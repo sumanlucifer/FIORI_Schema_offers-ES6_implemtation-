@@ -1,0 +1,50 @@
+_schema-version: "3.2"
+ID: knpl-influencer-web
+version: 0.0.1
+modules:
+- name: knpl-influencer-web-approuter
+  type: approuter.nodejs
+  path: knpl-influencer-web-approuter
+  requires:
+  - name: knpl-influencer-web_html_repo_runtime
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: knpl-influencer-web_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: knpl-influencer-web_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - MasterDataManagement-content.zip
+      name: MasterDataManagement
+      target-path: resources/
+- name: MasterDataManagement
+  type: html5
+  path: MasterDataManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: knpl-influencer-web_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: knpl-influencer-web_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install
