@@ -52,7 +52,7 @@
 		},
 		"contentDensities": {
 			"compact": true,
-			"cozy": true
+			"cozy": false
 		},
 		"models": {
 			"i18n": {
@@ -78,9 +78,13 @@
 				"clearControlAggregation": false
 			},
 			"routes": [{
-				"name": "RouteHome",
-				"pattern": "RouteHome",
-				"target": ["TargetHome"]
+				"name": "RouteMaster",
+				"pattern": "",
+				"target": ["TargetMaster"]
+			},{
+				"name": "RouteEditTable",
+				"pattern": "edit/{type}",
+				"target": ["TargetEditTable"]
 			}],
 			"targets": {
 				"TargetHome": {
@@ -89,7 +93,21 @@
 					"clearControlAggregation": false,
 					"viewId": "Home",
 					"viewName": "Home"
-				}
+                },
+                "TargetMaster": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "MasterData",
+					"viewName": "MasterData"
+                },"TargetEditTable": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "EditTable",
+					"viewName": "EditTable"
+                }
+                
 			}
 		}
 	}

@@ -1,11 +1,8 @@
-<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.Home" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.Home" 
+class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
 	<Shell id="shell">
 		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}">
-					<content></content>
-				</Page>
-			</pages>
+		
 		</App>
 	</Shell>
 </mvc:View>

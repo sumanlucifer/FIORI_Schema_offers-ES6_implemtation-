@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox>
+		<f:SimpleForm 
+			editable="true"
+			layout="ColumnLayout"
+		
+			columnsM="2"
+			columnsL="2"
+			columnsXL="2"
+			>
+			<f:content>
+			
+				<Label text="Title" />
+				<Input value="Desc"/>
+                <Label text="Links" />
+				<Input/>
+                <Label text="Category" />
+				<Input/>
+               
+				
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

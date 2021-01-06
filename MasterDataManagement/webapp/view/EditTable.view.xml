@@ -1,0 +1,26 @@
+<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.EditTable"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" 	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:uxap="sap.uxap"		height="100%">
+	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+		<uxap:headerTitle>
+			<uxap:ObjectPageHeader objectTitle="Edit Events">
+			</uxap:ObjectPageHeader>
+		</uxap:headerTitle>
+		<uxap:sections>
+
+
+			<uxap:ObjectPageSection titleUppercase="false" title="Events Details">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection titleUppercase="false" id="objSec1">
+                     
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+        
+          
+	
+
+
+		</uxap:sections>
+
+	</uxap:ObjectPageLayout>
+</mvc:View>
