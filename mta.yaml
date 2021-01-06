@@ -7,6 +7,7 @@ modules:
   path: knpl-influencer-web-approuter
   requires:
   - name: knpl-influencer-web_html_repo_runtime
+  - name: portal_resources_knpl-influencer-web
   parameters:
     disk-quota: 256M
     memory: 256M
@@ -32,6 +33,20 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: launchpad
+  type: com.sap.application.content
+  path: launchpad
+  requires:
+  - name: portal_resources_knpl-influencer-web
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: content-deploy-key
+  - name: knpl-influencer-web_html_repo_host
+  - name: knpl-influencer-web_ui_deployer
+  - name: uaa_knpl-influencer-web
 resources:
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
@@ -43,6 +58,11 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-host
+- name: portal_resources_knpl-influencer-web
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
 build-parameters:
   before-all:
   - builder: custom
