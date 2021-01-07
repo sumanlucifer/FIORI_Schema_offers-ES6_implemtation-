@@ -1,39 +1,41 @@
 sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        'sap/ui/core/Fragment',
-		'sap/ui/model/json/JSONModel'
-	],
+    "sap/ui/core/mvc/Controller",
+    'sap/ui/core/Fragment',
+    'sap/ui/model/json/JSONModel'
+],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-	function (Controller,Fragment,JSONModel) {
-		"use strict";
+    function (Controller, Fragment, JSONModel) {
+        "use strict";
 
-		return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.EditTable", {
-			onInit: function () {
+        return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.EditTable", {
+            onInit: function () {
                 var oRouter = this.getOwnerComponent().getRouter();
                 this._formFragments = {};
-               
-			    oRouter.getRoute("RouteEditTable").attachMatched(this._onRouteMatched, this);
+
+                oRouter.getRoute("RouteEditTable").attachMatched(this._onRouteMatched, this);
 
             },
-            _onRouteMatched:function(oEvent){
-                var sArgs = oEvent.getParameter("arguments")["type"];
-                console.log(sArgs);
-                 var oFrag = {
-                    eventsData:"EditExtLink",
-                    depoData:"EditDepo"
+            _onRouteMatched: function (oEvent) {
+                var sArgsType = oEvent.getParameter("arguments").type;
+                var sId = oEvent.getParameter("arguments").id;
+                console.log(sArgsType, sId);
+                var oFrag = {
+                    eventsData: "EditExtLink",
+                    depoData: "EditDepo"
                 }
-                this._initData(oFrag[sArgs]);
-                this._showFormFragment(oFrag[sArgs]);
+                this._initData(oFrag[sArgsType], sId);
+                this._showFormFragment(oFrag[sArgsType], sArgsType, sId);
             },
-            _initData:function(mParam1){
+            _initData: function (mParam1,mParam2) {
                 console.log(mParam1);
                 var oData = {
-                    title:mParam1=='EditExtLink'?'Edit External Link':'Edit Depot'
+                    titlePart1: mParam2 == "add" ? "Add" : "Edit",
+                    titlePart2: mParam1 == 'EditExtLink' ? 'External Link' : 'Depot'
                 }
                 var oModel = new JSONModel(oData);
-                this.getView().setModel(oModel,"oModelView");
+                this.getView().setModel(oModel, "oModelView");
             },
             _getFormFragment: function (sFragmentName) {
                 var pFormFragment = this._formFragments[sFragmentName],
@@ -48,17 +50,23 @@ sap.ui.define([
                 }
 
                 return pFormFragment;
-		},
+            },
 
-		_showFormFragment : function (sFragmentName) {
-			var objSection = this.getView().byId("objSec1");
+            _showFormFragment: function (sFragmentName, mType, mId) {
 
-			objSection.removeAllBlocks();
-			this._getFormFragment(sFragmentName).then(function(oVBox){
-				objSection.addBlock(oVBox);
-			});
-		}
+                var objSection = this.getView().byId("objSec1");
+
+                objSection.removeAllBlocks();
+                this._getFormFragment(sFragmentName).then(function (oVBox) {
+                    if (mId !== "add") {
+                        oVBox.bindElement("tableData>/" + mType + "/" + mId);
+                    } else {
+                        oVBox.unbindObject("tableData");
+                    }
+                    objSection.addBlock(oVBox);
+                });
+            }
 
 
-		});
-	});
+        });
+    });
