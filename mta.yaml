@@ -7,6 +7,7 @@ modules:
   path: knpl-influencer-web-approuter
   requires:
   - name: knpl-influencer-web_html_repo_runtime
+  - name: dest_knpl-influencer-web
   parameters:
     disk-quota: 256M
     memory: 256M
@@ -24,9 +25,21 @@ modules:
       - MasterDataManagement-content.zip
       name: MasterDataManagement
       target-path: resources/
+    - artifacts:
+      - OrganizationModule-content.zip
+      name: OrganizationModule
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: OrganizationModule
+  type: html5
+  path: OrganizationModule
   build-parameters:
     builder: custom
     commands:
@@ -43,6 +56,11 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-host
+- name: dest_knpl-influencer-web
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
 build-parameters:
   before-all:
   - builder: custom
