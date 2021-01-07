@@ -1,142 +1,99 @@
-<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:uxap="sap.uxap" 
-xmlns:core="sap.ui.core"
-	xmlns="sap.m"
-    	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table"
-	
-	height="100%">
+<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%">
 
-    	<Page
-		title="Centered Title"
-		class="sapUiContentPadding"
-		showNavButton="false"
-        showHeader="false" >
-		
-		
-		<content>
-        		
-        	<IconTabBar
-		id="idIconTabBarFiori2"
-		upperCase="true"
-		expanded="{device>/isNoPhone}"
-		class="sapUiResponsiveContentPadding">
-		<items>
-			<IconTabFilter key="0"
-				text="{i18n>MastDataExterLinks}">
-				<Table
-		inset="false"
-		items="{
-			path: 'tableData>/eventsData'
-		}">
-			<headerToolbar>
-							<Toolbar class="tblTlbrAd">
-								
-								<ToolbarSpacer></ToolbarSpacer>
-								<Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
-                                <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
-							</Toolbar>
-						</headerToolbar>
-		<columns>
-			
-			<Column width="100%"
-				minScreenWidth="Tablet"
-				demandPopin="true">
-				<Text text="{i18n>MasterDataDescription}" />
-			</Column>
-            <Column width="100%">
-				<Text text="{i18n>MastDataExterLinks}" />
-			</Column>
-			
-			<Column width="15%"
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="{i18n>GenericEdit}" />
-			</Column>
-            <Column width="15%"
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="{i18n>GenericRemove}" />
-			</Column>
-		</columns>
-		<items>
-			<ColumnListItem>
-				<cells>
-					
-				
-					<Text
-						text="{tableData>desc}" />
-                    <Text
-						text="{tableData>link}" />
-				
-                   	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                    <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
-			</IconTabFilter>
-			<IconTabFilter
-            key="1"
-				text="{i18n>MasterDataDepot}"
-				>
+    <Page title="Centered Title" class="sapUiContentPadding" showNavButton="false" showHeader="false">
 
-								<Table
-		inset="false"
-		items="{
-			path: 'tableData>/depoData'
-		}">
-			<headerToolbar>
-							<Toolbar class="tblTlbrAd">
-								
-								<ToolbarSpacer></ToolbarSpacer>
-							<Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
-                                <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
-							</Toolbar>
-						</headerToolbar>
-		<columns>
-			
-			<Column width="100%"
-				minScreenWidth="Tablet"
-				demandPopin="true">
-				<Text text="{i18n>MasterDataTitle}" />
-			</Column>
-           <Column width="15%"
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="{i18n>GenericEdit}" />
-			</Column>
-            <Column width="15%"
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="{i18n>GenericRemove}" />
-			</Column>
-			
-		</columns>
-		<items>
-			<ColumnListItem>
-				<cells>
-					
-				
-					<Text
-						text="{tableData>title}" />
-                   
-				
-                   	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
-			</IconTabFilter>
-			
-		</items>
-	</IconTabBar>
-        
+
+        <content>
+
+            <IconTabBar id="idIconTabBarFiori2" upperCase="true" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter key="0" text="{i18n>MastDataExterLinks}">
+                        <Table inset="false" items="{path: 'tableData>/eventsData'		}">
+                            <headerToolbar>
+                                <Toolbar class="tblTlbrAd">
+
+                                    <ToolbarSpacer></ToolbarSpacer>
+                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+
+                                <Column width="100%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>MasterDataDescription}"/>
+                                </Column>
+                                <Column width="100%">
+                                    <Text text="{i18n>MastDataExterLinks}"/>
+                                </Column>
+
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericRemove}"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+
+
+                                        <Text text="{tableData>desc}"/>
+                                        <Text text="{tableData>link}"/>
+
+                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabFilter key="1" text="{i18n>MasterDataDepot}">
+
+                        <Table inset="false" items="{
+                                                                                                                                                                                                                                			path: 'tableData>/depoData'
+                                                                                                                                                                                                                                		}">
+                            <headerToolbar>
+                                <Toolbar class="tblTlbrAd">
+
+                                    <ToolbarSpacer></ToolbarSpacer>
+                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+
+                                <Column width="100%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>MasterDataTitle}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericRemove}"/>
+                                </Column>
+
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+
+
+                                        <Text text="{tableData>title}"/>
+
+
+                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                </items>
+            </IconTabBar>
+
         </content>
-	</Page>
+    </Page>
 
 </mvc:View>
