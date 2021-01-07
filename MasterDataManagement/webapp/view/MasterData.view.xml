@@ -1,0 +1,149 @@
+<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:uxap="sap.uxap" 
+xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+    	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table"
+	
+	height="100%">
+
+
+
+
+    	<Page
+		title="Centered Title"
+		class="sapUiContentPadding"
+		showNavButton="false"
+        showHeader="false" >
+		<subHeader>
+			<Toolbar>
+                <Title text="Master Data" level="H2"></Title>
+            </Toolbar>
+		</subHeader>
+		
+		<content>
+        		
+        	<IconTabBar
+		id="idIconTabBarFiori2"
+		upperCase="true"
+		expanded="{device>/isNoPhone}"
+		class="sapUiResponsiveContentPadding">
+		<items>
+			<IconTabFilter
+				text="External Links">
+				<Table
+		inset="false"
+		items="{
+			path: 'oModelView>/eventsData'
+		}">
+			<headerToolbar>
+							<Toolbar class="tblTlbrAd">
+								
+								<ToolbarSpacer></ToolbarSpacer>
+								<Button text="Refresh" type="Transparent" icon="sap-icon://refresh"/>
+                                <Button text="Add" type="Transparent" icon="sap-icon://add"/>
+							</Toolbar>
+						</headerToolbar>
+		<columns>
+			
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Description" />
+			</Column>
+            <Column>
+				<Text text="Links" />
+			</Column>
+			
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Edit" />
+			</Column>
+            <Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Remove" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					
+				
+					<Text
+						text="{oModelView>desc}" />
+                    <Text
+						text="{oModelView>link}" />
+				
+                   	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+			</IconTabFilter>
+			<IconTabFilter
+				text="Depot"
+				>
+
+								<Table
+		inset="false"
+		items="{
+			path: 'oModelView>/depoData'
+		}">
+			<headerToolbar>
+							<Toolbar class="tblTlbrAd">
+								
+								<ToolbarSpacer></ToolbarSpacer>
+								<Button text="Refresh" type="Transparent" icon="sap-icon://refresh"/>
+                                <Button text="Add" type="Transparent" icon="sap-icon://add"/>
+							</Toolbar>
+						</headerToolbar>
+		<columns>
+			
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Title" />
+			</Column>
+           
+			
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Edit" />
+			</Column>
+            <Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Remove" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					
+				
+					<Text
+						text="{oModelView>title}" />
+                   
+				
+                   	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+        
+        </content>
+	</Page>
+
+</mvc:View>

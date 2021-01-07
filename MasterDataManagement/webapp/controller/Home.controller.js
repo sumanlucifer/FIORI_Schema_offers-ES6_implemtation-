@@ -10,6 +10,7 @@ sap.ui.define([
 		return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.Home", {
 			onInit: function () {
 
-			}
+            },
+            
 		});
 	});
