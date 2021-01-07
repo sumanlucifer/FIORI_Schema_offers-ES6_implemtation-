@@ -15,11 +15,7 @@
 			<f:content>
 			
 				<Label text="Title" />
-				<Input value="Desc"/>
-                <Label text="Links" />
-				<Input/>
-                <Label text="Category" />
-				<Input/>
+				<Input value=""/>
                
 				
 			</f:content>

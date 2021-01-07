@@ -2,13 +2,13 @@
 xmlns:uxap="sap.uxap"		height="100%">
 	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
 		<uxap:headerTitle>
-			<uxap:ObjectPageHeader objectTitle="Edit Events">
+			<uxap:ObjectPageHeader objectTitle="{oModelView>/title}">
 			</uxap:ObjectPageHeader>
 		</uxap:headerTitle>
 		<uxap:sections>
 
 
-			<uxap:ObjectPageSection titleUppercase="false" title="Events Details">
+			<uxap:ObjectPageSection titleUppercase="false" title="{oModelView>/title}">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection titleUppercase="false" id="objSec1">
                      

@@ -24,8 +24,16 @@ sap.ui.define([
                     eventsData:"EditExtLink",
                     depoData:"EditDepo"
                 }
-                console.log(oFrag[sArgs]);
+                this._initData(oFrag[sArgs]);
                 this._showFormFragment(oFrag[sArgs]);
+            },
+            _initData:function(mParam1){
+                console.log(mParam1);
+                var oData = {
+                    title:mParam1=='EditExtLink'?'Edit External Link':'Edit Depot'
+                }
+                var oModel = new JSONModel(oData);
+                this.getView().setModel(oModel,"oModelView");
             },
             _getFormFragment: function (sFragmentName) {
 			var pFormFragment = this._formFragments[sFragmentName],
