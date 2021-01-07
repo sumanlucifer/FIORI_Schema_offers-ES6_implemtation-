@@ -15,7 +15,7 @@
 			<f:content>
 			
 				<Label text="{i18n>MasterDataDepot}" />
-				<Input value=""/>
+				<Input value="{tableData>title}"/>
                
 				
 			</f:content>
