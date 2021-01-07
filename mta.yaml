@@ -29,6 +29,10 @@ modules:
       - OrganizationModule-content.zip
       name: OrganizationModule
       target-path: resources/
+    - artifacts:
+      - OrgModule-content.zip
+      name: OrgModule
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -40,6 +44,14 @@ modules:
 - name: OrganizationModule
   type: html5
   path: OrganizationModule
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: OrgModule
+  type: html5
+  path: OrgModule
   build-parameters:
     builder: custom
     commands:
