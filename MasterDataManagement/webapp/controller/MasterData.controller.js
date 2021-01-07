@@ -1,11 +1,12 @@
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
-        	"sap/ui/model/json/JSONModel"
+        "sap/ui/model/json/JSONModel",
+        "sap/m/MessageBox"
 	],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-	function (Controller,JSONModel) {
+	function (Controller,JSONModel,MessageBox) {
 		"use strict";
 
 		return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.MasterData", {
@@ -47,6 +48,9 @@ sap.ui.define([
                         type:sParam
                     });
 
+            },
+            onPressRemove:function(oEvent){
+                 MessageBox.confirm("Kindly confirm to remove.");
             }
             
 		});

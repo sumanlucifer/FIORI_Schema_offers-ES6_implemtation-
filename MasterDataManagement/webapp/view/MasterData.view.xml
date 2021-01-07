@@ -78,7 +78,7 @@ xmlns:core="sap.ui.core"
 						text="{oModelView>link}" />
 				
                    	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+                    <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
 				</cells>
 			</ColumnListItem>
 		</items>
@@ -133,7 +133,7 @@ xmlns:core="sap.ui.core"
                    
 				
                    	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
 				</cells>
 			</ColumnListItem>
 		</items>
