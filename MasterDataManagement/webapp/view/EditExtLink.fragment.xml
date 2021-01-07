@@ -16,9 +16,11 @@
 			>
 			<f:content>
 				<Label text="{i18n>MasterDataDescription}" />
-				<Input value="{tableData>desc}"/>
+				<Input value="{path:'tableData>desc'
+                    }"/>
                 <Label text="{i18n>MasterDataLink}" />
-				<Input value="{tableData>link}"/>        
+				<Input value="{path:'tableData>link'
+                    }"/>        
 			</f:content>
 		</f:SimpleForm>
 	</VBox>

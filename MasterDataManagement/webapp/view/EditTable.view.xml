@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.EditTable"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" 	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" 
+<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.EditTable"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" 	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" 
 xmlns:uxap="sap.uxap"		height="100%">
 	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
 		<uxap:headerTitle>

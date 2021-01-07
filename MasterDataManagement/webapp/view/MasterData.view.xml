@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.knpl.pragat.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc"
+<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:uxap="sap.uxap" 
 xmlns:core="sap.ui.core"
 	xmlns="sap.m"

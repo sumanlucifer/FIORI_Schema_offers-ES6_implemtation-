@@ -9,7 +9,7 @@ sap.ui.define([
     function (Controller, Fragment, JSONModel) {
         "use strict";
 
-        return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.EditTable", {
+        return Controller.extend("com.knpl.pragati.MasterDataManagement.controller.EditTable", {
             onInit: function () {
                 var oRouter = this.getOwnerComponent().getRouter();
                 this._formFragments = {};
@@ -28,7 +28,7 @@ sap.ui.define([
                 this._initData(oFrag[sArgsType], sId);
                 this._showFormFragment(oFrag[sArgsType], sArgsType, sId);
             },
-            _initData: function (mParam1,mParam2) {
+            _initData: function (mParam1, mParam2) {
                 console.log(mParam1);
                 var oData = {
                     titlePart1: mParam2 == "add" ? "Add" : "Edit",
@@ -44,7 +44,7 @@ sap.ui.define([
                 if (!pFormFragment) {
                     pFormFragment = Fragment.load({
                         id: oView.getId(),
-                        name: "com.knpl.pragat.MasterDataManagement.view." + sFragmentName
+                        name: "com.knpl.pragati.MasterDataManagement.view." + sFragmentName
                     });
                     this._formFragments[sFragmentName] = pFormFragment;
                 }
@@ -53,13 +53,15 @@ sap.ui.define([
             },
 
             _showFormFragment: function (sFragmentName, mType, mId) {
-
+                console.log(mType + "/" + mId)
                 var objSection = this.getView().byId("objSec1");
 
                 objSection.removeAllBlocks();
                 this._getFormFragment(sFragmentName).then(function (oVBox) {
                     if (mId !== "add") {
-                        oVBox.bindElement("tableData>/" + mType + "/" + mId);
+                        oVBox.bindElement({
+                            path: "/" + mType + "/" + mId, model: "tableData"
+                        });
                     } else {
                         oVBox.unbindObject("tableData");
                     }

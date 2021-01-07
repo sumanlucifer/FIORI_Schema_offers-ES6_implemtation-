@@ -1,11 +1,11 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "com/knpl/pragat/MasterDataManagement/model/models"
+    "com/knpl/pragati/MasterDataManagement/model/models"
 ], function (UIComponent, Device, models) {
     "use strict";
 
-    return UIComponent.extend("com.knpl.pragat.MasterDataManagement.Component", {
+    return UIComponent.extend("com.knpl.pragati.MasterDataManagement.Component", {
 
         metadata: {
             manifest: "json"

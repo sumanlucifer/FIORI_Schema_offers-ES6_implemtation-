@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"com/knpl/pragat/MasterDataManagement/controller/Home.controller"
+	"com/knpl/pragati/MasterDataManagement/controller/Home.controller"
 ], function (Controller) {
 	"use strict";
 

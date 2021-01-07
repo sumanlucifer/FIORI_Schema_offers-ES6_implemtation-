@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"com/knpl/pragat/MasterDataManagement/test/integration/AllJourneys"
+		"com/knpl/pragati/MasterDataManagement/test/integration/AllJourneys"
 	], function () {
 		QUnit.start();
 	});

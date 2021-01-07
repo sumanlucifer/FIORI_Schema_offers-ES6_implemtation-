@@ -7,7 +7,7 @@ sap.ui.define([
     "use strict";
 
     var oMockServer,
-        _sAppPath = "com/knpl/pragat/MasterDataManagement/",
+        _sAppPath = "com/knpl/pragati/MasterDataManagement/",
         _sJsonFilesPath = _sAppPath + "localService/mockdata";
 
     var oMockServerInterface = {

@@ -10,7 +10,7 @@ sap.ui.define([
     function (Controller, JSONModel, MessageBox, MessageToast) {
         "use strict";
 
-        return Controller.extend("com.knpl.pragat.MasterDataManagement.controller.MasterData", {
+        return Controller.extend("com.knpl.pragati.MasterDataManagement.controller.MasterData", {
             onInit: function () {
                 //this._setData()
             },

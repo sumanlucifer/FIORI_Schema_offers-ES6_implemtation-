@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Opa5) {
 	"use strict";
 
-	return Opa5.extend("com.knpl.pragat.MasterDataManagement.test.integration.arrangements.Startup", {
+	return Opa5.extend("com.knpl.pragati.MasterDataManagement.test.integration.arrangements.Startup", {
 
 		iStartMyApp: function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "com.knpl.pragat.MasterDataManagement",
+					name: "com.knpl.pragati.MasterDataManagement",
 					async: true
 				},
 				hash: oOptions.hash,
