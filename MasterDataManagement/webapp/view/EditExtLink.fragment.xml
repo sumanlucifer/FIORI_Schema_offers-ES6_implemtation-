@@ -14,9 +14,9 @@
 			>
 			<f:content>
 			
-				<Label text="Description" />
+				<Label text="{i18n>MasterDataDescription}" />
 				<Input/>
-                <Label text="Links" />
+                <Label text="{i18n>MasterDataLink}" />
 				<Input/>
                
                

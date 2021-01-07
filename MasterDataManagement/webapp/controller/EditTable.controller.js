@@ -36,18 +36,18 @@ sap.ui.define([
                 this.getView().setModel(oModel,"oModelView");
             },
             _getFormFragment: function (sFragmentName) {
-			var pFormFragment = this._formFragments[sFragmentName],
-				oView = this.getView();
+                var pFormFragment = this._formFragments[sFragmentName],
+                    oView = this.getView();
 
-			if (!pFormFragment) {
-				pFormFragment = Fragment.load({
-					id: oView.getId(),
-					name: "com.knpl.pragat.MasterDataManagement.view." + sFragmentName
-				});
-				this._formFragments[sFragmentName] = pFormFragment;
-			}
+                if (!pFormFragment) {
+                    pFormFragment = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragat.MasterDataManagement.view." + sFragmentName
+                    });
+                    this._formFragments[sFragmentName] = pFormFragment;
+                }
 
-			return pFormFragment;
+                return pFormFragment;
 		},
 
 		_showFormFragment : function (sFragmentName) {

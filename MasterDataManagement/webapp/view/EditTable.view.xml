@@ -8,7 +8,7 @@ xmlns:uxap="sap.uxap"		height="100%">
 		<uxap:sections>
 
 
-			<uxap:ObjectPageSection titleUppercase="false" title="{oModelView>/title}">
+			<uxap:ObjectPageSection titleUppercase="false" title="Details">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection titleUppercase="false" id="objSec1">
                      

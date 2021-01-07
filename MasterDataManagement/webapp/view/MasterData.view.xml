@@ -14,11 +14,7 @@ xmlns:core="sap.ui.core"
 		class="sapUiContentPadding"
 		showNavButton="false"
         showHeader="false" >
-		<subHeader>
-			<Toolbar>
-                <Title text="Master Data" level="H2"></Title>
-            </Toolbar>
-		</subHeader>
+		
 		
 		<content>
         		
@@ -28,8 +24,8 @@ xmlns:core="sap.ui.core"
 		expanded="{device>/isNoPhone}"
 		class="sapUiResponsiveContentPadding">
 		<items>
-			<IconTabFilter
-				text="External Links">
+			<IconTabFilter key="0"
+				text="{i18n>MastDataExterLinks}">
 				<Table
 		inset="false"
 		items="{
@@ -39,32 +35,32 @@ xmlns:core="sap.ui.core"
 							<Toolbar class="tblTlbrAd">
 								
 								<ToolbarSpacer></ToolbarSpacer>
-								<Button text="Refresh" type="Transparent" icon="sap-icon://refresh"/>
-                                <Button text="Add" type="Transparent" icon="sap-icon://add"/>
+								<Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
 							</Toolbar>
 						</headerToolbar>
 		<columns>
 			
-			<Column
+			<Column width="100%"
 				minScreenWidth="Tablet"
 				demandPopin="true">
-				<Text text="Description" />
+				<Text text="{i18n>MasterDataDescription}" />
 			</Column>
-            <Column>
-				<Text text="Links" />
+            <Column width="100%">
+				<Text text="{i18n>Links}" />
 			</Column>
 			
-			<Column
+			<Column width="15%"
 				minScreenWidth="Desktop"
 				demandPopin="true"
 				hAlign="Center">
-				<Text text="Edit" />
+				<Text text="{i18n>GenericEdit}" />
 			</Column>
-            <Column
+            <Column width="15%"
 				minScreenWidth="Desktop"
 				demandPopin="true"
 				hAlign="Center">
-				<Text text="Remove" />
+				<Text text="{i18n>GenericRemove}" />
 			</Column>
 		</columns>
 		<items>
@@ -78,14 +74,15 @@ xmlns:core="sap.ui.core"
 						text="{oModelView>link}" />
 				
                    	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+                    <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
 				</cells>
 			</ColumnListItem>
 		</items>
 	</Table>
 			</IconTabFilter>
 			<IconTabFilter
-				text="Depot"
+            key="1"
+				text="{i18n>MasterDataDepot}"
 				>
 
 								<Table
@@ -97,31 +94,30 @@ xmlns:core="sap.ui.core"
 							<Toolbar class="tblTlbrAd">
 								
 								<ToolbarSpacer></ToolbarSpacer>
-								<Button text="Refresh" type="Transparent" icon="sap-icon://refresh"/>
-                                <Button text="Add" type="Transparent" icon="sap-icon://add"/>
+							<Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
 							</Toolbar>
 						</headerToolbar>
 		<columns>
 			
-			<Column
+			<Column width="100%"
 				minScreenWidth="Tablet"
 				demandPopin="true">
-				<Text text="Title" />
+				<Text text="{i18n>MasterDataTitle}" />
 			</Column>
-           
+           <Column width="15%"
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="{i18n>GenericEdit}" />
+			</Column>
+            <Column width="15%"
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="{i18n>GenericRemove}" />
+			</Column>
 			
-			<Column
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="Edit" />
-			</Column>
-            <Column
-				minScreenWidth="Desktop"
-				demandPopin="true"
-				hAlign="Center">
-				<Text text="Remove" />
-			</Column>
 		</columns>
 		<items>
 			<ColumnListItem>
@@ -133,7 +129,7 @@ xmlns:core="sap.ui.core"
                    
 				
                    	<Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove"></Button>
+                       <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}"  type="Transparent"  tooltip="remove" press="onPressRemove"></Button>
 				</cells>
 			</ColumnListItem>
 		</items>
