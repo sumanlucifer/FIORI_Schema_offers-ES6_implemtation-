@@ -26,7 +26,11 @@
                 "i18n": "i18n/defaultGroupId.properties"
             },
             "payload": {
-                "viz": []
+                "viz": [ {
+					"id": "com.knpl.pragat.MasterDataManagement-0-1597672368722",
+					"appId": "com.knpl.pragat.MasterDataManagement",
+					"vizId": "Manage-MDM"
+				}]
             }
         }],
         "sites": [{
