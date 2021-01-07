@@ -3,3 +3,5 @@
 /resources/
 
 *.env1
+*.zip
+.vscode/

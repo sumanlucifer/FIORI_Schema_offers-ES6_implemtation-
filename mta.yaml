@@ -33,6 +33,10 @@ modules:
       - MasterDataManagement-content.zip
       name: MasterDataManagement
       target-path: resources/
+    - artifacts:
+      - OrganizationModule-content.zip
+      name: OrganizationModule
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -59,6 +63,14 @@ modules:
   - name: knpl-influencer-web_ui_deployer
   - name: uaa_knpl-influencer-web
   - name: knpl-portal-saas-registry
+- name: OrganizationModule
+  type: html5
+  path: OrganizationModule
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
