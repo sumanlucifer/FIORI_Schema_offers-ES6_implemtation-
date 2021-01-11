@@ -19,7 +19,7 @@ builder:
   - name: webide-extension-task-resources
     afterTask: webide-extension-task-updateManifestJson
     configuration:
-      nameSpace: com/knpl/pragat
+      nameSpace: com/knpl/pragati
   - name: webide-extension-task-copyFile
     afterTask: webide-extension-task-resources
     configuration:
