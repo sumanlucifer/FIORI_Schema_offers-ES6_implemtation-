@@ -20,7 +20,7 @@
                     "action": "ORG",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://account"
+                    "icon": "sap-icon://company-view"
                 }
             }
         },
