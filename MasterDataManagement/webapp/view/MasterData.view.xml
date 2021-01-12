@@ -89,6 +89,15 @@
                             </items>
                         </Table>
                     </IconTabFilter>
+                    <IconTabFilter key="3" text="{i18n>MasterDataKycType}"/>
+                    <IconTabFilter key="4" text="{i18n>MasterDataReligion}"/>
+                    <IconTabFilter key="5" text="{i18n>MasterDataTrainingType}"/>
+                    <IconTabFilter key="6" text="{i18n>MasterDataBusinessGroup}"/>
+                    <IconTabFilter key="7" text="{i18n>MasterDataBusinessCategory}"/>
+                    <IconTabFilter key="8" text="{i18n>MasterDataArcheType}"/>
+                    <IconTabFilter key="9" text="{i18n>MasterDataMaritialStatus}"/>
+                    <IconTabFilter key="10" text="{i18n>MasterDataLanguage}"/>
+                    <IconTabFilter key="11" text="{i18n>MasterDataComplaintType}"/>
 
                 </items>
             </IconTabBar>

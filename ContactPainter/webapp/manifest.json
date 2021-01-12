@@ -24,8 +24,8 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "CP",
-                    "action": "MDM",
+                    "semanticObject": "Manage",
+                    "action": "CP",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
                     "icon": "sap-icon://account"
