@@ -1,0 +1,63 @@
+<mvc:View
+	controllerName="com.knpl.pragati.ContactPainter.controller.Detail"
+	xmlns="sap.m"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<semantic:SemanticPage
+		id="detailPage"
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}">
+		<semantic:titleHeading>
+        	<FlexBox fitContainer="true" alignItems="Center">
+                <Avatar class="sapUiTinyMarginEnd"/>
+			    <Title
+				text="{tableData>Name}"
+				level="H2"/>
+            </FlexBox>
+           
+		</semantic:titleHeading>
+		
+		<semantic:content>
+			<VBox width="100%">
+            <Bar>
+				<contentRight>
+					<Button id="edit" text="Edit" press="handleEditPress" />
+					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+				</contentRight>
+			</Bar>
+            <VBox id="form">
+            </VBox>
+
+            </VBox>
+		</semantic:content>
+		<!--Semantic ShareMenu Buttons-->
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction
+				id="shareEmail"
+				press=".onSendEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:closeAction>
+			<semantic:CloseAction
+					id="closeColumn"
+					press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+
+		<semantic:fullScreenAction>
+			<semantic:FullScreenAction
+					id="enterFullScreen"
+					visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+					press=".toggleFullScreen"/>
+		</semantic:fullScreenAction>
+		<semantic:exitFullScreenAction>
+			<semantic:ExitFullScreenAction
+					id="exitFullScreen"
+					visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+					press=".toggleFullScreen"/>
+		</semantic:exitFullScreenAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
