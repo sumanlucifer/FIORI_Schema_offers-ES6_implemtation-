@@ -37,6 +37,10 @@ modules:
       - ContactPainter-content.zip
       name: ContactPainter
       target-path: resources/
+    - artifacts:
+      - OrgModule-content.zip
+      name: OrgModule
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -48,6 +52,9 @@ modules:
 - name: ContactPainter
   type: html5
   path: ContactPainter
+- name: OrgModule
+  type: html5
+  path: OrgModule
   build-parameters:
     builder: custom
     commands:
