@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormChange354wide"
+			editable="true"
+			layout="ResponsiveGridLayout"
+		
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false">
+			<f:content>
+				<Label text="Full name of the contact" />
+				<Input  value="{tableData>Name}" />
+				<Label text="Street and number where the contact is located" />
+				<Input value="{tableData>Address}" />
+				<Label text="City" />
+				<Input value="{tableData>City}" />
+                <Label text="State" />
+				<Input value="{tableData>State}" />
+				<Label text="Pin Code"/>
+                <Input value="{tableData>Pin}"/>
+                <Label text="Contact Number"/>
+                <Input value="{tableData>Number}"/>
+                <Label text="Email"/>
+                <Input value="{tableData>Email}"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>
