@@ -5,12 +5,20 @@ modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
-  requires:
-  - name: knpl-influencer-web_html_repo_runtime
-  - name: dest_knpl-influencer-web
   parameters:
-    disk-quota: 256M
-    memory: 256M
+      keep-existing-routes: true
+      buildpack: nodejs_buildpack
+      disk-quota: 256M
+      memory: 256M
+      routes:
+        - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
+  properties:
+      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  requires:
+  - name: uaa_knpl-influencer-web
+  - name: knpl-influencer-web_html_repo_runtime
+  - name: portal_resources_knpl-influencer-web
+  - name: knpl-portal-saas-registry
 - name: knpl-influencer-web_ui_deployer
   type: com.sap.application.content
   path: .
@@ -30,12 +38,8 @@ modules:
       name: ContactPainter
       target-path: resources/
     - artifacts:
-      - ContactPainter-content.zip
-      name: ContactPainter
-      target-path: resources/
-    - artifacts:
-      - ContactPainter-content.zip
-      name: ContactPainter
+      - OrgModule-content.zip
+      name: OrgModule
       target-path: resources/
 - name: MasterDataManagement
   type: html5
@@ -48,12 +52,40 @@ modules:
 - name: ContactPainter
   type: html5
   path: ContactPainter
+- name: OrgModule
+  type: html5
+  path: OrgModule
   build-parameters:
     builder: custom
     commands:
     - npm run build
     supported-platforms: []
+- name: launchpad
+  type: com.sap.application.content
+  path: launchpad
+  parameters:
+      config:
+        TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  requires:
+  - name: portal_resources_knpl-influencer-web
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: content-deploy-key
+  - name: knpl-influencer-web_html_repo_host
+  - name: knpl-influencer-web_ui_deployer
+  - name: uaa_knpl-influencer-web
+  - name: knpl-portal-saas-registry
 resources:
+- name: uaa_knpl-influencer-web
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: knpl-portal-xsuaa-service
+    service-plan: application
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
   parameters:
@@ -64,11 +96,26 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-host
-- name: dest_knpl-influencer-web
+- name: portal_resources_knpl-influencer-web
   type: org.cloudfoundry.managed-service
   parameters:
-    service: destination
-    service-plan: lite
+    service: portal
+    service-plan: standard
+# SaaS Provisioning - Service for application providers to register multitenant applications and services
+- name: knpl-portal-saas-registry
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: saas-registry
+    service-plan: application
+    config:
+      xsappname: knpl-influencer-web
+      appUrls:
+          onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
+          getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
+      category: knplportalapps
+      description: KNPL Portal application
+      displayName: KNPL_Portal
+      appName: KNPL_Portal
 build-parameters:
   before-all:
   - builder: custom
