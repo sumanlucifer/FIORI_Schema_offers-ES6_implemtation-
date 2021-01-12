@@ -12,18 +12,25 @@
     "ach": "set-ach",
     "resources": "resources.json",
     "dataSources": {
-      "mainService": {
-        "uri": "Northwind/V2/Northwind/Northwind.svc/",
-        "type": "OData",
-        "settings": {
-          "odataVersion": "2.0",
-          "localUri": "localService/metadata.xml"
-        }
-      },
-      "tableData_alias": {
+       "tableData_alias": {
         "uri": "model/masterData.json",
         "type": "JSON"
       }
+    },
+    "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Manage",
+                    "action": "CP",
+                    "title": "{{appTitle}}",
+                    "subTitle": "{{appSubTitle}}",
+                    "icon": "sap-icon://account"
+                }
+            }
     }
   },
   "sap.fiori": {
@@ -72,16 +79,7 @@
           "bundleName": "com.knpl.pragati.ContactPainter.i18n.i18n"
         }
       },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {
-          "defaultBindingMode": "TwoWay",
-          "defaultCountMode": "Inline",
-          "refreshAfterChange": false
-        }
-      },
-      "tableData": {
+       "tableData": {
         "type": "sap.ui.model.json.JSONModel",
         "dataSource": "tableData_alias",
         "settings": {

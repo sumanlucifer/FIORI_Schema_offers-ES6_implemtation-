@@ -15,10 +15,15 @@ modules:
   properties:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
   requires:
-  - name: uaa_knpl-influencer-web
-  - name: knpl-influencer-web_html_repo_runtime
-  - name: portal_resources_knpl-influencer-web
-  - name: knpl-portal-saas-registry
+    - name: uaa_knpl-influencer-web
+    - name: knpl-influencer-web_html_repo_runtime
+    - name: knpl-portal-saas-registry
+    - name: portal_resources_knpl-influencer-web
+      group: destinations
+      properties:
+        name: KNPL_PAINTER_API
+        url: 'https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/'
+        forwardAuthToken: true
 - name: knpl-influencer-web_ui_deployer
   type: com.sap.application.content
   path: .
