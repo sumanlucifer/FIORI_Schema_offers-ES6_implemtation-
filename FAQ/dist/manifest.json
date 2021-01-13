@@ -49,21 +49,6 @@
             "async": true,
             "id": "app"
         },
-        "crossNavigation": {
-            "inbounds": {
-                "intent1": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "Manage",
-                    "action": "FAQ",
-                    "title": "{{appTitle}}",
-                    "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://account"
-                }
-            }
-        },
         "dependencies": {
             "minUI5Version": "1.66.0",
             "libs": {

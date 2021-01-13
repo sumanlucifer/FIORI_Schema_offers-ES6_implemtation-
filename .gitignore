@@ -5,3 +5,8 @@
 *.env1
 *.zip
 .vscode/
+
+# auto generated wildcard
+knpl-influencer-web/FAQ/.env2
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env2

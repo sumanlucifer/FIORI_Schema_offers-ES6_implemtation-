@@ -1,2 +1,13 @@
 /node_modules/
 /dist/
+
+# auto generated wildcard
+knpl-influencer-web/FAQ/.env1
+# auto generated wildcard
+knpl-influencer-web/FAQ/.env2
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env2
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env1
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env2

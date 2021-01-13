@@ -50,16 +50,16 @@
 				</headerToolbar>
 
 				<columns>
-					<Column width="25%">
+					<Column width="20%">
 						<Text text="{i18n>colQuestion}"/>
 					</Column>
-					<Column width="63%">
+					<Column width="70%">
 						<Text text="{i18n>colAnswer}"/>
 					</Column>
                     <Column width="5%">
 						<Text text="{i18n>colEdit}"/>
 					</Column>
-					<Column width="7%">
+					<Column width="5%">
 						<Text text="{i18n>colRemove}"/>
 					</Column>
 				</columns>
@@ -67,7 +67,7 @@
 				<items>
 					<ColumnListItem>
 						<cells>
-							<Text text="{ProductName}"/>
+							<Text text="{Products}"/>
 							<Text text="{ProductName}"/>
 							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
 							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
