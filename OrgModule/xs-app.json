@@ -2,17 +2,11 @@
   "welcomeFile": "/index.html",
   "authenticationMethod": "none",
   "routes": [
-     {
-        "source": "^/KNPL_PAINTER_API/(.*)$",
-        "target": "$1",
-        "destination": "KNPL_PAINTER_API",
-        "csrfProtection" : false
-    },
     {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",
-      "authenticationType": "none"
+      "authenticationType": "xsuaa"
     }
   ]
 }

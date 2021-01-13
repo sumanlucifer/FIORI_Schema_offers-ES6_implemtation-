@@ -27,7 +27,10 @@
     "ach": "set-ach",
     "resources": "resources.json",
     "dataSources": {
-      
+        "painterData": {
+                "uri": "model/painterSet.json",
+                "type": "JSON"
+            }  
     }
   },
   "sap.fiori": {
@@ -76,15 +79,10 @@
           "bundleName": "com.knpl.pragati.OrgModule.i18n.i18n"
         }
       },
-      "": {
-        "dataSource": "",
-        "preload": true,
-        "settings": {
-          "defaultBindingMode": "TwoWay",
-          "defaultCountMode": "Inline",
-          "refreshAfterChange": false
-        }
-      }
+     "tableData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "painterData"
+            }
     },
     "routing": {
       "config": {
