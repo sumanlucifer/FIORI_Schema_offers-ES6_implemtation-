@@ -12,12 +12,23 @@
         "ach": "set-ach",
         "resources": "resources.json",
         "dataSources": {
-            "mainService": {
-                "uri": "Northwind/V2/Northwind/Northwind.svc/",
-                "type": "OData",
-                "settings": {
-                    "odataVersion": "2.0",
-                    "localUri": "localService/metadata.xml"
+            "tableData_alias": {
+                "uri": "model/masterData.json",
+                "type": "JSON"
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Manage",
+                    "action": "FAQ",
+                    "title": "{{appTitle}}",
+                    "subTitle": "{{appSubTitle}}",
+                    "icon": "sap-icon://incident"
                 }
             }
         }
@@ -49,21 +60,6 @@
             "async": true,
             "id": "app"
         },
-        "crossNavigation": {
-            "inbounds": {
-                "intent1": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "Manage",
-                    "action": "FAQ",
-                    "title": "{{appTitle}}",
-                    "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://account"
-                }
-            }
-        },
         "dependencies": {
             "minUI5Version": "1.66.0",
             "libs": {
@@ -83,15 +79,11 @@
                     "bundleName": "com.knpl.pragati.FAQ.i18n.i18n"
                 }
             },
-            "": {
-                "dataSource": "mainService",
-                "preload": true,
-                "settings": {
-                    "defaultBindingMode": "TwoWay",
-                    "defaultCountMode": "Inline",
-                    "refreshAfterChange": false
-                }
+            "tableData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "tableData_alias"
             }
+            
         },
         "routing": {
             "config": {
@@ -116,12 +108,21 @@
                     ]
                 },
                 {
-                    "pattern": "Products/{objectId}",
+                    "pattern": "MasterFAQSet/{objectId}",
                     "name": "object",
                     "target": [
                         "object"
                     ]
-                }
+                },
+                {
+					"name": "createObject",
+					"pattern": "MasterFAQSet",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"object"
+					]
+				}
             ],
             "targets": {
                 "worklist": {

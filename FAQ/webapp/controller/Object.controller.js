@@ -26,19 +26,20 @@ sap.ui.define([
 				oViewModel = new JSONModel({
 					busy : true,
 					delay : 0
-				});
-
+                });
+                
+            debugger;
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
             this.getRouter().getRoute("createObject").attachPatternMatched(this._onCreateObjectMatched, this);
 
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 			this.setModel(oViewModel, "objectView");
-			this.getOwnerComponent().getModel().metadataLoaded().then(function () {
-					// Restore original busy indicator delay for the object view
-					oViewModel.setProperty("/delay", iOriginalBusyDelay);
-				}
-			);
+			// this.getOwnerComponent().getModel().metadataLoaded().then(function () {
+			// 		// Restore original busy indicator delay for the object view
+			// 		oViewModel.setProperty("/delay", iOriginalBusyDelay);
+			// 	}
+			// );
 		},
 
 		/* =========================================================== */
@@ -103,7 +104,7 @@ sap.ui.define([
         },
         
         _setView: function (data) {
-
+            debugger;
 			this._oMessageManager.removeAllMessages();
 
 			var oViewModel = this.getModel("objectView");

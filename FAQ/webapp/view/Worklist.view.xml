@@ -19,13 +19,7 @@
 			<Table
 				id="table"
 				width="auto"
-				items="{
-					path: '/Products',
-					sorter: {
-						path: 'ProductName',
-						descending: false
-					}
-				}"
+				items="{ path: 'tableData>/' }"
 				noDataText="{worklistView>/tableNoDataText}"
 				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
 				growing="true"
@@ -67,8 +61,8 @@
 				<items>
 					<ColumnListItem>
 						<cells>
-							<Text text="{ProductName}"/>
-							<Text text="{ProductName}"/>
+							<Text text="{tableData>Question}"/>
+							<Text text="{tableData>Answer}"/>
 							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
 							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
 						</cells>

@@ -42,10 +42,6 @@ modules:
       - FAQ-content.zip
       name: FAQ
       target-path: resources/
-    - artifacts:
-      - Manage_FAQ-content.zip
-      name: Manage_FAQ
-      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -83,14 +79,6 @@ modules:
 - name: FAQ
   type: html5
   path: FAQ
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: Manage_FAQ
-  type: html5
-  path: Manage_FAQ
   build-parameters:
     builder: custom
     commands:
