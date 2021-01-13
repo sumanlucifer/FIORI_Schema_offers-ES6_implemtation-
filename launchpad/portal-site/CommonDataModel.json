@@ -27,9 +27,15 @@
             },
             "payload": {
                 "viz": [ {
-					"id": "com.knpl.pragat.MasterDataManagement-0-1597672368722",
-					"appId": "com.knpl.pragat.MasterDataManagement",
+					"appId": "com.knpl.pragati.MasterDataManagement",
 					"vizId": "Manage-MDM"
+                },
+             {		"appId": "com.knpl.pragati.OrgModule",
+					"vizId": "Manage-ORG"
+				}, {
+				
+					"appId": "com.knpl.pragati.ContactPainter",
+					"vizId": "Manage-CP"
 				}]
             }
         }],

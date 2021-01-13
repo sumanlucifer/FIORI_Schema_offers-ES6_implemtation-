@@ -57,6 +57,11 @@ modules:
 - name: ContactPainter
   type: html5
   path: ContactPainter
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 - name: OrgModule
   type: html5
   path: OrgModule
