@@ -11,6 +11,7 @@ modules:
   - name: uaa_knpl-influencer-web
   - name: knpl-influencer-web_html_repo_runtime
   - name: portal_resources_knpl-influencer-web
+  - name: dest_sapdev
   - name: knpl-portal-saas-registry
   - name: dest_knpl-influencer-web
   parameters:
@@ -39,8 +40,8 @@ modules:
       name: OrganizationModule
       target-path: resources/
     - artifacts:
-      - FAQ-content.zip
-      name: FAQ
+      - Manage_FAQ-content.zip
+      name: Manage_FAQ
       target-path: resources/
 - name: MasterDataManagement
   type: html5
@@ -76,9 +77,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: FAQ
+- name: Manage_FAQ
   type: html5
-  path: FAQ
+  path: Manage_FAQ
   build-parameters:
     builder: custom
     commands:
@@ -107,6 +108,11 @@ resources:
   parameters:
     service: portal
     service-plan: standard
+- name: dest_sapdev
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service-plan: lite
+    service: destination    
 - name: knpl-portal-saas-registry
   type: org.cloudfoundry.managed-service
   parameters:
@@ -121,11 +127,6 @@ resources:
       xsappname: knpl-influencer-web
     service: saas-registry
     service-plan: application
-- name: dest_knpl-influencer-web
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: destination
-    service-plan: lite
 build-parameters:
   before-all:
   - builder: custom
