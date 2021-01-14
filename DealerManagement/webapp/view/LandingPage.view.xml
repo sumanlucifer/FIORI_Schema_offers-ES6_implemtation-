@@ -1,0 +1,49 @@
+<mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}" showHeader="false">
+					<content>
+                        <Table id="table" width="auto" items="{path: 'KNPLModel>/DealerModel'}" noDataText="No Data" growing="true" 
+                        growingScrollToLoad="true">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tableTitle}" level="H3"/>
+                                    <ToolbarSpacer />
+                                    <SearchField width="30%" class="sapUiSmallMargin" placeholder="{i18n>searchTooltip}"/>
+                                    <!--<SearchField tooltip="{i18n>searchTooltip}" width="200px">
+                                        layoutData>
+                                            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </SearchField>-->
+                                </OverflowToolbar>
+                            </headerToolbar>	
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>Customer}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>DealerName}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>DepotName}"/>
+                                </Column>
+				            </columns>
+
+                            <items>
+                                <ColumnListItem type="Navigation">
+                                    <cells>
+                                        <ObjectIdentifier title="{KNPLModel>Customer}"/>
+                                        <Text text="{KNPLModel>DealerName}"/>
+                                        <Text text="{KNPLModel>DepotName}"/>
+                                    </cells>
+                                </ColumnListItem>
+				            </items>
+			            </Table>
+                    </content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
