@@ -5,3 +5,5 @@
 *.env1
 *.zip
 .vscode/
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env

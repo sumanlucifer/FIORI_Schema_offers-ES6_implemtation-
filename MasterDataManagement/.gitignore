@@ -3,3 +3,22 @@ package-lock.json
 /dist/
 /.vscode/
 /*-content.zip/ 
+
+# auto generated wildcard
+knpl-influencer-web/FAQ/.env1
+# auto generated wildcard
+knpl-influencer-web/FAQ/.env2
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env2
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env1
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env2
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env3
+# auto generated wildcard
+knpl-influencer-web/FAQ1/.env1
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env

@@ -1,0 +1,9 @@
+/mta_archives/
+/node_modules/
+/resources/
+
+ 
+
+*.env1
+*.zip
+.vscode/
