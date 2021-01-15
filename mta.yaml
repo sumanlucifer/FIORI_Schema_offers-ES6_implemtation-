@@ -88,14 +88,6 @@ modules:
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
-- name: OrganizationModule
-  type: html5
-  path: OrganizationModule
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -110,7 +102,7 @@ resources:
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: knpl-influencer-web-xsuaa-service
+    service-name: knpl-portal-xsuaa-service
     service-plan: application
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service

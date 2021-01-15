@@ -1,5 +1,17 @@
 {
-    "authenticationMethod": "none",
-    "routes": [],
+    "authenticationMethod" : "route",
+    "routes": [ {
+      "authenticationType": "xsuaa",
+      "csrfProtection": false,
+      "source": "^/Knpl/(.*)$",
+      "destination": "destination-knpl-pragati",
+      "target": "$1"
+    }, 
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }],
     "welcomeFile": "/cp.portal"
 }

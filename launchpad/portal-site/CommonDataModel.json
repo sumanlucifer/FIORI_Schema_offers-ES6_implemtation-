@@ -36,6 +36,10 @@
 				
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
+                },
+             {
+					"appId": "com.knpl.pragati.Manage_FAQ",
+					"vizId": "Manage-FAQ"
 				}]
             }
         }],

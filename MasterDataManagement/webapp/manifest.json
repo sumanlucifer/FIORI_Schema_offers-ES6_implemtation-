@@ -1,7 +1,8 @@
 {
     "_version": "1.12.0",
     "sap.cloud": {
-        "service": "com.knpl.pragati"
+        "public": true,
+        "service": "com.sap.sample.app"
     },
     "sap.app": {
         "id": "com.knpl.pragati.MasterDataManagement",
