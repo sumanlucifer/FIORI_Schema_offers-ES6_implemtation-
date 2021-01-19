@@ -24,8 +24,8 @@
                     },
                     "semanticObject": "Manage",
                     "action": "DLR",
-                    "title": "{{appTitle}}",
-                    "subTitle": "{{appSubTitle}}"
+                    "title": "{{appTitle1}}",
+                    "subTitle": "{{appSubTitle1}}"
                 }
             }
         },
@@ -114,16 +114,25 @@
 			},
 			"routes": [{
 				"name": "RouteLandingPage",
-				"pattern": "RouteLandingPage",
+				"pattern": "",
 				"target": ["TargetLandingPage"]
+			},{
+				"name": "RouteDetailsPage",
+				"pattern": "Details/{dealerID}",
+				"target": ["TargetDetailsPage"]
 			}],
 			"targets": {
 				"TargetLandingPage": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "LandingPage",
 					"viewName": "LandingPage"
+                },
+                "TargetDetailsPage": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "DealerDetails"
 				}
 			}
 		}

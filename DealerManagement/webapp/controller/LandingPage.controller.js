@@ -20,6 +20,10 @@ sap.ui.define([
                     iOriginalBusyDelay,
                     oTable = this.byId("idDealerTable");
 
+                //Router Object
+                this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			    this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);    
+
                 // Put down worklist table's original value for busy indicator delay,
                 // so it can be restored later on. Busy handling on the table is
                 // taken care of by the table itself.
@@ -46,6 +50,8 @@ sap.ui.define([
                     oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                 });
             },
+
+            _onObjectMatched: function (oEvent) {},
 
             onUpdateFinished: function (oEvent) {
                 // update the worklist's object counter after the table update
@@ -165,6 +171,17 @@ sap.ui.define([
 
                 // apply filter settings
                 oBinding.filter(aFilters);
+            },
+
+            onListItemPress: function (oEvent) {
+                var oItem = oEvent.getSource();
+                oItem.setNavigated(true);
+                var oBindingContext = oItem.getBindingContext("KNPLModel");
+                var oModel = this.getView().getModel("KNPLModel");
+                this.oRouter.navTo("RouteDetailsPage", {
+                    dealerID: oEvent.getSource().getBindingContext("KNPLModel").getObject().Id
+                });
+                //this.presentBusyDialog();
             },
 
 

@@ -36,7 +36,7 @@
                             </columns>
 
                             <items>
-                                <ColumnListItem type="Navigation">
+                                <ColumnListItem type="Navigation" press="onListItemPress">
                                     <cells>
                                         <ObjectIdentifier title="{KNPLModel>Name}"/>
                                         <Text text="{KNPLModel>Email}"/>
@@ -45,7 +45,7 @@
                                 </ColumnListItem>
                             </items>
                         </Table>
-                        
+
                     </content>
                 </Page>
             </pages>
