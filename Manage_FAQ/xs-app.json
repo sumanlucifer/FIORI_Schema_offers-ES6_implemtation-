@@ -6,15 +6,14 @@
             "authenticationType": "xsuaa",
             "source": "^/KNPL_PAINTER_API/(.*)$",
             "target": "$1",
-            "service": "destination-knpl-pragati",
-            "endpoint" : "/",
+            "destination": "KNPL_PAINTER_API",
             "csrfProtection": false
         },
         {
-      "source": "^(.*)$",
-      "target": "$1",
-      "service": "html5-apps-repo-rt",
-      "authenticationType": "none"
-    }
+            "source": "^(.*)$",
+            "target": "$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "none"
+        }
     ]
 }

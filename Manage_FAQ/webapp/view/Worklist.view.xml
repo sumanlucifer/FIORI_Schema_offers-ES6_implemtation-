@@ -1,37 +1,35 @@
-<mvc:View
-	controllerName="com.knpl.pragati.Manage_FAQ.controller.Worklist"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
-
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false">
-
-		<semantic:titleHeading>
-			<Title
-				text="{i18n>worklistTitle}"
-				level="H2"/>
-		</semantic:titleHeading>
-
-		<semantic:content>
-			<Table
-				id="table"
-				width="auto"
-				items="{
-					path: '/MasterFAQSet',
-					sorter: {
-						path: 'Id',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
+<mvc:View controllerName="com.knpl.pragati.Manage_FAQ.controller.Worklist" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar">
+	<f:DynamicPage id="page">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>worklistTitle}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQCategoryId" groupTitle="Filters" label="{i18n>colFAQCategory}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+										<core:Item key="{Id}" text="{FAQCategory}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<Table id="table" width="auto"
+				items="{ path: '/MasterFAQSet', parameters : { expand : 'FAQCategory' }, filters : { path : 'IsArchived' , operator : 'EQ' , value1 : false }, sorter: { path: 'Id', descending: false } }"
+				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished=".onUpdateFinished">
-
 				<headerToolbar>
 					<OverflowToolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
@@ -48,12 +46,14 @@
 						</Button>
 					</OverflowToolbar>
 				</headerToolbar>
-
 				<columns>
-					<Column width="25%">
+                    <Column width="15%">
+						<Text text="{i18n>colFAQCategory}"/>
+					</Column>
+					<Column width="20%">
 						<Text text="{i18n>colQuestion}"/>
 					</Column>
-					<Column width="63%">
+					<Column width="53%">
 						<Text text="{i18n>colAnswer}"/>
 					</Column>
                     <Column width="5%">
@@ -63,25 +63,18 @@
 						<Text text="{i18n>colRemove}"/>
 					</Column>
 				</columns>
-
 				<items>
 					<ColumnListItem>
 						<cells>
-							<Text text="{FAQQuestion}"/>
-							<Text text="{FAQAnswer}"/>
+							<Text text="{FAQCategory/FAQCategory}"/>
+							<Text text="{Question}"/>
+							<Text text="{Answer}"/>
 							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
 							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
 						</cells>
 					</ColumnListItem>
 				</items>
 			</Table>
-		</semantic:content>
-
-		<!-- <semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-		</semantic:sendEmailAction> -->
-
-
-	</semantic:SemanticPage>
-
+		</f:content>
+	</f:DynamicPage>
 </mvc:View>

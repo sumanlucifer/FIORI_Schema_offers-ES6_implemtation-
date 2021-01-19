@@ -13,7 +13,7 @@
         "resources": "resources.json",
         "dataSources": {
             "mainService": {
-                "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
+                "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0",
@@ -88,9 +88,10 @@
                 "preload": true,
                 "settings": {
                     "defaultBindingMode": "TwoWay",
-                    "defaultCountMode": "Inline",
-                    "refreshAfterChange": false,
-                    "useBatch" : false
+                    "defaultCountMode": "None",
+                    "defaultUpdateMethod": "Put",
+                    "useBatch" : false,
+                    "defaultOperationMode": "Auto"
                 }
             }
         },
