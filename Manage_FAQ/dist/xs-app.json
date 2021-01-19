@@ -1,0 +1,19 @@
+{
+    "welcomeFile": "/index.html",
+    "authenticationMethod": "none",
+    "routes": [
+        {
+            "authenticationType": "xsuaa",
+            "source": "^/Knpl/(.*)$",
+            "target": "$1",
+            "destination": "Knpl",
+            "csrfProtection": false
+        },
+        {
+            "source": "^(.*)$",
+            "target": "$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "none"
+        }
+    ]
+}

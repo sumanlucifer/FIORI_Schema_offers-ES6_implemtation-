@@ -1,0 +1,501 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="1.0"
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+        <Schema Namespace="com.knpl.pragati.entity"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="UserModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Username" Type="Edm.String" Nullable="true"/>
+                <Property Name="FirstName" Type="Edm.String" Nullable="true"/>
+                <Property Name="LastName" Type="Edm.String" Nullable="true"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true"/>
+                <Property Name="Gender" Type="Edm.String" Nullable="true"/>
+                <Property Name="Age" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+                <NavigationProperty Name="Role" Relationship="com.knpl.pragati.entity.UserModel_2_r_Role" FromRole="UserModel" ToRole="r_Role"/>
+            </EntityType>
+            <EntityType Name="DealerModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Customer" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="FiscalYear" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="DealerName" Type="Edm.String" Nullable="true"/>
+                <Property Name="Plnt" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="DepotName" Type="Edm.String" Nullable="true"/>
+                <Property Name="SGrp" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="SalesGroupName" Type="Edm.String" Nullable="true"/>
+                <Property Name="CustomerClass" Type="Edm.String" Nullable="true"/>
+                <Property Name="CustomerCategory" Type="Edm.String" Nullable="true"/>
+                <Property Name="DNPLBaseSaleValue" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ActiveInactive" Type="Edm.String" Nullable="true"/>
+                <Property Name="NormalException" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="EmailAttachmentModel">
+                <Key>
+                    <PropertyRef Name="UUID"/>
+                </Key>
+                <Property Name="UUID" Type="Edm.String" Nullable="true"/>
+                <Property Name="AttachmentName" Type="Edm.String" Nullable="true"/>
+                <Property Name="AttachmentType" Type="Edm.String" Nullable="true"/>
+                <Property Name="Attachment" Type="Edm.String" Nullable="true"/>
+                <Property Name="TemplateId" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+                <NavigationProperty Name="Template" Relationship="com.knpl.pragati.entity.r_Attachments_2_r_Template" FromRole="r_Attachments" ToRole="r_Template"/>
+            </EntityType>
+            <EntityType Name="EmailTemplateModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="TemplateType" Type="Edm.String" Nullable="true"/>
+                <Property Name="TemplateSubject" Type="Edm.String" Nullable="true"/>
+                <Property Name="TemplateBody" Type="Edm.String" Nullable="true"/>
+                <Property Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="EventId" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+                <NavigationProperty Name="Attachments" Relationship="com.knpl.pragati.entity.r_Attachments_2_r_Template" FromRole="r_Template" ToRole="r_Attachments"/>
+            </EntityType>
+            <EntityType Name="MasterArcheTypeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ArcheType" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterBusinessCategoryModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="BusinessCategory" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterBusinessGroupModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="BusinessGroup" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterCallCenterModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Option" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterCityModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="City" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterComplaintTypeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ComplaintType" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterCountryModel" m:HasStream="true">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Country" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsoCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="DialCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterDepotModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Depot" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterDisclaimerModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Disclaimer" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterDivisionModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Division" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterExternalLinksModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Description" Type="Edm.String" Nullable="true"/>
+                <Property Name="Links" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterFAQModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="FAQQuestion" Type="Edm.String" Nullable="true"/>
+                <Property Name="FAQAnswer" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterKycTypeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="KycType" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterLanguageModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="LangCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="LanguageDescription" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterMaritialStatusModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="MaritialStatus" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterPincodeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Pincode" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterProductModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ProductName" Type="Edm.String" Nullable="true"/>
+                <Property Name="ProductSKU" Type="Edm.String" Nullable="true"/>
+                <Property Name="ProductCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="ProductCatalogue" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterReligionModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Religion" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterRoleModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Role" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterSchemeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Scheme" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterSlabModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="SlabLowerLimit" Type="Edm.String" Nullable="true"/>
+                <Property Name="SlabUpperLimit" Type="Edm.String" Nullable="true"/>
+                <Property Name="Level" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterStateModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="State" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="MasterTimezoneModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="ZoneName" Type="Edm.String" Nullable="true"/>
+                <Property Name="Offset" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+                <NavigationProperty Name="Country" Relationship="com.knpl.pragati.entity.MasterTimezoneModel_2_r_Country" FromRole="MasterTimezoneModel" ToRole="r_Country"/>
+            </EntityType>
+            <EntityType Name="MasterTrainingTypeModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="TrainingType" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="ODataEntityModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Status" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Count" Type="Edm.Int32" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="PainterModel">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Name" Type="Edm.String" Nullable="true"/>
+                <Property Name="Username" Type="Edm.String" Nullable="true"/>
+                <Property Name="Password" Type="Edm.String" Nullable="true"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true"/>
+                <Property Name="MobileNo" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Role" Type="Edm.String" Nullable="true"/>
+                <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <Association Name="r_Attachments_2_r_Template">
+                <End Type="com.knpl.pragati.entity.EmailAttachmentModel" Multiplicity="*" Role="r_Attachments"/>
+                <End Type="com.knpl.pragati.entity.EmailTemplateModel" Multiplicity="0..1" Role="r_Template"/>
+            </Association>
+            <Association Name="UserModel_2_r_Role">
+                <End Type="com.knpl.pragati.entity.UserModel" Multiplicity="1" Role="UserModel"/>
+                <End Type="com.knpl.pragati.entity.MasterRoleModel" Multiplicity="0..1" Role="r_Role"/>
+            </Association>
+            <Association Name="MasterTimezoneModel_2_r_Country">
+                <End Type="com.knpl.pragati.entity.MasterTimezoneModel" Multiplicity="1" Role="MasterTimezoneModel"/>
+                <End Type="com.knpl.pragati.entity.MasterCountryModel" Multiplicity="0..1" Role="r_Country"/>
+            </Association>
+            <EntityContainer Name="DefaultContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="UserSet" EntityType="com.knpl.pragati.entity.UserModel"/>
+                <EntitySet Name="DealerSet" EntityType="com.knpl.pragati.entity.DealerModel"/>
+                <EntitySet Name="EmailAttachmentSet" EntityType="com.knpl.pragati.entity.EmailAttachmentModel"/>
+                <EntitySet Name="EmailTemplateSet" EntityType="com.knpl.pragati.entity.EmailTemplateModel"/>
+                <EntitySet Name="MasterArcheTypeSet" EntityType="com.knpl.pragati.entity.MasterArcheTypeModel"/>
+                <EntitySet Name="MasterBusinessCategorySet" EntityType="com.knpl.pragati.entity.MasterBusinessCategoryModel"/>
+                <EntitySet Name="MasterBusinessGroupSet" EntityType="com.knpl.pragati.entity.MasterBusinessGroupModel"/>
+                <EntitySet Name="MasterCallCenterSet" EntityType="com.knpl.pragati.entity.MasterCallCenterModel"/>
+                <EntitySet Name="MasterCitySet" EntityType="com.knpl.pragati.entity.MasterCityModel"/>
+                <EntitySet Name="MasterComplaintTypeSet" EntityType="com.knpl.pragati.entity.MasterComplaintTypeModel"/>
+                <EntitySet Name="MasterCountrySet" EntityType="com.knpl.pragati.entity.MasterCountryModel"/>
+                <EntitySet Name="MasterDepotSet" EntityType="com.knpl.pragati.entity.MasterDepotModel"/>
+                <EntitySet Name="MasterDisclaimerSet" EntityType="com.knpl.pragati.entity.MasterDisclaimerModel"/>
+                <EntitySet Name="MasterDivisionSet" EntityType="com.knpl.pragati.entity.MasterDivisionModel"/>
+                <EntitySet Name="MasterExternalLinksSet" EntityType="com.knpl.pragati.entity.MasterExternalLinksModel"/>
+                <EntitySet Name="MasterFAQSet" EntityType="com.knpl.pragati.entity.MasterFAQModel"/>
+                <EntitySet Name="MasterKycTypeSet" EntityType="com.knpl.pragati.entity.MasterKycTypeModel"/>
+                <EntitySet Name="MasterLanguageSet" EntityType="com.knpl.pragati.entity.MasterLanguageModel"/>
+                <EntitySet Name="MasterMaritialStatusSet" EntityType="com.knpl.pragati.entity.MasterMaritialStatusModel"/>
+                <EntitySet Name="MasterPincodeSet" EntityType="com.knpl.pragati.entity.MasterPincodeModel"/>
+                <EntitySet Name="MasterProductSet" EntityType="com.knpl.pragati.entity.MasterProductModel"/>
+                <EntitySet Name="MasterReligionSet" EntityType="com.knpl.pragati.entity.MasterReligionModel"/>
+                <EntitySet Name="MasterRoleSet" EntityType="com.knpl.pragati.entity.MasterRoleModel"/>
+                <EntitySet Name="MasterSchemeSet" EntityType="com.knpl.pragati.entity.MasterSchemeModel"/>
+                <EntitySet Name="MasterSlabSet" EntityType="com.knpl.pragati.entity.MasterSlabModel"/>
+                <EntitySet Name="MasterStateSet" EntityType="com.knpl.pragati.entity.MasterStateModel"/>
+                <EntitySet Name="MasterTimezoneSet" EntityType="com.knpl.pragati.entity.MasterTimezoneModel"/>
+                <EntitySet Name="MasterTrainingTypeSet" EntityType="com.knpl.pragati.entity.MasterTrainingTypeModel"/>
+                <EntitySet Name="ODataEntitySet" EntityType="com.knpl.pragati.entity.ODataEntityModel"/>
+                <EntitySet Name="PainterSet" EntityType="com.knpl.pragati.entity.PainterModel"/>
+                <AssociationSet Name="r_Attachments_2_r_Template" Association="com.knpl.pragati.entity.r_Attachments_2_r_Template">
+                    <End EntitySet="EmailAttachmentSet" Role="r_Attachments"/>
+                    <End EntitySet="EmailTemplateSet" Role="r_Template"/>
+                </AssociationSet>
+                <AssociationSet Name="UserModel_2_r_Role" Association="com.knpl.pragati.entity.UserModel_2_r_Role">
+                    <End EntitySet="UserSet" Role="UserModel"/>
+                    <End EntitySet="MasterRoleSet" Role="r_Role"/>
+                </AssociationSet>
+                <AssociationSet Name="MasterTimezoneModel_2_r_Country" Association="com.knpl.pragati.entity.MasterTimezoneModel_2_r_Country">
+                    <End EntitySet="MasterTimezoneSet" Role="MasterTimezoneModel"/>
+                    <End EntitySet="MasterCountrySet" Role="r_Country"/>
+                </AssociationSet>
+                <FunctionImport Name="GetLoggedInUser" ReturnType="Collection(com.knpl.pragati.entity.UserModel)" EntitySet="UserSet" m:HttpMethod="GET">
+                    <Parameter Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+                </FunctionImport>
+                <FunctionImport Name="GetLoggedInPainter" ReturnType="Collection(com.knpl.pragati.entity.PainterModel)" EntitySet="PainterSet" m:HttpMethod="GET">
+                    <Parameter Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+                </FunctionImport>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

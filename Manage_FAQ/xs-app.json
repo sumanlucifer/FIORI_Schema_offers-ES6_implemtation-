@@ -1,0 +1,20 @@
+{
+    "welcomeFile": "/index.html",
+    "authenticationMethod": "route",
+    "routes": [
+        {
+            "authenticationType": "xsuaa",
+            "source": "^/KNPL_PAINTER_API/(.*)$",
+            "target": "$1",
+            "service": "destination-knpl-pragati",
+            "endpoint" : "/",
+            "csrfProtection": false
+        },
+        {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "none"
+    }
+    ]
+}

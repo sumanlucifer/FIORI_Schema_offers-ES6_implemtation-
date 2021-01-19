@@ -5,19 +5,16 @@ modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
-  parameters:
-      keep-existing-routes: true
-      buildpack: nodejs_buildpack
-      disk-quota: 256M
-      memory: 256M
-      routes:
-        - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   properties:
-      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  parameters: 
+    routes:
+      - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   requires:
     - name: uaa_knpl-influencer-web
     - name: knpl-influencer-web_html_repo_runtime
     - name: knpl-portal-saas-registry
+    - name: destination-knpl-pragati
     - name: portal_resources_knpl-influencer-web
       group: destinations
       properties:
@@ -46,6 +43,10 @@ modules:
       - OrgModule-content.zip
       name: OrgModule
       target-path: resources/
+    - artifacts:
+      - Manage_FAQ-content.zip
+      name: Manage_FAQ
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -73,9 +74,6 @@ modules:
 - name: launchpad
   type: com.sap.application.content
   path: launchpad
-  parameters:
-      config:
-        TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
   requires:
   - name: portal_resources_knpl-influencer-web
     parameters:
@@ -88,6 +86,17 @@ modules:
   - name: knpl-influencer-web_ui_deployer
   - name: uaa_knpl-influencer-web
   - name: knpl-portal-saas-registry
+  parameters:
+    config:
+      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+- name: Manage_FAQ
+  type: html5
+  path: Manage_FAQ
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
@@ -111,21 +120,25 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-# SaaS Provisioning - Service for application providers to register multitenant applications and services
+- name: destination-knpl-pragati
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service-plan: lite
+    service: destination    
 - name: knpl-portal-saas-registry
   type: org.cloudfoundry.managed-service
   parameters:
-    service: saas-registry
-    service-plan: application
     config:
-      xsappname: knpl-influencer-web
+      appName: KNPL_Portal
       appUrls:
-          onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
-          getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
+        getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
+        onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
       category: knplportalapps
       description: KNPL Portal application
       displayName: KNPL_Portal
-      appName: KNPL_Portal
+      xsappname: knpl-influencer-web
+    service: saas-registry
+    service-plan: application
 build-parameters:
   before-all:
   - builder: custom

@@ -1,0 +1,87 @@
+<mvc:View
+	controllerName="com.knpl.pragati.Manage_FAQ.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+		</semantic:titleHeading>
+
+		<semantic:content>
+			<Table
+				id="table"
+				width="auto"
+				items="{
+					path: '/MasterFAQSet',
+					sorter: {
+						path: 'Id',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
+						<ToolbarSpacer/>
+						<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+							<layoutData>
+								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+							</layoutData>
+						</Button>
+						<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+							<layoutData>
+								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+							</layoutData>
+						</Button>
+					</OverflowToolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column width="25%">
+						<Text text="{i18n>colQuestion}"/>
+					</Column>
+					<Column width="63%">
+						<Text text="{i18n>colAnswer}"/>
+					</Column>
+                    <Column width="5%">
+						<Text text="{i18n>colEdit}"/>
+					</Column>
+					<Column width="7%">
+						<Text text="{i18n>colRemove}"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{FAQQuestion}"/>
+							<Text text="{FAQAnswer}"/>
+							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
+							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<!-- <semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction> -->
+
+
+	</semantic:SemanticPage>
+
+</mvc:View>
