@@ -88,9 +88,10 @@
                 "preload": true,
                 "settings": {
                     "defaultBindingMode": "TwoWay",
-                    "defaultCountMode": "Inline",
-                    "refreshAfterChange": false,
-                    "useBatch": false
+                    "defaultCountMode": "None",
+                    "defaultUpdateMethod": "Put",
+                    "useBatch": false,
+                    "defaultOperationMode": "Auto"
                 }
             }
         },

@@ -5,12 +5,15 @@
 *.env1
 *.zip
 .vscode/
+
+*/dist/
+
 # auto generated wildcard
 Manage_FAQ/.env
 # auto generated wildcard
 OrgModule/.env
 # auto generated wildcard
 Manage_FAQ/.env6
-/dist/
+
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env

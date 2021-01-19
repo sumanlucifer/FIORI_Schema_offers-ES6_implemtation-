@@ -65,7 +65,7 @@ sap.ui.define([
 		 * @public
 		 */
         onUpdateFinished: function (oEvent) {
-            // update the worklist's object counter after the table update
+            // // update the worklist's object counter after the table update
             var sTitle,
                 oTable = oEvent.getSource(),
                 iTotalItems = oEvent.getParameter("total");
@@ -77,23 +77,54 @@ sap.ui.define([
                 sTitle = this.getResourceBundle().getText("worklistTableTitle");
             }
             this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
+
+            // update the worklist's object counter after the table update
+            // var sTitle,
+            //     aFilters,
+            //     that = this,
+            //     FAQCategoryId = this.getModel("worklistView").getProperty("/FAQCategoryId");
+
+            // if (FAQCategoryId) {
+            //     aFilters = new sap.ui.model.Filter({
+            //         filters: [
+            //             new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+            //             new sap.ui.model.Filter('FAQCategoryId', sap.ui.model.FilterOperator.EQ, FAQCategoryId)
+            //         ],
+            //         and: true
+            //     });
+            // } else {
+            //     aFilters = new sap.ui.model.Filter({
+            //         filters: [
+            //             new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false)
+            //         ]
+            //     });
+            // }
+
+            // this.getModel().read("/MasterFAQSet/$count", {
+            //     filters: [aFilters],
+            //     async: true,
+            //     success: function (counter) {
+            //         sTitle = that.getResourceBundle().getText("worklistTableTitleCount", [counter]);
+            //         that.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
+            //     }
+            // })
         },
 
-		/**
-		 * Event handler when a table item gets pressed
-		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
-		 * @public
-		 */
+        /**
+         * Event handler when a table item gets pressed
+         * @param {sap.ui.base.Event} oEvent the table selectionChange event
+         * @public
+         */
         onPress: function (oEvent) {
             // The source is the list item that got pressed
             this._showObject(oEvent.getSource());
         },
 
-		/**
-		 * Event handler for navigating back.
-		 * We navigate back in the browser history
-		 * @public
-		 */
+        /**
+         * Event handler for navigating back.
+         * We navigate back in the browser history
+         * @public
+         */
         onNavBack: function () {
             // eslint-disable-next-line sap-no-history-manipulation
             history.go(-1);
@@ -101,27 +132,53 @@ sap.ui.define([
 
 
         onSearch: function (oEvent) {
-            if (oEvent.getParameters().refreshButtonPressed) {
-                // Search field's 'refresh' button has been pressed.
-                // This is visible if you select any master list item.
-                // In this case no new search is triggered, we only
-                // refresh the list binding.
-                this.onRefresh();
-            } else {
-                var aTableSearchState = [];
-                var sQuery = oEvent.getParameter("query");
+            // if (oEvent.getParameters().refreshButtonPressed) {
+            //     // Search field's 'refresh' button has been pressed.
+            //     // This is visible if you select any master list item.
+            //     // In this case no new search is triggered, we only
+            //     // refresh the list binding.
+            //     this.onRefresh();
+            // } else {
+            //     var aTableSearchState = [];
+            //     var sQuery = oEvent.getParameter("query");
 
-                if (sQuery && sQuery.length > 0) {
-                    aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
+            //     if (sQuery && sQuery.length > 0) {
+            //         aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
+            //     }
+            //     this._applySearch(aTableSearchState);
+            // }
+
+            var aFilters = this.getFiltersfromFB(),
+                oTable = this.getView().byId("table");
+            oTable.getBinding("items").filter(aFilters);
+            if (aFilters.length !== 0) {
+                if (aFilters[0].sPath === "FAQCategoryId") {
+                    this.getModel("worklistView").setProperty("/FAQCategoryId", aFilters[0].oValue1);
+                } else {
+                    this.getModel("worklistView").setProperty("/FAQCategoryId", null);
                 }
-                this._applySearch(aTableSearchState);
-            }
 
+                this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+            } else {
+                this.getModel("worklistView").setProperty("/FAQCategoryId", null);
+            }
+        },
+
+        getFiltersfromFB: function () {
+            var oFBCtrl = this.getView().byId("filterbar"),
+                aFilters = [];
+
+            oFBCtrl.getAllFilterItems().forEach(function (ele) {
+                if (ele.getControl().getSelectedKey()) {
+                    aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, ele.getControl().getSelectedKey()));
+                }
+            });
+            return aFilters;
         },
 
         /**
-		 * When Click on Add button
-		 */
+         * When Click on Add button
+         */
         onAdd: function (oEvent) {
             this.getRouter().navTo("createObject");
         },
@@ -151,11 +208,11 @@ sap.ui.define([
             this.showWarning("MSG_CONFIRM_DELETE", onYes);
         },
 
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
+        /**
+         * Event handler for refresh event. Keeps filter, sort
+         * and group settings and refreshes the list binding.
+         * @public
+         */
         onRefresh: function () {
             var oTable = this.byId("table");
             oTable.getBinding("items").refresh();
@@ -165,23 +222,23 @@ sap.ui.define([
         /* internal methods                                            */
         /* =========================================================== */
 
-		/**
-		 * Shows the selected item on the object page
-		 * On phones a additional history entry is created
-		 * @param {sap.m.ObjectListItem} oItem selected Item
-		 * @private
-		 */
+        /**
+         * Shows the selected item on the object page
+         * On phones a additional history entry is created
+         * @param {sap.m.ObjectListItem} oItem selected Item
+         * @private
+         */
         _showObject: function (oItem) {
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")
             });
         },
 
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-		 * @private
-		 */
+        /**
+         * Internal helper method to apply both filter and search state together on the list binding
+         * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
+         * @private
+         */
         _applySearch: function (aTableSearchState) {
             var oTable = this.byId("table"),
                 oViewModel = this.getModel("worklistView");
