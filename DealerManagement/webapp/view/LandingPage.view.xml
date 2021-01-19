@@ -7,16 +7,19 @@
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <content>
 
-                        <Table id="table" width="auto" items="{path: 'KNPLModel>/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true">
+                        <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
-                                    <Title text="{i18n>tableTitle}" level="H3"/>
+                                    <Title text="{worklistViewModel>/worklistTableTitle}" level="H3"/>
                                     <ToolbarSpacer />
                                     <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
                                         <layoutData>
                                             <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                         </layoutData>
                                     </SearchField>
+                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                    <Button text="Add Dealer" type="Emphasized"/>
                                 </OverflowToolbar>
                             </headerToolbar>
 
@@ -42,6 +45,7 @@
                                 </ColumnListItem>
                             </items>
                         </Table>
+                        
                     </content>
                 </Page>
             </pages>
