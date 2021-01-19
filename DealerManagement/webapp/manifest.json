@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "KNPL_DS": {
-                "uri": "/Knpl/api/v2/odata.svc/",
+                "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
                 "type": "OData",
                 "settings": {
                     "localUri": "localService/metadata.xml"
@@ -75,7 +75,9 @@
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "TwoWay",
-                    "defaultCountMode": "Request"
+                    "defaultCountMode": "Request",
+                    "useBatch" : false
+
 				},
 				"dataSource": "KNPL_DS",
 				"preload": true
