@@ -10,16 +10,16 @@
                         <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
-                                    <Title text="{worklistViewModel>/worklistTableTitle}" level="H3"/>
+                                    <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
                                     <ToolbarSpacer />
-                                    <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
+                                    <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}"> 
                                         <layoutData>
                                             <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                         </layoutData>
                                     </SearchField>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
-                                    <Button text="Add Dealer" type="Emphasized"/>
+                                    <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/>
                                 </OverflowToolbar>
                             </headerToolbar>
 
@@ -31,6 +31,9 @@
                                     <Text text="{i18n>email}"/>
                                 </Column>
                                 <Column>
+                                    <Text text="{i18n>DialCode}"/>
+                                </Column>
+                                 <Column>
                                     <Text text="{i18n>mobile}"/>
                                 </Column>
                             </columns>
@@ -38,8 +41,9 @@
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
                                     <cells>
-                                        <ObjectIdentifier title="{KNPLModel>Name}"/>
+                                        <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
                                         <Text text="{KNPLModel>Email}"/>
+                                         <Text text="{KNPLModel>DialCode}"/>
                                         <Text text="{KNPLModel>Mobile}"/>
                                     </cells>
                                 </ColumnListItem>
