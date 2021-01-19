@@ -128,8 +128,9 @@ sap.ui.define([
                 return;
             }
             oViewModel.setProperty("/oDetails", {
-                FAQQuestion: "",
-                FAQAnswer: ""
+                FAQCategoryId: null,
+                Question: "",
+                Answer: ""
             });
         },
 
@@ -186,22 +187,30 @@ sap.ui.define([
             },
                 aCtrlMessage = [];
 
-            if (!data.FAQQuestion) {
+            if (!data.FAQCategoryId) {
                 oReturn.IsNotValid = true;
-                oReturn.sMsg.push("MSG_VALDTN_ERR_QUESTION");
+                oReturn.sMsg.push("MSG_VALDTN_ERR_FAQCATEGORYID");
                 aCtrlMessage.push({
-                    message: "MSG_VALDTN_ERR_QUESTION",
-                    target: "/oDetails/FAQQuestion"
+                    message: "MSG_VALDTN_ERR_FAQCATEGORYID",
+                    target: "/oDetails/FAQCategoryId"
                 });
             } else
-                if (!data.FAQAnswer) {
+                if (!data.Question) {
                     oReturn.IsNotValid = true;
-                    oReturn.sMsg.push("MSG_VALDTN_ERR_ANSWER");
+                    oReturn.sMsg.push("MSG_VALDTN_ERR_QUESTION");
                     aCtrlMessage.push({
-                        message: "MSG_VALDTN_ERR_ANSWER",
-                        target: "/oDetails/FAQAnswer"
+                        message: "MSG_VALDTN_ERR_QUESTION",
+                        target: "/oDetails/Question"
                     });
-                }
+                } else
+                    if (!data.Answer) {
+                        oReturn.IsNotValid = true;
+                        oReturn.sMsg.push("MSG_VALDTN_ERR_ANSWER");
+                        aCtrlMessage.push({
+                            message: "MSG_VALDTN_ERR_ANSWER",
+                            target: "/oDetails/Answer"
+                        });
+                    }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
             return oReturn;

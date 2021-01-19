@@ -1,12 +1,12 @@
 {
     "welcomeFile": "/index.html",
-    "authenticationMethod": "none",
+    "authenticationMethod": "route",
     "routes": [
         {
-            "authenticationType": "xsuaa",
-            "source": "^/Knpl/(.*)$",
+            "authenticationType": "none",
+            "source": "^/KNPL_PAINTER_API/(.*)$",
             "target": "$1",
-            "destination": "Knpl",
+            "destination": "KNPL_PAINTER_API",
             "csrfProtection": false
         },
         {
