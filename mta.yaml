@@ -5,6 +5,13 @@ modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
+  parameters:
+      keep-existing-routes: true
+      buildpack: nodejs_buildpack
+      disk-quota: 256M
+      memory: 256M
+      routes:
+        - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   properties:
     TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
   parameters: 
@@ -79,8 +86,8 @@ modules:
     parameters:
       content-target: true
       service-key:
-        config:
-          content-endpoint: developer
+        config: null
+        content-endpoint: developer
         name: content-deploy-key
   - name: knpl-influencer-web_html_repo_host
   - name: knpl-influencer-web_ui_deployer
@@ -120,11 +127,14 @@ resources:
   parameters:
     service: portal
     service-plan: standard
+<<<<<<< HEAD
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
     service-plan: lite
     service: destination    
+=======
+>>>>>>> 4ef0f4499c52801f502de355b15449e125936f8a
 - name: knpl-portal-saas-registry
   type: org.cloudfoundry.managed-service
   parameters:
@@ -139,6 +149,11 @@ resources:
       xsappname: knpl-influencer-web
     service: saas-registry
     service-plan: application
+- name: destination-knpl-pragati
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service-plan: lite
+    service: destination    
 build-parameters:
   before-all:
   - builder: custom

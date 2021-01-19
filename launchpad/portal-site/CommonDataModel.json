@@ -35,8 +35,8 @@
 				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
-				}, {
-					"id": "com.knpl.pragati.Manage_FAQ-3-1610951178934",
+                },
+             {
 					"appId": "com.knpl.pragati.Manage_FAQ",
 					"vizId": "Manage-FAQ"
 				}]

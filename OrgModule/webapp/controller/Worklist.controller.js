@@ -3,8 +3,10 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.OrgModule.controller.Worklist", {
@@ -127,7 +129,43 @@ sap.ui.define([
 		onRefresh : function () {
 			var oTable = this.byId("table");
 			oTable.getBinding("items").refresh();
-		},
+        },
+        
+        onEdit: function (oEvent) {
+            this._showObject(oEvent.getSource());
+
+            // var oRouter = this.getOwnerComponent().getRouter();
+            // var sPath = oEvent.getSource().getBindingContext("tableData").getPath().split("/");
+            // var sParam = sPath[1];
+            // oRouter.navTo("RouteEditTable", {
+            //     type: sParam,
+            //     id: sPath[2]
+            // });
+        },
+
+        onDelete: function (oEvent) {
+            var othat = this;
+            var oView = this.getView();
+            var sPath = oEvent.getSource().getBindingContext("tableData").getPath();
+            var arryPath = sPath.split("/");
+            var sIndex = parseInt(arryPath[arryPath.length - 1]);
+            var oModel = oView.getModel("tableData");
+
+            var oProperty = oModel.getProperty(sPath.substring(0, sPath.lastIndexOf("/")));
+            console.log(oProperty);
+            MessageBox.confirm("Kindly confirm to remove.", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+
+                onClose: function (sAction) {
+                    if (sAction == "OK") {
+                        oProperty.splice(sIndex, 1);
+                        MessageToast.show("Data Sucessfully Deleted.");
+                    }
+                    oModel.refresh();
+                }
+            });
+        },
+
 
 		/* =========================================================== */
 		/* internal methods                                            */
