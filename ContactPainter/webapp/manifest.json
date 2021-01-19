@@ -31,7 +31,7 @@
                     "icon": "sap-icon://account"
                 }
             }
-    }
+        }
   },
   "sap.fiori": {
     "registrationIds": [],
