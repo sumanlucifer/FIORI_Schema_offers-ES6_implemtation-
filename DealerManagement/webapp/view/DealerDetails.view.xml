@@ -2,9 +2,9 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:uxap="sap.uxap"
     xmlns:layout="sap.ui.layout"
-    xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%" displayBlock="true">
+    xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%" >
     <Shell id="shell">
-        <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+        <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="false" toggleHeaderOnTitleClick="false">
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
