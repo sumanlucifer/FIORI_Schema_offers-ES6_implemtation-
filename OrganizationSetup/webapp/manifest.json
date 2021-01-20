@@ -122,7 +122,17 @@
 				"name": "AddUser",
 				"pattern": "AddUser",
 				"target": ["TargetAddUser"]
-			}],
+            },
+            {
+				"name": "AddRole",
+				"pattern": "AddRole",
+				"target": ["TargetAddRole"]
+            },
+            {
+            "pattern": "EditUser/{userId}",
+            "name": "EditUser",
+            "target": "TargetEditUser"
+		    }],
 			"targets": {
 				"TargetHome": {
 					"viewType": "XML",
@@ -137,6 +147,20 @@
 					"clearControlAggregation": false,
 					"viewId": "AddUser",
 					"viewName": "AddUser"
+                },
+                "TargetAddRole": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "AddRole",
+					"viewName": "AddRole"
+                },
+                "TargetEditUser": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "EditUser",
+					"viewName": "EditUser"
 				}
 			}
 		}

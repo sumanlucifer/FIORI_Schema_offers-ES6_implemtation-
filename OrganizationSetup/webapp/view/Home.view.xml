@@ -10,11 +10,11 @@
 		class="sapUiResponsiveContentPadding">
 		<items>
 			<IconTabFilter text="Users" key="users">
-				<Table inset="false" items="{path: 'data>/AdminSet'}">
+				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet'}">
                             <headerToolbar>
                                 <Toolbar class="tblTlbrAd">
                                     <ToolbarSpacer></ToolbarSpacer>
-                                    <SearchField width="20%" />
+                                    <SearchField id ="searchField" search=".onFilterInvoices" width="20%" />
                                     <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
                                 </Toolbar>
@@ -46,7 +46,7 @@
                                     <cells>
 
 
-                                        <Text text="{data>Id}"/>
+                                        <Text id="userId" text="{data>Id}"/>
                                         <Text text="{data>Name}"/>
                                         <Text text="{data>Mobile}"/>
                                         <Text text="{data>Email}"/>
@@ -67,7 +67,7 @@
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField width="20%" />
                                     <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddRole"/>
                                 </Toolbar>
                             </headerToolbar>
                             <columns>

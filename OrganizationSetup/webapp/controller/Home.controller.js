@@ -1,24 +1,67 @@
 sap.ui.define([
-		"sap/ui/core/mvc/Controller"
-	],
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/Sorter",
+    "sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"sap/ui/model/FilterType"
+],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-	function (Controller) {
-		"use strict";
+    function (Controller,Sorter, Filter, FilterOperator, FilterType,) {
+        "use strict";
 
-		return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
-			onInit: function () {
+        return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
+            onInit: function () {
 
             },
+            onFilterInvoices : function (oEvent) {
+ 
+			// build filter array
+			var aFilter = [];
+			var sQuery = oEvent.getParameter("query");
+			if (sQuery) {
+				aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
+			}
+ 
+			// filter binding
+			var oList = this.getView().byId("tableUsers");
+			var oBinding = oList.getBinding("items");
+			oBinding.filter(aFilter);
+		},
             onPressAdd: function () {
-                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                
+                oRouter.navTo("AddUser");
+
+            },
+            onPressAddRole: function () {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 // var selectedProductId = oEvent.getSource().getBindingContext().getProperty("ProductID");
                 // oRouter.navTo("detail", {
                 //     productId: selectedProductId
                 // });
-                oRouter.navTo("AddUser");
-                
+                oRouter.navTo("AddRole");
+
+            },
+            onPressEdit: function (oEvent) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                //var selectedUserId = oEvent.getSource().getBindingContext("data").getPath();
+                var oItem = oEvent.getSource();
+                oRouter.navTo("EditUser", {
+                    userId: window.encodeURIComponent(oItem.getBindingContext("data").getPath().substr(1))
+                });
+                //console.log(selectedUserId);
+            },
+            onPressRemove: function (oEvent) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                var oItem = oEvent.getSource();
+                var removeSet = window.encodeURIComponent(oItem.getBindingContext("data").getPath().substr(1));
+                console.log(removeSet);
+                var oModel = this.getView().getModel("data");
+                oModel.remove(removeSet);
+
             }
-		});
-	});
+        });
+    });

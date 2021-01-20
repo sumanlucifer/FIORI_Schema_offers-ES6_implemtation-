@@ -1,0 +1,28 @@
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.AddRole" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout">
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<Label text="Role" labelFor="role" design="Bold" />
+		<Input id="role" required="true" />
+
+		<Label text="Description" labelFor="description" design="Bold" />
+		<Input id="description" required="true" />
+
+        <!-- <Label text="DialCode" labelFor="dialcode" design="Bold" />
+		<Input id="dialcode" required="true" />
+
+         <Label text="Mobile" labelFor="mobile" design="Bold" />
+		<Input id="mobile" required="true" />
+
+         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
+		<Input id="countrycode" required="true" /> -->
+
+        <Button text="Add"
+						press="add"
+						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+               
+                
+                 
+	</l:VerticalLayout>
+</mvc:View>
