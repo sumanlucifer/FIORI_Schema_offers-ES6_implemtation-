@@ -2,14 +2,15 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:uxap="sap.uxap"
     xmlns:layout="sap.ui.layout"
-    xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%" >
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%">
     <Shell id="shell">
         <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="false" toggleHeaderOnTitleClick="false">
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
                         <Breadcrumbs id="breadcrumbsId" currentLocationText="Dealer Details">
-                            <Link text="All Dealers" press="handleLink1Press"/>
+                            <Link text="All Dealers" press="handleAllDealerLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
 
@@ -130,7 +131,10 @@
                                     </columns>
 
                                     <items>
-                                        <ColumnListItem>
+                                        <ColumnListItem type="Active" press="onListItemPress">
+                                            <dependents>
+                                                <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.detailPageFragments.ActionSheet" type="XML" />
+                                            </dependents>
                                             <cells>
                                                 <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
                                                 <Text text="{KNPLModel>RelationshipId}"/>

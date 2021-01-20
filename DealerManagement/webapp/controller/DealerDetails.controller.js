@@ -168,6 +168,15 @@ sap.ui.define([
 
                 // apply filter settings
                 oBinding.filter(aFilters);
+            },
+
+            onDetailPress: function (oEvent) {
+                var oButton = oEvent.getSource();
+                this.byId("actionSheet").openBy(oButton);
+            },
+
+            handleAllDealerLinkPress: function(oEvent){
+                this.oRouter.navTo("RouteLandingPage");
             }
 
         });

@@ -184,6 +184,11 @@ sap.ui.define([
                 //this.presentBusyDialog();
             },
 
+             onDetailPress: function (oEvent) {
+                var oButton = oEvent.getSource();
+                this.byId("actionSheet").openBy(oButton);
+            }
+
 
 
         });
