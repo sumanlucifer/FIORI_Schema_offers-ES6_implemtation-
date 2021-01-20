@@ -15,8 +15,8 @@
 
                     <uxap:expandedHeading>
                         <FlexBox direction="Row">
-                            <Title text="Dealer Name" class="sapUiTinyMarginEnd"/>
-                            <Text text="Dealer Id"/>
+                            <Title text="{KNPLModel>Name}" class="sapUiTinyMarginEnd"/>
+                            <Text text="{KNPLModel>Id}"/>
                         </FlexBox>
                     </uxap:expandedHeading>
 
@@ -24,15 +24,15 @@
                         <FlexBox fitContainer="true" alignItems="Center">
                             <Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
                             <FlexBox direction="Column">
-                                <Title text="Dealer Name" wrapping="true"/>
-                                <Text text="Dealer Id"/>
+                                <Title text="{KNPLModel>Name}" wrapping="true"/>
+                                <Text text="{KNPLModel>Id}"/>
                             </FlexBox>
 
                         </FlexBox>
                     </uxap:snappedHeading>
 
                     <uxap:snappedTitleOnMobile>
-                        <Title text="Dealer Name"/>
+                        <Title text="{KNPLModel>Name}"/>
                     </uxap:snappedTitleOnMobile>
 
                     <uxap:actions>
@@ -48,45 +48,45 @@
 
                     <Avatar class="sapUiSmallMarginEnd" displaySize="L" displayShape="Square"/>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Center" justifyContent="SpaceBetween" direction="Column">
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
                         <items>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="Username&#160;&#160;" />
+                                <Text text="{KNPLModel>Username}"/>
                             </HBox>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="Password&#160;&#160;" />
+                                <Text text="{KNPLModel>Password}"/>
                             </HBox>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="Email&#160;&#160;" />
+                                <Text text="{KNPLModel>Email}"/>
                             </HBox>
                         </items>
                     </FlexBox>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Center" justifyContent="SpaceBetween" direction="Column">
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
                         <items>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="DialCode&#160;&#160;" />
+                                <Text text="{KNPLModel>DialCode}"/>
                             </HBox>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="Mobile&#160;&#160;" />
+                                <Text text="{KNPLModel>Mobile}"/>
                             </HBox>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="CreatedAt&#160;&#160;" />
+                                <Text text="{KNPLModel>CreatedAt}"/>
                             </HBox>
                         </items>
                     </FlexBox>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Center" justifyContent="SpaceBetween" direction="Column">
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
                         <items>
                             <HBox>
-                                <Label text="Field&#160;&#160;" />
-                                <Text text="Value"/>
+                                <Label text="UpdatedBy&#160;&#160;" />
+                                <Text text="{KNPLModel>UpdatedBy}"/>
                             </HBox>
                         </items>
                     </FlexBox>
@@ -98,7 +98,7 @@
                     <uxap:subSections>
                         <uxap:ObjectPageSubSection>
                             <VBox>
-                                <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>PainterFamily'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <!-- <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/> -->
@@ -119,10 +119,10 @@
                                             <Text text="{i18n>name}"/>
                                         </Column>
                                         <Column>
-                                            <Text text="{i18n>email}"/>
+                                            <Text text="RelationshipId"/>
                                         </Column>
                                         <Column>
-                                            <Text text="{i18n>DialCode}"/>
+                                            <Text text="IsArchived"/>
                                         </Column>
                                         <Column>
                                             <Text text="{i18n>mobile}"/>
@@ -133,8 +133,8 @@
                                         <ColumnListItem type="Navigation" press="onListItemPress">
                                             <cells>
                                                 <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
-                                                <Text text="{KNPLModel>Email}"/>
-                                                <Text text="{KNPLModel>DialCode}"/>
+                                                <Text text="{KNPLModel>RelationshipId}"/>
+                                                <Text text="{KNPLModel>IsArchived}"/>
                                                 <Text text="{KNPLModel>Mobile}"/>
                                             </cells>
                                         </ColumnListItem>
