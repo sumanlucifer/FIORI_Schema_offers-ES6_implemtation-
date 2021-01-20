@@ -1,0 +1,15 @@
+<mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App>
+            <pages>
+                <Page id="page" title="{i18n>title}" showHeader="false">
+                    <content>
+                        
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

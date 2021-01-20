@@ -15,8 +15,7 @@
 			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
 			"version": "1.40.12"
         },
-        
-    "crossNavigation": {
+        "crossNavigation": {
             "inbounds": {
                 "intent1": {
                     "signature": {
@@ -25,14 +24,14 @@
                     },
                     "semanticObject": "Manage",
                     "action": "DLR",
-                    "title": "{{appTitle}}",
-                    "subTitle": "{{appSubTitle}}"
+                    "title": "{{appTitle1}}",
+                    "subTitle": "{{appSubTitle1}}"
                 }
             }
-    },
+        },
         "dataSources": {
             "KNPL_DS": {
-                "uri": "/Knpl/api/v2/odata.svc/",
+                "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
                 "type": "OData",
                 "settings": {
                     "localUri": "localService/metadata.xml"
@@ -90,7 +89,9 @@
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "TwoWay",
-                    "defaultCountMode": "Request"
+                    "defaultCountMode": "Request",
+                    "useBatch" : false
+
 				},
 				"dataSource": "KNPL_DS",
 				"preload": true
@@ -113,16 +114,25 @@
 			},
 			"routes": [{
 				"name": "RouteLandingPage",
-				"pattern": "RouteLandingPage",
+				"pattern": "",
 				"target": ["TargetLandingPage"]
+			},{
+				"name": "RouteDetailsPage",
+				"pattern": "Details/{dealerID}",
+				"target": ["TargetDetailsPage"]
 			}],
 			"targets": {
 				"TargetLandingPage": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "LandingPage",
 					"viewName": "LandingPage"
+                },
+                "TargetDetailsPage": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "DealerDetails"
 				}
 			}
 		}

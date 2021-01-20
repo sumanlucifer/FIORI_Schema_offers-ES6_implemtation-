@@ -8,8 +8,8 @@
         {
             "authenticationType": "none",
             "csrfProtection": false,
-            "source": "^/Knpl/(.*)$",
-            "destination": "Knpl",
+            "source": "^/KNPL_PAINTER_API/(.*)$",
+            "destination": "KNPL_PAINTER_API",
             "target": "$1"
         },
         {

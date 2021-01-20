@@ -1,49 +1,58 @@
-<mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
-	<Shell id="shell">
-		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}" showHeader="false">
-					<content>
-                        <Table id="table" width="auto" items="{path: 'KNPLModel>/DealerModel'}" noDataText="No Data" growing="true" 
-                        growingScrollToLoad="true">
+<mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showHeader="false">
+                    <content>
+
+                        <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
-                                    <Title text="{i18n>tableTitle}" level="H3"/>
+                                    <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
                                     <ToolbarSpacer />
-                                    <SearchField width="30%" class="sapUiSmallMargin" placeholder="{i18n>searchTooltip}"/>
-                                    <!--<SearchField tooltip="{i18n>searchTooltip}" width="200px">
-                                        layoutData>
+                                    <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}"> 
+                                        <layoutData>
                                             <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                         </layoutData>
-                                    </SearchField>-->
+                                    </SearchField>
+                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                    <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/>
                                 </OverflowToolbar>
-                            </headerToolbar>	
+                            </headerToolbar>
 
                             <columns>
                                 <Column>
-                                    <Text text="{i18n>Customer}"/>
+                                    <Text text="{i18n>name}"/>
                                 </Column>
                                 <Column>
-                                    <Text text="{i18n>DealerName}"/>
+                                    <Text text="{i18n>email}"/>
                                 </Column>
                                 <Column>
-                                    <Text text="{i18n>DepotName}"/>
+                                    <Text text="{i18n>DialCode}"/>
                                 </Column>
-				            </columns>
+                                 <Column>
+                                    <Text text="{i18n>mobile}"/>
+                                </Column>
+                            </columns>
 
                             <items>
-                                <ColumnListItem type="Navigation">
+                                <ColumnListItem type="Navigation" press="onListItemPress">
                                     <cells>
-                                        <ObjectIdentifier title="{KNPLModel>Customer}"/>
-                                        <Text text="{KNPLModel>DealerName}"/>
-                                        <Text text="{KNPLModel>DepotName}"/>
+                                        <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
+                                        <Text text="{KNPLModel>Email}"/>
+                                         <Text text="{KNPLModel>DialCode}"/>
+                                        <Text text="{KNPLModel>Mobile}"/>
                                     </cells>
                                 </ColumnListItem>
-				            </items>
-			            </Table>
+                            </items>
+                        </Table>
+
                     </content>
-				</Page>
-			</pages>
-		</App>
-	</Shell>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
 </mvc:View>

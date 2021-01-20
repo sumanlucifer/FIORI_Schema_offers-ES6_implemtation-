@@ -109,6 +109,8 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+
+
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
