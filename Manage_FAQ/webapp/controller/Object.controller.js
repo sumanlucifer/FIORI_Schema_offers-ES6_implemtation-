@@ -78,14 +78,6 @@ sap.ui.define([
 		 * @private
 		 */
         _onObjectMatched: function (oEvent) {
-            // var sObjectId =  oEvent.getParameter("arguments").objectId;
-            // this.getModel().metadataLoaded().then( function() {
-            // 	var sObjectPath = this.getModel().createKey("MasterFAQSet", {
-            // 		Id :  sObjectId
-            // 	});
-            // 	this._bindView("/" + sObjectPath);
-            // }.bind(this));
-
             this.getModel("objectView").setProperty("/sMode", "E");
             this.getModel("objectView").setProperty("/busy", true);
             var sObjectId = oEvent.getParameter("arguments").objectId;
@@ -240,6 +232,7 @@ sap.ui.define([
 
         CUOperation: function (oPayload) {
             var oViewModel = this.getModel("objectView");
+            oPayload.FAQCategoryId = parseInt(oPayload.FAQCategoryId);
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this;
             debugger;

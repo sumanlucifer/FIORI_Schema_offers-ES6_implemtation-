@@ -111,8 +111,8 @@ resources:
 - name: dest_sapdev
   type: org.cloudfoundry.managed-service
   parameters:
+    service: destination
     service-plan: lite
-    service: destination    
 - name: knpl-portal-saas-registry
   type: org.cloudfoundry.managed-service
   parameters:

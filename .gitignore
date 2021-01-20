@@ -4,4 +4,9 @@
 
 *.env1
 *.zip
+*/dist/
 .vscode/
+# auto generated wildcard
+knpl-influencer-web/Admin/.env
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env
