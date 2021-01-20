@@ -7,23 +7,23 @@ modules:
   path: knpl-influencer-web-approuter
   properties:
     TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
-  parameters: 
-    routes:
-      - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   requires:
-    - name: uaa_knpl-influencer-web
-    - name: knpl-influencer-web_html_repo_runtime
-    - name: knpl-portal-saas-registry
-    - name: destination-knpl-pragati
-    - name: portal_resources_knpl-influencer-web
-      group: destinations
-      properties:
-        name: KNPL_PAINTER_API
-        url: 'https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/'
-        forwardAuthToken: true
+  - name: uaa_knpl-influencer-web
+  - name: knpl-influencer-web_html_repo_runtime
+  - name: knpl-portal-saas-registry
+  - name: destination-knpl-pragati
+  - name: portal_resources_knpl-influencer-web
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: KNPL_PAINTER_API
+      url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
+  parameters:
+    routes:
+    - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
 - name: knpl-influencer-web_ui_deployer
-  path: .
   type: com.sap.application.content
+  path: .
   requires:
   - name: knpl-influencer-web_html_repo_host
     parameters:
@@ -40,16 +40,16 @@ modules:
       name: ContactPainter
       target-path: resources/
     - artifacts:
-      - OrgModule-content.zip
-      name: OrgModule
-      target-path: resources/
-    - artifacts:
       - Manage_FAQ-content.zip
       name: Manage_FAQ
       target-path: resources/
-    - artifacts:  
+    - artifacts:
       - DealerManagement-content.zip
       name: DealerManagement
+      target-path: resources/
+    - artifacts:
+      - OrganizationSetup-content.zip
+      name: OrganizationSetup
       target-path: resources/
 - name: MasterDataManagement
   type: html5
@@ -62,14 +62,6 @@ modules:
 - name: ContactPainter
   type: html5
   path: ContactPainter
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: OrgModule
-  type: html5
-  path: OrgModule
   build-parameters:
     builder: custom
     commands:
@@ -109,8 +101,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-
-
+- name: OrganizationSetup
+  type: html5
+  path: OrganizationSetup
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service

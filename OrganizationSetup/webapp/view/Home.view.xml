@@ -1,0 +1,119 @@
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Home" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+                    <IconTabBar
+		id="idIconTabBarNoIcons"
+		expanded="{device>/isNoPhone}"
+		class="sapUiResponsiveContentPadding">
+		<items>
+			<IconTabFilter text="Users" key="users">
+				<Table inset="false" items="{path: 'data>/AdminSet'}">
+                            <headerToolbar>
+                                <Toolbar class="tblTlbrAd">
+                                    <ToolbarSpacer></ToolbarSpacer>
+                                    <SearchField width="20%" />
+                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+
+                                <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>userId}"/>
+                                </Column>
+                                <Column width="20%">
+                                    <Text text="{i18n>userName}"/>
+                                </Column>
+                                <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>mobileNo}"/>
+                                </Column>
+                                <Column width="20%">
+                                    <Text text="{i18n>email}"/>
+                                </Column>
+
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericRemove}"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+
+
+                                        <Text text="{data>Id}"/>
+                                        <Text text="{data>Name}"/>
+                                        <Text text="{data>Mobile}"/>
+                                        <Text text="{data>Email}"/>
+
+                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+
+			</IconTabFilter>
+			<IconTabFilter text="Roles" key="roles">
+				<Table inset="false" items="{path: 'data>/MasterAdminRoleSet'}">
+                            <headerToolbar>
+                                <Toolbar class="tblTlbrAd">
+
+                                    <ToolbarSpacer></ToolbarSpacer>
+                                    <SearchField width="20%" />
+                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+
+                                <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>roleId}"/>
+                                </Column>
+                                <Column width="20%">
+                                    <Text text="{i18n>role}"/>
+                                </Column>
+                                
+
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericRemove}"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+
+
+                                        <Text text="{data>Id}"/>
+                                        <Text text="{data>Role}"/>
+                                        
+
+                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+			</IconTabFilter>
+			<IconTabFilter text="Company Settings" key="settings">
+				<Text text="Company Settings go here ..." />
+			</IconTabFilter>
+			<IconTabFilter text="Sharing Rules" key="rules">
+				<Text text="Sharing Rules content goes here ..." />
+			</IconTabFilter>
+		    </items>
+	    </IconTabBar>
+                    </content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

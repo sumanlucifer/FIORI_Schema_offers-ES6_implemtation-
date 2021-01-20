@@ -1,0 +1,28 @@
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.AddUser" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout">
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<Label text="Name" labelFor="name" design="Bold" />
+		<Input id="name" required="true" />
+
+		<Label text="Email" labelFor="email" design="Bold" />
+		<Input id="email" required="true" />
+
+        <Label text="DialCode" labelFor="dialcode" design="Bold" />
+		<Input id="dialcode" required="true" />
+
+         <Label text="Mobile" labelFor="mobile" design="Bold" />
+		<Input id="mobile" required="true" />
+
+         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
+		<Input id="countrycode" required="true" />
+
+        <Button text="Add"
+						press="add"
+						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+               
+                
+                 
+	</l:VerticalLayout>
+</mvc:View>
