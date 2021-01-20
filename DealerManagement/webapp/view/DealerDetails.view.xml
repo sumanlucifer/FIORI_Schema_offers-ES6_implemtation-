@@ -98,7 +98,7 @@
                     <uxap:subSections>
                         <uxap:ObjectPageSubSection>
                             <VBox>
-                                <Table id="idDealerTable" width="auto" items="{path: 'KNPLModel>PainterFamily'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                <Table id="idPainterTable" width="auto" items="{path: 'KNPLModel>PainterFamily'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <!-- <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/> -->
@@ -130,7 +130,7 @@
                                     </columns>
 
                                     <items>
-                                        <ColumnListItem type="Navigation" press="onListItemPress">
+                                        <ColumnListItem>
                                             <cells>
                                                 <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
                                                 <Text text="{KNPLModel>RelationshipId}"/>

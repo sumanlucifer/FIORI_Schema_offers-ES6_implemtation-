@@ -107,14 +107,14 @@ sap.ui.define([
             },
 
             handleSortButtonPressed: function () {
-                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.SortDialog")
+                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.SortDialog")
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
             },
 
             handleFilterButtonPressed: function () {
-                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.FilterDialog")
+                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.FilterDialog")
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
@@ -161,7 +161,7 @@ sap.ui.define([
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     aFilters = [];
-                debugger;
+                
                 var sPath = Object.keys(mParams.filterCompoundKeys)[0],
                     sOperator = "EQ",
                     sValue1 = mParams.filterKeys.false ? false : true,
