@@ -47,6 +47,10 @@ modules:
       - Manage_FAQ-content.zip
       name: Manage_FAQ
       target-path: resources/
+    - artifacts:  
+      - DealerManagement-content.zip
+      name: DealerManagement
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -92,6 +96,14 @@ modules:
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: DealerManagement
+  type: html5
+  path: DealerManagement
   build-parameters:
     builder: custom
     commands:

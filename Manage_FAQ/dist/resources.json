@@ -1,20 +1,20 @@
 {
     "resources": [
         {
-            "name": "controller/Object-dbg.controller.js",
+            "name": "controller/ErrorHandler-dbg.js",
             "isDebug": true
+        },
+        {
+            "name": "controller/Worklist.controller.js"
         },
         {
             "name": "model/models.js"
         },
         {
-            "name": "manifest.json"
-        },
-        {
             "name": "model/formatter.js"
         },
         {
-            "name": "controller/Worklist.controller.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Object.controller.js"
@@ -54,16 +54,16 @@
             "isDebug": true
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "controller/Object-dbg.controller.js",
+            "isDebug": true
         },
         {
             "name": "controller/NotFound-dbg.controller.js",
             "isDebug": true
         },
         {
-            "name": "controller/ErrorHandler-dbg.js",
-            "isDebug": true
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/BaseController-dbg.js",

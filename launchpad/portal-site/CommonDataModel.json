@@ -35,10 +35,13 @@
 				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
-                },
-             {
+				}, {
 					"appId": "com.knpl.pragati.Manage_FAQ",
 					"vizId": "Manage-FAQ"
+				}, {
+					"id": "com.knpl.pragati.DealerManagement-4-1611060857324",
+					"appId": "com.knpl.pragati.DealerManagement",
+					"vizId": "Manage-DLR"
 				}]
 			}
 		}],
