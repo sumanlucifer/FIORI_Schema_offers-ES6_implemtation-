@@ -1,5 +1,9 @@
-<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.AddUser" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.User" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
 xmlns:l="sap.ui.layout">
+<Page
+		title="{i18n>detailPageTitle}"
+		showNavButton="true"
+		navButtonPress=".onNavBack">
 	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 		<Label text="Name" labelFor="name" design="Bold" />
 		<Input id="name" required="true" />
@@ -25,4 +29,5 @@ xmlns:l="sap.ui.layout">
                 
                  
 	</l:VerticalLayout>
+    </Page>
 </mvc:View>

@@ -15,7 +15,7 @@ sap.ui.define([
             onInit: function () {
 
             },
-            onFilterInvoices : function (oEvent) {
+            onFilterUsers : function (oEvent) {
  
 			// build filter array
 			var aFilter = [];
@@ -26,6 +26,20 @@ sap.ui.define([
  
 			// filter binding
 			var oList = this.getView().byId("tableUsers");
+			var oBinding = oList.getBinding("items");
+			oBinding.filter(aFilter);
+        },
+        onFilterRoles : function (oEvent) {
+ 
+			// build filter array
+			var aFilter = [];
+			var sQuery = oEvent.getParameter("query");
+			if (sQuery) {
+				aFilter.push(new Filter("Role", FilterOperator.Contains, sQuery));
+			}
+ 
+			// filter binding
+			var oList = this.getView().byId("tableRoles");
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilter);
 		},
@@ -43,6 +57,15 @@ sap.ui.define([
                 // });
                 oRouter.navTo("AddRole");
 
+            },
+            onPressEditRole: function (oEvent) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                //var selectedUserId = oEvent.getSource().getBindingContext("data").getPath();
+                var oItem = oEvent.getSource();
+                oRouter.navTo("EditRole", {
+                    roleId: window.encodeURIComponent(oItem.getBindingContext("data").getPath().substr(1))
+                });
+                //console.log(selectedUserId);
             },
             onPressEdit: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

@@ -12,9 +12,11 @@
 			<IconTabFilter text="Users" key="users">
 				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet'}">
                             <headerToolbar>
+                            
                                 <Toolbar class="tblTlbrAd">
                                     <ToolbarSpacer></ToolbarSpacer>
-                                    <SearchField id ="searchField" search=".onFilterInvoices" width="20%" />
+                                    <SearchField id ="searchField" search=".onFilterUsers" width="20%" />
+                                    
                                     <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
                                 </Toolbar>
@@ -60,12 +62,12 @@
 
 			</IconTabFilter>
 			<IconTabFilter text="Roles" key="roles">
-				<Table inset="false" items="{path: 'data>/MasterAdminRoleSet'}">
+				<Table inset="false" id="tableRoles" items="{path: 'data>/MasterAdminRoleSet'}">
                             <headerToolbar>
                                 <Toolbar class="tblTlbrAd">
 
                                     <ToolbarSpacer></ToolbarSpacer>
-                                    <SearchField width="20%" />
+                                    <SearchField id ="searchFieldRole" search=".onFilterRoles" width="20%" />
                                     <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddRole"/>
                                 </Toolbar>
@@ -96,7 +98,7 @@
                                         <Text text="{data>Role}"/>
                                         
 
-                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEditRole" tooltip="Edit"></Button>
                                         <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
                                     </cells>
                                 </ColumnListItem>

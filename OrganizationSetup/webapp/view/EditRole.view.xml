@@ -6,22 +6,12 @@ xmlns:l="sap.ui.layout">
 		navButtonPress=".onNavBack">
 	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 		<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" />
+		<Input id="role" required="true" value="{data>Role}"/>
 
-		<Label text="Description" labelFor="description" design="Bold" />
-		<Input id="description" required="true" />
+		
 
-        <!-- <Label text="DialCode" labelFor="dialcode" design="Bold" />
-		<Input id="dialcode" required="true" />
-
-         <Label text="Mobile" labelFor="mobile" design="Bold" />
-		<Input id="mobile" required="true" />
-
-         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
-		<Input id="countrycode" required="true" /> -->
-
-        <Button text="Add"
-						press="add"
+        <Button text="Update"
+						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>

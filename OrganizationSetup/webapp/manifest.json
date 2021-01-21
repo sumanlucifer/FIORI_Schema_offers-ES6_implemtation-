@@ -65,8 +65,8 @@
 		"rootView": {
 			"viewName": "com.knpl.pragati.OrganizationSetup.view.Home",
 			"type": "XML",
-			"async": true,
-			"id": "Home"
+			"async": true
+			
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.1",
@@ -132,6 +132,11 @@
             "pattern": "EditUser/{userId}",
             "name": "EditUser",
             "target": "TargetEditUser"
+            },
+            {
+            "pattern": "EditRole/{roleId}",
+            "name": "EditRole",
+            "target": "TargetEditRole"
 		    }],
 			"targets": {
 				"TargetHome": {
@@ -154,6 +159,13 @@
 					"clearControlAggregation": false,
 					"viewId": "AddRole",
 					"viewName": "AddRole"
+                },
+                "TargetEditRole": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "EditRole",
+					"viewName": "EditRole"
                 },
                 "TargetEditUser": {
 					"viewType": "XML",
