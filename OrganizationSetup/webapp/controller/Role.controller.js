@@ -1,12 +1,13 @@
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/core/routing/History",
-        "sap/ui/core/UIComponent"
+        "sap/ui/core/UIComponent",
+        'sap/m/MessageToast'
 	],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-	function (Controller,History,UIComponent) {
+	function (Controller,History,UIComponent,MessageToast) {
 		"use strict";
 
 		return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Role", {
@@ -50,7 +51,7 @@ sap.ui.define([
                 
                 }
 
-                oModel.create("/MasterAdminRoleSet", oData);
+                oModel.create("/MasterAdminRoleSet", oData,{success:MessageToast.show("Successfully added!")});
                 
                 
             },
@@ -68,7 +69,7 @@ sap.ui.define([
 
                 var editSet = this.getView().getBindingContext("data").getPath();
                 
-            oModel.update(editSet, oData);
+            oModel.update(editSet, oData,{success:MessageToast.show("Successfully updated!")});
             }
 		});
 	});
