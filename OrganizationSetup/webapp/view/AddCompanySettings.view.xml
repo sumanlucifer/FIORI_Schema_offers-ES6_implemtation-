@@ -1,0 +1,29 @@
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout">
+<Page
+		title="{i18n>detailPageTitle}"
+		showNavButton="true"
+		navButtonPress=".onNavBack">
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		        <Label text="Disclaimer"  design="Bold"/>
+				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+
+                <Label text="AboutUs"  design="Bold"/>
+				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+
+                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
+		        <Input id="callcenter" required="true" width="20%" />
+
+        
+
+        <Button text="Add"
+						press="add"
+						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+               
+                
+                 
+	</l:VerticalLayout>
+    </Page>
+</mvc:View>

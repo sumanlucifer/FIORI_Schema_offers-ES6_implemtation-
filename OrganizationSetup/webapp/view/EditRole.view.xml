@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Role" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Role" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
 xmlns:l="sap.ui.layout">
 <Page
 		title="{i18n>detailPageTitle}"
