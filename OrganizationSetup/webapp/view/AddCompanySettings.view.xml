@@ -1,4 +1,6 @@
-<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" 
+    xmlns:re="sap/ui/richtexteditor/RichTextEditor"
+    class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
 xmlns:l="sap.ui.layout">
 <Page
 		title="{i18n>detailPageTitle}"
@@ -6,10 +8,26 @@ xmlns:l="sap.ui.layout">
 		navButtonPress=".onNavBack">
 	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 		        <Label text="Disclaimer"  design="Bold"/>
-				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Input id="disclaimer" required="true" />
+				<!-- <l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%">
+                 <re:RichTextEditor id="myRTE1" 
+                    width="50%" 
+                    showGroupClipboard="true" 
+                    showGroupStructure= "true"
+                    showGroupFont= "true"
+                    showGroupInsert= "true"
+                    showGroupLink= "true"
+                    showGroupUndo= "true"
+                    tooltip= "My RTE Tooltip"> 
+                    
+                    </re:RichTextEditor>
+                    
+                </l:VerticalLayout> -->
 
                 <Label text="AboutUs"  design="Bold"/>
-				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Input id="about" required="true"  />
+				<!-- <l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%">
+                </l:VerticalLayout> -->
 
                 <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
 		        <Input id="callcenter" required="true" width="20%" />

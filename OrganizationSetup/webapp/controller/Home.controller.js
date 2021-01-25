@@ -71,7 +71,7 @@ sap.ui.define([
 
                 var oItem = oEvent.getSource();
                 oRouter.navTo("EditCompanySettings", {
-                    Id: window.encodeURIComponent(oItem.getBindingContext("tableData").getPath().substr(1))
+                    settingsId: window.encodeURIComponent(oItem.getBindingContext("tableData").getPath().substr(1))
                 });
                 //console.log(selectedUserId);
             },

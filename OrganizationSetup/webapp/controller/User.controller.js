@@ -53,8 +53,8 @@ sap.ui.define([
                 var oData = {
                     Name: name,
                     Email: email,
-                    Mobile: null,
-                    DialCode: null,
+                    Mobile: mobile,
+                    DialCode: dialcode,
                     CountryCode: countrycode,
                     RoleId: role
                 }
@@ -77,8 +77,8 @@ sap.ui.define([
                 var oData = {
                     Name: name,
                     Email: email,
-                    Mobile: null,
-                    DialCode: null,
+                    Mobile: mobile,
+                    DialCode: dialcode,
                     CountryCode: countrycode,
                     RoleId: role
                 }

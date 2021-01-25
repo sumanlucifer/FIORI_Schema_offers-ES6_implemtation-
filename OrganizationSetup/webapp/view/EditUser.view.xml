@@ -24,6 +24,7 @@ xmlns:core="sap.ui.core">
 
         <ComboBox
             id="role"
+            selectedKey="{data>RoleId}"
 				items="{path: 'data>/MasterAdminRoleSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</ComboBox>

@@ -6,18 +6,34 @@ xmlns:l="sap.ui.layout">
 		navButtonPress=".onNavBack">
 	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 		        <Label text="Disclaimer"  design="Bold"/>
-				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Input id="disclaimer" required="true"  value="{tableData>Disclaimer}"/>
+				<!-- <l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%">
+                 <re:RichTextEditor id="myRTE1" 
+                    width="50%" 
+                    showGroupClipboard="true" 
+                    showGroupStructure= "true"
+                    showGroupFont= "true"
+                    showGroupInsert= "true"
+                    showGroupLink= "true"
+                    showGroupUndo= "true"
+                    tooltip= "My RTE Tooltip"> 
+                    
+                    </re:RichTextEditor>
+                    
+                </l:VerticalLayout> -->
 
                 <Label text="AboutUs"  design="Bold"/>
-				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Input id="about" required="true" value="{tableData>AboutUs}" />
+				<!-- <l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%">
+                </l:VerticalLayout> -->
 
                 <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" width="20%" />
+		        <Input id="callcenter" required="true" width="20%" value="{tableData>CallCenterNo}"/>
 
         
 
-        <Button text="Add"
-						press="add"
+        <Button text="Update"
+						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
