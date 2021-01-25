@@ -1,12 +1,17 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
 version: 1.0.1
+parameters:
+  enable-parallel-deployments: true
 modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
   properties:
     TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  parameters: 
+    routes:
+     - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   requires:
     - name: uaa_knpl-influencer-web
     - name: knpl-influencer-web_html_repo_runtime

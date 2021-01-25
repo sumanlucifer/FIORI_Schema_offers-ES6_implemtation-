@@ -30,9 +30,6 @@
 					"appId": "com.knpl.pragati.MasterDataManagement",
 					"vizId": "Manage-MDM"
 				}, {
-					"appId": "com.knpl.pragati.OrgModule",
-					"vizId": "Manage-ORG"
-				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
 				}, {
@@ -42,6 +39,10 @@
 					"id": "com.knpl.pragati.DealerManagement-4-1611060857324",
 					"appId": "com.knpl.pragati.DealerManagement",
 					"vizId": "Manage-DLR"
+				}, {
+					"id": "com.knpl.pragati.OrganizationSetup-4-1611571348067",
+					"appId": "com.knpl.pragati.OrganizationSetup",
+					"vizId": "Manage-ORG"
 				}]
 			}
 		}],
