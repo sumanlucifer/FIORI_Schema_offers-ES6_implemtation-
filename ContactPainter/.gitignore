@@ -24,3 +24,8 @@ OrgModule/.env
 # auto generated wildcard
 Manage_FAQ/.env6
 knpl-influencer-web/MasterDataManagement/.env
+
+# auto generated wildcard
+knpl1/MasterDataManagement/.env10
+# auto generated wildcard
+knpl1/ContactPainter/.env7

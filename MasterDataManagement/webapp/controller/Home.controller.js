@@ -10,7 +10,23 @@ sap.ui.define(
       "com.knpl.pragati.MasterDataManagement.controller.Home",
       {
         onInit: function () {
-          console.log("manik");
+          //console.log("this is the updated code");
+          var fnSetAppNotBusy = function(oEvent){
+              //console.log("Medta Data Loaded");
+          };
+          var fnSetNotloaded = function(){
+              //console.log("Metadata Not loaded");
+          }
+          var oModelData = this.getOwnerComponent().getModel();
+          oModelData.read("/MasterLanguageSet",{
+              success:function(data){
+                 // console.log(data)
+              },
+              error:function(data){
+                //console.log(data);
+              }
+          })
+
         },
       }
     );

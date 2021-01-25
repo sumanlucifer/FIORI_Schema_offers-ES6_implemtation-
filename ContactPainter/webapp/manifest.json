@@ -15,6 +15,14 @@
        "tableData_alias": {
         "uri": "model/masterData.json",
         "type": "JSON"
+      },
+       "mainService": {
+        "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+        "localUri": "localService/metadata.xml"
+        }
       }
     },
     "crossNavigation": {
@@ -28,10 +36,10 @@
                     "action": "CP",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://account"
+                    "icon": "sap-icon://employee-pane"
                 }
             }
-        }
+    }
   },
   "sap.fiori": {
     "registrationIds": [],
@@ -84,6 +92,17 @@
         "dataSource": "tableData_alias",
         "settings": {
           "defaultBindingMode": "OneTime"
+        }
+      },
+       "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": true,
+          "defaultUpdateMethod": "Put",
+          "useBatch" : false
         }
       }
     },

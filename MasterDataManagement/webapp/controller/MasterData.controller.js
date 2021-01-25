@@ -1,102 +1,237 @@
-sap.ui.define([
+sap.ui.define(
+  [
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-],
-	/**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */
-    function (Controller, JSONModel, MessageBox, MessageToast) {
-        "use strict";
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment",
+  ],
+  /**
+   * @param {typeof sap.ui.core.mvc.Controller} Controller
+   */
+  function (Controller, JSONModel, MessageBox, MessageToast, Fragment) {
+    "use strict";
 
-        return Controller.extend("com.knpl.pragati.MasterDataManagement.controller.MasterData", {
-            onInit: function () {
-                //this._setData()
-            },
-            _setData: function () {
+    return Controller.extend(
+      "com.knpl.pragati.MasterDataManagement.controller.MasterData",
+      {
+        onInit: function () {
+          this._setData();
 
+          this._fragment;
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter
+            .getRoute("RouteMaster")
+            .attachMatched(this._onRouteMatched, this);
+        },
+        _onRouteMatched: function (oEvent) {
+          var oQuery = oEvent.getParameter("arguments")["?query"];
+          var aValidKeys = [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+          ];
+          var sKey = 0;
+          if (oQuery && aValidKeys.indexOf(oQuery.tab) > -1) {
+                sKey = oQuery.tab;
+          }
+          this._initFragment(sKey);
+        },
+        _setData: function () {
+          var oData = {
+            smtTblEty: "MasterExternalLinksSet",
+            smtTblFlds: "Title,Description,Url",
+            IcnTbFilName: "External Links",
+          };
+          var oModel = new JSONModel(oData);
+          this.getView().setModel(oModel, "oCtrlMdl");
+        },
+        _initFragment: function (mKey) {
+          console.log("InitFragment");
+          var oView = this.getView();
+          var oIctbar = oView.byId("idIconTabBarFiori2");
+          var oItemFirst = oIctbar.getItems()[parseInt(mKey)];
+          oIctbar.setSelectedKey(mKey.toString());
+          oIctbar.fireSelect({
+            key: mKey.toString(),
+            item: oItemFirst,
+          });
+        },
+        onSectIctb: function (oEvent) {
+          console.log("selectTrigerred");
+          var oView = this.getView();
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oCtrlMdl = oView.getModel("oCtrlMdl");
+          var oVBox = oView.byId("oVbxSmtTbl");
+          oVBox.destroyItems();
+          var oFragment = Fragment.load({
+            id: oView.getId(),
+            name:
+              "com.knpl.pragati.MasterDataManagement.view.DisplayTableMaster",
+            controller: this,
+          }).then(function (oControl) {
+            oVBox.addItem(oControl);
+          });
+          var sItbFilName = oEvent.getParameter("item").getText();
+          oCtrlMdl.setProperty("/IcnTbFilName", sItbFilName);
+          if (sKey == "0") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterExternalLinksSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Title,Description,Url");
+          } else if (sKey == "1") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterDepotSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Depot");
+          } else if (sKey == "2") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterKycTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "KycType");
+          } else if (sKey == "3") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterReligionSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Religion");
+          } else if (sKey == "4") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterTrainingTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "TrainingType");
+          } else if (sKey == "5") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessGroupSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "BusinessGroup");
+          } else if (sKey == "6") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessCategorySet");
+            oCtrlMdl.setProperty("/smtTblFlds", "BusinessCategory");
+          } else if (sKey == "7") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterArcheTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "ArcheType");
+          } else if (sKey == "8") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterMaritalStatusSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "MaritalStatus");
+          } else if (sKey == "9") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterLanguageSet");
+            oCtrlMdl.setProperty(
+              "/smtTblFlds",
+              "Language,LanguageCode,Language,LanguageDescription"
+            );
+          } else if (sKey == "10") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterComplaintTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "ComplaintType");
+          }
+        },
 
+        onPressEdit: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext()
+            .getPath()
+            .substr(1);
+          var oFields = this.getView()
+            .getModel("oCtrlMdl")
+            .getProperty("/smtTblFlds");
+          var oIctbar = this.getView().byId("idIconTabBarFiori2");
+          var sSelectedKey = oIctbar.getSelectedKey();
+          var sName = oIctbar.getItems()[parseInt(sSelectedKey)].getText();
+          oRouter.navTo("RouteEditTable", {
+            fields: window.encodeURIComponent(oFields),
+            prop: window.encodeURIComponent(sPath),
+            mode: "edit",
+            name: window.encodeURIComponent(sName),
+          });
+        },
+        onPressAddBtn: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
 
-                var oData = {
-                    eventsData: [
-                        {
-                            desc: "whatsapp link",
-                            link: "www.whatsapp.com"
-                        },
-                        {
-                            desc: "google link",
-                            link: "www.google.com"
-                        }
-                    ],
-                    depoData: [
-                        {
-                            title: "Depot 1",
-                            link: "sample link 1"
-                        },
-                        {
-                            title: "Depot 2",
-                            link: "sample link 1"
-                        }
-                    ]
-                };
-                var oModel = new JSONModel(oData);
-                this.getView().setModel(oModel, "oModelView")
-            },
-            onPressEdit: function (oEvent) {
-                var oRouter = this.getOwnerComponent().getRouter();
-                var sPath = oEvent.getSource().getBindingContext("tableData").getPath().split("/");
-                var sParam = sPath[1];
-                oRouter.navTo("RouteEditTable", {
-                    type: sParam,
-                    id:sPath[2]
+          var oView = this.getView();
+          var oCtrlMdodel = oView.getModel("oCtrlMdl");
+          var oFields = oView.getModel("oCtrlMdl").getProperty("/smtTblFlds");
+          var sPath = oCtrlMdodel.getProperty("/smtTblEty");
+          var sName = oCtrlMdodel.getProperty("/IcnTbFilName");
+          oRouter.navTo("RouteEditTable", {
+            fields: window.encodeURIComponent(oFields),
+            prop: window.encodeURIComponent(sPath),
+            mode: "add",
+            name: window.encodeURIComponent(sName),
+          });
+        },
+        onPressRemove: function (oEvent) {
+          var othat = this;
+          var oView = this.getView();
+          var sPath = oEvent.getSource().getBindingContext().getPath();
+          var oBject = oEvent.getSource().getBindingContext().getObject();
+          console.log(oBject);
+          var oModel = this.getView().getModel();
+          var oTitle = oView.getModel("oCtrlMdl").getProperty("/IcnTbFilName");
+
+          MessageBox.confirm("Kindly confirm to remove.", {
+            actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+
+            onClose: function (sAction) {
+              if (sAction == "OK") {
+                oModel.remove(sPath, {
+                  success: function () {
+                    MessageToast.show(oTitle+" Sucessfully Deleted.");
+                    console.log(oView.getModel());
+                    oView.byId("smartTable").getModel().refresh();
+                  },
+                  error: function () {
+                    MessageBox.show("Unable to delete the data.");
+                  },
                 });
-
+                // oModel.refresh(true);
+                // oView.byId("smartTable").rebindTable();
+              }
             },
-            onPressRemove: function (oEvent) {
-                var othat = this;
-                var oView = this.getView();
-                var sPath = oEvent.getSource().getBindingContext("tableData").getPath()
-                var arryPath = sPath.split("/");
-                var sIndex = parseInt(arryPath[arryPath.length - 1]);
-                var oModel = oView.getModel("tableData");
+          });
+        },
+        onRefresh: function () {
+          var myLocation = location;
+          myLocation.reload();
+        },
+        onPressAdd: function () {
+          var oView = this.getView();
+          var oIcnTbr = oView.byId("idIconTabBarFiori2");
+          var sKey = oIcnTbr.getSelectedKey();
+          var oJSON = {
+            0: "eventsData",
+            1: "depoData",
+          };
+          var oRouter = this.getOwnerComponent().getRouter();
+          var sParam = oJSON[sKey];
+          oRouter.navTo("RouteEditTable", {
+            type: sParam,
+            id: "add",
+          });
+        },
+        handleSortButtonPressed: function () {
+          this._openDialog("Dialog");
+        },
+        _openDialog: function (sName, sPage, fInit) {
+          var oView = this.getView();
 
-                var oProperty = oModel.getProperty(sPath.substring(0, sPath.lastIndexOf("/")));
-                console.log(oProperty)
-
-                MessageBox.confirm("Kindly confirm to remove.", {
-                    actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-
-                    onClose: function (sAction) {
-                        if (sAction == "OK") {
-                            oProperty.splice(sIndex, 1);
-                            MessageToast.show("Data Sucessfully Deleted.");
-                        }
-                        oModel.refresh();
-                    }
-                });
-
-            },
-            onRefresh: function () {
-                var myLocation = location;
-                myLocation.reload();
-            },
-            onPressAdd: function () {
-                var oView = this.getView();
-                var oIcnTbr = oView.byId("idIconTabBarFiori2");
-                var sKey = oIcnTbr.getSelectedKey();
-                var oJSON = {
-                    "0": "eventsData",
-                    "1": "depoData"
-                }
-                var oRouter = this.getOwnerComponent().getRouter();
-                var sParam = oJSON[sKey];
-                oRouter.navTo("RouteEditTable", {
-                    type: sParam,
-                    id:"add"
-                });
-
-            }
-
-        });
-    });
+          // creates requested dialog if not yet created
+          if (!this._mDialogs[sName]) {
+            this._mDialogs[sName] = Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.MasterDataManagement.view.DialogViewSetting",
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              if (fInit) {
+                fInit(oDialog);
+              }
+              return oDialog;
+            });
+          }
+          this._mDialogs[sName].then(function (oDialog) {
+            // opens the requested dialog
+            oDialog.open();
+          });
+        },
+      }
+    );
+  }
+);

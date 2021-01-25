@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+
+    <smartTable:SmartTable id="smartTable" entitySet="{oCtrlMdl>/smtTblEty}" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" 
+    ignoredFields="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId" ignoreFromPersonalisation="" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" header="Line Items" placeToolbarInTable="true" persistencyKey="SmartTablePKey" initiallyVisibleFields="{oCtrlMdl>/smtTblFlds}">
+        <smartTable:customToolbar>
+            <OverflowToolbar id="stickyToolbar" design="Solid" class="stickyToolbar">
+                <ToolbarSpacer/>
+                
+                <Button type="Transparent" press="onPressAddBtn" icon="sap-icon://add" text="Add {oCtrlMdl>/IcnTbFilName}" tooltip="Add {oCtrlMdl>/IcnTbFilName}"/>
+                
+            </OverflowToolbar>
+        </smartTable:customToolbar>
+        <Table  growing="true" growingThreshold="4" growingScrollToLoad="false">
+            <columns>
+                <Column>
+                    <customData>
+                        <!-- Custom Field -->
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "columnIndex":"3", "leadingProperty": "Id"}'/>
+                    </customData>
+                    <Text text="Edit"/>
+                </Column>
+                <Column>
+                    <customData>
+                        <!-- Custom Field -->
+                        <core:CustomData key="p13nData" value='\{"columnKey": "IsSelected", "columnIndex":"4", "leadingProperty": "Id"}'/>
+                    </customData>
+                    <Text text="Remove"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
+                    </cells>
+                    <cells>
+                        <Button icon="sap-icon://delete" type="Transparent" press="onPressRemove" tooltip="Remove"></Button>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+
+</core:FragmentDefinition>

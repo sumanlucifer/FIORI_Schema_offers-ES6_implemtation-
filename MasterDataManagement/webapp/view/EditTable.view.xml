@@ -1,8 +1,8 @@
 <mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.EditTable"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" 	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" 
 xmlns:uxap="sap.uxap"		height="100%">
-	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" showFooter="true">
 		<uxap:headerTitle>
-			<uxap:ObjectPageHeader objectTitle="{oModelView>/titlePart1} {oModelView>/titlePart2}">
+			<uxap:ObjectPageHeader objectTitle="{oModelView>/titleP1} - {oModelView>/titleP2}">
 			</uxap:ObjectPageHeader>
 		</uxap:headerTitle>
 		<uxap:sections>
@@ -21,6 +21,12 @@ xmlns:uxap="sap.uxap"		height="100%">
 
 
 		</uxap:sections>
+        <uxap:footer>
+            <Toolbar>
+				<ToolbarSpacer/>
+				<Button width="9%" text= "{= ${oModelView>/edit} === true ? 'Save' : 'Add' }" type="Accept" press="onPressSave" />
+			</Toolbar>
+        </uxap:footer>
 
 	</uxap:ObjectPageLayout>
 </mvc:View>

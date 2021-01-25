@@ -1,42 +1,29 @@
-<core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:l="sap.ui.layout"
-	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
-	<VBox class="sapUiSmallMargin">
-		<f:SimpleForm id="SimpleFormDisplay354wide"
-			editable="false"
-			layout="ResponsiveGridLayout"
-		
-			labelSpanXL="4"
-			labelSpanL="3"
-			labelSpanM="4"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="4"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="2"
-			columnsL="1"
-			columnsM="1"
-			singleContainerFullSize="false">
-			<f:content>
-				<Label text="Full name of the contact" />
-				<Text id="nameText" text="{tableData>Name}" />
-				<Label text="Street and number where the contact is located" />
-				<Text text="{tableData>Address}" />
-				<Label text="City" />
-				<Text text="{tableData>City}" />
-                <Label text="State" />
-				<Text text="{tableData>State}" />
-				<Label text="Pin Code"/>
-                <Text text="{tableData>Pin}"/>
-                <Label text="Contact Number"/>
-                <Text text="{tableData>Number}"/>
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox
+        class="sapUiSmallMargin">
+        <!-- <smartForm:SmartForm id="smartForm" app:defaultCheckBoxDisplayBehaviour="OnOff" app:defaultDropDownDisplayBehaviour="idAndDescription" editTogglable="true" editToggled="handleEditToggled" title="Details">
+                    <smartForm:Group label="">
+                        <smartForm:GroupElement label="Name">
+                            <smartField:SmartField value="{Name}"/>
+                        </smartForm:GroupElement>
+                         <smartForm:GroupElement label="Email">
+                            <smartField:SmartField value="{Email}"/>
+                        </smartForm:GroupElement>
+                         <smartForm:GroupElement label="Mobile">
+                            <smartField:SmartField value="{Mobile}"/>
+                        </smartForm:GroupElement>
+                    </smartForm:Group>
+                </smartForm:SmartForm> -->
+        <f:SimpleForm id="SimpleFormDisplay354" editable="false" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+            <f:content>
+                <Label text="Name"/>
+                <Text text="{Name}"/>
+                <Label text="Mobile"/>
+                <Text text="{Mobile}"/>
                 <Label text="Email"/>
-                <Text text="{tableData>Email}"/>
-			</f:content>
-		</f:SimpleForm>
-	</VBox>
+                <Text text="{Email}"/>
+            </f:content>
+        </f:SimpleForm>
+
+    </VBox>
 </core:FragmentDefinition>

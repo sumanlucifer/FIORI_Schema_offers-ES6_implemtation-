@@ -29,3 +29,8 @@ OrgModule/.env
 Manage_FAQ/.env6
 knpl-influencer-web/MasterDataManagement/.env
 knpl-influencer-web/DealerManagement/.env
+
+# auto generated wildcard
+knpl1/MasterDataManagement/.env10
+# auto generated wildcard
+knpl1/ContactPainter/.env7
