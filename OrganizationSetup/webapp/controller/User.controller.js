@@ -7,7 +7,7 @@ sap.ui.define([
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, History, UIComponent,MessageToast) {
+    function (Controller, History, UIComponent, MessageToast) {
         "use strict";
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.User", {
@@ -35,10 +35,10 @@ sap.ui.define([
                     oRouter.navTo("RouteHome", {}, true);
                 }
             },
-            handleSuccess: function(oEvent) {
-			var msg = 'Updated Successfully!';
-			MessageToast.show(msg);
-		    },
+            handleSuccess: function (oEvent) {
+                var msg = 'Updated Successfully!';
+                MessageToast.show(msg);
+            },
             add: function () {
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
@@ -47,7 +47,7 @@ sap.ui.define([
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
 
-               
+
                 var oModel = this.getView().getModel("data");
 
                 var oData = {
@@ -59,8 +59,8 @@ sap.ui.define([
                     RoleId: role
                 }
 
-                    
-                 oModel.create("/AdminSet", oData,{success:MessageToast.show("Successfully added!")});
+
+                oModel.create("/AdminSet", oData, { success: MessageToast.show("Successfully added!") });
 
 
             },
@@ -86,7 +86,7 @@ sap.ui.define([
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
-               oModel.update(editSet, oData,{success:MessageToast.show("Successfully updated!")});
+                oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
 
 
             },

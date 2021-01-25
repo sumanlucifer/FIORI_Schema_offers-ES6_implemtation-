@@ -29,3 +29,10 @@ OrgModule/.env
 Manage_FAQ/.env6
 knpl-influencer-web/MasterDataManagement/.env
 knpl-influencer-web/DealerManagement/.env
+
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/webapp/.env
+# auto generated wildcard
+knpl-influencer-web/OrgModule/.env10
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env1

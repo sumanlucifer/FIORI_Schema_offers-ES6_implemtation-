@@ -8,6 +8,9 @@ xmlns:l="sap.ui.layout">
 		<Label text="Role" labelFor="role" design="Bold" />
 		<Input id="role" required="true" value="{data>Role}"/>
 
+        <Label text="Description" labelFor="description" design="Bold" />
+		<Input id="description" required="true" value="{data>Description}"/>
+
 		
 
         <Button text="Update"
