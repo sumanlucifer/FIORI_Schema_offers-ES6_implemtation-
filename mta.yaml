@@ -1,6 +1,6 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
-version: 0.0.1
+version: 1.0.1
 modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
@@ -13,7 +13,6 @@ modules:
   requires:
     - name: uaa_knpl-influencer-web
     - name: knpl-influencer-web_html_repo_runtime
-    - name: knpl-portal-saas-registry
     - name: destination-knpl-pragati
     - name: portal_resources_knpl-influencer-web
       group: destinations
@@ -83,13 +82,11 @@ modules:
     parameters:
       content-target: true
       service-key:
-        config: null
-        content-endpoint: developer
         name: content-deploy-key
+        config: 
+          content-endpoint: developer
   - name: knpl-influencer-web_html_repo_host
-  - name: knpl-influencer-web_ui_deployer
   - name: uaa_knpl-influencer-web
-  - name: knpl-portal-saas-registry
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
@@ -109,15 +106,12 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-
-
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: knpl-portal-xsuaa-service
     service-plan: application
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
@@ -129,6 +123,8 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-host
+    config:
+      sizeLimit: 2
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
@@ -139,20 +135,6 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-- name: knpl-portal-saas-registry
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      appName: KNPL_Portal
-      appUrls:
-        getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
-        onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
-      category: knplportalapps
-      description: KNPL Portal application
-      displayName: KNPL_Portal
-      xsappname: knpl-influencer-web
-    service: saas-registry
-    service-plan: application
 build-parameters:
   before-all:
   - builder: custom
