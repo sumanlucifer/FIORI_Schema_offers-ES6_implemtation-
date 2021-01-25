@@ -1,0 +1,39 @@
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.User" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core">
+<Page
+		title="{i18n>detailPageTitle}"
+		showNavButton="true"
+		navButtonPress=".onNavBack">
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<Label text="Name" labelFor="name" design="Bold" />
+		<Input id="name" required="true" />
+
+		<Label text="Email" labelFor="email" design="Bold" />
+		<Input id="email" required="true" />
+
+        <Label text="DialCode" labelFor="dialcode" design="Bold" />
+		<Input id="dialcode" required="true" />
+
+         <Label text="Mobile" labelFor="mobile" design="Bold" />
+		<Input id="mobile" required="true" />
+
+         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
+		<Input id="countrycode" required="true" />
+
+        	<ComboBox
+            id="role"
+				items="{path: 'data>/MasterAdminRoleSet'}">
+				<core:Item key="{data>Id}" text="{data>Description}" />
+			</ComboBox>
+        <Button text="Add"
+						press="add"
+						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+               
+                
+                 
+	</l:VerticalLayout>
+    </Page>
+</mvc:View>
