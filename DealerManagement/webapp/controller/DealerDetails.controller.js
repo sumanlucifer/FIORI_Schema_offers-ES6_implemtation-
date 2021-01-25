@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "com/knpl/pragati/DealerManagement/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
@@ -7,20 +7,22 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device'
 ],
-    function (Controller, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
         "use strict";
 
-        return Controller.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
+        return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
             onInit: function () {
-
+                // apply content density mode to the view as app view not created
+                this.addContentDensityClass();
+                
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
                     oTable = this.byId("idPainterTable");
-                this.KNPLModel = this.getOwnerComponent().getModel("KNPLModel");
+                this.KNPLModel = this.getComponentModel("KNPLModel");
 
                 //Router Object
-                this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                this.oRouter = this.getRouter();
                 this.oRouter.getRoute("RouteDetailsPage").attachPatternMatched(this._onObjectMatched, this);
 
                 // Put down table's original value for busy indicator delay,
@@ -37,7 +39,7 @@ sap.ui.define([
                 oViewModel = new JSONModel({
                     tableBusyDelay: 0
                 });
-                this.getView().setModel(oViewModel, "oViewModel");
+                this.setModel(oViewModel, "oViewModel");
 
                 // Make sure, busy indication is showing immediately so there is no
                 // break after the busy indication for loading the view's meta data is
@@ -56,6 +58,7 @@ sap.ui.define([
                     });
                     this._bindView("/" + sObjectPath);
                 }.bind(this));
+                this.dismissBusyDialog();
             },
 
             _bindView: function (sObjectPath) {
@@ -95,11 +98,11 @@ sap.ui.define([
 
             _applySearch: function (aTableSearchState) {
                 var oTable = this.byId("idPainterTable"),
-                    oViewModel = this.getView().getModel("worklistViewModel");
+                    oViewModel = this.getViewModel("worklistViewModel");
                 oTable.getBinding("items").filter(aTableSearchState, "Application");
                 // changes the noDataText of the list in case there are no filter results
                 if (aTableSearchState.length !== 0) {
-                    oViewModel.setProperty("/tableNoDataText", this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistNoDataWithSearchText"));
+                    oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
                 }
             },
 
@@ -170,7 +173,7 @@ sap.ui.define([
                 oBinding.filter(aFilters);
             },
 
-            onDetailPress: function (oEvent) {
+            onListItemPress: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
             },

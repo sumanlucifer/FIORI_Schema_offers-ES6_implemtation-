@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "com/knpl/pragati/DealerManagement/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
@@ -7,13 +7,13 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device'
 ],
-    function (Controller, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
         "use strict";
 
-        return Controller.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
+        return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
-                // apply content density mode to root view
-                this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+                // apply content density mode to the view as app view not created
+                this.addContentDensityClass();
 
                 //Initializations
                 var oViewModel,
@@ -21,7 +21,7 @@ sap.ui.define([
                     oTable = this.byId("idDealerTable");
 
                 //Router Object
-                this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                this.oRouter = this.getRouter();
 			    this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);    
 
                 // Put down worklist table's original value for busy indicator delay,
@@ -36,11 +36,11 @@ sap.ui.define([
 
                 // Model used to manipulate control states
                 oViewModel = new JSONModel({
-                    worklistTableTitle: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitle"),
-                    tableNoDataText: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("tableNoDataText"),
+                    worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
+                    tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
                     tableBusyDelay: 0
                 });
-                this.getView().setModel(oViewModel, "worklistViewModel");
+                this.setModel(oViewModel, "worklistViewModel");
 
                 // Make sure, busy indication is showing immediately so there is no
                 // break after the busy indication for loading the view's meta data is
@@ -61,11 +61,11 @@ sap.ui.define([
                 // only update the counter if the length is final and
                 // the table is not empty
                 if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    sTitle = this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
+                    sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
                 } else {
-                    sTitle = this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitle");
+                    sTitle = this.getResourceBundle().getText("worklistTableTitle");
                 }
-                this.getView().getModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
+                this.getViewModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
             },
 
             onSearch: function (oEvent) {
@@ -98,11 +98,11 @@ sap.ui.define([
 
             _applySearch: function (aTableSearchState) {
                 var oTable = this.byId("idDealerTable"),
-                    oViewModel = this.getView().getModel("worklistViewModel");
+                    oViewModel = this.getViewModel("worklistViewModel");
                 oTable.getBinding("items").filter(aTableSearchState, "Application");
                 // changes the noDataText of the list in case there are no filter results
                 if (aTableSearchState.length !== 0) {
-                    oViewModel.setProperty("/tableNoDataText", this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistNoDataWithSearchText"));
+                    oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
                 }
             },
 
@@ -177,11 +177,11 @@ sap.ui.define([
                 var oItem = oEvent.getSource();
                 oItem.setNavigated(true);
                 var oBindingContext = oItem.getBindingContext("KNPLModel");
-                var oModel = this.getView().getModel("KNPLModel");
+                var oModel = this.getViewModel("KNPLModel");
                 this.oRouter.navTo("RouteDetailsPage", {
                     dealerID: oEvent.getSource().getBindingContext("KNPLModel").getObject().Id
                 });
-                //this.presentBusyDialog();
+                this.presentBusyDialog();
             },
 
              onDetailPress: function (oEvent) {
