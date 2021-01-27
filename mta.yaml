@@ -1,27 +1,25 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
 version: 1.0.1
-parameters:
-  enable-parallel-deployments: true
 modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
   properties:
     TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
-  parameters: 
-    routes:
-     - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
   requires:
-    - name: uaa_knpl-influencer-web
-    - name: knpl-influencer-web_html_repo_runtime
-    - name: destination-knpl-pragati
-    - name: portal_resources_knpl-influencer-web
-      group: destinations
-      properties:
-        name: KNPL_PAINTER_API
-        url: 'https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/'
-        forwardAuthToken: true
+  - name: uaa_knpl-influencer-web
+  - name: knpl-influencer-web_html_repo_runtime
+  - name: destination-knpl-pragati
+  - name: portal_resources_knpl-influencer-web
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: KNPL_PAINTER_API
+      url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
+  parameters:
+    routes:
+    - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
 - name: knpl-influencer-web_ui_deployer
   type: com.sap.application.content
   path: .
@@ -52,6 +50,10 @@ modules:
       - OrganizationSetup-content.zip
       name: OrganizationSetup
       target-path: resources/
+    - artifacts:
+      - Training-content.zip
+      name: Training
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -76,9 +78,9 @@ modules:
     parameters:
       content-target: true
       service-key:
-        name: content-deploy-key
-        config: 
+        config:
           content-endpoint: developer
+        name: content-deploy-key
   - name: knpl-influencer-web_html_repo_host
   - name: uaa_knpl-influencer-web
   parameters:
@@ -108,6 +110,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: Training
+  type: html5
+  path: Training
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
@@ -123,10 +133,10 @@ resources:
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
-    service: html5-apps-repo
-    service-plan: app-host
     config:
       sizeLimit: 2
+    service: html5-apps-repo
+    service-plan: app-host
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
@@ -137,6 +147,8 @@ resources:
   parameters:
     service: portal
     service-plan: standard
+parameters:
+  enable-parallel-deployments: true
 build-parameters:
   before-all:
   - builder: custom

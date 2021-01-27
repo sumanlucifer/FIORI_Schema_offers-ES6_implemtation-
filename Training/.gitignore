@@ -1,0 +1,12 @@
+/node_modules/
+package-lock.json
+/dist/
+/.vscode/
+/*-content.zip/ 
+
+# auto generated wildcard
+knpl1/Training/.env1
+# auto generated wildcard
+knpl1/MasterDataManagement/.env11
+# auto generated wildcard
+knpl1/ContactPainter/.env8
