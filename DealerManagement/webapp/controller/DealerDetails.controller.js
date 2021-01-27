@@ -12,14 +12,12 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
             onInit: function () {
-                // apply content density mode to the view as app view not created
-                this.addContentDensityClass();
                 
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
                     oTable = this.byId("idPainterTable");
-                this.KNPLModel = this.getComponentModel("KNPLModel");
+                this.KNPLModel = this.getComponentModel();
 
                 //Router Object
                 this.oRouter = this.getRouter();
@@ -37,6 +35,7 @@ sap.ui.define([
 
                 // Model used to manipulate control states
                 oViewModel = new JSONModel({
+                    worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
                     tableBusyDelay: 0
                 });
                 this.setModel(oViewModel, "oViewModel");
@@ -63,9 +62,23 @@ sap.ui.define([
 
             _bindView: function (sObjectPath) {
                 this.getView().bindElement({
-                    path: sObjectPath,
-                    model: "KNPLModel"
+                    path: sObjectPath
                 });
+            },
+
+            onUpdateFinished: function (oEvent) {
+                // update the worklist's object counter after the table update
+                var sTitle,
+                    oTable = oEvent.getSource(),
+                    iTotalItems = oEvent.getParameter("total");
+                // only update the counter if the length is final and
+                // the table is not empty
+                if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                    sTitle = this.getResourceBundle().getText("detailPageWorklistTableTitleCount", [iTotalItems]);
+                } else {
+                    sTitle = this.getResourceBundle().getText("detailPageWorklistTableTitle");
+                }
+                this.getViewModel("oViewModel").setProperty("/detailPageWorklistTableTitle", sTitle);
             },
 
             onSearch: function (oEvent) {

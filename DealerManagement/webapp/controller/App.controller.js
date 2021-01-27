@@ -23,9 +23,9 @@ sap.ui.define([
 				};
 
 				// disable busy indication when the metadata is loaded and in case of errors
-				this.getOwnerComponent().getModel("KNPLModel").metadataLoaded().
+				this.getComponentModel().metadataLoaded().
 					then(fnSetAppNotBusy);
-				this.getOwnerComponent().getModel("KNPLModel").attachMetadataFailed(fnSetAppNotBusy);
+				this.getComponentModel().attachMetadataFailed(fnSetAppNotBusy);
 
 				// apply content density mode to root view
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());

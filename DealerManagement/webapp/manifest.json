@@ -1,19 +1,19 @@
 {
-	"_version": "1.12.0",
-	"sap.app": {
-		"id": "com.knpl.pragati.DealerManagement",
-		"type": "application",
-		"i18n": "i18n/i18n.properties",
-		"applicationVersion": {
-			"version": "1.0.0"
-		},
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
-		"resources": "resources.json",
-		"ach": "ach",
-		"sourceTemplate": {
-			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
-			"version": "1.40.12"
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "com.knpl.pragati.DealerManagement",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "sourceTemplate": {
+            "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+            "version": "1.40.12"
         },
         "crossNavigation": {
             "inbounds": {
@@ -38,104 +38,110 @@
                 }
             }
         }
-	},
-	
-	"sap.ui": {
-		"technology": "UI5",
-		"icons": {
-			"icon": "",
-			"favIcon": "",
-			"phone": "",
-			"phone@2": "",
-			"tablet": "",
-			"tablet@2": ""
-		},
-		"deviceTypes": {
-			"desktop": true,
-			"tablet": true,
-			"phone": true
-		}
-	},
-
-	"sap.ui5": {
-		"flexEnabled": false,
-		"rootView": {
-			"viewName": "com.knpl.pragati.DealerManagement.view.App",
-			"type": "XML",
-			"async": true,
-			"id": "app"
-		},
-		"dependencies": {
-			"minUI5Version": "1.60.1",
-			"libs": {
-				"sap.ui.core": {},
-				"sap.m": {},
-				"sap.ui.layout": {}
-			}
-		},
-		"contentDensities": {
-			"compact": true,
-			"cozy": true
-		},
-		"models": {
-			"i18n": {
-				"type": "sap.ui.model.resource.ResourceModel",
-				"settings": {
-					"bundleName": "com.knpl.pragati.DealerManagement.i18n.i18n"
-				}
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "com.knpl.pragati.DealerManagement.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.60.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.knpl.pragati.DealerManagement.i18n.i18n"
+                }
             },
-            "KNPLModel": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"settings": {
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "TwoWay",
+            "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Request",
-                    "useBatch" : false
-
-				},
-				"dataSource": "KNPL_DS",
-				"preload": true
-			}
-		},
+                    "useBatch": false
+                },
+                "dataSource": "KNPL_DS",
+                "preload": true
+            }
+        },
         "resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
-		},
-		"routing": {
-			"config": {
-				"routerClass": "sap.m.routing.Router",
-				"viewType": "XML",
-				"async": true,
-				"viewPath": "com.knpl.pragati.DealerManagement.view",
-				"controlAggregation": "pages",
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.knpl.pragati.DealerManagement.view",
+                "controlAggregation": "pages",
                 "controlId": "app"
-			},
-			"routes": [{
-				"name": "RouteLandingPage",
-				"pattern": "",
-				"target": ["TargetLandingPage"]
-			},{
-				"name": "RouteDetailsPage",
-				"pattern": "Details/{dealerID}",
-				"target": ["TargetDetailsPage"]
-			}],
-			"targets": {
-				"TargetLandingPage": {
-					"viewType": "XML",
-					"transition": "slide",
+            },
+            "routes": [
+                {
+                    "name": "RouteLandingPage",
+                    "pattern": "",
+                    "target": [
+                        "TargetLandingPage"
+                    ]
+                },
+                {
+                    "name": "RouteDetailsPage",
+                    "pattern": "Details/{dealerID}",
+                    "target": [
+                        "TargetDetailsPage"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetLandingPage": {
+                    "viewType": "XML",
+                    "transition": "slide",
                     "viewName": "LandingPage",
                     "viewLevel": 1,
                     "viewId": "landingPage"
                 },
                 "TargetDetailsPage": {
-					"viewType": "XML",
-					"transition": "slide",
+                    "viewType": "XML",
+                    "transition": "slide",
                     "viewName": "DealerDetails",
                     "viewLevel": 2,
                     "viewId": "detailPage"
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 }
