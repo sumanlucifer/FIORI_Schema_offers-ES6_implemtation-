@@ -36,10 +36,22 @@ sap.ui.define([
                     oRouter.navTo("RouteHome", {}, true);
                 }
             },
+            handleEmptyFields: function (oEvent) {
+                var msg = 'Mandatory Fields Empty!';
+                MessageToast.show(msg);
+            },
             add: function () {
                 var role = this.getView().byId("role").getValue();
                 var description = this.getView().byId("description").getValue();
-                
+
+                var requiredInputs = this.returnIdListOfRequiredFields();
+                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                if (passedValidation === false) {
+                    //show an error message, rest of code will not execute.
+                    this.handleEmptyFields();
+                    return false;
+                }
+
 
                 var oModel = this.getView().getModel("data");
 
@@ -61,15 +73,44 @@ sap.ui.define([
 
                 var oModel = this.getView().getModel("data");
 
+                var requiredInputs = this.returnIdListOfRequiredFields();
+                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                if (passedValidation === false) {
+                    //show an error message, rest of code will not execute.
+                    this.handleEmptyFields();
+                    return false;
+                }
+
+
                 var oData = {
                     Role: role,
                     Description: description
 
                 }
-                        console.log(oData)
-               // var editSet = this.getView().getBindingContext("data").getPath();
 
-               // oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
-            }
+                var editSet = this.getView().getBindingContext("data").getPath();
+
+                oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
+            },
+            returnIdListOfRequiredFields: function () {
+                let requiredInputs;
+                return requiredInputs = ['role', 'description'];
+            },
+
+            validateEventFeedbackForm: function (requiredInputs) {
+                var _self = this;
+                var valid = true;
+                requiredInputs.forEach(function (input) {
+                    var sInput = _self.getView().byId(input);
+                    if (sInput.getValue() == "" || sInput.getValue() == undefined) {
+                        valid = false;
+                        sInput.setValueState("Error");
+                    }
+                    else {
+                        sInput.setValueState("None");
+                    }
+                });
+                return valid;
+            },
         });
     });

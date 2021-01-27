@@ -1,26 +1,39 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Role" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
 <Page
-		title="{i18n>detailPageTitle}"
+		
 		showNavButton="true"
 		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		<Label text="Role" labelFor="role" design="Bold" />
+         <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="editRoleForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Edit Role"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				<Label text="Role" labelFor="role" design="Bold" />
 		<Input id="role" required="true" value="{data>Role}"/>
 
-        <Label text="Description" labelFor="description" design="Bold" />
+        <Label text="Description" labelFor="role" design="Bold" />
 		<Input id="description" required="true" value="{data>Description}"/>
-
 		
-
-        <Button text="Update"
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+	
+    <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Update"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+			</OverflowToolbar>
+		</footer>
     </Page>
 </mvc:View>

@@ -1,45 +1,63 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
 <Page
-		title="{i18n>detailPageTitle}"
+
 		showNavButton="true"
 		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		        <Label text="Disclaimer"  design="Bold"/>
+         <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="editCompanySettingsForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Edit Company Settings"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				<Label text="Disclaimer"  design="Bold"/>
                 <Input id="disclaimer" required="true"  value="{tableData>Disclaimer}"/>
-				<!-- <l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%">
-                 <re:RichTextEditor id="myRTE1" 
-                    width="50%" 
-                    showGroupClipboard="true" 
-                    showGroupStructure= "true"
-                    showGroupFont= "true"
-                    showGroupInsert= "true"
-                    showGroupLink= "true"
-                    showGroupUndo= "true"
-                    tooltip= "My RTE Tooltip"> 
-                    
-                    </re:RichTextEditor>
-                    
-                </l:VerticalLayout> -->
+				
 
                 <Label text="AboutUs"  design="Bold"/>
                 <Input id="about" required="true" value="{tableData>AboutUs}" />
-				<!-- <l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%">
-                </l:VerticalLayout> -->
+				
+
+                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
+		        <Input id="callcenter" required="true"  value="{tableData>CallCenterNo}"/>
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+
+	<!-- <l:VerticalLayout class="sapUiContentPadding" width="100%">
+		        <Label text="Disclaimer"  design="Bold"/>
+                <Input id="disclaimer" required="true"  value="{tableData>Disclaimer}"/>
+				
+
+                <Label text="AboutUs"  design="Bold"/>
+                <Input id="about" required="true" value="{tableData>AboutUs}" />
+				
 
                 <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
 		        <Input id="callcenter" required="true" width="20%" value="{tableData>CallCenterNo}"/>
 
         
 
-        <Button text="Update"
+        
+               
+                
+                 
+	</l:VerticalLayout> -->
+    <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Update"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+			</OverflowToolbar>
+		</footer>
     </Page>
 </mvc:View>

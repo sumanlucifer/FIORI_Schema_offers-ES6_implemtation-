@@ -39,22 +39,33 @@ sap.ui.define([
                 var msg = 'Updated Successfully!';
                 MessageToast.show(msg);
             },
+             handleEmptyFields: function (oEvent) {
+                var msg = 'Mandatory Fields Empty!';
+                MessageToast.show(msg);
+            },
             add: function () {
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
-                var dialcode = this.getView().byId("dialcode").getValue();
+               
                 var mobile = this.getView().byId("mobile").getValue();
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
 
 
+                 var requiredInputs = this.returnIdListOfRequiredFields();
+                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                if (passedValidation === false) {
+                    //show an error message, rest of code will not execute.
+                    this.handleEmptyFields();
+                    return false;
+                }
                 var oModel = this.getView().getModel("data");
 
                 var oData = {
                     Name: name,
                     Email: email,
                     Mobile: mobile,
-                    DialCode: dialcode,
+                    
                     CountryCode: countrycode,
                     RoleId: role
                 }
@@ -67,10 +78,18 @@ sap.ui.define([
             update: function () {
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
-                var dialcode = this.getView().byId("dialcode").getValue();
+               
                 var mobile = this.getView().byId("mobile").getValue();
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
+
+                var requiredInputs = this.returnIdListOfRequiredFields();
+                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                if (passedValidation === false) {
+                    //show an error message, rest of code will not execute.
+                    this.handleEmptyFields();
+                    return false;
+                }
 
                 var oModel = this.getView().getModel("data");
 
@@ -78,7 +97,7 @@ sap.ui.define([
                     Name: name,
                     Email: email,
                     Mobile: mobile,
-                    DialCode: dialcode,
+                    
                     CountryCode: countrycode,
                     RoleId: role
                 }
@@ -89,6 +108,27 @@ sap.ui.define([
                 oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
 
 
+            },
+            //validation
+             returnIdListOfRequiredFields: function () {
+                let requiredInputs;
+                return requiredInputs = ['name', 'email', 'mobile', 'countrycode'];
+            },
+
+            validateEventFeedbackForm: function (requiredInputs) {
+                var _self = this;
+                var valid = true;
+                requiredInputs.forEach(function (input) {
+                    var sInput = _self.getView().byId(input);
+                    if (sInput.getValue() == "" || sInput.getValue() == undefined) {
+                        valid = false;
+                        sInput.setValueState("Error");
+                    }
+                    else {
+                        sInput.setValueState("None");
+                    }
+                });
+                return valid;
             },
         });
     });

@@ -1,42 +1,72 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.User" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
 xmlns:l="sap.ui.layout"
-xmlns:core="sap.ui.core">
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
 <Page
-		title="{i18n>detailPageTitle}"
+		
 		showNavButton="true"
-		navButtonPress=".onNavBack">
-
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		<Label text="Name" labelFor="name" design="Bold" />
+		navButtonPress=".onNavBack"
+         class="sapUiContentPadding"
+        >
+        <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="editUserForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Edit User"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				<Label text="Name" labelFor="name" design="Bold" />
 		<Input id="name" required="true" value="{data>Name}" />
 
-		<Label text="Email" labelFor="email" design="Bold" />
+				<Label text="Email" labelFor="email" design="Bold" />
 		<Input id="email" required="true" value="{data>Email}"/>
 
-        <Label text="DialCode" labelFor="dialcode" design="Bold" />
-		<Input id="dialcode" required="true" value="{data>DialCode}"/>
+        
 
-         <Label text="Mobile" labelFor="mobile" design="Bold" />
-		<Input id="mobile" required="true" value="{data>Mobile}" />
+				<Label text="Mobile" labelFor="mobile" design="Bold" />
+		<Input id="mobile" required="true" value="{data>Mobile}" type="Number" />
 
          <Label text="CountryCode" labelFor="countrycode" design="Bold" />
 		<Input id="countrycode" required="true" value="{data>CountryCode}"/>
 
-        <ComboBox
+            <Label text="Role" labelFor="role" design="Bold" />
+        	<ComboBox
+        
             id="role"
             selectedKey="{data>RoleId}"
 				items="{path: 'data>/MasterAdminRoleSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</ComboBox>
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
 
-        <Button text="Update"
-						press="update"
-						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
-					
+	
+    
+
+    <footer>
+			<Toolbar>
+
+                <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+                    
+				<ToolbarSpacer />
+				<Button text="Update"
+						press="update">
+				
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+
+                        
+					
+				
+			</Toolbar>
+		</footer>
     </Page>
 </mvc:View>
