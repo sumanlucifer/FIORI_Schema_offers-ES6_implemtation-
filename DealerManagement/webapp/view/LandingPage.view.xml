@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Shell id="shell">
         <App id="app">
@@ -12,7 +12,7 @@
                                 <OverflowToolbar>
                                     <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
                                     <ToolbarSpacer />
-                                    <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}"> 
+                                    <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                                         <layoutData>
                                             <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                         </layoutData>
@@ -33,17 +33,20 @@
                                 <Column>
                                     <Text text="{i18n>DialCode}"/>
                                 </Column>
-                                 <Column>
+                                <Column>
                                     <Text text="{i18n>mobile}"/>
                                 </Column>
                             </columns>
 
                             <items>
-                                <ColumnListItem type="Navigation" press="onListItemPress">
+                                <ColumnListItem type="DetailAndActive" press="onListItemPress" detailPress="onDetailPress">
+                                    <dependents>
+                                        <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
+                                    </dependents>
                                     <cells>
                                         <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
                                         <Text text="{KNPLModel>Email}"/>
-                                         <Text text="{KNPLModel>DialCode}"/>
+                                        <Text text="{KNPLModel>DialCode}"/>
                                         <Text text="{KNPLModel>Mobile}"/>
                                     </cells>
                                 </ColumnListItem>

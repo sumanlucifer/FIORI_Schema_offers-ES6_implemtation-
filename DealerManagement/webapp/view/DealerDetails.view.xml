@@ -1,15 +1,155 @@
-<mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+<mvc:View xmlns:vbm="sap.ui.vbm"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%">
     <Shell id="shell">
-        <App>
-            <pages>
-                <Page id="page" title="{i18n>title}" showHeader="false">
-                    <content>
-                        
-                    </content>
-                </Page>
-            </pages>
-        </App>
+        <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="false" toggleHeaderOnTitleClick="false">
+            <uxap:headerTitle>
+                <uxap:ObjectPageDynamicHeaderTitle>
+                    <uxap:breadcrumbs>
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Dealer Details">
+                            <Link text="All Dealers" press="handleAllDealerLinkPress"/>
+                        </Breadcrumbs>
+                    </uxap:breadcrumbs>
+
+                    <uxap:expandedHeading>
+                        <FlexBox direction="Row">
+                            <Title text="{KNPLModel>Name}" class="sapUiTinyMarginEnd"/>
+                            <Text text="{KNPLModel>Id}"/>
+                        </FlexBox>
+                    </uxap:expandedHeading>
+
+                    <uxap:snappedHeading>
+                        <FlexBox fitContainer="true" alignItems="Center">
+                            <Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
+                            <FlexBox direction="Column">
+                                <Title text="{KNPLModel>Name}" wrapping="true"/>
+                                <Text text="{KNPLModel>Id}"/>
+                            </FlexBox>
+
+                        </FlexBox>
+                    </uxap:snappedHeading>
+
+                    <uxap:snappedTitleOnMobile>
+                        <Title text="{KNPLModel>Name}"/>
+                    </uxap:snappedTitleOnMobile>
+
+                    <uxap:actions>
+                        <Button text="Edit Dealer Details" type="Emphasized" icon="sap-icon://user-edit" iconFirst="true"/>
+                    </uxap:actions>
+                </uxap:ObjectPageDynamicHeaderTitle>
+
+
+            </uxap:headerTitle>
+
+            <uxap:headerContent>
+                <FlexBox wrap="Wrap" height="100%">
+
+                    <Avatar class="sapUiSmallMarginEnd" displaySize="L" displayShape="Square"/>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
+                        <items>
+                            <HBox>
+                                <Label text="Username&#160;&#160;" />
+                                <Text text="{KNPLModel>Username}"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Password&#160;&#160;" />
+                                <Text text="{KNPLModel>Password}"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Email&#160;&#160;" />
+                                <Text text="{KNPLModel>Email}"/>
+                            </HBox>
+                        </items>
+                    </FlexBox>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
+                        <items>
+                            <HBox>
+                                <Label text="DialCode&#160;&#160;" />
+                                <Text text="{KNPLModel>DialCode}"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="Mobile&#160;&#160;" />
+                                <Text text="{KNPLModel>Mobile}"/>
+                            </HBox>
+                            <HBox>
+                                <Label text="CreatedAt&#160;&#160;" />
+                                <Text text="{KNPLModel>CreatedAt}"/>
+                            </HBox>
+                        </items>
+                    </FlexBox>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd min-height" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
+                        <items>
+                            <HBox>
+                                <Label text="UpdatedBy&#160;&#160;" />
+                                <Text text="{KNPLModel>UpdatedBy}"/>
+                            </HBox>
+                        </items>
+                    </FlexBox>
+                </FlexBox>
+            </uxap:headerContent>
+
+            <uxap:sections>
+                <uxap:ObjectPageSection titleUppercase="false" title="Painter Linked">
+                    <uxap:subSections>
+                        <uxap:ObjectPageSubSection>
+                            <VBox>
+                                <Table id="idPainterTable" width="auto" items="{path: 'KNPLModel>PainterFamily'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <!-- <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/> -->
+                                            <ToolbarSpacer />
+                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
+                                                <layoutData>
+                                                    <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+                                                </layoutData>
+                                            </SearchField>
+                                            <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                            <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                            <!-- <Button text="Edit Dealer Details" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+
+                                    <columns>
+                                        <Column>
+                                            <Text text="{i18n>name}"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="RelationshipId"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="IsArchived"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>mobile}"/>
+                                        </Column>
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem type="Active" press="onListItemPress">
+                                            <dependents>
+                                                <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.detailPageFragments.ActionSheet" type="XML" />
+                                            </dependents>
+                                            <cells>
+                                                <ObjectIdentifier title="{KNPLModel>Name}" titleActive="true"/>
+                                                <Text text="{KNPLModel>RelationshipId}"/>
+                                                <Text text="{KNPLModel>IsArchived}"/>
+                                                <Text text="{KNPLModel>Mobile}"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+            </uxap:sections>
+        </uxap:ObjectPageLayout>
     </Shell>
 </mvc:View>
+
