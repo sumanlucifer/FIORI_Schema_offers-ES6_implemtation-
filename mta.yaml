@@ -110,11 +110,12 @@ modules:
     supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
-  type: org.cloudfoundry.managed-service
+  type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
+    service-name: knpl-pragati-uaa
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
   parameters:
