@@ -60,10 +60,10 @@
 	"sap.ui5": {
 		"flexEnabled": false,
 		"rootView": {
-			"viewName": "com.knpl.pragati.DealerManagement.view.LandingPage",
+			"viewName": "com.knpl.pragati.DealerManagement.view.App",
 			"type": "XML",
 			"async": true,
-			"id": "LandingPage"
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.1",
@@ -109,8 +109,7 @@
 				"async": true,
 				"viewPath": "com.knpl.pragati.DealerManagement.view",
 				"controlAggregation": "pages",
-				"controlId": "app",
-				"clearControlAggregation": false
+                "controlId": "app"
 			},
 			"routes": [{
 				"name": "RouteLandingPage",
@@ -125,14 +124,16 @@
 				"TargetLandingPage": {
 					"viewType": "XML",
 					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewName": "LandingPage"
+                    "viewName": "LandingPage",
+                    "viewLevel": 1,
+                    "viewId": "landingPage"
                 },
                 "TargetDetailsPage": {
 					"viewType": "XML",
 					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewName": "DealerDetails"
+                    "viewName": "DealerDetails",
+                    "viewLevel": 2,
+                    "viewId": "detailPage"
 				}
 			}
 		}
