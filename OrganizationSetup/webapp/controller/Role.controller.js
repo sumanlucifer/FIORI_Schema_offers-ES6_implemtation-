@@ -2,16 +2,37 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "sap/ui/core/UIComponent",
-    'sap/m/MessageToast'
+    "sap/ui/model/BindingMode",
+    'sap/m/MessageToast',
+    "sap/ui/core/message/Message",
+    "sap/ui/core/library",
+    "sap/ui/core/Fragment"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, History, UIComponent, MessageToast) {
+    function (Controller, History, UIComponent,BindingMode, MessageToast,Message,library,Fragment) {
         "use strict";
+
+        // shortcut for sap.ui.core.ValueState
+        var ValueState = library.ValueState;
+
+        // shortcut for sap.ui.core.MessageType
+        var MessageType = library.MessageType;
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Role", {
             onInit: function () {
+
+
+                var oMessageManager, oView;
+
+                oView = this.getView();
+                // set message model
+                oMessageManager = sap.ui.getCore().getMessageManager();
+                oView.setModel(oMessageManager.getMessageModel(), "message");
+
+                oMessageManager.registerObject(oView, true);
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("EditRole").attachPatternMatched(this._onObjectMatched, this);
 
@@ -25,6 +46,49 @@ sap.ui.define([
 
 
             },
+            _getMessagePopover: function () {
+                var oView = this.getView();
+
+                // create popover lazily (singleton)
+                if (!this._pMessagePopover) {
+                    this._pMessagePopover = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.OrganizationSetup.view.MessagePopover"
+                    }).then(function (oMessagePopover) {
+                        oView.addDependent(oMessagePopover);
+                        return oMessagePopover;
+                    });
+                }
+                return this._pMessagePopover;
+            },
+            onMessagePopoverPress: function (oEvent) {
+                var oSourceControl = oEvent.getSource();
+                this._getMessagePopover().then(function (oMessagePopover) {
+                    oMessagePopover.openBy(oSourceControl);
+                });
+            },
+
+            onSuccessPress: function () {
+                var oMessage = new Message({
+                    message: "My generated success message",
+                    type: MessageType.Success,
+                    //target: "/Dummy",
+                    //processor: this.getView().getModel()
+                });
+                sap.ui.getCore().getMessageManager().addMessages(oMessage);
+            },
+            onErrorPress: function () {
+                var oMessage = new Message({
+                    message: "Mandatory Fields Are Empty!",
+                    type: MessageType.Error,
+                    target: "/Dummy",
+                    processor: this.getView().getModel()
+                });
+                sap.ui.getCore().getMessageManager().addMessages(oMessage);
+            },
+             handleEmptyFields: function (oEvent) {
+                this.onErrorPress();
+            },
             onNavBack: function () {
                 var oHistory = History.getInstance();
                 var sPreviousHash = oHistory.getPreviousHash();
@@ -36,12 +100,14 @@ sap.ui.define([
                     oRouter.navTo("RouteHome", {}, true);
                 }
             },
-            handleEmptyFields: function (oEvent) {
-                var msg = 'Mandatory Fields Empty!';
-                MessageToast.show(msg);
-            },
             add: function () {
                 var role = this.getView().byId("role").getValue();
+                var description = this.getView().byId("description").getValue();
+                // var dialcode= this.getView().byId("dialcode").getValue();
+                // var mobile= this.getView().byId("mobile").getValue();
+                // var countrycode= this.getView().byId("countrycode").getValue();
+
+                var oModel = this.getView().getModel("data");
                 var description = this.getView().byId("description").getValue();
 
                 var requiredInputs = this.returnIdListOfRequiredFields();
@@ -52,13 +118,9 @@ sap.ui.define([
                     return false;
                 }
 
-
-                var oModel = this.getView().getModel("data");
-
                 var oData = {
                     Role: role,
                     Description: description
-
 
                 }
 
@@ -71,7 +133,6 @@ sap.ui.define([
                 var role = this.getView().byId("role").getValue();
                 var description = this.getView().byId("description").getValue();
 
-                var oModel = this.getView().getModel("data");
 
                 var requiredInputs = this.returnIdListOfRequiredFields();
                 var passedValidation = this.validateEventFeedbackForm(requiredInputs);
@@ -81,6 +142,7 @@ sap.ui.define([
                     return false;
                 }
 
+                var oModel = this.getView().getModel("data");
 
                 var oData = {
                     Role: role,
@@ -92,6 +154,7 @@ sap.ui.define([
 
                 oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
             },
+            //validation
             returnIdListOfRequiredFields: function () {
                 let requiredInputs;
                 return requiredInputs = ['role', 'description'];
@@ -112,5 +175,9 @@ sap.ui.define([
                 });
                 return valid;
             },
+            onClearPress : function(){
+			// does not remove the manually set ValueStateText we set in onValueStatePress():
+			sap.ui.getCore().getMessageManager().removeAllMessages();
+		},
         });
     });

@@ -16,7 +16,10 @@ xmlns:f="sap.ui.layout.form">
 			columnsXL="4"
 			><f:content>
 				<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" />
+		<Input id="role" required="true" 
+        	                type="Text"
+        				placeholder="Enter Role ..."
+        				valueStateText="Role must not be empty."/>
 
 		<Label text="Description" labelFor="description" design="Bold" />
 		<Input id="description" required="true" />
@@ -27,14 +30,21 @@ xmlns:f="sap.ui.layout.form">
 
 	
     <footer>
-			<OverflowToolbar>
+			<Toolbar>
+            <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
 				<ToolbarSpacer/>
+                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Add"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-			</OverflowToolbar>
+			</Toolbar>
 		</footer>
     </Page>
 </mvc:View>

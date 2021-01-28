@@ -17,18 +17,30 @@ xmlns:f="sap.ui.layout.form">
 			>
 			<f:content>
 				<Label text="Name" labelFor="name" design="Bold" />
-		<Input id="name" required="true" />
+		<Input id="name" required="true"
+        	                type="Text"
+        				placeholder="Enter Name ..."
+        				valueStateText="Name must not be empty. Maximum 10 characters." />
 
 				<Label text="Email" labelFor="email" design="Bold" />
-		<Input id="email" required="true" />
+		<Input id="email" required="true" 
+        	                type="Text"
+        				placeholder="Enter Email ..."
+        				valueStateText="Email must not be empty."/>
 
-        <Label text="DialCode" labelFor="dialcode" design="Bold" />
-		<Input id="dialcode" required="true" />
+        
+
 				<Label text="Mobile" labelFor="mobile" design="Bold" />
-		<Input id="mobile" required="true" type="Number"/>
+		<Input id="mobile" required="true"
+        	                type="Number"
+        				placeholder="Enter Mobile Number ..."
+        				valueStateText="Mobile No. must not be empty." />
 
          <Label text="CountryCode" labelFor="countrycode" design="Bold" />
-		<Input id="countrycode" required="true" />
+		<Input id="countrycode" required="true"
+        	                type="Text"
+        				placeholder="Enter CountryCode ..."
+        				valueStateText="CountryCode must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" />
         	<ComboBox
@@ -43,10 +55,18 @@ xmlns:f="sap.ui.layout.form">
 	
     <footer>
 			<OverflowToolbar>
+            <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
 				<ToolbarSpacer/>
+                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Add"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+
 					
 				</Button>
 			</OverflowToolbar>
