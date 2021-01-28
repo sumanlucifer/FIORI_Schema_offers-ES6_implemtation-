@@ -12,7 +12,8 @@ xmlns:l="sap.ui.layout"
 		class="sapUiResponsiveContentPadding">
 		<items>
 			<IconTabFilter text="Users" key="users">
-				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet'}" 
+				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
                 growingThreshold="20">
                             <headerToolbar>
@@ -68,7 +69,8 @@ xmlns:l="sap.ui.layout"
 
 			</IconTabFilter>
 			<IconTabFilter text="Roles" key="roles">
-				<Table inset="false" id="tableRoles" items="{path: 'data>/MasterAdminRoleSet'}"
+				<Table inset="false" id="tableRoles" items="{path: 'data>/MasterAdminRoleSet',
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
                 growingThreshold="20">
                             <headerToolbar>

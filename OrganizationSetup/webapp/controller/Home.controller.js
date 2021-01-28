@@ -71,7 +71,7 @@ sap.ui.define([
 
                 var oItem = oEvent.getSource();
                 oRouter.navTo("EditCompanySettings", {
-                    Id: window.encodeURIComponent(oItem.getBindingContext("tableData").getPath().substr(1))
+                    settingsId: window.encodeURIComponent(oItem.getBindingContext("tableData").getPath().substr(1))
                 });
                 //console.log(selectedUserId);
             },
@@ -93,15 +93,46 @@ sap.ui.define([
                 });
                 //console.log(selectedUserId);
             },
-            onPressRemove: function (oEvent) {
+            onPressRemoveUser: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 var oItem = oEvent.getSource();
-                var removeSet = window.encodeURIComponent(oItem.getBindingContext("data").getPath().substr(1));
-                console.log(removeSet);
-                var oModel = this.getView().getModel("data");
-                oModel.remove(removeSet);
+                var removeSet = oItem.getBindingContext("data").getPath();
 
+                var oTable = this.getView().byId("tableUsers");
+
+                var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
+
+                var oParam = {
+                    Name: oSelectedItem.Name,
+                    Email: oSelectedItem.Email,
+                    Mobile: oSelectedItem.Mobile,
+                    CountryCode: oSelectedItem.CountryCode,
+                    RoleId: oSelectedItem.RoleId,
+                    IsArchived: true
+                };
+                //console.log(oParam);
+                var oModel = this.getView().getModel("data");
+                oModel.update(removeSet, oParam);
+            },
+            onPressRemoveRole: function (oEvent) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                var oItem = oEvent.getSource();
+                var removeSet = oItem.getBindingContext("data").getPath();
+
+                var oTable = this.getView().byId("tableRole");
+
+                var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
+
+                var oParam = {
+                    Role: oSelectedItem.Role,
+                    IsArchived: true
+                };
+                //console.log(oParam);
+                var oModel = this.getView().getModel("data");
+                oModel.update(removeSet, oParam);
+                
             },
 
             

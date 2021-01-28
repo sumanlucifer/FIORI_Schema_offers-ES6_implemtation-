@@ -1,26 +1,50 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Role" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
 <Page
-		title="{i18n>detailPageTitle}"
+		
 		showNavButton="true"
 		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" />
+        <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="addRoleForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Add Role"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				<Label text="Role" labelFor="role" design="Bold" />
+		<Input id="role" required="true" 
+        	                type="Text"
+        				placeholder="Enter Role ..."
+        				valueStateText="Role must not be empty."/>
 
 		<Label text="Description" labelFor="description" design="Bold" />
 		<Input id="description" required="true" />
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
 
-        
-
-        <Button text="Add"
+	
+    <footer>
+			<Toolbar>
+            <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+				<ToolbarSpacer/>
+                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+				<Button text="Add"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+			</Toolbar>
+		</footer>
     </Page>
 </mvc:View>

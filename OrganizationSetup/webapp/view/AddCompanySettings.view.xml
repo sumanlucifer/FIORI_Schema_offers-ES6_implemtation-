@@ -1,29 +1,53 @@
-<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" 
+    xmlns:re="sap/ui/richtexteditor/RichTextEditor"
+    class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
 <Page
-		title="{i18n>detailPageTitle}"
 		showNavButton="true"
 		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		        <Label text="Disclaimer"  design="Bold"/>
-				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+        <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="addCompanySettingsForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Add Company Settings"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				 <Label text="Disclaimer"  design="Bold"/>
+                <Input id="disclaimer" required="true" />
+				
 
                 <Label text="AboutUs"  design="Bold"/>
-				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Input id="about" required="true"  />
+				
 
                 <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" width="20%" />
+		        <Input id="callcenter" required="true"  />
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
 
-        
-
-        <Button text="Add"
+	
+    <footer>
+			<Toolbar>
+            <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+				<ToolbarSpacer/>
+                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+				<Button text="Add"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+			</Toolbar>
+		</footer>
     </Page>
 </mvc:View>
