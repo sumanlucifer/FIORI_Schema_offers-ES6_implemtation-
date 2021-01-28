@@ -1,10 +1,10 @@
 {
     "resources": [
         {
-            "name": "controller/App.controller.js"
+            "name": "controller/ErrorHandler.js"
         },
         {
-            "name": "controller/ErrorHandler.js"
+            "name": "manifest.json"
         },
         {
             "name": "model/models.js"
@@ -22,14 +22,14 @@
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/BaseController.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "controller/App.controller.js"
         },
         {
             "name": "Component.js"
@@ -42,11 +42,11 @@
             "merged": true
         },
         {
-            "name": "model/formatter-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "model/formatter-dbg.js",
             "isDebug": true
         },
         {

@@ -22,3 +22,8 @@ knpl-influencer-web/MasterDataManagement/.env
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
 knpl1/ContactPainter/.env7
+
+# auto generated wildcard
+DealerManagement/.env4
+# auto generated wildcard
+DealerManagement/.env5
