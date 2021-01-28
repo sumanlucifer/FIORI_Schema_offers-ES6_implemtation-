@@ -60,6 +60,7 @@ sap.ui.define([
                 if (!oSearchField) {
                     // @ts-ignore
                     oBasicSearch = new sap.m.SearchField({
+                        id: "idSearch",
                         showSearchButton: false
                     });
                 } else {
@@ -91,52 +92,50 @@ sap.ui.define([
                 this.getViewModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
             },
 
-            onSearchOld: function (oEvent) {
-                if (oEvent.getParameters().refreshButtonPressed) {
-                    // Search field's 'refresh' button has been pressed.
-                    // This is visible if you select any master list item.
-                    // In this case no new search is triggered, we only
-                    // refresh the list binding.
-                    this.onRefresh();
-                } else {
-                    var aTableSearchState = [];
-                    var sQuery = oEvent.getParameter("query");
-
-                    if (sQuery && sQuery.length > 0) {
-                        aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
-                    }
-                    this._applySearch(aTableSearchState);
-                }
-            },
-
-            /**
-             * Event handler for refresh event. Keeps filter, sort
-             * and group settings and refreshes the list binding.
-             * @public
-             */
-            onRefresh: function () {
-                var oTable = this.byId("idDealerTable");
-                oTable.getBinding("items").refresh();
-            },
-
-            _applySearch: function (aTableSearchState) {
-                var oTable = this.byId("idDealerTable"),
-                    oViewModel = this.getViewModel("worklistViewModel");
-                oTable.getBinding("items").filter(aTableSearchState, "Application");
-                // changes the noDataText of the list in case there are no filter results
-                if (aTableSearchState.length !== 0) {
-                    oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-                }
-            },
-
-            onSearch: function () {
+            onSearch: function (oEvent) {
                 var aCurrentFilterValues = [];
 
-                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectName));
-                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectCategory));
-                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectSupplierName));
+                aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
+                aCurrentFilterValues.push(this.getInputText("idNameInput"));
+                aCurrentFilterValues.push(this.getInputText("idEmailInput"));
+                aCurrentFilterValues.push(this.getInputText("idMobileInput"));
+                aCurrentFilterValues.push(this.getInputText("idRegistrationStatus"));
 
                 this.filterTable(aCurrentFilterValues);
+            },
+
+            getInputText: function (controlId) {
+                return this.getView().byId(controlId).getValue();
+            },
+
+            filterTable: function (aCurrentFilterValues) {
+                this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+            },
+
+            getTableItems: function () {
+                return this.getView().byId("idDealerTable").getBinding("items");
+            },
+
+            getFilters: function (aCurrentFilterValues) {
+                var aFilters = [];
+
+                var aKeys = [
+                    "search","Name", "Email", "Mobile", "RegistrationStatus"
+                ];
+
+                for (let i = 0; i < aKeys.length; i++) {
+                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search" )
+                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
+                    else if(aCurrentFilterValues[i].length > 0 && aKeys[i] == "search" )    
+                        this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
+                }
+                return aFilters;
+            },
+
+            SearchInAllFields: function(aKeys, aFilters, searchValue){
+                for(let i=1 ; i<aKeys.length; i++){
+                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
+                }
             },
 
             handleSortButtonPressed: function () {
@@ -215,12 +214,12 @@ sap.ui.define([
                     dealerID: oEvent.getSource().getBindingContext().getObject().Id
                 });
                 this.presentBusyDialog();
-            },
+            }
 
-            onDetailPress: function (oEvent) {
+            /*onDetailPress: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
-            }
+            }*/
 
         });
     });

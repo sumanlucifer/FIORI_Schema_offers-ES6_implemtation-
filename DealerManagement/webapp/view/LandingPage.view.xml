@@ -21,43 +21,40 @@
                 <f:content>
                     <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Select forceSelection="false" change="onSelectChange" items="{
-                                                    path: '/PainterSet'
-                                                }">
-                                        <core:Item key="{Name}" text="{Name}"/>
-                                    </Select>
+                                    <Input id="idNameInput" placeholder="Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Name}" />
+                                        </suggestionItems>
+                                    </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Select forceSelection="false" change="onSelectChange" items="{
-                                                    path: '/PainterSet'
-                                                }">
-                                        <core:Item key="{Email}" text="{Email}"/>
-                                    </Select>
+                                    <Input id="idEmailInput" placeholder="Email" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Email}" />
+                                        </suggestionItems>
+                                    </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Select forceSelection="false" change="onSelectChange" items="{
-                                                    path: '/PainterSet'
-                                                }">
-                                        <core:Item key="{Mobile}" text="{Mobile}"/>
-                                    </Select>
+                                    <Input id="idMobileInput" placeholder="Mobile" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Mobile}" />
+                                        </suggestionItems>
+                                    </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="CreatedAt" label="CreatedAt" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Registration Status" label="Registration Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Select forceSelection="false" change="onSelectChange" items="{
-                                                    path: '/PainterSet'
-                                                }">
-                                        <core:Item key="{CreatedAt}" text="{CreatedAt}"/>
-                                    </Select>
+                                    <Input id="idRegistrationStatus" placeholder="Registration Status" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{RegistrationStatus}" />
+                                        </suggestionItems>
+                                    </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
