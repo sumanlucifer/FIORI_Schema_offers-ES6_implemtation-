@@ -17,7 +17,7 @@ sap.ui.define([
 				// @ts-ignore
 				this._oResourceBundle = oComponent.getModel("i18n").getResourceBundle();
 				this._oComponent = oComponent;
-				this._oModel = oComponent.getModel("KNPLModel");
+				this._oModel = oComponent.getModel();
 				this._bMessageOpen = false;
 				this._sErrorText = this._oResourceBundle.getText("errorText");
 

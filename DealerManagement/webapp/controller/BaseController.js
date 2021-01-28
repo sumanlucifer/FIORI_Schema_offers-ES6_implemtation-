@@ -28,7 +28,7 @@ sap.ui.define([
         },
 
         getComponentModel: function (sName) {
-            return this.getOwnerComponent().getModel(sName);
+            return this.getOwnerComponent().getModel();
         },
 
         /**

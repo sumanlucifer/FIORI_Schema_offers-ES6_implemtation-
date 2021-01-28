@@ -12,8 +12,6 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
-                // apply content density mode to the view as app view not created
-                this.addContentDensityClass();
 
                 //Initializations
                 var oViewModel,
@@ -22,7 +20,7 @@ sap.ui.define([
 
                 //Router Object
                 this.oRouter = this.getRouter();
-			    this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);    
+                this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
 
                 // Put down worklist table's original value for busy indicator delay,
                 // so it can be restored later on. Busy handling on the table is
@@ -51,7 +49,7 @@ sap.ui.define([
                 });
             },
 
-            _onObjectMatched: function (oEvent) {},
+            _onObjectMatched: function (oEvent) { },
 
             onUpdateFinished: function (oEvent) {
                 // update the worklist's object counter after the table update
@@ -68,7 +66,7 @@ sap.ui.define([
                 this.getViewModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
             },
 
-            onSearch: function (oEvent) {
+            onSearchOld: function (oEvent) {
                 if (oEvent.getParameters().refreshButtonPressed) {
                     // Search field's 'refresh' button has been pressed.
                     // This is visible if you select any master list item.
@@ -104,6 +102,16 @@ sap.ui.define([
                 if (aTableSearchState.length !== 0) {
                     oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
                 }
+            },
+
+            onSearch: function () {
+                var aCurrentFilterValues = [];
+
+                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectName));
+                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectCategory));
+                aCurrentFilterValues.push(this.getSelectedItemText(this.oSelectSupplierName));
+
+                this.filterTable(aCurrentFilterValues);
             },
 
             handleSortButtonPressed: function () {
@@ -161,7 +169,7 @@ sap.ui.define([
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     aFilters = [];
-                
+
                 var sPath = Object.keys(mParams.filterCompoundKeys)[0],
                     sOperator = "EQ",
                     sValue1 = mParams.filterKeys.false ? false : true,
@@ -176,20 +184,18 @@ sap.ui.define([
             onListItemPress: function (oEvent) {
                 var oItem = oEvent.getSource();
                 oItem.setNavigated(true);
-                var oBindingContext = oItem.getBindingContext("KNPLModel");
-                var oModel = this.getViewModel("KNPLModel");
+                var oBindingContext = oItem.getBindingContext();
+                var oModel = this.getComponentModel();
                 this.oRouter.navTo("RouteDetailsPage", {
-                    dealerID: oEvent.getSource().getBindingContext("KNPLModel").getObject().Id
+                    dealerID: oEvent.getSource().getBindingContext().getObject().Id
                 });
                 this.presentBusyDialog();
             },
 
-             onDetailPress: function (oEvent) {
+            onDetailPress: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
             }
-
-
 
         });
     });

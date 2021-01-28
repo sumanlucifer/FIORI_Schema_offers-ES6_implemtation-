@@ -2,14 +2,4 @@
 color: #e71a4f;
 } */
 
-.min-height{
-    min-height: 100%;
-}
 
-.sapUxAPObjectPageContainer, .sapUxAPObjectPageContainer+div, .sapUxAPObjectPageHeaderDetailsHidden {
-    background-color: #ffffff !important;
-}
-
-.sapFDynamicPageHeader.sapFDynamicPageHeaderWithContent {
-    box-shadow: none !important;
-}
