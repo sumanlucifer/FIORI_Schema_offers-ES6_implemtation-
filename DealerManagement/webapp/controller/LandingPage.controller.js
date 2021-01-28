@@ -12,11 +12,13 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
-
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
                     oTable = this.byId("idDealerTable");
+
+                //adding searchfield association to filterbar                        
+                this._addSearchFieldAssociationToFB();
 
                 //Router Object
                 this.oRouter = this.getRouter();
@@ -50,6 +52,29 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) { },
+
+            _addSearchFieldAssociationToFB: function () {
+                let oFilterBar = this.getView().byId("filterbar");
+                let oSearchField = oFilterBar.getBasicSearch();
+                var oBasicSearch;
+                if (!oSearchField) {
+                    // @ts-ignore
+                    oBasicSearch = new sap.m.SearchField({
+                        showSearchButton: false
+                    });
+                } else {
+                    oSearchField = null;
+                }
+
+                oFilterBar.setBasicSearch(oBasicSearch);
+
+                oBasicSearch.attachBrowserEvent("keyup", function (e) {
+                    if (e.which === 13) {
+                        this.onSearch();
+                    }
+                }.bind(this)
+                );
+            },
 
             onUpdateFinished: function (oEvent) {
                 // update the worklist's object counter after the table update

@@ -1,57 +1,3 @@
-<!-- <mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m">
-    <Page title="{i18n>title}" showHeader="false">
-        <content>
-
-            <Table id="idDealerTable" width="auto" items="{path: '/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
-                <headerToolbar>
-                    <OverflowToolbar>
-                        <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
-                        <ToolbarSpacer />
-                        <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
-                            <layoutData>
-                                <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-                            </layoutData>
-                        </SearchField>
-                        <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                        <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
-                        <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/>
-                    </OverflowToolbar>
-                </headerToolbar>
-
-                <columns>
-                    <Column>
-                        <Text text="{i18n>name}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>email}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>DialCode}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>mobile}"/>
-                    </Column>
-                </columns>
-
-                <items>
-                    <ColumnListItem type="DetailAndActive" press="onListItemPress" detailPress="onDetailPress">
-                        <dependents>
-                            <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
-                        </dependents>
-                        <cells>
-                            <ObjectIdentifier title="{Name}" titleActive="true"/>
-                            <Text text="{Email}"/>
-                            <Text text="{DialCode}"/>
-                            <Text text="{Mobile}"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-
-        </content>
-    </Page>
-</mvc:View> -->
-
 <mvc:View controllerName="com.knpl.pragati.DealerManagement.controller.LandingPage" height="100%"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
@@ -73,17 +19,8 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="true" showGoOnFB="true">
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="s" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <SearchField tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
-                                        <layoutData>
-                                            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-                                        </layoutData>
-                                    </SearchField>
-                                </fb:control>
-                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true">
                                 <fb:control>
                                     <Select forceSelection="false" change="onSelectChange" items="{
