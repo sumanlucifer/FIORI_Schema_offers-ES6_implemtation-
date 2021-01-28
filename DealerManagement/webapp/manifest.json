@@ -24,8 +24,8 @@
                     },
                     "semanticObject": "Manage",
                     "action": "DLR",
-                    "title": "{{appTitle1}}",
-                    "subTitle": "{{appSubTitle1}}"
+                    "title": "{{appTileTitle}}",
+                    "subTitle": "{{appTileSubTitle}}"
                 }
             }
         },
