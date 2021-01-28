@@ -51,6 +51,10 @@ modules:
       - DealerManagement-content.zip
       name: DealerManagement
       target-path: resources/
+    - artifacts:
+      - KnowledgeManagement-content.zip
+      name: KnowledgeManagement
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -101,8 +105,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-
-
+- name: KnowledgeManagement
+  type: html5
+  path: KnowledgeManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
