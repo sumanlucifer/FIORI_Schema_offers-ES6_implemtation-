@@ -4,8 +4,7 @@
     xmlns:layout="sap.ui.layout"
     xmlns="sap.m"
     xmlns:f="sap.f"
-    xmlns:fb="sap.ui.comp.filterbar"
-    xmlns:vm="sap.ui.comp.variants">
+    xmlns:fb="sap.ui.comp.filterbar">
     <f:DynamicPage headerExpanded="true">
         <!-- DynamicPage Title -->
         <f:title>
@@ -19,15 +18,33 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="true" showGoOnFB="true">
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="s" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <SearchField tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
-                                        <layoutData>
-                                            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-                                        </layoutData>
-                                    </SearchField>
+                                    <Input placeholder="Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Name}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input placeholder="Email" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Email}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input placeholder="Mobile" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Mobile}" />
+                                        </suggestionItems>
+                                    </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>

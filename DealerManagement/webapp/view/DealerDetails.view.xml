@@ -4,7 +4,6 @@
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
     xmlns="sap.m" controllerName="com.knpl.pragati.DealerManagement.controller.DealerDetails" height="100%">
-    <Shell id="shell">
         <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
@@ -19,9 +18,9 @@
                     </uxap:expandedHeading>
 
                     <uxap:snappedHeading>
-                        <FlexBox fitContainer="true" alignItems="Center">
+                        <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
                             <Avatar class="sapUiTinyMarginEnd"/>
-                            <FlexBox direction="Column">
+                            <FlexBox direction="Column" renderType="Bare">
                                 <Title text="{Name}" wrapping="true"/>
                                 <Text text="{Id}"/>
                             </FlexBox>
@@ -45,50 +44,29 @@
             </uxap:headerTitle>
 
             <uxap:headerContent>
-                <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom">
+                <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
 
                     <Avatar class="sapUiSmallMarginEnd" displaySize="M"/>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap">
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                            <HBox>
-                                <Label text="Username&#160;&#160;" />
-                                <Text text="{Username}"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Password&#160;&#160;" />
-                                <Text text="{Password}"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Email&#160;&#160;" />
-                                <Text text="{Email}"/>
-                            </HBox>
+                            <ObjectAttribute title="Username" text="{Username}"/>
+                            <ObjectAttribute title="Password" text="{Password}"/>
+                            <ObjectAttribute title="Email" text="{Email}"/>
                         </items>
                     </FlexBox>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                            <HBox>
-                                <Label text="DialCode&#160;&#160;" />
-                                <Text text="{DialCode}"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="Mobile&#160;&#160;" />
-                                <Text text="{Mobile}"/>
-                            </HBox>
-                            <HBox>
-                                <Label text="CreatedAt&#160;&#160;" />
-                                <Text text="{CreatedAt}"/>
-                            </HBox>
+                            <ObjectAttribute title="DialCode" text="{DialCode}"/>
+                            <ObjectAttribute title="Mobile" text="{Mobile}"/>
+                            <ObjectAttribute title="CreatedAt" text="{CreatedAt}"/>
                         </items>
                     </FlexBox>
 
-                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceBetween" direction="Column" wrap="Wrap">
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="Start" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                            <HBox>
-                                <Label text="UpdatedBy&#160;&#160;" />
-                                <Text text="{UpdatedBy}"/>
-                            </HBox>
+                            <ObjectAttribute title="UpdatedBy" text="{Username}"/>
                         </items>
                     </FlexBox>
                 </FlexBox>
@@ -98,7 +76,7 @@
                 <uxap:ObjectPageSection titleUppercase="false" title="Painter Linked">
                     <uxap:subSections>
                         <uxap:ObjectPageSubSection>
-                            <VBox>
+                            <VBox renderType="Bare">
                                 <Table id="idPainterTable" width="auto" items="{path: 'PainterFamily'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
@@ -155,6 +133,5 @@
                 </uxap:ObjectPageSection>
             </uxap:sections>
         </uxap:ObjectPageLayout>
-    </Shell>
 </mvc:View>
 
