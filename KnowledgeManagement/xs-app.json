@@ -1,12 +1,12 @@
 {
     "welcomeFile": "/index.html",
-    "authenticationMethod": "none",
+    "authenticationMethod": "route",
     "logout": {
         "logoutEndpoint": "/do/logout"
     },
     "routes": [
         {
-            "authenticationType": "none",
+            "authenticationType": "xsuaa",
             "csrfProtection": false,
             "source": "^/KNPL_PAINTER_API/(.*)$",
             "destination": "KNPL_PAINTER_API",
