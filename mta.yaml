@@ -43,6 +43,10 @@ modules:
       - Manage_FAQ-content.zip
       name: Manage_FAQ
       target-path: resources/
+    - artifacts:
+      - Manage_Notifications-content.zip
+      name: Manage_Notifications
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -80,6 +84,14 @@ modules:
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Manage_Notifications
+  type: html5
+  path: Manage_Notifications
   build-parameters:
     builder: custom
     commands:
