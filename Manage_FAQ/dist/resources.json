@@ -1,16 +1,17 @@
 {
     "resources": [
         {
-            "name": "index.html"
+            "name": "model/formatter-dbg.js",
+            "isDebug": true
         },
         {
-            "name": "Component.js"
+            "name": "model/formatter.js"
         },
         {
             "name": "model/models.js"
         },
         {
-            "name": "model/formatter.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/Worklist.controller.js"
@@ -31,7 +32,7 @@
             "name": "controller/App.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "Component.js"
         },
         {
             "name": "manifest-bundle.zip"
@@ -41,12 +42,12 @@
             "merged": true
         },
         {
-            "name": "controller/ErrorHandler-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/formatter-dbg.js",
-            "isDebug": true
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/Worklist-dbg.controller.js",
@@ -61,7 +62,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/ErrorHandler-dbg.js",
             "isDebug": true
         },
         {
@@ -95,8 +96,7 @@
             "name": "view/App.view.xml"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "index.html"
         }
     ]
 }

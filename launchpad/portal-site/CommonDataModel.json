@@ -44,6 +44,10 @@
 				}, {
 					"appId": "com.knpl.pragati.Manage_FAQ",
 					"vizId": "Manage-FAQ"
+				}, {
+					"id": "com.knpl.pragati.Manage_Notifications-6-1611902399399",
+					"appId": "com.knpl.pragati.Manage_Notifications",
+					"vizId": "Manage-Notifications"
 				}]
 			}
 		}],

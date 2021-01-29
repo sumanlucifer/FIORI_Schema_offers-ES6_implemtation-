@@ -1,11 +1,11 @@
 {
   "welcomeFile": "/index.html",
- "authenticationMethod": "route",
+  "authenticationMethod": "route",
   "logout": {
     "logoutEndpoint": "/do/logout"
   },
   "routes": [
-     {
+    {
       "authenticationType": "xsuaa",
       "csrfProtection": false,
       "source": "^/KNPL_PAINTER_API/(.*)$",
@@ -18,5 +18,5 @@
       "service": "html5-apps-repo-rt",
       "authenticationType": "xsuaa"
     }
-]
+  ]
 }

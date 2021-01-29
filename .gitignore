@@ -27,3 +27,8 @@ knpl1/ContactPainter/.env7
 DealerManagement/.env4
 # auto generated wildcard
 DealerManagement/.env5
+knpl-influencer-web/Manage_FAQ/.env
+# auto generated wildcard
+knpl-influencer-web/Manage_Painter/.env
+# auto generated wildcard
+knpl-influencer-web/Manage_FAQ/.env2
