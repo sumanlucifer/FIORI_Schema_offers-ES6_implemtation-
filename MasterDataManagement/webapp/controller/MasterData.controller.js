@@ -26,6 +26,7 @@ sap.ui.define(
         },
         _onRouteMatched: function (oEvent) {
           var oQuery = oEvent.getParameter("arguments")["?query"];
+          console.log(oQuery)
           var aValidKeys = [
             "0",
             "1",
@@ -41,7 +42,7 @@ sap.ui.define(
           ];
           var sKey = 0;
           if (oQuery && aValidKeys.indexOf(oQuery.tab) > -1) {
-                sKey = oQuery.tab;
+            sKey = oQuery.tab;
           }
           this._initFragment(sKey);
         },
@@ -64,6 +65,9 @@ sap.ui.define(
             key: mKey.toString(),
             item: oItemFirst,
           });
+        },
+        onNavBtnPress: function () {
+          console.log("onNavButtonPress");
         },
         onSectIctb: function (oEvent) {
           console.log("selectTrigerred");
@@ -139,6 +143,7 @@ sap.ui.define(
             prop: window.encodeURIComponent(sPath),
             mode: "edit",
             name: window.encodeURIComponent(sName),
+            key: sSelectedKey
           });
         },
         onPressAddBtn: function (oEvent) {
@@ -154,6 +159,7 @@ sap.ui.define(
             prop: window.encodeURIComponent(sPath),
             mode: "add",
             name: window.encodeURIComponent(sName),
+            key: this.getView().byId("idIconTabBarFiori2").getSelectedKey()
           });
         },
         onPressRemove: function (oEvent) {
@@ -172,7 +178,7 @@ sap.ui.define(
               if (sAction == "OK") {
                 oModel.remove(sPath, {
                   success: function () {
-                    MessageToast.show(oTitle+" Sucessfully Deleted.");
+                    MessageToast.show(oTitle + " Sucessfully Deleted.");
                     console.log(oView.getModel());
                     oView.byId("smartTable").getModel().refresh();
                   },

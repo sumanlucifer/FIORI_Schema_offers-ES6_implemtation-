@@ -1,30 +1,26 @@
 <mvc:View controllerName="com.knpl.pragati.Training.controller.ListMaster" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%" xmlns:smartTable="sap.ui.comp.smarttable">
 
-    <Page title="Training Types" class="sapUiContentPadding" showNavButton="true" showHeader="true">
+    <Page title="Training Types" class="sapUiContentPadding" showNavButton="false" showHeader="true">
         <headerContent>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Button icon="sap-icon://navigation-right-arrow" text="Add New Master Training Type"/>
-
-            </Toolbar>
+        
         </headerContent>
         <content>
             <smartTable:SmartTable id="smartTable" entitySet="MasterTrainingTypeSet" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" ignoredFields="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId" ignoreFromPersonalisation="" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" header="Line Items" placeToolbarInTable="true" beforeRebindTable="onBeforeRebindTable" persistencyKey="SmartTablePKey" initiallyVisibleFields="TrainingType">
                 <smartTable:customToolbar>
                     <OverflowToolbar id="stickyToolbar" design="Solid" class="stickyToolbar">
                         <ToolbarSpacer/>
-                        <Button type="Transparent" press="onPressAddBtn" icon="sap-icon://add" text="Add Training" tooltip="Add Training"/>
+                        <Button type="Transparent" press="onPressAddBtn" icon="sap-icon://add" text="Add Training Master" tooltip="Add Training"/>
                     </OverflowToolbar>
                 </smartTable:customToolbar>
                 <Table growing="true" growingThreshold="20" growingScrollToLoad="false">
                     <columns>
-                        <Column>
+                        <Column width="15%">
                             <customData>
                                 <core:CustomData key="p13nData" value='\{"columnKey": "Id", "columnIndex":"3", "leadingProperty": "Id"}'/>
                             </customData>
                             <Text text="Edit"/>
                         </Column>
-                        <Column>
+                        <Column width="15%">
                             <customData>
                                 <core:CustomData key="p13nData" value='\{"columnKey": "IsSelected", "columnIndex":"4", "leadingProperty": "Id"}'/>
                             </customData>

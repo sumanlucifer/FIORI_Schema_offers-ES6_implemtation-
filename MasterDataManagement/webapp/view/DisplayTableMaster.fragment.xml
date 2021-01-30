@@ -1,28 +1,25 @@
 <core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
-    <smartTable:SmartTable id="smartTable" entitySet="{oCtrlMdl>/smtTblEty}" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" 
-    ignoredFields="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId" ignoreFromPersonalisation="" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" header="Line Items" placeToolbarInTable="true" persistencyKey="SmartTablePKey" initiallyVisibleFields="{oCtrlMdl>/smtTblFlds}">
+    <smartTable:SmartTable id="smartTable" entitySet="{oCtrlMdl>/smtTblEty}" tableType="ResponsiveTable" showRowCount="false" useExportToExcel="false" ignoredFields="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId" ignoreFromPersonalisation="" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" placeToolbarInTable="true" persistencyKey="SmartTablePKey" initiallyVisibleFields="{oCtrlMdl>/smtTblFlds}">
         <smartTable:customToolbar>
             <OverflowToolbar id="stickyToolbar" design="Solid" class="stickyToolbar">
                 <ToolbarSpacer/>
-                
+
                 <Button type="Transparent" press="onPressAddBtn" icon="sap-icon://add" text="Add {oCtrlMdl>/IcnTbFilName}" tooltip="Add {oCtrlMdl>/IcnTbFilName}"/>
-                
+
             </OverflowToolbar>
         </smartTable:customToolbar>
-        <Table  growing="true" growingThreshold="4" growingScrollToLoad="false">
+        <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
             <columns>
-                <Column>
+                <Column width="15%">
                     <customData>
-                        <!-- Custom Field -->
                         <core:CustomData key="p13nData" value='\{"columnKey": "Id", "columnIndex":"3", "leadingProperty": "Id"}'/>
                     </customData>
                     <Text text="Edit"/>
                 </Column>
-                <Column>
+                <Column width="15%">
                     <customData>
-                        <!-- Custom Field -->
-                        <core:CustomData key="p13nData" value='\{"columnKey": "IsSelected", "columnIndex":"4", "leadingProperty": "Id"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "columnIndex":"4", "leadingProperty": "Id"}'/>
                     </customData>
                     <Text text="Remove"/>
                 </Column>

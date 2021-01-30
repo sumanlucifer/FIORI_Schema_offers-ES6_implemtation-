@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
+        "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
@@ -104,6 +104,11 @@
           "name": "RouteList",
           "pattern": "",
           "target": ["TargetList"]
+        },
+        {
+          "name": "RouteAddMaster",
+          "pattern": "AddMaster/{mode}",
+          "target": ["TargetAddMaster"]
         }
       ],
       "targets": {
@@ -120,6 +125,13 @@
           "clearControlAggregation": false,
           "viewId": "ListMaster",
           "viewName": "ListMaster"
+        },
+        "TargetAddMaster": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "AddMaster",
+          "viewName": "AddMaster"
         }
       }
     }

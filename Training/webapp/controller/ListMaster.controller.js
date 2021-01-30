@@ -65,6 +65,13 @@ sap.ui.define(
             }
           );
         },
+        onPressAddBtn: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          var oView = this.getView();
+          oRouter.navTo("RouteAddMaster",{
+              mode:"Add"
+          });
+        },
       }
     );
   }

@@ -29,12 +29,7 @@
 			</f:layout>
 			<f:formContainers>
 				<f:FormContainer formElements ="{path:'oModelView>/prop2',factory:'.myFactory'}">
-					<!-- <f:formElements>
-						<f:FormElement label="Country">
-							<f:fields>
-								<Input value="{SupplierName}" id="name"/>
-							</f:fields>
-						</f:FormElement> -->
+					
 				</f:FormContainer>
 			</f:formContainers>
 		</f:Form>

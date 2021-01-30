@@ -1,32 +1,23 @@
-<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.EditTable"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" 	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" 
-xmlns:uxap="sap.uxap"		height="100%">
-	<uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" showFooter="true">
-		<uxap:headerTitle>
-			<uxap:ObjectPageHeader objectTitle="{oModelView>/titleP1} - {oModelView>/titleP2}">
-			</uxap:ObjectPageHeader>
-		</uxap:headerTitle>
-		<uxap:sections>
+<mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.EditTable" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+   <Page title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="true" showHeader="true" navButtonPress="navPressBack">
+        <content>
+            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="false" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter key="0" text="{i18n>MastDataExterLinks}"></IconTabFilter>
+                </items>
+            </IconTabBar>
+            <VBox id="oVbxSmtTbl">
+               
+            </VBox>
 
-
-			<uxap:ObjectPageSection titleUppercase="false" title="Details">
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection titleUppercase="false" id="objSec1">
-                     
-					</uxap:ObjectPageSubSection>
-				</uxap:subSections>
-			</uxap:ObjectPageSection>
-        
-          
-	
-
-
-		</uxap:sections>
-        <uxap:footer>
+        </content>
+        <footer>
             <Toolbar>
-				<ToolbarSpacer/>
-				<Button width="9%" text= "{= ${oModelView>/edit} === true ? 'Save' : 'Add' }" type="Accept" press="onPressSave" />
-			</Toolbar>
-        </uxap:footer>
-
-	</uxap:ObjectPageLayout>
+                <Button icon="sap-icon://alert" text="{= ${message>/}.length }" visible="{= ${message>/}.length > 0 }" type="Emphasized" press="onMessagePopoverPress"/>
+                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+                <ToolbarSpacer/>
+                <Button width="9%" text="{= ${oModelView>/edit} === true ? 'Save' : 'Add' }" type="Accept" press="onPressSave"/>
+            </Toolbar>
+        </footer>
+    </Page>
 </mvc:View>
