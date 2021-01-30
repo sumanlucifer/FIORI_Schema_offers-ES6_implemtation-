@@ -41,7 +41,7 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 this.getView().bindElement({
                     path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").settingsId),
-                    model: "tableData"
+                    model: "data"
                 });
 
 
@@ -69,12 +69,12 @@ sap.ui.define([
                 });
             },
 
-            onSuccessPress: function () {
+            onSuccessPress: function (msg) {
                 var oMessage = new Message({
-                    message: "My generated success message",
+                    message: msg,
                     type: MessageType.Success,
-                    //target: "/Dummy",
-                    //processor: this.getView().getModel()
+                    target: "/Dummy",
+                    processor: this.getView().getModel()
                 });
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
             },
@@ -115,13 +115,16 @@ sap.ui.define([
                 }
 
                 var oData = {
-                    Disclaimer: disclaimer,
+
                     AboutUs: aboutUs,
-                    CallCenterNumber: callCenterNo
+                    Disclaimer: disclaimer,
+                    CallCenterHelpline: callCenterNo
+                
 
                 }
-                console.log(oData);
-                //oModel.create("/MasterAdminRoleSet", oData,{success:MessageToast.show("Successfully added!")});
+                var oModel = this.getView().getModel("data");
+                //console.log(oData);
+                oModel.create("/CompanySettingsSet", oData, { success: this.onSuccessPress("Successfully created!") });
 
 
             },
@@ -140,20 +143,21 @@ sap.ui.define([
                 }
 
 
-                // var oModel = this.getView().getModel("data");
+                var oModel = this.getView().getModel("data");
 
 
                 var oData = {
-                    Disclaimer: disclaimer,
+
                     AboutUs: aboutUs,
-                    CallCenterNumber: callCenterNo
+                    Disclaimer: disclaimer,
+                    CallCenterHelpline: callCenterNo
 
                 }
-                console.log(oData);
+                //console.log(oData);
 
-                // var editSet = this.getView().getBindingContext("data").getPath();
+                var editSet = this.getView().getBindingContext("data").getPath();
 
-                // oModel.update(editSet, oData, { success: MessageToast.show("Successfully updated!") });
+                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!")});
             },
             loadRichTextEditiors: function () {
                 var oRichTextEditorDisclaimer = new RichTextEditor("myRTE1", {
@@ -188,7 +192,7 @@ sap.ui.define([
             //validation
             returnIdListOfRequiredFields: function () {
                 let requiredInputs;
-                return requiredInputs = ['disclaimer', 'about','callcenter'];
+                return requiredInputs = ['disclaimer', 'about', 'callcenter'];
             },
 
             validateEventFeedbackForm: function (requiredInputs) {
@@ -206,9 +210,17 @@ sap.ui.define([
                 });
                 return valid;
             },
-            onClearPress : function(){
-			// does not remove the manually set ValueStateText we set in onValueStatePress():
-			sap.ui.getCore().getMessageManager().removeAllMessages();
-		},
+            onClearPress: function () {
+                // does not remove the manually set ValueStateText we set in onValueStatePress():
+                sap.ui.getCore().getMessageManager().removeAllMessages();
+            },
+            onCancelPress : function () {
+               
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                oRouter.navTo("RouteHome");
+
+        },
+        
         });
     });

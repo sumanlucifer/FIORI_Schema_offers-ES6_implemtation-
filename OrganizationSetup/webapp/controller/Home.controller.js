@@ -4,17 +4,20 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/FilterType",
-    "sap/ui/richtexteditor/RichTextEditor"
+    "sap/ui/richtexteditor/RichTextEditor",
+    'sap/m/MessageToast'
 
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor) {
+    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor, MessageToast) {
         "use strict";
+        
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
             onInit: function () {
+               
 
             },
             onFilterUsers: function (oEvent) {
@@ -62,7 +65,7 @@ sap.ui.define([
             },
             onPressAddCompanySettings: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-               
+
                 oRouter.navTo("AddCompanySettings");
 
             },
@@ -71,7 +74,7 @@ sap.ui.define([
 
                 var oItem = oEvent.getSource();
                 oRouter.navTo("EditCompanySettings", {
-                    settingsId: window.encodeURIComponent(oItem.getBindingContext("tableData").getPath().substr(1))
+                    settingsId: window.encodeURIComponent(oItem.getBindingContext("data").getPath().substr(1))
                 });
                 //console.log(selectedUserId);
             },
@@ -113,7 +116,24 @@ sap.ui.define([
                 };
                 //console.log(oParam);
                 var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam);
+                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
+
+
+
+            },
+            onRemoveSuccess: function () {
+                var msg = 'Removed Successfully!';
+                MessageToast.show(msg);
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+
+
+            },
+            onRemoveError: function () {
+                var msg = 'Error!';
+                MessageToast.show(msg);
+
+
             },
             onPressRemoveRole: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -131,12 +151,34 @@ sap.ui.define([
                 };
                 //console.log(oParam);
                 var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam);
-                
-            },
+                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
 
-            
-            
+
+            },
+            onPressRemoveCompanySettings: function (oEvent) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                var oItem = oEvent.getSource();
+                var removeSet = oItem.getBindingContext("data").getPath();
+
+                var oTable = this.getView().byId("tableCompanySettings");
+
+                var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
+
+                var oParam = {
+                    AboutUs: oSelectedItem.aboutUs,
+                    Disclaimer: oSelectedItem.disclaimer,
+                    CallCenterHelpline: oSelectedItem.callCenterNo,
+                    IsArchived: true
+                };
+                //console.log(oParam);
+                var oModel = this.getView().getModel("data");
+                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
+
+            }
+
+
+
 
         });
     });

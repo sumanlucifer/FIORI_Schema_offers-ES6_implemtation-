@@ -3,9 +3,6 @@ xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
 <Page
-		
-		showNavButton="true"
-		navButtonPress=".onNavBack"
          class="sapUiContentPadding"
         >
         <VBox class="sapUiSmallMargin">
@@ -30,7 +27,7 @@ xmlns:f="sap.ui.layout.form">
         				placeholder="Enter Name ..."
         				valueStateText="Name must not be empty. Maximum 10 characters." />
 
-				<Label text="Email" labelFor="email" design="Bold" />
+				<Label text="Email Id" labelFor="email" design="Bold" />
 		<Input id="email" required="true" value="{
         					path : 'data>Email',
                             type : 'sap.ui.model.type.String',
@@ -57,24 +54,29 @@ xmlns:f="sap.ui.layout.form">
         				placeholder="Enter Mobile Number ..."
         				valueStateText="Mobile No. must not be empty." />
 
-         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
+         <Label text="Country Code" labelFor="countrycode" design="Bold" />
 		<Input id="countrycode" required="true" value="{
         					path : 'data>CountryCode',
                              type : 'sap.ui.model.type.String',
         					constraints : {
         						minLength: 1
+                                
         						
         					}
                            }"
         	                type="Text"
-        				placeholder="Enter CountryCode ..."
+        				placeholder="Enter Country Code ..."
         				valueStateText="CountryCode must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" />
         	<ComboBox
         
             id="role"
+            required="true"
             selectedKey="{data>RoleId}"
+            
+        				placeholder="Select Role ..."
+        				valueStateText="Role must not be empty."
 				items="{path: 'data>/MasterAdminRoleSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</ComboBox>
@@ -100,8 +102,15 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer />
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Update"
+                type="Emphasized"
 						press="update">
 				
+				</Button>
+                  <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
+					
 				</Button>
 
                         

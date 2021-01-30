@@ -22,7 +22,7 @@ xmlns:l="sap.ui.layout"
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField id ="searchField" search=".onFilterUsers" width="20%" />
                                     
-                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
                                 </Toolbar>
                             </headerToolbar>
@@ -61,7 +61,7 @@ xmlns:l="sap.ui.layout"
                                         <Text text="{data>CountryCode}"/>
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveUser"></Button>
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -78,7 +78,7 @@ xmlns:l="sap.ui.layout"
 
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField id ="searchFieldRole" search=".onFilterRoles" width="20%" />
-                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddRole"/>
                                 </Toolbar>
                             </headerToolbar>
@@ -111,14 +111,15 @@ xmlns:l="sap.ui.layout"
                                         
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEditRole" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveRole"></Button>
                                     </cells>
                                 </ColumnListItem>
                             </items>
                         </Table>
 			</IconTabFilter>
 			<IconTabFilter text="Company Settings" key="settings">
-                    <Table inset="false" id="tableCompanySettings" items="{path: 'tableData>/CompanySettings'}"
+                    <Table inset="false" id="tableCompanySettings" items="{path: 'data>/CompanySettingsSet',
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
                 growingThreshold="20">
                             <headerToolbar>
@@ -126,7 +127,7 @@ xmlns:l="sap.ui.layout"
 
                                     <ToolbarSpacer></ToolbarSpacer>
             
-                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
+                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddCompanySettings"/>
                                 </Toolbar>
                             </headerToolbar>
@@ -157,13 +158,13 @@ xmlns:l="sap.ui.layout"
 
 
                                         
-                                        <Text text="{tableData>AboutUs}"/>
-                                        <Text text="{tableData>Disclaimer}"/>
-                                        <Text text="{tableData>CallCenterNo}"/>
+                                        <Text text="{data>AboutUs}"/>
+                                        <Text text="{data>Disclaimer}"/>
+                                        <Text text="{data>CallCenterHelpline}"/>
                                         
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEditCompanySettings" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
+                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveCompanySettings"></Button>
                                     </cells>
                                 </ColumnListItem>
                             </items>

@@ -2,10 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page
-		
-		showNavButton="true"
-		navButtonPress=".onNavBack">
+<Page>
          <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editRoleForm"
 			editable="true"
@@ -16,10 +13,16 @@ xmlns:f="sap.ui.layout.form">
 			columnsXL="4"
 			><f:content>
 				<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" value="{data>Role}"/>
+		<Input id="role" required="true" type="Text"
+        				placeholder="Enter Role ..."
+        				valueStateText="Role must not be empty."
+                         value="{data>Role}"/>
 
         <Label text="Description" labelFor="role" design="Bold" />
-		<Input id="description" required="true" value="{data>Description}"/>
+		<Input id="description" required="true" type="Text"
+        				placeholder="Enter Description ..."
+        				valueStateText="Description must not be empty."
+                        value="{data>Description}"/>
 		
 			</f:content>
 		</f:SimpleForm>
@@ -36,8 +39,15 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Update"
+                type="Emphasized"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+                  <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
 					
 				</Button>
 			</Toolbar>
