@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
-    <smartTable:SmartTable editable="false" id="smartTable" entitySet="{oCtrlMdl>/smtTblEty}" tableType="ResponsiveTable" showRowCount="false" useExportToExcel="false" useVariantManagement="true" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" placeToolbarInTable="true" persistencyKey="SmartTablePKey" initiallyVisibleFields="{oCtrlMdl>/smtTblFlds}" ignoreFromPersonalisation="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId">
+    <smartTable:SmartTable editable="false" id="smartTable" entitySet="{oCtrlMdl>/smtTblEty}" tableType="ResponsiveTable" showRowCount="false" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" placeToolbarInTable="true" persistencyKey="SmartTablePKey" initiallyVisibleFields="{oCtrlMdl>/smtTblFlds}" ignoreFromPersonalisation="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId">
         <smartTable:customToolbar>
             <OverflowToolbar>
                 <ToolbarSpacer/>
