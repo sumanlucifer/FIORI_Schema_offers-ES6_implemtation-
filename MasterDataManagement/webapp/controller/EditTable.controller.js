@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "com/knpl/pragati/MasterDataManagement/controller/BaseController",
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
     "sap/ui/comp/smartform/GroupElement",
@@ -10,12 +10,13 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/library",
     "sap/ui/core/message/Message",
+    "sap/m/Input"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
   function (
-    Controller,
+    BaseController,
     Fragment,
     JSONModel,
     GroupElement,
@@ -24,11 +25,12 @@ sap.ui.define(
     MessageBox,
     MessageToast,
     library,
-    Message
+    Message,
+    Input
   ) {
     "use strict";
 
-    return Controller.extend(
+    return BaseController.extend(
       "com.knpl.pragati.MasterDataManagement.controller.EditTable",
       {
         onInit: function () {
@@ -120,9 +122,9 @@ sap.ui.define(
           var sEdit = oContext.getModel().getProperty("/edit");
           console.log(sId);
           var oSmartControl = new FormElement({
-            label: oContext.getObject()["value"],
+            label: oContext.getObject()["value"].match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
             fields: [
-              new sap.m.Input({
+              new Input({
                 required: true,
 
                 fieldGroupIds: "InpGoup",
@@ -166,9 +168,9 @@ sap.ui.define(
           }
 
           if (this.getView().getModel("oModelView").getProperty("/edit")) {
-            //this._saveEdit();
+            this._saveEdit();
           } else {
-            //this._saveAdd();
+            this._saveAdd();
           }
         },
         _saveEdit: function () {

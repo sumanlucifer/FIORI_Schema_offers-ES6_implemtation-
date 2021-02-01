@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "com/knpl/pragati/MasterDataManagement/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
@@ -9,10 +9,10 @@ sap.ui.define(
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, MessageBox, MessageToast, Fragment) {
+  function (BaseController, JSONModel, MessageBox, MessageToast, Fragment) {
     "use strict";
 
-    return Controller.extend(
+    return BaseController.extend(
       "com.knpl.pragati.MasterDataManagement.controller.MasterData",
       {
         onInit: function () {
@@ -26,7 +26,7 @@ sap.ui.define(
         },
         _onRouteMatched: function (oEvent) {
           var oQuery = oEvent.getParameter("arguments")["?query"];
-          console.log(oQuery)
+          console.log(oQuery);
           var aValidKeys = [
             "0",
             "1",
@@ -143,7 +143,7 @@ sap.ui.define(
             prop: window.encodeURIComponent(sPath),
             mode: "edit",
             name: window.encodeURIComponent(sName),
-            key: sSelectedKey
+            key: sSelectedKey,
           });
         },
         onPressAddBtn: function (oEvent) {
@@ -159,7 +159,7 @@ sap.ui.define(
             prop: window.encodeURIComponent(sPath),
             mode: "add",
             name: window.encodeURIComponent(sName),
-            key: this.getView().byId("idIconTabBarFiori2").getSelectedKey()
+            key: this.getView().byId("idIconTabBarFiori2").getSelectedKey(),
           });
         },
         onPressRemove: function (oEvent) {
@@ -171,7 +171,7 @@ sap.ui.define(
           var oModel = this.getView().getModel();
           var oTitle = oView.getModel("oCtrlMdl").getProperty("/IcnTbFilName");
 
-          MessageBox.confirm("Kindly confirm to remove.", {
+          MessageBox.confirm("Kindly confirm to remove "+ oTitle, {
             actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
 
             onClose: function (sAction) {
