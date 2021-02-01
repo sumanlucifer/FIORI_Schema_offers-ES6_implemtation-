@@ -2,10 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page
-
-		showNavButton="true"
-		navButtonPress=".onNavBack">
+<Page>
          <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editCompanySettingsForm"
 			editable="true"
@@ -15,40 +12,34 @@ xmlns:f="sap.ui.layout.form">
 			columnsL="3"
 			columnsXL="4"
 			><f:content>
-				<Label text="Disclaimer"  design="Bold"/>
-                <Input id="disclaimer" required="true"  value="{tableData>Disclaimer}"/>
+				
 				
 
-                <Label text="AboutUs"  design="Bold"/>
-                <Input id="about" required="true" value="{tableData>AboutUs}" />
+                <Label text="About Us"  design="Bold"/>
+                <Input id="about" required="true" 
+                type="Text"
+        				placeholder="Enter About Us ..."
+        				valueStateText="About Us must not be empty."
+                        value="{data>AboutUs}" />
+
+                <Label text="Disclaimer"  design="Bold"/>
+                <Input id="disclaimer" required="true"  type="Text"
+        				placeholder="Enter Disclaimer ..."
+        				valueStateText="Disclaimer must not be empty."
+                        value="{data>Disclaimer}"/>
 				
 
-                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true"  value="{tableData>CallCenterNo}"/>
+                <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
+		        <Input id="callcenter" required="true"  type="Text"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty."
+                        value="{data>CallCenterHelpline}"/>
 		
 			</f:content>
 		</f:SimpleForm>
 	</VBox>
 
-	<!-- <l:VerticalLayout class="sapUiContentPadding" width="100%">
-		        <Label text="Disclaimer"  design="Bold"/>
-                <Input id="disclaimer" required="true"  value="{tableData>Disclaimer}"/>
-				
-
-                <Label text="AboutUs"  design="Bold"/>
-                <Input id="about" required="true" value="{tableData>AboutUs}" />
-				
-
-                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" width="20%" value="{tableData>CallCenterNo}"/>
-
-        
-
-        
-               
-                
-                 
-	</l:VerticalLayout> -->
+	
     <footer>
 			<Toolbar>
             <Button
@@ -60,8 +51,15 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Update"
+                type="Emphasized"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+                  <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
 					
 				</Button>
 			</Toolbar>

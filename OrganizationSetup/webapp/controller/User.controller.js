@@ -23,7 +23,7 @@ sap.ui.define([
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.User", {
             onInit: function () {
 
-               
+
 
                 var oMessageManager, oView;
 
@@ -69,12 +69,12 @@ sap.ui.define([
                 });
             },
 
-            onSuccessPress: function () {
+            onSuccessPress: function (msg) {
                 var oMessage = new Message({
-                    message: "My generated success message",
+                    message: msg,
                     type: MessageType.Success,
-                    //target: "/Dummy",
-                    //processor: this.getView().getModel()
+                    target: "/Dummy",
+                    processor: this.getView().getModel()
                 });
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
             },
@@ -101,9 +101,15 @@ sap.ui.define([
             handleSuccess: function (oEvent) {
                 var msg = 'Updated Successfully!';
                 MessageToast.show(msg);
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+
+                // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                // oRouter.navTo("RouteHome");
             },
             handleEmptyFields: function (oEvent) {
-                
+
                 this.onErrorPress();
             },
 
@@ -135,7 +141,7 @@ sap.ui.define([
                 }
 
 
-                oModel.create("/AdminSet", oData, { success: this.onSuccessPress, error: this.onErrorPress });
+                oModel.create("/AdminSet", oData, { success: this.onSuccessPress("Successfully created!") });
 
 
             },
@@ -170,13 +176,13 @@ sap.ui.define([
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
-                oModel.update(editSet, oData, { success: this.onSuccessPress, error: this.onErrorPress });
+                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!")});
 
 
             },
             returnIdListOfRequiredFields: function () {
                 let requiredInputs;
-                return requiredInputs = ['name', 'email', 'mobile', 'countrycode'];
+                return requiredInputs = ['name', 'email', 'mobile', 'countrycode', 'role'];
             },
 
             validateEventFeedbackForm: function (requiredInputs) {
@@ -194,11 +200,19 @@ sap.ui.define([
                 });
                 return valid;
             },
-            
-            onClearPress : function(){
-			// does not remove the manually set ValueStateText we set in onValueStatePress():
-			sap.ui.getCore().getMessageManager().removeAllMessages();
-		},
+
+            onClearPress: function () {
+                // does not remove the manually set ValueStateText we set in onValueStatePress():
+                sap.ui.getCore().getMessageManager().removeAllMessages();
+
+            },
+            onCancelPress: function () {
+                
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                oRouter.navTo("RouteHome");
+
+            }
 
 
 

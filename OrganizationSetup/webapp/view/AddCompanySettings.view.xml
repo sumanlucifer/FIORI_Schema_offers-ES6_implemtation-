@@ -4,9 +4,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page
-		showNavButton="true"
-		navButtonPress=".onNavBack">
+<Page>
         <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="addCompanySettingsForm"
 			editable="true"
@@ -16,16 +14,24 @@ xmlns:f="sap.ui.layout.form">
 			columnsL="3"
 			columnsXL="4"
 			><f:content>
-				 <Label text="Disclaimer"  design="Bold"/>
-                <Input id="disclaimer" required="true" />
+				 
 				
 
-                <Label text="AboutUs"  design="Bold"/>
-                <Input id="about" required="true"  />
+                <Label text="Abou tUs"  design="Bold"/>
+                <Input id="about" required="true" type="Text"
+        				placeholder="Enter About Us ..."
+        				valueStateText="About Us must not be empty." />
+
+                <Label text="Disclaimer"  design="Bold"/>
+                <Input id="disclaimer" required="true" type="Text"
+        				placeholder="Enter Disclaimer ..."
+        				valueStateText="Disclaimer must not be empty."/>
 				
 
-                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true"  />
+                <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
+		        <Input id="callcenter" required="true" type="Text"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty." />
 		
 			</f:content>
 		</f:SimpleForm>
@@ -43,8 +49,15 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Add"
+                type="Emphasized"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+                 <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
 					
 				</Button>
 			</Toolbar>

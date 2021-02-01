@@ -2,10 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page
-		
-		showNavButton="true"
-		navButtonPress=".onNavBack">
+<Page>
         <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="addRoleForm"
 			editable="true"
@@ -22,7 +19,9 @@ xmlns:f="sap.ui.layout.form">
         				valueStateText="Role must not be empty."/>
 
 		<Label text="Description" labelFor="description" design="Bold" />
-		<Input id="description" required="true" />
+		<Input id="description" required="true"  type="Text"
+        				placeholder="Enter Description ..."
+        				valueStateText="Description must not be empty."/>
 		
 			</f:content>
 		</f:SimpleForm>
@@ -40,8 +39,15 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Add"
+                type="Emphasized"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+					
+				</Button>
+                 <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
 					
 				</Button>
 			</Toolbar>

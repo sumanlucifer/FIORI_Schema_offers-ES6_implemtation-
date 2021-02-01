@@ -2,10 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page
-		
-		showNavButton="true"
-		navButtonPress=".onNavBack">
+<Page>
         <VBox class="sapUiSmallMargin">
 		<f:SimpleForm id="addUserForm"
 			editable="true"
@@ -19,6 +16,8 @@ xmlns:f="sap.ui.layout.form">
 				<Label text="Name" labelFor="name" design="Bold" />
 		<Input id="name" required="true"
         	                type="Text"
+                            
+                            
         				placeholder="Enter Name ..."
         				valueStateText="Name must not be empty. Maximum 10 characters." />
 
@@ -36,15 +35,18 @@ xmlns:f="sap.ui.layout.form">
         				placeholder="Enter Mobile Number ..."
         				valueStateText="Mobile No. must not be empty." />
 
-         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
+         <Label text="Country Code" labelFor="countrycode" design="Bold" />
 		<Input id="countrycode" required="true"
         	                type="Text"
-        				placeholder="Enter CountryCode ..."
+        				placeholder="Enter Country Code ..."
         				valueStateText="CountryCode must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" />
         	<ComboBox
             id="role"
+            required="true"
+            placeholder="Select Role ..."
+        				valueStateText="Role must not be empty."
 				items="{path: 'data>/MasterAdminRoleSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</ComboBox>
@@ -64,9 +66,16 @@ xmlns:f="sap.ui.layout.form">
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
 				<Button text="Add"
+                type="Emphasized"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 
+					
+				</Button>
+                  <Button text="Cancel"
+                type="Emphasized"
+						press="onCancelPress"
+						>
 					
 				</Button>
 			</OverflowToolbar>
