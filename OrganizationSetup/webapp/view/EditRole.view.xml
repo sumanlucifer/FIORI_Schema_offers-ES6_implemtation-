@@ -2,7 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page>
+<Page id="editRole">
          <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editRoleForm"
 			editable="true"
@@ -12,17 +12,29 @@ xmlns:f="sap.ui.layout.form">
 			columnsL="3"
 			columnsXL="4"
 			><f:content>
-				<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" type="Text"
+				<Label text="Role" labelFor="role" design="Bold" required="true" />
+		<Input id="role"  type="Text"
         				placeholder="Enter Role ..."
         				valueStateText="Role must not be empty."
-                         value="{data>Role}"/>
+                          value="{ 
+                                  path : 'data>Role', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                  }
+                              }" />
 
-        <Label text="Description" labelFor="role" design="Bold" />
-		<Input id="description" required="true" type="Text"
+        <Label text="Description" labelFor="role" design="Bold" required="true" />
+		<Input id="description"  type="Text"
         				placeholder="Enter Description ..."
         				valueStateText="Description must not be empty."
-                        value="{data>Description}"/>
+                        value="{ 
+                                  path : 'data>Description', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                  }
+                              }"/>
 		
 			</f:content>
 		</f:SimpleForm>

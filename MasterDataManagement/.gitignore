@@ -33,3 +33,5 @@ knpl-influencer-web/OrganizationSetup/webapp/.env
 knpl-influencer-web/OrgModule/.env10
 # auto generated wildcard
 knpl-influencer-web/OrganizationSetup/.env1
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env

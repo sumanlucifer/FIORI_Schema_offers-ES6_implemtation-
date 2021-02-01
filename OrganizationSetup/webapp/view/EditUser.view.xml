@@ -14,70 +14,74 @@ xmlns:f="sap.ui.layout.form">
 			columnsL="3"
 			columnsXL="4"
 			><f:content>
-				<Label text="Name" labelFor="name" design="Bold" />
-		<Input id="name" required="true" value="{
-        					path : 'data>Name',
-        					type : 'sap.ui.model.type.String',
-        					constraints : {
-        						minLength: 1,
-        						maxLength: 10
-        					}
-        				}"
+            <Label text="Name" labelFor="name" design="Bold" required="true"/>
+				<Input id="name" 
         	                type="Text"
-        				placeholder="Enter Name ..."
+                            value="{ 
+                                  path : 'data>Name', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+                        placeholder="Enter Name ..."
         				valueStateText="Name must not be empty. Maximum 10 characters." />
 
-				<Label text="Email Id" labelFor="email" design="Bold" />
-		<Input id="email" required="true" value="{
-        					path : 'data>Email',
-                            type : 'sap.ui.model.type.String',
-        					constraints : {
-        						minLength: 1
-        						
-        					}
-                           }"
+				<Label text="Email" labelFor="email" design="Bold" required="true" />
+		<Input id="email" 
         	                type="Text"
+                            value="{ 
+                                  path : 'data>Email', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                  		search : '\\S+@\\S+\\.\\S+' 
+                                	}
+                              }"
         				placeholder="Enter Email ..."
         				valueStateText="Email must not be empty."/>
 
         
 
-				<Label text="Mobile" labelFor="mobile" design="Bold" />
-		<Input id="mobile" required="true" value="{
-        					path : 'data>Mobile',
-        					constraints : {
-        						minLength: 1
-        						
-        					}
-                           }"
+				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
+		<Input id="mobile" 
         	                type="Number"
+                            value="{ 
+                                  path : 'data>Mobile', 
+                                  type : 'sap.ui.model.type.String', 
+                                   constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                                  }"
         				placeholder="Enter Mobile Number ..."
-        				valueStateText="Mobile No. must not be empty." />
+        				valueStateText="Mobile Number must not be empty." />
 
-         <Label text="Country Code" labelFor="countrycode" design="Bold" />
-		<Input id="countrycode" required="true" value="{
-        					path : 'data>CountryCode',
-                             type : 'sap.ui.model.type.String',
-        					constraints : {
-        						minLength: 1
-                                
-        						
-        					}
-                           }"
+         <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
+		<Input id="countrycode" 
         	                type="Text"
+                            value="{ 
+                                  path : 'data>CountryCode', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
         				placeholder="Enter Country Code ..."
-        				valueStateText="CountryCode must not be empty."/>
+        				valueStateText="Country Code must not be empty."/>
 
-            <Label text="Role" labelFor="role" design="Bold" />
+            <Label text="Role" labelFor="role" design="Bold" required="true" />
         	<ComboBox
         
             id="role"
-            required="true"
+           
             selectedKey="{data>RoleId}"
             
         				placeholder="Select Role ..."
         				valueStateText="Role must not be empty."
-				items="{path: 'data>/MasterAdminRoleSet'}">
+				 items="{path: 'data>/MasterAdminRoleSet',
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</ComboBox>
 		

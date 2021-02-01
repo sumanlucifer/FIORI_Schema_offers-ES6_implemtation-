@@ -2,7 +2,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page>
+<Page id="editCompanySettings">
          <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editCompanySettingsForm"
 			editable="true"
@@ -20,20 +20,41 @@ xmlns:f="sap.ui.layout.form">
                 type="Text"
         				placeholder="Enter About Us ..."
         				valueStateText="About Us must not be empty."
-                        value="{data>AboutUs}" />
+                        value="{ 
+                                  path : 'data>AboutUs', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }" />
 
                 <Label text="Disclaimer"  design="Bold"/>
                 <Input id="disclaimer" required="true"  type="Text"
         				placeholder="Enter Disclaimer ..."
         				valueStateText="Disclaimer must not be empty."
-                        value="{data>Disclaimer}"/>
+                         value="{ 
+                                  path : 'data>Disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"/>
 				
 
                 <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
 		        <Input id="callcenter" required="true"  type="Text"
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty."
-                        value="{data>CallCenterHelpline}"/>
+                        value="{ 
+                                  path : 'data>CallCenterHelpline', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"/>
 		
 			</f:content>
 		</f:SimpleForm>
