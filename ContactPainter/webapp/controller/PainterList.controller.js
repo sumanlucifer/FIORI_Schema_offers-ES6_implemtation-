@@ -47,7 +47,7 @@ sap.ui.define(
               "tableNoDataText"
             ),
             tableBusyDelay: 0,
-            prop1: "Manik",
+            prop1: "",
             busy: false,
             filterBar: {
               Name: "",
@@ -64,18 +64,28 @@ sap.ui.define(
           var oViewFilter = this.getView()
             .getModel("oModelView")
             .getProperty("/filterBar");
+          var aFlaEmpty=true
           for (let prop in oViewFilter) {
-            aCurrentFilterValues.push(
-              new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
-            );
+            if (oViewFilter[prop].trim() !== "") {
+                aFlaEmpty=false;
+              aCurrentFilterValues.push(
+                new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
+              );
+            }
           }
+         
           var endFilter = new Filter({
             filters: aCurrentFilterValues,
-            and: false,
+            and: true,
           });
           var oTable = this.byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
-          oBinding.filter(endFilter);
+          if(!aFlaEmpty){
+            oBinding.filter(endFilter);
+          }else{
+              oBinding.filter([]);
+          }
+          
         },
         onResetFilterBar: function () {
           this._ResetFilterBar();
@@ -88,21 +98,21 @@ sap.ui.define(
             Mobile: "",
             RegistrationStatus: "",
           };
-          var oViewFilter = this.getView()
-            .getModel("oModelView")
-            .setProperty("/filterBar", aResetProp);
-          for (let prop in aResetProp) {
-            aCurrentFilterValues.push(
-              new Filter(prop, FilterOperator.Contains, aResetProp[prop])
-            );
-          }
-          var endFilter = new Filter({
-            filters: aCurrentFilterValues,
-            and: false,
-          });
+           var oViewFilter = this.getView()
+             .getModel("oModelView")
+             .setProperty("/filterBar", aResetProp);
+        //   for (let prop in aResetProp) {
+        //     aCurrentFilterValues.push(
+        //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
+        //     );
+        //   }
+        //   var endFilter = new Filter({
+        //     filters: aCurrentFilterValues,
+        //     and: false,
+        //   });
           var oTable = this.byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
-          oBinding.filter(endFilter);
+          oBinding.filter([]);
         },
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
@@ -228,8 +238,8 @@ sap.ui.define(
           var oBject = oEvent.getSource().getBindingContext().getObject();
           var sPath = oEvent.getSource().getBindingContext().getPath();
           var oData = oView.getModel();
-          var othat=this;
-          console.log(sPath,oBject);
+          var othat = this;
+          console.log(sPath, oBject);
           MessageBox.confirm(
             "Kindly confirm to deactivated the painter " + oBject["Name"],
             {
