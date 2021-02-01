@@ -1,7 +1,5 @@
 sap.ui.define([
-	"./model/models",
-	"./model/formatter",
-	"./controller/ListSelector"
-], function() {
+	"com/knpl/pragati/ContactPainter/test/unit/controller/App.controller"
+], function () {
 	"use strict";
 });

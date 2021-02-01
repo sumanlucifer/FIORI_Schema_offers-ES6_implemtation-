@@ -131,7 +131,7 @@
         },
         {
           "name": "RouteEditTable",
-          "pattern": "edit/{prop}/{fields}/{mode}/{name}",
+          "pattern": "edit/{prop}/{fields}/{mode}/{name}/{key}",
           "target": ["TargetEditTable"]
         }
       ],

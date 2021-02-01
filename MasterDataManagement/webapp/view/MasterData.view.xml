@@ -1,10 +1,7 @@
 <mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%">
 
-    <Page title="Centered Title" class="sapUiContentPadding" showNavButton="false" showHeader="false">
-
-
+    <Page title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true" >
         <content>
-
             <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding">
                 <items>
                     <IconTabFilter key="0" text="{i18n>MastDataExterLinks}"></IconTabFilter>
@@ -18,7 +15,6 @@
                     <IconTabFilter key="8" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
                     <IconTabFilter key="9" text="{i18n>MasterDataLanguage}"></IconTabFilter>
                     <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
-
                 </items>
             </IconTabBar>
             <VBox id="oVbxSmtTbl">

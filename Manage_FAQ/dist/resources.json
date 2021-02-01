@@ -1,17 +1,16 @@
 {
     "resources": [
         {
-            "name": "model/formatter-dbg.js",
-            "isDebug": true
+            "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "model/formatter.js"
+            "name": "Component.js"
         },
         {
             "name": "model/models.js"
         },
         {
-            "name": "manifest.json"
+            "name": "model/formatter.js"
         },
         {
             "name": "controller/Worklist.controller.js"
@@ -20,7 +19,8 @@
             "name": "controller/Object.controller.js"
         },
         {
-            "name": "controller/NotFound.controller.js"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/ErrorHandler.js"
@@ -32,7 +32,7 @@
             "name": "controller/App.controller.js"
         },
         {
-            "name": "Component.js"
+            "name": "manifest.json"
         },
         {
             "name": "manifest-bundle.zip"
@@ -42,12 +42,12 @@
             "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/ErrorHandler-dbg.js",
             "isDebug": true
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "model/formatter-dbg.js",
+            "isDebug": true
         },
         {
             "name": "controller/Worklist-dbg.controller.js",
@@ -62,7 +62,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/ErrorHandler-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {

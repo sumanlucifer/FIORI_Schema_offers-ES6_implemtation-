@@ -1,0 +1,229 @@
+sap.ui.define(
+  [
+    "com/knpl/pragati/ContactPainter/controller/BaseController",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter",
+    "sap/ui/Device",
+  ],
+  /**
+   * @param {typeof sap.ui.core.mvc.Controller} Controller
+   */
+  function (
+    BaseController,
+    JSONModel,
+    MessageBox,
+    MessageToast,
+    Fragment,
+    Filter,
+    FilterOperator,
+    Sorter,
+    Device
+  ) {
+    "use strict";
+
+    return BaseController.extend(
+      "com.knpl.pragati.ContactPainter.controller.PainterList",
+      {
+        onInit: function () {
+          var oRouter = this.getOwnerComponent().getRouter();
+          console.log("Painter Data Loaded");
+          oRouter
+            .getRoute("RoutePList")
+            .attachMatched(this._onRouteMatched, this);
+        },
+        _onRouteMatched: function () {
+          console.log("Painter List Loaded");
+          this._initData();
+        },
+        _initData: function () {
+          var oViewModel = new JSONModel({
+            pageTitle: this.getResourceBundle().getText("PainterList"),
+            tableNoDataText: this.getResourceBundle().getText(
+              "tableNoDataText"
+            ),
+            tableBusyDelay: 0,
+            prop1: "Manik",
+            busy: false,
+            filterBar: {
+              Name: "",
+              Email: "",
+              Mobile: "",
+              RegistrationStatus: "",
+            },
+          });
+          this.setModel(oViewModel, "oModelView");
+        },
+        onFilter: function (oEvent) {
+          console.log("On FIlter");
+          var aCurrentFilterValues = [];
+          var oViewFilter = this.getView()
+            .getModel("oModelView")
+            .getProperty("/filterBar");
+          for (let prop in oViewFilter) {
+            aCurrentFilterValues.push(
+              new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
+            );
+          }
+          var endFilter = new Filter({
+            filters: aCurrentFilterValues,
+            and: false,
+          });
+          var oTable = this.byId("idPainterTable");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter(endFilter);
+        },
+        onResetFilterBar: function () {
+          this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+          var aCurrentFilterValues = [];
+          var aResetProp = {
+            Name: "",
+            Email: "",
+            Mobile: "",
+            RegistrationStatus: "",
+          };
+          var oViewFilter = this.getView()
+            .getModel("oModelView")
+            .setProperty("/filterBar", aResetProp);
+          for (let prop in aResetProp) {
+            aCurrentFilterValues.push(
+              new Filter(prop, FilterOperator.Contains, aResetProp[prop])
+            );
+          }
+          var endFilter = new Filter({
+            filters: aCurrentFilterValues,
+            and: false,
+          });
+          var oTable = this.byId("idPainterTable");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter(endFilter);
+        },
+        onPressAddPainter: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("RouteAddEditP", {
+            mode: "add",
+            id: "null",
+          });
+        },
+        onSuggest: function (event) {
+          var oSearchField = this.getView().byId("searchField");
+          var sValue = event.getParameter("suggestValue"),
+            aFilters = [];
+          if (sValue) {
+            aFilters = [
+              new Filter(
+                [
+                  new Filter("Name", function (sText) {
+                    return (
+                      (sText || "")
+                        .toUpperCase()
+                        .indexOf(sValue.toUpperCase()) > -1
+                    );
+                  }),
+                ],
+                false
+              ),
+            ];
+          }
+
+          oSearchField.getBinding("suggestionItems").filter(aFilters);
+          oSearchField.suggest();
+        },
+        onSearch: function (oEvent) {
+          var aFilters = [];
+          var endFilter;
+          var sQuery = oEvent.getSource().getValue();
+          if (sQuery && sQuery.length > 0) {
+            var filter1 = new Filter("Name", FilterOperator.Contains, sQuery);
+            var filter2 = new Filter("Email", FilterOperator.Contains, sQuery);
+            var filtes3 = new Filter("Mobile", FilterOperator.Contains, sQuery);
+            aFilters.push(filter1);
+            aFilters.push(filter2);
+            aFilters.push(filtes3);
+            endFilter = new Filter({ filters: aFilters, and: false });
+          }
+
+          // update list binding
+          var oTable = this.byId("idPainterTable");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter(endFilter);
+        },
+        handleSortButtonPressed: function () {
+          this.getViewSettingsDialog(
+            "com.knpl.pragati.ContactPainter.view.fragments.SortDialog"
+          ).then(function (oViewSettingsDialog) {
+            oViewSettingsDialog.open();
+          });
+        },
+        getViewSettingsDialog: function (sDialogFragmentName) {
+          if (!this._ViewSortDialog) {
+            var othat = this;
+            this._ViewSortDialog = Fragment.load({
+              id: this.getView().getId(),
+              name: sDialogFragmentName,
+              controller: this,
+            }).then(function (oDialog) {
+              if (Device.system.desktop) {
+                othat.getView().addDependent(oDialog);
+                oDialog.addStyleClass("sapUiSizeCompact");
+              }
+              return oDialog;
+            });
+          }
+          return this._ViewSortDialog;
+        },
+        handleSortDialogConfirm: function (oEvent) {
+          var oTable = this.byId("idPainterTable"),
+            mParams = oEvent.getParameters(),
+            oBinding = oTable.getBinding("items"),
+            sPath,
+            bDescending,
+            aSorters = [];
+
+          sPath = mParams.sortItem.getKey();
+          bDescending = mParams.sortDescending;
+          aSorters.push(new Sorter(sPath, bDescending));
+
+          // apply the selected sort and group settings
+          oBinding.sort(aSorters);
+        },
+
+        onUpdateFinished: function (oEvent) {
+          // update the worklist's object counter after the table update
+          var sTitle,
+            oTable = oEvent.getSource(),
+            iTotalItems = oEvent.getParameter("total");
+          // only update the counter if the length is final and
+          // the table is not empty
+          if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+            sTitle = this.getResourceBundle().getText("PainterList", [
+              iTotalItems,
+            ]);
+          } else {
+            sTitle = this.getResourceBundle().getText("PainterList");
+          }
+          this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
+        },
+        onPressEditPainter: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext()
+            .getPath()
+            .substr(1);
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("RouteAddEditP", {
+            mode: "edit",
+            id: window.encodeURIComponent(sPath)
+          });
+        },
+      }
+    );
+  }
+);

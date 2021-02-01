@@ -29,10 +29,17 @@ knpl-influencer-web/MasterDataManagement/.env
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
 knpl1/ContactPainter/.env7
-
 # auto generated wildcard
-OrganizationSetup/.env1
+ZSampGWCnct/GatewaySrvTest/.env3
 # auto generated wildcard
-DealerManagement/.env4
+ZSampGWCnct/GatewaySrvTest/.env4
 # auto generated wildcard
-DealerManagement/.env5
+knpl1/Training/.env1
+# auto generated wildcard
+knpl1/MasterDataManagement/.env11
+# auto generated wildcard
+knpl1/ContactPainter/.env8
+# auto generated wildcard
+ZSample2/HTML5Module/.env2
+# auto generated wildcard
+knpl1/MasterDataManagement/.env12

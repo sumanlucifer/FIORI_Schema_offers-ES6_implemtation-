@@ -4,24 +4,24 @@
     "id": "com.knpl.pragati.ContactPainter",
     "type": "application",
     "i18n": "i18n/i18n.properties",
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
     "applicationVersion": {
       "version": "1.0.0"
     },
-    "ach": "set-ach",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
     "resources": "resources.json",
+    "ach": "ach",
+    "sourceTemplate": {
+      "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+      "version": "1.40.12"
+    },
     "dataSources": {
-       "tableData_alias": {
-        "uri": "model/masterData.json",
-        "type": "JSON"
-      },
-       "mainService": {
-        "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
+      "mainService": {
+        "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
-        "localUri": "localService/metadata.xml"
+          "localUri": "localService/metadata.xml"
         }
       }
     },
@@ -41,14 +41,10 @@
             }
     }
   },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
-  },
   "sap.ui": {
     "technology": "UI5",
     "icons": {
-      "icon": "sap-icon://detail-view",
+      "icon": "",
       "favIcon": "",
       "phone": "",
       "phone@2": "",
@@ -62,18 +58,19 @@
     }
   },
   "sap.ui5": {
+    "flexEnabled": false,
     "rootView": {
       "viewName": "com.knpl.pragati.ContactPainter.view.App",
       "type": "XML",
       "async": true,
-      "id": "app"
+      "id": "App"
     },
     "dependencies": {
-      "minUI5Version": "1.66.0",
+      "minUI5Version": "1.60.1",
       "libs": {
         "sap.ui.core": {},
         "sap.m": {},
-        "sap.f": {}
+        "sap.ui.layout": {}
       }
     },
     "contentDensities": {
@@ -87,69 +84,64 @@
           "bundleName": "com.knpl.pragati.ContactPainter.i18n.i18n"
         }
       },
-       "tableData": {
-        "type": "sap.ui.model.json.JSONModel",
-        "dataSource": "tableData_alias",
-        "settings": {
-          "defaultBindingMode": "OneTime"
-        }
-      },
-       "": {
+      "": {
         "dataSource": "mainService",
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "Inline",
-          "refreshAfterChange": true,
-          "defaultUpdateMethod": "Put",
-          "useBatch" : false
+          "refreshAfterChange": false,
+          "useBatch":false
         }
       }
     },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
     "routing": {
       "config": {
-        "routerClass": "sap.f.routing.Router",
+        "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
+        "async": true,
         "viewPath": "com.knpl.pragati.ContactPainter.view",
-        "controlId": "layout",
-        "controlAggregation": "beginColumnPages",
-        "bypassed": {
-          "target": "notFound"
-        },
-        "async": true
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
       },
       "routes": [
         {
+          "name": "RoutePList",
           "pattern": "",
-          "name": "master",
-          "target": "master"
+          "target": [
+            "TargetPList"
+          ]
         },
         {
-          "pattern": "Products/{objectId}",
-          "name": "object",
-          "target": ["master", "object"]
+          "name": "RouteAddEditP",
+          "pattern": "PainterManage/{mode}/{id}",
+          "target": [
+            "TargetRouteAddEditP"
+          ]
         }
       ],
       "targets": {
-        "master": {
-          "viewName": "Master",
-          "viewLevel": 1,
-          "viewId": "master"
+        "TargetPList": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "PainterList",
+          "viewName": "PainterList"
         },
-        "object": {
-          "viewName": "Detail",
-          "viewId": "detail",
-          "viewLevel": 1,
-          "controlAggregation": "midColumnPages"
-        },
-        "detailObjectNotFound": {
-          "viewName": "DetailObjectNotFound",
-          "viewId": "detailObjectNotFound",
-          "controlAggregation": "midColumnPages"
-        },
-        "notFound": {
-          "viewName": "NotFound",
-          "viewId": "notFound"
+         "TargetRouteAddEditP": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "AddEditPainter",
+          "viewName": "AddEditPainter"
         }
       }
     }
