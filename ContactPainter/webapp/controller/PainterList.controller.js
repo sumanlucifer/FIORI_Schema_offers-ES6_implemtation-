@@ -220,8 +220,46 @@ sap.ui.define(
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteAddEditP", {
             mode: "edit",
-            id: window.encodeURIComponent(sPath)
+            id: window.encodeURIComponent(sPath),
           });
+        },
+        onDeactivate: function (oEvent) {
+          var oView = this.getView();
+          var oBject = oEvent.getSource().getBindingContext().getObject();
+          var sPath = oEvent.getSource().getBindingContext().getPath();
+          var oData = oView.getModel();
+          var othat=this;
+          console.log(sPath,oBject);
+          MessageBox.confirm(
+            "Kindly confirm to deactivated the painter " + oBject["Name"],
+            {
+              actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
+
+              onClose: function (sAction) {
+                if (sAction == "OK") {
+                  othat._Deactivate(oData, sPath, oBject);
+                }
+              },
+            }
+          );
+        },
+        _Deactivate: function (oData, sPath, oBject) {
+          oData.update(
+            sPath,
+            {
+              IsArchived: "true",
+            },
+            {
+              success: function (mData) {
+                MessageToast.show(oBject["Name"] + " Sucessfully Deactivated.");
+                oData.refresh();
+              },
+              error: function (data) {
+                var oRespText = JSON.parse(data.responseText);
+                MessageBox.error(oRespText["error"]["message"]["value"]);
+              },
+            }
+          );
         },
       }
     );

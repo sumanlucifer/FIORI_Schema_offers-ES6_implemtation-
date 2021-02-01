@@ -10,6 +10,7 @@ sap.ui.define(
     "sap/m/Label",
     "sap/ui/core/library",
     "sap/ui/core/message/Message",
+    "sap/m/DatePicker",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,7 +25,8 @@ sap.ui.define(
     Input,
     Label,
     library,
-    Message
+    Message,
+    DatePicker
   ) {
     "use strict";
 
@@ -62,6 +64,7 @@ sap.ui.define(
                 required: true,
                 type: "Text",
                 placeholder: "Enter the Painter's Name",
+                aggregationType: "Input",
               },
               {
                 value: "Mobile",
@@ -69,6 +72,7 @@ sap.ui.define(
                 required: true,
                 type: "Number",
                 placeholder: "Enter the Painter's Mobile Number",
+                aggregationType: "Input",
               },
               {
                 value: "DOB",
@@ -76,7 +80,8 @@ sap.ui.define(
                 required: true,
                 type: "Number",
                 placeholder:
-                  "Enter the Painter's Date of Birth in Format DDMMYY",
+                  "Format DDMMYY",
+                aggregationType: "Input",
               },
               {
                 value: "Email",
@@ -84,6 +89,7 @@ sap.ui.define(
                 required: false,
                 type: "Email",
                 placeholder: "Enter the Painter's Email",
+                aggregationType: "Input",
               },
             ],
             addData: {
@@ -140,34 +146,62 @@ sap.ui.define(
         },
         myFactory: function (sId, oContext) {
           var sEdit = oContext.getModel().getProperty("/mode");
+          var object = oContext.getObject();
           console.log(
             "1{oModelView>" +
               oContext.getModel().getProperty(oContext.getPath())["value"] +
               "}"
           );
-          var oSmartControl = new FormElement({
-            label: "{oModelView>label}",
-            fields: [
-              new Input({
-                required: "{oModelView>required}",
-                fieldGroupIds: "InpGoup",
-                type: "{oModelView>type}",
-                placeholder: "{oModelView>placeholder}",
-                value:
-                  sEdit == "add"
-                    ? "{oModelView>/addData/" +
-                      oContext.getModel().getProperty(oContext.getPath())[
-                        "value"
-                      ] +
-                      "}"
-                    : "{" +
-                      oContext.getModel().getProperty(oContext.getPath())[
-                        "value"
-                      ] +
-                      "}",
-              }),
-            ],
-          });
+          var oSmartControl;
+          if (object["aggregationType"] == "Input") {
+            oSmartControl = new FormElement({
+              label: "{oModelView>label}",
+              fields: [
+                new Input({
+                  required: "{oModelView>required}",
+                  fieldGroupIds: "InpGoup",
+                  type: "{oModelView>type}",
+                  placeholder: "{oModelView>placeholder}",
+                  value:
+                    sEdit == "add"
+                      ? "{oModelView>/addData/" +
+                        oContext.getModel().getProperty(oContext.getPath())[
+                          "value"
+                        ] +
+                        "}"
+                      : "{" +
+                        oContext.getModel().getProperty(oContext.getPath())[
+                          "value"
+                        ] +
+                        "}",
+                }),
+              ],
+            });
+          } else if (object["aggregationType"] == "Date") {
+            oSmartControl = new FormElement({
+              label: "{oModelView>label}",
+              fields: [
+                new DatePicker({
+                  required: "{oModelView>required}",
+                  fieldGroupIds: "InpGoup",
+                  placeholder: "{oModelView>placeholder}",
+                  displayFormat:"long",
+                  dateValue:
+                    sEdit == "add"
+                      ? "{oModelView>/addData/" +
+                        oContext.getModel().getProperty(oContext.getPath())[
+                          "value"
+                        ] +
+                        "}"
+                      : "{" +
+                        oContext.getModel().getProperty(oContext.getPath())[
+                          "value"
+                        ] +
+                        "}",
+                }),
+              ],
+            });
+          }
 
           return oSmartControl;
         },
