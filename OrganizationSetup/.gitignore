@@ -22,3 +22,7 @@ knpl1/ContactPainter/.env8
 ZSample2/HTML5Module/.env2
 # auto generated wildcard
 knpl1/MasterDataManagement/.env12
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env13
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env9

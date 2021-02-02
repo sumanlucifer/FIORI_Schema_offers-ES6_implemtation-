@@ -79,9 +79,8 @@ sap.ui.define(
                 label: "Date of Birth",
                 required: true,
                 type: "Number",
-                placeholder:
-                  "Format DDMMYY",
-                aggregationType: "Input",
+                placeholder: "Format DDMMYY",
+                aggregationType: "Date",
               },
               {
                 value: "Email",
@@ -185,7 +184,7 @@ sap.ui.define(
                   required: "{oModelView>required}",
                   fieldGroupIds: "InpGoup",
                   placeholder: "{oModelView>placeholder}",
-                  displayFormat:"long",
+                  displayFormat: "long",
                   dateValue:
                     sEdit == "add"
                       ? "{oModelView>/addData/" +
@@ -233,14 +232,18 @@ sap.ui.define(
           var valid = true;
           requiredInputs.forEach(function (input) {
             var sInput = input;
-            if (
-              (sInput.getValue() == "" || sInput.getValue() == undefined) &&
-              sInput.getRequired()
-            ) {
-              valid = false;
-              sInput.setValueState("Error");
-            } else {
-              sInput.setValueState("None");
+            try {
+              if (
+                (sInput.getValue() == "" || sInput.getValue() == undefined) &&
+                sInput.getRequired()
+              ) {
+                valid = false;
+                sInput.setValueState("Error");
+              } else {
+                sInput.setValueState("None");
+              }
+            } catch (error) {
+               
             }
           });
           return valid;
@@ -277,7 +280,6 @@ sap.ui.define(
             this.handleEmptyFields();
             return false;
           }
-
           if (this.getView().getModel("oModelView").getProperty("/edit")) {
             this._saveEdit();
           } else {
@@ -299,11 +301,10 @@ sap.ui.define(
           oDataModel.update(sEntityPath, oPayload, {
             success: function (data) {
               MessageToast.show(
-                "Painter " + oPayload["Name"] + "'s Successfully Updated."
+                "Painter " + oPayload["Name"] + " Successfully Updated."
               );
             },
             error: function (data) {
-              console.log(data);
               var oRespText = data["message"];
               MessageBox.error(oRespText);
             },

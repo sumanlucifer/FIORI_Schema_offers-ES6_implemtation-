@@ -22,28 +22,13 @@ knpl-influencer-web/MasterDataManagement/.env
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
 knpl1/ContactPainter/.env7
-<<<<<<< HEAD
+# auto generated wildcard
 
-# auto generated wildcard
-DealerManagement/.env4
-# auto generated wildcard
-DealerManagement/.env5
-knpl-influencer-web/Manage_FAQ/.env
-# auto generated wildcard
-knpl-influencer-web/Manage_Painter/.env
-# auto generated wildcard
-knpl-influencer-web/Manage_FAQ/.env2
-=======
-# auto generated wildcard
-ZSampGWCnct/GatewaySrvTest/.env3
-# auto generated wildcard
-ZSampGWCnct/GatewaySrvTest/.env4
-# auto generated wildcard
-knpl1/MasterDataManagement/.env11
-# auto generated wildcard
 knpl1/ContactPainter/.env8
 # auto generated wildcard
-ZSample2/HTML5Module/.env2
-# auto generated wildcard
 knpl1/MasterDataManagement/.env12
->>>>>>> manik
+
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env13
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env9

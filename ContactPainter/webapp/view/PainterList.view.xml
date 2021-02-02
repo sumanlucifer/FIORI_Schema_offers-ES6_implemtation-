@@ -57,7 +57,7 @@
         </f:header>
 
         <f:content>
-            <Table id="idPainterTable" width="auto" items="{path: '/PainterSet',sorter: { path: 'UpdatedAt', descending: true} }" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="25" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', filters:[{ path:'IsArchived', operator:'EQ', value1:false}],sorter: { path: 'UpdatedAt', descending: true} }" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="25" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
