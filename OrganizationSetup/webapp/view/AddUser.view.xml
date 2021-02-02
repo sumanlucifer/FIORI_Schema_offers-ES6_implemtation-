@@ -2,12 +2,14 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page id="addUser">
+<Page id="addUser"
+ floatingFooter="true"
+ title="Add User">
         <VBox class="sapUiSmallMargin">
 		<f:SimpleForm id="addUserForm"
 			editable="true"
 			layout="ColumnLayout"
-			title="Add User"
+			title="User Details"
 			columnsM="2"
 			columnsL="3"
 			columnsXL="4"
@@ -102,19 +104,20 @@ xmlns:f="sap.ui.layout.form">
                     press="onMessagePopoverPress" />
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
-				<Button text="Add"
+                <Button text="Cancel"
+                
+						press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
                 type="Emphasized"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 
 					
 				</Button>
-                  <Button text="Cancel"
-                type="Emphasized"
-						press="onCancelPress"
-						>
-					
-				</Button>
+                  
 			</OverflowToolbar>
 		</footer>
     </Page>

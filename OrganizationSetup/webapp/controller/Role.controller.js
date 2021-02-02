@@ -60,7 +60,15 @@ sap.ui.define([
                 oRouter.getRoute("EditRole").attachPatternMatched(this._onObjectMatched, this);
 
             },
+
+            onAfterRendering: function () {
+                 this.onClearPress();
+
+            },
             _onObjectMatched: function (oEvent) {
+
+                sap.ui.getCore().getMessageManager().removeAllMessages();
+
                 this.getView().bindElement({
                     path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").roleId),
                     model: "data"
@@ -92,6 +100,7 @@ sap.ui.define([
             },
 
             onSuccessPress: function (msg) {
+                 this.onClearPress();
                 var oMessage = new Message({
                     message: msg,
                     type: MessageType.Success,

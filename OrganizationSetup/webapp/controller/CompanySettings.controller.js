@@ -27,7 +27,7 @@ sap.ui.define([
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.CompanySettings", {
             onInit: function () {
 
-                 // Attaches validation handlers
+                // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
                 });
@@ -39,7 +39,7 @@ sap.ui.define([
                     about: null,
                     disclaimer: null,
                     callcenter: null,
-                   
+
                 };
 
                 var oModel = new JSONModel();
@@ -60,9 +60,19 @@ sap.ui.define([
                 oRouter.getRoute("EditCompanySettings").attachPatternMatched(this._onObjectMatched, this);
 
                 //this.loadRichTextEditiors();
+                
 
             },
+            onAfterRendering: function () {
+                this.onClearPress();
+
+            },
+
+
             _onObjectMatched: function (oEvent) {
+
+                sap.ui.getCore().getMessageManager().removeAllMessages();
+
                 this.getView().bindElement({
                     path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").settingsId),
                     model: "data"
@@ -94,6 +104,9 @@ sap.ui.define([
             },
 
             onSuccessPress: function (msg) {
+
+                 this.onClearPress();
+
                 var oMessage = new Message({
                     message: msg,
                     type: MessageType.Success,
@@ -132,7 +145,7 @@ sap.ui.define([
                 var aboutUs = this.getView().byId("about").getValue();
                 var callCenterNo = this.getView().byId("callcenter").getValue();
 
-               var passedValidation = this.onValidateAdd();
+                var passedValidation = this.onValidateAdd();
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -145,7 +158,7 @@ sap.ui.define([
                     AboutUs: aboutUs,
                     Disclaimer: disclaimer,
                     CallCenterHelpline: callCenterNo
-                
+
 
                 }
                 var oModel = this.getView().getModel("data");
@@ -184,7 +197,7 @@ sap.ui.define([
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
-                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!")});
+                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!") });
             },
             loadRichTextEditiors: function () {
                 var oRichTextEditorDisclaimer = new RichTextEditor("myRTE1", {
@@ -216,19 +229,19 @@ sap.ui.define([
                 });
                 this.getView().byId("aboutUsVerticalLayout").addContent(oRichTextEditorAboutUs);
             },
-            
+
             onClearPress: function () {
                 // does not remove the manually set ValueStateText we set in onValueStatePress():
                 sap.ui.getCore().getMessageManager().removeAllMessages();
             },
-            onCancelPress : function () {
-               
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            onCancelPress: function () {
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter.navTo("RouteHome");
 
-        },
-         onValidateEdit: function () {
+            },
+            onValidateEdit: function () {
                 // Create new validator instance
                 var validator = new Validator();
 
@@ -243,6 +256,6 @@ sap.ui.define([
                 return validator.validate(this.byId("addCompanySettings"));
             }
 
-        
+
         });
     });

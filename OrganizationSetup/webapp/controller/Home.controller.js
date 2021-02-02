@@ -20,6 +20,8 @@ sap.ui.define([
                
 
             },
+            
+            
             onFilterUsers: function (oEvent) {
 
                 // build filter array
