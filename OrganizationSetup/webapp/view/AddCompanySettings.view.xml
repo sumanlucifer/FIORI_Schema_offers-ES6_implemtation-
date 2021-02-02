@@ -4,7 +4,7 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page>
+<Page id="addCompanySettings">
         <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="addCompanySettingsForm"
 			editable="true"
@@ -17,19 +17,43 @@ xmlns:f="sap.ui.layout.form">
 				 
 				
 
-                <Label text="Abou tUs"  design="Bold"/>
-                <Input id="about" required="true" type="Text"
+                <Label text="About Us"  design="Bold" required="true"/>
+                <Input id="about"  type="Text"
+                        value="{ 
+                                  path : '/about', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
         				placeholder="Enter About Us ..."
         				valueStateText="About Us must not be empty." />
 
-                <Label text="Disclaimer"  design="Bold"/>
-                <Input id="disclaimer" required="true" type="Text"
+                <Label text="Disclaimer"  design="Bold" required="true"/>
+                <Input id="disclaimer"  type="Text"
+                            value="{ 
+                                  path : '/disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
         				placeholder="Enter Disclaimer ..."
         				valueStateText="Disclaimer must not be empty."/>
 				
 
-                <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" type="Text"
+                <Label text="Call Center Number" labelFor="callcenter" design="Bold" required="true" />
+		        <Input id="callcenter"  type="Number"
+                             value="{ 
+                                  path : '/callcenter', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty." />
 		

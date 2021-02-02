@@ -6,12 +6,16 @@ sap.ui.define([
     "sap/ui/model/BindingMode",
     "sap/ui/core/message/Message",
     "sap/ui/core/library",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/core/ValueState",
+    "../utils/Validator",
+    "sap/ui/model/json/JSONModel",
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, History, UIComponent, MessageToast, BindingMode, Message, library, Fragment) {
+    function (Controller, History, UIComponent, MessageToast, BindingMode, Message, library, Fragment,
+        ValueState, Validator, JSONModel) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -22,6 +26,27 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.User", {
             onInit: function () {
+
+                // Attaches validation handlers
+                sap.ui.getCore().attachValidationError(function (oEvent) {
+                    oEvent.getParameter("element").setValueState(ValueState.Error);
+                });
+                sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                    oEvent.getParameter("element").setValueState(ValueState.None);
+                });
+                // JSON dummy data
+                var oData = {
+                    name: null,
+                    email: null,
+                    mobile: null,
+                    countrycode: null,
+                    role: null
+                };
+
+                var oModel = new JSONModel();
+                oModel.setData(oData);
+
+                this.getView().setModel(oModel);
 
 
 
@@ -77,6 +102,10 @@ sap.ui.define([
                     processor: this.getView().getModel()
                 });
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
+
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+                console.log("ref");
             },
             onErrorPress: function () {
                 var oMessage = new Message({
@@ -121,13 +150,14 @@ sap.ui.define([
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
 
-                var requiredInputs = this.returnIdListOfRequiredFields();
-                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                var passedValidation = this.onValidateAdd();
+
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
                     this.handleEmptyFields();
                     return false;
                 }
+
 
                 var oModel = this.getView().getModel("data");
 
@@ -153,8 +183,8 @@ sap.ui.define([
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
 
-                var requiredInputs = this.returnIdListOfRequiredFields();
-                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+                 var passedValidation = this.onValidateEdit();
+
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
                     this.handleEmptyFields();
@@ -172,35 +202,15 @@ sap.ui.define([
                     CountryCode: countrycode,
                     RoleId: role
                 }
-                console.log(oData);
+               // console.log(oData);
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
-                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!")});
+                oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!") });
 
 
             },
-            returnIdListOfRequiredFields: function () {
-                let requiredInputs;
-                return requiredInputs = ['name', 'email', 'mobile', 'countrycode', 'role'];
-            },
-
-            validateEventFeedbackForm: function (requiredInputs) {
-                var _self = this;
-                var valid = true;
-                requiredInputs.forEach(function (input) {
-                    var sInput = _self.getView().byId(input);
-                    if (sInput.getValue() == "" || sInput.getValue() == undefined) {
-                        valid = false;
-                        sInput.setValueState("Error");
-                    }
-                    else {
-                        sInput.setValueState("None");
-                    }
-                });
-                return valid;
-            },
-
+            
             onClearPress: function () {
                 // does not remove the manually set ValueStateText we set in onValueStatePress():
                 sap.ui.getCore().getMessageManager().removeAllMessages();
@@ -208,10 +218,25 @@ sap.ui.define([
             },
             onCancelPress: function () {
                 
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter.navTo("RouteHome");
 
+            },
+            onValidateEdit: function () {
+                // Create new validator instance
+                var validator = new Validator();
+
+                // Validate input fields against root page with id 'somePage'
+                return validator.validate(this.byId("editUser"));
+            },
+            onValidateAdd: function () {
+                // Create new validator instance
+                var validator = new Validator();
+
+                // Validate input fields against root page with id 'somePage'
+                return validator.validate(this.byId("addUser"));
             }
 
 

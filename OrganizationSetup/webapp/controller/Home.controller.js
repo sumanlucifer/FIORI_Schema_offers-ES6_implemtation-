@@ -40,7 +40,7 @@ sap.ui.define([
                 var aFilter = [];
                 var sQuery = oEvent.getParameter("query");
                 if (sQuery) {
-                    aFilter.push(new Filter("Role", FilterOperator.Contains, sQuery));
+                    aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
                 }
 
                 // filter binding
@@ -122,10 +122,12 @@ sap.ui.define([
 
             },
             onRemoveSuccess: function () {
-                var msg = 'Removed Successfully!';
-                MessageToast.show(msg);
+                
+
                 var oModel = this.getView().getModel("data");
                 oModel.refresh();
+                var msg = 'Removed Successfully!';
+                MessageToast.show(msg);
 
 
             },

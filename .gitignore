@@ -21,14 +21,6 @@ knpl-influencer-web/MasterDataManagement/.env
 # auto generated wildcard
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
-knpl1/ContactPainter/.env7
+knpl-influencer-web/OrgModule/.env10
 # auto generated wildcard
-
-knpl1/ContactPainter/.env8
-# auto generated wildcard
-knpl1/MasterDataManagement/.env12
-
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env13
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env9
+knpl-influencer-web/OrganizationSetup/.env

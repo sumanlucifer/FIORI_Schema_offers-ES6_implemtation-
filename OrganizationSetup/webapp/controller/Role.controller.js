@@ -6,12 +6,16 @@ sap.ui.define([
     'sap/m/MessageToast',
     "sap/ui/core/message/Message",
     "sap/ui/core/library",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/core/ValueState",
+    "../utils/Validator",
+    "sap/ui/model/json/JSONModel",
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, History, UIComponent,BindingMode, MessageToast,Message,library,Fragment) {
+    function (Controller, History, UIComponent, BindingMode, MessageToast, Message, library, Fragment,
+        ValueState, Validator, JSONModel) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -22,6 +26,25 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Role", {
             onInit: function () {
+
+
+                // Attaches validation handlers
+                sap.ui.getCore().attachValidationError(function (oEvent) {
+                    oEvent.getParameter("element").setValueState(ValueState.Error);
+                });
+                sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                    oEvent.getParameter("element").setValueState(ValueState.None);
+                });
+                // JSON dummy data
+                var oData = {
+                    role: null,
+                    description: null
+                };
+
+                var oModel = new JSONModel();
+                oModel.setData(oData);
+
+                this.getView().setModel(oModel);
 
 
                 var oMessageManager, oView;
@@ -68,7 +91,7 @@ sap.ui.define([
                 });
             },
 
-           onSuccessPress: function (msg) {
+            onSuccessPress: function (msg) {
                 var oMessage = new Message({
                     message: msg,
                     type: MessageType.Success,
@@ -76,6 +99,11 @@ sap.ui.define([
                     processor: this.getView().getModel()
                 });
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
+
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+
+
             },
             onErrorPress: function () {
                 var oMessage = new Message({
@@ -86,7 +114,7 @@ sap.ui.define([
                 });
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
             },
-             handleEmptyFields: function (oEvent) {
+            handleEmptyFields: function (oEvent) {
                 this.onErrorPress();
             },
             onNavBack: function () {
@@ -103,20 +131,20 @@ sap.ui.define([
             add: function () {
                 var role = this.getView().byId("role").getValue();
                 var description = this.getView().byId("description").getValue();
-                // var dialcode= this.getView().byId("dialcode").getValue();
-                // var mobile= this.getView().byId("mobile").getValue();
-                // var countrycode= this.getView().byId("countrycode").getValue();
+
 
                 var oModel = this.getView().getModel("data");
                 var description = this.getView().byId("description").getValue();
 
-                var requiredInputs = this.returnIdListOfRequiredFields();
-                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+
+                var passedValidation = this.onValidateAdd();
+
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
                     this.handleEmptyFields();
                     return false;
                 }
+
 
                 var oData = {
                     Role: role,
@@ -124,7 +152,7 @@ sap.ui.define([
 
                 }
 
-                oModel.create("/MasterAdminRoleSet", oData,  { success: this.onSuccessPress("Successfully created!") });
+                oModel.create("/MasterAdminRoleSet", oData, { success: this.onSuccessPress("Successfully created!") });
 
 
             },
@@ -134,8 +162,9 @@ sap.ui.define([
                 var description = this.getView().byId("description").getValue();
 
 
-                var requiredInputs = this.returnIdListOfRequiredFields();
-                var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+
+                var passedValidation = this.onValidateEdit();
+
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
                     this.handleEmptyFields();
@@ -154,37 +183,32 @@ sap.ui.define([
 
                 oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!") });
             },
-            //validation
-            returnIdListOfRequiredFields: function () {
-                let requiredInputs;
-                return requiredInputs = ['role', 'description'];
-            },
 
-            validateEventFeedbackForm: function (requiredInputs) {
-                var _self = this;
-                var valid = true;
-                requiredInputs.forEach(function (input) {
-                    var sInput = _self.getView().byId(input);
-                    if (sInput.getValue() == "" || sInput.getValue() == undefined) {
-                        valid = false;
-                        sInput.setValueState("Error");
-                    }
-                    else {
-                        sInput.setValueState("None");
-                    }
-                });
-                return valid;
+            onClearPress: function () {
+                // does not remove the manually set ValueStateText we set in onValueStatePress():
+                sap.ui.getCore().getMessageManager().removeAllMessages();
             },
-            onClearPress : function () {
-			// does not remove the manually set ValueStateText we set in onValueStatePress():
-			sap.ui.getCore().getMessageManager().removeAllMessages();
-        },
-        onCancelPress : function () {
-             
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            onCancelPress: function () {
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter.navTo("RouteHome");
 
-        }
+            },
+            onValidateEdit: function () {
+                // Create new validator instance
+                var validator = new Validator();
+
+                // Validate input fields against root page with id 'somePage'
+                return validator.validate(this.byId("editRole"));
+            },
+            onValidateAdd: function () {
+                // Create new validator instance
+                var validator = new Validator();
+
+                // Validate input fields against root page with id 'somePage'
+                return validator.validate(this.byId("addRole"));
+            }
+
         });
     });

@@ -1,13 +1,13 @@
 {
     "resources": [
         {
-            "name": "controller/ErrorHandler.js"
+            "name": "view/Object.view.xml"
+        },
+        {
+            "name": "controller/BaseController.js"
         },
         {
             "name": "model/models.js"
-        },
-        {
-            "name": "manifest.json"
         },
         {
             "name": "model/formatter.js"
@@ -22,11 +22,10 @@
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "controller/ErrorHandler.js"
         },
         {
-            "name": "controller/BaseController.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/App.controller.js"
@@ -42,7 +41,7 @@
             "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/BaseController-dbg.js",
             "isDebug": true
         },
         {
@@ -66,7 +65,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/BaseController-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -87,7 +86,8 @@
             "name": "view/ObjectNotFound.view.xml"
         },
         {
-            "name": "view/Object.view.xml"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "view/NotFound.view.xml"
