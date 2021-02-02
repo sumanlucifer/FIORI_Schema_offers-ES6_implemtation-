@@ -2,12 +2,14 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
-<Page id="editRole">
+<Page id="editRole"
+floatingFooter="true"
+ title="Edit Role">
          <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editRoleForm"
 			editable="true"
 			layout="ColumnLayout"
-			title="Edit Role"
+			title="Role Details"
 			columnsM="2"
 			columnsL="3"
 			columnsXL="4"
@@ -41,7 +43,7 @@ xmlns:f="sap.ui.layout.form">
 	</VBox>
 	
     <footer>
-			<Toolbar>
+			<OverflowToolbar>
             <Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
@@ -50,19 +52,20 @@ xmlns:f="sap.ui.layout.form">
                     press="onMessagePopoverPress" />
 				<ToolbarSpacer/>
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
-				<Button text="Update"
+
+                <Button text="Cancel"
+						press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
                 type="Emphasized"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-                  <Button text="Cancel"
-                type="Emphasized"
-						press="onCancelPress"
-						>
-					
-				</Button>
-			</Toolbar>
+                  
+			</OverflowToolbar>
 		</footer>
     </Page>
 </mvc:View>

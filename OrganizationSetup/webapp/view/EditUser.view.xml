@@ -3,13 +3,16 @@ xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:f="sap.ui.layout.form">
 <Page
+id="editUser"
+floatingFooter="true"
+ title="Edit User"
          class="sapUiContentPadding"
         >
         <VBox class="sapUiSmallMargin">
         <f:SimpleForm id="editUserForm"
 			editable="true"
 			layout="ColumnLayout"
-			title="Edit User"
+			title="User Details"
 			columnsM="2"
 			columnsL="3"
 			columnsXL="4"
@@ -93,7 +96,7 @@ xmlns:f="sap.ui.layout.form">
     
 
     <footer>
-			<Toolbar>
+			<OverflowToolbar>
 
                 <Button
                     icon="sap-icon://alert"
@@ -105,22 +108,22 @@ xmlns:f="sap.ui.layout.form">
                     
 				<ToolbarSpacer />
                 <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
-				<Button text="Update"
+                <Button text="Cancel"
+                press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
                 type="Emphasized"
 						press="update">
 				
 				</Button>
-                  <Button text="Cancel"
-                type="Emphasized"
-						press="onCancelPress"
-						>
-					
-				</Button>
+                  
 
                         
 					
 				
-			</Toolbar>
+			</OverflowToolbar>
 		</footer>
     </Page>
 </mvc:View>

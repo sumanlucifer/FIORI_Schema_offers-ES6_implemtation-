@@ -26,6 +26,7 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.User", {
             onInit: function () {
+               
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -63,7 +64,14 @@ sap.ui.define([
                 oRouter.getRoute("EditUser").attachPatternMatched(this._onObjectMatched, this);
 
             },
+            onAfterRendering: function () {
+                 this.onClearPress();
+
+            },
             _onObjectMatched: function (oEvent) {
+
+                sap.ui.getCore().getMessageManager().removeAllMessages();
+
                 this.getView().bindElement({
                     path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").userId),
                     model: "data"
@@ -95,6 +103,9 @@ sap.ui.define([
             },
 
             onSuccessPress: function (msg) {
+
+                this.onClearPress();
+
                 var oMessage = new Message({
                     message: msg,
                     type: MessageType.Success,
@@ -105,7 +116,7 @@ sap.ui.define([
 
                 var oModel = this.getView().getModel("data");
                 oModel.refresh();
-                console.log("ref");
+                
             },
             onErrorPress: function () {
                 var oMessage = new Message({
@@ -183,7 +194,7 @@ sap.ui.define([
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
 
-                 var passedValidation = this.onValidateEdit();
+                var passedValidation = this.onValidateEdit();
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -202,7 +213,7 @@ sap.ui.define([
                     CountryCode: countrycode,
                     RoleId: role
                 }
-               // console.log(oData);
+                // console.log(oData);
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
@@ -210,14 +221,14 @@ sap.ui.define([
 
 
             },
-            
+
             onClearPress: function () {
                 // does not remove the manually set ValueStateText we set in onValueStatePress():
                 sap.ui.getCore().getMessageManager().removeAllMessages();
 
             },
             onCancelPress: function () {
-                
+
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
