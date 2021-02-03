@@ -47,6 +47,7 @@ floatingFooter="true"
 
                 <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
 		        <Input id="callcenter" required="true"  type="Text"
+                maxLength="10"
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty."
                         value="{ 
