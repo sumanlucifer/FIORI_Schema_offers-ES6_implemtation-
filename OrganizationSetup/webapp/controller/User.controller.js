@@ -10,12 +10,17 @@ sap.ui.define([
     "sap/ui/core/ValueState",
     "../utils/Validator",
     "sap/ui/model/json/JSONModel",
+    "sap/m/Dialog",
+	"sap/m/DialogType",
+	"sap/m/Button",
+    "sap/m/ButtonType",
+    "sap/m/Text"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, History, UIComponent, MessageToast, BindingMode, Message, library, Fragment,
-        ValueState, Validator, JSONModel) {
+        ValueState, Validator, JSONModel,Dialog, DialogType, Button, ButtonType,Text) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -26,7 +31,7 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.User", {
             onInit: function () {
-               
+
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -40,7 +45,7 @@ sap.ui.define([
                     name: null,
                     email: null,
                     mobile: null,
-                    countrycode: null,
+                    countrycode: "IN",
                     role: null
                 };
 
@@ -51,21 +56,21 @@ sap.ui.define([
 
 
 
-                var oMessageManager, oView;
+                // var oMessageManager, oView;
 
-                oView = this.getView();
-                // set message model
-                oMessageManager = sap.ui.getCore().getMessageManager();
-                oView.setModel(oMessageManager.getMessageModel(), "message");
+                // oView = this.getView();
+                // // set message model
+                // oMessageManager = sap.ui.getCore().getMessageManager();
+                // oView.setModel(oMessageManager.getMessageModel(), "message");
 
-                oMessageManager.registerObject(oView, true);
+                // oMessageManager.registerObject(oView, true);
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("EditUser").attachPatternMatched(this._onObjectMatched, this);
 
             },
             onAfterRendering: function () {
-                 this.onClearPress();
+                this.onClearPress();
 
             },
             _onObjectMatched: function (oEvent) {
@@ -106,17 +111,23 @@ sap.ui.define([
 
                 this.onClearPress();
 
-                var oMessage = new Message({
-                    message: msg,
-                    type: MessageType.Success,
-                    target: "/Dummy",
-                    processor: this.getView().getModel()
-                });
-                sap.ui.getCore().getMessageManager().addMessages(oMessage);
+                // var oMessage = new Message({
+                //     message: msg,
+                //     type: MessageType.Success,
+                //     target: "/Dummy",
+                //     processor: this.getView().getModel()
+                // });
+                // sap.ui.getCore().getMessageManager().addMessages(oMessage);
+                var msg = 'Saved Successfully!';
+                MessageToast.show(msg);
 
-                var oModel = this.getView().getModel("data");
-                oModel.refresh();
-                
+
+
+                setTimeout(function () {
+                    this.onCancelPress();
+                }.bind(this), 1000);
+
+
             },
             onErrorPress: function () {
                 var oMessage = new Message({
@@ -150,7 +161,7 @@ sap.ui.define([
             },
             handleEmptyFields: function (oEvent) {
 
-                this.onErrorPress();
+                this.onDialogPress();
             },
 
             add: function () {
@@ -234,6 +245,9 @@ sap.ui.define([
 
                 oRouter.navTo("RouteHome");
 
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+
             },
             onValidateEdit: function () {
                 // Create new validator instance
@@ -248,7 +262,27 @@ sap.ui.define([
 
                 // Validate input fields against root page with id 'somePage'
                 return validator.validate(this.byId("addUser"));
-            }
+            },
+            onDialogPress: function () {
+			if (!this.oEscapePreventDialog) {
+				this.oEscapePreventDialog = new Dialog({
+					title: "Error",
+					content: new Text({ text: "Mandatory Fields Are Empty!" }),
+					type: DialogType.Message,
+					buttons: [
+						new Button({
+							text: "Close",
+							press: function () {
+								this.oEscapePreventDialog.close();
+							}.bind(this)
+						})
+					]
+					
+				});
+			}
+
+			this.oEscapePreventDialog.open();
+		},
 
 
 

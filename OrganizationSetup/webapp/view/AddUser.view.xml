@@ -61,6 +61,7 @@ xmlns:f="sap.ui.layout.form">
          <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
 		<Input id="countrycode" 
         	                type="Text"
+                            editable="false"
                             value="{ 
                                   path : '/countrycode', 
                                   type : 'sap.ui.model.type.String', 
@@ -96,14 +97,15 @@ xmlns:f="sap.ui.layout.form">
 	
     <footer>
 			<OverflowToolbar>
-            <Button
+            <!-- <Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
                     press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
 				<ToolbarSpacer/>
-                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+                
                 <Button text="Cancel"
                 
 						press="onCancelPress"

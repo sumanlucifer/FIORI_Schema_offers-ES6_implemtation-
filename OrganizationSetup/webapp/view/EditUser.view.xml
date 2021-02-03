@@ -63,8 +63,9 @@ floatingFooter="true"
          <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
 		<Input id="countrycode" 
         	                type="Text"
+                            editable="false"
                             value="{ 
-                                  path : 'data>CountryCode', 
+                                  path : '/countrycode', 
                                   type : 'sap.ui.model.type.String', 
                                   constraints : { 
                                       minLength : 1
@@ -98,16 +99,17 @@ floatingFooter="true"
     <footer>
 			<OverflowToolbar>
 
-                <Button
+                <!-- <Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
                     press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
                    
                     
 				<ToolbarSpacer />
-                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+                
                 <Button text="Cancel"
                 press="onCancelPress"
 						>
