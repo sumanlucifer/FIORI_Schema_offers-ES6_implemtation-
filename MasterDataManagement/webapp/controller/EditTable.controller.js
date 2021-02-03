@@ -146,6 +146,8 @@ sap.ui.define(
           return requiredInputs;
         },
         validateEventFeedbackForm: function (requiredInputs) {
+         this._ErrorMsg = [];
+         var array=[];
           var _self = this;
           var valid = true;
           requiredInputs.forEach(function (input) {
@@ -153,14 +155,20 @@ sap.ui.define(
             if (sInput.getValue() == "" || sInput.getValue() == undefined) {
               valid = false;
               sInput.setValueState("Error");
+              array.push({
+                  message:"",
+                  target:""
+              })
             } else {
               sInput.setValueState("None");
             }
           });
+          console.log(array);
           return valid;
         },
         onPressSave: function () {
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
+
           var passedValidation = this.validateEventFeedbackForm(requiredInputs);
           if (passedValidation === false) {
             //show an error message, rest of code will not execute.
@@ -205,9 +213,16 @@ sap.ui.define(
           var sEntity = "/" + oMdlView.getProperty("/modelProp");
           var aPayload = oMdlView.getProperty("/addData");
           var sTitle = oMdlView.getProperty("/titleP2");
+          var oRouter = this.getOwnerComponent().getRouter();
+          var navKey = oMdlView.getProperty("/navBackKey")
           oDataModel.create(sEntity, aPayload, {
             success: function (data) {
               MessageToast.show(sTitle + " Successfully Created.");
+              oRouter.navTo("RouteMaster",{
+                  "?query":{
+                      tab:navKey
+                  }
+              })
             },
             error: function (data) {
               var oRespText = JSON.parse(data.responseText);

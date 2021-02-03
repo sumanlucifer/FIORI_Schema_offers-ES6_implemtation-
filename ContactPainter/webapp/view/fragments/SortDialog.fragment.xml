@@ -8,6 +8,7 @@
 			<ViewSettingsItem text="{i18n>Email}" key="Email" />
             <ViewSettingsItem text="{i18n>Mobile}" key="Mobile" />
             <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
+            <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

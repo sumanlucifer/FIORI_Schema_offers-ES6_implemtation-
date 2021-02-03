@@ -57,6 +57,11 @@ sap.ui.define(
             },
           });
           this.setModel(oViewModel, "oModelView");
+          this.getView().getModel().refresh();
+          this._sortTbInit();
+        },
+        _sortTbInit:function(){
+            //this.getView().byId("idPainterTable").getBinding().sort();
         },
         onFilter: function (oEvent) {
           console.log("On FIlter");
@@ -207,7 +212,7 @@ sap.ui.define(
         onUpdateFinished: function (oEvent) {
           // update the worklist's object counter after the table update
           var sTitle,
-            oTable = oEvent.getSource(),
+            oTable = this.getView().byId("idPainterTable"),
             iTotalItems = oEvent.getParameter("total");
           // only update the counter if the length is final and
           // the table is not empty

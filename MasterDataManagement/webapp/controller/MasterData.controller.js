@@ -5,18 +5,20 @@ sap.ui.define(
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, JSONModel, MessageBox, MessageToast, Fragment) {
+  function (BaseController, JSONModel, MessageBox, MessageToast, Fragment,Filter,FilterOperator) {
     "use strict";
 
     return BaseController.extend(
       "com.knpl.pragati.MasterDataManagement.controller.MasterData",
       {
         onInit: function () {
-          this._setData();
+          
 
           this._fragment;
           var oRouter = this.getOwnerComponent().getRouter();
@@ -44,6 +46,7 @@ sap.ui.define(
           if (oQuery && aValidKeys.indexOf(oQuery.tab) > -1) {
             sKey = oQuery.tab;
           }
+          this._setData();
           this._initFragment(sKey);
         },
         _setData: function () {
@@ -54,6 +57,7 @@ sap.ui.define(
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oCtrlMdl");
+          //this.getView().getModel().refresh(true);
         },
         _initFragment: function (mKey) {
           console.log("InitFragment");
@@ -68,6 +72,24 @@ sap.ui.define(
         },
         onNavBtnPress: function () {
           console.log("onNavButtonPress");
+        },
+        onBeforeRebindTable: function (oEvent) {
+          var mBindingParams = oEvent.getParameter("bindingParams");
+          console.log(mBindingParams);
+
+          console.log("omBeforeBindingTrigerred");
+          // to apply the sort
+          mBindingParams.sorter = [
+            new sap.ui.model.Sorter({
+              path: "CreatedAt",
+              descending: true,
+            }),
+          ];
+           mBindingParams.filters = [
+             new Filter("IsArchived",FilterOperator.NE,"true")
+           ]
+          // to short the sorted column in P13N dialog
+          // to prevent applying the initial sort all times
         },
         onSectIctb: function (oEvent) {
           console.log("selectTrigerred");
@@ -167,23 +189,25 @@ sap.ui.define(
           var oView = this.getView();
           var sPath = oEvent.getSource().getBindingContext().getPath();
           var oBject = oEvent.getSource().getBindingContext().getObject();
-          console.log(oBject);
           var oModel = this.getView().getModel();
           var oTitle = oView.getModel("oCtrlMdl").getProperty("/IcnTbFilName");
-
-          MessageBox.confirm("Kindly confirm to remove "+ oTitle, {
+          var oPayload = {
+            IsArchived: true,
+          };
+          console.log(sPath);
+          MessageBox.confirm("Kindly confirm to remove " + oTitle, {
             actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
 
             onClose: function (sAction) {
               if (sAction == "OK") {
-                oModel.remove(sPath, {
+                oModel.update(sPath, oPayload, {
                   success: function () {
                     MessageToast.show(oTitle + " Sucessfully Deleted.");
                     console.log(oView.getModel());
                     oView.byId("smartTable").getModel().refresh();
                   },
                   error: function () {
-                    MessageBox.show("Unable to delete the data.");
+                    MessageBox.error("Unable to delete the data.");
                   },
                 });
                 // oModel.refresh(true);

@@ -99,7 +99,7 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {
-          "defaultBindingMode": "TwoWay",
+          "defaultBindingMode": "OneWay",
           "defaultCountMode": "Inline",
           "refreshAfterChange": false,
           "useBatch" : false
