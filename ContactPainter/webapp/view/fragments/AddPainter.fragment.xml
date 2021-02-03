@@ -3,10 +3,6 @@
         <f:content>
             <Label text="Name"/>
             <Input value="{oModelView>/addData/Name}"   fieldGroupIds="InpGoup" required="true" id="Name" />
-            <Label text="City"/>
-            <Input value="{oModelView>/addData/City}" fieldGroupIds="InpGoup"   required="true" id="City" ></Input>
-            <Label text="State"/>
-            <Input value="{oModelView>/addData/State}" fieldGroupIds="InpGoup" required="true" id="State" />
             <Label text="Mobile No"/>
             <Input value="{oModelView>/addData/Mobile}" type="Number" fieldGroupIds="InpGoup" id="Mobile" maxLength="10" required="true"  />
              <Label text="Email"/>

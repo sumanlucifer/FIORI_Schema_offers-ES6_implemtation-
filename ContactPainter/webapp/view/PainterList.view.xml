@@ -100,7 +100,7 @@
                         </dependents>
                         <cells>
                             <ObjectIdentifier title="{Name}" titleActive="false"/>
-                            <Text text="{Id}"/>
+                            <Text text="{Email}"/>
                             <Text text="{Mobile}"/>
                             <Text text="{RegistrationStatus}"/>
                             <Button icon="sap-icon://edit" type="Transparent" press="onPressEditPainter" tooltip="Edit"></Button>

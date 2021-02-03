@@ -133,12 +133,13 @@ sap.ui.define(
           //new commit
         },
         onErrorPress: function () {
+          var oView = this.getView();
           var oMessage,
-            oViewModel = this.getView().getModel("oModelView"),
-            oDataModel = this.getView().getModel();
+            oViewModel = oView.getModel("oModelView"),
+            oDataModel = oView.getModel();
           var othat = this;
           var sCheckAdd = oViewModel.getProperty("/mode");
-          var oElementBinding = this.getView().getElementBinding().getPath();
+          var oElementBinding =oView.getElementBinding().getPath();
 
           console.log(this._ErrorMessages, sCheckAdd);
           for (var oProp of this._ErrorMessages) {

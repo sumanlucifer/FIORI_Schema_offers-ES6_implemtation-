@@ -3,8 +3,9 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "com/knpl/pragati/MasterDataManagement/model/models",
+     "com/knpl/pragati/ContactPainter/controller/ErrorHandler"
   ],
-  function (UIComponent, Device, models) {
+  function (UIComponent, Device, models,ErrorHandler) {
     "use strict";
 
     return UIComponent.extend("com.knpl.pragati.MasterDataManagement.Component", {
@@ -27,11 +28,11 @@ sap.ui.define(
         // set the device model
         this.setModel(models.createDeviceModel(), "device");
       },
-    //   destroy: function () {
-    //     this._oErrorHandler.destroy();
-    //     // call the base component's destroy function
-    //     UIComponent.prototype.destroy.apply(this, arguments);
-    //   },
+      destroy: function () {
+        this._oErrorHandler.destroy();
+        // call the base component's destroy function
+        UIComponent.prototype.destroy.apply(this, arguments);
+      },
 
       getContentDensityClass: function () {
         if (this._sContentDensityClass === undefined) {
