@@ -35,9 +35,11 @@ sap.ui.define(
           oRouter
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
+            
         },
         _onRouteMatched: function () {
           console.log("Painter List Loaded");
+          this.getView().getModel().resetChanges();
           this._initData();
         },
         _initData: function () {
@@ -57,6 +59,11 @@ sap.ui.define(
             },
           });
           this.setModel(oViewModel, "oModelView");
+          this.getView().getModel().refresh();
+          this._FilterInit();
+        },
+        _FilterInit:function(){
+            this._ResetFilterBar();
         },
         onFilter: function (oEvent) {
           console.log("On FIlter");
@@ -207,7 +214,7 @@ sap.ui.define(
         onUpdateFinished: function (oEvent) {
           // update the worklist's object counter after the table update
           var sTitle,
-            oTable = oEvent.getSource(),
+            oTable = this.getView().byId("idPainterTable"),
             iTotalItems = oEvent.getParameter("total");
           // only update the counter if the length is final and
           // the table is not empty

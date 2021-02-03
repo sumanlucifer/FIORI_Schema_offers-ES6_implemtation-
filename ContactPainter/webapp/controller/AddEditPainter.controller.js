@@ -47,82 +47,66 @@ sap.ui.define(
           var sArgId = window.decodeURIComponent(
             oEvent.getParameter("arguments").id
           );
-          console.log(sArgMode, sArgId);
-          this.getView().bindElement("/" + sArgId);
+
           this._initData(sArgMode, sArgId);
         },
         _initData: function (mParMode, mKey) {
           var oViewModel = new JSONModel({
             sIctbTitle: mParMode == "add" ? "Add" : "Edit",
+            busy: false,
             mPainterKey: mKey,
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
-            prop2: [
-              {
-                value: "Name",
-                label: "Name",
-                required: true,
-                type: "Text",
-                placeholder: "Enter the Painter's Name",
-                aggregationType: "Input",
-              },
-              {
-                value: "Mobile",
-                label: "Mobile Number",
-                required: true,
-                type: "Number",
-                placeholder: "Enter the Painter's Mobile Number",
-                aggregationType: "Input",
-              },
-              {
-                value: "DOB",
-                label: "Date of Birth",
-                required: true,
-                type: "Number",
-                placeholder: "Format DDMMYY",
-                aggregationType: "Date",
-              },
-              {
-                value: "Email",
-                label: "Email",
-                required: false,
-                type: "Email",
-                placeholder: "Enter the Painter's Email",
-                aggregationType: "Input",
-              },
-            ],
             addData: {
               Name: "",
+              //City: "",
               Mobile: "",
-              DOB: "",
+              //State: "",
               Email: "",
             },
+            //valueState: "None",
             addProps: ["Name", "Mobile", "DOB", "Email"],
           });
-          var oViewModel2 = new JSONModel({
-            busy: true,
-            delay: 0,
-          });
-          this._showFormFragment("EditPainter");
-          this._formFragments;
-          //add data validation
-          this.onClearPress();
-          var oMessageManager = sap.ui.getCore().getMessageManager();
-          var oView = this.getView();
-          oView.setModel(oMessageManager.getMessageModel(), "message");
-          oMessageManager.registerObject(oView, true);
-          //setting model
-          this.setModel(oViewModel2, "oModel2");
-          this.setModel(oViewModel, "oModelView");
-        },
+          //   var oViewModel2 = new JSONModel({
+          //     busy: true,
+          //     delay: 0,
+          //   });
+          if (mParMode == "add") {
+            this._showFormFragment("AddPainter");
+            this.getView().unbindElement();
+          } else {
+            this.getView().bindElement("/" + mKey, {
+              expand: "PainterAddress",
+            });
+            this._showFormFragment("EditPainter");
+          }
 
+          this._formFragments; //used for the fragments of the add and edit forms
+          this.getView().setModel(oViewModel, "oModelView");
+          this._initMessage(oViewModel);
+          this.getView().getModel().resetChanges();
+          //used to intialize the message class for displaying the messages
+        },
+        onAfterRendering: function () {
+          //var oModel = this.getView().getModel("oModelView");
+          //this._initMessage(oModel);
+        },
+        _initMessage: function (oViewModel) {
+          this._onClearMgsClass();
+          this._oMessageManager = sap.ui.getCore().getMessageManager();
+          var oView = this.getView();
+          console.log(this._oMessageManager.getMessageModel());
+          oView.setModel(this._oMessageManager.getMessageModel(), "message");
+          this._oMessageManager.registerObject(oView, true);
+        },
         navPressBack: function () {
           this.getOwnerComponent().getRouter().navTo("RoutePList");
         },
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
           var oView = this.getView();
-          objSection.removeAllItems();
+          objSection.destroyItems();
+
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
@@ -131,15 +115,16 @@ sap.ui.define(
         _getFormFragment: function (sFragmentName) {
           var oView = this.getView();
           var othat = this;
-          if (!this._formFragments) {
-            this._formFragments = Fragment.load({
-              id: oView.getId(),
-              name: "com.knpl.pragati.ContactPainter.view." + sFragmentName,
-              controller: othat,
-            }).then(function (oFragament) {
-              return oFragament;
-            });
-          }
+          // if (!this._formFragments) {
+          this._formFragments = Fragment.load({
+            id: oView.getId(),
+            name:
+              "com.knpl.pragati.ContactPainter.view.fragments." + sFragmentName,
+            controller: othat,
+          }).then(function (oFragament) {
+            return oFragament;
+          });
+          // }
 
           return this._formFragments;
         },
@@ -154,12 +139,13 @@ sap.ui.define(
           var oSmartControl;
           if (object["aggregationType"] == "Input") {
             oSmartControl = new FormElement({
-              label: "{oModelView>label}",
+              label: "{?}",
               fields: [
                 new Input({
                   required: "{oModelView>required}",
                   fieldGroupIds: "InpGoup",
                   type: "{oModelView>type}",
+
                   placeholder: "{oModelView>placeholder}",
                   value:
                     sEdit == "add"
@@ -177,6 +163,10 @@ sap.ui.define(
               ],
             });
           } else if (object["aggregationType"] == "Date") {
+            console.log(
+              oContext.getModel().getProperty(oContext.getPath())["value"]
+            );
+
             oSmartControl = new FormElement({
               label: "{oModelView>label}",
               fields: [
@@ -216,36 +206,59 @@ sap.ui.define(
           sap.ui.getCore().getMessageManager().addMessages(oMessage);
         },
         onErrorPress: function () {
-          var oMessage = new Message({
-            message: "Mandatory Fields Are Empty!",
-            type: this._MessageType.Error,
-            target: "/Dummy",
-            processor: this.getView().getModel(),
-          });
-          sap.ui.getCore().getMessageManager().addMessages(oMessage);
+          var oMessage,
+            oView = this.getView(),
+            oViewModel = oView.getModel("oModelView"),
+            oDataModel = oView.getModel(),
+            sElementBPath = "";
+          var othat = this;
+          var sCheckAdd = oViewModel.getProperty("/mode");
+          if (sCheckAdd !== "add") {
+            sElementBPath = oView.getElementBinding().getPath();
+          }
+
+          console.log(this._ErrorMessages);
+          for (var oProp of this._ErrorMessages) {
+            oMessage = new sap.ui.core.message.Message({
+              message: oProp["message"],
+              type: othat._MessageType.Error,
+              target:
+                sCheckAdd == "add"
+                  ? oProp["target"]
+                  : sElementBPath + "/" + oProp["target"],
+              processor: sCheckAdd == "add" ? oViewModel : oDataModel,
+            });
+            othat._oMessageManager.addMessages(oMessage);
+          }
         },
         handleEmptyFields: function (oEvent) {
           this.onErrorPress();
         },
         validateEventFeedbackForm: function (requiredInputs) {
-          var _self = this;
+          this._ErrorMessages = [];
+          var aArray = [];
+          var othat = this;
           var valid = true;
           requiredInputs.forEach(function (input) {
             var sInput = input;
-            try {
-              if (
-                (sInput.getValue() == "" || sInput.getValue() == undefined) &&
-                sInput.getRequired()
-              ) {
-                valid = false;
-                sInput.setValueState("Error");
-              } else {
-                sInput.setValueState("None");
-              }
-            } catch (error) {
-               
+
+            if (
+              sInput.getValue().trim() === "" &&
+              sInput.getRequired() === true
+            ) {
+              valid = false;
+              sInput.setValueState("Error");
+              othat._ErrorMessages.push({
+                message:
+                  sInput.getParent().getLabel().getText() +
+                  " is a mandatory field (*)",
+                target: sInput.getBinding("value").getPath(),
+              });
+            } else {
+              sInput.setProperty("valueState", "None");
             }
           });
+          console.log(this._ErrorMessages);
           return valid;
         },
         _getMessagePopover: function () {
@@ -268,11 +281,13 @@ sap.ui.define(
             oMessagePopover.openBy(oSourceControl);
           });
         },
-        onClearPress: function () {
+        _onClearMgsClass: function () {
           // does not remove the manually set ValueStateText we set in onValueStatePress():
+          //this._clearPress;
           sap.ui.getCore().getMessageManager().removeAllMessages();
         },
         onPressSave: function () {
+          this._onClearMgsClass();
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
           var passedValidation = this.validateEventFeedbackForm(requiredInputs);
           if (passedValidation === false) {
@@ -290,40 +305,58 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var sEntityPath = oView.getElementBinding().getPath();
-          var oDataValue = oDataModel.getProperty(sEntityPath);
+          var oDataValue = oDataModel.getObject(sEntityPath, {
+            expand: "PainterAddress",
+          });
           var oPrpReq = oModelView.getProperty("/prop2");
-          var oPayload = {};
-          for (var x in oPrpReq) {
-            oPayload[oPrpReq[x]["value"]] = oDataValue[oPrpReq[x]["value"]];
-          }
+          var oPayload = {
+            Name: oDataValue["Name"],
+            Mobile: oDataValue["Mobile"],
+            Email: oDataValue["Email"],
+            //State: oDataValue["PainterAddress"]["City"],
+            //City: oDataValue["PainterAddress"]["City"],
+          };
 
+          console.log(oPayload, sEntityPath);
           oDataModel.update(sEntityPath, oPayload, {
             success: function (data) {
-              MessageToast.show(
-                "Painter " + oPayload["Name"] + " Successfully Updated."
-              );
+              oModelView.setProperty("/busy", false);
+              MessageToast.show("Painter Sucessfully updated.");
             },
             error: function (data) {
-              var oRespText = data["message"];
-              MessageBox.error(oRespText);
+              oModelView.setProperty("/busy", false);
+              MessageBox.error("Unable to upadte the printer");
             },
           });
+          console.log();
         },
         _saveAdd: function () {
           var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var oDataModel = oView.getModel();
+          var oRouter = this.getOwnerComponent().getRouter();
           var oMdlView = oView.getModel("oModelView");
-          var sEntity = "/PainterRegistrationSet";
+          var sEntity = "/PainterSet"; //PainterSet";//PainterRegistrationSet
           var aPayload = oMdlView.getProperty("/addData");
           oDataModel.create(sEntity, aPayload, {
             success: function (data) {
+              oModelView.setProperty("/busy", false);
               MessageToast.show(
                 "Painter " + aPayload["Name"] + " Successfully Created."
               );
+              oRouter.navTo("RoutePList");
             },
-            error: function (data) {},
+            error: function () {
+              oModelView.setProperty("/busy", false);
+              MessageBox.error("Unable to add the printer");
+            },
           });
+        },
+        onExit: function () {
+          console.log("manik exit");
         },
       }
     );

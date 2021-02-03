@@ -10,7 +10,7 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/library",
     "sap/ui/core/message/Message",
-    "sap/m/Input"
+    "sap/m/Input",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -38,10 +38,7 @@ sap.ui.define(
           this._formFragments = {};
           this._ValueState = library.ValueState;
           this._MessageType = library.MessageType;
-          var oMessageManager = sap.ui.getCore().getMessageManager();
-          var oView = this.getView();
-          oView.setModel(oMessageManager.getMessageModel(), "message");
-          oMessageManager.registerObject(oView, true);
+
           oRouter
             .getRoute("RouteEditTable")
             .attachMatched(this._onRouteMatched, this);
@@ -59,21 +56,35 @@ sap.ui.define(
             oEvent.getParameter("arguments").name
           );
           console.log(sArgsFields, sArgesProp, sArgesMode, sArgName);
-          this.onClearPress();
+
           this.getView().bindElement("/" + sArgesProp);
-          this._initData(sArgsFields, sArgesMode, sArgName, sArgesProp,sArgKey);
+          this._initData(
+            sArgsFields,
+            sArgesMode,
+            sArgName,
+            sArgesProp,
+            sArgKey
+          );
           this._showFormFragment("EditDepo");
         },
-        _initData: function (sArgsType, sArgesMode, sArgName, sArgesProp,sArgKey) {
+        _initData: function (
+          sArgsType,
+          sArgesMode,
+          sArgName,
+          sArgesProp,
+          sArgKey
+        ) {
           var oData = {
             edit: sArgesMode == "edit" ? true : false,
+            mode: sArgesMode,
             modelProp: sArgesProp,
             prop1: "Group Title",
             prop2: [],
             titleP1: sArgesMode == "edit" ? "Edit" : "Add New",
             titleP2: sArgName,
             addData: {},
-            navBackKey:sArgKey
+            navBackKey: sArgKey,
+            busy: false,
           };
 
           var aArray = sArgsType.split(",");
@@ -86,15 +97,30 @@ sap.ui.define(
           console.log(oData);
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelView");
+          this._initMessage();
+        },
+
+        _initMessage: function () {
+          this.onClearPress();
+          this._oMessageManager = sap.ui.getCore().getMessageManager();
+          var oView = this.getView();
+          oView.setModel(this._oMessageManager.getMessageModel(), "message");
+          this._oMessageManager.registerObject(oView, true);
         },
         navPressBack: function () {
-          console.log(this.getView().getModel("oModelView").getProperty("/navBackKey"))
+          console.log(
+            this.getView().getModel("oModelView").getProperty("/navBackKey")
+          );
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteMaster",{
-              "?query":{
-                tab:this.getView().getModel("oModelView").getProperty("/navBackKey")
-              }
-          })
+
+          oRouter.navTo("RouteMaster", {
+            "?query": {
+              tab: this.getView()
+                .getModel("oModelView")
+                .getProperty("/navBackKey"),
+            },
+          });
+          //this.getView().getModel().resetChanges();
         },
         onSuccessPress: function (msg) {
           var oMessage = new Message({
@@ -107,13 +133,30 @@ sap.ui.define(
           //new commit
         },
         onErrorPress: function () {
-          var oMessage = new Message({
-            message: "Mandatory Fields Are Empty!",
-            type: this._MessageType.Error,
-            target: "/Dummy",
-            processor: this.getView().getModel(),
-          });
-          sap.ui.getCore().getMessageManager().addMessages(oMessage);
+          var oView = this.getView();
+          var oMessage,
+            oViewModel = oView.getModel("oModelView"),
+            oDataModel = oView.getModel(),
+            sElementBPath = "";
+          var othat = this;
+          var sCheckAdd = oViewModel.getProperty("/mode");
+          var oElementBinding = oView.getElementBinding().getPath();
+          if (sCheckAdd !== "add") {
+            sElementBPath = oView.getElementBinding().getPath();
+          }
+          console.log(this._ErrorMessages, sCheckAdd);
+          for (var oProp of this._ErrorMessages) {
+            oMessage = new sap.ui.core.message.Message({
+              message: oProp["message"],
+              type: othat._MessageType.Error,
+              target:
+                sCheckAdd == "add"
+                  ? oProp["target"]
+                  : oElementBinding + "/" + oProp["target"],
+              processor: sCheckAdd == "add" ? oViewModel : oDataModel,
+            });
+            othat._oMessageManager.addMessages(oMessage);
+          }
         },
         handleEmptyFields: function (oEvent) {
           this.onErrorPress();
@@ -123,7 +166,10 @@ sap.ui.define(
           var sEdit = oContext.getModel().getProperty("/edit");
           console.log(sId);
           var oSmartControl = new FormElement({
-            label: oContext.getObject()["value"].match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
+            label: oContext
+              .getObject()
+              ["value"].match(/[A-Z][a-z]+|[0-9]+/g)
+              .join(" "),
             fields: [
               new Input({
                 required: true,
@@ -146,21 +192,36 @@ sap.ui.define(
           return requiredInputs;
         },
         validateEventFeedbackForm: function (requiredInputs) {
-          var _self = this;
+          this._ErrorMessages = [];
+          var aArray = [];
+          var othat = this;
           var valid = true;
           requiredInputs.forEach(function (input) {
             var sInput = input;
-            if (sInput.getValue() == "" || sInput.getValue() == undefined) {
+
+            if (
+              sInput.getValue().trim() === "" &&
+              sInput.getRequired() === true &&
+              sInput.getVisible() === true
+            ) {
               valid = false;
               sInput.setValueState("Error");
+              othat._ErrorMessages.push({
+                message:
+                  sInput.getParent().getLabel() + " is a mandatory field (*)",
+                target: sInput.getBinding("value").getPath(),
+              });
             } else {
-              sInput.setValueState("None");
+              sInput.setProperty("valueState", "None");
             }
           });
+          console.log(this._ErrorMessages);
           return valid;
         },
         onPressSave: function () {
+          this.onClearPress();
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
+
           var passedValidation = this.validateEventFeedbackForm(requiredInputs);
           if (passedValidation === false) {
             //show an error message, rest of code will not execute.
@@ -178,6 +239,7 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var sTitle = oModelView.getProperty("/titleP2");
           var oDataValue = oDataModel.getProperty(
             oView.getElementBinding().getPath()
@@ -190,10 +252,13 @@ sap.ui.define(
 
           oDataModel.update(oView.getElementBinding().getPath(), oPayload, {
             success: function (data) {
+              oModelView.setProperty("/busy", false);
               MessageToast.show(sTitle + " Successfully Updated.");
             },
             error: function (data) {
+              oModelView.setProperty("/busy", false);
               var oRespText = JSON.parse(data.responseText);
+
               MessageBox.error(oRespText["error"]["message"]["value"]);
             },
           });
@@ -202,14 +267,24 @@ sap.ui.define(
           var oView = this.getView();
           var oDataModel = oView.getModel();
           var oMdlView = oView.getModel("oModelView");
+          oMdlView.setProperty("/busy", true);
           var sEntity = "/" + oMdlView.getProperty("/modelProp");
           var aPayload = oMdlView.getProperty("/addData");
           var sTitle = oMdlView.getProperty("/titleP2");
+          var oRouter = this.getOwnerComponent().getRouter();
+          var navKey = oMdlView.getProperty("/navBackKey");
           oDataModel.create(sEntity, aPayload, {
             success: function (data) {
+              oMdlView.setProperty("/busy", false);
               MessageToast.show(sTitle + " Successfully Created.");
+              oRouter.navTo("RouteMaster", {
+                "?query": {
+                  tab: navKey,
+                },
+              });
             },
             error: function (data) {
+              oMdlView.setProperty("/busy", false);
               var oRespText = JSON.parse(data.responseText);
               MessageBox.error(oRespText["error"]["message"]["value"]);
             },
@@ -243,7 +318,6 @@ sap.ui.define(
         },
         _getMessagePopover: function () {
           var oView = this.getView();
-
           // create popover lazily (singleton)
           if (!this._pMessagePopover) {
             this._pMessagePopover = Fragment.load({
@@ -265,7 +339,7 @@ sap.ui.define(
         onClearPress: function () {
           // does not remove the manually set ValueStateText we set in onValueStatePress():
           sap.ui.getCore().getMessageManager().removeAllMessages();
-        }
+        },
       }
     );
   }

@@ -3,7 +3,7 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "com/knpl/pragati/MasterDataManagement/model/models",
-    "com/knpl/pragati/MasterDataManagement/controller/ErrorHandler",
+     "com/knpl/pragati/MasterDataManagement/controller/ErrorHandler"
   ],
   function (UIComponent, Device, models,ErrorHandler) {
     "use strict";

@@ -1,13 +1,14 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<ViewSettingsDialog
+	<ViewSettingsDialog sortDescending="true"
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="{i18n>Name}" key="Name" selected="true" />
+			<ViewSettingsItem text="{i18n>Name}" key="Name" />
 			<ViewSettingsItem text="{i18n>Email}" key="Email" />
             <ViewSettingsItem text="{i18n>Mobile}" key="Mobile" />
             <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
+            <ViewSettingsItem text="{i18n>LastUpdated}" key="UpdatedAt" selected="true" />
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>
