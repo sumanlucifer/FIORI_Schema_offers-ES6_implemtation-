@@ -53,7 +53,7 @@ sap.ui.define(
         _initData: function (mParMode, mKey) {
           var oViewModel = new JSONModel({
             sIctbTitle: mParMode == "add" ? "Add" : "Edit",
-            busy:false,
+            busy: false,
             mPainterKey: mKey,
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
@@ -62,15 +62,15 @@ sap.ui.define(
               //City: "",
               Mobile: "",
               //State: "",
-              Email:""
+              Email: "",
             },
             //valueState: "None",
             addProps: ["Name", "Mobile", "DOB", "Email"],
           });
-        //   var oViewModel2 = new JSONModel({
-        //     busy: true,
-        //     delay: 0,
-        //   });
+          //   var oViewModel2 = new JSONModel({
+          //     busy: true,
+          //     delay: 0,
+          //   });
           if (mParMode == "add") {
             this._showFormFragment("AddPainter");
             this.getView().unbindElement();
@@ -81,9 +81,11 @@ sap.ui.define(
             this._showFormFragment("EditPainter");
           }
 
-          this._formFragments;//used for the fragments of the add and edit forms
+          this._formFragments; //used for the fragments of the add and edit forms
           this.getView().setModel(oViewModel, "oModelView");
-          this._initMessage(oViewModel);//used to intialize the message class for displaying the messages
+          this._initMessage(oViewModel);
+          this.getView().getModel().resetChanges();
+          //used to intialize the message class for displaying the messages
         },
         onAfterRendering: function () {
           //var oModel = this.getView().getModel("oModelView");
@@ -204,19 +206,26 @@ sap.ui.define(
           sap.ui.getCore().getMessageManager().addMessages(oMessage);
         },
         onErrorPress: function () {
-          var oMessage ,oView =this.getView(),
+          var oMessage,
+            oView = this.getView(),
             oViewModel = oView.getModel("oModelView"),
-            oDataModel =oView.getModel();
+            oDataModel = oView.getModel(),
+            sElementBPath = "";
           var othat = this;
           var sCheckAdd = oViewModel.getProperty("/mode");
-          var sElementBPath = oView.getElementBinding().getPath()
+          if (sCheckAdd !== "add") {
+            sElementBPath = oView.getElementBinding().getPath();
+          }
 
           console.log(this._ErrorMessages);
           for (var oProp of this._ErrorMessages) {
             oMessage = new sap.ui.core.message.Message({
               message: oProp["message"],
               type: othat._MessageType.Error,
-              target: sCheckAdd=="add"? oProp["target"] : sElementBPath + "/" + oProp["target"],
+              target:
+                sCheckAdd == "add"
+                  ? oProp["target"]
+                  : sElementBPath + "/" + oProp["target"],
               processor: sCheckAdd == "add" ? oViewModel : oDataModel,
             });
             othat._oMessageManager.addMessages(oMessage);
@@ -233,7 +242,10 @@ sap.ui.define(
           requiredInputs.forEach(function (input) {
             var sInput = input;
 
-            if (sInput.getValue().trim() === "" && sInput.getRequired() === true) {
+            if (
+              sInput.getValue().trim() === "" &&
+              sInput.getRequired() === true
+            ) {
               valid = false;
               sInput.setValueState("Error");
               othat._ErrorMessages.push({
@@ -293,6 +305,7 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var sEntityPath = oView.getElementBinding().getPath();
           var oDataValue = oDataModel.getObject(sEntityPath, {
             expand: "PainterAddress",
@@ -301,39 +314,49 @@ sap.ui.define(
           var oPayload = {
             Name: oDataValue["Name"],
             Mobile: oDataValue["Mobile"],
-            State: oDataValue["PainterAddress"]["City"],
-            City: oDataValue["PainterAddress"]["City"],
+            Email: oDataValue["Email"],
+            //State: oDataValue["PainterAddress"]["City"],
+            //City: oDataValue["PainterAddress"]["City"],
           };
 
           console.log(oPayload, sEntityPath);
-          oDataModel.update("", oPayload, {
+          oDataModel.update(sEntityPath, oPayload, {
             success: function (data) {
-              console.log("success", data);
+              oModelView.setProperty("/busy", false);
+              MessageToast.show("Painter Sucessfully updated.");
             },
             error: function (data) {
-              console.log("error", data);
+              oModelView.setProperty("/busy", false);
+              MessageBox.error("Unable to upadte the printer");
             },
           });
           console.log();
         },
         _saveAdd: function () {
           var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var oDataModel = oView.getModel();
-          var oRouter = this.getOwnerComponent().getRoute();
+          var oRouter = this.getOwnerComponent().getRouter();
           var oMdlView = oView.getModel("oModelView");
-          var sEntity = "/PainterSet";
+          var sEntity = "/PainterSet"; //PainterSet";//PainterRegistrationSet
           var aPayload = oMdlView.getProperty("/addData");
           oDataModel.create(sEntity, aPayload, {
             success: function (data) {
-               
-                MessageToast.show(
+              oModelView.setProperty("/busy", false);
+              MessageToast.show(
                 "Painter " + aPayload["Name"] + " Successfully Created."
               );
-               oRouter.navTo("RoutePList");
-            },error:function(){
-                MessageBox.error("Unable to add the printer")
-            }
+              oRouter.navTo("RoutePList");
+            },
+            error: function () {
+              oModelView.setProperty("/busy", false);
+              MessageBox.error("Unable to add the printer");
+            },
           });
+        },
+        onExit: function () {
+          console.log("manik exit");
         },
       }
     );

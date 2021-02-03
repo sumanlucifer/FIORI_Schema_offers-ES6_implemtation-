@@ -14,7 +14,7 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" value="{oModelView>/filterBar/Name}" placeholder="Name" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idNameInput" value="{oModelView>/filterBar/Name}" submit="onFilter" placeholder="Name" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Name}"/>
                                         </suggestionItems>
@@ -23,7 +23,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idEmailInput" value="{oModelView>/filterBar/Email}" placeholder="Email" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idEmailInput" submit="onFilter" value="{oModelView>/filterBar/Email}" placeholder="Email" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Email}"/>
                                         </suggestionItems>
@@ -32,7 +32,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idMobileInput" value="{oModelView>/filterBar/Mobile}" type="Number" placeholder="Mobile" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idMobileInput" submit="onFilter" value="{oModelView>/filterBar/Mobile}" type="Number" placeholder="Mobile" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Mobile}"/>
                                         </suggestionItems>
@@ -41,7 +41,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Registration Status" label="Registration Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" value="{oModelView>/filterBar/RegistrationStatus}" placeholder="Registration Status" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idRegistrationStatus" submit="onFilter" value="{oModelView>/filterBar/RegistrationStatus}" placeholder="Registration Status" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{RegistrationStatus}"/>
                                         </suggestionItems>

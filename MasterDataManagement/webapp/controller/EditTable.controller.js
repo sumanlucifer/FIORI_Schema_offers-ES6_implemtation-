@@ -136,11 +136,14 @@ sap.ui.define(
           var oView = this.getView();
           var oMessage,
             oViewModel = oView.getModel("oModelView"),
-            oDataModel = oView.getModel();
+            oDataModel = oView.getModel(),
+            sElementBPath = "";
           var othat = this;
           var sCheckAdd = oViewModel.getProperty("/mode");
-          var oElementBinding =oView.getElementBinding().getPath();
-
+          var oElementBinding = oView.getElementBinding().getPath();
+          if (sCheckAdd !== "add") {
+            sElementBPath = oView.getElementBinding().getPath();
+          }
           console.log(this._ErrorMessages, sCheckAdd);
           for (var oProp of this._ErrorMessages) {
             oMessage = new sap.ui.core.message.Message({
@@ -279,13 +282,11 @@ sap.ui.define(
                   tab: navKey,
                 },
               });
-              
             },
             error: function (data) {
               oMdlView.setProperty("/busy", false);
               var oRespText = JSON.parse(data.responseText);
               MessageBox.error(oRespText["error"]["message"]["value"]);
-              
             },
           });
         },
@@ -317,7 +318,6 @@ sap.ui.define(
         },
         _getMessagePopover: function () {
           var oView = this.getView();
-
           // create popover lazily (singleton)
           if (!this._pMessagePopover) {
             this._pMessagePopover = Fragment.load({
