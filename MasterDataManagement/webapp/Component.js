@@ -4,7 +4,7 @@ sap.ui.define(
     "sap/ui/Device",
     "com/knpl/pragati/MasterDataManagement/model/models",
   ],
-  function (UIComponent, Device, models,ErrorHandler) {
+  function (UIComponent, Device, models) {
     "use strict";
 
     return UIComponent.extend("com.knpl.pragati.MasterDataManagement.Component", {
