@@ -49,7 +49,8 @@ xmlns:f="sap.ui.layout.form">
 				
 
                 <Label text="Call Center Number" labelFor="callcenter" design="Bold" required="true" />
-		        <Input id="callcenter"  type="Number"
+		        <Input id="callcenter"  type="Number" 
+                maxLength="10"
                              value="{ 
                                   path : '/callcenter', 
                                   type : 'sap.ui.model.type.String', 
