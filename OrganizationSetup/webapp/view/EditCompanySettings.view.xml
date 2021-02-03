@@ -18,8 +18,8 @@ floatingFooter="true"
 				
 
                 <Label text="About Us"  design="Bold"/>
-                <Input id="about" required="true" 
-                type="Text"
+                <TextArea id="about" required="true" 
+                width="100%" rows="4"
         				placeholder="Enter About Us ..."
         				valueStateText="About Us must not be empty."
                         value="{ 
@@ -32,7 +32,7 @@ floatingFooter="true"
                               }" />
 
                 <Label text="Disclaimer"  design="Bold"/>
-                <Input id="disclaimer" required="true"  type="Text"
+                <TextArea id="disclaimer" required="true"  width="100%" rows="4"
         				placeholder="Enter Disclaimer ..."
         				valueStateText="Disclaimer must not be empty."
                          value="{ 
@@ -65,15 +65,16 @@ floatingFooter="true"
 	
     <footer>
     <OverflowToolbar>
-				<ToolbarSpacer/>
-				<Button
+				
+				<!-- <Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
                     press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
 				<ToolbarSpacer/>
-                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+                
                 <Button text="Cancel"
                 
 						press="onCancelPress"

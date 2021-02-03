@@ -5,23 +5,24 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/model/FilterType",
     "sap/ui/richtexteditor/RichTextEditor",
-    'sap/m/MessageToast'
+    'sap/m/MessageToast',
+    "sap/m/MessageBox"
 
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor, MessageToast) {
+    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor, MessageToast, MessageBox) {
         "use strict";
-        
+
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
             onInit: function () {
-               
+
 
             },
-            
-            
+
+
             onFilterUsers: function (oEvent) {
 
                 // build filter array
@@ -38,18 +39,39 @@ sap.ui.define([
             },
             onFilterRoles: function (oEvent) {
 
-                // build filter array
-                var aFilter = [];
-                var sQuery = oEvent.getParameter("query");
-                if (sQuery) {
-                    aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
-                }
 
-                // filter binding
+                var sQuery = oEvent.getSource().getValue();
+
+                var oFilter = new Filter({
+
+                    filters: [
+
+                        new Filter("Role", FilterOperator.Contains, sQuery),
+                        new Filter("Description", FilterOperator.Contains, sQuery)
+
+                    ]
+
+                });
                 var oList = this.getView().byId("tableRoles");
                 var oBinding = oList.getBinding("items");
-                oBinding.filter(aFilter);
+
+                oBinding.filter(oFilter);
+
+                // // build filter array
+                // var aFilter = [];
+                // var sQuery = oEvent.getParameter("query");
+                // if (sQuery) {
+                //     aFilter.push(new Filter("Description", FilterOperator.Contains, sQuery));
+
+                // }
+                // var sQuery = oEvent.getSource().getValue();  
+
+                // // filter binding
+                // var oList = this.getView().byId("tableRoles");
+                // var oBinding = oList.getBinding("items");
+                // oBinding.filter(aFilter);
             },
+
             onPressAdd: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
@@ -99,35 +121,33 @@ sap.ui.define([
                 //console.log(selectedUserId);
             },
             onPressRemoveUser: function (oEvent) {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
 
                 var oItem = oEvent.getSource();
                 var removeSet = oItem.getBindingContext("data").getPath();
-
                 var oTable = this.getView().byId("tableUsers");
 
                 var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
-
                 var oParam = {
-                    Name: oSelectedItem.Name,
-                    Email: oSelectedItem.Email,
-                    Mobile: oSelectedItem.Mobile,
-                    CountryCode: oSelectedItem.CountryCode,
-                    RoleId: oSelectedItem.RoleId,
-                    IsArchived: true
-                };
-                //console.log(oParam);
-                var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
+                        Name: oSelectedItem.Name,
+                        Email: oSelectedItem.Email,
+                        Mobile: oSelectedItem.Mobile,
+                        CountryCode: oSelectedItem.CountryCode,
+                        RoleId: oSelectedItem.RoleId,
+                        IsArchived: true
+                    };
+                function onYes() {
+                    var oModel = this.getView().getModel("data");
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers") });
+                }
 
-
+                this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);
 
             },
-            onRemoveSuccess: function () {
+            onRemoveSuccess: function (oTable) {
                 
-
-                var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                var oList = this.getView().byId(oTable);
+                oList.getBinding("items").refresh(true);
                 var msg = 'Removed Successfully!';
                 MessageToast.show(msg);
 
@@ -153,9 +173,13 @@ sap.ui.define([
                     Role: oSelectedItem.Role,
                     IsArchived: true
                 };
-                //console.log(oParam);
-                var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
+                function onYes() {
+                   var oModel = this.getView().getModel("data");
+                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableRoles") });
+                }
+
+                this.showWarning("MSG_CONFIRM_DELETE_ROLE", onYes);
+                
 
 
             },
@@ -175,11 +199,31 @@ sap.ui.define([
                     CallCenterHelpline: oSelectedItem.callCenterNo,
                     IsArchived: true
                 };
-                //console.log(oParam);
-                var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess() });
+               function onYes() {
+                  var oModel = this.getView().getModel("data");
+                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableCompanySettings") });
+                }
 
-            }
+                this.showWarning("MSG_CONFIRM_DELETE_CompanySettings", onYes);
+                
+
+            },
+            showWarning: function (sMsgTxt, _fnYes) {
+                var that = this;
+                MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            _fnYes && _fnYes.apply(that);
+                        }
+                    }
+                });
+            },
+            getResourceBundle: function () {
+                return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            },
+
+
 
 
 

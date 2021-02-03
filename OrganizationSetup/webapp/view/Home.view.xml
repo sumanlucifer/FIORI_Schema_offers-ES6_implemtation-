@@ -13,7 +13,14 @@ xmlns:l="sap.ui.layout"
 		<items>
 			<IconTabFilter text="Users" key="users">
 				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',
-                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
+               
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false},
+                parameters : {expand:'Role'},
+                sorter:{
+                    path: 'Id', 
+                    descending: true
+                }
+                 }"
                 growing="true" 
                 growingThreshold="20">
                             <headerToolbar>
@@ -30,7 +37,7 @@ xmlns:l="sap.ui.layout"
 
                                 
                                 <Column width="20%">
-                                    <Text text="{i18n>userName}"/>
+                                    <Text text="{i18n>name}"/>
                                 </Column>
                                 <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>mobileNo}"/>
@@ -39,7 +46,7 @@ xmlns:l="sap.ui.layout"
                                     <Text text="{i18n>email}"/>
                                 </Column>
                                 <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>country}"/>
+                                    <Text text="{i18n>role}"/>
                                 </Column>
 
                                 <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
@@ -58,7 +65,7 @@ xmlns:l="sap.ui.layout"
                                         <Text text="{data>Name}"/>
                                         <Text text="{data>Mobile}"/>
                                         <Text text="{data>Email}"/>
-                                        <Text text="{data>CountryCode}"/>
+                                        <Text text="{data>Role/Description}"/>
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
                                         <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveUser"></Button>
@@ -79,7 +86,7 @@ xmlns:l="sap.ui.layout"
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField id ="searchFieldRole" search=".onFilterRoles" width="20%" />
                                     <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddRole"/>
+                                    <!-- <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddRole"/> -->
                                 </Toolbar>
                             </headerToolbar>
                             <columns>
@@ -96,9 +103,9 @@ xmlns:l="sap.ui.layout"
                                 <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
                                     <Text text="{i18n>GenericEdit}"/>
                                 </Column>
-                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                <!-- <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
                                     <Text text="{i18n>GenericRemove}"/>
-                                </Column>
+                                </Column> -->
                             </columns>
                             <items>
                                 <ColumnListItem>
@@ -111,7 +118,7 @@ xmlns:l="sap.ui.layout"
                                         
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEditRole" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveRole"></Button>
+                                        <!-- <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveRole"></Button> -->
                                     </cells>
                                 </ColumnListItem>
                             </items>

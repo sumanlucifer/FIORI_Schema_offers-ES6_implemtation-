@@ -18,9 +18,10 @@ xmlns:f="sap.ui.layout.form">
 			><f:content>
 				 
 				
-
+            
                 <Label text="About Us"  design="Bold" required="true"/>
-                <Input id="about"  type="Text"
+                <TextArea id="about"  width="100%" rows="4"
+                maxLength="1000"
                         value="{ 
                                   path : '/about', 
                                   type : 'sap.ui.model.type.String', 
@@ -33,7 +34,8 @@ xmlns:f="sap.ui.layout.form">
         				valueStateText="About Us must not be empty." />
 
                 <Label text="Disclaimer"  design="Bold" required="true"/>
-                <Input id="disclaimer"  type="Text"
+                <TextArea id="disclaimer"  width="100%" rows="4"
+                maxLength="1000"
                             value="{ 
                                   path : '/disclaimer', 
                                   type : 'sap.ui.model.type.String', 
@@ -67,14 +69,15 @@ xmlns:f="sap.ui.layout.form">
 	
     <footer>
 			<OverflowToolbar>
-            <Button
+            <!-- <Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
                     press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
 				<ToolbarSpacer/>
-                <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/>
+                
 
                 <Button text="Cancel"
                 
@@ -88,6 +91,7 @@ xmlns:f="sap.ui.layout.form">
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
+                
                  
 			</OverflowToolbar>
 		</footer>

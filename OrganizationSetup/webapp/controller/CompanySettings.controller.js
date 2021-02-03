@@ -10,12 +10,17 @@ sap.ui.define([
     "sap/ui/core/ValueState",
     "../utils/Validator",
     "sap/ui/model/json/JSONModel",
+    "sap/m/Dialog",
+    "sap/m/DialogType",
+    "sap/m/Button",
+    "sap/m/ButtonType",
+    "sap/m/Text"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, History, UIComponent, RichTextEditor, MessageToast, Message, library, Fragment,
-        ValueState, Validator, JSONModel) {
+        ValueState, Validator, JSONModel, Dialog, DialogType, Button, ButtonType, Text) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -47,20 +52,20 @@ sap.ui.define([
 
                 this.getView().setModel(oModel);
 
-                var oMessageManager, oView;
+                // var oMessageManager, oView;
 
-                oView = this.getView();
-                // set message model
-                oMessageManager = sap.ui.getCore().getMessageManager();
-                oView.setModel(oMessageManager.getMessageModel(), "message");
+                // oView = this.getView();
+                // // set message model
+                // oMessageManager = sap.ui.getCore().getMessageManager();
+                // oView.setModel(oMessageManager.getMessageModel(), "message");
 
-                oMessageManager.registerObject(oView, true);
+                // oMessageManager.registerObject(oView, true);
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("EditCompanySettings").attachPatternMatched(this._onObjectMatched, this);
 
-                //this.loadRichTextEditiors();
-                
+
+
 
             },
             onAfterRendering: function () {
@@ -105,17 +110,25 @@ sap.ui.define([
 
             onSuccessPress: function (msg) {
 
-                 this.onClearPress();
+                this.onClearPress();
 
-                var oMessage = new Message({
-                    message: msg,
-                    type: MessageType.Success,
-                    target: "/Dummy",
-                    processor: this.getView().getModel()
-                });
-                sap.ui.getCore().getMessageManager().addMessages(oMessage);
-                var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                // var oMessage = new Message({
+                //     message: msg,
+                //     type: MessageType.Success,
+                //     target: "/Dummy",
+                //     processor: this.getView().getModel()
+                // });
+                // sap.ui.getCore().getMessageManager().addMessages(oMessage);
+                // var oModel = this.getView().getModel("data");
+                // oModel.refresh();
+                var msg = 'Saved Successfully!';
+                MessageToast.show(msg);
+
+
+
+                setTimeout(function () {
+                    this.onCancelPress();
+                }.bind(this), 1000);
             },
             onErrorPress: function () {
                 var oMessage = new Message({
@@ -127,7 +140,7 @@ sap.ui.define([
                 sap.ui.getCore().getMessageManager().addMessages(oMessage);
             },
             handleEmptyFields: function (oEvent) {
-                this.onErrorPress();
+                this.onDialogPress();
             },
             onNavBack: function () {
                 var oHistory = History.getInstance();
@@ -199,36 +212,7 @@ sap.ui.define([
 
                 oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!") });
             },
-            loadRichTextEditiors: function () {
-                var oRichTextEditorDisclaimer = new RichTextEditor("myRTE1", {
-                    width: "50%",
-                    height: "100px",
-                    showGroupClipboard: true,
-                    showGroupStructure: true,
-                    showGroupFont: true,
-                    showGroupInsert: true,
-                    showGroupLink: true,
-                    showGroupUndo: true,
-                    tooltip: "My RTE Tooltip",
-                    //value:"Demo"
 
-                });
-                this.getView().byId("disclaimerVerticalLayout").addContent(oRichTextEditorDisclaimer);
-
-                var oRichTextEditorAboutUs = new RichTextEditor("myRTE2", {
-                    width: "50%",
-                    height: "100px",
-                    showGroupClipboard: true,
-                    showGroupStructure: true,
-                    showGroupFont: true,
-                    showGroupInsert: true,
-                    showGroupLink: true,
-                    showGroupUndo: true,
-                    tooltip: "My RTE Tooltip",
-                    //value:"Demo"
-                });
-                this.getView().byId("aboutUsVerticalLayout").addContent(oRichTextEditorAboutUs);
-            },
 
             onClearPress: function () {
                 // does not remove the manually set ValueStateText we set in onValueStatePress():
@@ -236,9 +220,13 @@ sap.ui.define([
             },
             onCancelPress: function () {
 
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter.navTo("RouteHome");
+
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
 
             },
             onValidateEdit: function () {
@@ -254,7 +242,27 @@ sap.ui.define([
 
                 // Validate input fields against root page with id 'somePage'
                 return validator.validate(this.byId("addCompanySettings"));
-            }
+            },
+            onDialogPress: function () {
+                if (!this.oEscapePreventDialog) {
+                    this.oEscapePreventDialog = new Dialog({
+                        title: "Error",
+                        content: new Text({ text: "Mandatory Fields Are Empty!" }),
+                        type: DialogType.Message,
+                        buttons: [
+                            new Button({
+                                text: "Close",
+                                press: function () {
+                                    this.oEscapePreventDialog.close();
+                                }.bind(this)
+                            })
+                        ]
+
+                    });
+                }
+
+                this.oEscapePreventDialog.open();
+            },
 
 
         });
