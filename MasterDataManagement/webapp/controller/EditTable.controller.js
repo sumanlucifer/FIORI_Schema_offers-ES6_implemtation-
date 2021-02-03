@@ -76,7 +76,7 @@ sap.ui.define(
         ) {
           var oData = {
             edit: sArgesMode == "edit" ? true : false,
-            mode:sArgesMode,
+            mode: sArgesMode,
             modelProp: sArgesProp,
             prop1: "Group Title",
             prop2: [],
@@ -84,7 +84,7 @@ sap.ui.define(
             titleP2: sArgName,
             addData: {},
             navBackKey: sArgKey,
-            busy:true
+            busy: false,
           };
 
           var aArray = sArgsType.split(",");
@@ -112,7 +112,7 @@ sap.ui.define(
             this.getView().getModel("oModelView").getProperty("/navBackKey")
           );
           var oRouter = this.getOwnerComponent().getRouter();
-          
+
           oRouter.navTo("RouteMaster", {
             "?query": {
               tab: this.getView()
@@ -120,7 +120,7 @@ sap.ui.define(
                 .getProperty("/navBackKey"),
             },
           });
-          this.getView().getModel().resetChanges();
+          //this.getView().getModel().resetChanges();
         },
         onSuccessPress: function (msg) {
           var oMessage = new Message({
@@ -140,12 +140,15 @@ sap.ui.define(
           var sCheckAdd = oViewModel.getProperty("/mode");
           var oElementBinding = this.getView().getElementBinding().getPath();
 
-          console.log(this._ErrorMessages,sCheckAdd);
+          console.log(this._ErrorMessages, sCheckAdd);
           for (var oProp of this._ErrorMessages) {
             oMessage = new sap.ui.core.message.Message({
               message: oProp["message"],
               type: othat._MessageType.Error,
-              target:sCheckAdd == "add"? oProp["target"] : oElementBinding+"/"+oProp["target"],
+              target:
+                sCheckAdd == "add"
+                  ? oProp["target"]
+                  : oElementBinding + "/" + oProp["target"],
               processor: sCheckAdd == "add" ? oViewModel : oDataModel,
             });
             othat._oMessageManager.addMessages(oMessage);
@@ -232,6 +235,7 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          oModelView.setProperty("/busy", true);
           var sTitle = oModelView.getProperty("/titleP2");
           var oDataValue = oDataModel.getProperty(
             oView.getElementBinding().getPath()
@@ -244,10 +248,13 @@ sap.ui.define(
 
           oDataModel.update(oView.getElementBinding().getPath(), oPayload, {
             success: function (data) {
+              oModelView.setProperty("/busy", false);
               MessageToast.show(sTitle + " Successfully Updated.");
             },
             error: function (data) {
+              oModelView.setProperty("/busy", false);
               var oRespText = JSON.parse(data.responseText);
+
               MessageBox.error(oRespText["error"]["message"]["value"]);
             },
           });
@@ -256,6 +263,7 @@ sap.ui.define(
           var oView = this.getView();
           var oDataModel = oView.getModel();
           var oMdlView = oView.getModel("oModelView");
+          oMdlView.setProperty("/busy", true);
           var sEntity = "/" + oMdlView.getProperty("/modelProp");
           var aPayload = oMdlView.getProperty("/addData");
           var sTitle = oMdlView.getProperty("/titleP2");
@@ -263,16 +271,20 @@ sap.ui.define(
           var navKey = oMdlView.getProperty("/navBackKey");
           oDataModel.create(sEntity, aPayload, {
             success: function (data) {
+              oMdlView.setProperty("/busy", false);
               MessageToast.show(sTitle + " Successfully Created.");
               oRouter.navTo("RouteMaster", {
                 "?query": {
                   tab: navKey,
                 },
               });
+              
             },
             error: function (data) {
+              oMdlView.setProperty("/busy", false);
               var oRespText = JSON.parse(data.responseText);
               MessageBox.error(oRespText["error"]["message"]["value"]);
+              
             },
           });
         },

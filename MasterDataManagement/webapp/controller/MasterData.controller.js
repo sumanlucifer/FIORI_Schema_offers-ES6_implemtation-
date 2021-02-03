@@ -58,6 +58,7 @@ sap.ui.define(
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oCtrlMdl");
+          this.getView().getModel().resetChanges();
           //this.getView().getModel().refresh(true);
         },
         _initFragment: function (mKey) {
