@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%">
 
-    <Page title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true" >
+    <Page busy="{oCtrlMdl>/busy}" busyIndicatorDelay="0" title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true" >
         <content>
             <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding" >
                 <items>

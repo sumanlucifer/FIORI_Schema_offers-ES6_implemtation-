@@ -54,6 +54,7 @@ sap.ui.define(
             smtTblEty: "MasterExternalLinksSet",
             smtTblFlds: "Title,Description,Url",
             IcnTbFilName: "External Links",
+            busy:false
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oCtrlMdl");

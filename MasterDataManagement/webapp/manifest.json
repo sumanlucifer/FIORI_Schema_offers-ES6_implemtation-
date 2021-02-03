@@ -25,7 +25,7 @@
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
-        "localUri": "localService/metadata.xml"
+          "localUri": "localService/metadata.xml"
         }
       }
     },
@@ -99,10 +99,11 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {
-          "defaultBindingMode": "OneWay",
+          "defaultBindingMode": "TwoWay",
           "defaultCountMode": "Inline",
           "refreshAfterChange": false,
-          "useBatch" : false
+          "defaultUpdateMethod": "Put",
+          "useBatch": false
         }
       }
     },
