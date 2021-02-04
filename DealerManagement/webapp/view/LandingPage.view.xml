@@ -65,7 +65,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idDealerTable" width="auto" items="{path: '/PainterSet'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
@@ -86,14 +86,30 @@
                         <Text text="{i18n>name}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>email}"/>
+                        <Text text="{i18n>plantCode}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>DialCode}"/>
+                        <Text text="{i18n>depot}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>mobile}"/>
+                        <Text text="{i18n>salesGroupID}"/>
                     </Column>
+                    <Column>
+                        <Text text="{i18n>salesGroupName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>customerName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>fiscalYear}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>customerClass}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>customerCategory}"/>
+                    </Column>
+                    
                 </columns>
 
                 <items>
@@ -102,10 +118,16 @@
                             <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
                         </dependents>
                         <cells>
-                            <ObjectIdentifier title="{Name}" titleActive="true"/>
-                            <Text text="{Email}"/>
-                            <Text text="{DialCode}"/>
-                            <Text text="{Mobile}"/>
+                            <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                            <Text text="{PlantCode}"/>
+                            <Text text="{Depot}"/>
+                            <Text text="{SalesGroupId}"/>
+                            <Text text="{SalesGroupName}"/>
+                            <Text text="{CustomerId}"/>
+                            <Text text="{FiscalYear}"/>
+                            <Text text="{CustomerClass}"/>
+                            <Text text="{CustomerCategory}"/>
+                            
                         </cells>
                     </ColumnListItem>
                 </items>
