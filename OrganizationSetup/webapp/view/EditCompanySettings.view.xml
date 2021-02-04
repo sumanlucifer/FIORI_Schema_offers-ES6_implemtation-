@@ -41,6 +41,7 @@ floatingFooter="true"
                                   constraints : { 
                                       minLength : 1
                                       
+                                      
                                   }
                               }"/>
 				

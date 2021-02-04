@@ -29,7 +29,7 @@ floatingFooter="true"
                                   }
                               }"
                         placeholder="Enter Name ..."
-        				valueStateText="Name must not be empty. Maximum 10 characters." />
+        				valueStateText="Name must not be empty" />
 
 				<Label text="Email" labelFor="email" design="Bold" required="true" />
 		<Input id="email" 
@@ -49,6 +49,7 @@ floatingFooter="true"
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
         	                type="Number"
+                            
                             value="{ 
                                   path : 'data>Mobile', 
                                   type : 'sap.ui.model.type.String', 
@@ -58,7 +59,7 @@ floatingFooter="true"
                                   }
                                   }"
         				placeholder="Enter Mobile Number ..."
-        				valueStateText="Mobile Number must not be empty." />
+        				valueStateText="Mobile Number must not be empty or Enter a valid Mobile Number" />
 
          <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
 		<Input id="countrycode" 
