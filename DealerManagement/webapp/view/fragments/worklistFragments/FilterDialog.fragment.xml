@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleFilterDialogConfirm">
+		<filterItems>
+			<ViewSettingsFilterItem text="Archived" key="IsArchived" multiSelect="false">
+				<items>
+					<ViewSettingsItem text="Yes" key="true"/>
+					<ViewSettingsItem text="No" key="false"/>
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

@@ -3,3 +3,7 @@
 .btnTblAd .sapMBtnInner {
     border: none;
 }
+
+.ictbr .sapMITBContent{
+    padding:0 !important;
+}

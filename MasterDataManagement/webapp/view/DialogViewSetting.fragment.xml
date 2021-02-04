@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleConfirm">
+		<sortItems>
+			<ViewSettingsItem text="Title" key="1" selected="true" />
+			
+			
+		</sortItems>
+		
+		<filterItems>
+			<ViewSettingsFilterItem text="Title" key="1">
+				<items>
+					<ViewSettingsItem text="Title" key="1a" />
+				
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

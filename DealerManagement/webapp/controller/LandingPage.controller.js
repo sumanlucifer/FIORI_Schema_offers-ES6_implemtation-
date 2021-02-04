@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "com/knpl/pragati/DealerManagement/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
@@ -7,22 +7,22 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device'
 ],
-    function (Controller, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
         "use strict";
 
-        return Controller.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
+        return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
-                // apply content density mode to root view
-                this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
                     oTable = this.byId("idDealerTable");
 
+                //adding searchfield association to filterbar                        
+                this._addSearchFieldAssociationToFB();
+
                 //Router Object
-                this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			    this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);    
+                this.oRouter = this.getRouter();
+                this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
 
                 // Put down worklist table's original value for busy indicator delay,
                 // so it can be restored later on. Busy handling on the table is
@@ -36,11 +36,11 @@ sap.ui.define([
 
                 // Model used to manipulate control states
                 oViewModel = new JSONModel({
-                    worklistTableTitle: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitle"),
-                    tableNoDataText: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("tableNoDataText"),
+                    worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
+                    tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
                     tableBusyDelay: 0
                 });
-                this.getView().setModel(oViewModel, "worklistViewModel");
+                this.setModel(oViewModel, "worklistViewModel");
 
                 // Make sure, busy indication is showing immediately so there is no
                 // break after the busy indication for loading the view's meta data is
@@ -51,7 +51,31 @@ sap.ui.define([
                 });
             },
 
-            _onObjectMatched: function (oEvent) {},
+            _onObjectMatched: function (oEvent) { },
+
+            _addSearchFieldAssociationToFB: function () {
+                let oFilterBar = this.getView().byId("filterbar");
+                let oSearchField = oFilterBar.getBasicSearch();
+                var oBasicSearch;
+                if (!oSearchField) {
+                    // @ts-ignore
+                    oBasicSearch = new sap.m.SearchField({
+                        id: "idSearch",
+                        showSearchButton: false
+                    });
+                } else {
+                    oSearchField = null;
+                }
+
+                oFilterBar.setBasicSearch(oBasicSearch);
+
+                oBasicSearch.attachBrowserEvent("keyup", function (e) {
+                    if (e.which === 13) {
+                        this.onSearch();
+                    }
+                }.bind(this)
+                );
+            },
 
             onUpdateFinished: function (oEvent) {
                 // update the worklist's object counter after the table update
@@ -61,60 +85,68 @@ sap.ui.define([
                 // only update the counter if the length is final and
                 // the table is not empty
                 if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    sTitle = this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
+                    sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
                 } else {
-                    sTitle = this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistTableTitle");
+                    sTitle = this.getResourceBundle().getText("worklistTableTitle");
                 }
-                this.getView().getModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
+                this.getViewModel("worklistViewModel").setProperty("/worklistTableTitle", sTitle);
             },
 
             onSearch: function (oEvent) {
-                if (oEvent.getParameters().refreshButtonPressed) {
-                    // Search field's 'refresh' button has been pressed.
-                    // This is visible if you select any master list item.
-                    // In this case no new search is triggered, we only
-                    // refresh the list binding.
-                    this.onRefresh();
-                } else {
-                    var aTableSearchState = [];
-                    var sQuery = oEvent.getParameter("query");
+                var aCurrentFilterValues = [];
 
-                    if (sQuery && sQuery.length > 0) {
-                        aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
-                    }
-                    this._applySearch(aTableSearchState);
+                aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
+                aCurrentFilterValues.push(this.getInputText("idNameInput"));
+                aCurrentFilterValues.push(this.getInputText("idEmailInput"));
+                aCurrentFilterValues.push(this.getInputText("idMobileInput"));
+                aCurrentFilterValues.push(this.getInputText("idRegistrationStatus"));
+
+                this.filterTable(aCurrentFilterValues);
+            },
+
+            getInputText: function (controlId) {
+                return this.getView().byId(controlId).getValue();
+            },
+
+            filterTable: function (aCurrentFilterValues) {
+                this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+            },
+
+            getTableItems: function () {
+                return this.getView().byId("idDealerTable").getBinding("items");
+            },
+
+            getFilters: function (aCurrentFilterValues) {
+                var aFilters = [];
+
+                var aKeys = [
+                    "search","Name", "Email", "Mobile", "RegistrationStatus"
+                ];
+
+                for (let i = 0; i < aKeys.length; i++) {
+                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search" )
+                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
+                    else if(aCurrentFilterValues[i].length > 0 && aKeys[i] == "search" )    
+                        this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
+                return aFilters;
             },
 
-            /**
-             * Event handler for refresh event. Keeps filter, sort
-             * and group settings and refreshes the list binding.
-             * @public
-             */
-            onRefresh: function () {
-                var oTable = this.byId("idDealerTable");
-                oTable.getBinding("items").refresh();
-            },
-
-            _applySearch: function (aTableSearchState) {
-                var oTable = this.byId("idDealerTable"),
-                    oViewModel = this.getView().getModel("worklistViewModel");
-                oTable.getBinding("items").filter(aTableSearchState, "Application");
-                // changes the noDataText of the list in case there are no filter results
-                if (aTableSearchState.length !== 0) {
-                    oViewModel.setProperty("/tableNoDataText", this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("worklistNoDataWithSearchText"));
+            SearchInAllFields: function(aKeys, aFilters, searchValue){
+                for(let i=1 ; i<aKeys.length; i++){
+                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
                 }
             },
 
             handleSortButtonPressed: function () {
-                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.SortDialog")
+                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.SortDialog")
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
             },
 
             handleFilterButtonPressed: function () {
-                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.FilterDialog")
+                this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.FilterDialog")
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
@@ -161,7 +193,7 @@ sap.ui.define([
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     aFilters = [];
-                debugger;
+
                 var sPath = Object.keys(mParams.filterCompoundKeys)[0],
                     sOperator = "EQ",
                     sValue1 = mParams.filterKeys.false ? false : true,
@@ -176,15 +208,18 @@ sap.ui.define([
             onListItemPress: function (oEvent) {
                 var oItem = oEvent.getSource();
                 oItem.setNavigated(true);
-                var oBindingContext = oItem.getBindingContext("KNPLModel");
-                var oModel = this.getView().getModel("KNPLModel");
+                var oBindingContext = oItem.getBindingContext();
+                var oModel = this.getComponentModel();
                 this.oRouter.navTo("RouteDetailsPage", {
-                    dealerID: oEvent.getSource().getBindingContext("KNPLModel").getObject().Id
+                    dealerID: oEvent.getSource().getBindingContext().getObject().Id
                 });
-                //this.presentBusyDialog();
-            },
+                this.presentBusyDialog();
+            }
 
-
+            /*onDetailPress: function (oEvent) {
+                var oButton = oEvent.getSource();
+                this.byId("actionSheet").openBy(oButton);
+            }*/
 
         });
     });

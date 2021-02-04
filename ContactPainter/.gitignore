@@ -26,10 +26,30 @@ Manage_FAQ/.env6
 knpl-influencer-web/MasterDataManagement/.env
 
 # auto generated wildcard
-knpl-influencer-web/OrganizationSetup/webapp/.env
+knpl1/MasterDataManagement/.env10
 # auto generated wildcard
-knpl-influencer-web/OrgModule/.env10
+knpl1/ContactPainter/.env7
 # auto generated wildcard
 knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
-knpl-influencer-web/OrganizationSetup/.env
+ZSampGWCnct/GatewaySrvTest/.env4
+# auto generated wildcard
+knpl1/Training/.env1
+# auto generated wildcard
+knpl1/MasterDataManagement/.env11
+# auto generated wildcard
+knpl1/ContactPainter/.env8
+# auto generated wildcard
+ZSample2/HTML5Module/.env2
+# auto generated wildcard
+knpl1/MasterDataManagement/.env12
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env13
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env9
+# auto generated wildcard
+ContactPainter/ContactPainter/.env12
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env10
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env14

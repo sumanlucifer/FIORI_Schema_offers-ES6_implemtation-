@@ -1,6 +1,6 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
-version: 0.0.1
+version: 1.0.1
 modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
@@ -10,7 +10,6 @@ modules:
   requires:
   - name: uaa_knpl-influencer-web
   - name: knpl-influencer-web_html_repo_runtime
-  - name: knpl-portal-saas-registry
   - name: destination-knpl-pragati
   - name: portal_resources_knpl-influencer-web
     group: destinations
@@ -51,6 +50,18 @@ modules:
       - OrganizationSetup-content.zip
       name: OrganizationSetup
       target-path: resources/
+    - artifacts:
+      - KnowledgeManagement-content.zip
+      name: KnowledgeManagement
+      target-path: resources/
+    - artifacts:
+      - Manage_Notifications-content.zip
+      name: Manage_Notifications
+      target-path: resources/
+    - artifacts:
+      - Training-content.zip
+      name: Training
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -75,13 +86,11 @@ modules:
     parameters:
       content-target: true
       service-key:
-        config: null
-        content-endpoint: developer
+        config:
+          content-endpoint: developer
         name: content-deploy-key
   - name: knpl-influencer-web_html_repo_host
-  - name: knpl-influencer-web_ui_deployer
   - name: uaa_knpl-influencer-web
-  - name: knpl-portal-saas-registry
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
@@ -109,14 +118,38 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: KnowledgeManagement
+  type: html5
+  path: KnowledgeManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Manage_Notifications
+  type: html5
+  path: Manage_Notifications
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Training
+  type: html5
+  path: Training
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
-  type: org.cloudfoundry.managed-service
+  type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: knpl-portal-xsuaa-service
     service-plan: application
+    service-name: knpl-pragati-uaa
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
   parameters:
@@ -125,6 +158,8 @@ resources:
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
+    config:
+      sizeLimit: 2
     service: html5-apps-repo
     service-plan: app-host
 - name: destination-knpl-pragati
@@ -137,20 +172,8 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-- name: knpl-portal-saas-registry
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      appName: KNPL_Portal
-      appUrls:
-        getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
-        onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
-      category: knplportalapps
-      description: KNPL Portal application
-      displayName: KNPL_Portal
-      xsappname: knpl-influencer-web
-    service: saas-registry
-    service-plan: application
+parameters:
+  enable-parallel-deployments: true
 build-parameters:
   before-all:
   - builder: custom

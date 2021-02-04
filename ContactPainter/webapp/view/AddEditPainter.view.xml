@@ -1,0 +1,20 @@
+<mvc:View controllerName="com.knpl.pragati.ContactPainter.controller.AddEditPainter" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+   <Page title="{i18n>appTitle}" busy="{oModelView>/busy}" busyIndicatorDelay="0" class="sapUiContentPadding" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+        <content>
+            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="false" expandable="false" expanded="true" class="ictbr sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter key="0" text="{oModelView>/sIctbTitle} Painter"></IconTabFilter>
+                </items>
+            </IconTabBar>
+            <VBox id="oVbxSmtTbl">
+               
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button width="9%" text="{= ${oModelView>/mode} === 'add' ? 'Save' : 'Save' }" type="Emphasized" press="onPressSave"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

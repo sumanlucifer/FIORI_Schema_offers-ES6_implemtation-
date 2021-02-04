@@ -1,106 +1,25 @@
 <mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%">
 
-    <Page title="Centered Title" class="sapUiContentPadding" showNavButton="false" showHeader="false">
-
-
+    <Page busy="{oCtrlMdl>/busy}" busyIndicatorDelay="0" title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true" >
         <content>
-
-            <IconTabBar id="idIconTabBarFiori2" upperCase="true" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding">
+            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding" >
                 <items>
-                    <IconTabFilter key="0" text="{i18n>MastDataExterLinks}">
-                        <Table inset="false" items="{path: 'tableData>/eventsData'		}">
-                            <headerToolbar>
-                                <Toolbar class="tblTlbrAd">
-
-                                    <ToolbarSpacer></ToolbarSpacer>
-                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
-                                </Toolbar>
-                            </headerToolbar>
-                            <columns>
-
-                                <Column width="100%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>MasterDataDescription}"/>
-                                </Column>
-                                <Column width="100%">
-                                    <Text text="{i18n>MastDataExterLinks}"/>
-                                </Column>
-
-                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericEdit}"/>
-                                </Column>
-                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericRemove}"/>
-                                </Column>
-                            </columns>
-                            <items>
-                                <ColumnListItem>
-                                    <cells>
-
-
-                                        <Text text="{tableData>desc}"/>
-                                        <Text text="{tableData>link}"/>
-
-                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
-                    </IconTabFilter>
-                    <IconTabFilter key="1" text="{i18n>MasterDataDepot}">
-
-                        <Table inset="false" items="{
-                                                                                                                                                                                                                                			path: 'tableData>/depoData'
-                                                                                                                                                                                                                                		}">
-                            <headerToolbar>
-                                <Toolbar class="tblTlbrAd">
-
-                                    <ToolbarSpacer></ToolbarSpacer>
-                                    <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/>
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
-                                </Toolbar>
-                            </headerToolbar>
-                            <columns>
-
-                                <Column width="100%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>MasterDataTitle}"/>
-                                </Column>
-                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericEdit}"/>
-                                </Column>
-                                <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericRemove}"/>
-                                </Column>
-
-                            </columns>
-                            <items>
-                                <ColumnListItem>
-                                    <cells>
-
-
-                                        <Text text="{tableData>title}"/>
-
-
-                                        <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
-                                        <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemove"></Button>
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
-                    </IconTabFilter>
-                    <IconTabFilter key="3" text="{i18n>MasterDataKycType}"/>
-                    <IconTabFilter key="4" text="{i18n>MasterDataReligion}"/>
-                    <IconTabFilter key="5" text="{i18n>MasterDataTrainingType}"/>
-                    <IconTabFilter key="6" text="{i18n>MasterDataBusinessGroup}"/>
-                    <IconTabFilter key="7" text="{i18n>MasterDataBusinessCategory}"/>
-                    <IconTabFilter key="8" text="{i18n>MasterDataArcheType}"/>
-                    <IconTabFilter key="9" text="{i18n>MasterDataMaritialStatus}"/>
-                    <IconTabFilter key="10" text="{i18n>MasterDataLanguage}"/>
-                    <IconTabFilter key="11" text="{i18n>MasterDataComplaintType}"/>
-
+                    <IconTabFilter key="0" text="{i18n>MastDataExterLinks}"></IconTabFilter>
+                    <IconTabFilter key="1" text="{i18n>MasterDataDepot}"></IconTabFilter>
+                    <IconTabFilter key="2" text="{i18n>MasterDataKycType}"></IconTabFilter>
+                    <IconTabFilter key="3" text="{i18n>MasterDataReligion}"></IconTabFilter>
+                    <IconTabFilter key="4" text="{i18n>MasterDataTrainingType}"></IconTabFilter>
+                    <IconTabFilter key="5" text="{i18n>MasterDataBusinessGroup}"></IconTabFilter>
+                    <IconTabFilter key="6" text="{i18n>MasterDataBusinessCategory}"></IconTabFilter>
+                    <IconTabFilter key="7" text="{i18n>MasterDataArcheType}"></IconTabFilter>
+                    <IconTabFilter key="8" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
+                    <IconTabFilter key="9" text="{i18n>MasterDataLanguage}"></IconTabFilter>
+                    <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
                 </items>
             </IconTabBar>
+            <VBox id="oVbxSmtTbl">
+                <!-- <core:Fragment fragmentName="com.knpl.pragati.MasterDataManagement.view.DisplayTableMaster" type="XML"/> -->
+            </VBox>
 
         </content>
     </Page>
