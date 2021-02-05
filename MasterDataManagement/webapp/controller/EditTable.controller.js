@@ -11,6 +11,7 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/message/Message",
     "sap/m/Input",
+    "com/knpl/pragati/MasterDataManagement/controller/Validator",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -26,7 +27,8 @@ sap.ui.define(
     MessageToast,
     library,
     Message,
-    Input
+    Input,
+    Validator
   ) {
     "use strict";
 
@@ -57,7 +59,11 @@ sap.ui.define(
           );
           console.log(sArgsFields, sArgesProp, sArgesMode, sArgName);
 
-          this.getView().bindElement("/" + sArgesProp);
+          if(sArgesMode=="edit"){
+            this.getView().bindElement("/" + sArgesProp);
+          }else if(sArgesMode==="add"){
+              this.getView().unbindElement();
+          }
           this._initData(
             sArgsFields,
             sArgesMode,
@@ -91,6 +97,7 @@ sap.ui.define(
           for (var prop in aArray) {
             oData["prop2"].push({
               value: aArray[prop],
+              InpVal:""
             });
             oData["addData"][aArray[prop]] = "";
           }
@@ -164,27 +171,98 @@ sap.ui.define(
 
         myFactory: function (sId, oContext) {
           var sEdit = oContext.getModel().getProperty("/edit");
-          console.log(sId);
+          var oObject = oContext.getObject();
+          var sPath, oSmartControl;
+          if (sEdit == true) {
+            sPath = oObject["value"];
+          } else {
+            sPath = "oModelView>InpVal";
+          }
+          console.log(sPath);
+          var atextFileds = [
+            "Title",
+            "Description",
+            "Depot",
+            "KycType",
+            "Religion",
+            "TrainingType",
+            "BusinessGroup",
+            "BusinessCategory",
+            "ArcheType",
+            "MaritalStatus",
+            "Language",
+            "LanguageCode",
+            "ComplaintType",
+          ];
+          var aUrlFields = ["Url"];
+          var aNumberFields = [];
+          var aSpecialCharFields = ["LanguageDescription"];
+
+          if (atextFileds.indexOf(oObject["value"]) > -1) {
+            oSmartControl = this._CtrlTxtFld(oObject, sPath);
+          } else if (aUrlFields.indexOf(oObject["value"]) > -1) {
+            oSmartControl = this._CtrlUrlFld(oObject, sPath);
+          } else if (aSpecialCharFields.indexOf(oObject["value"]) > -1) {
+            oSmartControl = this._CtrlSplChrFld(oObject, sPath);
+          }
+
+          return oSmartControl;
+        },
+        _CtrlTxtFld: function (oObject, sPath) {
           var oSmartControl = new FormElement({
-            label: oContext
-              .getObject()
-              ["value"].match(/[A-Z][a-z]+|[0-9]+/g)
-              .join(" "),
+            label: oObject["value"].match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
             fields: [
               new Input({
                 required: true,
-
-                fieldGroupIds: "InpGoup",
-                value:
-                  sEdit == true
-                    ? "{" + oContext.getObject()["value"] + "}"
-                    : "{oModelView>/addData/" +
-                      oContext.getObject()["value"] +
-                      "}",
-              }),
+                value: {
+                  path: sPath,
+                  type: "sap.ui.model.type.String",
+                  constraints: {
+                    minLength: "1",
+                    maxLength: "50",
+                    search: "^[a-zA-Z0-9]{1}[wW]*",
+                  },
+                },
+              }), //iput
             ],
           });
-
+          return oSmartControl;
+        },
+        _CtrlUrlFld: function (oObject, sPath) {
+          var oSmartControl = new FormElement({
+            label: oObject["value"].match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
+            fields: [
+              new Input({
+                required: true,
+                value: {
+                  path: sPath,
+                  type: "sap.ui.model.type.String",
+                  constraints: {
+                    search:
+                      "^(http://www.|https://www.|http://|https://|www.){1}[a-zA-Z0-9]",
+                  },
+                },
+              }), //iput
+            ],
+          });
+          return oSmartControl;
+        },
+        _CtrlSplChrFld: function (oObject, sPath) {
+          var oSmartControl = new FormElement({
+            label: oObject["value"].match(/[A-Z][a-z]+|[0-9]+/g).join(" "),
+            fields: [
+              new Input({
+                required: true,
+                value: {
+                  path: sPath,
+                  type: "sap.ui.model.type.String",
+                  constraints: {
+                    minLength: "1",
+                  },
+                },
+              }), //iput
+            ],
+          });
           return oSmartControl;
         },
         returnIdListOfRequiredFields: function () {
@@ -220,12 +298,11 @@ sap.ui.define(
         },
         onPressSave: function () {
           this.onClearPress();
-          var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
-
-          var passedValidation = this.validateEventFeedbackForm(requiredInputs);
+          var validator = new Validator();
+          var passedValidation = validator.validate(
+            this.getView().byId("FormChange354")
+          );
           if (passedValidation === false) {
-            //show an error message, rest of code will not execute.
-            this.handleEmptyFields();
             return false;
           }
 
@@ -236,10 +313,10 @@ sap.ui.define(
           }
         },
         _saveEdit: function () {
-          var oDataModel = this.getView().getModel();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
           oModelView.setProperty("/busy", true);
+          var oDataModel = oView.getModel();
           var sTitle = oModelView.getProperty("/titleP2");
           var oDataValue = oDataModel.getProperty(
             oView.getElementBinding().getPath()
@@ -269,7 +346,11 @@ sap.ui.define(
           var oMdlView = oView.getModel("oModelView");
           oMdlView.setProperty("/busy", true);
           var sEntity = "/" + oMdlView.getProperty("/modelProp");
-          var aPayload = oMdlView.getProperty("/addData");
+          var aPayload = {},aProp2=oMdlView.getProperty("/prop2");
+          for(var prop of aProp2 ){
+              aPayload[prop["value"]] = prop["InpVal"];
+          }
+          console.log(aPayload);
           var sTitle = oMdlView.getProperty("/titleP2");
           var oRouter = this.getOwnerComponent().getRouter();
           var navKey = oMdlView.getProperty("/navBackKey");
