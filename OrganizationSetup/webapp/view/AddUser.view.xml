@@ -47,16 +47,19 @@ xmlns:f="sap.ui.layout.form">
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
         	                type="Number"
+                            
                             value="{ 
                                   path : '/mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1
+                                      minLength : 1,
+                                      maxLength :10
+                                      
                                       
                                   }
                                   }"
         				placeholder="Enter Mobile Number ..."
-        				valueStateText="Mobile Number must not be empty." />
+        				valueStateText="Mobile Number must not be empty or Enter a valid Mobile Number" />
 
          <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
 		<Input id="countrycode" 

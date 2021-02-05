@@ -22,6 +22,7 @@ sap.ui.define([
                 //Router Object
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("RouteDetailsPage").attachPatternMatched(this._onObjectMatched, this);
+                
 
                 // Put down table's original value for busy indicator delay,
                 // so it can be restored later on. Busy handling on the table is
@@ -52,9 +53,10 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
                 this.KNPLModel.metadataLoaded().then(function () {
-                    var sObjectPath = this.KNPLModel.createKey("PainterSet", {
+                    var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
                     });
+                     //console.log(sObjectPath);
                     this._bindView("/" + sObjectPath);
                 }.bind(this));
                 this.dismissBusyDialog();
