@@ -141,7 +141,7 @@ sap.ui.define(
             oCtrlMdl.setProperty("/smtTblEty", "MasterLanguageSet");
             oCtrlMdl.setProperty(
               "/smtTblFlds",
-              "Language,LanguageCode,Language,LanguageDescription"
+              "Language,LanguageCode,LanguageDescription"
             );
           } else if (sKey == "10") {
             oCtrlMdl.setProperty("/smtTblEty", "MasterComplaintTypeSet");

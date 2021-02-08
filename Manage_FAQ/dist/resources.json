@@ -1,7 +1,10 @@
 {
     "resources": [
         {
-            "name": "Component.js"
+            "name": "manifest-bundle.zip"
+        },
+        {
+            "name": "controller/Object.controller.js"
         },
         {
             "name": "model/models.js"
@@ -13,7 +16,7 @@
             "name": "controller/Worklist.controller.js"
         },
         {
-            "name": "controller/Object.controller.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/NotFound.controller.js"
@@ -28,17 +31,18 @@
             "name": "controller/App.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "Component.js"
         },
         {
-            "name": "manifest-bundle.zip"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "Component-preload.js",
             "merged": true
         },
         {
-            "name": "controller/BaseController-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -62,7 +66,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/BaseController-dbg.js",
             "isDebug": true
         },
         {
@@ -90,10 +94,6 @@
         },
         {
             "name": "view/App.view.xml"
-        },
-        {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
         },
         {
             "name": "index.html"
