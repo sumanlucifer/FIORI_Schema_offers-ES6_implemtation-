@@ -21,36 +21,36 @@
                 <f:content>
                     <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Dealer Name" label="Dealer Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" placeholder="Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idNameInput" placeholder="Dealer Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Name}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Sales Group Name" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idEmailInput" placeholder="Email" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idEmailInput" placeholder="Sales Group Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Email}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Customer Category" label="Customer Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idMobileInput" placeholder="Mobile" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Mobile}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Registration Status" label="Registration Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" placeholder="Registration Status" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{RegistrationStatus}" />
                                         </suggestionItems>

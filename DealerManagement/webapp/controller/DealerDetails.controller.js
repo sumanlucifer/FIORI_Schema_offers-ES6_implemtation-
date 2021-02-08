@@ -12,6 +12,9 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
             onInit: function () {
+
+
+                
                 
                 //Initializations
                 var oViewModel,
@@ -58,6 +61,7 @@ sap.ui.define([
                     });
                      //console.log(sObjectPath);
                     this._bindView("/" + sObjectPath);
+                    this._bindPainterTable("/" + sObjectPath+"/Painter");
                 }.bind(this));
                 this.dismissBusyDialog();
             },
@@ -66,6 +70,13 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sObjectPath
                 });
+            },
+            _bindPainterTable: function (spath) {
+                this.oPainterTableTemplate=this.oPainterTableTemplate?this.oPainterTableTemplate:this.getView().byId("idColumnListItem");
+                
+                var tableId = this.getView().byId("idPainterTable");
+                tableId.bindItems({path:spath,template:this.oPainterTableTemplate.clone()});
+                
             },
 
             onUpdateFinished: function (oEvent) {

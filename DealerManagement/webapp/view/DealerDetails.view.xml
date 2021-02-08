@@ -122,7 +122,7 @@
                                     </columns>
 
                                     <items>
-                                        <ColumnListItem type="Active" press="onListItemPress">
+                                        <ColumnListItem  id="idColumnListItem" type="Active" press="onListItemPress">
                                             <dependents>
                                                 <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.detailPageFragments.ActionSheet" type="XML" />
                                             </dependents>
