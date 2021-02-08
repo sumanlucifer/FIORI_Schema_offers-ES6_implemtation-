@@ -120,7 +120,7 @@ sap.ui.define([
                 var aFilters = [];
 
                 var aKeys = [
-                    "search","Name", "Email", "Mobile", "RegistrationStatus"
+                    "search","DealerName", "SalesGroupName", "CustomerCategory", "Depot"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
