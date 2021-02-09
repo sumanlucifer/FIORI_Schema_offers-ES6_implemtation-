@@ -20,16 +20,18 @@ floatingFooter="true"
             <Label text="Name" labelFor="name" design="Bold" required="true"/>
 				<Input id="name" 
         	                type="Text"
+                            liveChange="onLiveChangeInputValidate"
                             value="{ 
                                   path : 'data>Name', 
                                   type : 'sap.ui.model.type.String', 
                                   constraints : { 
-                                      minLength : 1
+                                      minLength : 1,
+                                       maxLength :25
                                       
                                   }
                               }"
                         placeholder="Enter Name ..."
-        				valueStateText="Name must not be empty" />
+        				valueStateText="Enter a valid Name. Maximum 25 characters." />
 
 				<Label text="Email" labelFor="email" design="Bold" required="true" />
 		<Input id="email" 
@@ -48,13 +50,14 @@ floatingFooter="true"
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Number"
+        	                type="Tel"
                             
                             value="{ 
                                   path : 'data>Mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1
+                                      minLength : 1,
+                                      maxLength: 10
                                       
                                   }
                                   }"

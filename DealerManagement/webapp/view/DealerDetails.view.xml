@@ -116,6 +116,9 @@
                                         <Column>
                                             <Text text="{i18n>date}"/>
                                         </Column>
+                                         <Column width="10%">
+                                            <Text text="{i18n>mobile}"/>
+                                        </Column>
                                         <Column width="10%">
                                             <Text text="{i18n>status}"/>
                                         </Column>
@@ -134,7 +137,7 @@
                                                 <Text text="{AgeGroupId}"/>
                                                 <Text text="{CreatedAt}"/>
                                                 <Text text="{Mobile}"/>
-                                                <Button text="Linked"></Button>
+                                                <Button text="Linked" press="changeLinkStatus"></Button>
                                             </cells>
                                         </ColumnListItem>
                                     </items>

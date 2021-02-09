@@ -5,12 +5,18 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
-    'sap/ui/Device'
+    'sap/ui/Device',
+    'sap/m/MessageToast',
+    "sap/m/MessageBox"
 ],
-    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device,
+        MessageToast,MessageBox) {
         "use strict";
-
+                 var dealerID;
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
+
+           
+
             onInit: function () {
 
 
@@ -55,6 +61,7 @@ sap.ui.define([
 
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
+                dealerID=sObjectId;
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
@@ -206,7 +213,54 @@ sap.ui.define([
 
             handleAllDealerLinkPress: function(oEvent){
                 this.oRouter.navTo("RouteLandingPage");
-            }
+            },
+            changeLinkStatus: function (oEvent) {
+                 var oItem = oEvent.getSource();
+                var removeSet = oItem.getBindingContext().getPath();
+                var oTable = this.getView().byId("idPainterTable");
+
+                var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
+                
+                
+               
+                
+                var oParam = {
+                        PainterId: oSelectedItem.Id,
+                         DealerId: dealerID
+                        
+                    };
+                    //console.log(oParam);
+                function onYes() {
+                    var oModel = this.getView().getModel();
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
+                }
+
+                this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
+
+            },
+             onRemoveSuccess: function (oTable) {
+                
+                var oList = this.getView().byId(oTable);
+                oList.getBinding("items").refresh(true);
+                var msg = 'Unlinked Successfully!';
+                MessageToast.show(msg);
+
+
+            },
+            showWarning: function (sMsgTxt, _fnYes) {
+                var that = this;
+                MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            _fnYes && _fnYes.apply(that);
+                        }
+                    }
+                });
+            },
+            getResourceBundle: function () {
+                return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            },
 
         });
     });
