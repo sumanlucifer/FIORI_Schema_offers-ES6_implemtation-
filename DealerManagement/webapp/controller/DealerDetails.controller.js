@@ -12,8 +12,11 @@ sap.ui.define([
     function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device,
         MessageToast,MessageBox) {
         "use strict";
-
+                 var dealerID;
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
+
+           
+
             onInit: function () {
 
 
@@ -58,6 +61,7 @@ sap.ui.define([
 
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
+                dealerID=sObjectId;
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
@@ -216,33 +220,46 @@ sap.ui.define([
                 var oTable = this.getView().byId("idPainterTable");
 
                 var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
-                //console.log(oSelectedItem);
-                MessageToast.show("Unlink Alert!");
                 
-                // var oParam = {
-                //         Name: oSelectedItem.Name,
-                //         Email: oSelectedItem.Email,
-                //         Mobile: oSelectedItem.Mobile,
-                //         CountryCode: oSelectedItem.CountryCode,
-                //         RoleId: oSelectedItem.RoleId,
-                //         IsArchived: true
-                //     };
-                // function onYes() {
-                //     var oModel = this.getView().getModel();
-                //     oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
-                // }
+                
+               
+                
+                var oParam = {
+                        PainterId: oSelectedItem.Id,
+                         DealerId: dealerID
+                        
+                    };
+                    //console.log(oParam);
+                function onYes() {
+                    var oModel = this.getView().getModel();
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
+                }
 
-                //this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
+                this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
 
             },
              onRemoveSuccess: function (oTable) {
                 
                 var oList = this.getView().byId(oTable);
                 oList.getBinding("items").refresh(true);
-                var msg = 'Removed Successfully!';
+                var msg = 'Unlinked Successfully!';
                 MessageToast.show(msg);
 
 
+            },
+            showWarning: function (sMsgTxt, _fnYes) {
+                var that = this;
+                MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            _fnYes && _fnYes.apply(that);
+                        }
+                    }
+                });
+            },
+            getResourceBundle: function () {
+                return this.getOwnerComponent().getModel("i18n").getResourceBundle();
             },
 
         });
