@@ -57,6 +57,46 @@ sap.ui.define(
             mPainterKey: mKey,
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
+            PainterDetails: {
+              DateOfJoining: "1",
+              PrimaryMobileNo: "",
+              SecondryMobileNo: "",
+              AgeGroup: "",
+              PreferredLanguage: "",
+            },
+            PersonalDetails: {
+              FullName: "",
+              EmailId: "",
+              PrimaryDealer: "",
+              SecondryDealer: "",
+            },
+            PainterLocation: {
+              Area: "",
+              City: "",
+              State: "",
+            },
+            SecurityQuestions: {
+              Question: "",
+              Answer: "",
+            },
+            SegmentationDetails: {
+              TimeSize: "",
+              Experiences: "",
+              SitesPerMonth: "",
+              Potential: "",
+            },
+            FamilyDetails: [],
+            AssetDetails: [],
+            BankingDetails: {
+              AccountHolderName: "",
+              AccountType: "",
+              BankName: "",
+              AccountNumber: "",
+              IFSCCode: "",
+              KYCStatus: "",
+              AadhaarCardNo: "",
+            },
+            editTble1: true,
             addData: {
               Name: "",
               //City: "",
@@ -75,10 +115,10 @@ sap.ui.define(
             this._showFormFragment("AddPainter");
             this.getView().unbindElement();
           } else {
-            this.getView().bindElement("/" + mKey, {
-              expand: "PainterAddress",
-            });
-            this._showFormFragment("EditPainter");
+            // this.getView().bindElement("/" + mKey, {
+            //   expand: "PainterAddress",
+            // });
+            // this._showFormFragment("EditPainter");
           }
 
           this._formFragments; //used for the fragments of the add and edit forms
@@ -128,159 +168,209 @@ sap.ui.define(
 
           return this._formFragments;
         },
-        myFactory: function (sId, oContext) {
-          var sEdit = oContext.getModel().getProperty("/mode");
-          var object = oContext.getObject();
-          console.log(
-            "1{oModelView>" +
-              oContext.getModel().getProperty(oContext.getPath())["value"] +
-              "}"
-          );
-          var oSmartControl;
-          if (object["aggregationType"] == "Input") {
-            oSmartControl = new FormElement({
-              label: "{?}",
-              fields: [
-                new Input({
-                  required: "{oModelView>required}",
-                  fieldGroupIds: "InpGoup",
-                  type: "{oModelView>type}",
-
-                  placeholder: "{oModelView>placeholder}",
-                  value:
-                    sEdit == "add"
-                      ? "{oModelView>/addData/" +
-                        oContext.getModel().getProperty(oContext.getPath())[
-                          "value"
-                        ] +
-                        "}"
-                      : "{" +
-                        oContext.getModel().getProperty(oContext.getPath())[
-                          "value"
-                        ] +
-                        "}",
-                }),
-              ],
-            });
-          } else if (object["aggregationType"] == "Date") {
-            console.log(
-              oContext.getModel().getProperty(oContext.getPath())["value"]
-            );
-
-            oSmartControl = new FormElement({
-              label: "{oModelView>label}",
-              fields: [
-                new DatePicker({
-                  required: "{oModelView>required}",
-                  fieldGroupIds: "InpGoup",
-                  placeholder: "{oModelView>placeholder}",
-                  displayFormat: "long",
-                  dateValue:
-                    sEdit == "add"
-                      ? "{oModelView>/addData/" +
-                        oContext.getModel().getProperty(oContext.getPath())[
-                          "value"
-                        ] +
-                        "}"
-                      : "{" +
-                        oContext.getModel().getProperty(oContext.getPath())[
-                          "value"
-                        ] +
-                        "}",
-                }),
-              ],
-            });
-          }
-
-          return oSmartControl;
+        onPressAddFamliy: function () {
+          var oModel = this.getView().getModel("oModelView");
+          oModel.getProperty("/FamilyDetails").push({
+            RelType: "Sister",
+            Name: "Manik",
+            ContactNumber: "9898989",
+          });
+          oModel.refresh();
         },
+        onPressFDLSave: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var bProp = oModel.getProperty("/editTble1");
+          oModel.setProperty("/editTble1",!bProp);
+        },
+        onPressRemoveRel: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getPath()
+            .split("/");
+          var aFamilyDetails = oModel.getProperty("/FamilyDetails");
+          aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+          oModel.refresh();
+          console.log(sPath);
+        },
+        onPressAdAsset: function () {
+          console.log("asset");
+          var oModel = this.getView().getModel("oModelView");
+          oModel.getProperty("/AssetDetails").push({
+            TypeOfAsst: "",
+            Name: "",
+          });
+          oModel.refresh();
+        },
+        onPressRemoveAsset: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getPath()
+            .split("/");
+          var aFamilyDetails = oModel.getProperty("/AssetDetails");
+          aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+          oModel.refresh();
+          console.log(sPath);
+        },
+        // myFactory: function (sId, oContext) {
+        //   var sEdit = oContext.getModel().getProperty("/mode");
+        //   var object = oContext.getObject();
+        //   console.log(
+        //     "1{oModelView>" +
+        //       oContext.getModel().getProperty(oContext.getPath())["value"] +
+        //       "}"
+        //   );
+        //   var oSmartControl;
+        //   if (object["aggregationType"] == "Input") {
+        //     oSmartControl = new FormElement({
+        //       label: "{?}",
+        //       fields: [
+        //         new Input({
+        //           required: "{oModelView>required}",
+        //           fieldGroupIds: "InpGoup",
+        //           type: "{oModelView>type}",
+
+        //           placeholder: "{oModelView>placeholder}",
+        //           value:
+        //             sEdit == "add"
+        //               ? "{oModelView>/addData/" +
+        //                 oContext.getModel().getProperty(oContext.getPath())[
+        //                   "value"
+        //                 ] +
+        //                 "}"
+        //               : "{" +
+        //                 oContext.getModel().getProperty(oContext.getPath())[
+        //                   "value"
+        //                 ] +
+        //                 "}",
+        //         }),
+        //       ],
+        //     });
+        //   } else if (object["aggregationType"] == "Date") {
+        //     console.log(
+        //       oContext.getModel().getProperty(oContext.getPath())["value"]
+        //     );
+
+        //     oSmartControl = new FormElement({
+        //       label: "{oModelView>label}",
+        //       fields: [
+        //         new DatePicker({
+        //           required: "{oModelView>required}",
+        //           fieldGroupIds: "InpGoup",
+        //           placeholder: "{oModelView>placeholder}",
+        //           displayFormat: "long",
+        //           dateValue:
+        //             sEdit == "add"
+        //               ? "{oModelView>/addData/" +
+        //                 oContext.getModel().getProperty(oContext.getPath())[
+        //                   "value"
+        //                 ] +
+        //                 "}"
+        //               : "{" +
+        //                 oContext.getModel().getProperty(oContext.getPath())[
+        //                   "value"
+        //                 ] +
+        //                 "}",
+        //         }),
+        //       ],
+        //     });
+        //   }
+
+        //   return oSmartControl;
+        // },
         //adding the code for the valuehelp
 
-        onSuccessPress: function (msg) {
-          var oMessage = new Message({
-            message: msg,
-            type: this._MessageType.Success,
-            target: "/Dummy",
-            processor: this.getView().getModel(),
-          });
-          sap.ui.getCore().getMessageManager().addMessages(oMessage);
-        },
-        onErrorPress: function () {
-          var oMessage,
-            oView = this.getView(),
-            oViewModel = oView.getModel("oModelView"),
-            oDataModel = oView.getModel(),
-            sElementBPath = "";
-          var othat = this;
-          var sCheckAdd = oViewModel.getProperty("/mode");
-          if (sCheckAdd !== "add") {
-            sElementBPath = oView.getElementBinding().getPath();
-          }
+        // onSuccessPress: function (msg) {
+        //   var oMessage = new Message({
+        //     message: msg,
+        //     type: this._MessageType.Success,
+        //     target: "/Dummy",
+        //     processor: this.getView().getModel(),
+        //   });
+        //   sap.ui.getCore().getMessageManager().addMessages(oMessage);
+        // },
+        // onErrorPress: function () {
+        //   var oMessage,
+        //     oView = this.getView(),
+        //     oViewModel = oView.getModel("oModelView"),
+        //     oDataModel = oView.getModel(),
+        //     sElementBPath = "";
+        //   var othat = this;
+        //   var sCheckAdd = oViewModel.getProperty("/mode");
+        //   if (sCheckAdd !== "add") {
+        //     sElementBPath = oView.getElementBinding().getPath();
+        //   }
 
-          console.log(this._ErrorMessages);
-          for (var oProp of this._ErrorMessages) {
-            oMessage = new sap.ui.core.message.Message({
-              message: oProp["message"],
-              type: othat._MessageType.Error,
-              target:
-                sCheckAdd == "add"
-                  ? oProp["target"]
-                  : sElementBPath + "/" + oProp["target"],
-              processor: sCheckAdd == "add" ? oViewModel : oDataModel,
-            });
-            othat._oMessageManager.addMessages(oMessage);
-          }
-        },
-        handleEmptyFields: function (oEvent) {
-          this.onErrorPress();
-        },
-        validateEventFeedbackForm: function (requiredInputs) {
-          this._ErrorMessages = [];
-          var aArray = [];
-          var othat = this;
-          var valid = true;
-          requiredInputs.forEach(function (input) {
-            var sInput = input;
+        //   console.log(this._ErrorMessages);
+        //   for (var oProp of this._ErrorMessages) {
+        //     oMessage = new sap.ui.core.message.Message({
+        //       message: oProp["message"],
+        //       type: othat._MessageType.Error,
+        //       target:
+        //         sCheckAdd == "add"
+        //           ? oProp["target"]
+        //           : sElementBPath + "/" + oProp["target"],
+        //       processor: sCheckAdd == "add" ? oViewModel : oDataModel,
+        //     });
+        //     othat._oMessageManager.addMessages(oMessage);
+        //   }
+        // },
+        // handleEmptyFields: function (oEvent) {
+        //   this.onErrorPress();
+        // },
+        // validateEventFeedbackForm: function (requiredInputs) {
+        //   this._ErrorMessages = [];
+        //   var aArray = [];
+        //   var othat = this;
+        //   var valid = true;
+        //   requiredInputs.forEach(function (input) {
+        //     var sInput = input;
 
-            if (
-              sInput.getValue().trim() === "" &&
-              sInput.getRequired() === true
-            ) {
-              valid = false;
-              sInput.setValueState("Error");
-              othat._ErrorMessages.push({
-                message:
-                  sInput.getParent().getLabel().getText() +
-                  " is a mandatory field (*)",
-                target: sInput.getBinding("value").getPath(),
-              });
-            } else {
-              sInput.setProperty("valueState", "None");
-            }
-          });
-          console.log(this._ErrorMessages);
-          return valid;
-        },
-        _getMessagePopover: function () {
-          var oView = this.getView();
-          // create popover lazily (singleton)
-          if (!this._pMessagePopover) {
-            this._pMessagePopover = Fragment.load({
-              id: oView.getId(),
-              name: "com.knpl.pragati.ContactPainter.view.MessagePopover",
-            }).then(function (oMessagePopover) {
-              oView.addDependent(oMessagePopover);
-              return oMessagePopover;
-            });
-          }
-          return this._pMessagePopover;
-        },
-        onMessagePopoverPress: function (oEvent) {
-          var oSourceControl = oEvent.getSource();
-          this._getMessagePopover().then(function (oMessagePopover) {
-            oMessagePopover.openBy(oSourceControl);
-          });
-        },
+        //     if (
+        //       sInput.getValue().trim() === "" &&
+        //       sInput.getRequired() === true
+        //     ) {
+        //       valid = false;
+        //       sInput.setValueState("Error");
+        //       othat._ErrorMessages.push({
+        //         message:
+        //           sInput.getParent().getLabel().getText() +
+        //           " is a mandatory field (*)",
+        //         target: sInput.getBinding("value").getPath(),
+        //       });
+        //     } else {
+        //       sInput.setProperty("valueState", "None");
+        //     }
+        //   });
+        //   console.log(this._ErrorMessages);
+        //   return valid;
+        // },
+        // _getMessagePopover: function () {
+        //   var oView = this.getView();
+        //   // create popover lazily (singleton)
+        //   if (!this._pMessagePopover) {
+        //     this._pMessagePopover = Fragment.load({
+        //       id: oView.getId(),
+        //       name: "com.knpl.pragati.ContactPainter.view.MessagePopover",
+        //     }).then(function (oMessagePopover) {
+        //       oView.addDependent(oMessagePopover);
+        //       return oMessagePopover;
+        //     });
+        //   }
+        //   return this._pMessagePopover;
+        // },
+        // onMessagePopoverPress: function (oEvent) {
+        //   var oSourceControl = oEvent.getSource();
+        //   this._getMessagePopover().then(function (oMessagePopover) {
+        //     oMessagePopover.openBy(oSourceControl);
+        //   });
+        // },
         _onClearMgsClass: function () {
           // does not remove the manually set ValueStateText we set in onValueStatePress():
           //this._clearPress;
@@ -292,7 +382,7 @@ sap.ui.define(
           var passedValidation = this.validateEventFeedbackForm(requiredInputs);
           if (passedValidation === false) {
             //show an error message, rest of code will not execute.
-            this.handleEmptyFields();
+            //this.handleEmptyFields();
             return false;
           }
           if (this.getView().getModel("oModelView").getProperty("/edit")) {

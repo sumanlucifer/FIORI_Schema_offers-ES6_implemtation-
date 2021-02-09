@@ -35,7 +35,6 @@ sap.ui.define(
           oRouter
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
-            
         },
         _onRouteMatched: function () {
           console.log("Painter List Loaded");
@@ -62,8 +61,8 @@ sap.ui.define(
           this.getView().getModel().refresh();
           this._FilterInit();
         },
-        _FilterInit:function(){
-            this._ResetFilterBar();
+        _FilterInit: function () {
+          this._ResetFilterBar();
         },
         onFilter: function (oEvent) {
           console.log("On FIlter");
@@ -71,28 +70,27 @@ sap.ui.define(
           var oViewFilter = this.getView()
             .getModel("oModelView")
             .getProperty("/filterBar");
-          var aFlaEmpty=true
+          var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop].trim() !== "") {
-                aFlaEmpty=false;
+              aFlaEmpty = false;
               aCurrentFilterValues.push(
                 new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
               );
             }
           }
-         
+
           var endFilter = new Filter({
             filters: aCurrentFilterValues,
             and: true,
           });
           var oTable = this.byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
-          if(!aFlaEmpty){
+          if (!aFlaEmpty) {
             oBinding.filter(endFilter);
-          }else{
-              oBinding.filter([]);
+          } else {
+            oBinding.filter([]);
           }
-          
         },
         onResetFilterBar: function () {
           this._ResetFilterBar();
@@ -105,18 +103,18 @@ sap.ui.define(
             Mobile: "",
             RegistrationStatus: "",
           };
-           var oViewFilter = this.getView()
-             .getModel("oModelView")
-             .setProperty("/filterBar", aResetProp);
-        //   for (let prop in aResetProp) {
-        //     aCurrentFilterValues.push(
-        //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
-        //     );
-        //   }
-        //   var endFilter = new Filter({
-        //     filters: aCurrentFilterValues,
-        //     and: false,
-        //   });
+          var oViewFilter = this.getView()
+            .getModel("oModelView")
+            .setProperty("/filterBar", aResetProp);
+          //   for (let prop in aResetProp) {
+          //     aCurrentFilterValues.push(
+          //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
+          //     );
+          //   }
+          //   var endFilter = new Filter({
+          //     filters: aCurrentFilterValues,
+          //     and: false,
+          //   });
           var oTable = this.byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
@@ -226,6 +224,17 @@ sap.ui.define(
             sTitle = this.getResourceBundle().getText("PainterList");
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
+        },
+        onListItemPress: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext()
+            .getPath()
+            .substr(1);
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("RouteProfile", {
+          });
         },
         onPressEditPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();

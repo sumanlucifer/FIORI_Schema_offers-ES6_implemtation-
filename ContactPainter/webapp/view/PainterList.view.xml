@@ -10,9 +10,9 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Email" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input id="idNameInput" value="{oModelView>/filterBar/Name}" submit="onFilter" placeholder="Name" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
@@ -25,23 +25,23 @@
                                 <fb:control>
                                     <Input id="idEmailInput" submit="onFilter" value="{oModelView>/filterBar/Email}" placeholder="Email" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
-                                            <core:Item text="{Email}"/>
+                                            <core:Item text="{AgeGroupId}"/>
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="{i18n>RegistrationDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idMobileInput" submit="onFilter" value="{oModelView>/filterBar/Mobile}" type="Number" placeholder="Mobile" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idMobileInput" submit="onFilter" value="{oModelView>/filterBar/Mobile}" type="Number" placeholder="{i18n>RegistrationDate}" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
-                                            <core:Item text="{Mobile}"/>
+                                            <core:Item text="{CreatedAt}"/>
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Registration Status" label="Registration Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" submit="onFilter" value="{oModelView>/filterBar/RegistrationStatus}" placeholder="Registration Status" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
+                                    <Input id="idRegistrationStatus" submit="onFilter" value="{oModelView>/filterBar/RegistrationStatus}" placeholder="{i18n>Status}" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{RegistrationStatus}"/>
                                         </suggestionItems>
@@ -57,18 +57,11 @@
         </f:header>
 
         <f:content>
-            <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', filters:[{ path:'IsArchived', operator:'EQ', value1:false}],sorter: { path: 'UpdatedAt', descending: true} }" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="25" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table  width="auto" items="{path: '/PainterSet'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
-                        <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <!-- <SearchField width="20%" id="searchField" suggest="onSuggest" suggestionItems="{path: '/PainterSet',sorter: { path: 'Name' } }" tooltip="{i18n>SearchPainters}" search="onSearch" placeholder="{i18n>SearchPainters}">
-                                                                                <SuggestionItem text="{Name}" key="{Id}"/>
-                                                                            </SearchField> -->
-                        <Button
-                        tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
-                    <!-- <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
                     </Toolbar>
                 </headerToolbar>
 
@@ -77,34 +70,31 @@
                         <Text text="{i18n>Name}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>Email}"/>
+                        <Text text="{i18n>PainterId}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>Mobile}"/>
+                        <Text text="{i18n>PrimaryMobile}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>RegistrationStatus}"/>
+                        <Text text="{i18n>AgeGroup}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>LinkDealer}"/>
                     </Column>
                     <Column width="10%">
-                        <Text text="{i18n>Edit}"/>
-                    </Column>
-                    <Column width="10%">
-                        <Text text="{i18n>Deactivate}"/>
+                        <Text text="{i18n>RegistrationDate}"/>
                     </Column>
                 </columns>
 
                 <items>
-                    <ColumnListItem press="onListItemPress">
-                        <dependents>
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.ActionSheet" type="XML"/>
-                        </dependents>
+                    <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
-                            <ObjectIdentifier title="{Name}" titleActive="false"/>
-                            <Text text="{Email}"/>
+                            <ObjectIdentifier title="{Name}" titleActive="true"/>
+                            <Text text="{Id}"/>
                             <Text text="{Mobile}"/>
-                            <Text text="{RegistrationStatus}"/>
-                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEditPainter" tooltip="Edit"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate" tooltip="Deactivate"></Button>
+                            <Text text="{AgeGroupId}"/>
+                            <Text text="{DealerId}"/>
+                            <Text text="{RegistrationDate}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
