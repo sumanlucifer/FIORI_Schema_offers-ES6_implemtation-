@@ -17,17 +17,19 @@ xmlns:f="sap.ui.layout.form">
 			<f:content>
 				<Label text="Name" labelFor="name" design="Bold" required="true"/>
 		<Input id="name" 
+        liveChange="onLiveChangeInputValidate"
         	                type="Text"
                             value="{ 
                                   path : '/name', 
                                   type : 'sap.ui.model.type.String', 
                                   constraints : { 
-                                      minLength : 1
+                                      minLength : 1,
+                                      maxLength :25
                                       
                                   }
                               }"
                         placeholder="Enter Name ..."
-        				valueStateText="Name must not be empty. Maximum 10 characters." />
+        				valueStateText="Enter a valid Name. Maximum 25 characters." />
 
 				<Label text="Email" labelFor="email" design="Bold" required="true" />
 		<Input id="email" 
@@ -46,14 +48,15 @@ xmlns:f="sap.ui.layout.form">
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Number"
+        	                type="Tel"
                             
                             value="{ 
                                   path : '/mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
                                       minLength : 1,
-                                      maxLength :10
+                                      maxLength : 10
+                                      
                                       
                                       
                                   }

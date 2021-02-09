@@ -11,8 +11,8 @@ sap.ui.define([
     "../utils/Validator",
     "sap/ui/model/json/JSONModel",
     "sap/m/Dialog",
-	"sap/m/DialogType",
-	"sap/m/Button",
+    "sap/m/DialogType",
+    "sap/m/Button",
     "sap/m/ButtonType",
     "sap/m/Text"
 ],
@@ -20,7 +20,7 @@ sap.ui.define([
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, History, UIComponent, MessageToast, BindingMode, Message, library, Fragment,
-        ValueState, Validator, JSONModel,Dialog, DialogType, Button, ButtonType,Text) {
+        ValueState, Validator, JSONModel, Dialog, DialogType, Button, ButtonType, Text) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -264,25 +264,37 @@ sap.ui.define([
                 return validator.validate(this.byId("addUser"));
             },
             onDialogPress: function () {
-			if (!this.oEscapePreventDialog) {
-				this.oEscapePreventDialog = new Dialog({
-					title: "Error",
-					content: new Text({ text: "Mandatory Fields Are Empty!" }),
-					type: DialogType.Message,
-					buttons: [
-						new Button({
-							text: "Close",
-							press: function () {
-								this.oEscapePreventDialog.close();
-							}.bind(this)
-						})
-					]
-					
-				});
-			}
+                if (!this.oEscapePreventDialog) {
+                    this.oEscapePreventDialog = new Dialog({
+                        title: "Error",
+                        content: new Text({ text: "Mandatory Fields Are Empty!" }),
+                        type: DialogType.Message,
+                        buttons: [
+                            new Button({
+                                text: "Close",
+                                press: function () {
+                                    this.oEscapePreventDialog.close();
+                                }.bind(this)
+                            })
+                        ]
 
-			this.oEscapePreventDialog.open();
-		},
+                    });
+                }
+
+                this.oEscapePreventDialog.open();
+            },
+            onLiveChangeInputValidate: function (oEvent) {
+                var blockSpecialRegex = /[0-9~`!@#$%^&()_={}[\]:;,.<>+\/?-]/;
+                // var inputValue = oEvent.getParameter('value').trim();
+                //console.log(inputValue);
+                if (oEvent.getParameter("value").match(blockSpecialRegex)) {
+                    this.getView().byId("name").setValueState(sap.ui.core.ValueState.Error);
+                   // this.setValueState(sap.ui.core.ValueState.Error);
+                }
+                // else {
+                //     this.setValueState(sap.ui.core.ValueState.Success);
+                // }
+            }
 
 
 

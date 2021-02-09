@@ -5,9 +5,12 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
-    'sap/ui/Device'
+    'sap/ui/Device',
+    'sap/m/MessageToast',
+    "sap/m/MessageBox"
 ],
-    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device,
+        MessageToast,MessageBox) {
         "use strict";
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
@@ -206,7 +209,41 @@ sap.ui.define([
 
             handleAllDealerLinkPress: function(oEvent){
                 this.oRouter.navTo("RouteLandingPage");
-            }
+            },
+            changeLinkStatus: function (oEvent) {
+                 var oItem = oEvent.getSource();
+                var removeSet = oItem.getBindingContext().getPath();
+                var oTable = this.getView().byId("idPainterTable");
+
+                var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
+                //console.log(oSelectedItem);
+                MessageToast.show("Unlink Alert!");
+                
+                // var oParam = {
+                //         Name: oSelectedItem.Name,
+                //         Email: oSelectedItem.Email,
+                //         Mobile: oSelectedItem.Mobile,
+                //         CountryCode: oSelectedItem.CountryCode,
+                //         RoleId: oSelectedItem.RoleId,
+                //         IsArchived: true
+                //     };
+                // function onYes() {
+                //     var oModel = this.getView().getModel();
+                //     oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
+                // }
+
+                //this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
+
+            },
+             onRemoveSuccess: function (oTable) {
+                
+                var oList = this.getView().byId(oTable);
+                oList.getBinding("items").refresh(true);
+                var msg = 'Removed Successfully!';
+                MessageToast.show(msg);
+
+
+            },
 
         });
     });
