@@ -59,10 +59,10 @@ sap.ui.define(
           );
           console.log(sArgsFields, sArgesProp, sArgesMode, sArgName);
 
-          if(sArgesMode=="edit"){
+          if (sArgesMode == "edit") {
             this.getView().bindElement("/" + sArgesProp);
-          }else if(sArgesMode==="add"){
-              this.getView().unbindElement();
+          } else if (sArgesMode === "add") {
+            this.getView().unbindElement();
           }
           this._initData(
             sArgsFields,
@@ -97,7 +97,7 @@ sap.ui.define(
           for (var prop in aArray) {
             oData["prop2"].push({
               value: aArray[prop],
-              InpVal:""
+              InpVal: "",
             });
             oData["addData"][aArray[prop]] = "";
           }
@@ -318,6 +318,8 @@ sap.ui.define(
           oModelView.setProperty("/busy", true);
           var oDataModel = oView.getModel();
           var sTitle = oModelView.getProperty("/titleP2");
+          var oRouter = this.getOwnerComponent().getRouter();
+          var navKey = oModelView.getProperty("/navBackKey");
           var oDataValue = oDataModel.getProperty(
             oView.getElementBinding().getPath()
           );
@@ -331,6 +333,11 @@ sap.ui.define(
             success: function (data) {
               oModelView.setProperty("/busy", false);
               MessageToast.show(sTitle + " Successfully Updated.");
+              oRouter.navTo("RouteMaster", {
+                "?query": {
+                  tab: navKey,
+                },
+              });
             },
             error: function (data) {
               oModelView.setProperty("/busy", false);
@@ -346,9 +353,10 @@ sap.ui.define(
           var oMdlView = oView.getModel("oModelView");
           oMdlView.setProperty("/busy", true);
           var sEntity = "/" + oMdlView.getProperty("/modelProp");
-          var aPayload = {},aProp2=oMdlView.getProperty("/prop2");
-          for(var prop of aProp2 ){
-              aPayload[prop["value"]] = prop["InpVal"];
+          var aPayload = {},
+            aProp2 = oMdlView.getProperty("/prop2");
+          for (var prop of aProp2) {
+            aPayload[prop["value"]] = prop["InpVal"];
           }
           console.log(aPayload);
           var sTitle = oMdlView.getProperty("/titleP2");
