@@ -5,48 +5,150 @@
                 <core:Title text="Membership"/>
                 <Label text="Membership Id"/>
                 <Text text="Sample Data"/>
-                <Label text="{i18n>DateOfJoining}"  />
-                <Input required="true" visible="{oModelView>/profileEdit}" />
-                <Input required="true" visible="{= !${oModelView>/profileEdit} }" />
-                <Label text="{i18n>PrimaryMobileNo}"/>
-                <Input required="true"></Input>
+                <Label required="true" text="{i18n>DateOfJoining}"/>
+                <VBox height="auto" width="auto">
+                    <DatePicker visible="{= ${oModelView>/profileEdit} === true }" placeholder="DD/MM/YYYY" value="{path:'oModelView>/PainterDetails/DateOfJoining',type : 'sap.ui.model.type.Date', formatOptions : { pattern: 'dd/MM/y' } }" required="true"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
+                <Label required="true" text="{i18n>PrimaryMobileNo}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" type="Number" value="{path:'oModelView>/PainterDetails/PrimaryMobileNo',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>SecondryMobileNo}"/>
-                <Input value="{SecondryMobileNo}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" type="Number" value="{path:'oModelView>/PainterDetails/PrimaryMobileNo',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>AgeGroup}"/>
-                <Input/>
+                <VBox height="auto" width="auto">
+                    <ComboBox width="100%" visible="{= ${oModelView>/profileEdit} === true }" selectedKey="{path:'oModelView>/PainterDetails/AgeGroup',type : 'sap.ui.model.type.String', constraints:{  search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>PreferredLanguage}"/>
-                <Input value="{PreferredLanguage}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox width="100%" visible="{= ${oModelView>/profileEdit} === true }" selectedKey="{path:'oModelView>/PainterDetails/PreferredLanguage',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
-                <Input value="{FullName}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label required="true" text="{i18n>EmailId}"/>
-                <Input value="{EmailId}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" value="{ path : 'oModelView>/PersonalDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>LinkDealer}"/>
-                <Input required="false" value="{LinkDealer}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>SecondryLinkDealer}"/>
-                <Input value="{SecondryLinkDealer}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <core:Title text="{i18n>LocationDetails}"/>
                 <Label text="{i18n>Area}"/>
-                <Input required="true" value="{Area}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>City}"/>
-                <Input required="true" value="{City}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>State}"/>
-                <Input required="true" value="{State}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <core:Title text="{i18n>SecurityQuestions}"/>
-                <Label text="{i18n>Questions}"/>
-                <Input required="true" value="{Questions}"/>
+                 <Label text="{i18n>Questions}"/>
+                <VBox height="auto" width="auto">
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>Answer}"/>
-                <Input value="{Answer}"/>
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <core:Title text="{i18n>SegmentationDetails}"/>
                 <Label text="{i18n>TimeSize}"/>
-                <Input required="true" value="{TimeSize}"/>
+                <VBox>
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>Experiences}"/>
-                <Input required="true" value="{Experiences}"/>
+                <VBox>
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>SitePerMonth}"/>
-                <Input required="false" value="{SitePerMonth}"/>
+                <VBox>
+                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                        <items>
+                            <core:Item text="Sample1" key="1"/>
+                            <core:Item text="Sample2" key="2"/>
+                        </items>
+                    </ComboBox>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
                 <Label text="{i18n>Potential}"/>
-                <Input required="false" value="{Potential}"/>
-
+                <VBox height="auto" width="auto">
+                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                </VBox>
             </f:content>
         </f:SimpleForm>
         <Table id="idFamilyDetils" width="auto" items="{path: 'oModelView>/FamilyDetails'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
@@ -54,7 +156,7 @@
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}"/>
                     <ToolbarSpacer/>
-                    <Button text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
+                    <Button visible="{= ${oModelView>/profileEdit} === true }" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -90,7 +192,7 @@
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>
                     <ToolbarSpacer/>
-                    <Button text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    <Button visible="{= ${oModelView>/profileEdit} === true }" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -102,7 +204,7 @@
                     <Text text="{i18n>AssetName}"/>
                 </Column>
                 <Column width="5%"></Column>
-               <Column width="5%"></Column>
+                <Column width="5%"></Column>
             </columns>
 
             <items>
