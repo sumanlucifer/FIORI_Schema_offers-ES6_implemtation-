@@ -1,10 +1,10 @@
 {
     "resources": [
         {
-            "name": "manifest-bundle.zip"
+            "name": "controller/Worklist.controller.js"
         },
         {
-            "name": "controller/Object.controller.js"
+            "name": "controller/ErrorHandler.js"
         },
         {
             "name": "model/models.js"
@@ -13,16 +13,17 @@
             "name": "model/formatter.js"
         },
         {
-            "name": "controller/Worklist.controller.js"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/Object.controller.js"
         },
         {
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "controller/ErrorHandler.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/BaseController.js"
@@ -34,19 +35,18 @@
             "name": "Component.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "manifest-bundle.zip"
         },
         {
             "name": "Component-preload.js",
             "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "model/formatter-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/formatter-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {

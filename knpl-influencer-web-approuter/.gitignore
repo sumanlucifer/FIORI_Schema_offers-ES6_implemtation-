@@ -37,11 +37,6 @@ knpl1/ContactPainter/.env7
 # auto generated wildcard
 knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
-<<<<<<< HEAD
-knpl-influencer-web/OrganizationSetup/.env
-=======
-ZSampGWCnct/GatewaySrvTest/.env4
-# auto generated wildcard
 knpl1/Training/.env1
 # auto generated wildcard
 knpl1/MasterDataManagement/.env11
@@ -63,4 +58,7 @@ knpl-influencer-web/ContactPainter/.env10
 knpl-influencer-web/MasterDataManagement/.env14
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env15
-
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env11
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env16

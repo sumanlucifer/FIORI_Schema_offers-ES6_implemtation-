@@ -1,14 +1,15 @@
 <mvc:View controllerName="com.knpl.pragati.ContactPainter.controller.AddEditPainter" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
-   <Page title="{i18n>appTitle}" busy="{oModelView>/busy}" busyIndicatorDelay="0" class="sapUiContentPadding" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+    <Page busy="{oModelView>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="false" navButtonPress="navPressBack">
+        <subHeader>
+            <Toolbar>
+                <Breadcrumbs currentLocationText="{i18n>AddPainter}">
+                    <Link text="{i18n>PaintersList}" press="navPressBack"/>
+                </Breadcrumbs>
+                <ToolbarSpacer></ToolbarSpacer>
+            </Toolbar>
+        </subHeader>
         <content>
-            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="false" expandable="false" expanded="true" class="ictbr sapUiResponsiveContentPadding">
-                <items>
-                    <IconTabFilter key="0" text="{oModelView>/sIctbTitle} Painter"></IconTabFilter>
-                </items>
-            </IconTabBar>
-            <VBox id="oVbxSmtTbl">
-               
-            </VBox>
+            <VBox width="100%" id="oVbxSmtTbl"></VBox>
         </content>
         <footer>
             <Toolbar>
