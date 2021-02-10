@@ -1,4 +1,4 @@
-<mvc:View height="100%" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -52,19 +52,15 @@
                     </fb:FilterBar>
                 </f:content>
             </f:DynamicPageHeader>
-
-
         </f:header>
-
         <f:content>
-            <Table  width="auto" items="{path: '/PainterSet'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table width="auto" items="{path: '/PainterSet'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     </Toolbar>
                 </headerToolbar>
-
                 <columns>
                     <Column>
                         <Text text="{i18n>Name}"/>

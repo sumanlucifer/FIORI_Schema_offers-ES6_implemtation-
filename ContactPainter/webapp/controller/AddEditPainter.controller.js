@@ -11,6 +11,7 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/message/Message",
     "sap/m/DatePicker",
+    "sap/ui/core/ValueState",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -26,7 +27,8 @@ sap.ui.define(
     Label,
     library,
     Message,
-    DatePicker
+    DatePicker,
+    ValueState
   ) {
     "use strict";
 
@@ -35,6 +37,14 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
+          sap.ui.getCore().attachValidationError(function (oEvent) {
+            console.log(oEvent.getParameter("element"));
+            oEvent.getParameter("element").setValueState(ValueState.Error);
+          });
+
+          sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+            oEvent.getParameter("element").setValueState(ValueState.None);
+          });
 
           oRouter
             .getRoute("RouteAddEditP")
@@ -58,7 +68,7 @@ sap.ui.define(
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
             PainterDetails: {
-              DateOfJoining: "1",
+              DateOfJoining: null,
               PrimaryMobileNo: "",
               SecondryMobileNo: "",
               AgeGroup: "",
@@ -66,7 +76,7 @@ sap.ui.define(
             },
             PersonalDetails: {
               FullName: "",
-              EmailId: "",
+              Email: "",
               PrimaryDealer: "",
               SecondryDealer: "",
             },
@@ -123,7 +133,7 @@ sap.ui.define(
 
           this._formFragments; //used for the fragments of the add and edit forms
           this.getView().setModel(oViewModel, "oModelView");
-          this._initMessage(oViewModel);
+          //this._initMessage(oViewModel);
           this.getView().getModel().resetChanges();
           //used to intialize the message class for displaying the messages
         },
@@ -171,17 +181,33 @@ sap.ui.define(
         onPressAddFamliy: function () {
           var oModel = this.getView().getModel("oModelView");
           oModel.getProperty("/FamilyDetails").push({
-            RelType: "Sister",
-            Name: "Manik",
-            ContactNumber: "9898989",
+            RelType: "",
+            Name: "",
+            ContactNumber: "",
+            editable: true,
           });
+          oModel.refresh();
+        },
+        onPressEditRel: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getObject();
+          oObject["editable"] = true;
           oModel.refresh();
         },
         onPressFDLSave: function (oEvent) {
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
-          var bProp = oModel.getProperty("/editTble1");
-          oModel.setProperty("/editTble1",!bProp);
+          var oObject = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getObject();
+          oObject["editable"] = false;
+          oModel.refresh();
+          console.log(oModel);
         },
         onPressRemoveRel: function (oEvent) {
           var oView = this.getView();
@@ -196,15 +222,37 @@ sap.ui.define(
           oModel.refresh();
           console.log(sPath);
         },
+        onAssetEdit: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getObject();
+          oObject["editable"] = true;
+          oModel.refresh();
+        },
         onPressAdAsset: function () {
           console.log("asset");
           var oModel = this.getView().getModel("oModelView");
           oModel.getProperty("/AssetDetails").push({
             TypeOfAsst: "",
             Name: "",
+            editable: true,
           });
           oModel.refresh();
         },
+        onAsetSave: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getObject();
+          oObject["editable"] = false;
+          oModel.refresh();
+        },
+
         onPressRemoveAsset: function (oEvent) {
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
@@ -377,6 +425,9 @@ sap.ui.define(
           sap.ui.getCore().getMessageManager().removeAllMessages();
         },
         onPressSave: function () {
+          console.log(this.getView().getModel("oModelView"));
+        },
+        onPressSave1: function () {
           this._onClearMgsClass();
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
           var passedValidation = this.validateEventFeedbackForm(requiredInputs);
