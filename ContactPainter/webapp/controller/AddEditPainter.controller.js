@@ -82,10 +82,10 @@ sap.ui.define(
               AgeGroupId: 1,
               Name: "Manik Saluja",
               Email: "manik093@gmail.com",
-              DOB: null,
+              DOB: new Date(),
             },
             Preference: {
-              LanguageId: 2,
+              LanguageId: "",
               SecurityQuestionId: 4,
               SecurityAnswer: "Securtiy Answer",
             },
@@ -95,13 +95,13 @@ sap.ui.define(
               StateKey: 1,
               Citykey: "",
               TeamSizeKey: 1,
-              SMobile1: "989176119",
-              DOB:""
+              SMobile1: "98917611999",
+              DOB: "",
             },
             PainterAddress: {
               AddressLine1: "AddressLine1",
-              City: null,
-              State: null,
+              City: "Pune",
+              State: "MH",
             },
             PainterSegmentation: {
               TeamSize: "",
@@ -160,25 +160,28 @@ sap.ui.define(
         },
         onPressSave: function () {
           var oValidator = new Validator();
-          var oVbox = this.getView().byId("idVbx");
+          var oVbox = this.getView().byId("SimpleFormChange480_12120Dual");
           var bValidation = oValidator.validate(oVbox);
 
           console.log(bValidation);
 
           var oViewModel = this.getView().getModel("oModelView");
-          var oPainterData =Object.assign({}, oViewModel.getProperty("/PainterDetails"));
-
+          var oPainterData = this._ReturnObjects(
+            oViewModel.getProperty("/PainterDetails")
+          );
 
           //Getting the Data for Preferrences
-          var oPreferrence = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/Preference"))
-          );
+          var oPreferrence =this._ReturnObjects(oViewModel.getProperty("/Preference"));
+          
           //Getting the additional contact information of the painter
           var SMobile1 = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile1"))
           );
           var aPainterSecContact = [];
-          aPainterSecContact.push({ Mobile: SMobile1 });
+          if (SMobile1.trim !== "") {
+            aPainterSecContact.push({ Mobile: SMobile1 });
+          }
+
           //Getting the data for the PainterAddress
           var oPainterAddress = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddress"))
@@ -248,11 +251,13 @@ sap.ui.define(
             },
           });
         },
-        _ReturnObjects:function(mParam){
-            var object =  Object.assign({}, mParam);
-         
-
-
+        _ReturnObjects: function (mParam) {
+          var obj = Object.assign({}, mParam);
+          var oNew = Object.entries(obj).reduce(
+            (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
+            {}
+          );
+          return oNew;
         },
         onAfterRendering: function () {
           //var oModel = this.getView().getModel("oModelView");

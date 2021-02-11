@@ -16,7 +16,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>PreferredLanguage}"/>
-                <ComboBox items="{path:'/MasterLanguageSet'}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                <ComboBox required="false" items="{path:'/MasterLanguageSet'}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'sap.ui.model.type.Integer', constraints:{  minLength:1 } }">
                     <items>
                         <core:Item text="{Language}" key="{Id}"/>
                     </items>
