@@ -7,31 +7,39 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device',
     'sap/m/MessageToast',
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    'sap/ui/model/type/String',
+    'sap/m/ColumnListItem',
+    'sap/m/Label',
+    'sap/m/SearchField',
+    'sap/m/Token'
 ],
     function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device,
-        MessageToast,MessageBox) {
+        MessageToast, MessageBox, typeString, ColumnListItem, Label, SearchField, Token, ) {
         "use strict";
-                 var dealerID;
+        var dealerID;
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
 
-           
+
 
             onInit: function () {
 
 
-                
-                
+
+
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
                     oTable = this.byId("idPainterTable");
                 this.KNPLModel = this.getComponentModel();
 
+                this.oColModel = new JSONModel(sap.ui.require.toUrl("com/knpl/pragati/DealerManagement/model") + "/columnsModel.json");
+                this.oProductsModel = this.getView().getModel();
+
                 //Router Object
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("RouteDetailsPage").attachPatternMatched(this._onObjectMatched, this);
-                
+
 
                 // Put down table's original value for busy indicator delay,
                 // so it can be restored later on. Busy handling on the table is
@@ -61,14 +69,14 @@ sap.ui.define([
 
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
-                dealerID=sObjectId;
+                dealerID = sObjectId;
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
                     });
-                     //console.log(sObjectPath);
+                    //console.log(sObjectPath);
                     this._bindView("/" + sObjectPath);
-                    this._bindPainterTable("/" + sObjectPath+"/Painter");
+                    this._bindPainterTable("/" + sObjectPath + "/Painter");
                 }.bind(this));
                 this.dismissBusyDialog();
             },
@@ -79,11 +87,11 @@ sap.ui.define([
                 });
             },
             _bindPainterTable: function (spath) {
-                this.oPainterTableTemplate=this.oPainterTableTemplate?this.oPainterTableTemplate:this.getView().byId("idColumnListItem");
-                
+                this.oPainterTableTemplate = this.oPainterTableTemplate ? this.oPainterTableTemplate : this.getView().byId("idColumnListItem");
+
                 var tableId = this.getView().byId("idPainterTable");
-                tableId.bindItems({path:spath,template:this.oPainterTableTemplate.clone()});
-                
+                tableId.bindItems({ path: spath, template: this.oPainterTableTemplate.clone() });
+
             },
 
             onUpdateFinished: function (oEvent) {
@@ -211,25 +219,25 @@ sap.ui.define([
                 this.byId("actionSheet").openBy(oButton);
             },
 
-            handleAllDealerLinkPress: function(oEvent){
+            handleAllDealerLinkPress: function (oEvent) {
                 this.oRouter.navTo("RouteLandingPage");
             },
             changeLinkStatus: function (oEvent) {
-                 var oItem = oEvent.getSource();
+                var oItem = oEvent.getSource();
                 var removeSet = oItem.getBindingContext().getPath();
                 var oTable = this.getView().byId("idPainterTable");
 
                 var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
-                
-                
-               
-                
+
+
+
+
                 var oParam = {
-                        PainterId: oSelectedItem.Id,
-                         DealerId: dealerID
-                        
-                    };
-                    //console.log(oParam);
+                    PainterId: oSelectedItem.Id,
+                    DealerId: dealerID
+
+                };
+                //console.log(oParam);
                 function onYes() {
                     var oModel = this.getView().getModel();
                     oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
@@ -238,14 +246,123 @@ sap.ui.define([
                 this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
 
             },
-             onRemoveSuccess: function (oTable) {
-                
+            onRemoveSuccess: function (oTable) {
+
                 var oList = this.getView().byId(oTable);
                 oList.getBinding("items").refresh(true);
                 var msg = 'Unlinked Successfully!';
                 MessageToast.show(msg);
 
 
+            },
+            linkPainters: function () {
+
+                var aCols = this.oColModel.getData().cols;
+                this._oBasicSearchField = new SearchField({
+                    showSearchButton: false
+                });
+
+                this._oValueHelpDialog = sap.ui.xmlfragment("com.knpl.pragati.DealerManagement.view.fragments.LinkPainterDialogFilterbar", this);
+                this.getView().addDependent(this._oValueHelpDialog);
+
+                this._oValueHelpDialog.setRangeKeyFields([{
+                    label: "Painter",
+                    key: "Id",
+                    type: "string",
+                    typeInstance: new typeString({}, {
+                        maxLength: 7
+                    })
+                }]);
+
+                this._oValueHelpDialog.getFilterBar().setBasicSearch(this._oBasicSearchField);
+
+                this._oValueHelpDialog.getTableAsync().then(function (oTable) {
+                    oTable.setModel(this.oProductsModel);
+                    oTable.setModel(this.oColModel, "columns");
+
+                    if (oTable.bindRows) {
+                        oTable.bindAggregation("rows", "/PainterSet");
+                    }
+
+                    if (oTable.bindItems) {
+                        oTable.bindAggregation("items", "/PainterSet", function () {
+                            return new ColumnListItem({
+                                cells: aCols.map(function (column) {
+                                    return new Label({ text: "{" + column.template + "}" });
+                                })
+                            });
+                        });
+                    }
+
+                    this._oValueHelpDialog.update();
+                }.bind(this));
+
+                // this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+                this._oValueHelpDialog.open();
+
+
+            },
+            onValueHelpOkPress: function (oEvent) {
+                var aTokens = oEvent.getSource().getTokens();
+
+                console.log(aTokens);
+
+                //this._oMultiInput.setTokens(aTokens);
+                //this._oValueHelpDialog.close();
+            },
+
+            onValueHelpCancelPress: function () {
+                this._oValueHelpDialog.close();
+            },
+
+            onValueHelpAfterClose: function () {
+                this._oValueHelpDialog.destroy();
+            },
+
+            onFilterBarSearch: function (oEvent) {
+                var sSearchQuery = this._oBasicSearchField.getValue(),
+                    aSelectionSet = oEvent.getParameter("selectionSet");
+                var aFilters = aSelectionSet.reduce(function (aResult, oControl) {
+                    if (oControl.getValue()) {
+                        aResult.push(new Filter({
+                            path: oControl.getName(),
+                            operator: FilterOperator.Contains,
+                            value1: oControl.getValue()
+                        }));
+                    }
+
+                    return aResult;
+                }, []);
+
+                aFilters.push(new Filter({
+                    filters: [
+                        // new Filter({ path: "Id", operator: FilterOperator.Contains, value1: sSearchQuery }),
+                        new Filter({ path: "Name", operator: FilterOperator.Contains, value1: sSearchQuery }),
+                        new Filter({ path: "Mobile", operator: FilterOperator.Contains, value1: sSearchQuery })
+                    ],
+                    and: false
+                }));
+
+                this._filterTable(new Filter({
+                    filters: aFilters,
+                    and: true
+                }));
+            },
+
+            _filterTable: function (oFilter) {
+                var oValueHelpDialog = this._oValueHelpDialog;
+
+                oValueHelpDialog.getTableAsync().then(function (oTable) {
+                    if (oTable.bindRows) {
+                        oTable.getBinding("rows").filter(oFilter);
+                    }
+
+                    if (oTable.bindItems) {
+                        oTable.getBinding("items").filter(oFilter);
+                    }
+
+                    oValueHelpDialog.update();
+                });
             },
             showWarning: function (sMsgTxt, _fnYes) {
                 var that = this;
