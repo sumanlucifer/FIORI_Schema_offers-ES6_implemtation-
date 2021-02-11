@@ -12,6 +12,10 @@ sap.ui.define(
     "sap/ui/core/message/Message",
     "sap/m/DatePicker",
     "sap/ui/core/ValueState",
+    "com/knpl/pragati/ContactPainter/controller/Validator",
+    "sap/ui/model/type/Date",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -28,7 +32,11 @@ sap.ui.define(
     library,
     Message,
     DatePicker,
-    ValueState
+    ValueState,
+    Validator,
+    DateType,
+    Filter,
+    FilterOperator
   ) {
     "use strict";
 
@@ -38,10 +46,12 @@ sap.ui.define(
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
           sap.ui.getCore().attachValidationError(function (oEvent) {
-            console.log(oEvent.getParameter("element"));
-            oEvent.getParameter("element").setValueState(ValueState.Error);
+            if (oEvent.getParameter("element").getRequired()) {
+              oEvent.getParameter("element").setValueState(ValueState.Error);
+            } else {
+              oEvent.getParameter("element").setValueState(ValueState.None);
+            }
           });
-
           sap.ui.getCore().attachValidationSuccess(function (oEvent) {
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
@@ -68,26 +78,36 @@ sap.ui.define(
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
             PainterDetails: {
-              DateOfJoining: null,
-              PrimaryMobileNo: "",
-              SecondryMobileNo: "",
-              AgeGroup: "",
-              PreferredLanguage: "",
+              Mobile: "9891761199",
+              AgeGroupId: 1,
+              Name: "Manik Saluja",
+              Email: "manik093@gmail.com",
+              DOB: null,
             },
-            PersonalDetails: {
-              FullName: "",
-              Email: "",
-              PrimaryDealer: "",
-              SecondryDealer: "",
+            Preference: {
+              LanguageId: 2,
+              SecurityQuestionId: 4,
+              SecurityAnswer: "Securtiy Answer",
             },
-            PainterLocation: {
-              Area: "",
-              City: "",
-              State: "",
+            PainterAddDet: {
+              SecondryDealer: [],
+              DealerId: 2,
+              StateKey: 1,
+              Citykey: "",
+              TeamSizeKey: 1,
+              SMobile1: "989176119",
+              DOB:""
             },
-            SecurityQuestions: {
-              Question: "",
-              Answer: "",
+            PainterAddress: {
+              AddressLine1: "AddressLine1",
+              City: null,
+              State: null,
+            },
+            PainterSegmentation: {
+              TeamSize: "",
+              PainterExperience: 3,
+              SitesPerMonth: 3,
+              Potential: "potential",
             },
             SegmentationDetails: {
               TimeSize: "",
@@ -95,18 +115,19 @@ sap.ui.define(
               SitesPerMonth: "",
               Potential: "",
             },
-            FamilyDetails: [],
-            AssetDetails: [],
-            BankingDetails: {
-              AccountHolderName: "",
-              AccountType: "",
-              BankName: "",
-              AccountNumber: "",
-              IFSCCode: "",
+            PainterFamily: [],
+            PainterAssets: [],
+            PainterBankDetails: {
+              AccountHolderName: "Account Holder Name",
+              AccountType: "Saving",
+              BankName: "Purvanchal Bank",
+              AccountNumber: "500095756765",
+              IfscCode: "IFSCCODE276576",
+            },
+            PainterKycDetails: {
               KYCStatus: "",
               AadhaarCardNo: "",
             },
-            editTble1: true,
             addData: {
               Name: "",
               //City: "",
@@ -137,6 +158,102 @@ sap.ui.define(
           this.getView().getModel().resetChanges();
           //used to intialize the message class for displaying the messages
         },
+        onPressSave: function () {
+          var oValidator = new Validator();
+          var oVbox = this.getView().byId("idVbx");
+          var bValidation = oValidator.validate(oVbox);
+
+          console.log(bValidation);
+
+          var oViewModel = this.getView().getModel("oModelView");
+          var oPainterData =Object.assign({}, oViewModel.getProperty("/PainterDetails"));
+
+
+          //Getting the Data for Preferrences
+          var oPreferrence = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/Preference"))
+          );
+          //Getting the additional contact information of the painter
+          var SMobile1 = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile1"))
+          );
+          var aPainterSecContact = [];
+          aPainterSecContact.push({ Mobile: SMobile1 });
+          //Getting the data for the PainterAddress
+          var oPainterAddress = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAddress"))
+          );
+          var oPainterSeg = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterSegmentation"))
+          );
+          // Getting the Family Details
+          var oPtrFamily = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterFamily"))
+          ).map((item) => {
+            delete item.editable;
+            return item;
+          });
+
+          //Getting the Assets Data
+          var oPayloadDevice = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAssets"))
+          ).map((item) => {
+            delete item.editable;
+            return item;
+          });
+
+          //Getting the Dealer's Data
+          var oSecMainDealers = JSON.parse(
+            JSON.stringify(
+              oViewModel.getProperty("/PainterAddDet/SecondryDealer")
+            )
+          );
+          var sPrimaryDealerId = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAddDet/DealerId"))
+          );
+          var oDealers = [];
+          for (var i of oSecMainDealers) {
+            oDealers.push({
+              Id: parseInt(i),
+            });
+          }
+          oDealers.push({ Id: sPrimaryDealerId });
+
+          // creating the set for the banking details
+          var oBankingPayload = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
+          );
+
+          var oPayload = Object.assign(
+            {
+              PainterAddress: oPainterAddress,
+              PainterContact: aPainterSecContact,
+              Preference: oPreferrence,
+              Dealers: oDealers,
+              PainterSegmentation: oPainterSeg,
+              PainterFamily: oPtrFamily,
+              Assets: oPayloadDevice,
+              PainterBankDetails: oBankingPayload,
+            },
+            oPainterData
+          );
+          console.log(oPayload, oViewModel);
+          var oData = this.getView().getModel();
+          oData.create("/PainterSet", oPayload, {
+            success: function () {
+              console.log("success");
+            },
+            error: function () {
+              console.log("error");
+            },
+          });
+        },
+        _ReturnObjects:function(mParam){
+            var object =  Object.assign({}, mParam);
+         
+
+
+        },
         onAfterRendering: function () {
           //var oModel = this.getView().getModel("oModelView");
           //this._initMessage(oModel);
@@ -160,6 +277,7 @@ sap.ui.define(
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
+            //console.log(oView.byId("dpicker").setMinDate(new Date(2016, 0, 1)));
           });
         },
         _getFormFragment: function (sFragmentName) {
@@ -178,12 +296,26 @@ sap.ui.define(
 
           return this._formFragments;
         },
+        onStateChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey() + "";
+          var oCity,
+            aFilter = [],
+            oView = this.getView();
+          if (sKey !== "") {
+            oView
+              .getModel("oModelView")
+              .setProperty("/PainterAddress/City", null);
+            oCity = oView.byId("cmbCity").getBinding("items");
+            aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+            oCity.filter(aFilter);
+          }
+        },
         onPressAddFamliy: function () {
           var oModel = this.getView().getModel("oModelView");
-          oModel.getProperty("/FamilyDetails").push({
-            RelType: "",
+          oModel.getProperty("/PainterFamily").push({
+            RelationshipId: null,
+            Mobile: "",
             Name: "",
-            ContactNumber: "",
             editable: true,
           });
           oModel.refresh();
@@ -217,7 +349,7 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getPath()
             .split("/");
-          var aFamilyDetails = oModel.getProperty("/FamilyDetails");
+          var aFamilyDetails = oModel.getProperty("/PainterFamily");
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
           oModel.refresh();
           console.log(sPath);
@@ -235,9 +367,9 @@ sap.ui.define(
         onPressAdAsset: function () {
           console.log("asset");
           var oModel = this.getView().getModel("oModelView");
-          oModel.getProperty("/AssetDetails").push({
-            TypeOfAsst: "",
-            Name: "",
+          oModel.getProperty("/PainterAssets").push({
+            Id: "",
+            AssetName: "",
             editable: true,
           });
           oModel.refresh();
@@ -261,7 +393,7 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getPath()
             .split("/");
-          var aFamilyDetails = oModel.getProperty("/AssetDetails");
+          var aFamilyDetails = oModel.getProperty("/PainterAssets");
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
           oModel.refresh();
           console.log(sPath);
@@ -424,9 +556,7 @@ sap.ui.define(
           //this._clearPress;
           sap.ui.getCore().getMessageManager().removeAllMessages();
         },
-        onPressSave: function () {
-          console.log(this.getView().getModel("oModelView"));
-        },
+
         onPressSave1: function () {
           this._onClearMgsClass();
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
