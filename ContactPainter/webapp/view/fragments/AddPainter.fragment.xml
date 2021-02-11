@@ -10,13 +10,13 @@
                 <Label text="{i18n>SecondryMobileNo}"/>
                 <Input type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 <Label text="{i18n>AgeGroup}"/>
-                <ComboBox items="{/MasterAgeGroupSet}" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'sap.ui.model.type.Integer', constraints:{  search: '^[0-9]{1}$' } }">
+                <ComboBox items="{/MasterAgeGroupSet}" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'sap.ui.model.type.Integer', constraints:{  search: '^[1-9]{1}$' } }">
                     <items>
                         <core:Item text="{AgeGroup}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>PreferredLanguage}"/>
-                <ComboBox required="false" items="{path:'/MasterLanguageSet'}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'sap.ui.model.type.Integer', constraints:{  minLength:1 } }">
+                <ComboBox required="false" items="{path:'/MasterLanguageSet'}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'sap.ui.model.type.Integer', constraints:{  search: '^[1-9]{1}$' } }">
                     <items>
                         <core:Item text="{Language}" key="{Id}"/>
                     </items>
@@ -27,13 +27,13 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>PrimaryDealer}"/>
-                <ComboBox items="{/DealerSet}" required="true" selectedKey="{path:'oModelView>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                <ComboBox id="cmbxPDlr" items="{/DealerSet}" required="true" selectedKey="{path:'oModelView>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <Label text="{i18n>SecondryLinkDealer}"/>
-                <MultiComboBox items="{/DealerSet}" selectedKeys="{path:'oModelView>/PainterAddDet/SecondryDealer'}">
+                <Label text="{i18n>SecondryPrimaryDealer}"/>
+                <MultiComboBox selectionChange="secDealerChanged" items="{/DealerSet}" selectedKeys="{path:'oModelView>/PainterAddDet/SecondryDealer'}">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}"/>
                     </items>
@@ -53,9 +53,9 @@
                         <core:Item text="{State}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <core:Title text="{i18n>SecurityQuestions}"/>
-                <Label text="{i18n>Questions}"/>
-                <ComboBox items="{/MasterSecurityQuestionSet}" valueStateText="Enter a valid value" required="true" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'sap.ui.model.type.Integer', constraints:{ search: '^[0-9]{1}$' } }">
+                <core:Title text="{i18n>SecurityQuestion}"/>
+                <Label text="{i18n>Question}"/>
+                <ComboBox required="true" items="{/MasterSecurityQuestionSet}" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'sap.ui.model.type.Integer', constraints:{ search: '^[1-9]{1,}$' } }">
                     <items>
                         <core:Item text="{Question}" key="{Id}"/>
                     </items>
@@ -70,13 +70,13 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>Experiences}"/>
-                <ComboBox required="true" items="{/MasterExperienceSet}" selectedKey="{path:'oModelView>/PainterSegmentation/PainterExperience',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                <ComboBox required="true" items="{/MasterExperienceSet}" selectedKey="{path:'oModelView>/PainterSegmentation/PainterExperience',type : 'sap.ui.model.type.Integer', constraints:{ search: '^[1-9]{1}$' } }">
                     <items>
                         <core:Item text="{Experience}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>SitePerMonth}"/>
-                <ComboBox items="{/MasterSitePerMonthSet}" selectedKey="{path:'oModelView>/PainterSegmentation/SitesPerMonth',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
+                <ComboBox items="{/MasterSitePerMonthSet}" selectedKey="{path:'oModelView>/PainterSegmentation/SitesPerMonth',type : 'sap.ui.model.type.Integer', constraints:{ search: '^[1-9]{1}$' } }">
                     <items>
                         <core:Item text="{SitePerMonth}" key="{Id}"/>
                     </items>
@@ -138,7 +138,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table width="auto" items="{path: 'oModelView>/PainterAssets', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table width="auto" items="{path: 'oModelView>/PainterAssets',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>

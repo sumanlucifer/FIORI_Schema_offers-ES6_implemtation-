@@ -103,9 +103,10 @@ sap.ui.define(
                 try {
                   oControlBinding = oControl.getBinding(aValidateProperties[i]);
                   oExternalValue = oControl.getProperty(aValidateProperties[i]);
-                  oInternalValue = oControlBinding
-                    .getType()
-                    .parseValue(oExternalValue, oControlBinding.sInternalType);
+                oInternalValue = oExternalValue
+                  //   oInternalValue = oControlBinding
+                //     .getType()
+                //     .parseValue(oExternalValue, oControlBinding.sInternalType);
 
                   //oControl.getProperty("editable") ||
 

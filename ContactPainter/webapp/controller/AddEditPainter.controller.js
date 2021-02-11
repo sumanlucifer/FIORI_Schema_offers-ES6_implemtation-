@@ -70,6 +70,7 @@ sap.ui.define(
 
           this._initData(sArgMode, sArgId);
         },
+
         _initData: function (mParMode, mKey) {
           var oViewModel = new JSONModel({
             sIctbTitle: mParMode == "add" ? "Add" : "Edit",
@@ -78,36 +79,36 @@ sap.ui.define(
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
             PainterDetails: {
-              Mobile: "9891761199",
-              AgeGroupId: 1,
-              Name: "Manik Saluja",
-              Email: "manik093@gmail.com",
-              DOB: new Date(),
+              Mobile: "",
+              AgeGroupId: "",
+              Name: "",
+              Email: "",
+              DOB: null,
             },
             Preference: {
               LanguageId: "",
-              SecurityQuestionId: 4,
-              SecurityAnswer: "Securtiy Answer",
+              SecurityQuestionId: "",
+              SecurityAnswer: "",
             },
             PainterAddDet: {
               SecondryDealer: [],
-              DealerId: 2,
-              StateKey: 1,
+              DealerId: "",
+              StateKey: "",
               Citykey: "",
-              TeamSizeKey: 1,
-              SMobile1: "98917611999",
+              TeamSizeKey: "",
+              SMobile1: "",
               DOB: "",
             },
             PainterAddress: {
-              AddressLine1: "AddressLine1",
-              City: "Pune",
-              State: "MH",
+              AddressLine1: "",
+              City: "",
+              State: "",
             },
             PainterSegmentation: {
               TeamSize: "",
-              PainterExperience: 3,
-              SitesPerMonth: 3,
-              Potential: "potential",
+              PainterExperience: "",
+              SitesPerMonth: "",
+              Potential: "",
             },
             SegmentationDetails: {
               TimeSize: "",
@@ -118,11 +119,11 @@ sap.ui.define(
             PainterFamily: [],
             PainterAssets: [],
             PainterBankDetails: {
-              AccountHolderName: "Account Holder Name",
-              AccountType: "Saving",
-              BankName: "Purvanchal Bank",
-              AccountNumber: "500095756765",
-              IfscCode: "IFSCCODE276576",
+              AccountHolderName: "",
+              AccountType: "",
+              BankName: "",
+              AccountNumber: "",
+              IfscCode: "",
             },
             PainterKycDetails: {
               KYCStatus: "",
@@ -160,25 +161,30 @@ sap.ui.define(
         },
         onPressSave: function () {
           var oValidator = new Validator();
-          var oVbox = this.getView().byId("SimpleFormChange480_12120Dual");
+          var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox);
-
+          if (bValidation) {
+            this._postDataToSave();
+          }
           console.log(bValidation);
-
+        },
+        _postDataToSave: function () {
           var oViewModel = this.getView().getModel("oModelView");
           var oPainterData = this._ReturnObjects(
             oViewModel.getProperty("/PainterDetails")
           );
 
           //Getting the Data for Preferrences
-          var oPreferrence =this._ReturnObjects(oViewModel.getProperty("/Preference"));
-          
+          var oPreferrence = this._ReturnObjects(
+            oViewModel.getProperty("/Preference")
+          );
+
           //Getting the additional contact information of the painter
           var SMobile1 = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile1"))
           );
           var aPainterSecContact = [];
-          if (SMobile1.trim !== "") {
+          if (SMobile1.trim() !== "") {
             aPainterSecContact.push({ Mobile: SMobile1 });
           }
 
@@ -186,9 +192,10 @@ sap.ui.define(
           var oPainterAddress = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddress"))
           );
-          var oPainterSeg = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterSegmentation"))
+          var oPainterSeg = this._ReturnObjects(
+            oViewModel.getProperty("/PainterSegmentation")
           );
+
           // Getting the Family Details
           var oPtrFamily = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterFamily"))
@@ -220,7 +227,7 @@ sap.ui.define(
               Id: parseInt(i),
             });
           }
-          oDealers.push({ Id: sPrimaryDealerId });
+          oDealers.push({ Id: parseInt(sPrimaryDealerId) });
 
           // creating the set for the banking details
           var oBankingPayload = JSON.parse(
@@ -244,10 +251,10 @@ sap.ui.define(
           var oData = this.getView().getModel();
           oData.create("/PainterSet", oPayload, {
             success: function () {
-              console.log("success");
+              MessageToast.show("Painter Sucessfully Created");
             },
-            error: function () {
-              console.log("error");
+            error: function (a,b,c) {
+              MessageBox.error("Unable to create a painter due to the server issues");
             },
           });
         },
@@ -313,6 +320,22 @@ sap.ui.define(
             oCity = oView.byId("cmbCity").getBinding("items");
             aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
             oCity.filter(aFilter);
+          }
+        },
+        secDealerChanged: function (oEvent) {
+          var oView = this.getView();
+          var sPkey = oView.byId("cmbxPDlr").getSelectedKey();
+          var mBox = oEvent.getSource();
+          var oItem = oEvent.getParameters()["changedItem"];
+          var sSKey = oItem.getProperty("key");
+          console.log(sPkey, sSKey);
+          if (sPkey == sSKey) {
+            mBox.removeSelectedItem(oItem);
+            mBox.removeSelectedItem(sSKey);
+            MessageToast.show(
+              oItem.getProperty("text") +
+                " is already selected in the Primary Dealer"
+            );
           }
         },
         onPressAddFamliy: function () {
