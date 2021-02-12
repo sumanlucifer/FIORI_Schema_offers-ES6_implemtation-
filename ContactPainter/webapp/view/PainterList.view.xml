@@ -54,7 +54,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table width="auto" items="{path: '/PainterSet'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table width="auto" items="{path: '/PainterSet', parameters:{$expand:'PainterAddress' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <ToolbarSpacer/>
@@ -77,8 +77,11 @@
                     <Column>
                         <Text text="{i18n>LinkDealer}"/>
                     </Column>
-                    <Column width="10%">
+                    <Column>
                         <Text text="{i18n>RegistrationDate}"/>
+                    </Column>
+                    <Column width="10%">
+                        <Text text="{i18n>Actions}"/>
                     </Column>
                 </columns>
 
@@ -90,7 +93,11 @@
                             <Text text="{Mobile}"/>
                             <Text text="{AgeGroupId}"/>
                             <Text text="{DealerId}"/>
-                            <Text text="{RegistrationDate}"/>
+                            <ObjectStatus text="{RegistrationStatus}" state="{= ${RegistrationStatus} === 'PENDING' ? 'Information' : 'Success' }"/>
+                            <HBox>
+                                <Button icon="sap-icon://edit" type="Transparent" press="onPressFDLSave"></Button>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>

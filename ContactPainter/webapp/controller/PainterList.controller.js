@@ -9,6 +9,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/Device",
+    "sap/ui/core/format/DateFormat",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -22,7 +23,8 @@ sap.ui.define(
     Filter,
     FilterOperator,
     Sorter,
-    Device
+    Device,
+    DateFormat
   ) {
     "use strict";
 
@@ -225,6 +227,13 @@ sap.ui.define(
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
+        fmtDate: function (mDate) {
+          var date = new Date(mDate);
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/yyyy",
+          });
+          return oDateFormat.format(date);
+        },
         onListItemPress: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           var sPath = oEvent
@@ -233,8 +242,7 @@ sap.ui.define(
             .getPath()
             .substr(1);
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteProfile", {
-          });
+          oRouter.navTo("RouteProfile", {});
         },
         onPressEditPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
