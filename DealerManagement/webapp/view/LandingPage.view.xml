@@ -43,7 +43,7 @@
                                 <fb:control>
                                     <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
-                                            <core:Item text="{Mobile}" />
+                                            <core:Item text="{CustomerCategory}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
@@ -52,7 +52,7 @@
                                 <fb:control>
                                     <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
-                                            <core:Item text="{RegistrationStatus}" />
+                                            <core:Item text="{Depot}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
