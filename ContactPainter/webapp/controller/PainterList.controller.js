@@ -42,6 +42,7 @@ sap.ui.define(
           console.log("Painter List Loaded");
           this.getView().getModel().resetChanges();
           this._initData();
+          this._addSearchFieldAssociationToFB();
         },
         _initData: function () {
           var oViewModel = new JSONModel({
@@ -57,16 +58,14 @@ sap.ui.define(
               CreatedAt: "",
               RegistrationStatus: "",
             },
-            searchBar:""
+            searchBar: "",
           });
           this.setModel(oViewModel, "oModelView");
           this.getView().getModel().refresh();
           this._fiterBarSort();
           //this._FilterInit();
         },
-        _fiterBarSort: function () {
-          
-        },
+        _fiterBarSort: function () {},
         _FilterInit: function () {
           this._ResetFilterBar();
         },
@@ -123,9 +122,9 @@ sap.ui.define(
           var aResetProp = {
             AgrGroup: "",
             CreatedAt: "",
-            RegistrationStatus: ""
+            RegistrationStatus: "",
           };
-          var oViewModel = this.getView().getModel("oModelView")
+          var oViewModel = this.getView().getModel("oModelView");
           oViewModel.setProperty("/filterBar", aResetProp);
           oViewModel.setProperty("/searchBar", "");
 
@@ -173,6 +172,35 @@ sap.ui.define(
           oSearchField.getBinding("suggestionItems").filter(aFilters);
           oSearchField.suggest();
         },
+        _addSearchFieldAssociationToFB: function () {
+          let oFilterBar = this.getView().byId("filterbar");
+          let oSearchField = oFilterBar.getBasicSearch();
+          var oBasicSearch;
+          var othat =this;
+          if (!oSearchField) {
+            // @ts-ignore
+            oBasicSearch = new sap.m.SearchField({
+              id: "idSearch",
+              value:"{oModelView>/searchBar}",
+              showSearchButton: true,
+              search:othat.onSearch.bind(othat)
+            });
+          } else {
+            oSearchField = null;
+          }
+
+          oFilterBar.setBasicSearch(oBasicSearch);
+
+          oBasicSearch.attachBrowserEvent(
+            "keyup",
+            function (e) {
+              if (e.which === 13) {
+                this.onSearch();
+              }
+            }.bind(this)
+          );
+        },
+
         onSearch: function (oEvent) {
           var aFilters = [];
           var endFilter;
@@ -188,7 +216,7 @@ sap.ui.define(
           }
 
           // update list binding
-          var oTable = this.byId("idPainterTable");
+          var oTable = this.getView().byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter(endFilter);
         },

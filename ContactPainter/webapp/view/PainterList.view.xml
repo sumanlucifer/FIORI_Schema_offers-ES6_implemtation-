@@ -12,20 +12,16 @@
                 <f:content>
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
                                 <fb:control>
                                     <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
                                             				path: '/PainterSet'
                                             			}">
                                         <SuggestionItem text="{Name}"/>
                                     </SearchField>
-                                    <!-- <Input id="idNameInput" value="{oModelView>/filterBar/Name}" submit="onFilter" placeholder="Name" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
-                                                                            <suggestionItems>
-                                                                                <core:Item text="{Name}"/>
-                                                                            </suggestionItems>
-                                                                        </Input> -->
+                                    
                                 </fb:control>
-                            </fb:FilterGroupItem>
+                            </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox id="cmbxAgeGrp" items="{path:'/PainterSet', parameters:{expand:'AgeGroup' }}" selectedKey="{oModelView>/filterBar/AgeGroup}">
