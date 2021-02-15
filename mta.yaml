@@ -62,6 +62,10 @@ modules:
       - Training-content.zip
       name: Training
       target-path: resources/
+    - artifacts:
+      - Catelogue-content.zip
+      name: Catelogue
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -142,14 +146,22 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: Catelogue
+  type: html5
+  path: Catelogue
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-plan: application
     service-name: knpl-pragati-uaa
+    service-plan: application
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
   parameters:
