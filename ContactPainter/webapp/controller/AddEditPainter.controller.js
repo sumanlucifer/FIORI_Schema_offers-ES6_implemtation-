@@ -484,7 +484,7 @@ sap.ui.define(
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              Id: "",
+              AssetType: "",
               AssetName: "",
               editable: true,
             });
