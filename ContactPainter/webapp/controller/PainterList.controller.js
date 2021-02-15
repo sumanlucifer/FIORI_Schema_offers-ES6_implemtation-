@@ -53,15 +53,19 @@ sap.ui.define(
             prop1: "",
             busy: false,
             filterBar: {
-              Name: "",
-              Email: "",
-              Mobile: "",
+              AgrGroup: "",
+              CreatedAt: "",
               RegistrationStatus: "",
             },
+            searchBar:""
           });
           this.setModel(oViewModel, "oModelView");
           this.getView().getModel().refresh();
-          this._FilterInit();
+          this._fiterBarSort();
+          //this._FilterInit();
+        },
+        _fiterBarSort: function () {
+          
         },
         _FilterInit: function () {
           this._ResetFilterBar();
@@ -75,10 +79,27 @@ sap.ui.define(
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop].trim() !== "") {
-              aFlaEmpty = false;
-              aCurrentFilterValues.push(
-                new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
-              );
+              console.log(oViewFilter[prop]);
+              if (prop === "AgeGroup") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "AgeGroup/AgeGroup",
+                    FilterOperator.Contains,
+                    oViewFilter[prop]
+                  )
+                );
+              } else if (prop === "CreatedAt") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                );
+              } else {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
+                );
+              }
             }
           }
 
@@ -86,7 +107,7 @@ sap.ui.define(
             filters: aCurrentFilterValues,
             and: true,
           });
-          var oTable = this.byId("idPainterTable");
+          var oTable = this.getView().byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           if (!aFlaEmpty) {
             oBinding.filter(endFilter);
@@ -100,14 +121,14 @@ sap.ui.define(
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
-            Name: "",
-            Email: "",
-            Mobile: "",
-            RegistrationStatus: "",
+            AgrGroup: "",
+            CreatedAt: "",
+            RegistrationStatus: ""
           };
-          var oViewFilter = this.getView()
-            .getModel("oModelView")
-            .setProperty("/filterBar", aResetProp);
+          var oViewModel = this.getView().getModel("oModelView")
+          oViewModel.setProperty("/filterBar", aResetProp);
+          oViewModel.setProperty("/searchBar", "");
+
           //   for (let prop in aResetProp) {
           //     aCurrentFilterValues.push(
           //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
@@ -158,11 +179,11 @@ sap.ui.define(
           var sQuery = oEvent.getSource().getValue();
           if (sQuery && sQuery.length > 0) {
             var filter1 = new Filter("Name", FilterOperator.Contains, sQuery);
-            var filter2 = new Filter("Email", FilterOperator.Contains, sQuery);
-            var filtes3 = new Filter("Mobile", FilterOperator.Contains, sQuery);
+            //var filter2 = new Filter("Email", FilterOperator.Contains, sQuery);
+            //var filtes3 = new Filter("Mobile", FilterOperator.Contains, sQuery);
             aFilters.push(filter1);
-            aFilters.push(filter2);
-            aFilters.push(filtes3);
+            //aFilters.push(filter2);
+            //aFilters.push(filtes3);
             endFilter = new Filter({ filters: aFilters, and: false });
           }
 

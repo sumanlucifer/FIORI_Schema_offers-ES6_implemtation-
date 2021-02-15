@@ -171,14 +171,15 @@ sap.ui.define(
           var bValidation = oValidator.validate(oVbox);
           var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
           var dTbleAssets = !oModel.getProperty("/EditTb2AST");
-          if (dTbleAssets == false) {
-            MessageToast.show(
-              "Kindly save the details in the 'Asset Details' table to continue."
-            );
-          }
+
           if (cTbleFamily == false) {
             MessageToast.show(
               "Kindly save the details in the 'Family Details' table to continue."
+            );
+          }
+          if (dTbleAssets == false) {
+            MessageToast.show(
+              "Kindly save the details in the 'Asset Details' table to continue."
             );
           }
           if (bValidation && cTbleFamily && dTbleAssets) {
@@ -227,6 +228,7 @@ sap.ui.define(
             JSON.stringify(oViewModel.getProperty("/PainterAssets"))
           ).map((item) => {
             delete item.editable;
+            //delete item.Id;
             return item;
           });
 

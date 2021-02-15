@@ -5,10 +5,11 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="{i18n>Name}" key="Name" />
-			<ViewSettingsItem text="{i18n>Email}" key="Email" />
-            <ViewSettingsItem text="{i18n>Mobile}" key="Mobile" />
+			<ViewSettingsItem text="{i18n>PainterId}" key="Id" />
+            <ViewSettingsItem text="{i18n>PrimaryMobile}" key="Mobile" />
+            <ViewSettingsItem text="{i18n>AgeGroup}" key="AgeGroup/AgeGroup" />
             <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
-            <ViewSettingsItem text="{i18n>LastUpdated}" key="UpdatedAt" selected="true" />
+            <ViewSettingsItem text="{i18n>RegistrationDate}" key="CreatedAt" selected="true" />
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>
