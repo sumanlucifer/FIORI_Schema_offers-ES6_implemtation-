@@ -6,16 +6,16 @@
                 <Label text="{i18n>DateOfJoining}"/>
                 <DatePicker dateValue="{path:'oModelView>/PainterDetails/DOB'}" id="dpicker" placeholder="DD/MM/YYYY" value="{path:'oModelView>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" required="true"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
-                <Input required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:12, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Input required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10, search: '^[0-9]*$' } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
                 <VBox>
                     <Input type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
 
                     <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input  visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                    <Input visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 </VBox>
-               
+
                 <Label text="{i18n>AgeGroup}"/>
                 <ComboBox items="{/MasterAgeGroupSet}" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
@@ -171,7 +171,7 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <ComboBox items="{/MasterAssetTypeSet}" editable="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>Id',type : 'com.knpl.pragati.ContactPainter.model.customInt'}" required="true">
+                            <ComboBox items="{/MasterAssetTypeSet}" editable="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetType',type : 'sap.ui.mode.type.String',constraints:{minLength:1}}" required="true">
                                 <items>
                                     <core:Item text="{AssetType}" key="{Id}"/>
 

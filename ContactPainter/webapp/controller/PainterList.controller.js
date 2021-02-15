@@ -343,7 +343,8 @@ sap.ui.define(
           oData.update(
             sPath,
             {
-              IsArchived: "true",
+              "Id":parseInt(oBject["Id"]),
+              "IsArchived": true
             },
             {
               success: function (mData) {
