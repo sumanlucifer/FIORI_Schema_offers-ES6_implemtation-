@@ -81,6 +81,7 @@ sap.ui.define(
             edit: mParMode == "add" ? false : true,
             EditTb1FDL: false,
             EditTb2AST: false,
+            AnotherMobField:false,
             PainterDetails: {
               Mobile: "",
               AgeGroupId: "",
@@ -100,6 +101,7 @@ sap.ui.define(
               Citykey: "",
               TeamSizeKey: "",
               SMobile1: "",
+              SMobile2: "",
               DOB: "",
               AccountTypeKey: "",
               BankNameKey: "",
@@ -202,9 +204,15 @@ sap.ui.define(
           var SMobile1 = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile1"))
           );
+          var SMobile2 = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile2"))
+          );
           var aPainterSecContact = [];
           if (SMobile1.trim() !== "") {
             aPainterSecContact.push({ Mobile: SMobile1 });
+          }
+          if (SMobile2.trim() !== "") {
+            aPainterSecContact.push({ Mobile: SMobile2 });
           }
 
           //Getting the data for the PainterAddress
@@ -332,6 +340,9 @@ sap.ui.define(
           // }
 
           return this._formFragments;
+        },
+        onSecMobLinkPress:function(){
+            this.getView().getModel("oModelView").setProperty("/AnotherMobField",true)
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey() + "";
