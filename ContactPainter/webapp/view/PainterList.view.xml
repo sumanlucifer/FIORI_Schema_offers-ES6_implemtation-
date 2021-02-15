@@ -73,7 +73,7 @@
                         <Text text="{i18n>AgeGroup}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>PrimaryDealer}"/>
+                        <Text text="{i18n>LinkPrimaryDealer}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>RegistrationDate}"/>

@@ -9,7 +9,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/Device",
-    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/DateFormat"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,7 +24,8 @@ sap.ui.define(
     FilterOperator,
     Sorter,
     Device,
-    DateFormat
+    DateFormat,
+
   ) {
     "use strict";
 
@@ -59,13 +60,26 @@ sap.ui.define(
               RegistrationStatus: "",
             },
             searchBar: "",
+            SortSettings:true
           });
           this.setModel(oViewModel, "oModelView");
           this.getView().getModel().refresh();
           this._fiterBarSort();
-          //this._FilterInit();
+          this._FilterInit();
+          
         },
-        _fiterBarSort: function () {},
+        _fiterBarSort: function () {
+             if (this._ViewSortDialog) {
+                 var oDialog = this.getView().byId("viewSetting")
+                oDialog.setSortDescending(true);
+                oDialog.setSelectedSortItem("CreatedAt");
+                var otable = this.getView().byId("idPainterTable");
+                var oSorter = new Sorter({path:'CreatedAt',descending:true})
+                otable.getBinding("items").sort(oSorter)
+
+             }
+        },
+
         _FilterInit: function () {
           this._ResetFilterBar();
         },
@@ -180,7 +194,6 @@ sap.ui.define(
           if (!oSearchField) {
             // @ts-ignore
             oBasicSearch = new sap.m.SearchField({
-              id: "idSearch",
               value:"{oModelView>/searchBar}",
               showSearchButton: true,
               search:othat.onSearch.bind(othat)
@@ -191,14 +204,14 @@ sap.ui.define(
 
           oFilterBar.setBasicSearch(oBasicSearch);
 
-          oBasicSearch.attachBrowserEvent(
-            "keyup",
-            function (e) {
-              if (e.which === 13) {
-                this.onSearch();
-              }
-            }.bind(this)
-          );
+        //   oBasicSearch.attachBrowserEvent(
+        //     "keyup",
+        //     function (e) {
+        //       if (e.which === 13) {
+        //         this.onSearch();
+        //       }
+        //     }.bind(this)
+        //   );
         },
 
         onSearch: function (oEvent) {
