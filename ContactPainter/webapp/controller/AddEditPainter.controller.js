@@ -16,6 +16,7 @@ sap.ui.define(
     "sap/ui/model/type/Date",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "com/knpl/pragati/ContactPainter/model/customInt",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -67,10 +68,10 @@ sap.ui.define(
           var sArgId = window.decodeURIComponent(
             oEvent.getParameter("arguments").id
           );
-
+          this._GetServiceData();
           this._initData(sArgMode, sArgId);
         },
-
+        _GetServiceData: function () {},
         _initData: function (mParMode, mKey) {
           var oViewModel = new JSONModel({
             sIctbTitle: mParMode == "add" ? "Add" : "Edit",
@@ -78,6 +79,9 @@ sap.ui.define(
             mPainterKey: mKey,
             mode: mParMode,
             edit: mParMode == "add" ? false : true,
+            EditTb1FDL: false,
+            EditTb2AST: false,
+            AnotherMobField:false,
             PainterDetails: {
               Mobile: "",
               AgeGroupId: "",
@@ -97,7 +101,10 @@ sap.ui.define(
               Citykey: "",
               TeamSizeKey: "",
               SMobile1: "",
+              SMobile2: "",
               DOB: "",
+              AccountTypeKey: "",
+              BankNameKey: "",
             },
             PainterAddress: {
               AddressLine1: "",
@@ -160,10 +167,24 @@ sap.ui.define(
           //used to intialize the message class for displaying the messages
         },
         onPressSave: function () {
+          var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox);
-          if (bValidation) {
+          var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
+          var dTbleAssets = !oModel.getProperty("/EditTb2AST");
+
+          if (cTbleFamily == false) {
+            MessageToast.show(
+              "Kindly save the details in the 'Family Details' table to continue."
+            );
+          }
+          if (dTbleAssets == false) {
+            MessageToast.show(
+              "Kindly save the details in the 'Asset Details' table to continue."
+            );
+          }
+          if (bValidation && cTbleFamily && dTbleAssets) {
             this._postDataToSave();
           }
           console.log(bValidation);
@@ -183,9 +204,15 @@ sap.ui.define(
           var SMobile1 = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile1"))
           );
+          var SMobile2 = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAddDet/SMobile2"))
+          );
           var aPainterSecContact = [];
           if (SMobile1.trim() !== "") {
             aPainterSecContact.push({ Mobile: SMobile1 });
+          }
+          if (SMobile2.trim() !== "") {
+            aPainterSecContact.push({ Mobile: SMobile2 });
           }
 
           //Getting the data for the PainterAddress
@@ -209,6 +236,7 @@ sap.ui.define(
             JSON.stringify(oViewModel.getProperty("/PainterAssets"))
           ).map((item) => {
             delete item.editable;
+            //delete item.Id;
             return item;
           });
 
@@ -253,8 +281,13 @@ sap.ui.define(
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
             },
-            error: function (a,b,c) {
-              MessageBox.error("Unable to create a painter due to the server issues");
+            error: function (a) {
+              MessageBox.error(
+                "Unable to create a painter due to the server issues",
+                {
+                  title: "Error Code: " + a.statusCode,
+                }
+              );
             },
           });
         },
@@ -308,6 +341,9 @@ sap.ui.define(
 
           return this._formFragments;
         },
+        onSecMobLinkPress:function(){
+            this.getView().getModel("oModelView").setProperty("/AnotherMobField",true)
+        },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey() + "";
           var oCity,
@@ -328,7 +364,6 @@ sap.ui.define(
           var mBox = oEvent.getSource();
           var oItem = oEvent.getParameters()["changedItem"];
           var sSKey = oItem.getProperty("key");
-          console.log(sPkey, sSKey);
           if (sPkey == sSKey) {
             mBox.removeSelectedItem(oItem);
             mBox.removeSelectedItem(sSKey);
@@ -340,13 +375,29 @@ sap.ui.define(
         },
         onPressAddFamliy: function () {
           var oModel = this.getView().getModel("oModelView");
-          oModel.getProperty("/PainterFamily").push({
-            RelationshipId: null,
-            Mobile: "",
-            Name: "",
-            editable: true,
-          });
-          oModel.refresh();
+          var oFamiDtlMdl = oModel.getProperty("/PainterFamily");
+          var bFlag = true;
+          if (oFamiDtlMdl.length > 0) {
+            for (var prop of oFamiDtlMdl) {
+              if (prop["editable"] == true) {
+                bFlag = false;
+                MessageToast.show(
+                  "Save or delete the existing data in the table before adding a new data."
+                );
+                break;
+              }
+            }
+          }
+          if (bFlag == true) {
+            oFamiDtlMdl.push({
+              RelationshipId: "",
+              Mobile: "",
+              Name: "",
+              editable: true,
+            });
+            oModel.setProperty("/EditTb1FDL", true);
+            oModel.refresh();
+          }
         },
         onPressEditRel: function (oEvent) {
           var oView = this.getView();
@@ -356,7 +407,9 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getObject();
           oObject["editable"] = true;
+
           oModel.refresh();
+          this._setFDLTbleFlag();
         },
         onPressFDLSave: function (oEvent) {
           var oView = this.getView();
@@ -365,9 +418,22 @@ sap.ui.define(
             .getSource()
             .getBindingContext("oModelView")
             .getObject();
-          oObject["editable"] = false;
-          oModel.refresh();
-          console.log(oModel);
+          var bFlag = true;
+          for (var abc in oObject) {
+            if (oObject[abc] == "") {
+              bFlag = false;
+              MessageToast.show(
+                "Kindly enter the complete deatils before saving."
+              );
+              break;
+            }
+          }
+
+          if (bFlag == true) {
+            oObject["editable"] = false;
+            oModel.refresh();
+          }
+          this._setFDLTbleFlag();
         },
         onPressRemoveRel: function (oEvent) {
           var oView = this.getView();
@@ -379,8 +445,52 @@ sap.ui.define(
             .split("/");
           var aFamilyDetails = oModel.getProperty("/PainterFamily");
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+          this._setFDLTbleFlag();
           oModel.refresh();
-          console.log(sPath);
+        },
+        _setFDLTbleFlag() {
+          var oModel = this.getView().getModel("oModelView");
+          var oFamiDtlMdl = oModel.getProperty("/PainterFamily");
+          var bFlag = true;
+          if (oFamiDtlMdl.length > 0) {
+            for (var prop of oFamiDtlMdl) {
+              if (prop["editable"] == true) {
+                bFlag = false;
+                break;
+              }
+            }
+          }
+          if (bFlag === false) {
+            oModel.setProperty("/EditTb1FDL", true);
+          } else {
+            oModel.setProperty("/EditTb1FDL", false);
+          }
+        },
+
+        onPressAdAsset: function () {
+          var oModel = this.getView().getModel("oModelView");
+          var oFamiDtlMdl = oModel.getProperty("/PainterAssets");
+          var bFlag = true;
+          if (oFamiDtlMdl.length > 0) {
+            for (var prop of oFamiDtlMdl) {
+              if (prop["editable"] == true) {
+                bFlag = false;
+                MessageToast.show(
+                  "Save or delete the existing data in the 'Asset Details' table before adding a new data."
+                );
+                break;
+              }
+            }
+          }
+          if (bFlag == true) {
+            oFamiDtlMdl.push({
+              Id: "",
+              AssetName: "",
+              editable: true,
+            });
+            oModel.setProperty("/EditTb2AST", true);
+            oModel.refresh();
+          }
         },
         onAssetEdit: function (oEvent) {
           var oView = this.getView();
@@ -390,17 +500,9 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getObject();
           oObject["editable"] = true;
+
           oModel.refresh();
-        },
-        onPressAdAsset: function () {
-          console.log("asset");
-          var oModel = this.getView().getModel("oModelView");
-          oModel.getProperty("/PainterAssets").push({
-            Id: "",
-            AssetName: "",
-            editable: true,
-          });
-          oModel.refresh();
+          this._setASTTbleFlag();
         },
         onAsetSave: function (oEvent) {
           var oView = this.getView();
@@ -409,8 +511,22 @@ sap.ui.define(
             .getSource()
             .getBindingContext("oModelView")
             .getObject();
-          oObject["editable"] = false;
-          oModel.refresh();
+          var bFlag = true;
+          for (var abc in oObject) {
+            if (oObject[abc] == "") {
+              bFlag = false;
+              MessageToast.show(
+                "Kindly enter the complete deatils before saving."
+              );
+              break;
+            }
+          }
+
+          if (bFlag == true) {
+            oObject["editable"] = false;
+            oModel.refresh();
+          }
+          this._setASTTbleFlag();
         },
 
         onPressRemoveAsset: function (oEvent) {
@@ -423,8 +539,26 @@ sap.ui.define(
             .split("/");
           var aFamilyDetails = oModel.getProperty("/PainterAssets");
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+          this._setASTTbleFlag();
           oModel.refresh();
-          console.log(sPath);
+        },
+        _setASTTbleFlag: function () {
+          var oModel = this.getView().getModel("oModelView");
+          var oFamiDtlMdl = oModel.getProperty("/PainterAssets");
+          var bFlag = true;
+          if (oFamiDtlMdl.length > 0) {
+            for (var prop of oFamiDtlMdl) {
+              if (prop["editable"] == true) {
+                bFlag = false;
+                break;
+              }
+            }
+          }
+          if (bFlag === false) {
+            oModel.setProperty("/EditTb2AST", true);
+          } else {
+            oModel.setProperty("/EditTb2AST", false);
+          }
         },
         // myFactory: function (sId, oContext) {
         //   var sEdit = oContext.getModel().getProperty("/mode");

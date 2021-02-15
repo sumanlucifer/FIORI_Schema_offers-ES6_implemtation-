@@ -9,7 +9,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/Device",
-    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/DateFormat"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,7 +24,8 @@ sap.ui.define(
     FilterOperator,
     Sorter,
     Device,
-    DateFormat
+    DateFormat,
+
   ) {
     "use strict";
 
@@ -42,6 +43,7 @@ sap.ui.define(
           console.log("Painter List Loaded");
           this.getView().getModel().resetChanges();
           this._initData();
+          this._addSearchFieldAssociationToFB();
         },
         _initData: function () {
           var oViewModel = new JSONModel({
@@ -53,16 +55,31 @@ sap.ui.define(
             prop1: "",
             busy: false,
             filterBar: {
-              Name: "",
-              Email: "",
-              Mobile: "",
+              AgrGroup: "",
+              CreatedAt: "",
               RegistrationStatus: "",
             },
+            searchBar: "",
+            SortSettings:true
           });
           this.setModel(oViewModel, "oModelView");
           this.getView().getModel().refresh();
+          this._fiterBarSort();
           this._FilterInit();
+          
         },
+        _fiterBarSort: function () {
+             if (this._ViewSortDialog) {
+                 var oDialog = this.getView().byId("viewSetting")
+                oDialog.setSortDescending(true);
+                oDialog.setSelectedSortItem("CreatedAt");
+                var otable = this.getView().byId("idPainterTable");
+                var oSorter = new Sorter({path:'CreatedAt',descending:true})
+                otable.getBinding("items").sort(oSorter)
+
+             }
+        },
+
         _FilterInit: function () {
           this._ResetFilterBar();
         },
@@ -75,10 +92,27 @@ sap.ui.define(
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop].trim() !== "") {
-              aFlaEmpty = false;
-              aCurrentFilterValues.push(
-                new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
-              );
+              console.log(oViewFilter[prop]);
+              if (prop === "AgeGroup") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "AgeGroup/AgeGroup",
+                    FilterOperator.Contains,
+                    oViewFilter[prop]
+                  )
+                );
+              } else if (prop === "CreatedAt") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                );
+              } else {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
+                );
+              }
             }
           }
 
@@ -86,7 +120,7 @@ sap.ui.define(
             filters: aCurrentFilterValues,
             and: true,
           });
-          var oTable = this.byId("idPainterTable");
+          var oTable = this.getView().byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           if (!aFlaEmpty) {
             oBinding.filter(endFilter);
@@ -100,14 +134,14 @@ sap.ui.define(
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
-            Name: "",
-            Email: "",
-            Mobile: "",
+            AgrGroup: "",
+            CreatedAt: "",
             RegistrationStatus: "",
           };
-          var oViewFilter = this.getView()
-            .getModel("oModelView")
-            .setProperty("/filterBar", aResetProp);
+          var oViewModel = this.getView().getModel("oModelView");
+          oViewModel.setProperty("/filterBar", aResetProp);
+          oViewModel.setProperty("/searchBar", "");
+
           //   for (let prop in aResetProp) {
           //     aCurrentFilterValues.push(
           //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
@@ -152,22 +186,50 @@ sap.ui.define(
           oSearchField.getBinding("suggestionItems").filter(aFilters);
           oSearchField.suggest();
         },
+        _addSearchFieldAssociationToFB: function () {
+          let oFilterBar = this.getView().byId("filterbar");
+          let oSearchField = oFilterBar.getBasicSearch();
+          var oBasicSearch;
+          var othat =this;
+          if (!oSearchField) {
+            // @ts-ignore
+            oBasicSearch = new sap.m.SearchField({
+              value:"{oModelView>/searchBar}",
+              showSearchButton: true,
+              search:othat.onSearch.bind(othat)
+            });
+          } else {
+            oSearchField = null;
+          }
+
+          oFilterBar.setBasicSearch(oBasicSearch);
+
+        //   oBasicSearch.attachBrowserEvent(
+        //     "keyup",
+        //     function (e) {
+        //       if (e.which === 13) {
+        //         this.onSearch();
+        //       }
+        //     }.bind(this)
+        //   );
+        },
+
         onSearch: function (oEvent) {
           var aFilters = [];
           var endFilter;
           var sQuery = oEvent.getSource().getValue();
           if (sQuery && sQuery.length > 0) {
             var filter1 = new Filter("Name", FilterOperator.Contains, sQuery);
-            var filter2 = new Filter("Email", FilterOperator.Contains, sQuery);
-            var filtes3 = new Filter("Mobile", FilterOperator.Contains, sQuery);
+            //var filter2 = new Filter("Email", FilterOperator.Contains, sQuery);
+            //var filtes3 = new Filter("Mobile", FilterOperator.Contains, sQuery);
             aFilters.push(filter1);
-            aFilters.push(filter2);
-            aFilters.push(filtes3);
+            //aFilters.push(filter2);
+            //aFilters.push(filtes3);
             endFilter = new Filter({ filters: aFilters, and: false });
           }
 
           // update list binding
-          var oTable = this.byId("idPainterTable");
+          var oTable = this.getView().byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter(endFilter);
         },
