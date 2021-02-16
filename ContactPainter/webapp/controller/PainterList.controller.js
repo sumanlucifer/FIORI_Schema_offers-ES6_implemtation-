@@ -9,7 +9,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/ui/Device",
-    "sap/ui/core/format/DateFormat"
+    "sap/ui/core/format/DateFormat",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,8 +24,7 @@ sap.ui.define(
     FilterOperator,
     Sorter,
     Device,
-    DateFormat,
-
+    DateFormat
   ) {
     "use strict";
 
@@ -39,8 +38,9 @@ sap.ui.define(
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
         },
-        _onRouteMatched: function () {
+        _onRouteMatched: function (oEvent) {
           console.log("Painter List Loaded");
+
           this.getView().getModel().resetChanges();
           this._initData();
           this._addSearchFieldAssociationToFB();
@@ -55,29 +55,28 @@ sap.ui.define(
             prop1: "",
             busy: false,
             filterBar: {
-              AgrGroup: "",
+              AgeGroupId: "",
               CreatedAt: "",
               RegistrationStatus: "",
+              Name: "",
             },
-            searchBar: "",
-            SortSettings:true
+
+            SortSettings: true,
           });
           this.setModel(oViewModel, "oModelView");
           this.getView().getModel().refresh();
           this._fiterBarSort();
           this._FilterInit();
-          
         },
         _fiterBarSort: function () {
-             if (this._ViewSortDialog) {
-                 var oDialog = this.getView().byId("viewSetting")
-                oDialog.setSortDescending(true);
-                oDialog.setSelectedSortItem("CreatedAt");
-                var otable = this.getView().byId("idPainterTable");
-                var oSorter = new Sorter({path:'CreatedAt',descending:true})
-                otable.getBinding("items").sort(oSorter)
-
-             }
+          if (this._ViewSortDialog) {
+            var oDialog = this.getView().byId("viewSetting");
+            oDialog.setSortDescending(true);
+            oDialog.setSelectedSortItem("CreatedAt");
+            var otable = this.getView().byId("idPainterTable");
+            var oSorter = new Sorter({ path: "CreatedAt", descending: true });
+            otable.getBinding("items").sort(oSorter);
+          }
         },
 
         _FilterInit: function () {
@@ -93,12 +92,12 @@ sap.ui.define(
           for (let prop in oViewFilter) {
             if (oViewFilter[prop].trim() !== "") {
               console.log(oViewFilter[prop]);
-              if (prop === "AgeGroup") {
+              if (prop === "AgeGroupId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
-                    "AgeGroup/AgeGroup",
-                    FilterOperator.Contains,
+                    "AgeGroupId",
+                    FilterOperator.EQ,
                     oViewFilter[prop]
                   )
                 );
@@ -134,13 +133,14 @@ sap.ui.define(
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
-            AgrGroup: "",
+            AgeGroupId: "",
             CreatedAt: "",
             RegistrationStatus: "",
+            searchBar: ""
           };
           var oViewModel = this.getView().getModel("oModelView");
           oViewModel.setProperty("/filterBar", aResetProp);
-          oViewModel.setProperty("/searchBar", "");
+          //oViewModel.setProperty("/searchBar", "");
 
           //   for (let prop in aResetProp) {
           //     aCurrentFilterValues.push(
@@ -190,13 +190,13 @@ sap.ui.define(
           let oFilterBar = this.getView().byId("filterbar");
           let oSearchField = oFilterBar.getBasicSearch();
           var oBasicSearch;
-          var othat =this;
+          var othat = this;
           if (!oSearchField) {
             // @ts-ignore
             oBasicSearch = new sap.m.SearchField({
-              value:"{oModelView>/searchBar}",
+              value: "{oModelView>/filterBar/Name}",
               showSearchButton: true,
-              search:othat.onSearch.bind(othat)
+              search: othat.onFilter.bind(othat),
             });
           } else {
             oSearchField = null;
@@ -204,14 +204,14 @@ sap.ui.define(
 
           oFilterBar.setBasicSearch(oBasicSearch);
 
-        //   oBasicSearch.attachBrowserEvent(
-        //     "keyup",
-        //     function (e) {
-        //       if (e.which === 13) {
-        //         this.onSearch();
-        //       }
-        //     }.bind(this)
-        //   );
+          //   oBasicSearch.attachBrowserEvent(
+          //     "keyup",
+          //     function (e) {
+          //       if (e.which === 13) {
+          //         this.onSearch();
+          //       }
+          //     }.bind(this)
+          //   );
         },
 
         onSearch: function (oEvent) {
@@ -303,8 +303,12 @@ sap.ui.define(
             .getBindingContext()
             .getPath()
             .substr(1);
+          console.log(sPath);
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteProfile", {});
+          oRouter.navTo("RouteProfile", {
+            mode: "edit",
+            prop: window.encodeURIComponent(sPath),
+          });
         },
         onPressEditPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
@@ -313,10 +317,12 @@ sap.ui.define(
             .getBindingContext()
             .getPath()
             .substr(1);
+          console.log(sPath);
+
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteAddEditP", {
+          oRouter.navTo("RouteProfile", {
             mode: "edit",
-            id: window.encodeURIComponent(sPath),
+            prop: window.encodeURIComponent(sPath),
           });
         },
         onDeactivate: function (oEvent) {
@@ -343,8 +349,8 @@ sap.ui.define(
           oData.update(
             sPath,
             {
-              "Id":parseInt(oBject["Id"]),
-              "IsArchived": true
+              Id: parseInt(oBject["Id"]),
+              IsArchived: true,
             },
             {
               success: function (mData) {

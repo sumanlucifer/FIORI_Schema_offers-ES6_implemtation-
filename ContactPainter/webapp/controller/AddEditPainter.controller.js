@@ -57,9 +57,7 @@ sap.ui.define(
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
 
-          oRouter
-            .getRoute("RouteAddEditP")
-            .attachMatched(this._onRouteMatched, this);
+          oRouter.getRoute("RouteAddEditP").attachMatched(this._onRouteMatched, this);
           this._ValueState = library.ValueState;
           this._MessageType = library.MessageType;
         },
@@ -182,6 +180,11 @@ sap.ui.define(
           if (dTbleAssets == false) {
             MessageToast.show(
               "Kindly save the details in the 'Asset Details' table to continue."
+            );
+          }
+           if (bValidation == false) {
+            MessageToast.show(
+              "Kindly input all the mandatory(*) fields to continue."
             );
           }
           if (bValidation && cTbleFamily && dTbleAssets) {
@@ -357,6 +360,27 @@ sap.ui.define(
             aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
             oCity.filter(aFilter);
           }
+        },
+        onLinkPrimryChange:function(oEvent){
+            var oSource = oEvent.getSource();
+            var sSkey = oSource.getSelectedKey();
+            var sItem = oSource.getSelectedItem();
+            var oView = this.getView();
+            var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
+            var sFlag=true;
+            for(var i of mCmbx){
+                if(parseInt(i)==parseInt(sSkey)){
+                    sFlag=false;
+                }
+            }
+            if(!sFlag){
+                oSource.clearSelection();
+                //oSource.setValue("");
+                MessageToast.show("Kindly select a different dealer as its already selected as secondry dealer.");
+                
+            }
+            console.log(oSource.getSelectedKey())
+            
         },
         secDealerChanged: function (oEvent) {
           var oView = this.getView();
