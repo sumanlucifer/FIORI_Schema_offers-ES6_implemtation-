@@ -41,6 +41,7 @@ sap.ui.define(
             "8",
             "9",
             "10",
+            "11"
           ];
           var sKey = 0;
           if (oQuery && aValidKeys.indexOf(oQuery.tab) > -1) {
@@ -146,6 +147,9 @@ sap.ui.define(
           } else if (sKey == "10") {
             oCtrlMdl.setProperty("/smtTblEty", "MasterComplaintTypeSet");
             oCtrlMdl.setProperty("/smtTblFlds", "ComplaintType");
+          }else if (sKey == "11") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterFAQCategorySet");
+            oCtrlMdl.setProperty("/smtTblFlds", "FAQCategory");
           }
         },
 

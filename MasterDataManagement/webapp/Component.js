@@ -19,6 +19,10 @@ sap.ui.define(
        * @override
        */
       init: function () {
+
+         // initialize the error handler with the component
+		this._oErrorHandler = new ErrorHandler(this);
+
         // call the base component's init function
         UIComponent.prototype.init.apply(this, arguments);
 

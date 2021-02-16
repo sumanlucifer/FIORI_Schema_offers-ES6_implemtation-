@@ -15,6 +15,7 @@
                     <IconTabFilter key="8" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
                     <IconTabFilter key="9" text="{i18n>MasterDataLanguage}"></IconTabFilter>
                     <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
+                    <IconTabFilter key="11" text="{i18n>MasterDataFaqCat}"></IconTabFilter>
                 </items>
             </IconTabBar>
             <VBox id="oVbxSmtTbl">
