@@ -1,0 +1,73 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="DisplayFragment"
+			editable="false"
+			layout="ColumnLayout"
+			title="Company Settings Details "
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="3"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false" >
+			<f:content>
+            
+				<core:Title text="AboutUs" />
+				 <TextArea id="about" required="true" 
+                width="100%" rows="10"
+        				placeholder="Enter About Us ..."
+        				valueStateText="About Us must not be empty."
+                        editable="false"
+                        value="{ 
+                                  path : 'AboutUs', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }" />
+				
+				<core:Title text="Disclaimer" />
+				<TextArea id="disclaimer" required="true"  width="100%" rows="10"
+        				placeholder="Enter Disclaimer ..."
+                        editable="false"
+        				valueStateText="Disclaimer must not be empty."
+                         value="{ 
+                                  path : 'Disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                      
+                                  }
+                              }"/>
+				
+				<core:Title text="Call Center Number" />
+				<Input id="callcenter" required="true"  type="Text"
+                maxLength="15"
+                editable="false"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty."
+                        value="{ 
+                                  path : 'CallCenterHelpline', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

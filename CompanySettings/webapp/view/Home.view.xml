@@ -1,0 +1,37 @@
+<mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.Home" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+            <Page id="CompanySettings"
+            	title="Company Settings">
+            <!-- <customHeader>
+			<Bar>
+				<contentRight>
+					<Button id="edit" text="Edit" press="handleEditPress" />
+					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+				</contentRight>
+			</Bar>
+            </customHeader> -->
+            <footer>
+            <OverflowToolbar>
+            
+				<ToolbarSpacer/>
+                
+
+                <Button id="edit" text="Edit" press="handleEditPress" />
+					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+                
+                 
+			</OverflowToolbar>
+            </footer>
+		</Page>
+				
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

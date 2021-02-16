@@ -32,9 +32,8 @@ ContactPainter/ContactPainter/.env12
 knpl-influencer-web/ContactPainter/.env10
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env14
+
 # auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env15
+knpl-influencer-web/Catelogue/.env1
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env11
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env16
+knpl-influencer-web/CompanySettings/.env2

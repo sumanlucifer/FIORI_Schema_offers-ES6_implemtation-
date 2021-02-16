@@ -222,6 +222,7 @@ sap.ui.define([
             handleAllDealerLinkPress: function (oEvent) {
                 this.oRouter.navTo("RouteLandingPage");
             },
+
             changeLinkStatus: function (oEvent) {
                 var oItem = oEvent.getSource();
                 var removeSet = oItem.getBindingContext().getPath();
@@ -229,18 +230,31 @@ sap.ui.define([
 
                 var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
 
+                var oContext = this;
+                var painterId = oSelectedItem.Id;
 
 
-
-                var oParam = {
-                    PainterId: oSelectedItem.Id,
-                    DealerId: dealerID
-
-                };
                 //console.log(oParam);
+                //console.log(removeSet);
                 function onYes() {
                     var oModel = this.getView().getModel();
-                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("idPainterTable") });
+                    oModel.callFunction(
+                        "/ChangePainterLinkStatus", {
+                        method: "GET",
+                        urlParameters: {
+                            PainterId: painterId,
+                            DealerId: dealerID,
+
+                        },
+                        success:
+                            this.onRemoveSuccess("idPainterTable")
+                        ,
+                        error: function (oError) {
+
+                        }
+                    });
+
+
                 }
 
                 this.showWarning("MSG_CONFIRM_UNLINK_USER", onYes);
@@ -303,12 +317,20 @@ sap.ui.define([
 
             },
             onValueHelpOkPress: function (oEvent) {
-                var aTokens = oEvent.getSource().getTokens();
+                var aTokens = oEvent.getParameter("tokens");
+               
+                if (aTokens.length > 1) {
+                    var dataToSend = [];
+                    for (var i = 0; i < aTokens.length; i++) {
+                        dataToSend.push(aTokens[i].getKey());
+                        
 
-                console.log(aTokens);
+                    }
+                } else {
+                    dataToSend = aTokens[0].getKey();
 
-                //this._oMultiInput.setTokens(aTokens);
-                //this._oValueHelpDialog.close();
+                }
+                console.log(dataToSend);
             },
 
             onValueHelpCancelPress: function () {
