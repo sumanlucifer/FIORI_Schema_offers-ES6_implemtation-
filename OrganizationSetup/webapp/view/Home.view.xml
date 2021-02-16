@@ -124,7 +124,7 @@ xmlns:l="sap.ui.layout"
                             </items>
                         </Table>
 			</IconTabFilter>
-			<IconTabFilter text="Company Settings" key="settings">
+			<!-- <IconTabFilter text="Company Settings" key="settings">
                     <Table inset="false" id="tableCompanySettings" items="{path: 'data>/CompanySettingsSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
@@ -134,7 +134,7 @@ xmlns:l="sap.ui.layout"
 
                                     <ToolbarSpacer></ToolbarSpacer>
             
-                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
+                                   
                                     <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAddCompanySettings"/>
                                 </Toolbar>
                             </headerToolbar>
@@ -176,10 +176,8 @@ xmlns:l="sap.ui.layout"
                                 </ColumnListItem>
                             </items>
                         </Table>
-			</IconTabFilter>
-			<!-- <IconTabFilter text="Sharing Rules" key="rules">
-				<Text text="Sharing Rules content goes here ..." />
 			</IconTabFilter> -->
+			
 		    </items>
 	    </IconTabBar>
                     </content>

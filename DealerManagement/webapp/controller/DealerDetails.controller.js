@@ -222,7 +222,7 @@ sap.ui.define([
             handleAllDealerLinkPress: function (oEvent) {
                 this.oRouter.navTo("RouteLandingPage");
             },
-            
+
             changeLinkStatus: function (oEvent) {
                 var oItem = oEvent.getSource();
                 var removeSet = oItem.getBindingContext().getPath();
@@ -246,8 +246,8 @@ sap.ui.define([
                             DealerId: dealerID,
 
                         },
-                        success: 
-                           this.onRemoveSuccess("idPainterTable")
+                        success:
+                            this.onRemoveSuccess("idPainterTable")
                         ,
                         error: function (oError) {
 
@@ -318,11 +318,19 @@ sap.ui.define([
             },
             onValueHelpOkPress: function (oEvent) {
                 var aTokens = oEvent.getParameter("tokens");
+               
+                if (aTokens.length > 1) {
+                    var dataToSend = [];
+                    for (var i = 0; i < aTokens.length; i++) {
+                        dataToSend.push(aTokens[i].getKey());
+                        
 
-                console.log(aTokens);
+                    }
+                } else {
+                    dataToSend = aTokens[0].getKey();
 
-                //this._oMultiInput.setTokens(aTokens);
-                //this._oValueHelpDialog.close();
+                }
+                console.log(dataToSend);
             },
 
             onValueHelpCancelPress: function () {
