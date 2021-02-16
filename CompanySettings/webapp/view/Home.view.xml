@@ -5,26 +5,18 @@ xmlns:f="sap.ui.layout.form">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-            <Page id="CompanySettings"
-            	title="Company Settings">
-            <!-- <customHeader>
-			<Bar>
-				<contentRight>
-					<Button id="edit" text="Edit" press="handleEditPress" />
-					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
-					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
-				</contentRight>
-			</Bar>
-            </customHeader> -->
+            <Page id="CompanySettings">
+            
             <footer>
             <OverflowToolbar>
             
 				<ToolbarSpacer/>
                 
 
-                <Button id="edit" text="Edit" press="handleEditPress" />
-					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+                <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" />
+					
 					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
                 
                  
 			</OverflowToolbar>
