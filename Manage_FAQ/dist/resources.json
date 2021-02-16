@@ -1,20 +1,19 @@
 {
     "resources": [
         {
-            "name": "controller/Worklist.controller.js"
-        },
-        {
-            "name": "controller/ErrorHandler.js"
+            "name": "view/NotFound.view.xml"
         },
         {
             "name": "model/models.js"
         },
         {
+            "name": "manifest.json"
+        },
+        {
             "name": "model/formatter.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "controller/Worklist.controller.js"
         },
         {
             "name": "controller/Object.controller.js"
@@ -23,7 +22,7 @@
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "controller/ErrorHandler.js"
         },
         {
             "name": "controller/BaseController.js"
@@ -42,11 +41,11 @@
             "merged": true
         },
         {
-            "name": "model/formatter-dbg.js",
+            "name": "controller/BaseController-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "model/formatter-dbg.js",
             "isDebug": true
         },
         {
@@ -66,7 +65,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/BaseController-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -90,7 +89,8 @@
             "name": "view/Object.view.xml"
         },
         {
-            "name": "view/NotFound.view.xml"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "view/App.view.xml"
