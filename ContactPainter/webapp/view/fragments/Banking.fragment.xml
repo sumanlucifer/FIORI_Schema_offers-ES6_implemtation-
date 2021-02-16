@@ -4,48 +4,23 @@
             <f:content>
                 <core:Title text="{i18n>BankingDetails}"/>
                 <Label text="{i18n>AccountHolderName}"/>
-                 <VBox height="auto" width="auto">
-                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
+                <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountType}"/>
-               <VBox>
-                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
-                        <items>
-                            <core:Item text="Sample1" key="1"/>
-                            <core:Item text="Sample2" key="2"/>
-                        </items>
-                    </ComboBox>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
+                <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankName}"/>
-                <VBox>
-                    <ComboBox visible="{= ${oModelView>/profileEdit} === true }" width="100%" required="true" selectedKey="{path:'oModelView>/PersonalDetails/PrimaryDealer',type : 'sap.ui.model.type.String', constraints:{ search: '^[0-9]{1}$' } }">
-                        <items>
-                            <core:Item text="Sample1" key="1"/>
-                            <core:Item text="Sample2" key="2"/>
-                        </items>
-                    </ComboBox>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
+                <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountNumber}"/>
+                <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Label text="{i18n>IFSCCode}"/>
+                <Text text="{PainterBankDetails/IfscCode}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <core:Title text="{i18n>KYCDetails}"/>
+                <Label text="{i18n>KYCStatus}"/>
                 <VBox height="auto" width="auto">
                     <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                     <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 </VBox>
-                <Label text="{i18n>IFSCCode}"/>
-                 <VBox height="auto" width="auto">
-                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
-                <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>KYCStatus}"/>
-                 <VBox height="auto" width="auto">
-                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
                 <Label text="{i18n>AadhaarCardNumber}"/>
-                 <VBox height="auto" width="auto">
+                <VBox height="auto" width="auto">
                     <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                     <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 </VBox>

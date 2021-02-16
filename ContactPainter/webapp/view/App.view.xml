@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.knpl.pragati.ContactPainter.controller.App"  xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
 	<Shell id="shell">
-		<App id="app">
+		<App busy="{appView>/busy}" busyIndicatorDelay="0" id="app">
 			<pages>
 			
 			</pages>

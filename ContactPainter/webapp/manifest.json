@@ -126,7 +126,7 @@
         },
         {
           "name": "RouteProfile",
-          "pattern": "Profile",
+          "pattern": "Profile/{mode}/{prop}",
           "target": ["TargetProfile"]
         }
       ],

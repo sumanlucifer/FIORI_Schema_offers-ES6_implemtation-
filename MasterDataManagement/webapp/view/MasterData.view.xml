@@ -5,6 +5,8 @@
             <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter key="0" text="{i18n>MastDataExterLinks}"></IconTabFilter>
+                     <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
+                     <IconTabFilter key="11" text="{i18n>MasterDataFaqCat}"></IconTabFilter>
                     <IconTabFilter key="1" text="{i18n>MasterDataDepot}"></IconTabFilter>
                     <IconTabFilter key="2" text="{i18n>MasterDataKycType}"></IconTabFilter>
                     <IconTabFilter key="3" text="{i18n>MasterDataReligion}"></IconTabFilter>
@@ -14,8 +16,8 @@
                     <IconTabFilter key="7" text="{i18n>MasterDataArcheType}"></IconTabFilter>
                     <IconTabFilter key="8" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
                     <IconTabFilter key="9" text="{i18n>MasterDataLanguage}"></IconTabFilter>
-                    <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
-                    <IconTabFilter key="11" text="{i18n>MasterDataFaqCat}"></IconTabFilter>
+                   
+                   
                 </items>
             </IconTabBar>
             <VBox id="oVbxSmtTbl">

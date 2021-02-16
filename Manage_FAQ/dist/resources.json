@@ -1,7 +1,7 @@
 {
     "resources": [
         {
-            "name": "Component.js"
+            "name": "../../../../sap-ui-version.json"
         },
         {
             "name": "controller/Object.controller.js"
@@ -31,8 +31,7 @@
             "name": "controller/App.controller.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "Component.js"
         },
         {
             "name": "manifest-bundle.zip"
@@ -78,7 +77,8 @@
             "isDebug": true
         },
         {
-            "name": "../../../../sap-ui-version.json"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "view/Worklist.view.xml"

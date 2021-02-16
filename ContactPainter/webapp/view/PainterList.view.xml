@@ -24,8 +24,8 @@
                             </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox id="cmbxAgeGrp" items="{path:'/PainterSet', parameters:{expand:'AgeGroup' }}" selectedKey="{oModelView>/filterBar/AgeGroup}">
-                                        <core:Item text="{AgeGroup/AgeGroup}" key="{AgeGroup/AgeGroup}"/>
+                                    <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
+                                        <core:Item text="{AgeGroup}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -98,7 +98,7 @@
                             <ObjectStatus text="{RegistrationStatus}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
 
                             <HBox>
-                                <Button icon="sap-icon://edit" type="Transparent" press="onPressFDLSave"></Button>
+                                <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
                         </cells>
