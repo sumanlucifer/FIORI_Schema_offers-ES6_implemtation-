@@ -7,7 +7,7 @@
 		<f:SimpleForm id="DisplayFragment"
 			editable="false"
 			layout="ColumnLayout"
-			title="Company Settings Details"
+			title="Company Settings Details "
 			labelSpanXL="4"
 			labelSpanL="4"
 			labelSpanM="4"

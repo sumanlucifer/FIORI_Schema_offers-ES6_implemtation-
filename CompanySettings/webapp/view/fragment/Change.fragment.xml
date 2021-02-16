@@ -23,7 +23,7 @@
 			singleContainerFullSize="false" >
 			<f:content>
             
-				<core:Title text="AboutUs" />
+				<core:Title text="AboutUs"/>
 				 <TextArea  id ="aboutChange" required="true" 
                 width="100%" rows="10"
         				placeholder="Enter About Us ..."

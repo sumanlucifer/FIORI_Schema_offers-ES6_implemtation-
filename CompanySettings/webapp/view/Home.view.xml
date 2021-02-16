@@ -7,7 +7,7 @@ xmlns:f="sap.ui.layout.form">
 			<pages>
             <Page id="CompanySettings"
             	title="Company Settings">
-            <customHeader>
+            <!-- <customHeader>
 			<Bar>
 				<contentRight>
 					<Button id="edit" text="Edit" press="handleEditPress" />
@@ -15,7 +15,20 @@ xmlns:f="sap.ui.layout.form">
 					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
 				</contentRight>
 			</Bar>
-            </customHeader>
+            </customHeader> -->
+            <footer>
+            <OverflowToolbar>
+            
+				<ToolbarSpacer/>
+                
+
+                <Button id="edit" text="Edit" press="handleEditPress" />
+					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+                
+                 
+			</OverflowToolbar>
+            </footer>
 		</Page>
 				
 			</pages>
