@@ -16,7 +16,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button width="9%" text="{i18n>Sace}" type="Emphasized" press="onPressSave"/>
+                <Button width="9%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
                 <Button width="9%" text="{i18n>Cancel}" press="navPressBack"/>
             </Toolbar>
         </footer>
