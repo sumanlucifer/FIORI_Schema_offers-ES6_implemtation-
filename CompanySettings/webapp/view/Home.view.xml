@@ -5,7 +5,21 @@ xmlns:f="sap.ui.layout.form">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-            <Page id="CompanySettings">
+            <Page>
+            <VBox visible="{=!${local>/bEdit}}">
+            
+            <core:Fragment
+            
+                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
+            </core:Fragment></VBox>
+
+                <VBox visible="{local>/bEdit}" >
+                <core:Fragment
+             
+                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
+            </core:Fragment>
+                </VBox>
+             
             
             <footer>
             <OverflowToolbar>

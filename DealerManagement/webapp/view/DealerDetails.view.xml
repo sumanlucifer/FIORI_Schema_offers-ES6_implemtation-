@@ -85,7 +85,7 @@
                                         <OverflowToolbar>
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
                                             <ToolbarSpacer />
-                                            <Button type="Emphasized" text="Link painters" press="linkPainters" />
+                                            <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
                                             <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                                                 <layoutData>
                                                     <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
