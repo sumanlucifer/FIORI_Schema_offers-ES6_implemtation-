@@ -18,7 +18,8 @@
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>LinkSecondryDealer}"/>
-                <Link text="Dealers" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
+                
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"/>
@@ -53,12 +54,12 @@
 
             </f:content>
         </f:SimpleForm>
-        <Table id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table  id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}"/>
                     <ToolbarSpacer/>
-                    <Button visible="{= ${oModelView>/profileEdit} === true }" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
+                    <Button visible="false" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -80,19 +81,19 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Text text="{RelationshipId}"/>
+                        <ObjectIdentifier title="{RelationshipId}" titleActive="true"/>
                         <Text text="{Mobile}"/>
                         <Text text="{Name}"/>
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-        <Table width="auto" items="{path: 'Assets/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Assets/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>
                     <ToolbarSpacer/>
-                    <Button visible="{= ${oModelView>/profileEdit} === true }" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    <Button visible="false" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -103,6 +104,9 @@
                 <Column>
                     <Text text="{i18n>AssetName}"/>
                 </Column>
+                <Column>
+                    <Text text=""/>
+                </Column>
                 <Column width="5%"></Column>
                 <Column width="5%"></Column>
             </columns>
@@ -110,7 +114,7 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Text text="{AssetType}"/>
+                        <ObjectIdentifier title="{AssetType}" titleActive="true"/>
                         <Text text="{AssetName}"/>
                     </cells>
                 </ColumnListItem>

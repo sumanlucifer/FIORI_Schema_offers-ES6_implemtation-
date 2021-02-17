@@ -8,7 +8,7 @@
                 <Label text="{i18n>AccountType}"/>
                 <ComboBox items="{/MasterBankAccountTypeSet}" required="true" selectedKey="{path:'oModelView>/PainterBankDetails/AccountType', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }  }">
                     <items>
-                        <core:Item text="{AccountType}" key="{Id}"/>
+                        <core:Item text="{AccountType}" key="{AccountType}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>BankName}"/>
@@ -22,10 +22,16 @@
                 <Label text="{i18n>IFSCCode}"/>
                 <Input required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>KYCStatus}"/>
-                <Input required="false"/>
+                <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
+                    <buttons>
+                        <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
+                        <RadioButton id="RB1-2" text="{i18n>DrivingLicence}"/>
+                        <RadioButton id="RB1-3" text="{i18n>VoterId}"/>
+                    </buttons>
+                </RadioButtonGroup>
                 <Label text="{i18n>AadhaarCardNumber}"/>
                 <Input required="false"/>
+                <Label text=""/>
             </f:content>
         </f:SimpleForm>
     </VBox>

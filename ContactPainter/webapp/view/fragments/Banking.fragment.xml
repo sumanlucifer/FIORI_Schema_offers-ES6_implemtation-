@@ -8,20 +8,20 @@
                 <Label text="{i18n>AccountType}"/>
                 <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankName}"/>
-                <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterBankDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountNumber}"/>
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>IFSCCode}"/>
                 <Text text="{PainterBankDetails/IfscCode}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>KYCStatus}"/>
-                <VBox height="auto" width="auto">
-                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
+                <Label text="{i18n>}"/>
+                 <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
+                    <buttons>
+                        <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
+                    </buttons>
+                </RadioButtonGroup>
                 <Label text="{i18n>AadhaarCardNumber}"/>
                 <VBox height="auto" width="auto">
-                    <Input visible="{= ${oModelView>/profileEdit} === true }" required="true" value="{path : 'oModelView>/PersonalDetails/FullName', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                     <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 </VBox>
             </f:content>

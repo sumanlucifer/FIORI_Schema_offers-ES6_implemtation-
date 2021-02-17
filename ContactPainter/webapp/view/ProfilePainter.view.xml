@@ -7,52 +7,40 @@
                         <Link text="{i18n>Painters}" press="onNavBack"/>
                     </Breadcrumbs>
                 </uxap:breadcrumbs>
-                <uxap:snappedHeading>
-                    <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
-                        <m:Avatar class="sapUiSmallMarginEnd" displayShape="Square" initials="HF"/>
-                        <FlexBox direction="Column" renderType="Bare">
-                            <Title text="Sample Name" wrapping="true"/>
-                            <Text text="Id"/>
-                        </FlexBox>
-                    </FlexBox>
-                </uxap:snappedHeading>
-
+                <uxap:expandedHeading>
+                    <m:Title text="{Name}" wrapping="true"/>
+                </uxap:expandedHeading>
                 <uxap:expandedContent>
-                    <Text text="{DealerName}"/>
+                    <m:Text text="{Id}"/>
                 </uxap:expandedContent>
 
-
-                <uxap:snappedTitleOnMobile>
-                    <Title text="{DealerName}"/>
-                </uxap:snappedTitleOnMobile>
-
-                <!-- <uxap:actions>
-                                                                        <Button text="Edit Dealer Details" type="Emphasized" icon="sap-icon://user-edit" iconFirst="true"/>
-                                                                    </uxap:actions> -->
+                <uxap:snappedHeading>
+                    <m:FlexBox fitContainer="true" alignItems="Center">
+                        <m:Avatar src="sap-icon://picture" backgroundColor="Blue" class="sapUiTinyMarginEnd"/>
+                        <m:Title text="{Name}" wrapping="true"/>
+                    </m:FlexBox>
+                </uxap:snappedHeading>
             </uxap:ObjectPageDynamicHeaderTitle>
 
 
         </uxap:headerTitle>
 
         <uxap:headerContent>
-            <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" fitContainer="true">
+            <m:FlexBox wrap="Wrap">
+                <m:Avatar src="sap-icon://picture" backgroundColor="Blue" displaySize="L" class="sapUiTinyMarginEnd"/>
 
-                <m:Avatar class="sapUiMediumMarginEnd sapUiSmallMarginBottom" displayShape="Square" initials="HF" displaySize="L"/>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
+                    <m:ObjectStatus title="{i18n>AgeGroup}" text="{AgeGroup/AgeGroup}"/>
+                </layout:VerticalLayout>
 
-                <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
-                    <items>
-                        <!-- <ObjectAttribute title="{i18n>name}" text="{DealerName}"/> -->
-                        <ObjectAttribute title="{i18n>ContactNo}" text="{Mobile}"/>
-                        <ObjectAttribute title="{i18n>AgeGroup}" text="{SalesGroupName}"/>
-                    </items>
-                </FlexBox>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:ObjectStatus title="{i18n>Address}" text="{PainterAddress/AddressLine1}"/>
 
-                <FlexBox class="sapUiLargeMarginBegin sapUiTinyMarginTop" alignItems="Start" justifyContent="Start" direction="Column" wrap="Wrap" renderType="Bare">
-                    <items>
-                        <ObjectAttribute title="{i18n>}" text="{CustomerCategory}"/>
-                    </items>
-                </FlexBox>
-            </FlexBox>
+                </layout:VerticalLayout>
+
+
+            </m:FlexBox>
         </uxap:headerContent>
 
         <uxap:sections>

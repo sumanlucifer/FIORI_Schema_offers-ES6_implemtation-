@@ -1,19 +1,19 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox id="idVbx" width="100%">
         <f:SimpleForm id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddPainterDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>PainterDetails}"/>
                 <Label text="{i18n>DateOfJoining}"/>
-                <DatePicker dateValue="{path:'oModelView>/PainterDetails/DOB'}" id="dpicker" placeholder="DD/MM/YYYY" value="{path:'oModelView>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" required="true"/>
+                <DatePicker valueStateText="Enter a valid date, less than or equal to today." dateValue="{path:'oModelView>/PainterDetails/DOB'}" value="{path:'oModelView>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="dpicker" placeholder="DD/MM/YYYY" required="true"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
                 <Input valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
                 <VBox>
-                    <Input  valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank."  type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }"/>
+                    <Input valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }"/>
 
                     <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input   valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
+                    <Input valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 </VBox>
 
                 <Label text="{i18n>AgeGroup}"/>
@@ -54,7 +54,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>City}" required="true"/>
-                <ComboBox editable="{= ${oModelView>/PainterAddDet/StateKey} !== '' }" items="{path:'/MasterCitySet'}" value="{path:'oModelView>/PainterAddress/City'}" selectedKey="{path:'oModelView>/PainterAddDet/Citykey', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }  }" id="cmbCity" required="true">
+                <ComboBox valueStateText="Kindly select the city according to state." editable="{= ${oModelView>/PainterAddDet/StateKey} !== '' }" items="{path:'/MasterCitySet'}" value="{path:'oModelView>/PainterAddress/City'}" selectedKey="{path:'oModelView>/PainterAddDet/Citykey', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }  }" id="cmbCity" required="true">
                     <items>
                         <core:Item text="{City}" key="{Id}"/>
                     </items>
@@ -120,22 +120,23 @@
 
             </columns>
             <items>
-                <ColumnListItem press="onListItemPress">
+                <ColumnListItem>
                     <cells>
                         <VBox>
-                            <ComboBox items="{/MasterRelationshipSet}" editable="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>RelationshipId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }" required="true">
+                            <Select  visible="{= ${oModelView>editable} === true }"   items="{path:'/MasterRelationshipSet', templateShareable:false}" selectedKey="{path:'oModelView>RelationshipId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }"  >
                                 <items>
                                     <core:Item text="{Relationship}" key="{Id}"/>
                                 </items>
-                            </ComboBox>
+                            </Select>
+                            <ObjectIdentifier title="{path:'oModelView>RelationshipId',formatter:'.fmtLink'}" titleActive="true" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <VBox>
-                            <Input required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input  required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>Name}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20} }" visible="{= ${oModelView>editable} === true }"/>
-                            <Text text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }"/>
+                            <Input valueStateText="Kindly enter the mobile number of 10 digits." required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Text  text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
@@ -172,12 +173,12 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <ComboBox items="{/MasterAssetTypeSet}" editable="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetType',type : 'sap.ui.model.type.String',constraints:{minLength:1}}" required="true">
+                            <Select  items="{path:'/MasterAssetTypeSet',templateShareable:false}"  visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetType',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" required="true">
                                 <items>
                                     <core:Item text="{AssetType}" key="{Id}"/>
-
                                 </items>
-                            </ComboBox>
+                            </Select>
+                            <ObjectIdentifier title="{path:'oModelView>AssetType',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <VBox>
                             <Input required="true" value="{path:'oModelView>AssetName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
@@ -216,9 +217,16 @@
                 <Input required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>KYCStatus}"/>
-                <Input required="false"/>
+                <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
+                    <buttons>
+                        <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
+                        <RadioButton id="RB1-2" text="{i18n>DrivingLicence}"/>
+                        <RadioButton id="RB1-3" text="{i18n>VoterId}"/>
+                    </buttons>
+                </RadioButtonGroup>
                 <Label text="{i18n>AadhaarCardNumber}"/>
                 <Input required="false"/>
+                <Label text=""/>
             </f:content>
         </f:SimpleForm>
     </VBox>

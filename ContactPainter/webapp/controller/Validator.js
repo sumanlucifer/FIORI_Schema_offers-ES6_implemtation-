@@ -134,13 +134,19 @@ sap.ui.define(
                   // catch any validation errors
                   this._isValid = false;
                   oControlBinding = oControl.getBinding(aValidateProperties[i]);
-                  console.log(oControl.getValueStateText())
+                  var vaueStateText;
+                  if(oControl.getValueStateText()!==undefined && oControl.getValueStateText()!==null && oControl.getValueStateText()!==""){
+                      vaueStateText = oControl.getValueStateText();
+                  }else{
+                      vaueStateText =  ex.message;
+                  }
+                 
                   sap.ui
                     .getCore()
                     .getMessageManager()
                     .addMessages(
                       new Message({
-                        message:oControl.getValueStateText() || ex.message,
+                        message:vaueStateText,
                         type: MessageType.Error,
                         target:
                           (oControlBinding.getContext()
