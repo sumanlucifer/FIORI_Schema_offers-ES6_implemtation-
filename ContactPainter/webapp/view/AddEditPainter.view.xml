@@ -3,8 +3,8 @@
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddPainter}">
-                        <Link text="{i18n>PaintersList}" press="navPressBack"/>
+                    <Breadcrumbs currentLocationText="{i18n>AddNewPainter}">
+                        <Link text="{i18n>Painters}" press="navPressBack"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>

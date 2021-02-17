@@ -23,6 +23,10 @@
           "odataVersion": "2.0",
           "localUri": "localService/metadata.xml"
         }
+      },
+      "uploadData": {
+        "uri": "model/uploaditems.json",
+        "type": "JSON"
       }
     },
     "crossNavigation": {
@@ -94,6 +98,10 @@
           "defaultUpdateMethod": "Put",
           "useBatch": false
         }
+      },
+      "uploadModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "uploadData"
       }
     },
     "resources": {

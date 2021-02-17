@@ -16,6 +16,7 @@ sap.ui.define(
     "sap/ui/model/type/Date",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/core/format/DateFormat",
     "com/knpl/pragati/ContactPainter/model/customInt",
   ],
   /**
@@ -37,7 +38,8 @@ sap.ui.define(
     Validator,
     DateType,
     Filter,
-    FilterOperator
+    FilterOperator,
+    DateFormat
   ) {
     "use strict";
 
@@ -57,7 +59,9 @@ sap.ui.define(
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
 
-          oRouter.getRoute("RouteAddEditP").attachMatched(this._onRouteMatched, this);
+          oRouter
+            .getRoute("RouteAddEditP")
+            .attachMatched(this._onRouteMatched, this);
           this._ValueState = library.ValueState;
           this._MessageType = library.MessageType;
         },
@@ -79,7 +83,7 @@ sap.ui.define(
             edit: mParMode == "add" ? false : true,
             EditTb1FDL: false,
             EditTb2AST: false,
-            AnotherMobField:false,
+            AnotherMobField: false,
             PainterDetails: {
               Mobile: "",
               AgeGroupId: "",
@@ -134,28 +138,12 @@ sap.ui.define(
               KYCStatus: "",
               AadhaarCardNo: "",
             },
-            addData: {
-              Name: "",
-              //City: "",
-              Mobile: "",
-              //State: "",
-              Email: "",
-            },
-            //valueState: "None",
-            addProps: ["Name", "Mobile", "DOB", "Email"],
           });
-          //   var oViewModel2 = new JSONModel({
-          //     busy: true,
-          //     delay: 0,
-          //   });
+
           if (mParMode == "add") {
             this._showFormFragment("AddPainter");
             this.getView().unbindElement();
           } else {
-            // this.getView().bindElement("/" + mKey, {
-            //   expand: "PainterAddress",
-            // });
-            // this._showFormFragment("EditPainter");
           }
 
           this._formFragments; //used for the fragments of the add and edit forms
@@ -182,7 +170,7 @@ sap.ui.define(
               "Kindly save the details in the 'Asset Details' table to continue."
             );
           }
-           if (bValidation == false) {
+          if (bValidation == false) {
             MessageToast.show(
               "Kindly input all the mandatory(*) fields to continue."
             );
@@ -230,6 +218,7 @@ sap.ui.define(
           var oPtrFamily = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterFamily"))
           ).map((item) => {
+            //delete item.RelValue;
             delete item.editable;
             return item;
           });
@@ -239,7 +228,16 @@ sap.ui.define(
             JSON.stringify(oViewModel.getProperty("/PainterAssets"))
           ).map((item) => {
             delete item.editable;
-            //delete item.Id;
+            ``;
+            delete item.editable;
+            return item;
+          });
+
+          //Getting the Assets Data
+          var oPayloadDevice = JSON.parse(
+            JSON.stringify(oViewModel.getProperty("/PainterAssets"))
+          ).map((item) => {
+            delete item.editable;
             return item;
           });
 
@@ -321,12 +319,22 @@ sap.ui.define(
           var objSection = this.getView().byId("oVbxSmtTbl");
           var oView = this.getView();
           objSection.destroyItems();
-
+          var othat = this;
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
+            //othat._setDataValue.call(othat);
             //console.log(oView.byId("dpicker").setMinDate(new Date(2016, 0, 1)));
           });
+        },
+        _setDataValue: function () {
+          console.log("manik");
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/yyyy",
+          });
+          var Date4 = oDateFormat.format(new Date());
+          console.log(this.getView().byId("dpicker"));
+          this.getView().byId("dpicker").setMaxDate(new Date());
         },
         _getFormFragment: function (sFragmentName) {
           var oView = this.getView();
@@ -344,43 +352,46 @@ sap.ui.define(
 
           return this._formFragments;
         },
-        onSecMobLinkPress:function(){
-            this.getView().getModel("oModelView").setProperty("/AnotherMobField",true)
+        onSecMobLinkPress: function () {
+          this.getView()
+            .getModel("oModelView")
+            .setProperty("/AnotherMobField", true);
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey() + "";
-          var oCity,
+          var oView = this.getView();
+          var oCity = oView.byId("cmbCity"),
+            oBindingCity,
             aFilter = [],
             oView = this.getView();
           if (sKey !== "") {
-            oView
-              .getModel("oModelView")
-              .setProperty("/PainterAddress/City", null);
-            oCity = oView.byId("cmbCity").getBinding("items");
+            oCity.clearSelection();
+            oCity.setValue("");
+            oBindingCity = oCity.getBinding("items");
             aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
-            oCity.filter(aFilter);
+            oBindingCity.filter(aFilter);
           }
         },
-        onLinkPrimryChange:function(oEvent){
-            var oSource = oEvent.getSource();
-            var sSkey = oSource.getSelectedKey();
-            var sItem = oSource.getSelectedItem();
-            var oView = this.getView();
-            var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
-            var sFlag=true;
-            for(var i of mCmbx){
-                if(parseInt(i)==parseInt(sSkey)){
-                    sFlag=false;
-                }
+        onLinkPrimryChange: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var sSkey = oSource.getSelectedKey();
+          var sItem = oSource.getSelectedItem();
+          var oView = this.getView();
+          var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
+          var sFlag = true;
+          for (var i of mCmbx) {
+            if (parseInt(i) == parseInt(sSkey)) {
+              sFlag = false;
             }
-            if(!sFlag){
-                oSource.clearSelection();
-                //oSource.setValue("");
-                MessageToast.show("Kindly select a different dealer as its already selected as secondry dealer.");
-                
-            }
-            console.log(oSource.getSelectedKey())
-            
+          }
+          if (!sFlag) {
+            oSource.clearSelection();
+            //oSource.setValue("");
+            MessageToast.show(
+              "Kindly select a different dealer as its already selected as secondry dealer."
+            );
+          }
+          console.log(oSource.getSelectedKey());
         },
         secDealerChanged: function (oEvent) {
           var oView = this.getView();
@@ -396,6 +407,16 @@ sap.ui.define(
                 " is already selected in the Primary Dealer"
             );
           }
+        },
+        onFamilyCmbxChng: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getSource()
+            .getBindingContext("oModelView")
+            .getObject();
+
+          oModel.refresh();
         },
         onPressAddFamliy: function () {
           var oModel = this.getView().getModel("oModelView");
@@ -420,7 +441,8 @@ sap.ui.define(
               editable: true,
             });
             oModel.setProperty("/EditTb1FDL", true);
-            oModel.refresh();
+         
+            //relvalue and editable properties are added here and will be removed in the postsave function
           }
         },
         onPressEditRel: function (oEvent) {
@@ -442,21 +464,26 @@ sap.ui.define(
             .getSource()
             .getBindingContext("oModelView")
             .getObject();
+          console.log(oObject);
+          var oTable = oView.byId("idFamilyDetils");
+          //var oValidator = new Validator();
+
           var bFlag = true;
+          //var cFlag = oValidator.validate();
           for (var abc in oObject) {
             if (oObject[abc] == "") {
               bFlag = false;
-              MessageToast.show(
-                "Kindly enter the complete deatils before saving."
-              );
               break;
             }
           }
 
-          if (bFlag == true) {
+          if (bFlag) {
             oObject["editable"] = false;
             oModel.refresh();
+          } else {
+            console.log("Kinly Input proper values");
           }
+          oModel.refresh(true);
           this._setFDLTbleFlag();
         },
         onPressRemoveRel: function (oEvent) {
@@ -471,6 +498,20 @@ sap.ui.define(
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
           this._setFDLTbleFlag();
           oModel.refresh();
+        },
+        fmtLink:function(mParam){
+            var sPath = "/MasterRelationshipSet("+mParam+")";
+            var oData = this.getView().getModel().getProperty(sPath);
+            if(oData!==undefined && oData!==null){
+                return oData["Relationship"]
+            }
+        },
+        fmtAsset:function(mParam){
+            var sPath = "/MasterAssetTypeSet("+mParam+")";
+            var oData = this.getView().getModel().getProperty(sPath);
+            if(oData!==undefined && oData!==null){
+                return oData["AssetType"]
+            }
         },
         _setFDLTbleFlag() {
           var oModel = this.getView().getModel("oModelView");
@@ -548,9 +589,10 @@ sap.ui.define(
 
           if (bFlag == true) {
             oObject["editable"] = false;
-            oModel.refresh();
           }
+          oModel.refresh(true);
           this._setASTTbleFlag();
+
         },
 
         onPressRemoveAsset: function (oEvent) {
