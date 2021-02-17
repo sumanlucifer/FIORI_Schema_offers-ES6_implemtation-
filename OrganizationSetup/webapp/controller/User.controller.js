@@ -267,7 +267,7 @@ sap.ui.define([
                 if (!this.oEscapePreventDialog) {
                     this.oEscapePreventDialog = new Dialog({
                         title: "Error",
-                        content: new Text({ text: "Mandatory Fields Are Empty!" }),
+                        content: new Text({ text: "Mandatory Fields Are Empty! or Wrong Values Entered!" }),
                         type: DialogType.Message,
                         buttons: [
                             new Button({

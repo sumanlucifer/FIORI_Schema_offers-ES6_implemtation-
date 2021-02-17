@@ -23,8 +23,8 @@
 			singleContainerFullSize="false" >
 			<f:content>
             
-				<core:Title text="AboutUs"/>
-				 <TextArea  id ="aboutChange" required="true" 
+				<core:Title text="About Us"/>
+				 <TextArea   required="true" 
                 width="100%" rows="10"
         				placeholder="Enter About Us ..."
         				valueStateText="About Us must not be empty."
@@ -38,7 +38,7 @@
                               }" />
 				
 				<core:Title text="Disclaimer" />
-				<TextArea id="disclaimerChange" required="true"  width="100%" rows="10"
+				<TextArea  required="true"  width="100%" rows="10"
         				placeholder="Enter Disclaimer ..."
         				valueStateText="Disclaimer must not be empty."
                          value="{ 
@@ -52,7 +52,7 @@
                               }"/>
 				
 				<core:Title text="Call Center Number" />
-				<Input  id="callCenterChange" required="true"  type="Text"
+				<Input   required="true"  type="Text"
                 maxLength="15"
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty."

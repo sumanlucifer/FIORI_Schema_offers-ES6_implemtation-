@@ -9,12 +9,14 @@ sap.ui.define([
     "sap/m/DialogType",
     "sap/m/Button",
     "sap/m/ButtonType",
-    "sap/m/Text"
+    "sap/m/Text",
+    "sap/ui/model/json/JSONModel"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Fragment, MessageToast, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text) {
+    function (Controller, Fragment, MessageToast, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
+        JSONModel) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -35,14 +37,21 @@ sap.ui.define([
                 // Set the initial form to be the display one
                 this._showFormFragment("Display");
 
-                 // Attaches validation handlers
+                // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
                 });
                 sap.ui.getCore().attachValidationSuccess(function (oEvent) {
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
-                
+
+                var oViewModel = new JSONModel({
+                    about: "",
+                    disclaimer: "",
+                    callcenter: "",
+                });
+                this.getView().setModel(oViewModel, "oModelView");
+
 
 
             },
@@ -72,11 +81,21 @@ sap.ui.define([
             },
 
             handleSavePress: function () {
-                var about = this.getView().byId("aboutChange").getValue();
-                var disclaimer = this.getView().byId("disclaimerChange").getValue();
-                var callCenterHelpline = this.getView().byId("callCenterChange").getValue();
+                // var about = this.getView().byId("aboutChange").getValue();
+                // var disclaimer = this.getView().byId("disclaimerChange").getValue();
+                // var callCenterHelpline = this.getView().byId("callCenterChange").getValue();
+                var oDataModel = this.getView().getModel();
+                var oView = this.getView();
+                var oModelView = oView.getModel("oModelView");
+                oModelView.setProperty("/busy", true);
+                var sEntityPath = oView.getElementBinding().getPath();
+                var oDataValue = oDataModel.getObject(sEntityPath);
+                //var oPrpReq = oModelView.getProperty("/prop2");
+              
+               
 
-                var passedValidation = this.onValidate();
+
+                 var passedValidation = this.onValidate();
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -85,13 +104,13 @@ sap.ui.define([
                 }
 
                 var oData = {
-                    AboutUs: about,
-                    Disclaimer: disclaimer,
-                    CallCenterHelpline: callCenterHelpline
+                     AboutUs: oDataValue["AboutUs"],
+                    Disclaimer: oDataValue["Disclaimer"],
+                    CallCenterHelpline: oDataValue["CallCenterHelpline"],
                 }
 
-                //this._toggleButtonsAndView(false);
-                console.log(oData)
+
+                //console.log(oData)
                 var editSet = "/CompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
                 oModel.update(editSet, oData, { success: this.onSuccessPress() });
@@ -111,6 +130,7 @@ sap.ui.define([
             },
 
             _toggleButtonsAndView: function (bEdit) {
+
                 var oView = this.getView();
 
                 // Show the appropriate action buttons
@@ -123,6 +143,7 @@ sap.ui.define([
             },
 
             _getFormFragment: function (sFragmentName) {
+
                 var pFormFragment = this._formFragments[sFragmentName],
                     oView = this.getView();
 
