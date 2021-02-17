@@ -17,6 +17,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
+    "sap/ui/core/routing/History",
     "com/knpl/pragati/ContactPainter/model/customInt",
   ],
   /**
@@ -39,7 +40,8 @@ sap.ui.define(
     DateType,
     Filter,
     FilterOperator,
-    DateFormat
+    DateFormat,
+    History
   ) {
     "use strict";
 
@@ -313,7 +315,16 @@ sap.ui.define(
           this._oMessageManager.registerObject(oView, true);
         },
         navPressBack: function () {
-          this.getOwnerComponent().getRouter().navTo("RoutePList");
+          var oHistory = History.getInstance();
+          var sPreviousHash = oHistory.getPreviousHash();
+
+          if (sPreviousHash !== undefined) {
+            window.history.go(-1);
+          } else {
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RoutePList", {}, true);
+          }
+          
         },
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
@@ -441,7 +452,7 @@ sap.ui.define(
               editable: true,
             });
             oModel.setProperty("/EditTb1FDL", true);
-         
+
             //relvalue and editable properties are added here and will be removed in the postsave function
           }
         },
@@ -499,19 +510,19 @@ sap.ui.define(
           this._setFDLTbleFlag();
           oModel.refresh();
         },
-        fmtLink:function(mParam){
-            var sPath = "/MasterRelationshipSet("+mParam+")";
-            var oData = this.getView().getModel().getProperty(sPath);
-            if(oData!==undefined && oData!==null){
-                return oData["Relationship"]
-            }
+        fmtLink: function (mParam) {
+          var sPath = "/MasterRelationshipSet(" + mParam + ")";
+          var oData = this.getView().getModel().getProperty(sPath);
+          if (oData !== undefined && oData !== null) {
+            return oData["Relationship"];
+          }
         },
-        fmtAsset:function(mParam){
-            var sPath = "/MasterAssetTypeSet("+mParam+")";
-            var oData = this.getView().getModel().getProperty(sPath);
-            if(oData!==undefined && oData!==null){
-                return oData["AssetType"]
-            }
+        fmtAsset: function (mParam) {
+          var sPath = "/MasterAssetTypeSet(" + mParam + ")";
+          var oData = this.getView().getModel().getProperty(sPath);
+          if (oData !== undefined && oData !== null) {
+            return oData["AssetType"];
+          }
         },
         _setFDLTbleFlag() {
           var oModel = this.getView().getModel("oModelView");
@@ -592,7 +603,6 @@ sap.ui.define(
           }
           oModel.refresh(true);
           this._setASTTbleFlag();
-
         },
 
         onPressRemoveAsset: function (oEvent) {
