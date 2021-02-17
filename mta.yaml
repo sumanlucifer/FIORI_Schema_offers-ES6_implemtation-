@@ -47,6 +47,10 @@ modules:
       - Manage_Notifications-content.zip
       name: Manage_Notifications
       target-path: resources/
+    - artifacts:
+      - Training_Learning-content.zip
+      name: Training_Learning
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -92,6 +96,14 @@ modules:
 - name: Manage_Notifications
   type: html5
   path: Manage_Notifications
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Training_Learning
+  type: html5
+  path: Training_Learning
   build-parameters:
     builder: custom
     commands:

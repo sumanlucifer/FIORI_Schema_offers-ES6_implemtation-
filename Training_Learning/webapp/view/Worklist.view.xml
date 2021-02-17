@@ -1,0 +1,150 @@
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.Worklist" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar">
+	<f:DynamicPage id="page">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>worklistTitle}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+										<core:Item key="{Id}" text="{TrainingType}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding traininglearning-tab">
+				<items>
+					<IconTabFilter text="{worklistView>/training}">
+						<Table id="table" width="auto"
+							items="{ path: '/TrainingSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							updateFinished=".onUpdateFinished">
+							<headerToolbar>
+								<OverflowToolbar>
+									<ToolbarSpacer/>
+									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+										<layoutData>
+											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+										</layoutData>
+									</Button>
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAdd">
+							            <layoutData>
+								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+							            </layoutData>
+						            </Button>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column>
+									<Text text="{i18n>colTrainingName}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colCreationDate}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colTrainingType}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colStartDate}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colStartTime}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colCreatedBy}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colAction}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Title}"/>
+                                        <Text text="{CreatedAt}"/>
+                                        <Text text="{Title}"/>
+                                        <Text text="{StartDate}"/>
+                                        <Text text="{StartTime}"/>
+                                        <Text text="{CreatedBy}"/>
+                                        <HBox>
+                                            <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="{i18n>Edit}"/>
+							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
+                                        </HBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter text="{worklistView>/learning}">
+						<Table id="table1" width="auto"
+							items="{ path: '/LearningSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							updateFinished=".onUpdateFinished1">
+							<headerToolbar>
+								<OverflowToolbar>
+									<ToolbarSpacer/>
+									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+										<layoutData>
+											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+										</layoutData>
+									</Button>
+                                    <Button text="{i18n>btnAddLearning}" icon="sap-icon://add" press="onAdd">
+							            <layoutData>
+								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+							            </layoutData>
+						            </Button>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column>
+									<Text text="{i18n>colLink}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colTitle}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colCreationDate}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colCreatedBy}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colAction}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+                                        <!-- <Text text="{Url}"/> -->
+                                        <Link text="{Url}" target="_blank" href="{Url}"/>
+                                        <Text text="{Title}"/>
+                                        <Text text="{CreatedAt}"/>
+                                        <Text text="{CreatedBy}"/>
+										<HBox>
+                                            <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="{i18n>Edit}"/>
+							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
+                                        </HBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>
