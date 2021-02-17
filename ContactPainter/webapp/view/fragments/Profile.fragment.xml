@@ -14,7 +14,7 @@
 
                 <Label text="{i18n>PreferredLanguage}"/>
 
-                <Text text="{Preference/LanguageId}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>LinkSecondryDealer}"/>
@@ -38,7 +38,7 @@
                 <Text text="{PainterAddress/State}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>SecurityQuestions}"/>
                 <Label text="{i18n>Question}"/>
-                <Text text="{Preference/SecurityQuestionId}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Answer}"/>
                 <Text text="{Preference/SecurityAnswer}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>SegmentationDetails}"/>
