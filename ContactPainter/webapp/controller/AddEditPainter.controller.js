@@ -230,16 +230,6 @@ sap.ui.define(
             JSON.stringify(oViewModel.getProperty("/PainterAssets"))
           ).map((item) => {
             delete item.editable;
-            ``;
-            delete item.editable;
-            return item;
-          });
-
-          //Getting the Assets Data
-          var oPayloadDevice = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterAssets"))
-          ).map((item) => {
-            delete item.editable;
             return item;
           });
 

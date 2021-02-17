@@ -70,6 +70,9 @@ sap.ui.define(
           "simpleForm",
           "rows",
           "cells",
+          "sections",
+          "subSections",
+          "blocks"
         ],
         aControlAggregation = null,
         oControlBinding = null,

@@ -6,14 +6,14 @@
                 <Label text="{i18n>DateOfJoining}"/>
                 <DatePicker dateValue="{oModelView>/DOB}" id="dpicker" placeholder="DD/MM/YYYY" value="{path:'oModelControl>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' }  }" required="true"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
-                <Input required="true" valueStateText="Mobile No should be of 10 digits" type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
+                <Input required="true" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
                 <VBox>
-                    <Input valueStateText="Mobile No should be of 10 digits" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
+                    <Input valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
 
                     <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelControl>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input valueStateText="Mobile No should be of 10 digits" visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
+                    <Input valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
                 </VBox>
 
                 <Label text="{i18n>AgeGroup}"/>
@@ -32,7 +32,7 @@
                 <Label text="{i18n>FullName}"/>
                 <Input required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                 <Label text="{i18n>EmailId}"/>
-                <Input value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
+                <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{/DealerSet}" required="true" selectedKey="{path:'oModelControl>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }">
                     <items>
@@ -123,12 +123,12 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <Select items="{path:'/MasterRelationshipSet',templateShareable: false}" value="{oModelView>RelValue}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>RelationshipId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }" required="true">
+                            <Select visible="{= ${oModelView>editable} === true }" items="{path:'/MasterRelationshipSet', templateShareable:false}" selectedKey="{path:'oModelView>RelationshipId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                                 <items>
                                     <core:Item text="{Relationship}" key="{Id}"/>
                                 </items>
                             </Select>
-                            <ObjectIdentifier title="{oModelView>RelValue}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
+                            <ObjectIdentifier title="{path:'oModelView>RelationshipId',formatter:'.fmtLink'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
                             <Input required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
@@ -147,7 +147,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-      <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelView>/Assets',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelView>/Assets',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>
@@ -173,12 +173,12 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <Select items="{path:'/MasterAssetTypeSet',templateShareable:false}" value="{oModelView>AssetValue}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetType',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" required="true">
+                            <Select items="{path:'/MasterAssetTypeSet',templateShareable:false}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetType',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" required="true">
                                 <items>
                                     <core:Item text="{AssetType}" key="{Id}"/>
                                 </items>
                             </Select>
-                            <ObjectIdentifier title="{oModelView>AssetValue}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
+                            <ObjectIdentifier title="{path:'oModelView>AssetType',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
                             <Input required="true" value="{path:'oModelView>AssetName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
@@ -193,6 +193,6 @@
                     </cells>
                 </ColumnListItem>
             </items>
-        </Table> 
+        </Table>
     </VBox>
 </core:FragmentDefinition>
