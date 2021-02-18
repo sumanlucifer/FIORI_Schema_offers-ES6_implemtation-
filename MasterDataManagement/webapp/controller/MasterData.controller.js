@@ -6,20 +6,26 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (BaseController, JSONModel, MessageBox, MessageToast, Fragment,Filter,FilterOperator) {
+  function (
+    BaseController,
+    JSONModel,
+    MessageBox,
+    MessageToast,
+    Fragment,
+    Filter,
+    FilterOperator
+  ) {
     "use strict";
 
     return BaseController.extend(
       "com.knpl.pragati.MasterDataManagement.controller.MasterData",
       {
         onInit: function () {
-          
-
           this._fragment;
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter
@@ -41,7 +47,7 @@ sap.ui.define(
             "8",
             "9",
             "10",
-            "11"
+            "11",
           ];
           var sKey = 0;
           if (oQuery && aValidKeys.indexOf(oQuery.tab) > -1) {
@@ -52,10 +58,10 @@ sap.ui.define(
         },
         _setData: function () {
           var oData = {
-            smtTblEty: "MasterExternalLinksSet",
-            smtTblFlds: "Title,Description,Url",
-            IcnTbFilName: "External Links",
-            busy:false
+            smtTblEty: "MasterComplaintTypeSet",
+            smtTblFlds: "ComplaintType",
+            IcnTbFilName: "Complaint Type",
+            busy: false,
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oCtrlMdl");
@@ -63,7 +69,6 @@ sap.ui.define(
           //this.getView().getModel().refresh(true);
         },
         _initFragment: function (mKey) {
-          console.log("InitFragment");
           var oView = this.getView();
           var oIctbar = oView.byId("idIconTabBarFiori2");
           var oItemFirst = oIctbar.getItems()[parseInt(mKey)];
@@ -73,9 +78,7 @@ sap.ui.define(
             item: oItemFirst,
           });
         },
-        onNavBtnPress: function () {
-          console.log("onNavButtonPress");
-        },
+        onNavBtnPress: function () {},
         onBeforeRebindTable: function (oEvent) {
           var mBindingParams = oEvent.getParameter("bindingParams");
           console.log(mBindingParams);
@@ -88,9 +91,9 @@ sap.ui.define(
               descending: true,
             }),
           ];
-           mBindingParams.filters = [
-             new Filter("IsArchived",FilterOperator.NE,"true")
-           ]
+          mBindingParams.filters = [
+            new Filter("IsArchived", FilterOperator.NE, "true"),
+          ];
           // to short the sorted column in P13N dialog
           // to prevent applying the initial sort all times
         },
@@ -112,32 +115,32 @@ sap.ui.define(
           var sItbFilName = oEvent.getParameter("item").getText();
           oCtrlMdl.setProperty("/IcnTbFilName", sItbFilName);
           if (sKey == "0") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterExternalLinksSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "Title,Description,Url");
+            oCtrlMdl.setProperty("/smtTblEty", "MasterComplaintTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "ComplaintType");
           } else if (sKey == "1") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterDepotSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "Depot");
+            oCtrlMdl.setProperty("/smtTblEty", "MasterFAQCategorySet");
+            oCtrlMdl.setProperty("/smtTblFlds", "FAQCategory");
           } else if (sKey == "2") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterKycTypeSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "KycType");
-          } else if (sKey == "3") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterReligionSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "Religion");
-          } else if (sKey == "4") {
             oCtrlMdl.setProperty("/smtTblEty", "MasterTrainingTypeSet");
             oCtrlMdl.setProperty("/smtTblFlds", "TrainingType");
+          } else if (sKey == "3") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterExternalLinksSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Title,Description,Url");
+          } else if (sKey == "4") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterDepotSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Depot");
           } else if (sKey == "5") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessGroupSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "BusinessGroup");
-          } else if (sKey == "6") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessCategorySet");
-            oCtrlMdl.setProperty("/smtTblFlds", "BusinessCategory");
-          } else if (sKey == "7") {
             oCtrlMdl.setProperty("/smtTblEty", "MasterArcheTypeSet");
             oCtrlMdl.setProperty("/smtTblFlds", "ArcheType");
+          } else if (sKey == "6") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterKycTypeSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "KycType");
+          } else if (sKey == "7") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessGroupSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "BusinessGroup");
           } else if (sKey == "8") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterMaritalStatusSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "MaritalStatus");
+            oCtrlMdl.setProperty("/smtTblEty", "MasterBusinessCategorySet");
+            oCtrlMdl.setProperty("/smtTblFlds", "BusinessCategory");
           } else if (sKey == "9") {
             oCtrlMdl.setProperty("/smtTblEty", "MasterLanguageSet");
             oCtrlMdl.setProperty(
@@ -145,11 +148,14 @@ sap.ui.define(
               "Language,LanguageCode,LanguageDescription"
             );
           } else if (sKey == "10") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterComplaintTypeSet");
-            oCtrlMdl.setProperty("/smtTblFlds", "ComplaintType");
-          }else if (sKey == "11") {
-            oCtrlMdl.setProperty("/smtTblEty", "MasterFAQCategorySet");
-            oCtrlMdl.setProperty("/smtTblFlds", "FAQCategory");
+            oCtrlMdl.setProperty("/smtTblEty", "MasterSecurityQuestionSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Question");
+          } else if (sKey == "11") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterReligionSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "Religion");
+          } else if (sKey == "12") {
+            oCtrlMdl.setProperty("/smtTblEty", "MasterMaritalStatusSet");
+            oCtrlMdl.setProperty("/smtTblFlds", "MaritalStatus");
           }
         },
 
@@ -198,6 +204,7 @@ sap.ui.define(
           var oModel = this.getView().getModel();
           var oTitle = oView.getModel("oCtrlMdl").getProperty("/IcnTbFilName");
           var oPayload = {
+            Id: oBject["Id"],
             IsArchived: true,
           };
           console.log(sPath);

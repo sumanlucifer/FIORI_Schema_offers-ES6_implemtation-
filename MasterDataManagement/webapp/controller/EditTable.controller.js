@@ -193,7 +193,8 @@ sap.ui.define(
             "Language",
             "LanguageCode",
             "ComplaintType",
-            "FAQCategory"
+            "FAQCategory",
+            "Question"
           ];
           var aUrlFields = ["Url"];
           var aNumberFields = [];
