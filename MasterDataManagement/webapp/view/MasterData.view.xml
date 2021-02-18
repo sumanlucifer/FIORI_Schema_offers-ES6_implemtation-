@@ -1,27 +1,26 @@
 <mvc:View controllerName="com.knpl.pragati.MasterDataManagement.controller.MasterData" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:ui="sap.ui.table" height="100%">
 
-    <Page busy="{oCtrlMdl>/busy}" busyIndicatorDelay="0" title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true" >
+    <Page busy="{oCtrlMdl>/busy}" busyIndicatorDelay="0" title="{i18n>appSubTitle}" class="sapUiContentPadding" showNavButton="false" showHeader="true">
         <content>
-            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding" >
+            <IconTabBar id="idIconTabBarFiori2" select="onSectIctb" upperCase="true" expandable="true" expanded="true" class="ictbr sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter key="0" text="{i18n>MastDataExterLinks}"></IconTabFilter>
-                     <IconTabFilter key="10" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
-                     <IconTabFilter key="11" text="{i18n>MasterDataFaqCat}"></IconTabFilter>
-                    <IconTabFilter key="1" text="{i18n>MasterDataDepot}"></IconTabFilter>
-                    <IconTabFilter key="2" text="{i18n>MasterDataKycType}"></IconTabFilter>
-                    <IconTabFilter key="3" text="{i18n>MasterDataReligion}"></IconTabFilter>
-                    <IconTabFilter key="4" text="{i18n>MasterDataTrainingType}"></IconTabFilter>
-                    <IconTabFilter key="5" text="{i18n>MasterDataBusinessGroup}"></IconTabFilter>
-                    <IconTabFilter key="6" text="{i18n>MasterDataBusinessCategory}"></IconTabFilter>
-                    <IconTabFilter key="7" text="{i18n>MasterDataArcheType}"></IconTabFilter>
-                    <IconTabFilter key="8" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
+                    <IconTabFilter key="0" text="{i18n>MasterDataComplaintType}"></IconTabFilter>
+                    <IconTabFilter key="1" text="{i18n>MasterDataFaqCat}"></IconTabFilter>
+                    <IconTabFilter key="2" text="{i18n>MasterDataTrainingType}"></IconTabFilter>
+                    <IconTabFilter key="3" text="{i18n>MastDataExterLinks}"></IconTabFilter>
+                    <IconTabFilter key="4" text="{i18n>MasterDataDepot}"></IconTabFilter>
+                    <IconTabFilter key="5" text="{i18n>MasterDataArcheType}"></IconTabFilter>
+                    <IconTabFilter key="6" text="{i18n>MasterDataKycType}"></IconTabFilter>
+                    <IconTabFilter key="7" text="{i18n>MasterDataBusinessGroup}"></IconTabFilter>
+                    <IconTabFilter key="8" text="{i18n>MasterDataBusinessCategory}"></IconTabFilter>
                     <IconTabFilter key="9" text="{i18n>MasterDataLanguage}"></IconTabFilter>
-                   
-                   
+                    <IconTabFilter key="10" text="{i18n>SecurityQuestions}"></IconTabFilter>
+                    <IconTabFilter key="11" text="{i18n>MasterDataReligion}"></IconTabFilter>
+                    <IconTabFilter key="12" text="{i18n>MasterDataMaritialStatus}"></IconTabFilter>
                 </items>
             </IconTabBar>
-            <VBox id="oVbxSmtTbl">
-                <!-- <core:Fragment fragmentName="com.knpl.pragati.MasterDataManagement.view.DisplayTableMaster" type="XML"/> -->
+            <VBox
+                id="oVbxSmtTbl"><!-- <core:Fragment fragmentName="com.knpl.pragati.MasterDataManagement.view.DisplayTableMaster" type="XML"/> -->
             </VBox>
 
         </content>

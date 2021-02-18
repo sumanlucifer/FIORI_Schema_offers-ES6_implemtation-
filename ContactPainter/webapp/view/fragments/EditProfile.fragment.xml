@@ -34,7 +34,7 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{/DealerSet}" required="true" selectedKey="{path:'oModelControl>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }">
+                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{/DealerSet}" required="false" selectedKey="{path:'oModelControl>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}"/>
                     </items>

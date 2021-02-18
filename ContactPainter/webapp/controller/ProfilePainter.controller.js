@@ -228,15 +228,18 @@ sap.ui.define(
         fmtLink: function (mParam) {
           var sPath = "/MasterRelationshipSet(" + mParam + ")";
           var oData = this.getView().getModel().getProperty(sPath);
+          return mParam;
           if (oData !== undefined && oData !== null) {
             return oData["Relationship"];
           } else {
             return mParam;
           }
+          
         },
         fmtAsset: function (mParam) {
           var sPath = "/MasterAssetTypeSet(" + mParam + ")";
           var oData = this.getView().getModel().getProperty(sPath);
+          return mParam;
           if (oData !== undefined && oData !== null) {
             return oData["AssetType"];
           } else {
