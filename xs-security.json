@@ -1,5 +1,5 @@
 {
-  "xsappname": "knpl-influencer-web",
+  "xsappname": "debasisa_web",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
     "oauth2-configuration": {
