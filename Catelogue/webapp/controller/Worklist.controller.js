@@ -112,7 +112,7 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("ProductName", FilterOperator.Contains, sQuery)];
+					aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
 				}
 				this._applySearch(aTableSearchState);
 			}
@@ -141,8 +141,9 @@ sap.ui.define([
 		 */
 		_showObject : function (oItem) {
 			this.getRouter().navTo("object", {
-				objectId: oItem.getBindingContext().getProperty("ProductID")
-			});
+				objectId: oItem.getBindingContext().getProperty("Id")
+            });
+            
 		},
 
 		/**

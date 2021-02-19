@@ -262,8 +262,10 @@ sap.ui.define([
             },
             onRemoveSuccess: function (oTable) {
 
-                var oList = this.getView().byId(oTable);
-                oList.getBinding("items").refresh(true);
+            //    var oList = this.getView().byId(oTable);
+            //    oList.getBinding("items").refresh(true);
+            var model=this.getView().getModel();
+            model.refresh(true);
                 var msg = 'Unlinked Successfully!';
                 MessageToast.show(msg);
 

@@ -32,10 +32,10 @@ sap.ui.define([
 
                 this.getView().bindElement("/CompanySettingsSet(1)");
 
-                this._formFragments = {};
+                // this._formFragments = {};
 
                 // Set the initial form to be the display one
-                this._showFormFragment("Display");
+                // this._showFormFragment("Display");
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -53,9 +53,17 @@ sap.ui.define([
                 this.getView().setModel(oViewModel, "oModelView");
 
 
+                var oLocaModel = new JSONModel({
+                    bEdit: false
+                });
+                this.getView().setModel(oLocaModel, "local");
+
+
+
 
             },
             handleEditPress: function () {
+                this.getView().getModel("local").setProperty("/bEdit", true);
 
                 //Clone the data
                 this._oSupplier = Object.assign({}, this.getView().bindElement("/CompanySettingsSet(1)"));
@@ -65,6 +73,8 @@ sap.ui.define([
             },
 
             handleCancelPress: function () {
+
+                this.getView().getModel("local").setProperty("/bEdit", false);
 
                 //Restore the data
                 var oModel = this.getView().getModel("data");
@@ -81,9 +91,7 @@ sap.ui.define([
             },
 
             handleSavePress: function () {
-                // var about = this.getView().byId("aboutChange").getValue();
-                // var disclaimer = this.getView().byId("disclaimerChange").getValue();
-                // var callCenterHelpline = this.getView().byId("callCenterChange").getValue();
+
                 var oDataModel = this.getView().getModel();
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelView");
@@ -91,11 +99,11 @@ sap.ui.define([
                 var sEntityPath = oView.getElementBinding().getPath();
                 var oDataValue = oDataModel.getObject(sEntityPath);
                 //var oPrpReq = oModelView.getProperty("/prop2");
-              
-               
 
 
-                 var passedValidation = this.onValidate();
+
+
+                var passedValidation = this.onValidate();
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -104,7 +112,7 @@ sap.ui.define([
                 }
 
                 var oData = {
-                     AboutUs: oDataValue["AboutUs"],
+                    AboutUs: oDataValue["AboutUs"],
                     Disclaimer: oDataValue["Disclaimer"],
                     CallCenterHelpline: oDataValue["CallCenterHelpline"],
                 }
@@ -122,6 +130,7 @@ sap.ui.define([
                 MessageToast.show(msg);
 
                 setTimeout(function () {
+                    this.getView().getModel("local").setProperty("/bEdit", false);
                     this._toggleButtonsAndView(false);
                 }.bind(this), 1000);
 
@@ -142,30 +151,30 @@ sap.ui.define([
                 this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
-            _getFormFragment: function (sFragmentName) {
+            // _getFormFragment: function (sFragmentName) {
 
-                var pFormFragment = this._formFragments[sFragmentName],
-                    oView = this.getView();
+            //     var pFormFragment = this._formFragments[sFragmentName],
+            //         oView = this.getView();
 
-                if (!pFormFragment) {
-                    pFormFragment = Fragment.load({
-                        id: oView.getId(),
-                        name: "com.knpl.pragati.CompanySettings.view.fragment." + sFragmentName
-                    });
-                    this._formFragments[sFragmentName] = pFormFragment;
-                }
+            //     if (!pFormFragment) {
+            //         pFormFragment = Fragment.load({
+            //             id: oView.getId(),
+            //             name: "com.knpl.pragati.CompanySettings.view.fragment." + sFragmentName
+            //         });
+            //         this._formFragments[sFragmentName] = pFormFragment;
+            //     }
 
-                return pFormFragment;
-            },
+            //     return pFormFragment;
+            // },
 
-            _showFormFragment: function (sFragmentName) {
-                var oPage = this.byId("CompanySettings");
+            // _showFormFragment: function (sFragmentName) {
+            //     var oPage = this.byId("CompanySettings");
 
-                oPage.removeAllContent();
-                this._getFormFragment(sFragmentName).then(function (oVBox) {
-                    oPage.insertContent(oVBox);
-                });
-            },
+            //     oPage.removeAllContent();
+            //     this._getFormFragment(sFragmentName).then(function (oVBox) {
+            //         oPage.insertContent(oVBox);
+            //     });
+            // },
 
             onValidate: function () {
                 // Create new validator instance
@@ -193,7 +202,9 @@ sap.ui.define([
                 }
 
                 this.oEscapePreventDialog.open();
-            },
+            }
+
+
 
         });
     });

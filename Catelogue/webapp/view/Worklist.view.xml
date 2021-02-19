@@ -14,7 +14,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Dealers"/>
+                    <Title text="Catelogues"/>
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
@@ -33,27 +33,27 @@
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Creation Date" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idEmailInput" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idCreationDate" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Email}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Customer Category" label="Customer Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="Title" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idTitle" placeholder="Title" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{CustomerCategory}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idCreatedBy" placeholder="Created By" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Depot}" />
                                         </suggestionItems>
@@ -68,7 +68,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idCatlogueTable" width="auto" items="{path: '/PainterSet' }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
@@ -86,50 +86,36 @@
 
                 <columns>
                     <Column>
-                        <Text text="{i18n>name}"/>
+                        <Text text="{i18n>title}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>plantCode}"/>
+                        <Text text="{i18n>creationDate}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>depot}"/>
+                        <Text text="{i18n>createdBy}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>salesGroupID}"/>
+                        <Text text="{i18n>action}"/>
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>salesGroupName}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>customerName}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>fiscalYear}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>customerClass}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>customerCategory}"/>
-                    </Column>
+                    </Column> -->
+                   
                     
                 </columns>
 
                 <items>
-                    <ColumnListItem type="Navigation" press="onListItemPress">
+                    <ColumnListItem type="Navigation" press="onPress">
                         <!-- <dependents>
                             <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
                         </dependents> -->
                         <cells>
-                            <ObjectIdentifier title="{DealerName}" titleActive="true"/>
-                            <Text text="{PlantCode}"/>
-                            <Text text="{Depot}"/>
-                            <Text text="{SalesGroupId}"/>
-                            <Text text="{SalesGroupName}"/>
-                            <Text text="{CustomerId}"/>
-                            <Text text="{FiscalYear}"/>
-                            <Text text="{CustomerClass}"/>
-                            <Text text="{CustomerCategory}"/>
+                            <ObjectIdentifier title="{Name}" />
+                            <Text text="{Email}"/>
+                            <Text text="{CreatedAt}"/>
+                            <Text text="{Mobile}"/>
+                            <Text text="{RegistrationStatus}"/>
+                            
                             
                         </cells>
                     </ColumnListItem>

@@ -2,36 +2,218 @@
 	controllerName="com.knpl.pragati.Catelogue.controller.Object"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    class="sapUiSizeCompact">
+ <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true" >
+            <uxap:headerTitle>
+                <uxap:ObjectPageDynamicHeaderTitle>
+                    <uxap:breadcrumbs>
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
+                            <Link text="Catelogues" press="handleAllDealerLinkPress"/>
+                        </Breadcrumbs>
+                    </uxap:breadcrumbs>
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
-		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
+                    <uxap:expandedHeading>
+                        <Title text="{Name}" class="sapUiTinyMarginEnd"/>
+                    </uxap:expandedHeading>
 
-		<semantic:titleHeading>
-			<Title
-				text="{ProductName}"
-				level="H2"/>
-		</semantic:titleHeading>
+                    <uxap:snappedHeading>
+                        <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                            <f:Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
+                            <FlexBox direction="Column" renderType="Bare">
+                                <Title text="{Name}" wrapping="true"/>
+                                <!-- <Text text="{Id}"/> -->
+                            </FlexBox>
+                        </FlexBox>
+                    </uxap:snappedHeading>
 
-		<semantic:headerContent>
-			<ObjectNumber
-				number="{
-					path: 'ProductID',
-					formatter: '.formatter.numberUnit'
-				}"
-				unit="{UnitPrice}"
-			/>
-		</semantic:headerContent>
+                    <!-- <uxap:expandedContent>
+                        <Text text="{Name}"/>
+                    </uxap:expandedContent> -->
+                     
 
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-		</semantic:sendEmailAction>
+                    <uxap:snappedTitleOnMobile>
+                        <Title text="{Name}"/>
+                    </uxap:snappedTitleOnMobile>
+
+                   
+                </uxap:ObjectPageDynamicHeaderTitle>
 
 
-	</semantic:SemanticPage>
+            </uxap:headerTitle>
+            <uxap:headerContent>
+                <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                    
+                    <f:Avatar class="sapUiSmallMarginEnd" displayShape="Square" displaySize="XL"/>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           
+                            <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                             
+                        </items>
+                    </FlexBox>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           <ObjectAttribute title="{i18n>createdBy}" text="{CreatedBy}"/>
+                            
+                        </items>
+                    </FlexBox>
+
+                   
+                </FlexBox>
+            </uxap:headerContent>
+
+            
+            
+
+            <uxap:sections>
+                <uxap:ObjectPageSection >
+                    <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="Catelogue Details" titleUppercase="false">
+                    <Panel width="auto" class="sapUiResponsiveMargin">
+                    <Label text="Title" design="Bold" required="true"/>
+				<Input  
+        	                type="Text"
+                            width="50%"
+                            value="{ 
+                                  path : 'Name', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1,
+                                       maxLength :25
+                                      
+                                  }
+                              }"
+                        placeholder="Enter Title ..."
+        				valueStateText="Enter a valid Title. Maximum 25 characters." />
+		<!-- <headerToolbar>
+			<OverflowToolbar>
+				<Title text="Add Catelogue Details"/>
+			</OverflowToolbar>
+		</headerToolbar> -->
+		
+	</Panel>
+                    </uxap:ObjectPageSubSection>
+                        <uxap:ObjectPageSubSection>
+                        <VBox>
+                         
+                        <f:Card>
+				<f:layoutData>
+					<f:GridContainerItemLayoutData minRows="4" columns="4" />
+				</f:layoutData>
+				<!-- <f:header>
+					<card:Header title="Uploaded"/>
+				</f:header> -->
+                
+                
+				<f:content>
+					<Panel width="auto" class="sapUiResponsiveMargin" >
+		<headerToolbar>
+			<OverflowToolbar >
+				<Title text="Uploaded"/>
+                               
+                               <ToolbarSpacer />
+                               <Label  text="Thumbnail upload"/>
+                                <SearchField  search=".onFilterUsers" width="20%" />
+                                
+                                    	
+                               
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			
+                    
+                          <layout:HorizontalLayout class="sapUiContentPadding" > 
+                           <FlexBox
+                                    height="100px"
+                                    alignItems="Center"
+                                    justifyContent="Start">
+                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
+                                    <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
+                                    <FlexBox  alignItems="Center"
+                                    justifyContent="Start">
+                                    <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}" active="true"/>
+                                        <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{CreatedBy}"/></FlexBox>
+                            
+			                        </FlexBox>
+                             </layout:HorizontalLayout>
+                             	
+                      
+			
+		</content>
+	</Panel>
+				</f:content>
+			</f:Card>
+            </VBox>
+                            
+                        </uxap:ObjectPageSubSection>
+                        <uxap:ObjectPageSubSection>
+                        <VBox>
+                         
+                        <f:Card>
+				<f:layoutData>
+					<f:GridContainerItemLayoutData minRows="4" columns="4" />
+				</f:layoutData>
+				<!-- <f:header>
+					<card:Header title="Uploaded"/>
+				</f:header> -->
+                
+                
+				<f:content>
+					<Panel width="auto" class="sapUiResponsiveMargin" >
+		<headerToolbar>
+			<OverflowToolbar >
+				<Title text="Uploaded"/>
+                               
+                               <ToolbarSpacer />
+                               <Label  text="Thumbnail upload"/>
+                                <SearchField  search=".onFilterUsers" width="20%" />
+                                
+                                    	
+                               
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			
+                    
+                          <layout:HorizontalLayout class="sapUiContentPadding" > 
+                           <FlexBox
+                                    height="100px"
+                                    alignItems="Center"
+                                    justifyContent="Start">
+                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
+                                    <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
+                                    <FlexBox  alignItems="Center"
+                                    justifyContent="Start">
+                                    <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}" active="true"/>
+                                        <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{CreatedBy}"/></FlexBox>
+                            
+			                        </FlexBox>
+                             </layout:HorizontalLayout>
+                             	
+                      
+			
+		</content>
+	</Panel>
+				</f:content>
+			</f:Card>
+            </VBox>
+                            
+                        </uxap:ObjectPageSubSection>
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+            </uxap:sections>
+        </uxap:ObjectPageLayout>
 
 </mvc:View>
+
+	

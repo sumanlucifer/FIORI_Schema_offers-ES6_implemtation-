@@ -120,6 +120,8 @@ sap.ui.define([
                 // sap.ui.getCore().getMessageManager().addMessages(oMessage);
                 var msg = 'Saved Successfully!';
                 MessageToast.show(msg);
+                 var oModel = this.getView().getModel("data");
+                oModel.refresh();
 
 
 
