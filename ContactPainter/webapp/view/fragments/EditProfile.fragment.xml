@@ -2,9 +2,28 @@
     <VBox width="100%">
         <f:SimpleForm id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <core:Title text="{i18n>PainterDetails}"/>
-                <Label text="{i18n>DateOfJoining}"/>
-                <DatePicker dateValue="{oModelView>/DOB}" id="dpicker" placeholder="DD/MM/YYYY" value="{path:'oModelControl>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' }  }" required="true"/>
+                <core:Title text="{i18n>Membership}"/>
+                <Label text="{i18n>MembershipId}"/>
+                <Text/>
+                <Label required="false" text="{i18n>DateOfJoining}"/>
+                <Text text="{path:'DOB',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                <Label text="{i18n>AgeGroup}"/>
+                <Text text="{AgeGroup/AgeGroup}"/>
+                <Label text="{i18n>PreferredLanguage}"/>
+                <Text text="{Preference/Language/Language}"/>
+                <Label text="{i18n>LinkPrimaryDealer}"/>
+                <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Label text="{i18n>LinkSecondryDealer}"/>
+                <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{/DealerSet}" selectedKeys="{path:'oModelControl>/PainterAddDet/SecondryDealer'}">
+                    <items>
+                        <core:Item text="{DealerName}" key="{Id}"/>
+                    </items>
+                </MultiComboBox>
+                <core:Title text="{i18n>PersonalDetails}"/>
+                <Label text="{i18n>FullName}"/>
+                <Input required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                <Label text="{i18n>EmailId}"/>
+                <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
                 <Input required="true" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
@@ -15,36 +34,6 @@
                     </HBox>
                     <Input valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
                 </VBox>
-
-                <Label text="{i18n>AgeGroup}"/>
-                <ComboBox items="{/MasterAgeGroupSet}" selectedKey="{path:'oModelView>/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
-                    <items>
-                        <core:Item text="{AgeGroup}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-                <Label text="{i18n>PreferredLanguage}"/>
-                <ComboBox required="false" items="{path:'/MasterLanguageSet'}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
-                    <items>
-                        <core:Item text="{Language}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-                <core:Title text="{i18n>PersonalDetails}"/>
-                <Label text="{i18n>FullName}"/>
-                <Input required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
-                <Label text="{i18n>EmailId}"/>
-                <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
-                <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{/DealerSet}" required="false" selectedKey="{path:'oModelControl>/PainterAddDet/DealerId',type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }">
-                    <items>
-                        <core:Item text="{DealerName}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-                <Label text="{i18n>LinkSecondryDealer}"/>
-                <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{/DealerSet}" selectedKeys="{path:'oModelControl>/PainterAddDet/SecondryDealer'}">
-                    <items>
-                        <core:Item text="{DealerName}" key="{Id}"/>
-                    </items>
-                </MultiComboBox>
                 <core:Title text="{i18n>LocationDetails}"/>
 
                 <Label text="{i18n>State}"/>
@@ -114,7 +103,7 @@
                     <Text text="{i18n>ContactNumber}"/>
                 </Column>
                 <Column width="10%">
-                    <Text text="{i18n>Actions}"/>
+                    <Text text="{i18n>Action}"/>
                 </Column>
 
 
@@ -158,13 +147,13 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>TypeOfAsset}"/>
+                    <Text text="{i18n>TypeOfAssets}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>AssetName}"/>
                 </Column>
                 <Column width="10%">
-                    <Text text="{i18n>Actions}"/>
+                    <Text text="{i18n>Action}"/>
                 </Column>
 
             </columns>

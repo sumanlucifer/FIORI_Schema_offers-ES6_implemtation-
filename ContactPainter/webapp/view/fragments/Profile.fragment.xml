@@ -2,9 +2,9 @@
     <VBox width="100%">
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <core:Title text="Membership"/>
-                <Label text="Membership Id"/>
-                <Text text="{Id}"/>
+                <core:Title text="{i18n>Membership}"/>
+                <Label text="{i18n>MembershipId}"/>
+                <Text/>
                 <Label required="false" text="{i18n>DateOfJoining}"/>
                 <Text text="{path:'DOB',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
 
@@ -15,11 +15,10 @@
                 <Label text="{i18n>PreferredLanguage}"/>
 
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>LinkPrimaryDealer}"/>
-                <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
+
                 <Label text="{i18n>LinkSecondryDealer}"/>
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
-                
+
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"/>
@@ -28,20 +27,23 @@
                 <Label required="false" text="{i18n>PrimaryMobileNo}"/>
                 <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
+                <VBox items="{path:'PainterContact/',templateShareable: false}">
+                    <Text text="{Mobile}"/>
+                </VBox>
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>LocationDetails}"/>
-                <Label text="{i18n>Area}"/>
-                <Text text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>City}"/>
-                <Text text="{PainterAddress/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>State}"/>
                 <Text text="{PainterAddress/State}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Label text="{i18n>City}"/>
+                <Text text="{PainterAddress/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Label text="{i18n>Area}"/>
+                <Text text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>SecurityQuestions}"/>
                 <Label text="{i18n>Question}"/>
                 <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Answer}"/>
                 <Text text="{Preference/SecurityAnswer}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <core:Title text="{i18n>SegmentationDetails}"/>
+                <core:Title text="{i18n>Segmentation}"/>
                 <Label text="{i18n>TeamSize}"/>
                 <Text text="{PainterSegmentation/TeamSize}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Experiences}"/>
@@ -54,7 +56,7 @@
 
             </f:content>
         </f:SimpleForm>
-        <Table  id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}"/>
@@ -99,7 +101,7 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>TypeOfAsset}"/>
+                    <Text text="{i18n>TypeOfAssets}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>AssetName}"/>

@@ -42,7 +42,7 @@ sap.ui.define(
 
       sap.ui.getCore().getMessageManager().removeAllMessages();
 
-      if (oControl.length > 0) {
+      if (oControl.hasOwnProperty("length") > 0) {
         for (var i in oControl) {
           this._validate(oControl[i]);
         }

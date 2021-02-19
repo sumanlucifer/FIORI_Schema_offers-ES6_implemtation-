@@ -127,19 +127,19 @@ sap.ui.define(
           console.log(oSource.getSelectedKey());
         },
         secDealerChanged: function (oEvent) {
-          var oView = this.getView();
-          var sPkey = oView.byId("cmbxPDlr").getSelectedKey();
-          var mBox = oEvent.getSource();
-          var oItem = oEvent.getParameters()["changedItem"];
-          var sSKey = oItem.getProperty("key");
-          if (sPkey == sSKey) {
-            mBox.removeSelectedItem(oItem);
-            mBox.removeSelectedItem(sSKey);
-            MessageToast.show(
-              oItem.getProperty("text") +
-                " is already selected in the Primary Dealer"
-            );
-          }
+        //   var oView = this.getView();
+        //   var sPkey = 
+        //   var mBox = oEvent.getSource();
+        //   var oItem = oEvent.getParameters()["changedItem"];
+        //   var sSKey = oItem.getProperty("key");
+        //   if (sPkey == sSKey) {
+        //     mBox.removeSelectedItem(oItem);
+        //     mBox.removeSelectedItem(sSKey);
+        //     MessageToast.show(
+        //       oItem.getProperty("text") +
+        //         " is already selected in the Primary Dealer"
+        //     );
+        //   }
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey() + "";
@@ -471,9 +471,9 @@ sap.ui.define(
               Id: parseInt(i),
             });
           }
-          if (oPrimaryDealer !== "") {
-            oDealers.push({ Id: parseInt(oPrimaryDealer) });
-          }
+        //   if (oPrimaryDealer !== "") {
+        //     oDealers.push({ Id: parseInt(oPrimaryDealer) });
+        //   }
 
           oPayload["Dealers"] = oDealers;
 
@@ -595,7 +595,7 @@ sap.ui.define(
             iCountContact++;
           }
 
-          //setting up dealers data
+          //setting up Dealers data
           var oDealer = oDataValue["Dealers"];
           var oDealerArray = [];
           for (var i of oDealer) {

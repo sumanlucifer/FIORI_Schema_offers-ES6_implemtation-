@@ -22,6 +22,7 @@
                 <Label text="{i18n>IFSCCode}"/>
                 <Input required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
+                <Label text="{i18n>SelectedKYCDocument}"/>
                 <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
                     <buttons>
                         <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>

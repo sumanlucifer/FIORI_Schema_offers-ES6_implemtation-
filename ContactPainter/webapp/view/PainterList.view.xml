@@ -13,15 +13,15 @@
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                             <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
-                                <fb:control>
-                                    <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
-                                            				path: '/PainterSet'
-                                            			}">
-                                        <SuggestionItem text="{Name}"/>
-                                    </SearchField>
-                                    
-                                </fb:control>
-                            </fb:FilterGroupItem> -->
+                                                                                        <fb:control>
+                                                                                            <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
+                                                                                                    				path: '/PainterSet'
+                                                                                                    			}">
+                                                                                                <SuggestionItem text="{Name}"/>
+                                                                                            </SearchField>
+                                                                                            
+                                                                                        </fb:control>
+                                                                                    </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
@@ -31,10 +31,11 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>RegistrationDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox id="cmbxRegDate" items="{/PainterSet}" selectedKey="{oModelView>/filterBar/CreatedAt}">
+                                    <!-- <ComboBox id="cmbxRegDate" items="{path:'/PainterSet',sorter:{path:'CreatedAt',group:true,descending:true}}" selectedKey="{oModelView>/filterBar/CreatedAt}">
                                         <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
 
-                                    </ComboBox>
+                                    </ComboBox> -->
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" dateValue="{oModelView>/filterBar/CreatedAt}" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -51,9 +52,10 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'AgeGroup' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'AgeGroup' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
+                        <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                         <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
@@ -64,7 +66,10 @@
                         <Text text="{i18n>Name}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>PainterId}"/>
+                        <Text text="{i18n>MembershipId}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>RegistrationDate}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>PrimaryMobile}"/>
@@ -76,13 +81,10 @@
                         <Text text="{i18n>LinkPrimaryDealer}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>RegistrationDate}"/>
-                    </Column>
-                    <Column>
                         <Text text="{i18n>Status}"/>
                     </Column>
                     <Column width="10%">
-                        <Text text="{i18n>Actions}"/>
+                        <Text text="{i18n>Action}"/>
                     </Column>
                 </columns>
 
@@ -90,13 +92,12 @@
                     <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
                             <ObjectIdentifier title="{Name}" titleActive="true"/>
-                            <Text text="{Id}"/>
+                            <Text/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{AgeGroup/AgeGroup}"/>
                             <Text text="{DealerId}"/>
-                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
-                            <ObjectStatus text="{RegistrationStatus}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
-
+                            <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>

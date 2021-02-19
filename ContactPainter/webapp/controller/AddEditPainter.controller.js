@@ -209,9 +209,10 @@ sap.ui.define(
           }
 
           //Getting the data for the PainterAddress
-          var oPainterAddress = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterAddress"))
+          var oPainterAddress = this._ReturnObjects(
+            oViewModel.getProperty("/PainterAddress")
           );
+          
           var oPainterSeg = this._ReturnObjects(
             oViewModel.getProperty("/PainterSegmentation")
           );
@@ -270,9 +271,11 @@ sap.ui.define(
           );
           console.log(oPayload, oViewModel);
           var oData = this.getView().getModel();
+          var othat = this;
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
+              othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -314,7 +317,6 @@ sap.ui.define(
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RoutePList", {}, true);
           }
-          
         },
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
@@ -467,8 +469,10 @@ sap.ui.define(
             .getObject();
           console.log(oObject);
           var oTable = oView.byId("idFamilyDetils");
-          //var oValidator = new Validator();
-
+          var oCells = oEvent.getSource().getParent().getParent().getCells();
+          var oValidator = new Validator();
+          var cFlag = oValidator.validate(oCells);
+          console.log(cFlag);
           var bFlag = true;
           //var cFlag = oValidator.validate();
           for (var abc in oObject) {
@@ -478,13 +482,15 @@ sap.ui.define(
             }
           }
 
-          if (bFlag) {
+          if (bFlag && cFlag) {
             oObject["editable"] = false;
-            oModel.refresh();
+            oModel.refresh(true);
           } else {
-            console.log("Kinly Input proper values");
+            MessageToast.show(
+              "Kindly input 'family details' value in a proper format to continue"
+            );
           }
-          oModel.refresh(true);
+          //oModel.refresh(true);
           this._setFDLTbleFlag();
         },
         onPressRemoveRel: function (oEvent) {
@@ -578,6 +584,9 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getObject();
           var bFlag = true;
+          var oCells = oEvent.getSource().getParent().getParent();
+          var oValidator = new Validator();
+          var cFlag = oValidator.validate(oCells);
           for (var abc in oObject) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -588,8 +597,12 @@ sap.ui.define(
             }
           }
 
-          if (bFlag == true) {
+          if (bFlag == true && cFlag == true) {
             oObject["editable"] = false;
+          } else {
+            MessageToast.show(
+              "Kindly input 'asset' values in porper format to save."
+            );
           }
           oModel.refresh(true);
           this._setASTTbleFlag();

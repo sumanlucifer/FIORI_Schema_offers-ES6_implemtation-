@@ -56,7 +56,7 @@ sap.ui.define(
             busy: false,
             filterBar: {
               AgeGroupId: "",
-              CreatedAt: "",
+              CreatedAt: null,
               RegistrationStatus: "",
               Name: "",
             },
@@ -82,6 +82,10 @@ sap.ui.define(
         _FilterInit: function () {
           this._ResetFilterBar();
         },
+        fmtStatus: function (mParam) {
+          var sLetter = mParam.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+          return sLetter;
+        },
         onFilter: function (oEvent) {
           console.log("On FIlter");
           var aCurrentFilterValues = [];
@@ -90,16 +94,12 @@ sap.ui.define(
             .getProperty("/filterBar");
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
-            if (oViewFilter[prop].trim() !== "") {
+            if ( oViewFilter[prop] )  {
               console.log(oViewFilter[prop]);
               if (prop === "AgeGroupId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(
-                    "AgeGroupId",
-                    FilterOperator.EQ,
-                    oViewFilter[prop]
-                  )
+                  new Filter("AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
                 );
               } else if (prop === "CreatedAt") {
                 aFlaEmpty = false;
@@ -109,7 +109,11 @@ sap.ui.define(
               } else {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.Contains, oViewFilter[prop])
+                  new Filter(
+                    prop,
+                    FilterOperator.Contains,
+                    oViewFilter[prop].trim()
+                  )
                 );
               }
             }
@@ -134,9 +138,9 @@ sap.ui.define(
           var aCurrentFilterValues = [];
           var aResetProp = {
             AgeGroupId: "",
-            CreatedAt: "",
+            CreatedAt: null,
             RegistrationStatus: "",
-            searchBar: ""
+            searchBar: "",
           };
           var oViewModel = this.getView().getModel("oModelView");
           oViewModel.setProperty("/filterBar", aResetProp);
