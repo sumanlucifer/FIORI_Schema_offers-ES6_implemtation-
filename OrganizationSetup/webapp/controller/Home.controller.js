@@ -138,18 +138,22 @@ sap.ui.define([
                     };
                 function onYes() {
                     var oModel = this.getView().getModel("data");
-                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers") });
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers")});
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);
 
             },
             onRemoveSuccess: function (oTable) {
+
                 
-                var oList = this.getView().byId(oTable);
-                oList.getBinding("items").refresh(true);
-                var msg = 'Removed Successfully!';
+                    var msg = 'Removed Successfully!';
                 MessageToast.show(msg);
+               
+                
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+               
 
 
             },

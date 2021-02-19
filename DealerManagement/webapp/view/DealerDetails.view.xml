@@ -52,8 +52,9 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                             <!-- <ObjectAttribute title="{i18n>name}" text="{DealerName}"/> -->
-                            <ObjectAttribute title="{i18n>depot}" text="{Depot}"/>
-                             <ObjectAttribute title="{i18n>salesGroupId}" text="{SalesGroupId}"/>
+                            
+                            <ObjectAttribute title="{i18n>depot}" text="{Depot}" />
+                             <ObjectAttribute title="{i18n>salesGroupID}" text="{SalesGroupId}"/>
                             <ObjectAttribute title="{i18n>salesGroupName}" text="{SalesGroupName}"/>
                         </items>
                     </FlexBox>
@@ -104,6 +105,9 @@
                                         </Column>
             
                                         <Column>
+                                            <Text text="{i18n>membershipId}"/>
+                                        </Column>
+                                         <Column width="10%">
                                             <Text text="{i18n>mobile}"/>
                                         </Column>
                                         <Column>
@@ -118,11 +122,9 @@
                                         <Column>
                                             <Text text="{i18n>date}"/>
                                         </Column>
-                                         <Column width="10%">
-                                            <Text text="{i18n>mobile}"/>
-                                        </Column>
+                                        
                                         <Column width="10%">
-                                            <Text text="{i18n>status}"/>
+                                            <Text text="{i18n>action}"/>
                                         </Column>
                                     </columns>
 
@@ -133,13 +135,14 @@
                                             </dependents>
                                             <cells>
                                                 <ObjectIdentifier title="{Name}" titleActive="true"/>
+                                                <Text text="{MembershipCard}"/>
                                                 <Text text="{Mobile}"/>
                                                 <Text text="{Id}"/>
-                                                <Text text="{Mobile}"/>
-                                                <Text text="{AgeGroupId}"/>
+                                                <Text text="{PainterAddress}"/>
+                                                <Text text="{AgeGroup}"/>
                                                 <Text text="{CreatedAt}"/>
-                                                <Text text="{Mobile}"/>
-                                                <Button text="Linked" press="changeLinkStatus"></Button>
+                                                
+                                                <Button text="Unlink" type="Reject" press="changeLinkStatus"></Button>
                                             </cells>
                                         </ColumnListItem>
                                     </items>
