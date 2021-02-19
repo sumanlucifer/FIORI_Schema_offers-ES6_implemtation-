@@ -13,18 +13,62 @@
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
-                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Dealer Details">
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
                             <Link text="Catelogues" press="handleAllDealerLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
 
-                   
+                    <uxap:expandedHeading>
+                        <Title text="{Name}" class="sapUiTinyMarginEnd"/>
+                    </uxap:expandedHeading>
+
+                    <uxap:snappedHeading>
+                        <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                            <f:Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
+                            <FlexBox direction="Column" renderType="Bare">
+                                <Title text="{Name}" wrapping="true"/>
+                                <!-- <Text text="{Id}"/> -->
+                            </FlexBox>
+                        </FlexBox>
+                    </uxap:snappedHeading>
+
+                    <!-- <uxap:expandedContent>
+                        <Text text="{Name}"/>
+                    </uxap:expandedContent> -->
+                     
+
+                    <uxap:snappedTitleOnMobile>
+                        <Title text="{Name}"/>
+                    </uxap:snappedTitleOnMobile>
 
                    
                 </uxap:ObjectPageDynamicHeaderTitle>
 
 
             </uxap:headerTitle>
+            <uxap:headerContent>
+                <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                    
+                    <f:Avatar class="sapUiSmallMarginEnd" displayShape="Square" displaySize="XL"/>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           
+                            <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                             
+                        </items>
+                    </FlexBox>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           <ObjectAttribute title="{i18n>createdBy}" text="{CreatedBy}"/>
+                            
+                        </items>
+                    </FlexBox>
+
+                   
+                </FlexBox>
+            </uxap:headerContent>
 
             
             
@@ -91,7 +135,7 @@
                                     height="100px"
                                     alignItems="Center"
                                     justifyContent="Start">
-                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M"/>
+                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
                                     <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
                                     <FlexBox  alignItems="Center"
                                     justifyContent="Start">
@@ -145,7 +189,7 @@
                                     height="100px"
                                     alignItems="Center"
                                     justifyContent="Start">
-                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M"/>
+                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
                                     <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
                                     <FlexBox  alignItems="Center"
                                     justifyContent="Start">
