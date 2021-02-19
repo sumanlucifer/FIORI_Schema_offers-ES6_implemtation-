@@ -92,11 +92,11 @@ sap.ui.define([
 			// only update the counter if the length is final and
 			// the table is not empty
 			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-				sTitle = this.getResourceBundle().getText("learningCount", [iTotalItems]);
+				sTitle = this.getResourceBundle().getText("videoCount", [iTotalItems]);
 			} else {
-				sTitle = this.getResourceBundle().getText("learning");
+				sTitle = this.getResourceBundle().getText("video");
 			}
-			this.getModel("worklistView").setProperty("/learning", sTitle);
+			this.getModel("worklistView").setProperty("/video", sTitle);
 		},
 
 		/**
@@ -137,7 +137,45 @@ sap.ui.define([
 				this._applySearch(aTableSearchState);
 			}
 
-		},
+        },
+        
+        /**
+         * When Click on Add button
+         */
+        onAddVideo: function (oEvent) {
+            this.getRouter().navTo("createObject");
+        },
+
+        onAddTraining: function (oEvent) {
+            this.getRouter().navTo("createObject");
+        },
+
+        onRefreshView: function () {
+            var oModel = this.getModel();
+            oModel.refresh(true);
+        },
+
+        onEditVideo: function (oEvent) {
+            this._showObject(oEvent.getSource());
+        },
+
+        onEditTraining: function (oEvent) {
+            this._showObject(oEvent.getSource());
+        },
+
+        onDelete: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+
+            function onYes() {
+                var data = this.getModel().getData(sPath);
+                this.getModel().update(sPath, {
+                    IsArchived: true
+                }, {
+                    success: this.showToast.bind(this, "MSG_SUCCESS_VIDEO_REMOVE")
+                });
+            }
+            this.showWarning("MSG_CONFIRM_DELETE", onYes);
+        },
 
 		/**
 		 * Event handler for refresh event. Keeps filter, sort

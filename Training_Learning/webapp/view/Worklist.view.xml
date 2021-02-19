@@ -41,7 +41,7 @@
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
 									</Button>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAdd">
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddTraining">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -81,7 +81,7 @@
                                         <Text text="{StartTime}"/>
                                         <Text text="{CreatedBy}"/>
                                         <HBox>
-                                            <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>
@@ -102,7 +102,7 @@
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
 									</Button>
-                                    <Button text="{i18n>btnAddLearning}" icon="sap-icon://add" press="onAdd">
+                                    <Button text="{i18n>btnAddLearning}" icon="sap-icon://add" press="onAddVideo">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -135,7 +135,7 @@
                                         <Text text="{CreatedAt}"/>
                                         <Text text="{CreatedBy}"/>
 										<HBox>
-                                            <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>

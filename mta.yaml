@@ -11,9 +11,7 @@ modules:
   - name: uaa_knpl-influencer-web
   - name: knpl-influencer-web_html_repo_runtime
   - name: portal_resources_knpl-influencer-web
-  - name: dest_sapdev
   - name: knpl-portal-saas-registry
-  - name: dest_knpl-influencer-web
   parameters:
     buildpack: nodejs_buildpack
     disk-quota: 256M
@@ -132,11 +130,6 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-- name: dest_sapdev
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: destination
-    service-plan: lite
 - name: knpl-portal-saas-registry
   type: org.cloudfoundry.managed-service
   parameters:
