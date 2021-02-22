@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
     <smartTable:SmartTable
-        id="idSmartTable"
         editable="false"
         beforeRebindTable="onBeforeRebindTable"
         entitySet="{tabData>smartTblEntity}"

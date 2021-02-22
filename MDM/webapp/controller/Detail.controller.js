@@ -57,23 +57,24 @@ sap.ui.define([
 				path: "/tabs/" + this._tab,
 				model: "tabData"
             });
+            this._destroyAndAddSmartTableContainer();
+        },
+        _destroyAndAddSmartTableContainer: function () {
             var oView = this.getView(),
                 oVBox = oView.byId("idSmartTableContainer");
             
-            oVBox.destroyItems();
             var oFragment = Fragment.load({
                 id: oView.getId(),
                 name:
                 "com.knpl.pragati.MDM.view.fragment.SmartTable",
                 controller: this,
             }).then(function (oControl) {
+                oVBox.destroyItems();
                 oVBox.addItem(oControl);
             });
         },
         onBeforeRebindTable: function (oEvent) {
           var mBindingParams = oEvent.getParameter("bindingParams");
-          console.log(mBindingParams);
-          console.log("onBeforeBindingTrigerred");
           
           // to apply the sort
           mBindingParams.sorter = [
@@ -118,6 +119,7 @@ sap.ui.define([
             });
         },
         onPressRemove: function (oEvent) {
+            var that = this;
             var oView = this.getView();
             var sPath = oEvent.getSource().getBindingContext().getPath();
             var oModel = this.getView().getModel();
@@ -129,7 +131,7 @@ sap.ui.define([
             };
             MessageBox.confirm("Are you sure you want to delete this " + oTab.tabName + "?", {
                 actions: ["Delete", MessageBox.Action.CANCEL],
-				emphasizedAction: "Delete",
+                emphasizedAction: "Delete",
                 onClose: function (sAction) {
                     if (sAction == "Delete") {
                         oViewModel.setProperty("/busy", true);
@@ -137,16 +139,17 @@ sap.ui.define([
                             success: function () {
                                 MessageToast.show(oTab.tabName + " Sucessfully Deleted.");
                                 oViewModel.setProperty("/busy", false);
-                                oView.byId("idSmartTable").getModel().refresh();
+                                that._destroyAndAddSmartTableContainer();
                             },
                             error: function () {
                                 oViewModel.setProperty("/busy", false);
                                 MessageBox.error("Unable to delete the data.");
+                                that._destroyAndAddSmartTableContainer();
                             }
                         });
                     }
                 }
             });
         }
-	});
+    });
 });
