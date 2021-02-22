@@ -205,6 +205,9 @@ sap.ui.define([
                     aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
                 }
             },
+            handleAddCateloguePressed : function () {
+                this.getRouter().navTo("Add");
+            }
 
 	});
 });

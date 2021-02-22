@@ -71,16 +71,17 @@
             <Table id="idCatlogueTable" width="auto" items="{path: '/PainterSet' }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
+                        <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
                         <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                             <layoutData>
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
+                        <Button text="Add Catelogue" press="handleAddCateloguePressed" />
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
-                        <!-- <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                        
                     </OverflowToolbar>
                 </headerToolbar>
 

@@ -132,6 +132,13 @@
                     "target": [
                         "object"
                     ]
+                },
+                {
+                    "pattern": "Add",
+                    "name": "Add",
+                    "target": [
+                        "AddCatelogue"
+                    ]
                 }
             ],
             "targets": {
@@ -154,6 +161,10 @@
                 "notFound": {
                     "viewName": "NotFound",
                     "viewId": "notFound"
+                },
+                "AddCatelogue": {
+                    "viewName": "AddCatelogue",
+                    "viewId": "AddCatelogue"
                 }
             }
         }
