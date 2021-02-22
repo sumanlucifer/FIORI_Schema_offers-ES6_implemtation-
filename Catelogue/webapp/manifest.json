@@ -32,6 +32,10 @@
                 "settings": {
                     "localUri": "localService/metadata.xml"
                 }
+            },
+            "tableData_alias": {
+                "uri": "model/demoData.json",
+                "type": "JSON"
             }
         }
     },
@@ -91,6 +95,13 @@
                 },
                 "dataSource": "KNPL_DS",
                 "preload": true
+            },
+            "demo": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "tableData_alias",
+                "settings": {
+                    "defaultBindingMode": "OneTime"
+                }
             }
         },
         "routing": {

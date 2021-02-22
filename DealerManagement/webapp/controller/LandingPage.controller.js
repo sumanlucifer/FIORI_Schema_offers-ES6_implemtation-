@@ -96,10 +96,10 @@ sap.ui.define([
                 var aCurrentFilterValues = [];
 
                 aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
-                aCurrentFilterValues.push(this.getInputText("idNameInput"));
-                aCurrentFilterValues.push(this.getInputText("idEmailInput"));
-                aCurrentFilterValues.push(this.getInputText("idMobileInput"));
-                aCurrentFilterValues.push(this.getInputText("idRegistrationStatus"));
+                aCurrentFilterValues.push(this.getInputText("idPlantCode"));
+                aCurrentFilterValues.push(this.getInputText("idDepot"));
+                aCurrentFilterValues.push(this.getInputText("idSalesGroupName"));
+                aCurrentFilterValues.push(this.getInputText("idFiscalYear"));
 
                 this.filterTable(aCurrentFilterValues);
             },
@@ -120,7 +120,7 @@ sap.ui.define([
                 var aFilters = [];
 
                 var aKeys = [
-                    "search","DealerName", "SalesGroupName", "CustomerCategory", "Depot"
+                    "search","PlantCode", "Depot","SalesGroupName","FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {

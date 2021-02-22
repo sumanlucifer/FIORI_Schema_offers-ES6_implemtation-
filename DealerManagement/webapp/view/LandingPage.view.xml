@@ -21,42 +21,43 @@
                 <f:content>
                     <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Dealer Name" label="Dealer Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="PlantCode" label="Plant Code" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" placeholder="Dealer Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idPlantCode" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
                                         <suggestionItems>
-                                            <core:Item text="{Name}" />
-                                        </suggestionItems>
-                                    </Input>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Sales Group Name" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idEmailInput" placeholder="Sales Group Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Email}" />
-                                        </suggestionItems>
-                                    </Input>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Customer Category" label="Customer Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{CustomerCategory}" />
+                                            <core:Item text="{PlantCode}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idDepot" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
                                         <suggestionItems>
                                             <core:Item text="{Depot}" />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="SalesGroupName" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input id="idSalesGroupName" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{SalesGroupName}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="FiscalYear" label="Fiscal Year" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input id="idFiscalYear" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{FiscalYear}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
