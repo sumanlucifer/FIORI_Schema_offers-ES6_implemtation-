@@ -56,7 +56,7 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                            <ObjectAttribute title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                              
                         </items>
                     </FlexBox>
@@ -125,9 +125,9 @@
                                                     showSeparators="Inner"
                                                     items="{path: 'demo>/d/results'}" >
                                                     <CustomListItem>
-                                                    <layout:HorizontalLayout class="sapUiContentPadding" > 
+                                                    <!-- <layout:HorizontalLayout class="sapUiContentPadding"  > 
                                                                 <FlexBox
-                                                                            height="100px"
+                                                                          
                                                                             alignItems="Center"
                                                                             justifyContent="Start">
                                                                             <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
@@ -140,7 +140,35 @@
                                                                                 <ObjectAttribute title="{i18n>uploadedOn}" text="{demo>CreatedBy}"/></FlexBox>
                                                                     
                                                                             </FlexBox>
-                                                                    </layout:HorizontalLayout>
+                                                                    </layout:HorizontalLayout> -->
+                                                                    <HBox >
+                                                                        <VBox>
+                                                                        <f:Avatar class="sapUiSmallMargin" displaySize="M" displayShape="Square"/>
+                                                                        </VBox>
+                                                                        <VBox >
+                                                                        <HBox class="sapUiSmallMargin" >
+                                                                        <!-- <ObjectAttribute title="{i18n>createdBy}" text="{demo>Role}" active="true"/> -->
+                                                                        	<ObjectAttribute
+                                                                                    text="{demo>file}"
+                                                                                    active="true"
+                                                                                    press="handleLinkObjectAttributePress" />
+                                                                        	
+                                                                        </HBox>
+                                                                        <HBox>
+                                                                        <HBox class="sapUiSmallMargin" >
+                                                                        <ObjectAttribute title="{i18n>uploadedBy}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}"  active="true"/>
+                                                                        </HBox>
+                                                                         <HBox class="sapUiSmallMargin">
+                                                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}" />
+                                                                        </HBox>
+                                                                        <HBox class="sapUiSmallMargin">
+                                                                        <ObjectAttribute title="{i18n>fileSize}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}" />
+                                                                        </HBox>
+                                                                        </HBox>
+                                                                        </VBox>
+                                                                         
+
+                                                                    </HBox>
                                                     </CustomListItem>
                                                 </List>
                                             </f:content>

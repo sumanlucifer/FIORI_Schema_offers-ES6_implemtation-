@@ -2,8 +2,9 @@ sap.ui.define([
 	"./BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
-	"../model/formatter"
-], function (BaseController, JSONModel, History, formatter) {
+    "../model/formatter",
+    
+], function (BaseController, JSONModel, History, formatter,DateFormat) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.Catelogue.controller.Object", {
@@ -136,7 +137,13 @@ sap.ui.define([
         },
         handleAllCatelogueLinkPress : function () {
             this.oRouter.navTo("");
-        }
+        },
+    //  dateFormatter :function (jsonDateString){ 
+    //      const dt = DateFormat.getDateTimeInstance({ pattern: "dd/MM/yyyy" });
+    //         var date= new Date(parseInt(jsonDateString.replace('/Date(', '')));
+    //        const dayMonthYear = dt.format(date) // returns: "01/08/2020"
+    //        return dayMonthYear;
+    //         }
 
 	});
 

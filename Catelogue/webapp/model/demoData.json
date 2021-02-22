@@ -12,10 +12,11 @@
                 "Description": "Super Admin ",
                 "IsArchived": false,
                 "CreatedAt": "/Date(1611224899420)/",
-                "CreatedBy": null,
+                "CreatedBy": "Admin",
                 "UpdatedAt": "/Date(1612788155280)/",
                 "UpdatedBy": 1,
-                "IsSelected": false
+                "IsSelected": false,
+                "file":"http://www.pdf995.com/samples/pdf.pdf"
             },
             {
                 "__metadata": {
@@ -28,10 +29,13 @@
                 "Description": "Call Center",
                 "IsArchived": false,
                 "CreatedAt": "/Date(1611224899425)/",
-                "CreatedBy": null,
+                "CreatedBy": "Admin",
                 "UpdatedAt": "/Date(1611224899425)/",
                 "UpdatedBy": null,
-                "IsSelected": false
+                "IsSelected": false,
+                "file":"http://www.pdf995.com/samples/pdf.pdf"
+
+
             }
             
        

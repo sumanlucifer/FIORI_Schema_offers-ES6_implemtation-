@@ -98,15 +98,11 @@
                     <Column>
                         <Text text="{i18n>salesGroupName}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>customerName}"/>
-                    </Column>
+                    
                     <Column>
                         <Text text="{i18n>fiscalYear}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>customerClass}"/>
-                    </Column>
+                    
                     <Column>
                         <Text text="{i18n>customerCategory}"/>
                     </Column>
@@ -124,9 +120,9 @@
                             <Text text="{Depot}"/>
                             <Text text="{SalesGroupId}"/>
                             <Text text="{SalesGroupName}"/>
-                            <Text text="{CustomerId}"/>
+                            
                             <Text text="{FiscalYear}"/>
-                            <Text text="{CustomerClass}"/>
+                            
                             <Text text="{CustomerCategory}"/>
                             
                         </cells>
