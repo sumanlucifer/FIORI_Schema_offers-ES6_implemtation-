@@ -37,10 +37,11 @@ sap.ui.define(
      * @param {(sap.ui.core.Control|sap.ui.layout.form.FormContainer|sap.ui.layout.form.FormElement)} oControl - The control or element to be validated.
      * @return {boolean} whether the oControl is valid or not.
      */
-    Validator.prototype.validate = function (oControl) {
+    Validator.prototype.validate = function (oControl, mParam) {
       this._isValid = true;
-
-      sap.ui.getCore().getMessageManager().removeAllMessages();
+      if (mParam) {
+        sap.ui.getCore().getMessageManager().removeAllMessages();
+      }
 
       if (oControl.hasOwnProperty("length") > 0) {
         for (var i in oControl) {
@@ -72,7 +73,7 @@ sap.ui.define(
           "cells",
           "sections",
           "subSections",
-          "blocks"
+          "blocks",
         ],
         aControlAggregation = null,
         oControlBinding = null,
@@ -106,8 +107,8 @@ sap.ui.define(
                 try {
                   oControlBinding = oControl.getBinding(aValidateProperties[i]);
                   oExternalValue = oControl.getProperty(aValidateProperties[i]);
-               
-                    oInternalValue = oControlBinding
+
+                  oInternalValue = oControlBinding
                     .getType()
                     .parseValue(oExternalValue, oControlBinding.sInternalType);
 
@@ -129,7 +130,7 @@ sap.ui.define(
                       else {
                         var sPathB = oControlBinding.getPath();
                         var oModel = oControlBinding.getModel("oModelView");
-                        oModel.setProperty(sPathB,"");
+                        oModel.setProperty(sPathB, "");
                       }
                     }
                   }
@@ -138,18 +139,22 @@ sap.ui.define(
                   this._isValid = false;
                   oControlBinding = oControl.getBinding(aValidateProperties[i]);
                   var vaueStateText;
-                  if(oControl.getValueStateText()!==undefined && oControl.getValueStateText()!==null && oControl.getValueStateText()!==""){
-                      vaueStateText = oControl.getValueStateText();
-                  }else{
-                      vaueStateText =  ex.message;
+                  if (
+                    oControl.getValueStateText() !== undefined &&
+                    oControl.getValueStateText() !== null &&
+                    oControl.getValueStateText() !== ""
+                  ) {
+                    vaueStateText = oControl.getValueStateText();
+                  } else {
+                    vaueStateText = ex.message;
                   }
-                 
+
                   sap.ui
                     .getCore()
                     .getMessageManager()
                     .addMessages(
                       new Message({
-                        message:vaueStateText,
+                        message: vaueStateText,
                         type: MessageType.Error,
                         target:
                           (oControlBinding.getContext()

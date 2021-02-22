@@ -4,7 +4,7 @@
             <f:content>
                 <core:Title text="{i18n>Membership}"/>
                 <Label text="{i18n>MembershipId}"/>
-                <Text/>
+                <Text text="{MembershipCard}"/>
                 <Label required="false" text="{i18n>DateOfJoining}"/>
                 <Text text="{path:'DOB',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
 
@@ -33,9 +33,9 @@
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>LocationDetails}"/>
                 <Label text="{i18n>State}"/>
-                <Text text="{PainterAddress/State}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterAddress/StateDetails/State}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>City}"/>
-                <Text text="{PainterAddress/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterAddress/CityDetails/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Area}"/>
                 <Text text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>SecurityQuestions}"/>
@@ -45,14 +45,13 @@
                 <Text text="{Preference/SecurityAnswer}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>Segmentation}"/>
                 <Label text="{i18n>TeamSize}"/>
-                <Text text="{PainterSegmentation/TeamSize}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterSegmentation/TeamSizeDetails/TeamSize}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Experiences}"/>
-                <Text text="{PainterSegmentation/PainterExperience}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterSegmentation/PainterExperienceDetails/Experience}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>SitePerMonth}"/>
-                <Text text="{PainterSegmentation/SitesPerMonth}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterSegmentation/SitePerMonthDetails/SitePerMonth}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Potential}"/>
-
-                <Text text="{PainterSegmentation/Potential}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }"/>
 
             </f:content>
         </f:SimpleForm>
@@ -83,7 +82,7 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{RelationshipId}" titleActive="true"/>
+                        <ObjectIdentifier title="{RelationshipDetails/Relationship}" titleActive="true"/>
                         <Text text="{Mobile}"/>
                         <Text text="{Name}"/>
                     </cells>
@@ -116,7 +115,7 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{AssetType}" titleActive="true"/>
+                        <ObjectIdentifier title="{AssetTypeDetails/AssetType}" titleActive="true"/>
                         <Text text="{AssetName}"/>
                     </cells>
                 </ColumnListItem>

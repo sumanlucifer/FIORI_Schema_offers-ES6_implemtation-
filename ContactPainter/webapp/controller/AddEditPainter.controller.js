@@ -112,14 +112,14 @@ sap.ui.define(
             },
             PainterAddress: {
               AddressLine1: "",
-              City: "",
-              State: "",
+              CityId: "",
+              StateId: "",
             },
             PainterSegmentation: {
-              TeamSize: "",
+              TeamSizeId: "",
               PainterExperience: "",
               SitesPerMonth: "",
-              Potential: "",
+              PotentialId: "",
             },
             SegmentationDetails: {
               TimeSize: "",
@@ -131,8 +131,8 @@ sap.ui.define(
             PainterAssets: [],
             PainterBankDetails: {
               AccountHolderName: "",
-              AccountType: "",
-              BankName: "",
+              AccountTypeId: "",
+              BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
             },
@@ -158,7 +158,7 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
-          var bValidation = oValidator.validate(oVbox);
+          var bValidation = oValidator.validate(oVbox,true);
           var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
           var dTbleAssets = !oModel.getProperty("/EditTb2AST");
 
@@ -275,7 +275,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
-              othat.navPressBack();
+              //othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -361,13 +361,13 @@ sap.ui.define(
             .setProperty("/AnotherMobField", true);
         },
         onStateChange: function (oEvent) {
-          var sKey = oEvent.getSource().getSelectedKey() + "";
+          var sKey = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oCity = oView.byId("cmbCity"),
             oBindingCity,
             aFilter = [],
             oView = this.getView();
-          if (sKey !== "") {
+          if (sKey !== null) {
             oCity.clearSelection();
             oCity.setValue("");
             oBindingCity = oCity.getBinding("items");
@@ -556,7 +556,7 @@ sap.ui.define(
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              AssetType: "",
+              AssetTypeId: "",
               AssetName: "",
               editable: true,
             });

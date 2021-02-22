@@ -16,7 +16,7 @@
 
                 <uxap:snappedHeading>
                     <m:FlexBox fitContainer="true" alignItems="Center">
-                        <m:Avatar src="sap-icon://picture" backgroundColor="Blue" class="sapUiTinyMarginEnd"/>
+                        <m:Avatar src="sap-icon://picture"  class="sapUiTinyMarginEnd"/>
                         <m:Title text="{Name}" wrapping="true"/>
                     </m:FlexBox>
                 </uxap:snappedHeading>
@@ -27,7 +27,7 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap">
-                <m:Avatar src="sap-icon://picture" backgroundColor="Blue" displaySize="L" class="sapUiTinyMarginEnd"/>
+                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginEnd"/>
 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>

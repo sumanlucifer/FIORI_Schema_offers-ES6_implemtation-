@@ -8,9 +8,9 @@
                 <Label text="{i18n>AccountHolderName}"/>
                 <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountType}"/>
-                <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankName}"/>
-                <Text text="{PainterBankDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterBankDetails/BankNameDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountNumber}"/>
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>IFSCCode}"/>
