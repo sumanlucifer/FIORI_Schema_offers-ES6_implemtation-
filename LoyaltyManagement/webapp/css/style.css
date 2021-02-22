@@ -1,0 +1,8 @@
+/* Global css here */
+.sap-desktop .sapUiAFLayout .sapUiAFLayoutItem:first-child .sapMLabelTextWrapper::after {
+    content: "" !important;
+}
+
+.sap-desktop .formContainer {
+    margin-top: 5rem !important;
+}

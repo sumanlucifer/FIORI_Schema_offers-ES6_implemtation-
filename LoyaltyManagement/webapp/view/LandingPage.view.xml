@@ -1,0 +1,230 @@
+<mvc:View controllerName="com.knpl.pragati.LoyaltyManagement.controller.LandingPage" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants">
+    <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>landingPageViewTitle}"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <SearchField id="idSearchInput" placeholder="{i18n>searchFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Request Type" label="{i18n>requestTypeFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox id="idRequestTypeInput" selectedKey="all" placeholder="{i18n>requestTypeFilterPlaceholder}">
+                                        <core:Item key="all" text="All" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox id="idStatusInput" selectedKey="" placeholder="{i18n>statusFilterPlaceholder}">
+                                        <core:Item key="all" text="All" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DatePicker id="idDateInput" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+            <IconTabBar
+                id="idIconTabBar"
+                headerMode="Inline"
+                expanded="{device>/isNoPhone}"
+                class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter
+                        text="{i18n>allRequestIconTabarTitle}"
+                        key="all"
+                        count="200">
+                        <Table id="idAllRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent"/>
+                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>tblColName}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColMembershipId}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                </Column>
+                                <Column width="15%">
+                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPoints}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColDateTime}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColStatus}"/>
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem type="Navigation" press="onListItemPress">
+                                    <dependents>
+                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
+                                    </dependents>
+                                    <cells>
+                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                                        <Text text="{PlantCode}"/>
+                                        <Text text="{Depot}"/>
+                                        <Text text="{SalesGroupId}"/>
+                                        <Text text="{SalesGroupName}"/>
+                                        <Text text="{CustomerId}"/>
+                                        <Text text="{FiscalYear}"/>
+                                        <Text text="{CustomerClass}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        text="{i18n>accrualRequestIconTabarTitle}"
+                        key="accrual"
+                        count="100">
+                        <Table id="idAccrualRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>tblColName}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColMembershipId}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColTypeOfAccrual}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPoints}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColDateTime}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColStatus}"/>
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem type="Navigation" press="onListItemPress">
+                                    <cells>
+                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                                        <Text text="{PlantCode}"/>
+                                        <Text text="{Depot}"/>
+                                        <Text text="{SalesGroupId}"/>
+                                        <Text text="{SalesGroupName}"/>
+                                        <Text text="{CustomerId}"/>
+                                        <Text text="{FiscalYear}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        text="{i18n>redemptionRequestIconTabarTitle}"
+                        key="redemption"
+                        count="100">
+                        <Table id="idRedemptionRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>tblColName}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColMembershipId}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColTypeOfRedeem}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColPoints}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColDateTime}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>tblColStatus}"/>
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem type="Navigation" press="onListItemPress">
+                                    <cells>
+                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                                        <Text text="{PlantCode}"/>
+                                        <Text text="{Depot}"/>
+                                        <Text text="{SalesGroupId}"/>
+                                        <Text text="{SalesGroupName}"/>
+                                        <Text text="{CustomerId}"/>
+                                        <Text text="{FiscalYear}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
