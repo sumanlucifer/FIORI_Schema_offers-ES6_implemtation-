@@ -1,13 +1,14 @@
 sap.ui.define([
-	"./BaseController"
+    "./BaseController"
+    
 ], function (BaseController) {
-	"use strict";
+    "use strict";
+    	
 
 	return BaseController.extend("com.knpl.pragati.Catelogue.controller.AddCatelogue", {
 
         onInit : function (){
-
-           // alert("Loaded!");
+    
 
         }
 

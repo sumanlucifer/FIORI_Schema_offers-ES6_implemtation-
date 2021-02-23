@@ -29,7 +29,12 @@ sap.ui.define([
                 var aFilter = [];
                 var sQuery = oEvent.getParameter("query");
                 if (sQuery) {
-                    aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
+                    // aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
+                    aFilter.push(new Filter(
+                        "tolower(Name)",
+                        FilterOperator.Contains,
+                        "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                    ));
                 }
 
                 // filter binding
@@ -46,8 +51,18 @@ sap.ui.define([
 
                     filters: [
 
-                        new Filter("Role", FilterOperator.Contains, sQuery),
-                        new Filter("Description", FilterOperator.Contains, sQuery)
+                        // new Filter("Role", FilterOperator.Contains, sQuery),
+                        // new Filter("Description", FilterOperator.Contains, sQuery)
+                        new Filter(
+                            "tolower(Role)",
+                            FilterOperator.Contains,
+                            "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                        ),
+                        new Filter(
+                            "tolower(Description)",
+                            FilterOperator.Contains,
+                            "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                        )
 
                     ]
 
@@ -129,16 +144,16 @@ sap.ui.define([
 
                 var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
                 var oParam = {
-                        Name: oSelectedItem.Name,
-                        Email: oSelectedItem.Email,
-                        Mobile: oSelectedItem.Mobile,
-                        CountryCode: oSelectedItem.CountryCode,
-                        RoleId: oSelectedItem.RoleId,
-                        IsArchived: true
-                    };
+                    Name: oSelectedItem.Name,
+                    Email: oSelectedItem.Email,
+                    Mobile: oSelectedItem.Mobile,
+                    CountryCode: oSelectedItem.CountryCode,
+                    RoleId: oSelectedItem.RoleId,
+                    IsArchived: true
+                };
                 function onYes() {
                     var oModel = this.getView().getModel("data");
-                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers")});
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers") });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);
@@ -146,14 +161,14 @@ sap.ui.define([
             },
             onRemoveSuccess: function (oTable) {
 
-                
-                    var msg = 'Removed Successfully!';
+
+                var msg = 'Removed Successfully!';
                 MessageToast.show(msg);
-               
-                
+
+
                 var oModel = this.getView().getModel("data");
                 oModel.refresh();
-               
+
 
 
             },
@@ -178,12 +193,12 @@ sap.ui.define([
                     IsArchived: true
                 };
                 function onYes() {
-                   var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableRoles") });
+                    var oModel = this.getView().getModel("data");
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableRoles") });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_ROLE", onYes);
-                
+
 
 
             },
@@ -203,13 +218,13 @@ sap.ui.define([
                     CallCenterHelpline: oSelectedItem.callCenterNo,
                     IsArchived: true
                 };
-               function onYes() {
-                  var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableCompanySettings") });
+                function onYes() {
+                    var oModel = this.getView().getModel("data");
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableCompanySettings") });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_CompanySettings", onYes);
-                
+
 
             },
             showWarning: function (sMsgTxt, _fnYes) {
