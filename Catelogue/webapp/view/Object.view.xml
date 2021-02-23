@@ -8,13 +8,15 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
     xmlns:card="sap.f.cards"
-    class="sapUiSizeCompact">
- <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true" >
+    xmlns:tnt="sap.tnt"
+    class="sapUiSizeCompact"
+    >
+ <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
                         <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
-                            <Link text="Catelogues" press="handleAllDealerLinkPress"/>
+                            <Link text="Catelogues" press="handleAllCatelogueLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
 
@@ -54,7 +56,7 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
+                            <ObjectAttribute title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                              
                         </items>
                     </FlexBox>
@@ -76,9 +78,9 @@
             <uxap:sections>
                 <uxap:ObjectPageSection >
                     <uxap:subSections>
-                    <uxap:ObjectPageSubSection title="Catelogue Details" titleUppercase="false">
-                    <Panel width="auto" class="sapUiResponsiveMargin">
-                    <Label text="Title" design="Bold" required="true"/>
+                    <uxap:ObjectPageSubSection>
+                    <!-- <Panel width="auto" > -->
+                    <!-- <Label text="Title" design="Bold" required="true"/>
 				<Input  
         	                type="Text"
                             width="50%"
@@ -92,123 +94,90 @@
                                   }
                               }"
                         placeholder="Enter Title ..."
-        				valueStateText="Enter a valid Title. Maximum 25 characters." />
+        				valueStateText="Enter a valid Title. Maximum 25 characters." /> -->
 		<!-- <headerToolbar>
 			<OverflowToolbar>
 				<Title text="Add Catelogue Details"/>
 			</OverflowToolbar>
 		</headerToolbar> -->
+        <ObjectAttribute title="Title" text="{Name}"/>
 		
-	</Panel>
+	<!-- </Panel> -->
                     </uxap:ObjectPageSubSection>
-                        <uxap:ObjectPageSubSection>
-                        <VBox>
-                         
-                        <f:Card>
-				<f:layoutData>
-					<f:GridContainerItemLayoutData minRows="4" columns="4" />
-				</f:layoutData>
-				<!-- <f:header>
-					<card:Header title="Uploaded"/>
-				</f:header> -->
-                
-                
-				<f:content>
-					<Panel width="auto" class="sapUiResponsiveMargin" >
-		<headerToolbar>
-			<OverflowToolbar >
-				<Title text="Uploaded"/>
-                               
-                               <ToolbarSpacer />
-                               <Label  text="Thumbnail upload"/>
-                                <SearchField  search=".onFilterUsers" width="20%" />
-                                
-                                    	
-                               
-			</OverflowToolbar>
-		</headerToolbar>
-		<content>
-			
-                    
-                          <layout:HorizontalLayout class="sapUiContentPadding" > 
-                           <FlexBox
-                                    height="100px"
-                                    alignItems="Center"
-                                    justifyContent="Start">
-                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
-                                    <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
-                                    <FlexBox  alignItems="Center"
-                                    justifyContent="Start">
-                                    <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}" active="true"/>
-                                        <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
-                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{CreatedBy}"/></FlexBox>
-                            
-			                        </FlexBox>
-                             </layout:HorizontalLayout>
-                             	
-                      
-			
-		</content>
-	</Panel>
-				</f:content>
-			</f:Card>
-            </VBox>
-                            
-                        </uxap:ObjectPageSubSection>
-                        <uxap:ObjectPageSubSection>
-                        <VBox>
-                         
-                        <f:Card>
-				<f:layoutData>
-					<f:GridContainerItemLayoutData minRows="4" columns="4" />
-				</f:layoutData>
-				<!-- <f:header>
-					<card:Header title="Uploaded"/>
-				</f:header> -->
-                
-                
-				<f:content>
-					<Panel width="auto" class="sapUiResponsiveMargin" >
-		<headerToolbar>
-			<OverflowToolbar >
-				<Title text="Uploaded"/>
-                               
-                               <ToolbarSpacer />
-                               <Label  text="Thumbnail upload"/>
-                                <SearchField  search=".onFilterUsers" width="20%" />
-                                
-                                    	
-                               
-			</OverflowToolbar>
-		</headerToolbar>
-		<content>
-			
-                    
-                          <layout:HorizontalLayout class="sapUiContentPadding" > 
-                           <FlexBox
-                                    height="100px"
-                                    alignItems="Center"
-                                    justifyContent="Start">
-                                    <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
-                                    <ObjectAttribute title="{i18n>createdBy}" text="{Name}" active="true"/>
-                                    <FlexBox  alignItems="Center"
-                                    justifyContent="Start">
-                                    <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}" active="true"/>
-                                        <ObjectAttribute title="{i18n>creationDate}" text="{CreatedAt}"/>
-                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{CreatedBy}"/></FlexBox>
-                            
-			                        </FlexBox>
-                             </layout:HorizontalLayout>
-                             	
-                      
-			
-		</content>
-	</Panel>
-				</f:content>
-			</f:Card>
-            </VBox>
+                        <uxap:ObjectPageSubSection  class="sapUiMediumMargin">
+                        <!-- <VBox> -->
+                        <f:Card
+                        class="sapUiMediumMargin">
+                        
+                                            <f:header>
+                                                <card:Header
+                                                    title="Uploaded"
+                                                    />
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                            </f:header>
+                                            <f:content>
+                                            
+                                                <List
+                                                    showSeparators="Inner"
+                                                    items="{path: 'demo>/d/results'}" >
+                                                    <CustomListItem>
+                                                    <!-- <layout:HorizontalLayout class="sapUiContentPadding"  > 
+                                                                <FlexBox
+                                                                          
+                                                                            alignItems="Center"
+                                                                            justifyContent="Start">
+                                                                            <f:Avatar class="sapUiSmallMarginEnd" displaySize="M" displayShape="Square"/>
+                                                                            <ObjectAttribute title="{i18n>createdBy}" text="{demo>Role}" active="true"/>
+                                                                            <FlexBox  alignItems="Center"
+                                                                            alignContent="Stretch"
+                                                                            justifyContent="Start">
+                                                                            <ObjectAttribute title="{i18n>creationDate}" text="{demo>CreatedAt}" active="true"/>
+                                                                                <ObjectAttribute title="{i18n>creationDate}" text="{demo>CreatedAt}"/>
+                                                                                <ObjectAttribute title="{i18n>uploadedOn}" text="{demo>CreatedBy}"/></FlexBox>
+                                                                    
+                                                                            </FlexBox>
+                                                                    </layout:HorizontalLayout> -->
+                                                                    <HBox >
+                                                                        <VBox>
+                                                                        <f:Avatar class="sapUiSmallMargin" displaySize="M" displayShape="Square"/>
+                                                                        </VBox>
+                                                                        <VBox >
+                                                                        <HBox class="sapUiSmallMargin" >
+                                                                        <!-- <ObjectAttribute title="{i18n>createdBy}" text="{demo>Role}" active="true"/> -->
+                                                                        	<ObjectAttribute
+                                                                                    text="{demo>file}"
+                                                                                    active="true"
+                                                                                    press="handleLinkObjectAttributePress" />
+                                                                        	
+                                                                        </HBox>
+                                                                        <HBox>
+                                                                        <HBox class="sapUiSmallMargin" >
+                                                                        <ObjectAttribute title="{i18n>uploadedBy}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}"  active="true"/>
+                                                                        </HBox>
+                                                                         <HBox class="sapUiSmallMargin">
+                                                                        <ObjectAttribute title="{i18n>uploadedOn}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}" />
+                                                                        </HBox>
+                                                                        <HBox class="sapUiSmallMargin">
+                                                                        <ObjectAttribute title="{i18n>fileSize}" text="{path: 'demo>CreatedAt',formatter: '.formatter.dateFormatter'}" />
+                                                                        </HBox>
+                                                                        </HBox>
+                                                                        </VBox>
+                                                                         
+
+                                                                    </HBox>
+                                                    </CustomListItem>
+                                                </List>
+                                            </f:content>
+                                        </f:Card>
+                                                                
+                                                            
                             
                         </uxap:ObjectPageSubSection>
+                        
                     </uxap:subSections>
                 </uxap:ObjectPageSection>
             </uxap:sections>

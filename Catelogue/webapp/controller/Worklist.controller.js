@@ -100,24 +100,24 @@ sap.ui.define([
 		},
 
 
-		onSearch : function (oEvent) {
-			if (oEvent.getParameters().refreshButtonPressed) {
-				// Search field's 'refresh' button has been pressed.
-				// This is visible if you select any master list item.
-				// In this case no new search is triggered, we only
-				// refresh the list binding.
-				this.onRefresh();
-			} else {
-				var aTableSearchState = [];
-				var sQuery = oEvent.getParameter("query");
+		// onSearch : function (oEvent) {
+		// 	if (oEvent.getParameters().refreshButtonPressed) {
+		// 		// Search field's 'refresh' button has been pressed.
+		// 		// This is visible if you select any master list item.
+		// 		// In this case no new search is triggered, we only
+		// 		// refresh the list binding.
+		// 		this.onRefresh();
+		// 	} else {
+		// 		var aTableSearchState = [];
+		// 		var sQuery = oEvent.getParameter("query");
 
-				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
-				}
-				this._applySearch(aTableSearchState);
-			}
+		// 		if (sQuery && sQuery.length > 0) {
+		// 			aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
+		// 		}
+		// 		this._applySearch(aTableSearchState);
+		// 	}
 
-		},
+		// },
 
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
@@ -159,7 +159,55 @@ sap.ui.define([
 			if (aTableSearchState.length !== 0) {
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 			}
-		}
+        },
+         onSearch: function (oEvent) {
+                var aCurrentFilterValues = [];
+
+                aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
+                aCurrentFilterValues.push(this.getInputText("idNameInput"));
+                aCurrentFilterValues.push(this.getInputText("idCreationDate"));
+                aCurrentFilterValues.push(this.getInputText("idTitle"));
+                aCurrentFilterValues.push(this.getInputText("idCreatedBy"));
+
+                this.filterTable(aCurrentFilterValues);
+            },
+
+            getInputText: function (controlId) {
+                return this.getView().byId(controlId).getValue();
+            },
+
+            filterTable: function (aCurrentFilterValues) {
+                this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+            },
+
+            getTableItems: function () {
+                return this.getView().byId("idCatlogueTable").getBinding("items");
+            },
+
+            getFilters: function (aCurrentFilterValues) {
+                var aFilters = [];
+
+                var aKeys = [
+                    "search","PlantCode", "Depot","SalesGroupName","FiscalYear"
+                ];
+
+                for (let i = 0; i < aKeys.length; i++) {
+                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search" )
+                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
+                    else if(aCurrentFilterValues[i].length > 0 && aKeys[i] == "search" )    
+                        this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
+                }
+                return aFilters;
+            },
+
+            SearchInAllFields: function(aKeys, aFilters, searchValue){
+                for(let i=1 ; i<aKeys.length; i++){
+                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
+                }
+            },
+            handleAddCateloguePressed : function () {
+                this.getRouter().navTo("Add");
+            }
 
 	});
 });

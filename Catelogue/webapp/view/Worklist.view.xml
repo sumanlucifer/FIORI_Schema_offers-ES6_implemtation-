@@ -44,7 +44,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="Title" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idTitle" placeholder="Title" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idTitle" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{CustomerCategory}" />
                                         </suggestionItems>
@@ -53,7 +53,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idCreatedBy" placeholder="Created By" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
+                                    <Input id="idCreatedBy" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
                                         <suggestionItems>
                                             <core:Item text="{Depot}" />
                                         </suggestionItems>
@@ -71,16 +71,17 @@
             <Table id="idCatlogueTable" width="auto" items="{path: '/PainterSet' }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
+                        <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
                         <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                             <layoutData>
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
+                        <Button text="Add Catelogue" press="handleAddCateloguePressed" />
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
-                        <!-- <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                        
                     </OverflowToolbar>
                 </headerToolbar>
 
@@ -111,8 +112,8 @@
                         </dependents> -->
                         <cells>
                             <ObjectIdentifier title="{Name}" />
+                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{Email}"/>
-                            <Text text="{CreatedAt}"/>
                             <Text text="{Mobile}"/>
                             <Text text="{RegistrationStatus}"/>
                             
