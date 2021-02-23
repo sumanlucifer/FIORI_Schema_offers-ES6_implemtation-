@@ -3,34 +3,31 @@
         <Table width="auto" items="{path: 'oModelView>/FamilyDetails'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                  
-                   
+
+
                     <ToolbarSpacer/>
-                    <SearchField width="20%"></SearchField>
-                   <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                     <SearchField width="20%"></SearchField>
+                    <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Text text="Name"/>
+                    <Text text="Scan Token Number"/>
                 </Column>
                 <Column>
-                    <Text text="Referral Mobile Number"/>
+                    <Text text="Mobile Number"/>
                 </Column>
                 <Column>
-                    <Text text="Email Id"/>
+                    <Text text="Points"/>
                 </Column>
                 <Column>
                     <Text text="Date and Time"/>
                 </Column>
                 <Column>
-                    <Text text="Onboarding Status"/>
-                </Column>
-                <Column>
-                    <Text text="Points Received"/>
+                    <Text text="Quantity"/>
                 </Column>
             </columns>
 
@@ -40,8 +37,9 @@
                         <Input value="{oModelView>RelType}"/>
                         <Input value="{oModelView>Name}"/>
                         <Input value="{oModelView>ContactNumber}"/>
-                        <Button icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
-                        <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
+                        <Input value="{oModelView>ContactNumber}"/>
+                        <Input value="{oModelView>ContactNumber}"/>
+
                     </cells>
                 </ColumnListItem>
             </items>

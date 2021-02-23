@@ -6,6 +6,7 @@
                   
                    
                     <ToolbarSpacer/>
+                    <SearchField width="20%"></SearchField>
                    <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                         <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                         <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
