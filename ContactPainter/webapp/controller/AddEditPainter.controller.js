@@ -368,11 +368,14 @@ sap.ui.define(
           }
           var bFlag = true;
           var sBindValue = "";
-          var oSouceBinding = oSource.getBinding("value").getPath()
+          var oSouceBinding = oSource.getBinding("value").getPath();
           var aFieldGroup = sap.ui.getCore().byFieldGroupId("Mobile");
           console.log(aFieldGroup);
           var oModelView = this.getView().getModel("oModelView");
           for (var i of aFieldGroup) {
+            if (oSource.getValue().trim() === "") {
+              break;
+            }
             if (oSource.getId() === i.getId()) {
               continue;
             }

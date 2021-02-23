@@ -380,6 +380,9 @@ sap.ui.define(
           console.log(aFieldGroup);
           var oModelView = this.getView().getModel("oModelView");
           for (var i of aFieldGroup) {
+            if(oSource.getValue().trim()===""){
+                break;
+            }
             if (oSource.getId() === i.getId()) {
               continue;
             }
