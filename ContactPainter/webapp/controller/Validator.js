@@ -40,6 +40,7 @@ sap.ui.define(
     Validator.prototype.validate = function (oControl, mParam) {
       this._isValid = true;
       if (mParam) {
+        console.log("inside this method.")
         sap.ui.getCore().getMessageManager().removeAllMessages();
       }
 

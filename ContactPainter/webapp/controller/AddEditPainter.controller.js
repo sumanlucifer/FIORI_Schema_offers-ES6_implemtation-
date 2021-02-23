@@ -158,7 +158,7 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
-          var bValidation = oValidator.validate(oVbox,true);
+          var bValidation = oValidator.validate(oVbox, true);
           var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
           var dTbleAssets = !oModel.getProperty("/EditTb2AST");
 
@@ -212,7 +212,7 @@ sap.ui.define(
           var oPainterAddress = this._ReturnObjects(
             oViewModel.getProperty("/PainterAddress")
           );
-          
+
           var oPainterSeg = this._ReturnObjects(
             oViewModel.getProperty("/PainterSegmentation")
           );
@@ -275,7 +275,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
-              //othat.navPressBack();
+              othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -359,6 +359,42 @@ sap.ui.define(
           this.getView()
             .getModel("oModelView")
             .setProperty("/AnotherMobField", true);
+        },
+        onPrimaryNoChang: function (oEvent) {
+          console.log("Event Pressed", oEvent.getSource().getValue());
+          var oSource = oEvent.getSource();
+          if (oSource.getValueState() == "Error") {
+            return;
+          }
+          var bFlag = true;
+          var sBindValue = "";
+          var oSouceBinding = oSource.getBinding("value").getPath()
+          var aFieldGroup = sap.ui.getCore().byFieldGroupId("Mobile");
+          console.log(aFieldGroup);
+          var oModelView = this.getView().getModel("oModelView");
+          for (var i of aFieldGroup) {
+            if (oSource.getId() === i.getId()) {
+              continue;
+            }
+            if (i.getValue().trim() === oSource.getValue().trim()) {
+              bFlag = false;
+              sBindValue = i.getBinding("value").getPath();
+            }
+          }
+          var oJson = {
+            "/PainterDetails/Mobile": "Primary Mobile",
+            "/PainterAddDet/SMobile1": "Secondry Mobile",
+            "/PainterAddDet/SMobile2": "Secondry Mobile",
+          };
+          if (!bFlag) {
+            oSource.setValue("");
+            oModelView.setProperty(oSouceBinding, "");
+            MessageToast.show(
+              "This mobile number is already entered in " +
+                oJson[sBindValue] +
+                " kindly eneter a new number"
+            );
+          }
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();

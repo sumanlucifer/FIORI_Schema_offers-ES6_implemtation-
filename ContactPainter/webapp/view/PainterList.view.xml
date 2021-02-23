@@ -92,7 +92,7 @@
                     <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
                             <ObjectIdentifier title="{Name}" titleActive="true"/>
-                            <Text/>
+                            <Text text="{MembershipCard}"/>
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{AgeGroup/AgeGroup}"/>

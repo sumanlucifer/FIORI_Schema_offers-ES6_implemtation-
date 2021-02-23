@@ -310,6 +310,11 @@ sap.ui.define(
               oPayload["PainterSegmentation"][c] = null;
             }
           }
+           for (var d in oPayload["PainterAddress"]) {
+            if (oPayload["PainterAddress"][d] === "") {
+              oPayload["PainterAddress"][d] = null;
+            }
+          }
           console.log(oPayload, sPath);
           oData.update(sPath, oPayload, {
             success: function () {
@@ -358,6 +363,45 @@ sap.ui.define(
           this.getView()
             .getModel("oModelControl")
             .setProperty("/AnotherMobField", true);
+        },
+        onPrimaryNoChang:function(){
+
+        },
+         onPrimaryNoChang: function (oEvent) {
+          console.log("Event Pressed", oEvent.getSource().getValue());
+          var oSource = oEvent.getSource();
+          if (oSource.getValueState() == "Error") {
+            return;
+          }
+          var bFlag = true;
+          var sBindValue = "";
+          var oSouceBinding = oSource.getBinding("value").getPath()
+          var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
+          console.log(aFieldGroup);
+          var oModelView = this.getView().getModel("oModelView");
+          for (var i of aFieldGroup) {
+            if (oSource.getId() === i.getId()) {
+              continue;
+            }
+            if (i.getValue().trim() === oSource.getValue().trim()) {
+              bFlag = false;
+              sBindValue = i.getBinding("value").getPath();
+            }
+          }
+          var oJson = {
+            "/Mobile": "Primary Mobile",
+            "/PainterAddDet/SMobile1": "Secondry Mobile",
+            "/PainterAddDet/SMobile2": "Secondry Mobile",
+          };
+          if (!bFlag) {
+            oSource.setValue("");
+            oModelView.setProperty(oSouceBinding, "");
+            MessageToast.show(
+              "This mobile number is already entered in " +
+                oJson[sBindValue] +
+                " kindly eneter a new number"
+            );
+          }
         },
         onLinkPrimryChange: function (oEvent) {
           var oSource = oEvent.getSource();
@@ -496,7 +540,7 @@ sap.ui.define(
           var sPath = "/MasterAssetTypeSet(" + mParam1 + ")";
           var oData = this.getView().getModel().getProperty(sPath);
          if (oData !== undefined && oData !== null) {
-            return oData["Relationship"];
+            return oData["AssetType"];
           } else {
             return mParam1;
           }

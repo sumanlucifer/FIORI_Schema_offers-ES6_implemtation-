@@ -6,14 +6,14 @@
                 <Label text="{i18n>DateOfJoining}"/>
                 <DatePicker valueStateText="Enter a valid date, less than or equal to today." dateValue="{path:'oModelView>/PainterDetails/DOB'}" value="{path:'oModelView>/PainterAddDet/DOB', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="dpicker" placeholder="DD/MM/YYYY" required="true"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
-                <Input valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
+                <Input  fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
                 <VBox>
-                    <Input valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }"/>
+                    <Input fieldGroupIds="Mobile"  change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }"/>
 
                     <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
+                    <Input fieldGroupIds="Mobile"  change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 </VBox>
 
                 <Label text="{i18n>AgeGroup}"/>
