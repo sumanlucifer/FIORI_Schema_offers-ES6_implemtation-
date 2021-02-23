@@ -11,17 +11,30 @@ sap.ui.define([
 function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.LoyaltyManagement.controller.LandingPage", {
+    return BaseController.extend("com.knpl.pragati.LoyaltyManagement.controller.AddLoyaltyPoint", {
         onInit: function () {
             //Router Object
             this.oRouter = this.getRouter();
-            this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
+            this.oRouter.getRoute("AddLoyaltyPoint").attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) { },
 
-        onPressAddPointBtn: function () {
-            this.oRouter.navTo("AddLoyaltyPoint");
+        onPressBreadcrumbLink: function () {
+            this._navToHome();
+        },
+
+        onPressCancelBtn: function () {
+            this._navToHome();
+        },
+
+        onPressSaveBtn: function () {
+
+        },
+
+        _navToHome: function () {
+            this.oRouter.navTo("RouteLandingPage");
         }
+
     });
 });

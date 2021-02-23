@@ -67,7 +67,7 @@
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent"/>
+                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                 </OverflowToolbar>
@@ -77,22 +77,22 @@
                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColMembershipId}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
-                                <Column width="15%">
+                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
                                 <Column>
@@ -136,19 +136,19 @@
                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColMembershipId}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfAccrual}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
                                 <Column>
@@ -188,19 +188,19 @@
                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColMembershipId}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRedeem}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
                                 <Column>

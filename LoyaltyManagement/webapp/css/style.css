@@ -1,8 +1,12 @@
 /* Global css here */
-.sap-desktop .sapUiAFLayout .sapUiAFLayoutItem:first-child .sapMLabelTextWrapper::after {
+.sapUiAFLayout .sapUiAFLayoutItem:first-child .sapMLabelTextWrapper::after {
     content: "" !important;
 }
 
-.sap-desktop .formContainer {
-    margin-top: 5rem !important;
+.sapFDynamicPageTitleTop {
+    height: 100%;
+}
+
+.sapUiFormElementLbl {
+    margin-top: 0.5rem;
 }

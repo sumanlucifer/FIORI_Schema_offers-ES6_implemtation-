@@ -117,6 +117,20 @@
                     "target": [
                         "TargetLandingPage"
                     ]
+                },
+                {
+                    "name": "DetailPage",
+                    "pattern": "DetailPage",
+                    "target": [
+                        "TargetDetailPage"
+                    ]
+                },
+                {
+                    "name": "AddLoyaltyPoint",
+                    "pattern": "AddLoyaltyPoint",
+                    "target": [
+                        "TargetAddLoyaltyPoint"
+                    ]
                 }
             ],
             "targets": {
@@ -133,6 +147,13 @@
                     "viewName": "DetailPage",
                     "viewLevel": 1,
                     "viewId": "detailPage"
+                },
+                "TargetAddLoyaltyPoint": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "AddLoyaltyPoint",
+                    "viewLevel": 1,
+                    "viewId": "addLoyaltyPoint"
                 }
             }
         }
