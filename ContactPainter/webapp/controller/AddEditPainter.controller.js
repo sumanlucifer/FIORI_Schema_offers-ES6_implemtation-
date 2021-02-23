@@ -112,14 +112,14 @@ sap.ui.define(
             },
             PainterAddress: {
               AddressLine1: "",
-              City: "",
-              State: "",
+              CityId: "",
+              StateId: "",
             },
             PainterSegmentation: {
-              TeamSize: "",
+              TeamSizeId: "",
               PainterExperience: "",
               SitesPerMonth: "",
-              Potential: "",
+              PotentialId: "",
             },
             SegmentationDetails: {
               TimeSize: "",
@@ -131,8 +131,8 @@ sap.ui.define(
             PainterAssets: [],
             PainterBankDetails: {
               AccountHolderName: "",
-              AccountType: "",
-              BankName: "",
+              AccountTypeId: "",
+              BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
             },
@@ -158,7 +158,7 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
-          var bValidation = oValidator.validate(oVbox);
+          var bValidation = oValidator.validate(oVbox, true);
           var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
           var dTbleAssets = !oModel.getProperty("/EditTb2AST");
 
@@ -209,9 +209,10 @@ sap.ui.define(
           }
 
           //Getting the data for the PainterAddress
-          var oPainterAddress = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterAddress"))
+          var oPainterAddress = this._ReturnObjects(
+            oViewModel.getProperty("/PainterAddress")
           );
+
           var oPainterSeg = this._ReturnObjects(
             oViewModel.getProperty("/PainterSegmentation")
           );
@@ -270,9 +271,11 @@ sap.ui.define(
           );
           console.log(oPayload, oViewModel);
           var oData = this.getView().getModel();
+          var othat = this;
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
+              othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -314,7 +317,6 @@ sap.ui.define(
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RoutePList", {}, true);
           }
-          
         },
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
@@ -358,14 +360,53 @@ sap.ui.define(
             .getModel("oModelView")
             .setProperty("/AnotherMobField", true);
         },
+        onPrimaryNoChang: function (oEvent) {
+          console.log("Event Pressed", oEvent.getSource().getValue());
+          var oSource = oEvent.getSource();
+          if (oSource.getValueState() == "Error") {
+            return;
+          }
+          var bFlag = true;
+          var sBindValue = "";
+          var oSouceBinding = oSource.getBinding("value").getPath();
+          var aFieldGroup = sap.ui.getCore().byFieldGroupId("Mobile");
+          console.log(aFieldGroup);
+          var oModelView = this.getView().getModel("oModelView");
+          for (var i of aFieldGroup) {
+            if (oSource.getValue().trim() === "") {
+              break;
+            }
+            if (oSource.getId() === i.getId()) {
+              continue;
+            }
+            if (i.getValue().trim() === oSource.getValue().trim()) {
+              bFlag = false;
+              sBindValue = i.getBinding("value").getPath();
+            }
+          }
+          var oJson = {
+            "/PainterDetails/Mobile": "Primary Mobile",
+            "/PainterAddDet/SMobile1": "Secondry Mobile",
+            "/PainterAddDet/SMobile2": "Secondry Mobile",
+          };
+          if (!bFlag) {
+            oSource.setValue("");
+            oModelView.setProperty(oSouceBinding, "");
+            MessageToast.show(
+              "This mobile number is already entered in " +
+                oJson[sBindValue] +
+                " kindly eneter a new number"
+            );
+          }
+        },
         onStateChange: function (oEvent) {
-          var sKey = oEvent.getSource().getSelectedKey() + "";
+          var sKey = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oCity = oView.byId("cmbCity"),
             oBindingCity,
             aFilter = [],
             oView = this.getView();
-          if (sKey !== "") {
+          if (sKey !== null) {
             oCity.clearSelection();
             oCity.setValue("");
             oBindingCity = oCity.getBinding("items");
@@ -467,8 +508,10 @@ sap.ui.define(
             .getObject();
           console.log(oObject);
           var oTable = oView.byId("idFamilyDetils");
-          //var oValidator = new Validator();
-
+          var oCells = oEvent.getSource().getParent().getParent().getCells();
+          var oValidator = new Validator();
+          var cFlag = oValidator.validate(oCells);
+          console.log(cFlag);
           var bFlag = true;
           //var cFlag = oValidator.validate();
           for (var abc in oObject) {
@@ -478,13 +521,15 @@ sap.ui.define(
             }
           }
 
-          if (bFlag) {
+          if (bFlag && cFlag) {
             oObject["editable"] = false;
-            oModel.refresh();
+            oModel.refresh(true);
           } else {
-            console.log("Kinly Input proper values");
+            MessageToast.show(
+              "Kindly input 'family details' value in a proper format to continue"
+            );
           }
-          oModel.refresh(true);
+          //oModel.refresh(true);
           this._setFDLTbleFlag();
         },
         onPressRemoveRel: function (oEvent) {
@@ -550,7 +595,7 @@ sap.ui.define(
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              AssetType: "",
+              AssetTypeId: "",
               AssetName: "",
               editable: true,
             });
@@ -578,6 +623,9 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getObject();
           var bFlag = true;
+          var oCells = oEvent.getSource().getParent().getParent();
+          var oValidator = new Validator();
+          var cFlag = oValidator.validate(oCells);
           for (var abc in oObject) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -588,8 +636,12 @@ sap.ui.define(
             }
           }
 
-          if (bFlag == true) {
+          if (bFlag == true && cFlag == true) {
             oObject["editable"] = false;
+          } else {
+            MessageToast.show(
+              "Kindly input 'asset' values in porper format to save."
+            );
           }
           oModel.refresh(true);
           this._setASTTbleFlag();

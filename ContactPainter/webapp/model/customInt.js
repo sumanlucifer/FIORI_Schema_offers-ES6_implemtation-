@@ -23,7 +23,7 @@ sap.ui.define(
       },
       validateValue: function (oValue) {
         if (!Number.isInteger(parseInt(oValue))) {
-          throw new ValidateException("KindlyInput a valid value");
+          throw new ValidateException("Kindly enter or select a valid value");
         }
       },
     });

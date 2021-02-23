@@ -8,15 +8,15 @@
                     </Breadcrumbs>
                 </uxap:breadcrumbs>
                 <uxap:expandedHeading>
-                    <m:Title text="{Name}" wrapping="true"/>
+                    <m:Title class="sapUiSmallMarginBegin" text="{Name}" wrapping="true"/>
                 </uxap:expandedHeading>
                 <uxap:expandedContent>
-                    <m:Text text="{Id}"/>
+                    <m:Text class="sapUiSmallMarginBegin" text="{MembershipCard}"/>
                 </uxap:expandedContent>
 
                 <uxap:snappedHeading>
                     <m:FlexBox fitContainer="true" alignItems="Center">
-                        <m:Avatar src="sap-icon://picture" backgroundColor="Blue" class="sapUiTinyMarginEnd"/>
+                        <m:Avatar src="sap-icon://picture"  class="sapUiTinyMarginEnd"/>
                         <m:Title text="{Name}" wrapping="true"/>
                     </m:FlexBox>
                 </uxap:snappedHeading>
@@ -26,16 +26,16 @@
         </uxap:headerTitle>
 
         <uxap:headerContent>
-            <m:FlexBox wrap="Wrap">
-                <m:Avatar src="sap-icon://picture" backgroundColor="Blue" displaySize="L" class="sapUiTinyMarginEnd"/>
+            <m:FlexBox wrap="Wrap" renderType="Bare">
+                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin" />
 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
                     <m:ObjectStatus title="{i18n>AgeGroup}" text="{AgeGroup/AgeGroup}"/>
                 </layout:VerticalLayout>
 
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:ObjectStatus title="{i18n>Address}" text="{PainterAddress/AddressLine1}"/>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="25%">
+                    <m:ObjectStatus renderWhitespace="true" maxLines="3" wrapping="true" title="{i18n>Address}" text="{PainterAddress/AddressLine1} {PainterAddress/CityDetails/City}, {PainterAddress/StateDetails/State}"/>
 
                 </layout:VerticalLayout>
 
@@ -104,7 +104,7 @@
                 <contentRight>
                     <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
                     <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-                    <Button id="cancel" text="Cancel" visible="false" press="handleCancelPress"/>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
                 </contentRight>
             </Bar>
         </uxap:footer>

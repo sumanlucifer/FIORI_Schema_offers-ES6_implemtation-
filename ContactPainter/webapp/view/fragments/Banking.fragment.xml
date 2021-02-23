@@ -3,19 +3,23 @@
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>BankingDetails}"/>
+                <Label text="{i18n>RegistrationDate}"/>
+                <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountHolderName}"/>
                 <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountType}"/>
-                <Text text="{PainterBankDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankName}"/>
-                <Text text="{PainterBankDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{PainterBankDetails/BankNameDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountNumber}"/>
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>IFSCCode}"/>
                 <Text text="{PainterBankDetails/IfscCode}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Label text="{i18n>BankStatus}" />
+                <Text />
                 <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>}"/>
-                 <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
+                <Label text="{i18n>SelectedKYCDocument}"/>
+                <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
                     <buttons>
                         <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
                     </buttons>
@@ -24,6 +28,7 @@
                 <VBox height="auto" width="auto">
                     <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 </VBox>
+                
             </f:content>
         </f:SimpleForm>
     </VBox>
