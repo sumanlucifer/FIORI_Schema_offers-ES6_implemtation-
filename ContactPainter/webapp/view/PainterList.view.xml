@@ -13,15 +13,15 @@
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                             <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
-                                                                                                                    <fb:control>
-                                                                                                                        <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
-                                                                                                                                				path: '/PainterSet'
-                                                                                                                                			}">
-                                                                                                                            <SuggestionItem text="{Name}"/>
-                                                                                                                        </SearchField>
-                                                                                                                        
-                                                                                                                    </fb:control>
-                                                                                                                </fb:FilterGroupItem> -->
+                                                                                                                                                <fb:control>
+                                                                                                                                                    <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
+                                                                                                                                                            				path: '/PainterSet'
+                                                                                                                                                            			}">
+                                                                                                                                                        <SuggestionItem text="{Name}"/>
+                                                                                                                                                    </SearchField>
+                                                                                                                                                    
+                                                                                                                                                </fb:control>
+                                                                                                                                            </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
@@ -32,10 +32,10 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>RegistrationDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <!-- <ComboBox id="cmbxRegDate" items="{path:'/PainterSet',sorter:{path:'CreatedAt',group:true,descending:true}}" selectedKey="{oModelView>/filterBar/CreatedAt}">
-                                                                            <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
-                                    
-                                                                        </ComboBox> -->
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" dateValue="{oModelView>/filterBar/CreatedAt}" displayFormat="dd/MM/yyyy"></DatePicker>
+                                                                                                                <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
+                                                                        
+                                                                                                            </ComboBox> -->
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -62,7 +62,7 @@
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column id="nameColumn">
+                    <Column width="15%" id="nameColumn">
                         <Text text="{i18n>Name}"/>
                     </Column>
                     <Column>
@@ -72,7 +72,7 @@
                         <Text text="{i18n>RegistrationDate}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>PrimaryMobile}"/>
+                        <Text text="{i18n>MobileNumber}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>AgeGroup}"/>
@@ -80,8 +80,14 @@
                     <Column>
                         <Text text="{i18n>LinkPrimaryDealer}"/>
                     </Column>
+                     <Column>
+                        <Text text="{i18n>KycStatus}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>BankStatus}"/>
+                    </Column>
                     <Column>
-                        <Text text="{i18n>Status}"/>
+                        <Text text="{i18n>RegStatus}"/>
                     </Column>
                     <Column width="10%">
                         <Text text="{i18n>Action}"/>
@@ -91,12 +97,14 @@
                 <items>
                     <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
-                            <ObjectIdentifier title="{Name}" titleActive="true"/>
+                            <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
                             <Text text="{MembershipCard}"/>
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{AgeGroup/AgeGroup}"/>
                             <Text text="{DealerId}"/>
+                             <Text text="Pending"/>
+                             <Text text="Pending"/>
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>

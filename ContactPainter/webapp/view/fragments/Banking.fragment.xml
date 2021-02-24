@@ -19,15 +19,9 @@
                 <Text />
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
-                <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
-                    <buttons>
-                        <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
-                    </buttons>
-                </RadioButtonGroup>
-                <Label text="{i18n>AadhaarCardNumber}"/>
-                <VBox height="auto" width="auto">
-                    <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                </VBox>
+                <Text text = "{PainterKycDetails/KycTypeDetails/KycType}"/>
+                <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 
             </f:content>
         </f:SimpleForm>

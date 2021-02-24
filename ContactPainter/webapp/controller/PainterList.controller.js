@@ -109,6 +109,7 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "Name") {
                 aFlaEmpty = false;
@@ -116,7 +117,13 @@ sap.ui.define(
                   new Filter(
                     "tolower(Name)",
                     FilterOperator.Contains,
-                    "'" + oViewFilter[prop].trim().toLowerCase().replace("'","''") + "'")
+                    "'" +
+                      oViewFilter[prop]
+                        .trim()
+                        .toLowerCase()
+                        .replace("'", "''") +
+                      "'"
+                  )
                 );
               } else {
                 aFlaEmpty = false;
@@ -362,13 +369,10 @@ sap.ui.define(
           );
         },
         _Deactivate: function (oData, sPath, oBject) {
-          oData.update(
-            sPath,
-            {
-              Id: parseInt(oBject["Id"]),
-              IsArchived: true,
-            },
-            {
+            var oPayload={
+                IsArchived:true
+            }
+            oData.update(sPath+"/IsArchived", oPayload, {
               success: function (mData) {
                 MessageToast.show(oBject["Name"] + " Sucessfully Deactivated.");
                 oData.refresh();
@@ -377,8 +381,7 @@ sap.ui.define(
                 var oRespText = JSON.parse(data.responseText);
                 MessageBox.error(oRespText["error"]["message"]["value"]);
               },
-            }
-          );
+            });
         },
       }
     );
