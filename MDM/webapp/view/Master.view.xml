@@ -1,0 +1,49 @@
+<mvc:View displayBlock="true" controllerName="com.knpl.pragati.MDM.controller.Master" height="100%"
+	  xmlns="sap.m"
+	  xmlns:f="sap.f"
+      xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	  xmlns:mvc="sap.ui.core.mvc">
+	<f:DynamicPage id="dynamicPageId"
+                   class="masterPage"
+				   toggleHeaderOnTitleClick="false">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+                    <OverflowToolbar class="headerToolbar" width="100%">
+                        <Title text="{i18n>masterPageTitle}"/>
+						<ToolbarSpacer/>
+					</OverflowToolbar>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+
+		<!-- DynamicPage Content -->
+		<f:content>
+            <VBox>
+                <Toolbar class="headerToolbar sapUiTinyMarginBottom" width="100%">
+                    <ToolbarSpacer/>
+                    <SearchField class="searchFieldRightMargin" search="onSearch" width="27rem"/>
+                </Toolbar>
+                <List
+                    id="tabDataList"
+                    growing="true"
+                    growingThreshold="20"
+                    growingScrollToLoad="false"
+                    items="{
+                            path: 'tabData>/tabs',
+                            sorter: {
+                                path: 'tabName'
+                            }
+                        }"
+                    includeItemInSelection="true" >
+                    <ObjectListItem
+                    title="{tabData>tabName}"
+                    data:key="{tabData>tabId}"
+                    type="Active"
+                    press="onListItemPress"></ObjectListItem>
+                </List>
+            </VBox>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>
