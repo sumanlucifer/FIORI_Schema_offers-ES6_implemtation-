@@ -12,15 +12,16 @@ sap.ui.define([
     'sap/m/ColumnListItem',
     'sap/m/Label',
     'sap/m/SearchField',
-    'sap/m/Token'
+    'sap/m/Token',
+    "../model/formatter",
 ],
     function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device,
-        MessageToast, MessageBox, typeString, ColumnListItem, Label, SearchField, Token, ) {
+        MessageToast, MessageBox, typeString, ColumnListItem, Label, SearchField, Token, formatter) {
         "use strict";
         var dealerID;
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
 
-
+                        formatter: formatter,
 
             onInit: function () {
 

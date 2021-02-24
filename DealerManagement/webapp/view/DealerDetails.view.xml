@@ -140,7 +140,7 @@
                                                 <Text text="{Id}"/>
                                                 <Text text="{PainterAddress}"/>
                                                 <Text text="{AgeGroup}"/>
-                                                <Text text="{CreatedAt}"/>
+                                                <Text  text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                                 
                                                 <Button text="Unlink" type="Reject" press="changeLinkStatus"></Button>
                                             </cells>

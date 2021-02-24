@@ -214,6 +214,11 @@ sap.ui.define([
                     dealerID: oEvent.getSource().getBindingContext().getObject().Id
                 });
                 this.presentBusyDialog();
+            },
+            onReset :function (){
+                var oModel = this.getComponentModel();
+                console.log(oModel);
+
             }
 
             /*onDetailPress: function (oEvent) {
