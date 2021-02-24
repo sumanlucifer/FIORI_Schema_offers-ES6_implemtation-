@@ -26,8 +26,8 @@
         <footer>
             <m:OverflowToolbar>
 				<m:ToolbarSpacer/>
-				<m:Button text="{= ${oModelView>/edit} === true ? 'Update' : 'Add' }" type="Emphasized" press="onPressSave"/>
                 <m:Button text="Cancel" type="Transparent" press="handleClose"/>
+                	<m:Button text="{= ${oModelView>/edit} === true ? 'Update' : 'Add' }" type="Emphasized" press="onPressSave"/>
 			</m:OverflowToolbar>
         </footer>
 	</DynamicPage>
