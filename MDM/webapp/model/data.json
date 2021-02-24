@@ -65,6 +65,19 @@
             "tabName": "Complaint Type",
             "smartTblEntity": "MasterComplaintTypeSet",
             "smartTblFields": "ComplaintType"
+        },
+         {
+			"tabId": 11,
+            "tabName": "FAQ Category",
+            "smartTblEntity": "MasterFAQCategorySet",
+            "smartTblFields": "FAQCategory"
+        },
+         {
+			"tabId": 12,
+            "tabName": "Security Question",
+            "smartTblEntity": "MasterSecurityQuestionSet",
+            "smartTblFields": "Question"
         }
+        
 	]
 }
