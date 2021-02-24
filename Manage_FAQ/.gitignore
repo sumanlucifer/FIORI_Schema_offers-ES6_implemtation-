@@ -7,3 +7,5 @@
 *.env1
 *.zip
 .vscode/
+# auto generated wildcard
+debasisa_web/Manage_FAQ/.env

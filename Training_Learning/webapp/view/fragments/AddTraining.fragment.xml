@@ -1,0 +1,65 @@
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbx" width="100%">
+        <f:SimpleForm id="TrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>TrainingDetails}"/>
+                <Label text="{i18n>colTrainingType}"/>
+                <ComboBox required="false" items="{path:'/MasterTrainingTypeSet'}" selectedKey="{path:'oModelView>/TrainingTypeId' }">
+                    <items>
+                        <core:Item text="{TrainingType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>colTrainingName}"/>
+                <Input required="true" maxLength="100" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <Label text="{i18n>colRewardPoints}"/>
+                <Input required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+
+                <Label text="{i18n>colStartDate}"/>
+                <DatePicker valueStateText="Enter a valid date, less than or equal to today." dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelView>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="dpicker" placeholder="DD/MM/YYYY" required="true"/>
+                <Label text="{i18n>colLink}"/>
+                <Input required="true" maxLength="100" value="{path : 'oModelView>/Url', type : 'sap.ui.model.type.String' }"/>
+
+                <Label text="{i18n>colStartTime}"/>
+                <DatePicker dateValue="{path:'oModelView>/StartTime'}" value="{path:'oModelView>/StartTime'}"/>
+                <Label text="{i18n>colEndTime}"/>
+                <Input required="true" maxLength="100" value="{path : 'oModelView>/EndTime' }"/>
+
+                <core:Title text="{i18n>TargetGroup}"/>
+                <Label text="{i18n>colSelectAll}"/>
+                <Switch state="{objectView>SelectGroup}" customTextOn="Yes" customTextOff="No">
+					<layoutData>
+						<FlexItemData growFactor="1"/>
+					</layoutData>
+				</Switch>
+                <Label text="{i18n>colZone}"/>
+                <Input required="true" maxLength="100" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <Label text="{i18n>colDepot}"/>
+                <Input required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <Label text="{i18n>colDivision}"/>
+                <Input required="true" maxLength="100" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <Label text="{i18n>colPainterType}"/>
+                <Input required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <Label text="{i18n>colPainterArcheType}"/>
+                <Input required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+
+                <Label text="{i18n>colTrainingDescription}"/>
+                <Input required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+
+                <core:Title text="{i18n>Questionnaire}"/>
+                <List id="List" mode="Delete" delete="handleDelete" enableBusyIndicator="true" headerText="{i18n>colHighlights}" growing="true"
+					items="{path: 'oModelView>Highlights' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer/>
+				    		<Button press="addQuestionnaire" text="{i18n>btnAddQuestionnaire}"/>
+						</Toolbar>
+					</headerToolbar>
+					<CustomListItem>
+						<Input width="100%" value="{oModelView>Highlight}" visible="{= ${oModelView>/IsArchived} !== true }"/>
+					</CustomListItem>
+				</List>
+
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

@@ -20,18 +20,28 @@
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
+								<fb:control>
+									<ComboBox>
+                                        <items>
+                                            <core:Item text="{i18n>active}" key="0"/>
+                                            <core:Item text="{i18n>inActive}" key="1"/>
+                                        </items>
+                                    </ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
 						</fb:filterGroupItems>
 					</fb:FilterBar>
 				</f:content>
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding traininglearning-tab">
+			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}">
 				<items>
 					<IconTabFilter text="{worklistView>/training}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingType' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -68,31 +78,39 @@
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
                                 <Column>
+									<Text text="{i18n>colStatus}"/>
+								</Column>
+                                <Column>
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem>
+								<ColumnListItem press="onListItemPressTraining" type="Navigation">
 									<cells>
 										<Text text="{Title}"/>
-                                        <Text text="{CreatedAt}"/>
-                                        <Text text="{Title}"/>
+                                        <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
+                                        <Text text="{TrainingType/TrainingType}"/>
                                         <Text text="{StartDate}"/>
-                                        <Text text="{StartTime}"/>
-                                        <Text text="{CreatedBy}"/>
+                                        <Text text="{StartTime}-{EndTime}"/>
+                                        <Text text="{CreatedByName}"/>
+                                        <!-- <Text text="{Status}"/> -->
+                                        <HBox>
+                                        <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
+                                        <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
+                                        </HBox>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>
 							</items>
 						</Table>
 					</IconTabFilter>
-					<IconTabFilter text="{worklistView>/learning}">
+					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -123,20 +141,23 @@
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
                                 <Column>
+									<Text text="{i18n>colStatus}"/>
+								</Column>
+                                <Column>
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem>
+								<ColumnListItem press="onListItemPressVideo" type="Navigation">
 									<cells>
-                                        <!-- <Text text="{Url}"/> -->
                                         <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{Title}"/>
-                                        <Text text="{CreatedAt}"/>
-                                        <Text text="{CreatedBy}"/>
+                                        <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
+                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{Status}"/>
 										<HBox>
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>Remove}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>

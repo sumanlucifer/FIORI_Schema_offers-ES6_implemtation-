@@ -10,6 +10,7 @@ modules:
   requires:
   - name: uaa_knpl-influencer-web
   - name: knpl-influencer-web_html_repo_runtime
+  - name: destination-knpl-pragati
   - name: portal_resources_knpl-influencer-web
   - name: knpl-portal-saas-registry
   parameters:
@@ -120,6 +121,11 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
+- name: destination-knpl-pragati
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite    
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
