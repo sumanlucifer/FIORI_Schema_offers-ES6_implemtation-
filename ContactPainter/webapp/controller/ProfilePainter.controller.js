@@ -71,7 +71,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,Preference/Language,PainterContact,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Assets/AssetTypeDetails,Dealers,Preference/SecurityQuestion";
+            "AgeGroup,Preference/Language,PainterContact,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Assets/AssetTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -133,7 +133,7 @@ sap.ui.define(
             EditTb2AST: false,
             AnotherMobField: false,
             PainterAddDet: {
-              DOB: "",
+              JoiningDate: "",
               StateKey: "",
               Citykey: "",
               DealerId: "",
@@ -154,12 +154,12 @@ sap.ui.define(
           //setting the value property for the date this will help in resolving the date validation
           // at the time of calling the validation function
 
-          var oDate = oDataValue["DOB"];
+          var oDate = oDataValue["JoiningDate"];
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
           });
           oControlModel.setProperty(
-            "/PainterAddDet/DOB",
+            "/PainterAddDet/JoiningDate",
             oDateFormat.format(oDate)
           );
           //setting up secondry mobile number data
@@ -298,6 +298,11 @@ sap.ui.define(
           //   }
 
           oPayload["Dealers"] = oDealers;
+
+          //setting up painter kyc data
+          
+          
+         
 
           var oData = this.getView().getModel();
           var sPath = "/" + oCtrlModel.getProperty("/bindProp");
@@ -545,6 +550,25 @@ sap.ui.define(
           }
           //oModel.refresh(true);
           this._setFDLTbleFlag();
+        },
+        onKycChange: function (oEvent) {
+          var oModel = this.getView().getModel("oModelView");
+
+          var oView = this.getView();
+          if (oEvent.getSource().getSelectedKey() == "") {
+            oView.byId("kycIdNo").setValueState("None");
+            oModel.setProperty("/PainterKycDetails/GovtId", "");
+          }
+        },
+        fmtLabel: function (mParam1) {
+          var oData = this.getView().getModel(),
+            oPayload = "";
+          if (mParam1 == "") {
+            return "Select the KYC to enable the below field.";
+          } else {
+            oPayload = oData.getProperty("/MasterKycTypeSet(" + mParam1 + ")");
+            return "Enter the " + oPayload["KycType"] + " Number";
+          }
         },
         fmtLink: function (mParam1) {
           var sPath = "/MasterRelationshipSet(" + mParam1 + ")";

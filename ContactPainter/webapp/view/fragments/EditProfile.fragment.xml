@@ -6,7 +6,7 @@
                 <Label text="{i18n>MembershipId}"/>
                 <ObjectStatus text="{oModelView>/MembershipCard}" state="None"/>
                 <Label required="false" text="{i18n>DateOfJoining}"/>
-                <ObjectStatus text="{oModelControl>/PainterAddDet/DOB}" state="None"/>
+                <ObjectStatus text="{oModelControl>/PainterAddDet/JoiningDate}" state="None"/>
                 <Label text="{i18n>AgeGroup}"/>
                 <ObjectStatus state="None" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" />
                 <Label text="{i18n>PreferredLanguage}"/>

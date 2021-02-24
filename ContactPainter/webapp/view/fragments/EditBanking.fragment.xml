@@ -18,21 +18,22 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>AccountNumber}"/>
-                <Input required="true" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Input valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 <Label text="{i18n>IFSCCode}"/>
-                <Input required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                <Input valueStateText="IFSC Code should have letters followed by numbers." required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
-                <RadioButtonGroup selectedIndex="0" columns="3" width="100%">
-                    <buttons>
-                        <RadioButton id="RB1-1" text="{i18n>AadhaarCard}"/>
-                        <RadioButton id="RB1-2" text="{i18n>DrivingLicence}"/>
-                        <RadioButton id="RB1-3" text="{i18n>VoterId}"/>
-                    </buttons>
-                </RadioButtonGroup>
-                <Label text="{i18n>AadhaarCardNumber}"/>
-                <Input required="false"/>
-                <Label text=""/>
+                <Label text="{i18n>SelectedKYCDocument}"/>
+                <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
+                <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+            <!-- <ComboBox change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                                <items>
+                                    <core:Item text="{KycType}" key="{Id}"></core:Item>
+                                </items>
+                            </ComboBox>
+                            <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                            <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/> -->
             </f:content>
         </f:SimpleForm>
     </VBox>

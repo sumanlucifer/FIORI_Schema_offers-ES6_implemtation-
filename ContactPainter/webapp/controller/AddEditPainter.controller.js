@@ -91,7 +91,7 @@ sap.ui.define(
               AgeGroupId: "",
               Name: "",
               Email: "",
-              DOB: null,
+              JoiningDate: null,
             },
             Preference: {
               LanguageId: "",
@@ -106,7 +106,7 @@ sap.ui.define(
               TeamSizeKey: "",
               SMobile1: "",
               SMobile2: "",
-              DOB: "",
+              JoiningDate: "",
               AccountTypeKey: "",
               BankNameKey: "",
             },
@@ -137,8 +137,8 @@ sap.ui.define(
               IfscCode: "",
             },
             PainterKycDetails: {
-              KYCStatus: "",
-              AadhaarCardNo: "",
+              KycTypeId: "",
+              GovtId: "",
             },
           });
 
@@ -180,7 +180,7 @@ sap.ui.define(
           if (bValidation && cTbleFamily && dTbleAssets) {
             this._postDataToSave();
           }
-          console.log(bValidation);
+          
         },
         _postDataToSave: function () {
           var oViewModel = this.getView().getModel("oModelView");
@@ -255,7 +255,19 @@ sap.ui.define(
           var oBankingPayload = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
           );
+          //Painter KYC Details
 
+          var oNewKYCObj = this._ReturnObjects(
+            oViewModel.getProperty("/PainterKycDetails")
+          );
+          var oKycPayload;
+          if (Object.keys(oNewKYCObj).length !== 0) {
+            oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
+            oKycPayload = oNewKYCObj;
+          } else {
+            oKycPayload = null;
+          }
+        
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
@@ -266,6 +278,7 @@ sap.ui.define(
               PainterFamily: oPtrFamily,
               Assets: oPayloadDevice,
               PainterBankDetails: oBankingPayload,
+              PainterKycDetails: oKycPayload,
             },
             oPainterData
           );
@@ -275,7 +288,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
-              othat.navPressBack();
+              //othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -303,7 +316,8 @@ sap.ui.define(
           this._onClearMgsClass();
           this._oMessageManager = sap.ui.getCore().getMessageManager();
           var oView = this.getView();
-          console.log(this._oMessageManager.getMessageModel());
+         
+          
           oView.setModel(this._oMessageManager.getMessageModel(), "message");
           this._oMessageManager.registerObject(oView, true);
         },
@@ -327,16 +341,15 @@ sap.ui.define(
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
             //othat._setDataValue.call(othat);
-            //console.log(oView.byId("dpicker").setMinDate(new Date(2016, 0, 1)));
+          
+            
           });
         },
         _setDataValue: function () {
-          console.log("manik");
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
           });
           var Date4 = oDateFormat.format(new Date());
-          console.log(this.getView().byId("dpicker"));
           this.getView().byId("dpicker").setMaxDate(new Date());
         },
         _getFormFragment: function (sFragmentName) {
@@ -361,7 +374,7 @@ sap.ui.define(
             .setProperty("/AnotherMobField", true);
         },
         onPrimaryNoChang: function (oEvent) {
-          console.log("Event Pressed", oEvent.getSource().getValue());
+         
           var oSource = oEvent.getSource();
           if (oSource.getValueState() == "Error") {
             return;
@@ -370,7 +383,7 @@ sap.ui.define(
           var sBindValue = "";
           var oSouceBinding = oSource.getBinding("value").getPath();
           var aFieldGroup = sap.ui.getCore().byFieldGroupId("Mobile");
-          console.log(aFieldGroup);
+      
           var oModelView = this.getView().getModel("oModelView");
           for (var i of aFieldGroup) {
             if (oSource.getValue().trim() === "") {
@@ -433,7 +446,7 @@ sap.ui.define(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
           }
-          console.log(oSource.getSelectedKey());
+     
         },
         secDealerChanged: function (oEvent) {
           var oView = this.getView();
@@ -506,15 +519,17 @@ sap.ui.define(
             .getSource()
             .getBindingContext("oModelView")
             .getObject();
-          console.log(oObject);
+      
+            
           var oTable = oView.byId("idFamilyDetils");
           var oCells = oEvent.getSource().getParent().getParent().getCells();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          console.log(cFlag);
+     
+          
           var bFlag = true;
           //var cFlag = oValidator.validate();
-           var oCheckProp = ["RelationshipId", "Mobile", "Name"];
+          var oCheckProp = ["RelationshipId", "Mobile", "Name"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -627,7 +642,7 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-           var oCheckProp = ["AssetTypeId", "AssetName"];
+          var oCheckProp = ["AssetTypeId", "AssetName"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -680,14 +695,29 @@ sap.ui.define(
             oModel.setProperty("/EditTb2AST", false);
           }
         },
+        onKycChange: function (oEvent) {
+          var oModel = this.getView().getModel("oModelView");
+   
+          var oView = this.getView();
+          if (oEvent.getSource().getSelectedKey() == "") {
+            oView.byId("kycIdNo").setValueState("None");
+            oModel.setProperty("/PainterKycDetails/GovtId", "");
+          }
+        },
+        fmtLabel: function (mParam1) {
+          var oData = this.getView().getModel(),
+            oPayload = "";
+          if (mParam1 == "") {
+            return "Select the KYC to enable the below field.";
+          } else {
+            oPayload = oData.getProperty("/MasterKycTypeSet(" + mParam1 + ")");
+            return "Enter the " + oPayload["KycType"] + " Number";
+          }
+        },
         // myFactory: function (sId, oContext) {
         //   var sEdit = oContext.getModel().getProperty("/mode");
         //   var object = oContext.getObject();
-        //   console.log(
-        //     "1{oModelView>" +
-        //       oContext.getModel().getProperty(oContext.getPath())["value"] +
-        //       "}"
-        //   );
+        //   
         //   var oSmartControl;
         //   if (object["aggregationType"] == "Input") {
         //     oSmartControl = new FormElement({
@@ -715,10 +745,8 @@ sap.ui.define(
         //       ],
         //     });
         //   } else if (object["aggregationType"] == "Date") {
-        //     console.log(
-        //       oContext.getModel().getProperty(oContext.getPath())["value"]
-        //     );
-
+        //   
+        
         //     oSmartControl = new FormElement({
         //       label: "{oModelView>label}",
         //       fields: [
@@ -769,7 +797,8 @@ sap.ui.define(
         //     sElementBPath = oView.getElementBinding().getPath();
         //   }
 
-        //   console.log(this._ErrorMessages);
+        // 
+        
         //   for (var oProp of this._ErrorMessages) {
         //     oMessage = new sap.ui.core.message.Message({
         //       message: oProp["message"],
@@ -810,7 +839,8 @@ sap.ui.define(
         //       sInput.setProperty("valueState", "None");
         //     }
         //   });
-        //   console.log(this._ErrorMessages);
+        //  
+        
         //   return valid;
         // },
         // _getMessagePopover: function () {
@@ -872,7 +902,7 @@ sap.ui.define(
             //City: oDataValue["PainterAddress"]["City"],
           };
 
-          console.log(oPayload, sEntityPath);
+          
           oDataModel.update(sEntityPath, oPayload, {
             success: function (data) {
               oModelView.setProperty("/busy", false);
@@ -883,7 +913,7 @@ sap.ui.define(
               MessageBox.error("Unable to upadte the printer");
             },
           });
-          console.log();
+          
         },
         _saveAdd: function () {
           var oView = this.getView();
@@ -909,7 +939,7 @@ sap.ui.define(
           });
         },
         onExit: function () {
-          console.log("manik exit");
+          
         },
       }
     );

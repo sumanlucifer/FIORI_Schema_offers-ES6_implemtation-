@@ -57,7 +57,7 @@ sap.ui.define(
           var sArgName = window.decodeURIComponent(
             oEvent.getParameter("arguments").name
           );
-          console.log(sArgsFields, sArgesProp, sArgesMode, sArgName);
+          //console.log(sArgsFields, sArgesProp, sArgesMode, sArgName);
 
           if (sArgesMode == "edit") {
             this.getView().bindElement("/" + sArgesProp);
@@ -101,7 +101,7 @@ sap.ui.define(
             });
             oData["addData"][aArray[prop]] = "";
           }
-          console.log(oData);
+          //console.log(oData);
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelView");
           this._initMessage();
@@ -115,9 +115,9 @@ sap.ui.define(
           this._oMessageManager.registerObject(oView, true);
         },
         navPressBack: function () {
-          console.log(
-            this.getView().getModel("oModelView").getProperty("/navBackKey")
-          );
+        //   console.log(
+        //     this.getView().getModel("oModelView").getProperty("/navBackKey")
+        //   );
           var oRouter = this.getOwnerComponent().getRouter();
 
           oRouter.navTo("RouteMaster", {
@@ -151,7 +151,7 @@ sap.ui.define(
           if (sCheckAdd !== "add") {
             sElementBPath = oView.getElementBinding().getPath();
           }
-          console.log(this._ErrorMessages, sCheckAdd);
+          //console.log(this._ErrorMessages, sCheckAdd);
           for (var oProp of this._ErrorMessages) {
             oMessage = new sap.ui.core.message.Message({
               message: oProp["message"],
@@ -178,7 +178,7 @@ sap.ui.define(
           } else {
             sPath = "oModelView>InpVal";
           }
-          console.log(sPath);
+          //console.log(sPath);
           var atextFileds = [
             "Title",
             "Description",
@@ -295,7 +295,7 @@ sap.ui.define(
               sInput.setProperty("valueState", "None");
             }
           });
-          console.log(this._ErrorMessages);
+          //console.log(this._ErrorMessages);
           return valid;
         },
         onPressSave: function () {
@@ -360,7 +360,7 @@ sap.ui.define(
           for (var prop of aProp2) {
             aPayload[prop["value"]] = prop["InpVal"];
           }
-          console.log(aPayload);
+          //console.log(aPayload);
           var sTitle = oMdlView.getProperty("/titleP2");
           var oRouter = this.getOwnerComponent().getRouter();
           var navKey = oMdlView.getProperty("/navBackKey");

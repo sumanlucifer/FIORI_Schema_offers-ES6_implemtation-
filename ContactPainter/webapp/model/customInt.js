@@ -3,29 +3,33 @@ sap.ui.define(
   function (SimpleType, ValidateException) {
     "use strict";
 
-    return SimpleType.extend("com.knpl.pragati.ContactPainter.model.customInt", {
-      formatValue: function (oValue) {
-       
-        if (oValue == "") {
-          return oValue;
-        } else if (oValue !== "") {
-          return parseInt(oValue);
-        }
-      },
-      parseValue: function (oValue) {
-        var abc = 0;
-        if (oValue == "") {
-          abc = "";
-        } else if (Number.isInteger(parseInt(oValue))) {
-          abc = parseInt(oValue);
-        }
-        return abc;
-      },
-      validateValue: function (oValue) {
-        if (!Number.isInteger(parseInt(oValue))) {
-          throw new ValidateException("Kindly enter or select a valid value");
-        }
-      },
-    });
+    return SimpleType.extend(
+      "com.knpl.pragati.ContactPainter.model.customInt",
+      {
+        formatValue: function (oValue) {
+         
+          if (oValue == "") {
+            return oValue;
+          } else if (oValue !== "") {
+            return parseInt(oValue);
+          }
+        },
+        parseValue: function (oValue) {
+          var abc = 0;
+          if (oValue == "") {
+            abc = "";
+          } else if (Number.isInteger(parseInt(oValue))) {
+            abc = parseInt(oValue);
+          }
+          return abc;
+        },
+        validateValue: function (oValue) {
+         
+          if (!Number.isInteger(parseInt(oValue))) {
+            throw new ValidateException("Kindly enter or select a valid value");
+          }
+        },
+      }
+    );
   }
 );
