@@ -30,7 +30,7 @@
                 </ComboBox>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
-                <Input required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :40, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                <Input maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
@@ -117,6 +117,7 @@
                 <Column>
                     <Text text="{i18n>ContactNumber}"/>
                 </Column>
+            
                 <Column width="10%">
                     <Text text="{i18n>Action}"/>
                 </Column>
@@ -135,11 +136,11 @@
                             <ObjectIdentifier title="{path:'oModelView>RelationshipId',formatter:'.fmtLink'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input maxLength="50"  width="60%" required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>Name}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input valueStateText="Kindly enter the mobile number of 10 digits." required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input  width="60%" valueStateText="Kindly enter the mobile number of 10 digits." required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <HBox>
@@ -167,6 +168,9 @@
                 <Column>
                     <Text text="{i18n>AssetName}"/>
                 </Column>
+                <Column>
+                    <Text />
+                </Column>
                 <Column width="10%">
                     <Text text="{i18n>Action}"/>
                 </Column>
@@ -185,9 +189,10 @@
                             <ObjectIdentifier title="{path:'oModelView>AssetTypeId',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input required="true" value="{path:'oModelView>AssetName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input maxLength="50" width="60%" required="true" value="{path:'oModelView>AssetName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>AssetName}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
+                        <Text />
                         <HBox justifyContent="SpaceBetween">
                             <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onAssetEdit"></Button>
                             <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" type="Transparent" press="onAsetSave"></Button>

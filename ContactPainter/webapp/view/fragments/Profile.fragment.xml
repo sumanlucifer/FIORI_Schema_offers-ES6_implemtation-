@@ -10,12 +10,13 @@
 
                 <Label text="{i18n>AgeGroup}"/>
 
-                <Text text="{AgeGroup/AgeGroup}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
 
                 <Label text="{i18n>PreferredLanguage}"/>
 
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-
+                <Label text="{i18n>LinkPrimaryDealer}"/>
+                <Text/>
                 <Label text="{i18n>LinkSecondryDealer}"/>
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
 
@@ -37,7 +38,7 @@
                 <Label text="{i18n>City}"/>
                 <Text text="{PainterAddress/CityDetails/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>Area}"/>
-                <Text text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text="{i18n>SecurityQuestions}"/>
                 <Label text="{i18n>Question}"/>
                 <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }"/>

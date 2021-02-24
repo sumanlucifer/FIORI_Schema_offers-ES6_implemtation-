@@ -514,7 +514,8 @@ sap.ui.define(
           console.log(cFlag);
           var bFlag = true;
           //var cFlag = oValidator.validate();
-          for (var abc in oObject) {
+           var oCheckProp = ["RelationshipId", "Mobile", "Name"];
+          for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
               break;
@@ -626,7 +627,8 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          for (var abc in oObject) {
+           var oCheckProp = ["AssetTypeId", "AssetName"];
+          for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
               MessageToast.show(

@@ -83,7 +83,11 @@ sap.ui.define(
           this._ResetFilterBar();
         },
         fmtStatus: function (mParam) {
-          var sLetter = mParam.toLowerCase().split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+          var sLetter = mParam
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
           return sLetter;
         },
         onFilter: function (oEvent) {
@@ -94,7 +98,7 @@ sap.ui.define(
             .getProperty("/filterBar");
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
-            if ( oViewFilter[prop] )  {
+            if (oViewFilter[prop]) {
               console.log(oViewFilter[prop]);
               if (prop === "AgeGroupId") {
                 aFlaEmpty = false;
@@ -105,6 +109,14 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                );
+              } else if (prop === "Name") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "tolower(Name)",
+                    FilterOperator.Contains,
+                    "'" + oViewFilter[prop].trim().toLowerCase().replace("'","''") + "'")
                 );
               } else {
                 aFlaEmpty = false;

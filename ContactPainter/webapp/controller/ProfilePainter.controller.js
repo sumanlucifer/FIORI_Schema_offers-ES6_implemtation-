@@ -70,14 +70,14 @@ sap.ui.define(
             oEvent.getParameter("arguments").prop
           );
           var oView = this.getView();
-          var sExpandParam = "AgeGroup,Preference/Language,PainterContact,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Assets/AssetTypeDetails,Dealers,Preference/SecurityQuestion"
+          var sExpandParam =
+            "AgeGroup,Preference/Language,PainterContact,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Assets/AssetTypeDetails,Dealers,Preference/SecurityQuestion";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
               path: "/" + oProp,
               parameters: {
-                expand:
-                  sExpandParam,
+                expand: sExpandParam,
               },
             });
           }
@@ -140,7 +140,7 @@ sap.ui.define(
               SecondryDealer: [],
               SMobile1: "",
               SMobile2: "",
-              DOJ:""
+              DOJ: "",
             },
           };
           var oControlModel = new JSONModel(oDataCtrl);
@@ -184,7 +184,14 @@ sap.ui.define(
             "/PainterAddDet/SecondryDealer",
             oDealerArray
           );
-
+          //setting up the state/city filtering data
+          var oCity = oView.byId("cmbCity"),
+            sStateKey = oDataValue["PainterAddress"]["StateId"] || "",
+            aFilterCity = [],
+            oBindingCity = oCity.getBinding("items");
+          aFilterCity.push(new Filter("StateId", FilterOperator.EQ, sStateKey));
+          oBindingCity.filter(aFilterCity);
+          //setting up model to the view
           var oNewData = Object.assign({}, oDataValue);
 
           console.log(oDataValue);
@@ -208,7 +215,7 @@ sap.ui.define(
           var oValidator = new Validator();
           var oVbox1 = oView.byId("ObjectPageLayout");
           //var oVbox2 = oView.byId("idVbBanking");
-          var bValidation = oValidator.validate(oVbox1,true);
+          var bValidation = oValidator.validate(oVbox1, true);
           var cValidation = true; //oValidator.validate(oVbox2);
           var dTbleFamily = !oModelControl.getProperty("/EditTb1FDL");
           var eTbleAssets = !oModelControl.getProperty("/EditTb2AST");
@@ -228,7 +235,7 @@ sap.ui.define(
               "Kindly input all the mandatory(*) fields to continue."
             );
           }
-          if ( cValidation == false ) {
+          if (cValidation == false) {
             MessageToast.show(
               "Kindly input all the mandatory(*) fields to continue."
             );
@@ -240,7 +247,6 @@ sap.ui.define(
           console.log(bValidation);
         },
 
-        
         _postDataToSave: function () {
           var oView = this.getView();
           var oCtrlModel = oView.getModel("oModelControl");
@@ -310,7 +316,7 @@ sap.ui.define(
               oPayload["PainterSegmentation"][c] = null;
             }
           }
-           for (var d in oPayload["PainterAddress"]) {
+          for (var d in oPayload["PainterAddress"]) {
             if (oPayload["PainterAddress"][d] === "") {
               oPayload["PainterAddress"][d] = null;
             }
@@ -341,6 +347,18 @@ sap.ui.define(
           );
           return oNew;
         },
+        fmtAddress: function (mParam1, mParam2, mParam3) {
+          if (mParam1) {
+            return mParam1.trim() + ", " + mParam2 + ", " + mParam3;
+          } else {
+            return mParam2 + ", " + mParam3;
+          }
+        },
+        fmtAgeGrp: function (mParam1) {
+          if (mParam1) {
+            return mParam1 + " years";
+          }
+        },
         onPressDealerLink: function (oEvent) {
           var oSource = oEvent.getSource();
           var oView = this.getView();
@@ -358,16 +376,13 @@ sap.ui.define(
             oPopover.openBy(oSource);
           });
         },
-        
+
         onSecMobLinkPress: function () {
           this.getView()
             .getModel("oModelControl")
             .setProperty("/AnotherMobField", true);
         },
-        onPrimaryNoChang:function(){
-
-        },
-         onPrimaryNoChang: function (oEvent) {
+        onPrimaryNoChang: function (oEvent) {
           console.log("Event Pressed", oEvent.getSource().getValue());
           var oSource = oEvent.getSource();
           if (oSource.getValueState() == "Error") {
@@ -375,13 +390,13 @@ sap.ui.define(
           }
           var bFlag = true;
           var sBindValue = "";
-          var oSouceBinding = oSource.getBinding("value").getPath()
+          var oSouceBinding = oSource.getBinding("value").getPath();
           var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
           console.log(aFieldGroup);
           var oModelView = this.getView().getModel("oModelView");
           for (var i of aFieldGroup) {
-            if(oSource.getValue().trim()===""){
-                break;
+            if (oSource.getValue().trim() === "") {
+              break;
             }
             if (oSource.getId() === i.getId()) {
               continue;
@@ -512,7 +527,8 @@ sap.ui.define(
           console.log(cFlag);
           var bFlag = true;
           //var cFlag = oValidator.validate();
-          for (var abc in oObject) {
+          var oCheckProp = ["RelationshipId", "Mobile", "Name"];
+          for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
               break;
@@ -542,7 +558,7 @@ sap.ui.define(
         fmtAsset: function (mParam1) {
           var sPath = "/MasterAssetTypeSet(" + mParam1 + ")";
           var oData = this.getView().getModel().getProperty(sPath);
-         if (oData !== undefined && oData !== null) {
+          if (oData !== undefined && oData !== null) {
             return oData["AssetType"];
           } else {
             return mParam1;
@@ -623,7 +639,7 @@ sap.ui.define(
           this._setASTTbleFlag();
         },
         onAsetSave: function (oEvent) {
-           var oView = this.getView();
+          var oView = this.getView();
           var oModel = oView.getModel("oModelView");
           var oObject = oEvent
             .getSource()
@@ -633,7 +649,8 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          for (var abc in oObject) {
+          var oCheckProp = ["AssetTypeId", "AssetName"];
+          for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
               MessageToast.show(
@@ -687,7 +704,7 @@ sap.ui.define(
             oModelControl.setProperty("/EditTb2AST", false);
           }
         },
-        
+
         _save: function () {
           var oModel = this.getView().getModel("oModelView");
           console.log(oModel.getData());
@@ -702,16 +719,16 @@ sap.ui.define(
           var oVboxProfile = oView.byId("idVbProfile");
           var sFragName = mParam == "Edit" ? "EditProfile" : "Profile";
           oVboxProfile.destroyItems();
-          var oFragProf = Fragment.load({
+          return Fragment.load({
             id: oView.getId(),
             controller: othat,
             name: "com.knpl.pragati.ContactPainter.view.fragments." + sFragName,
           }).then(function (oControlProfile) {
             oView.addDependent(oControlProfile);
             oVboxProfile.addItem(oControlProfile);
+            promise.resolve();
+            return promise;
           });
-          promise.resolve();
-          return promise;
         },
         _loadEditBanking: function (mParam) {
           var promise = jQuery.Deferred();
@@ -720,16 +737,16 @@ sap.ui.define(
           var oVboxProfile = oView.byId("idVbBanking");
           var sFragName = mParam == "Edit" ? "EditBanking" : "Banking";
           oVboxProfile.destroyItems();
-          var oFragProf = Fragment.load({
+          return Fragment.load({
             id: oView.getId(),
             controller: othat,
             name: "com.knpl.pragati.ContactPainter.view.fragments." + sFragName,
           }).then(function (oControlProfile) {
             oView.addDependent(oControlProfile);
             oVboxProfile.addItem(oControlProfile);
+            promise.resolve();
+            return promise;
           });
-          promise.resolve();
-          return promise;
         },
 
         handleCancelPress: function () {

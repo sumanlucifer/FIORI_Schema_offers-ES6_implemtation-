@@ -15,9 +15,12 @@
                 </uxap:expandedContent>
 
                 <uxap:snappedHeading>
-                    <m:FlexBox fitContainer="true" alignItems="Center">
-                        <m:Avatar src="sap-icon://picture"  class="sapUiTinyMarginEnd"/>
-                        <m:Title text="{Name}" wrapping="true"/>
+                    <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                        <m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/>
+                        <FlexBox direction="Column" renderType="Bare">
+                            <Title text="{Name}" wrapping="true"/>
+                            <Text text="{MembershipCard}"/>
+                        </FlexBox>
                     </m:FlexBox>
                 </uxap:snappedHeading>
             </uxap:ObjectPageDynamicHeaderTitle>
@@ -26,16 +29,15 @@
         </uxap:headerTitle>
 
         <uxap:headerContent>
-            <m:FlexBox wrap="Wrap" renderType="Bare">
-                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin" />
+            <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
 
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
-                    <m:ObjectStatus title="{i18n>AgeGroup}" text="{AgeGroup/AgeGroup}"/>
-                </layout:VerticalLayout>
-
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="25%">
-                    <m:ObjectStatus renderWhitespace="true" maxLines="3" wrapping="true" title="{i18n>Address}" text="{PainterAddress/AddressLine1} {PainterAddress/CityDetails/City}, {PainterAddress/StateDetails/State}"/>
+                    <m:ObjectStatus title="{i18n>AgeGroup}" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}"/>
+                </m:FlexBox>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
+                    <m:ObjectStatus title="{i18n>Address}" text="{parts:['PainterAddress/AddressLine1','PainterAddress/CityDetails/City','PainterAddress/StateDetails/State'], formatter:'.fmtAddress' }"/>
 
                 </layout:VerticalLayout>
 
@@ -71,11 +73,20 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Training}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
                             <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Offers}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Offers" type="XML"/>
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>

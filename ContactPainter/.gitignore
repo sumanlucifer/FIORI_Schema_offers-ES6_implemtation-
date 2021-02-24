@@ -64,4 +64,6 @@ Demo/debasisa_web/Training_Learning/.env1
 knpl-influencer-web/MasterDataManagement/.env15
 
 # auto generated wildcard
-MDM/.env2
+knpl-influencer-web/MasterDataManagement/.env18
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env13
