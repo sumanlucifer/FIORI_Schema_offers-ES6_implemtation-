@@ -287,8 +287,9 @@ sap.ui.define(
           var othat = this;
           oData.create("/PainterSet", oPayload, {
             success: function () {
-              MessageToast.show("Painter Sucessfully Created");
-              //othat.navPressBack();
+              
+                MessageToast.show("Painter Sucessfully Created");
+              othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
