@@ -27,9 +27,6 @@
 			},
 			"payload": {
 				"viz": [{
-					"appId": "com.knpl.pragati.MasterDataManagement",
-					"vizId": "Manage-MDM"
-				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
 				}, {
@@ -45,6 +42,10 @@
 					"id": "com.knpl.pragati.Manage_Notifications-6-1611902399399",
 					"appId": "com.knpl.pragati.Manage_Notifications",
 					"vizId": "Manage-Notifications"
+				}, {
+					"id": "com.knpl.pragati.MDM-5-1614158582160",
+					"appId": "com.knpl.pragati.MDM",
+					"vizId": "Manage-MDM"
 				}]
 			}
 		}, {

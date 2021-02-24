@@ -11,3 +11,6 @@ debasisa_web/Manage_FAQ/.env4
 debasisa_web/Training_Learning/.env2
 # auto generated wildcard
 debasisa_web/Manage_FAQ/.env5
+
+# auto generated wildcard
+MDM/.env2

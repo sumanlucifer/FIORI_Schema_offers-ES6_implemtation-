@@ -9,6 +9,20 @@
         "applicationVersion": {
             "version": "1.0.0"
         },
+  "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Manage",
+                    "action": "MDM",
+                    "title": "{{appTitle}}"
+                }
+            }
+        },
+
         "ach": "set-ach",
         "resources": "resources.json",
         "dataSources": {

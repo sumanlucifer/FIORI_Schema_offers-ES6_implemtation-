@@ -72,7 +72,7 @@ modules:
       target-path: resources/
 - name: MasterDataManagement
   type: html5
-  path: MasterDataManagement
+  path: MDM
   build-parameters:
     builder: custom
     commands:

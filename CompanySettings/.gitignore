@@ -10,3 +10,5 @@ knpl-influencer-web/CompanySettings/.env2
 Demo/debasisa_web/Training_Learning/.env1
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env15
+# auto generated wildcard
+MDM/.env2
