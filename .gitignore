@@ -6,6 +6,8 @@
 *.zip
 */dist/
 .vscode/
+*/.gitignore/
+*.env*
 # auto generated wildcard
 knpl-influencer-web/Admin/.env
 # auto generated wildcard

@@ -32,7 +32,7 @@
                     "action": "Training",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://incident"
+                    "icon": "sap-icon://e-learning"
                 }
             }
         }
@@ -118,7 +118,7 @@
                     ]
                 },
                 {
-                    "pattern": "TrainingSet/{objectId}",
+                    "pattern": "LearningSet/{objectId}",
                     "name": "object",
                     "target": [
                         "object"
@@ -126,7 +126,7 @@
                 },
                 {
                     "name": "createObject",
-                    "pattern": "TrainingSet",
+                    "pattern": "LearningSet",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
