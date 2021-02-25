@@ -103,6 +103,7 @@ sap.ui.define([
                 aCurrentFilterValues.push(this.getInputText("idFiscalYear"));
 
                 this.filterTable(aCurrentFilterValues);
+
             },
 
             getInputText: function (controlId) {
@@ -121,20 +122,20 @@ sap.ui.define([
                 var aFilters = [];
 
                 var aKeys = [
-                    "search","PlantCode", "Depot","SalesGroupName","FiscalYear"
+                    "search", "PlantCode", "Depot", "SalesGroupName", "FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
-                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search" )
+                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
                         aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
-                    else if(aCurrentFilterValues[i].length > 0 && aKeys[i] == "search" )    
+                    else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
                 return aFilters;
             },
 
-            SearchInAllFields: function(aKeys, aFilters, searchValue){
-                for(let i=1 ; i<aKeys.length; i++){
+            SearchInAllFields: function (aKeys, aFilters, searchValue) {
+                for (let i = 1; i < aKeys.length; i++) {
                     aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
                 }
             },
@@ -216,11 +217,21 @@ sap.ui.define([
                 });
                 this.presentBusyDialog();
             },
-            onReset :function (){
+            onReset: function () {
                 var oModel = this.getComponentModel();
                 console.log(oModel);
 
-            }
+            },
+            // handleSuggest: function (oEvent) {
+            //     var aFilters = [];
+            //     var sTerm = oEvent.getParameter("suggestValue");
+            //     if (sTerm) {
+            //         aFilters.push(new sap.ui.model.Filter("FiscalYear", sap.ui.model.FilterOperator.Contains, sTerm));
+            //     }
+            //     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+            //     //do not filter the provided suggestions before showing them to the user - important
+            //     oEvent.getSource().setFilterSuggests(false);
+            // }
 
             /*onDetailPress: function (oEvent) {
                 var oButton = oEvent.getSource();

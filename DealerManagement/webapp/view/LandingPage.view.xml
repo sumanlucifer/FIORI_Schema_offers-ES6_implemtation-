@@ -50,9 +50,9 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="FiscalYear" label="Fiscal Year" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idFiscalYear" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{FiscalYear}" />
+                                    <Input id="idFiscalYear" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}" >
+                                        <suggestionItems >
+                                            <core:Item text="{FiscalYear}"  />
                                         </suggestionItems>
                                     </Input>
                                 </fb:control>
