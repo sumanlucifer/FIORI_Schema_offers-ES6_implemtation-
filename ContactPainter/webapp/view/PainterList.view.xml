@@ -84,7 +84,7 @@
                         <Text text="{i18n>KycStatus}"/>
                     </Column>
                      <Column>
-                        <Text text="{i18n>BankStatus}"/>
+                        <Text text="{i18n>BankNameStatus}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>RegStatus}"/>
