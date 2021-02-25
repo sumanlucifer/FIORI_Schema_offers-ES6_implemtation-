@@ -93,6 +93,7 @@ sap.ui.define([
             },
 
             onSearch: function (oEvent) {
+                //console.log(oEvent.getSource().getBasicSearchValue());
                 var aCurrentFilterValues = [];
 
                 aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
