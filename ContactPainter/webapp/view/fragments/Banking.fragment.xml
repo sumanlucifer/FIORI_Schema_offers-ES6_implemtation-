@@ -15,14 +15,15 @@
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>IFSCCode}"/>
                 <Text text="{PainterBankDetails/IfscCode}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>BankStatus}" />
-                <Text />
+                <Label text="{i18n>BankDetailsStatus}"/>
+                <Text text="Pending"/>
+                <Text/>
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
-                <Text text = "{PainterKycDetails/KycTypeDetails/KycType}"/>
-                <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
+                <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-                
+
             </f:content>
         </f:SimpleForm>
     </VBox>
