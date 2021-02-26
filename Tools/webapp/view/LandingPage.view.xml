@@ -1,0 +1,118 @@
+<mvc:View controllerName="com.knpl.pragati.Tools.controller.LandingPage" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants">
+    <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiContentPadding">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>landingPageViewTitle}"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <SearchField id="idSearchInput" placeholder="{i18n>searchFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="{i18n>creationDateFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DatePicker id="idCreationDateInput" placeholder="{i18n>creationDateFilterPlaceholder}"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="{i18n>titleFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="idTitleInput" placeholder="{i18n>titleFilterPlaceholder}" showSuggestion="true" showValueHelp="true" suggestionItems="{/MasterExternalLinksSet}">
+                                        <suggestionItems>
+                                            <core:Item text="{Title}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>createdByFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="idCreatedByInput" placeholder="{i18n>createdByFilterPlaceholder}" showSuggestion="true" showValueHelp="true">
+                                        <suggestionItems>
+                                            <core:Item text="{CreatedBy}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+            <Table
+                id="idToolTable"
+                width="auto"
+                items="{path: '/MasterExternalLinksSet', filters: [{path: 'IsArchived', operator: 'EQ', value1: false}]}"
+                noDataText="{i18n>tblNoDataText}"
+                growing="true"
+                growingScrollToLoad="true"
+                busy="{ViewModel>/busy}"
+                updateFinished="onUpdateFinished">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="{i18n>tblTitle} ({ViewModel>/TotalCount})" />
+                        <ToolbarSpacer />
+                        <Button text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
+                        <Button tooltip="Sort" icon="sap-icon://sort" press="onSort" />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column width="25%" minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>tblColUrl}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>tblColTitle}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>tblColDescription}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>tblColCreationDate}"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>tblColCreatedBy}"/>
+                    </Column>
+                    <Column width="10%">
+                        <Text text="{i18n>tblColAction}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation" press="onPressListItem">
+                        <cells>
+                            <Link text="{Url}" href="{Url}" target="blank" tooltip="{Url}"/>
+                            <Text text="{Title}"/>
+                            <Text text="{Description}"/>
+                            <Text text="{path: 'CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                            <Text text="{CreatedBy}"/>
+                            <HBox>
+                                <Text text="{Status}"/>
+                                <Button type="Transparent" icon="sap-icon://edit" tooltip="{i18n>editBtnTooltip}" press="onPressEdit"/>
+                                <Button type="Transparent" icon="sap-icon://delete" tooltip="{i18n>deleteBtnTooltip}" press="onPressDelete"/>
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
