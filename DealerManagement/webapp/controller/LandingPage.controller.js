@@ -129,15 +129,20 @@ sap.ui.define([
                     if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
                         aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
+                            
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
                 return aFilters;
             },
 
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
+               
+    
                 for (let i = 1; i < aKeys.length; i++) {
+
                     aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
                 }
+                
             },
 
             handleSortButtonPressed: function () {
