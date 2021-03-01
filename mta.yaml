@@ -74,6 +74,10 @@ modules:
       - Training_Learning-content.zip
       name: Training_Learning
       target-path: resources/
+    - artifacts:
+      - Tools-content.zip
+      name: Tools
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -178,7 +182,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-
+- name: Tools
+  type: html5
+  path: Tools
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service

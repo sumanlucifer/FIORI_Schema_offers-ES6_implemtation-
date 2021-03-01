@@ -47,6 +47,10 @@
 					"id": "com.knpl.pragati.Training_Learning-5-1614334447383",
 					"appId": "com.knpl.pragati.Training_Learning",
 					"vizId": "Manage-Training"
+				}, {
+					"id": "com.knpl.pragati.Tools-6-1614575221046",
+					"appId": "com.knpl.pragati.Tools",
+					"vizId": "Manage-TLS"
 				}]
 			}
 		}, {
