@@ -153,9 +153,6 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         onValueHelpRequested: function() {
             var oColModel = new JSONModel({
                 "cols": [{
-                    "label": "ID",
-                    "template": "Id"
-                },{
                     "label": "Name",
                     "template": "Name"
                 }]
@@ -167,7 +164,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 			this._oValueHelpDialog.getTableAsync().then(function (oTable) {
                 oTable.setModel(this.getComponentModel());
                 oTable.setModel(oColModel, "columns");
-                oTable.setWidth("30rem");
+                oTable.setWidth("25rem");
 
 				if (oTable.bindRows) {
 					oTable.bindAggregation("rows", {path: '/AdminSet',filters: [new Filter("IsArchived", FilterOperator.EQ, false)]});
