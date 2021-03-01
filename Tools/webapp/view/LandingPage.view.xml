@@ -100,7 +100,7 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
-                    <Column width="10%">
+                    <Column width="{=${device>/system/desktop} ? '10%' : 'auto'}">
                         <Text text="{i18n>tblColAction}"/>
                     </Column>
                 </columns>

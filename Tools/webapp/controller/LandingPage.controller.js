@@ -184,7 +184,8 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                                     return new Label({ text: "{" + column.template + "}" });
                                 })
                             });
-                        }
+                        },
+                        templateShareable: false
 					});
 				}
 
