@@ -38,7 +38,10 @@ sap.ui.define([
                 shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
                 tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
-                tableBusyDelay: 0
+                tableBusyDelay: 0,
+                filterBar: {
+                    FAQCategoryId: null
+                }
             });
             this.setModel(oViewModel, "worklistView");
 
@@ -108,6 +111,21 @@ sap.ui.define([
             //         that.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
             //     }
             // })
+        },
+
+        onReset: function () {
+          this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+          var aCurrentFilterValues = [];
+          var aResetProp = {
+            FAQCategoryId: null
+          };
+          var oViewModel = this.getView().getModel("oViewModel");
+          oViewModel.setProperty("/filterBar", aResetProp);
+          var oTable = this.byId("table");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter([]);
         },
 
         /**

@@ -32,7 +32,7 @@
                     "action": "Training",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://incident"
+                    "icon": "sap-icon://e-learning"
                 }
             }
         }
@@ -90,7 +90,7 @@
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "None",
                     "defaultUpdateMethod": "Put",
-                    "useBatch" : false,
+                    "useBatch": false,
                     "defaultOperationMode": "Auto"
                 }
             }
@@ -118,21 +118,35 @@
                     ]
                 },
                 {
-                    "pattern": "TrainingSet/{objectId}",
+                    "pattern": "LearningSet/{objectId}",
                     "name": "object",
                     "target": [
                         "object"
                     ]
                 },
                 {
-					"name": "createObject",
-					"pattern": "TrainingSet",
-					"titleTarget": "",
-					"greedy": false,
-					"target": [
-						"object"
-					]
-				}
+                    "name": "createObject",
+                    "pattern": "LearningSet",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "object"
+                    ]
+                },
+                {
+                    "name": "RouteAddEditT",
+                    "pattern": "TrainingManage/{mode}/{id}",
+                    "target": [
+                        "TargetRouteAddEditT"
+                    ]
+                },
+                {
+                    "name": "RouteTrainingTab",
+                    "pattern": "TrainingTab/{mode}/{prop}",
+                    "target": [
+                        "TargetTrainingTab"
+                    ]
+                }
             ],
             "targets": {
                 "worklist": {
@@ -146,6 +160,20 @@
                     "viewId": "object",
                     "viewLevel": 2,
                     "title": "{i18n>objectViewTitle}"
+                },
+                "TargetRouteAddEditT": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "AddEditTraining",
+                    "viewName": "AddEditTraining"
+                },
+                "TargetTrainingTab": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "TrainingTab",
+                    "viewName": "TrainingTab"
                 },
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",

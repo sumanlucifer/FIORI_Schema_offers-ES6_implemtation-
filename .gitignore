@@ -7,25 +7,8 @@
 *.env*
 *.zip
 .vscode/
+*/.gitignore/
 *.env*
-*/dist/
-
-# auto generated wildcard
-Manage_FAQ/.env
-# auto generated wildcard
-OrgModule/.env
-# auto generated wildcard
-Manage_FAQ/.env6
-
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env
-
-# auto generated wildcard
-knpl1/MasterDataManagement/.env10
-# auto generated wildcard
-knpl-influencer-web/OrgModule/.env10
-# auto generated wildcard
-ZSampGWCnct/GatewaySrvTest/.env3
 # auto generated wildcard
 ZSampGWCnct/GatewaySrvTest/.env4
 # auto generated wildcard
@@ -59,6 +42,7 @@ debasisa_web/Manage_FAQ/.env4
 debasisa_web/Training_Learning/.env2
 # auto generated wildcard
 debasisa_web/Manage_FAQ/.env5
+<<<<<<< HEAD
 
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env18
@@ -66,3 +50,17 @@ knpl-influencer-web/MasterDataManagement/.env18
 knpl-influencer-web/ContactPainter/.env13
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env14
+=======
+# auto generated wildcard
+debasisa_web/Training_Learning/.env
+# auto generated wildcard
+debasisa_web/Training_Learning/.env4
+# auto generated wildcard
+debasisa_web/Training_Learning/.env5
+# auto generated wildcard
+debasisa_web/Manage_FAQ/.env
+# auto generated wildcard
+debasisa_web/Manage_FAQ/.env2
+# auto generated wildcard
+debasisa_web/Training_Learning/.env8
+>>>>>>> debasisa

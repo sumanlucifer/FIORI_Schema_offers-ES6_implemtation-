@@ -78,9 +78,11 @@ sap.ui.define([
 		 * @private
 		 */
         _onObjectMatched: function (oEvent) {
+            debugger;
             this.getModel("objectView").setProperty("/sMode", "E");
             this.getModel("objectView").setProperty("/busy", true);
             var sObjectId = oEvent.getParameter("arguments").objectId;
+            var Id = oEvent.getParameter("arguments").Id;
             this.getModel().metadataLoaded().then(function () {
                 var sObjectPath = this.getModel().createKey("/LearningSet", {
                     Id: sObjectId
@@ -111,7 +113,7 @@ sap.ui.define([
         _setView: function (data) {
 
             this._oMessageManager.removeAllMessages();
-
+            debugger;
             var oViewModel = this.getModel("objectView");
             oViewModel.setProperty("/busy", false);
             this._pendingDelOps = [];
@@ -146,6 +148,7 @@ sap.ui.define([
 		 * Save edit or create FAQ details 
 		 */
         onSave: function () {
+            debugger;
             this._oMessageManager.removeAllMessages();
 
             var oViewModel = this.getModel("objectView");
@@ -175,9 +178,26 @@ sap.ui.define([
                 IsNotValid: false,
                 sMsg: []
             },
+                url = data.Url,
                 aCtrlMessage = [];
             var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-
+            
+            if (data.Title === "") {
+                oReturn.IsNotValid = true;
+                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TTL");
+                aCtrlMessage.push({
+                    message: "MSG_PLS_ENTER_ERR_TTL",
+                    target: "/oDetails/Url"
+                });
+            } else 
+            if (data.Url === "" ) {
+                oReturn.IsNotValid = true;
+                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                aCtrlMessage.push({
+                    message: "MSG_PLS_ENTER_ERR_URL",
+                    target: "/oDetails/Url"
+                });
+            } else 
             if (data.Url !== "" && !url.match(regex)) {
                 oReturn.IsNotValid = true;
                 oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
@@ -214,6 +234,7 @@ sap.ui.define([
         },
 
         CUOperation: function (oPayload) {
+            debugger;
             var oViewModel = this.getModel("objectView");
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this;

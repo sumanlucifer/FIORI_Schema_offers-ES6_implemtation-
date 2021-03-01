@@ -8,4 +8,4 @@
 *.zip
 .vscode/
 # auto generated wildcard
-Manage_FAQ/.env
+debasisa_web/Manage_FAQ/.env

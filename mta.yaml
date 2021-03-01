@@ -70,6 +70,10 @@ modules:
       - CompanySettings-content.zip
       name: CompanySettings
       target-path: resources/
+    - artifacts:
+      - Training_Learning-content.zip
+      name: Training_Learning
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -166,6 +170,15 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: Training_Learning
+  type: html5
+  path: Training_Learning
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
@@ -179,6 +192,11 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
+- name: destination-knpl-pragati
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite    
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
@@ -186,11 +204,6 @@ resources:
       sizeLimit: 2
     service: html5-apps-repo
     service-plan: app-host
-- name: destination-knpl-pragati
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: destination
-    service-plan: lite
 - name: portal_resources_knpl-influencer-web
   type: org.cloudfoundry.managed-service
   parameters:

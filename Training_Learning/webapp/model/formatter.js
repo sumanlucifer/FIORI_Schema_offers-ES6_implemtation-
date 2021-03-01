@@ -14,6 +14,25 @@ sap.ui.define([], function () {
 				return "";
 			}
 			return parseFloat(sValue).toFixed(2);
+        },
+        
+        formatDate: function (dValue) {
+            debugger;
+			if (!dValue) {
+				return "";
+			}
+			var sValue = dValue;
+			var pattern = "dd MMM yyyy";
+			// if (tValue) {
+			// 	sValue = sValue + " " + tValue;
+			// }
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: pattern
+			});
+
+			var oNow = new Date(sValue);
+			return oDateFormat.format(oNow); //string in the same format as "Thu, Jan 29, 2017"
+			
 		}
 
 	};

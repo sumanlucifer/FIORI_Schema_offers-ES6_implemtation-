@@ -61,7 +61,7 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailSubject"),
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
-        },	});
+        },	
         
         /*
 		 * Common function for showing warning dialogs
@@ -94,6 +94,7 @@ sap.ui.define([
 		 */
 		showToast: function (sMsgTxt) {
 			MessageToast.show(this.getResourceBundle().getText(sMsgTxt));
-		}
+        }
+    });    
 
 });
