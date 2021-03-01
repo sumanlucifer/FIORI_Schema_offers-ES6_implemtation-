@@ -84,7 +84,7 @@
                         <core:Item text="{SitePerMonth}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <Label text="{i18n>Potential}"/>
+                <Label text="{i18n>AnnualPaidPotential}"/>
                 <ComboBox items="{path:'/MasterPotentialSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterSegmentation/PotentialId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{Potential}" key="{Id}"/>

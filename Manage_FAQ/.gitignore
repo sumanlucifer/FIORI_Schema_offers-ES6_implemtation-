@@ -8,4 +8,6 @@
 *.zip
 .vscode/
 # auto generated wildcard
-debasisa_web/Manage_FAQ/.env
+Manage_FAQ/.env
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env14

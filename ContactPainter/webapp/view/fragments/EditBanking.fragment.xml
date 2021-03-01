@@ -3,37 +3,31 @@
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>BankingDetails}"/>
-                <Label text="{i18n>AccountHolderName}"/>
-                <Input required="true" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
-                <Label text="{i18n>AccountType}"/>
-                <ComboBox items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelView>/PainterBankDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
-                    <items>
-                        <core:Item text="{AccountType}" key="{Id}"/>
-                    </items>
-                </ComboBox>
+                <Label text="{i18n>IFSCCode}"/>
+                <Input valueStateText="IFSC Code should have letters followed by numbers." required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <Label text="{i18n>BankName}"/>
                 <ComboBox required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterBankDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                     <items>
                         <core:Item text="{BankName}" key="{Id}"></core:Item>
                     </items>
                 </ComboBox>
-                <Label text="{i18n>AccountNumber}"/>
+                <Label text="{i18n>AccountType}"/>
+                <ComboBox items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelView>/PainterBankDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{AccountType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                   <Label text="{i18n>AccountNumber}"/>
                 <Input valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
-                <Label text="{i18n>IFSCCode}"/>
-                <Input valueStateText="IFSC Code should have letters followed by numbers." required="true" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                <Label text="{i18n>ConfirmAccNumber}"/>
+                <Input required="true"/>
+                <Label text="{i18n>AccountHolderName}"/>
+                <Input required="true" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>SelectedKYCDocument}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
                 <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-            <!-- <ComboBox change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
-                                <items>
-                                    <core:Item text="{KycType}" key="{Id}"></core:Item>
-                                </items>
-                            </ComboBox>
-                            <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                            <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/> -->
             </f:content>
         </f:SimpleForm>
     </VBox>
