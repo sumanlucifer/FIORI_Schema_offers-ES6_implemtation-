@@ -115,14 +115,29 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
-                    "tolower(Name)",
-                    FilterOperator.Contains,
-                    "'" +
-                      oViewFilter[prop]
-                        .trim()
-                        .toLowerCase()
-                        .replace("'", "''") +
-                      "'"
+                    [
+                      new Filter(
+                        "tolower(Name)",
+                        FilterOperator.Contains,
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
+                      ),
+                      new Filter(
+                        "MembershipCard",
+                        FilterOperator.Contains,
+                        oViewFilter[prop].trim().toUpperCase()
+                      ),
+                      new Filter(
+                        "Mobile",
+                        FilterOperator.Contains,
+                        oViewFilter[prop].trim()
+                      ),
+                    ],
+                    false
                   )
                 );
               } else {
@@ -369,19 +384,19 @@ sap.ui.define(
           );
         },
         _Deactivate: function (oData, sPath, oBject) {
-            var oPayload={
-                IsArchived:true
-            }
-            oData.update(sPath+"/IsArchived", oPayload, {
-              success: function (mData) {
-                MessageToast.show(oBject["Name"] + " Sucessfully Deactivated.");
-                oData.refresh();
-              },
-              error: function (data) {
-                var oRespText = JSON.parse(data.responseText);
-                MessageBox.error(oRespText["error"]["message"]["value"]);
-              },
-            });
+          var oPayload = {
+            IsArchived: true,
+          };
+          oData.update(sPath + "/IsArchived", oPayload, {
+            success: function (mData) {
+              MessageToast.show(oBject["Name"] + " Sucessfully Deactivated.");
+              oData.refresh();
+            },
+            error: function (data) {
+              var oRespText = JSON.parse(data.responseText);
+              MessageBox.error(oRespText["error"]["message"]["value"]);
+            },
+          });
         },
       }
     );
