@@ -30,7 +30,7 @@
 							badgeIcon="sap-icon://camera"
 							badgeTooltip= "Sabine Mayer"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreationDate}"/>
                             <Text text="{path: 'DetailViewModel>/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}" />
@@ -38,6 +38,15 @@
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
                             <Text text="{DetailViewModel>/CreatedBy}" />
+                        </layout:HorizontalLayout>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <layout:HorizontalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
+                            <ObjectStatus
+                                class="toolStatus"
+                                text="{=${DetailViewModel>/Status} ? ${i18n>statusActive} : ${i18n>statusInActive}}"
+                                state="{=${DetailViewModel>/Status} ? 'Success' : 'None'}" />
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>

@@ -10,3 +10,11 @@
 .actionPage .sapUiFormElementLbl {
     margin-top: 0.5rem;
 }
+
+.valueHelpDialog {
+    max-width: 34rem !important;
+}
+
+.toolStatus {
+    margin-top: 1px !important;
+}
