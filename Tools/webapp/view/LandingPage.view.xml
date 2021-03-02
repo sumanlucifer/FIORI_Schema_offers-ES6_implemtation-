@@ -115,7 +115,7 @@
                             <Text text="{CreatedByDetails/Name}"/>
                             <HBox>
                                 <ObjectStatus
-                                    class="sapUiTinyMarginTop"
+                                    class="statusWidth sapUiTinyMarginTop"
                                     text="{=${Status} ? ${i18n>statusActive} : ${i18n>statusInActive}}"
                                     state="{=${Status} ? 'Success' : 'None'}" />
                                 <Button type="Transparent" icon="sap-icon://edit" tooltip="{i18n>editBtnTooltip}" press="onPressEdit"/>

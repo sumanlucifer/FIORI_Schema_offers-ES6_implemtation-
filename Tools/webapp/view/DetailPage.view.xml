@@ -37,16 +37,21 @@
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
-                            <Text text="{DetailViewModel>/CreatedBy}" />
+                            <Text text="{DetailViewModel>/CreatedByDetails/Name}" />
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <layout:HorizontalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
-                            <ObjectStatus
-                                class="toolStatus"
-                                text="{=${DetailViewModel>/Status} ? ${i18n>statusActive} : ${i18n>statusInActive}}"
-                                state="{=${DetailViewModel>/Status} ? 'Success' : 'None'}" />
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="statusLabel sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
+                            <SegmentedButton
+                                width="{=${device>/system/desktop} ? '9rem' : '17rem'}"
+                                selectedKey="{=${DetailViewModel>/Status} ? 'active' : 'inactive'}"
+                                selectionChange="onChangeStatus">
+                                <items>
+                                    <SegmentedButtonItem text="{i18n>statusActive}" key="active" />
+                                    <SegmentedButtonItem text="{i18n>statusInActive}" key="inactive" />
+                                </items>
+                            </SegmentedButton>
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
