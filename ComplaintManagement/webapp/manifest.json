@@ -20,6 +20,21 @@
           "localUri": "localService/metadata.xml"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "Manage",
+          "action": "CM",
+          "title": "{{appTitle}}",
+          "subTitle": "{{appSubTitle}}",
+          "icon": "sap-icon://quality-issue"
+        }
+      }
     }
   },
   "sap.fiori": {
