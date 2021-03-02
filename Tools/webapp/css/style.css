@@ -7,6 +7,22 @@
     height: 100%;
 }
 
+.statusWidth {
+    width: 3.3rem;
+}
+
 .actionPage .sapUiFormElementLbl {
     margin-top: 0.5rem;
+}
+
+.valueHelpDialog {
+    max-width: 29rem !important;
+}
+
+.toolStatus {
+    margin-top: 1px !important;
+}
+
+.statusLabel {
+    margin-top: 0.5rem !important;
 }
