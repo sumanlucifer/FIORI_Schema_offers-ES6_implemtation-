@@ -4,7 +4,7 @@
             <Bar>
                 <contentLeft>
                     <Breadcrumbs currentLocationText="{i18n>AddNewTraining}">
-                        <Link text="{i18n>Training}" press="navPressBack"/>
+                        <Link text="{i18n>TrainingVideo}" press="navPressBack"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>
@@ -15,8 +15,8 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button text="{i18n>Cancel}" press="navPressBack"/>
-                <Button text="{i18n>Save}" type="Emphasized" press="onSave"/>
+                <Button text="{i18n>btnCancel}" press="onCancel"/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press="onSave"/>
             </Toolbar>
         </footer>
     </Page>

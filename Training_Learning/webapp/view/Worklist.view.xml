@@ -20,6 +20,11 @@
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="StartDate" label="{i18n>colStartDate}">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
 								<fb:control>
 									<ComboBox>
@@ -72,7 +77,7 @@
 									<Text text="{i18n>colStartDate}"/>
 								</Column>
                                 <Column>
-									<Text text="{i18n>colStartTime}"/>
+									<Text text="{i18n>colTime}"/>
 								</Column>
                                 <Column>
 									<Text text="{i18n>colCreatedBy}"/>

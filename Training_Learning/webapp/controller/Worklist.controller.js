@@ -193,8 +193,8 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath();
 
             function onYes() {
-                var data = this.getModel().getData(sPath);
-                this.getModel().update(sPath, {
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
                     IsArchived: true
                 }, {
                     success: this.showToast.bind(this, "MSG_SUCCESS_VIDEO_REMOVE")
@@ -207,8 +207,8 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath();
 
             function onYes() {
-                var data = this.getModel().getData(sPath);
-                this.getModel().update(sPath, {
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
                     IsArchived: true
                 }, {
                     success: this.showToast.bind(this, "MSG_SUCCESS_TRAINING_REMOVE")

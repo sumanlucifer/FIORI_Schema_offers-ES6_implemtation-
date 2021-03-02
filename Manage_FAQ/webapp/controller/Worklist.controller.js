@@ -214,10 +214,8 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath();
 
             function onYes() {
-                var data = this.getModel().getData(sPath);
-                this.getModel().update(sPath, {
-                    FAQQuestion: data.FAQQuestion,
-                    FAQAnswer: data.FAQAnswer,
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
                     IsArchived: true
                 }, {
                     success: this.showToast.bind(this, "MSG_SUCCESS_FAQ_REMOVE")

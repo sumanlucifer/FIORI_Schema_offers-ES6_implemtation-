@@ -17,7 +17,6 @@ sap.ui.define([], function () {
         },
         
         formatDate: function (dValue) {
-            debugger;
 			if (!dValue) {
 				return "";
 			}

@@ -275,77 +275,7 @@ sap.ui.define([
                 }
 
             });
-        },
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
-		 * @private
-		 */
-        _onObjectMatched: function (oEvent) {
-            var sObjectId = oEvent.getParameter("arguments").objectId;
-            this.getModel().metadataLoaded().then(function () {
-                var sObjectPath = this.getModel().createKey("LearningSet", {
-                    Id: sObjectId
-                });
-                this._bindView("/" + sObjectPath);
-            }.bind(this));
-        },
-
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {string} sObjectPath path to the object to be bound
-		 * @private
-		 */
-        _bindView: function (sObjectPath) {
-            var oViewModel = this.getModel("objectView"),
-                oDataModel = this.getModel();
-
-            this.getView().bindElement({
-                path: sObjectPath,
-                events: {
-                    change: this._onBindingChange.bind(this),
-                    dataRequested: function () {
-                        oDataModel.metadataLoaded().then(function () {
-                            // Busy indicator on view should only be set if metadata is loaded,
-                            // otherwise there may be two busy indications next to each other on the
-                            // screen. This happens because route matched handler already calls '_bindView'
-                            // while metadata is loaded.
-                            oViewModel.setProperty("/busy", true);
-                        });
-                    },
-                    dataReceived: function () {
-                        oViewModel.setProperty("/busy", false);
-                    }
-                }
-            });
-        },
-
-        _onBindingChange: function () {
-            var oView = this.getView(),
-                oViewModel = this.getModel("objectView"),
-                oElementBinding = oView.getElementBinding();
-
-            // No data for the binding
-            if (!oElementBinding.getBoundContext()) {
-                this.getRouter().getTargets().display("objectNotFound");
-                return;
-            }
-
-            var oResourceBundle = this.getResourceBundle(),
-                oObject = oView.getBindingContext().getObject(),
-                sObjectId = oObject.Id,
-                sObjectName = oObject.Title;
-
-            oViewModel.setProperty("/busy", false);
-
-            oViewModel.setProperty("/shareSendEmailSubject",
-                oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
-            oViewModel.setProperty("/shareSendEmailMessage",
-                oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         }
-
     });
 
 });
