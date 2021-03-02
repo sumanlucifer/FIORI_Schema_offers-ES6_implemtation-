@@ -81,7 +81,7 @@
                         <Text text="{i18n>LinkPrimaryDealer}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>SecondryDealers}"/>
+                        <Text text="{i18n>LinkSecondryDealer}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>KycStatus}"/>
