@@ -119,11 +119,12 @@ sap.ui.define(
           });
 
           // this._initEditData();
-          //this._initSaveModel();
+          // this._initSaveModel();
         },
         _initEditData: function () {
           var promise = jQuery.Deferred();
           var oView = this.getView();
+          var othat = this;
           var oControlModel2 = oView.getModel("oModelControl2");
           var sPath = oControlModel2.getProperty("/bindProp");
           var oDataCtrl = {
@@ -149,11 +150,11 @@ sap.ui.define(
 
           var oDataValue = oView.getModel().getObject("/" + sPath, {
             expand:
-              "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,Assets,Dealers",
+              "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Assets,Dealers",
           });
-          //setting the value property for the date this will help in resolving the date validation
+          // setting the value property for the date this will help in resolving the date validation
           // at the time of calling the validation function
-
+          console.log(oDataValue);
           var oDate = oDataValue["JoiningDate"];
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
@@ -162,7 +163,7 @@ sap.ui.define(
             "/PainterAddDet/JoiningDate",
             oDateFormat.format(oDate)
           );
-          //setting up secondry mobile number data
+          // setting up secondry mobile number data
           var iCountContact = 0;
           for (var j of oDataValue["PainterContact"]) {
             if (iCountContact == 0) {
@@ -174,7 +175,7 @@ sap.ui.define(
             iCountContact++;
           }
 
-          //setting up Dealers data
+          // setting up Dealers data
           var oDealer = oDataValue["Dealers"];
           var oDealerArray = [];
           for (var i of oDealer) {
@@ -184,29 +185,80 @@ sap.ui.define(
             "/PainterAddDet/SecondryDealer",
             oDealerArray
           );
-          //setting up the state/city filtering data
+          // setting up the state/city filtering data
           var oCity = oView.byId("cmbCity"),
             sStateKey = oDataValue["PainterAddress"]["StateId"] || "",
             aFilterCity = [],
             oBindingCity = oCity.getBinding("items");
           aFilterCity.push(new Filter("StateId", FilterOperator.EQ, sStateKey));
           oBindingCity.filter(aFilterCity);
-          //setting up model to the view
-          var oNewData = Object.assign({}, oDataValue);
 
+          // setting up model to the view
+          var oNewData = Object.assign({}, oDataValue);
           console.log(oDataValue);
+
+          //console.log(oNewData);
           var oModel = new JSONModel(oDataValue);
           oView.setModel(oModel, "oModelView");
+          // setting up the fields data so that the mobile user can also be viewed
+          var sReqFields = [
+            "Email",
+            "Mobile",
+            "Name",
+            "PainterAddress/AddressLine1",
+            "PainterAddress/CityId",
+            "PainterAddress/StateId",
+            "Preference/SecurityQuestionId",
+            "Preference/SecurityAnswer",
+            "PainterSegmentation/TeamSizeId",
+            "PainterSegmentation/PainterExperience",
+            "PainterSegmentation/SitePerMonthId",
+            "PainterSegmentation/PotentialId",
+            "PainterBankDetails/IfscCode",
+            "PainterBankDetails/BankNameId",
+            "PainterBankDetails/AccountTypeId",
+            "PainterBankDetails/AccountNumber",
+            "PainterBankDetails/AccountHolderName",
+            "PainterKycDetails/KycTypeId",
+            "PainterKycDetails/GovtId",
+          ];
+          var sValue = "",
+            sPlit;
+          for (var k of sReqFields) {
+            sValue = oModel.getProperty("/" + k);
+            sPlit = k.split("/");
+            if (sPlit.length > 1) {
+              if (
+                toString.call(oModel.getProperty("/" + sPlit[0])) !==
+                "[object Object]"
+              ) {
+                console.log(sPlit);
+                oModel.setProperty("/" + sPlit[0], {});
+              }
+            }
+            if (sValue == undefined) {
+              oModel.setProperty("/" + k, "");
+            }
+          }
+          console.log(oModel);
           oModel.refresh(true);
           promise.resolve();
           return promise;
         },
+        _checkJson: function (mParam) {
+          try {
+            JSON.parse(mParam);
+          } catch (e) {
+            return false;
+          }
+          return true;
+        },
         handleSavePress: function () {
-          //this._toggleButtonsAndView(false);
+          // this._toggleButtonsAndView(false);
           var oView = this.getView();
-          //oView.getModel("oModelControl").setProperty("/modeEdit", false);
+          // oView.getModel("oModelControl").setProperty("/modeEdit", false);
           this.onPressSave();
-          //this._postDataToSave();
+          // this._postDataToSave();
         },
         onPressSave: function () {
           var oView = this.getView();
@@ -214,9 +266,9 @@ sap.ui.define(
           var oModel = oView.getModel("oModelView");
           var oValidator = new Validator();
           var oVbox1 = oView.byId("ObjectPageLayout");
-          //var oVbox2 = oView.byId("idVbBanking");
+          // var oVbox2 = oView.byId("idVbBanking");
           var bValidation = oValidator.validate(oVbox1, true);
-          var cValidation = true; //oValidator.validate(oVbox2);
+          var cValidation = true; // oValidator.validate(oVbox2);
           var dTbleFamily = !oModelControl.getProperty("/EditTb1FDL");
           var eTbleAssets = !oModelControl.getProperty("/EditTb2AST");
 
@@ -263,7 +315,7 @@ sap.ui.define(
               delete prop["editable"];
             }
           }
-          //setting up contact number data
+          // setting up contact number data
           var aPainterSecContact = [];
           var SMobile1 = JSON.parse(
             JSON.stringify(oCtrlModel.getProperty("/PainterAddDet/SMobile1"))
@@ -289,21 +341,28 @@ sap.ui.define(
           );
           var oDealers = [];
           for (var i of oSecondryDealer) {
-            oDealers.push({
-              Id: parseInt(i),
-            });
+            oDealers.push({ Id: parseInt(i) });
           }
-          //   if (oPrimaryDealer !== "") {
+          // if (oPrimaryDealer !== "") {
           //     oDealers.push({ Id: parseInt(oPrimaryDealer) });
-          //   }
+          // }
 
           oPayload["Dealers"] = oDealers;
 
-          //setting up painter kyc data
-          
-          
-         
+          // setting up painter kyc data
+          var oNewKYCObj = this._ReturnObjects(
+            oViewModel.getProperty("/PainterKycDetails")
+          );
+          var oKycPayload=null;
+          if (Object.keys(oNewKYCObj).length !== 0) {
+            if(oNewKYCObj.hasOwnProperty("KycTypeId") && oNewKYCObj.hasOwnProperty("GovtId")){
+                oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
+                oKycPayload = oNewKYCObj;
+            }
+          }
+          oPayload["PainterKycDetails"] = oKycPayload;
 
+          //removing the empty values from gen data, painteraddress,preference,segmentation
           var oData = this.getView().getModel();
           var sPath = "/" + oCtrlModel.getProperty("/bindProp");
           for (var a in oPayload) {
@@ -440,7 +499,7 @@ sap.ui.define(
           }
           if (!sFlag) {
             oSource.clearSelection();
-            //oSource.setValue("");
+            // oSource.setValue("");
             MessageToast.show(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
@@ -448,19 +507,19 @@ sap.ui.define(
           console.log(oSource.getSelectedKey());
         },
         secDealerChanged: function (oEvent) {
-          //   var oView = this.getView();
-          //   var sPkey =
-          //   var mBox = oEvent.getSource();
-          //   var oItem = oEvent.getParameters()["changedItem"];
-          //   var sSKey = oItem.getProperty("key");
-          //   if (sPkey == sSKey) {
+          // var oView = this.getView();
+          // var sPkey =
+          // var mBox = oEvent.getSource();
+          // var oItem = oEvent.getParameters()["changedItem"];
+          // var sSKey = oItem.getProperty("key");
+          // if (sPkey == sSKey) {
           //     mBox.removeSelectedItem(oItem);
           //     mBox.removeSelectedItem(sSKey);
           //     MessageToast.show(
           //       oItem.getProperty("text") +
           //         " is already selected in the Primary Dealer"
           //     );
-          //   }
+          // }
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -531,7 +590,7 @@ sap.ui.define(
           var cFlag = oValidator.validate(oCells);
           console.log(cFlag);
           var bFlag = true;
-          //var cFlag = oValidator.validate();
+          // var cFlag = oValidator.validate();
           var oCheckProp = ["RelationshipId", "Mobile", "Name"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
@@ -548,7 +607,7 @@ sap.ui.define(
               "Kindly input 'family details' value in a proper format to continue"
             );
           }
-          //oModel.refresh(true);
+          // oModel.refresh(true);
           this._setFDLTbleFlag();
         },
         onKycChange: function (oEvent) {
@@ -565,6 +624,8 @@ sap.ui.define(
             oPayload = "";
           if (mParam1 == "") {
             return "Select the KYC to enable the below field.";
+          }else if(mParam1==undefined) {
+            return "";
           } else {
             oPayload = oData.getProperty("/MasterKycTypeSet(" + mParam1 + ")");
             return "Enter the " + oPayload["KycType"] + " Number";
@@ -791,14 +852,14 @@ sap.ui.define(
           oView.byId("cancel").setVisible(bEdit);
 
           // Set the right form type
-          //this._showFormFragment(bEdit ? "Change" : "Display");
+          // this._showFormFragment(bEdit ? "Change" : "Display");
         },
         _showFormFragment: function (sFragmentName) {
-          //   var oPage = this.byId("page");
-          //   oPage.removeAllContent();
-          //   this._getFormFragment(sFragmentName).then(function (oVBox) {
+          // var oPage = this.byId("page");
+          // oPage.removeAllContent();
+          // this._getFormFragment(sFragmentName).then(function (oVBox) {
           //     oPage.insertContent(oVBox);
-          //   });
+          // });
         },
         _getFormFragment: function (sFragmentName) {
           var pFormFragment = this._formFragments[sFragmentName],

@@ -426,6 +426,9 @@ sap.ui.define(
           if (sSecAccVal === "") {
             return;
           } else {
+            MessageToast.show(
+              "Kindly enter the same account number in the 'Confirm Account Number' field."
+            );
             oSecAccNo.setValue("");
           }
         },
