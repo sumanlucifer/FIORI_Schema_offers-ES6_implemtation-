@@ -154,7 +154,7 @@ sap.ui.define(
           });
           // setting the value property for the date this will help in resolving the date validation
           // at the time of calling the validation function
-          console.log(oDataValue);
+          
           var oDate = oDataValue["JoiningDate"];
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
@@ -190,14 +190,17 @@ sap.ui.define(
             sStateKey = oDataValue["PainterAddress"]["StateId"] || "",
             aFilterCity = [],
             oBindingCity = oCity.getBinding("items");
-          aFilterCity.push(new Filter("StateId", FilterOperator.EQ, sStateKey));
-          oBindingCity.filter(aFilterCity);
+          if (sStateKey !== "") {
+            aFilterCity.push(
+              new Filter("StateId", FilterOperator.EQ, sStateKey)
+            );
+            oBindingCity.filter(aFilterCity);
+          }
 
           // setting up model to the view
           var oNewData = Object.assign({}, oDataValue);
-          console.log(oDataValue);
-
-          //console.log(oNewData);
+         
+      
           var oModel = new JSONModel(oDataValue);
           oView.setModel(oModel, "oModelView");
           // setting up the fields data so that the mobile user can also be viewed
@@ -353,11 +356,14 @@ sap.ui.define(
           var oNewKYCObj = this._ReturnObjects(
             oViewModel.getProperty("/PainterKycDetails")
           );
-          var oKycPayload=null;
+          var oKycPayload = null;
           if (Object.keys(oNewKYCObj).length !== 0) {
-            if(oNewKYCObj.hasOwnProperty("KycTypeId") && oNewKYCObj.hasOwnProperty("GovtId")){
-                oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
-                oKycPayload = oNewKYCObj;
+            if (
+              oNewKYCObj.hasOwnProperty("KycTypeId") &&
+              oNewKYCObj.hasOwnProperty("GovtId")
+            ) {
+              oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
+              oKycPayload = oNewKYCObj;
             }
           }
           oPayload["PainterKycDetails"] = oKycPayload;
@@ -624,7 +630,7 @@ sap.ui.define(
             oPayload = "";
           if (mParam1 == "") {
             return "Select the KYC to enable the below field.";
-          }else if(mParam1==undefined) {
+          } else if (mParam1 == undefined) {
             return "";
           } else {
             oPayload = oData.getProperty("/MasterKycTypeSet(" + mParam1 + ")");
