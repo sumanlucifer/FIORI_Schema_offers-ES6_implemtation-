@@ -4,7 +4,7 @@
             <f:content>
                 <core:Title text="{i18n>PainterDetails}"/>
                 <Label text="{i18n>DateOfJoining}"/>
-                <DatePicker valueStateText="Enter a valid date, less than or equal to today." value="{path:'oModelView>/PainterDetails/JoiningDate', type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy' }, strictParsing: true, UTC:true  }" id="dpicker" placeholder="DD/MM/YYYY" required="true"/>
+                <DatePicker required="false" editable="false" value="{path:'oModelView>/PainterDetails/JoiningDate', type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy' } }"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
                 <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
@@ -221,9 +221,9 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>AccountNumber}"/>
-                <Input valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Input id="idAddAcntNum" change="onPrimaryAcChange" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 <Label text="{i18n>ConfirmAccNumber}"/>
-                <Input required="true"/>
+                <Input id="idCnfAcntNum" required="true" change="onConfAccChng" type="Number"  value="{path:'oModelView>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
                 <Label text="{i18n>AccountHolderName}"/>
                 <Input required="true" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 <core:Title text="{i18n>KYCDetails}"/>

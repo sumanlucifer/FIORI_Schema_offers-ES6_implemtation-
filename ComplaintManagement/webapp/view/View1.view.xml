@@ -1,0 +1,112 @@
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <vm:VariantManagement standardItemText="{i18n>appDescription}"></vm:VariantManagement>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                        <fb:filterGroupItems>
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
+                                                                                                                                                                            <fb:control>
+                                                                                                                                                                                <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
+                                                                                                                                                                                        				path: '/PainterSet'
+                                                                                                                                                                                        			}">
+                                                                                                                                                                                    <SuggestionItem text="{Name}"/>
+                                                                                                                                                                                </SearchField>
+                                                                                                                                                                                
+                                                                                                                                                                            </fb:control>
+                                                                                                                                                                        </fb:FilterGroupItem> -->
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="Complaint Type" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
+                                        <core:Item text="{AgeGroup}" key="{Id}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="Complaint Details" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <!-- <ComboBox id="cmbxRegDate" items="{path:'/PainterSet',sorter:{path:'CreatedAt',group:true,descending:true}}" selectedKey="{oModelView>/filterBar/CreatedAt}">
+                                                                                                                                                    <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
+                                                                                                            
+                                                                                                                                                </ComboBox> -->
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox id="cmbx" selectedKey="{oModelView>/filterBar/RegistrationStatus}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Registered" key="REGISTERED"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="Date" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox  selectedKey="{oModelView>/filterBar/RegistrationStatus}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Registered" key="REGISTERED"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'AgeGroup' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Complaints"/>
+                        <ToolbarSpacer/>
+                        <Button icon="sap-icon://add" text="Add Complaint" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="15%" id="nameColumn">
+                        <Text text="Painter Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="Membership Id"/>
+                    </Column>
+                    <Column>
+                        <Text text="Primary Mobile Number"/>
+                    </Column>
+                    <Column>
+                        <Text text="Complaint Type"/>
+                    </Column>
+                    <Column>
+                        <Text text="Complaint Details"/>
+                    </Column>
+                    <Column>
+                        <Text text="Date and Time"/>
+                    </Column>
+                    <Column>
+                        <Text text="Status"/>
+                    </Column>
+                   
+                </columns>
+
+                <items>
+                    <ColumnListItem press="onListItemPress" type="Navigation">
+                        <cells>
+                            <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
+                            <Text text="{MembershipCard}"/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <Text text="{Mobile}"/>
+                            <Text text="{AgeGroup/AgeGroup}"/>
+                            <Text text="{DealerId}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
