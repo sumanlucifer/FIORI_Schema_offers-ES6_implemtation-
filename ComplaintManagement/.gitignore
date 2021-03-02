@@ -1,0 +1,5 @@
+/node_modules/
+/dist/
+
+# auto generated wildcard
+knpl-influencer-web/ComplaintManagement/.env1
