@@ -96,7 +96,7 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             var sObjectId = oEvent.getParameter("arguments").objectId;
             this.getModel().metadataLoaded().then(function () {
-                var sObjectPath = this.getModel().createKey("PainterSet", {
+                var sObjectPath = this.getModel().createKey("MasterProductCatalogueSet", {
                     Id: sObjectId
                 });
                 this._bindView("/" + sObjectPath);
@@ -146,8 +146,8 @@ sap.ui.define([
 
             var oResourceBundle = this.getResourceBundle(),
                 oObject = oView.getBindingContext().getObject(),
-                sObjectId = oObject.ProductID,
-                sObjectName = oObject.ProductName;
+                sObjectId = oObject.Id,
+                sObjectName = oObject.Title;
 
             oViewModel.setProperty("/busy", false);
 
