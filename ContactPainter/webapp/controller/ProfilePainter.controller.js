@@ -87,6 +87,7 @@ sap.ui.define(
           var oData = {
             modeEdit: false,
             bindProp: oProp,
+            iCtbar:true
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -104,7 +105,9 @@ sap.ui.define(
         handleEditPress: function () {
           this._toggleButtonsAndView(true);
           var oView = this.getView();
-          oView.getModel("oModelControl2").setProperty("/modeEdit", true);
+          var oCtrl2Model = oView.getModel("oModelControl2")
+          oCtrl2Model.setProperty("/modeEdit", true);
+          oCtrl2Model.setProperty("/iCtbar",false);
           var c1, c2, c3;
           var othat = this;
           c1 = othat._loadEditProfile("Edit");
@@ -843,7 +846,9 @@ sap.ui.define(
         handleCancelPress: function () {
           this._toggleButtonsAndView(false);
           var oView = this.getView();
-          oView.getModel("oModelControl2").setProperty("/modeEdit", false);
+          var oCtrlModel2 =  oView.getModel("oModelControl2")
+          oCtrlModel2.setProperty("/modeEdit", false);
+          oCtrlModel2.setProperty("/iCtbar",true);
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           oView.getModel().refresh(true);
