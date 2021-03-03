@@ -1,5 +1,6 @@
 sap.ui.define([
-	"com/knpl/pragati/ComplaintManagement/ComplaintManagement/test/unit/controller/View1.controller"
-], function () {
+	"./model/formatter",
+	"./model/models"
+], function() {
 	"use strict";
 });

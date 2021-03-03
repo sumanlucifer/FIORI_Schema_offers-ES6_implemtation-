@@ -1,0 +1,80 @@
+<mvc:View controllerName="com.knpl.pragati.ComplaintManagement.ComplaintManagement.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic">
+
+    <semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
+
+        <semantic:titleHeading>
+            <Title text="{i18n>worklistTitle}" level="H2"/>
+        </semantic:titleHeading>
+
+        <semantic:content>
+            <Table id="table" width="auto" items="{
+                					path: '/ComplaintSet',
+                                    parameters:{expand:'ComplaintType,Painter,ComplaintSubtype'}
+                				}" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished=".onUpdateFinished">
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
+                        <ToolbarSpacer/>
+                        <Button type="Transparent" text="{i18n>AddComplaint}" />
+                        <!-- <SearchField
+                        							id="searchField"
+                        							tooltip="{i18n>worklistSearchTooltip}"
+                        							search=".onSearch">
+                        							<layoutData>
+                        								<OverflowToolbarLayoutData
+                        									maxWidth="200px"
+                        									priority="NeverOverflow"/>
+                        							</layoutData>
+                        						</SearchField> -->
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column>
+                        <Text text="{i18n>PainterName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>MembershipId}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>PrimaryMobileNo}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ComplaintType}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ComplaintDetails}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>DateAndTime}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Status}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation" press=".onPress">
+                        <cells>
+                            <Text text="{Painter/Name}"/>
+                            <Text text="{Painter/MembershipCard}"/>
+                            <Text text="{Painter/Mobile}"/>
+                            <Text text="{ComplaintType/ComplaintType}"/>
+                            <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                            <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </semantic:content>
+
+        <semantic:sendEmailAction>
+            <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+        </semantic:sendEmailAction>
+
+
+    </semantic:SemanticPage>
+
+</mvc:View>

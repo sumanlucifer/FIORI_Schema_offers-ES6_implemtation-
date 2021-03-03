@@ -1,7 +1,10 @@
 sap.ui.define([
 	"sap/ui/test/Opa5",
 	"./arrangements/Startup",
-	"./NavigationJourney"
+	"./WorklistJourney",
+	"./NavigationJourney",
+	"./NotFoundJourney",
+	"./ObjectJourney"
 ], function (Opa5, Startup) {
 	"use strict";
 
@@ -10,4 +13,5 @@ sap.ui.define([
 		viewNamespace: "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view.",
 		autoWait: true
 	});
+
 });

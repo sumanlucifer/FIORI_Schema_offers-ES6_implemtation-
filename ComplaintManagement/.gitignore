@@ -1,8 +1,5 @@
 /node_modules/
-package-lock.json
 /dist/
-/.vscode/
-/*-content.zip/ 
 
 # auto generated wildcard
 knpl-influencer-web/ComplaintManagement/.env1

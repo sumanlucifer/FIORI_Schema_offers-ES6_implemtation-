@@ -4,17 +4,13 @@
     "id": "com.knpl.pragati.ComplaintManagement.ComplaintManagement",
     "type": "application",
     "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
     "applicationVersion": {
       "version": "1.0.0"
     },
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
+    "ach": "set-ach",
     "resources": "resources.json",
-    "ach": "ach",
-    "sourceTemplate": {
-      "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
-      "version": "1.40.12"
-    },
     "dataSources": {
       "mainService": {
         "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
@@ -24,12 +20,31 @@
           "localUri": "localService/metadata.xml"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "Manage",
+          "action": "CM",
+          "title": "{{appTitle}}",
+          "subTitle": "{{appSubTitle}}",
+          "icon": "sap-icon://quality-issue"
+        }
+      }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
   },
   "sap.ui": {
     "technology": "UI5",
     "icons": {
-      "icon": "",
+      "icon": "sap-icon://task",
       "favIcon": "",
       "phone": "",
       "phone@2": "",
@@ -43,19 +58,18 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": false,
     "rootView": {
-      "viewName": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view.View1",
+      "viewName": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view.App",
       "type": "XML",
       "async": true,
-      "id": "View1"
+      "id": "app"
     },
     "dependencies": {
-      "minUI5Version": "1.60.1",
+      "minUI5Version": "1.66.0",
       "libs": {
         "sap.ui.core": {},
         "sap.m": {},
-        "sap.ui.layout": {}
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -75,50 +89,56 @@
         "settings": {
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "Inline",
-          "refreshAfterChange": false
+          "refreshAfterChange": true,
+          "defaultUpdateMethod": "Put",
+          "useBatch": false
         }
       }
-    },
-    "resources": {
-      "css": [
-        {
-          "uri": "css/style.css"
-        }
-      ]
     },
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
-        "async": true,
         "viewPath": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view",
-        "controlAggregation": "pages",
         "controlId": "app",
-        "clearControlAggregation": false
+        "controlAggregation": "pages",
+        "bypassed": {
+          "target": ["notFound"]
+        },
+        "async": true
       },
       "routes": [
         {
-          "name": "RouteView1",
-          "pattern": "RouteView1",
-          "target": [
-            "TargetView1"
-          ]
+          "pattern": "",
+          "name": "worklist",
+          "target": ["worklist"]
+        },
+        {
+          "pattern": "ComplaintSet/{objectId}",
+          "name": "object",
+          "target": ["object"]
         }
       ],
       "targets": {
-        "TargetView1": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "View1",
-          "viewName": "View1"
+        "worklist": {
+          "viewName": "Worklist",
+          "viewId": "worklist",
+          "viewLevel": 1,
+          "title": "{i18n>worklistViewTitle}"
         },
-         "TargetAddEdit": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "AddEdit",
-          "viewName": "AddEdit"
+        "object": {
+          "viewName": "Object",
+          "viewId": "object",
+          "viewLevel": 2,
+          "title": "{i18n>objectViewTitle}"
+        },
+        "objectNotFound": {
+          "viewName": "ObjectNotFound",
+          "viewId": "objectNotFound"
+        },
+        "notFound": {
+          "viewName": "NotFound",
+          "viewId": "notFound"
         }
       }
     }

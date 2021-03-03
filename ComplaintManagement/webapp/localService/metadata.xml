@@ -337,7 +337,7 @@
                 <Property Name="IsSelected" Type="Edm.Boolean" Nullable="false"/>
                 <NavigationProperty Name="Division" Relationship="com.knpl.pragati.entity.MasterDepotModel_2_r_Division" FromRole="MasterDepotModel" ToRole="r_Division"/>
             </EntityType>
-            <EntityType Name="MasterDivisionModel">
+            <EntityType Name="MasterDivisionModel" m:HasStream="true">
                 <Key>
                     <PropertyRef Name="Id"/>
                 </Key>
@@ -570,7 +570,7 @@
                 <Property Name="IsSelected" Type="Edm.Boolean" Nullable="false"/>
                 <NavigationProperty Name="ProductCategory" Relationship="com.knpl.pragati.entity.MasterProductModel_2_r_ProductCategory" FromRole="MasterProductModel" ToRole="r_ProductCategory"/>
             </EntityType>
-            <EntityType Name="MasterProductCatalogueModel">
+            <EntityType Name="MasterProductCatalogueModel" m:HasStream="true">
                 <Key>
                     <PropertyRef Name="Id"/>
                 </Key>
@@ -713,7 +713,7 @@
                 <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
                 <Property Name="IsSelected" Type="Edm.Boolean" Nullable="false"/>
             </EntityType>
-            <EntityType Name="MasterRequestTypeModel">
+            <EntityType Name="MasterRequestTypeModel" m:HasStream="true">
                 <Key>
                     <PropertyRef Name="Id"/>
                 </Key>
@@ -1247,7 +1247,7 @@
                 <Property Name="IsSelected" Type="Edm.Boolean" Nullable="false"/>
                 <NavigationProperty Name="TrainingQuestionnaireOptions" Relationship="com.knpl.pragati.entity.TrainingQuestionnaireModel_2_r_TrainingQuestionnaireOptions" FromRole="TrainingQuestionnaireModel" ToRole="r_TrainingQuestionnaireOptions"/>
             </EntityType>
-            <EntityType Name="TrainingQuestionnaireOptionsModel">
+            <EntityType Name="TrainingQuestionnaireOptionsModel" m:HasStream="true">
                 <Key>
                     <PropertyRef Name="Id"/>
                 </Key>

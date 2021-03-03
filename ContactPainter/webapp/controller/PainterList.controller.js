@@ -334,6 +334,30 @@ sap.ui.define(
           });
           return oDateFormat.format(date);
         },
+        onDealersPress: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var sPath = oSource.getBindingContext().getPath();
+          var oView = this.getView();
+          if (!this._pPopover) {
+            this._pPopover = Fragment.load({
+              id: oView.getId(),
+              name: "com.knpl.pragati.ContactPainter.view.fragments.Popover",
+              controller: this,
+            }).then(function (oPopover) {
+              oView.addDependent(oPopover);
+              return oPopover;
+            });
+          }
+          this._pPopover.then(function (oPopover) {
+            oPopover.openBy(oSource);
+            oPopover.bindElement({
+              path: sPath,
+              parameters: {
+                expand: "Dealers",
+              },
+            });
+          });
+        },
         onListItemPress: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           var sPath = oEvent
