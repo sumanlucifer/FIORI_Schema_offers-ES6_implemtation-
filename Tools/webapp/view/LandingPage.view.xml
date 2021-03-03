@@ -85,13 +85,13 @@
                 </headerToolbar>
 
                 <columns>
-                    <Column width="25%" minScreenWidth="Tablet" demandPopin="true">
+                    <Column width="{=${device>/system/desktop} ? '25%' : 'auto'}" minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColUrl}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>tblColTitle}"/>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Column width="{=${device>/system/desktop} ? '25%' : 'auto'}" minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColDescription}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
@@ -100,7 +100,10 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
-                    <Column width="{=${device>/system/desktop} ? '10%' : 'auto'}">
+                    <Column width="{=${device>/system/desktop} ? '6%' : 'auto'}" minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="{i18n>tblColStatus}"/>
+                    </Column>
+                    <Column width="{=${device>/system/desktop} ? '6%' : 'auto'}">
                         <Text text="{i18n>tblColAction}"/>
                     </Column>
                 </columns>
@@ -113,11 +116,11 @@
                             <Text text="{Description}"/>
                             <Text text="{path: 'CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <HBox>
-                                <ObjectStatus
+                            <ObjectStatus
                                     class="statusWidth sapUiTinyMarginTop"
                                     text="{=${Status} ? ${i18n>statusActive} : ${i18n>statusInActive}}"
                                     state="{=${Status} ? 'Success' : 'None'}" />
+                            <HBox>
                                 <Button type="Transparent" icon="sap-icon://edit" tooltip="{i18n>editBtnTooltip}" press="onPressEdit"/>
                                 <Button type="Transparent" icon="sap-icon://delete" tooltip="{i18n>deleteBtnTooltip}" press="onPressDelete"/>
                             </HBox>

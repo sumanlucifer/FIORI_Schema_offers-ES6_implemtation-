@@ -22,13 +22,13 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <Avatar
-							src="./test-resources/sap/m/images/284133_GettyImages-145058106_2600.jpg"
-							displaySize="L"
-							imageFitType="Cover"
-							press="onPress"
-							badgeIcon="sap-icon://camera"
-							badgeTooltip= "Sabine Mayer"/>
+                        <HBox id="idToolImgContainer">
+                            <Avatar
+                                id="idToolImg"
+                                displaySize="L"
+                                displayShape="Circle" />
+                            <Button class="toolImgUploaderBtn" icon="sap-icon://edit" tooltip="{i18n>imageEditBtnTooltip}" type="Emphasized" press="onPressEditImage"/>
+                        </HBox>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
