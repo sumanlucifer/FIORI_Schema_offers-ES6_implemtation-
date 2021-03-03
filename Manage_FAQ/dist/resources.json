@@ -1,10 +1,11 @@
 {
     "resources": [
         {
-            "name": "view/ObjectNotFound.view.xml"
+            "name": "controller/ErrorHandler-dbg.js",
+            "isDebug": true
         },
         {
-            "name": "manifest.json"
+            "name": "controller/App.controller.js"
         },
         {
             "name": "model/models.js"
@@ -28,7 +29,7 @@
             "name": "controller/BaseController.js"
         },
         {
-            "name": "controller/App.controller.js"
+            "name": "manifest.json"
         },
         {
             "name": "Component.js"
@@ -41,11 +42,11 @@
             "merged": true
         },
         {
-            "name": "controller/NotFound-dbg.controller.js",
+            "name": "model/formatter-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/formatter-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -57,12 +58,12 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/NotFound-dbg.controller.js",
             "isDebug": true
         },
         {
-            "name": "controller/ErrorHandler-dbg.js",
-            "isDebug": true
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/BaseController-dbg.js",
@@ -83,8 +84,7 @@
             "name": "view/Worklist.view.xml"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "view/ObjectNotFound.view.xml"
         },
         {
             "name": "view/Object.view.xml"
