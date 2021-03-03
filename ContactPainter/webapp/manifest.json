@@ -100,8 +100,7 @@
         }
       },
       "uploadModel": {
-        "type": "sap.ui.model.json.JSONModel",
-        "dataSource": "uploadData"
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {

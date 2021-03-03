@@ -5,7 +5,7 @@ sap.ui.define(
     "com/knpl/pragati/ContactPainter/model/models",
     "com/knpl/pragati/ContactPainter/controller/ErrorHandler",
   ],
-  function (UIComponent, Device, models,ErrorHandler) {
+  function (UIComponent, Device, models, ErrorHandler) {
     "use strict";
 
     return UIComponent.extend("com.knpl.pragati.ContactPainter.Component", {
@@ -27,6 +27,29 @@ sap.ui.define(
 
         // set the device model
         this.setModel(models.createDeviceModel(), "device");
+        this._initModel();
+      },
+      _initModel: function () {
+        var oModel = this.getModel("uploadModel");
+        console.log(oModel);
+        var oData = [],
+          obj;
+        for (var i = 1; i <= 100; i++) {
+          obj = {
+            Col1: i,
+            Col2: "Second Value",
+            Col3: "Third Value",
+            Col4: "Fourth Value",
+            Col5: "Fifth Value",
+            Col6: "Fifth Value",
+            Col7: "Fifth Value",
+            Col8: "Fifth Value",
+            Col9: "Fifth Value",
+          };
+          oData.push(obj);
+        }
+        oModel.setData(oData);
+        console.log(oModel);
       },
       destroy: function () {
         this._oErrorHandler.destroy();
