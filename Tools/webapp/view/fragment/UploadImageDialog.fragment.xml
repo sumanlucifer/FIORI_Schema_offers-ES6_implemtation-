@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+	xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>updateImgDialogTitle}" class="sapUiSizeCompact">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Label text="{i18n>fileUploaderLblTxt}" required="true" />
+                <u:FileUploader
+                    id="idToolImgUploader"
+                    name="toolImageUploader"
+                    width="100%"
+                    tooltip="{i18n>fileUploaderTooltip}"
+                    change="uploadImage"
+                    typeMissmatch="handleTypeMissmatch"
+                    fileType="png,jpg,jpeg"
+                    useMultipart="false"
+                    uploadComplete="handleUploadComplete"/>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="{i18n>uploadBtnTxt}" tooltip="{i18n>uploadBtnTooltip}" type="Emphasized" press="onPressUpload" />
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>closeBtnTxt}" tooltip="{i18n>closeBtnTooltip}" type="Transparent" press="onPressClose" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
