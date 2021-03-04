@@ -267,7 +267,8 @@ sap.ui.define(
           } else {
             oKycPayload = null;
           }
-
+          // settting the username of the painter same as the mobile number
+          oPainterData["Username"] = oPainterData["Mobile"];
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
