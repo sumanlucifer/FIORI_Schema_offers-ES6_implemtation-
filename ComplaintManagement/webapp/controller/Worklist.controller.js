@@ -249,10 +249,12 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (mParam) {
-          if (mParam === "REGISTERED") {
-            return "Closed";
-          }
-          return "Open";
+           var sLetter = mParam
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+          return sLetter;
         },
         handleSortButtonPressed: function () {
           this.getViewSettingsDialog(

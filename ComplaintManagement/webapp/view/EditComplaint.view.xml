@@ -3,7 +3,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                   <Title text="{ComplaintS}"/>
+                   <Title text="{ComplaintType/ComplaintType}"/>
                 </f:heading>
                 	<f:breadcrumbs>
 						<Breadcrumbs currentLocationText="Update Complaint">
@@ -17,7 +17,7 @@
 						<Label text="{ComplaintCode}"/>
 					</f:snappedContent>
 					<f:snappedTitleOnMobile>
-						<Title text="{ComplaintCode}"/>
+						<Title text="{ComplaintType/ComplaintType}"/>
 					</f:snappedTitleOnMobile>
             </f:DynamicPageTitle>
         </f:title>
@@ -30,13 +30,13 @@
 							
 						</layout:VerticalLayout>
 
-						<layout:VerticalLayout>
-							<ObjectAttribute title="{i18n>ComplaintDetails}" />
-							
-						</layout:VerticalLayout>
+						 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="40%">
+                                <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                        </layout:VerticalLayout>
                         <layout:VerticalLayout>
+                            <Label text="{i18n>Status}:"/>
 							<ObjectStatus
-                                class="sapMObjectStatusMedium"
+                                class="sapMObjectStatusLarge"
                                 text="{ComplaintStatus}"
                                 state="None" />
 							

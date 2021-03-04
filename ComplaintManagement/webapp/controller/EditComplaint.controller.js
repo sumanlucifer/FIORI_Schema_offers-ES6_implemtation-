@@ -85,39 +85,60 @@ sap.ui.define(
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl");
           var othat = this;
+          this._sErrorText = this.getOwnerComponent()
+            .getModel("i18n")
+            .getResourceBundle()
+            .getText("errorText");
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
           c1.then(function () {
             c2 = othat._setDisplayData(oProp);
+            c2.then(function () {
+             
+            });
           });
         },
         _setDisplayData: function (oProp) {
           var promise = jQuery.Deferred();
-          var oView=this.getView();
+          var oView = this.getView();
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
-            if (oProp.trim() !== "") {
-              oView.bindElement({
-                path: "/" + oProp,
-                parameters: {
-                  expand: sExpandParam,
-                },
+          var othat = this;
+          if (oProp.trim() !== "") {
+            oView.bindElement({
+              path: "/" + oProp,
+              parameters: {
+                expand: sExpandParam,
+              },
+              events: {
                 dataRequested: function (oEvent) {
-						oView.setBusy(true);
-				},
-				dataReceived: function (oEvent) {
-                        oView.setBusy(false);
-                        
-				}
-              });
-            }
+                  oView.setBusy(true);
+                  console.log("a");
+                },
+                dataReceived: function (oEvent) {
+                  oView.setBusy(false);
+                  console.log("b");
+                  othat._initEditData(oProp);
+                },
+              },
+            });
+          }
           promise.resolve();
           return promise;
         },
         _initEditData: function (oProp) {
-             var promise = jQuery.Deferred();
-          console.log(this.getView().getModel().getObject("/ComplaintSet(22)"));
-           promise.resolve();
-          return promise;
+          var oView = this.getView();
+          var oDataValue = "";
+          oView.getModel().read("/" + oProp, { success: function (data) {
+             var oViewModel = new JSONModel(data);
+             console.log(data)
+             oView.setModel(oViewModel, "oModelView");
+          },
+          error:function(){
+
+          } });
+         
+         
+        
           
         },
         _loadEditProfile: function (mParam) {
@@ -141,7 +162,28 @@ sap.ui.define(
           });
         },
         handleSavePress: function () {
-          console.log(this.getView().getModel().getObject("/ComplaintSet(22)"));
+          var oView = this.getView();
+          var oData = oView.getModel();
+          var sPath = oView.getElementBinding().getPath();
+          var oDataValue = oView.getModel("oModelView").getData();
+          //var oPayload = Object.assign({},oDataValue);
+
+          console.log(oDataValue);
+          var othat = this;
+          oData.update(sPath, oDataValue, {
+            success: function () {
+              MessageToast.show("Complaint Sucessfully Updated");
+              console.log(othat._sErrorText);
+            },
+            error: function (a) {
+              MessageBox.error(othat._sErrorText, {
+                title: "Error Code: " + a.statusCode,
+              });
+            },
+          });
+          console.log(sPath);
+
+          //var oProp =
         },
         handleCancelPress: function () {
           this.onNavBack();
