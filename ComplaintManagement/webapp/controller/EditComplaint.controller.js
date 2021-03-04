@@ -94,7 +94,7 @@ sap.ui.define(
           c1.then(function () {
             c2 = othat._setDisplayData(oProp);
             c2.then(function () {
-             
+                c3=othat._initEditData(oProp)
             });
           });
         },
@@ -112,12 +112,11 @@ sap.ui.define(
               events: {
                 dataRequested: function (oEvent) {
                   oView.setBusy(true);
-                  console.log("a");
+                 
                 },
                 dataReceived: function (oEvent) {
                   oView.setBusy(false);
-                  console.log("b");
-                  othat._initEditData(oProp);
+                  
                 },
               },
             });
@@ -166,14 +165,15 @@ sap.ui.define(
           var oData = oView.getModel();
           var sPath = oView.getElementBinding().getPath();
           var oDataValue = oView.getModel("oModelView").getData();
-          //var oPayload = Object.assign({},oDataValue);
+       
 
           console.log(oDataValue);
           var othat = this;
           oData.update(sPath, oDataValue, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
-              console.log(othat._sErrorText);
+              oData.refresh(true)
+              
             },
             error: function (a) {
               MessageBox.error(othat._sErrorText, {
@@ -181,7 +181,7 @@ sap.ui.define(
               });
             },
           });
-          console.log(sPath);
+         
 
           //var oProp =
         },

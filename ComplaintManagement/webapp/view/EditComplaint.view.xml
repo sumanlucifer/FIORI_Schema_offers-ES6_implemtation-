@@ -23,14 +23,14 @@
         </f:title>
         	<f:header>
 				<f:DynamicPageHeader pinnable="true">
-					<layout:HorizontalLayout allowWrapping="true">
+					<layout:HorizontalLayout allowWrapping="false">
 						<layout:VerticalLayout class="sapUiMediumMarginEnd">
 							<ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
 							<ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
 							
 						</layout:VerticalLayout>
 
-						 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="40%">
+						 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
                                 <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
                         </layout:VerticalLayout>
                         <layout:VerticalLayout>
@@ -52,8 +52,8 @@
         <f:footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                    <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
                     <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
+                    <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
             </Toolbar>
         </f:footer>
     </f:DynamicPage>
