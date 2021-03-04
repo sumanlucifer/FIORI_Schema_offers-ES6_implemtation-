@@ -54,7 +54,7 @@ xmlns:f="sap.ui.layout.form">
                                   path : '/mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1,
+                                      minLength : 10,
                                       maxLength : 10
                                       
                                       

@@ -4,7 +4,7 @@
 	<ViewSettingsDialog
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Dealer Name" key="Name" selected="true" />
+			<ViewSettingsItem text="Dealer Name" key="DealerName" selected="true" />
 			<!-- <ViewSettingsItem text="Email" key="Email" /> -->
 		</sortItems>
 	</ViewSettingsDialog>

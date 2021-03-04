@@ -5,7 +5,7 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="Name" key="Name" selected="true" />
-			<ViewSettingsItem text="RelationshipId" key="RelationshipId" />
+			<!-- <ViewSettingsItem text="RelationshipId" key="RelationshipId" /> -->
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

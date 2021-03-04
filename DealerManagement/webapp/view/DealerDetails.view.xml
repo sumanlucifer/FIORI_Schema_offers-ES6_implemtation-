@@ -81,7 +81,7 @@
                         <uxap:ObjectPageSubSection>
                             <VBox renderType="Bare">
                             	
-                                <Table id="idPainterTable" width="auto" items="{path: 'Painter'}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                <Table id="idPainterTable" width="auto" items="{path: 'Painter'}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>

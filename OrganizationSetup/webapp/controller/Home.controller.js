@@ -33,7 +33,7 @@ sap.ui.define([
                     aFilter.push(new Filter(
                         "tolower(Name)",
                         FilterOperator.Contains,
-                        "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                        "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                     ));
                 }
 
@@ -56,12 +56,12 @@ sap.ui.define([
                         new Filter(
                             "tolower(Role)",
                             FilterOperator.Contains,
-                            "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                            "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                         ),
                         new Filter(
                             "tolower(Description)",
                             FilterOperator.Contains,
-                            "'" + sQuery.toLowerCase().replace("'", "''") + "'"
+                            "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                         )
 
                     ]

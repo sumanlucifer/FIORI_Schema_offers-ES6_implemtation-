@@ -117,34 +117,37 @@ sap.ui.define([
             getTableItems: function () {
                 return this.getView().byId("idDealerTable").getBinding("items");
             },
-            SearchInAllFields: function (aKeys, aFilters, searchValue) {
-               
-    
-                for (let i = 1; i < aKeys.length; i++) {
 
-                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
-                }
-                
-            },
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
 
                 var aKeys = [
-                    "search", "PlantCode", "Depot", "SalesGroupName", "FiscalYear"
+                    "search", "tolower(PlantCode)", "tolower(Depot)", "tolower(SalesGroupName)", "tolower(FiscalYear)"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
                     if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
-                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
+                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
-                           
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
+                
                 return aFilters;
             },
+            SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-            
+
+                for (let i = 1; i < aKeys.length; i++) {
+
+                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                    
+                }
+                
+
+            },
+
+
 
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.SortDialog")
@@ -224,10 +227,27 @@ sap.ui.define([
                 this.presentBusyDialog();
             },
             onReset: function () {
-                var oModel = this.getComponentModel();
-                console.log(oModel);
+               
+                this._ResetFilterBar();
+       
 
             },
+            _ResetFilterBar: function () {
+          var aCurrentFilterValues = [];
+          var aResetProp = {
+            PlantCode: "",
+            Depot: "",
+            SalesGroupName: "",
+            FiscalYear: "",
+          };
+          var oViewModel = this.getView().getModel();
+          oViewModel.setProperty("/filterBar", aResetProp);
+          
+          var oTable = this.byId("idDealerTable");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter([]);
+        },
+
             // handleSuggest: function (oEvent) {
             //     var aFilters = [];
             //     var sTerm = oEvent.getParameter("suggestValue");

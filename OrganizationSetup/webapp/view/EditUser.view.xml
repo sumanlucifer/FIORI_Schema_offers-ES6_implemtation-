@@ -56,7 +56,7 @@ floatingFooter="true"
                                   path : 'data>Mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1,
+                                      minLength : 10,
                                       maxLength: 10
                                       
                                   }

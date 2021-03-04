@@ -15,7 +15,7 @@ sap.ui.define([
     "sap/ui/Device",
     "sap/ui/core/Fragment"
 
-], function (BaseController, JSONModel, History, formatter, DateFormat, jQuery, deepExtend, syncStyleClass, Controller,
+], function (BaseController, JSONModel, History, formatter, jQuery, deepExtend, syncStyleClass, Controller,
     ObjectMarker, MessageToast, UploadCollectionParameter, MobileLibrary,
     FileSizeFormat, Device, Fragment
 ) {
@@ -183,266 +183,72 @@ sap.ui.define([
             }
         },
 
-        onChange: function (oEvent) {
-            var oUploadCollection = oEvent.getSource();
-            // Header Token
-            var oCustomerHeaderToken = new UploadCollectionParameter({
-                name: "x-csrf-token",
-                value: "securityTokenFromModel"
-            });
-            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+        // onChange: function (oEvent) {
+
+            
+        //     var oUploadCollection = oEvent.getSource();
+        //     // Header Token
+        //     var oCustomerHeaderToken = new UploadCollectionParameter({
+        //         name: "x-csrf-token",
+        //         value: this.getModel().getSecurityToken()
+        //     });
+        //     oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+        // },
+        // onSave : function () {
+        //     var collection=this.getView().byId('UploadCollection');
+
+        //     collection.upload();
+        // },
+        	onSelectionChangeImage: function() {
+			var oUploadCollection = this.byId("UploadCollectionImage");
+			// If there's any item selected, sets download button enabled
+			if (oUploadCollection.getSelectedItems().length > 0) {
+				this.byId("downloadButton").setEnabled(true);
+				if (oUploadCollection.getSelectedItems().length === 1) {
+					this.byId("versionButton").setEnabled(true);
+				} else {
+					this.byId("versionButton").setEnabled(false);
+				}
+			} else {
+				this.byId("downloadButton").setEnabled(false);
+				this.byId("versionButton").setEnabled(false);
+			}
         },
+        	onDownloadImage: function() {
+			var oUploadCollection = this.byId("UploadCollectionImage");
+			var aSelectedItems = oUploadCollection.getSelectedItems();
+			if (aSelectedItems) {
+				for (var i = 0; i < aSelectedItems.length; i++) {
+					oUploadCollection.downloadItem(aSelectedItems[i], true);
+				}
+			} else {
+				MessageToast.show("Select an item to download");
+			}
+		},
 
-        onFileDeleted: function (oEvent) {
-            this.deleteItemById(oEvent.getParameter("documentId"));
-            MessageToast.show("FileDeleted event triggered.");
-        },
+		onVersion: function() {
+			var oUploadCollection = this.byId("UploadCollection");
+			this.bIsUploadVersion = true;
+			this.oItemToUpdate = oUploadCollection.getSelectedItem();
+			oUploadCollection.openFileDialog(this.oItemToUpdate);
+		},
+        
 
-        deleteItemById: function (sItemToDeleteId) {
-            var oData = this.byId("UploadCollection").getModel().getData();
-            var aItems = deepExtend({}, oData).items;
-            jQuery.each(aItems, function (index) {
-                if (aItems[index] && aItems[index].documentId === sItemToDeleteId) {
-                    aItems.splice(index, 1);
-                }
-            });
-            this.byId("UploadCollection").getModel().setData({
-                "items": aItems
-            });
-            this.byId("attachmentTitle").setText(this.getAttachmentTitleText());
-        },
+       
 
-        deleteMultipleItems: function (aItemsToDelete) {
-            var oData = this.byId("UploadCollection").getModel().getData();
-            var nItemsToDelete = aItemsToDelete.length;
-            var aItems = deepExtend({}, oData).items;
-            var i = 0;
-            jQuery.each(aItems, function (index) {
-                if (aItems[index]) {
-                    for (i = 0; i < nItemsToDelete; i++) {
-                        if (aItems[index].documentId === aItemsToDelete[i].getDocumentId()) {
-                            aItems.splice(index, 1);
-                        }
-                    }
-                }
-            });
-            this.byId("UploadCollection").getModel().setData({
-                "items": aItems
-            });
-            this.byId("attachmentTitle").setText(this.getAttachmentTitleText());
-        },
+       
+        
 
-        onFilenameLengthExceed: function () {
-            MessageToast.show("FilenameLengthExceed event triggered.");
-        },
+      
 
-        onFileRenamed: function (oEvent) {
-            var oData = this.byId("UploadCollection").getModel().getData();
-            var aItems = deepExtend({}, oData).items;
-            var sDocumentId = oEvent.getParameter("documentId");
-            jQuery.each(aItems, function (index) {
-                if (aItems[index] && aItems[index].documentId === sDocumentId) {
-                    aItems[index].fileName = oEvent.getParameter("item").getFileName();
-                }
-            });
-            this.byId("UploadCollection").getModel().setData({
-                "items": aItems
-            });
-            MessageToast.show("FileRenamed event triggered.");
-        },
+       
+       
 
-        onFileSizeExceed: function () {
-            MessageToast.show("FileSizeExceed event triggered.");
-        },
+        
 
-        onTypeMissmatch: function () {
-            MessageToast.show("TypeMissmatch event triggered.");
-        },
+        
+        
 
-        onUploadComplete: function (oEvent) {
-            var oUploadCollection = this.byId("UploadCollection");
-            var oData = oUploadCollection.getModel().getData();
-
-            oData.items.unshift({
-                "documentId": Date.now().toString(), // generate Id,
-                "fileName": oEvent.getParameter("files")[0].fileName,
-                "mimeType": "",
-                "thumbnailUrl": "",
-                "url": "",
-                "attributes": [
-                    {
-                        "title": "Uploaded By",
-                        "text": "You",
-                        "active": false
-                    },
-                    {
-                        "title": "Uploaded On",
-                        "text": new Date().toLocaleDateString(),
-                        "active": false
-                    },
-                    {
-                        "title": "File Size",
-                        "text": "505000",
-                        "active": false
-                    }
-                ],
-                "statuses": [
-                    {
-                        "title": "",
-                        "text": "",
-                        "state": "None"
-                    }
-                ],
-                "markers": [
-                    {
-                    }
-                ],
-                "selected": false
-            });
-            this.getView().getModel().refresh();
-
-            // Sets the text to the label
-            this.byId("attachmentTitle").setText(this.getAttachmentTitleText());
-
-            // delay the success message for to notice onChange message
-            setTimeout(function () {
-                MessageToast.show("UploadComplete event triggered.");
-            }, 4000);
-        },
-
-        onBeforeUploadStarts: function (oEvent) {
-            // Header Slug
-            var oCustomerHeaderSlug = new UploadCollectionParameter({
-                name: "slug",
-                value: oEvent.getParameter("fileName")
-            });
-            oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
-            MessageToast.show("BeforeUploadStarts event triggered.");
-        },
-
-        onUploadTerminated: function () {
-			/*
-			// get parameter file name
-			var sFileName = oEvent.getParameter("fileName");
-			// get a header parameter (in case no parameter specified, the callback function getHeaderParameter returns all request headers)
-			var oRequestHeaders = oEvent.getParameters().getHeaderParameter();
-			*/
-        },
-
-        onFileTypeChange: function (oEvent) {
-            this.byId("UploadCollection").setFileType(oEvent.getSource().getSelectedKeys());
-        },
-
-        onSelectAllPress: function (oEvent) {
-            var oUploadCollection = this.byId("UploadCollection");
-            if (!oEvent.getSource().getPressed()) {
-                this.deselectAllItems(oUploadCollection);
-                oEvent.getSource().setPressed(false);
-                oEvent.getSource().setText("Select all");
-            } else {
-                this.deselectAllItems(oUploadCollection);
-                oUploadCollection.selectAll();
-                oEvent.getSource().setPressed(true);
-                oEvent.getSource().setText("Deselect all");
-            }
-            this.onSelectionChange(oEvent);
-        },
-
-        deselectAllItems: function (oUploadCollection) {
-            var aItems = oUploadCollection.getItems();
-            for (var i = 0; i < aItems.length; i++) {
-                oUploadCollection.setSelectedItem(aItems[i], false);
-            }
-        },
-
-        getAttachmentTitleText: function () {
-            var aItems = this.byId("UploadCollection").getItems();
-            return "Uploaded (" + aItems.length + ")";
-        },
-
-        onModeChange: function (oEvent) {
-            var oSettingsModel = this.getView().getModel("settings");
-            if (oEvent.getParameters().selectedItem.getProperty("key") === ListMode.MultiSelect) {
-                oSettingsModel.setProperty("/visibleEdit", false);
-                oSettingsModel.setProperty("/visibleDelete", false);
-                this.enableToolbarItems(true);
-            } else {
-                oSettingsModel.setProperty("/visibleEdit", true);
-                oSettingsModel.setProperty("/visibleDelete", true);
-                this.enableToolbarItems(false);
-            }
-        },
-
-        enableToolbarItems: function (status) {
-            this.byId("selectAllButton").setVisible(status);
-            this.byId("deleteSelectedButton").setVisible(status);
-            this.byId("selectAllButton").setEnabled(status);
-            // This is only enabled if there is a selected item in multi-selection mode
-            if (this.byId("UploadCollection").getSelectedItems().length > 0) {
-                this.byId("deleteSelectedButton").setEnabled(true);
-            }
-        },
-
-        onDeleteSelectedItems: function () {
-            var aSelectedItems = this.byId("UploadCollection").getSelectedItems();
-            this.deleteMultipleItems(aSelectedItems);
-            if (this.byId("UploadCollection").getSelectedItems().length < 1) {
-                this.byId("selectAllButton").setPressed(false);
-                this.byId("selectAllButton").setText("Select all");
-            }
-            MessageToast.show("Delete selected items button press.");
-        },
-
-        onSearch: function () {
-            MessageToast.show("Search feature isn't available in this sample");
-        },
-
-        onSelectionChange: function () {
-            var oUploadCollection = this.byId("UploadCollection");
-            // Only it is enabled if there is a selected item in multi-selection mode
-            if (oUploadCollection.getMode() === ListMode.MultiSelect) {
-                if (oUploadCollection.getSelectedItems().length > 0) {
-                    this.byId("deleteSelectedButton").setEnabled(true);
-                } else {
-                    this.byId("deleteSelectedButton").setEnabled(false);
-                }
-            }
-        },
-
-        onAttributePress: function (oEvent) {
-            MessageToast.show("Attribute press event - " + oEvent.getSource().getTitle() + ": " + oEvent.getSource().getText());
-        },
-
-        onMarkerPress: function (oEvent) {
-            MessageToast.show("Marker press event - " + oEvent.getSource().getType());
-        },
-
-        onOpenAppSettings: function (oEvent) {
-            var oView = this.getView();
-
-            if (!this._pSettingsDialog) {
-                this._pSettingsDialog = Fragment.load({
-                    id: oView.getId(),
-                    name: "sap.m.sample.UploadCollection.AppSettings",
-                    controller: this
-                }).then(function (oSettingsDialog) {
-                    oView.addDependent(oSettingsDialog);
-                    return oSettingsDialog;
-                });
-            }
-
-            this._pSettingsDialog.then(function (oSettingsDialog) {
-                syncStyleClass("sapUiSizeCompact", oView, oSettingsDialog);
-                oSettingsDialog.setContentWidth("42rem");
-                oSettingsDialog.open();
-            });
-        },
-
-        onDialogCloseButton: function () {
-            this._pSettingsDialog.then(function (oSettingsDialog) {
-                oSettingsDialog.close();
-            });
-        }
 
     });
 
