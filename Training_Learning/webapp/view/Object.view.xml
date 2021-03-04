@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.AddEditTraining" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.Object" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
     <Page busy="{oModelView>/busy}" binding="{objectView>/oDetails}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
         <headerContent>
             <Bar>
@@ -28,7 +28,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnCancel}" press="onCancel"/>
-                <Button text="{i18n>btnSave}" type="Emphasized" press="onSave"/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press="onSaveVideo"/>
             </Toolbar>
         </footer>
     </Page>

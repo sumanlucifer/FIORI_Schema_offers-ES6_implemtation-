@@ -11,23 +11,23 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true">
+					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true" showRestoreOnFB="true">
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+									<ComboBox items="{ path: '/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingTypeId}">
 										<core:Item key="{Id}" text="{TrainingType}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="StartDate" label="{i18n>colStartDate}">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'worklistView>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
 								<fb:control>
-									<ComboBox>
+									<ComboBox selectedKey="{worklistView>/filterBar/Status}">
                                         <items>
                                             <core:Item text="{i18n>active}" key="0"/>
                                             <core:Item text="{i18n>inActive}" key="1"/>
@@ -64,28 +64,28 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column>
+								<Column width="26%">
 									<Text text="{i18n>colTrainingName}"/>
 								</Column>
-                                <Column>
+                                <Column width="12%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column>
+                                <Column width="12%">
 									<Text text="{i18n>colTrainingType}"/>
 								</Column>
-                                <Column>
+                                <Column width="12%">
 									<Text text="{i18n>colStartDate}"/>
 								</Column>
-                                <Column>
+                                <Column width="10%">
 									<Text text="{i18n>colTime}"/>
 								</Column>
-                                <Column>
+                                <Column width="12%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column>
+                                <Column width="8%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column>
+                                <Column width="8%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
@@ -132,22 +132,22 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column>
+								<Column width="35%">
 									<Text text="{i18n>colLink}"/>
 								</Column>
-                                <Column>
+                                <Column width="22%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column>
+                                <Column width="13%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column>
+                                <Column width="13%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column>
+                                <Column width="8%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column>
+                                <Column width="9%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>

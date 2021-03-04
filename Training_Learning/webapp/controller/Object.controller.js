@@ -147,7 +147,7 @@ sap.ui.define([
 		 * @function
 		 * Save edit or create FAQ details 
 		 */
-        onSave: function () {
+        onSaveVideo: function () {
             debugger;
             this._oMessageManager.removeAllMessages();
 
@@ -259,8 +259,10 @@ sap.ui.define([
                 } else {
                     // delete oClonePayload.IsArchived;
                     // oClonePayload.Id = +oClonePayload.Id;
+                    debugger;
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (data) {
+                            debugger;
                             oViewModel.setProperty("/busy", false);
                             that.getRouter().navTo("worklist", true);
                             that.showToast.call(that, "MSG_SUCCESS_CREATE");

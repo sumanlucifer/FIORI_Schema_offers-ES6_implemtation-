@@ -40,7 +40,12 @@ sap.ui.define([
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
                 tableNoDataTextTraining: this.getResourceBundle().getText("tableNoDataTextTraining"),
                 tableNoDataTextVideo: this.getResourceBundle().getText("tableNoDataTextVideo"),
-                tableBusyDelay: 0
+                tableBusyDelay: 0,
+                filterBar: {
+                    TrainingTypeId: "",
+                    StartDate: "",
+                    Status: ""
+                }
             });
             this.setModel(oViewModel, "worklistView");
 
@@ -110,6 +115,23 @@ sap.ui.define([
             this._showObject(oEvent.getSource());
         },
 
+        onReset: function () {
+            this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+            var aCurrentFilterValues = [];
+            var aResetProp = {
+                TrainingTypeId: "",
+                Status: "",
+                StartDate: ""
+            };
+            var oViewModel = this.getView().getModel("worklistView");
+            oViewModel.setProperty("/filterBar", aResetProp);
+            var oTable = this.byId("table");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
+        },
+
 		/**
 		 * Event handler for navigating back.
 		 * We navigate back in the browser history
@@ -120,33 +142,96 @@ sap.ui.define([
             history.go(-1);
         },
 
-
         onSearch: function (oEvent) {
-            if (oEvent.getParameters().refreshButtonPressed) {
-                // Search field's 'refresh' button has been pressed.
-                // This is visible if you select any master list item.
-                // In this case no new search is triggered, we only
-                // refresh the list binding.
-                this.onRefresh();
-            } else {
-                var aTableSearchState = [];
-                var sQuery = oEvent.getParameter("query");
-
-                if (sQuery && sQuery.length > 0) {
-                    aTableSearchState = [new Filter("Title", FilterOperator.Contains, sQuery)];
+            debugger;
+            console.log("On FIlter");
+            var aCurrentFilterValues = [];
+            var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
+            var aFlaEmpty = true;
+            for (let prop in oViewFilter) {
+                if (oViewFilter[prop]) {
+                    console.log(oViewFilter[prop]);
+                    if (prop === "TrainingTypeId") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter("TrainingTypeId", FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "StartDate") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                        );
+                    } else if (prop === "Status") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                        );
+                    } else {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(
+                                prop,
+                                FilterOperator.Contains,
+                                oViewFilter[prop].trim()
+                            )
+                        );
+                    }
                 }
-                this._applySearch(aTableSearchState);
             }
 
+            var endFilter = new Filter({
+                filters: aCurrentFilterValues,
+                and: true,
+            });
+            var oTable = this.getView().byId("table");
+            var oBinding = oTable.getBinding("items");
+            if (!aFlaEmpty) {
+                oBinding.filter(endFilter);
+            } else {
+                oBinding.filter([]);
+            }
         },
+
+        // onSearch: function (oEvent) {
+        //     var aFilters = this.getFiltersfromFB(),
+        //         oTable = this.getView().byId("table"),
+        //         oTable1 = this.getView().byId("table1");
+        //     debugger;
+        //     oTable.getBinding("items").filter(aFilters);
+        //     if (aFilters.length !== 0) {
+        //         if (aFilters[0].sPath === "TrainingTypeId") {
+        //             this.getModel("worklistView").setProperty("/TrainingTypeId", aFilters[0].oValue1);
+        //         } else {
+        //             this.getModel("worklistView").setProperty("/TrainingTypeId", null);
+        //         }
+
+        //         this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+        //     } else {
+        //         this.getModel("worklistView").setProperty("/TrainingTypeId", null);
+        //     }
+        // },
+
+        // getFiltersfromFB: function () {
+        //     var oFBCtrl = this.getView().byId("filterbar"),
+        //         aFilters = [];
+        //     debugger;
+        //     var oViewFilter = this.getView()
+        //         .getModel("worklistView")
+        //         .getProperty("/filterBar");
+        //     oFBCtrl.getAllFilterItems().forEach(function (ele) {
+        //         var typeId = ele.getControl().getSelectedKey();
+        //         if (typeId) {
+        //             aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, typeId));
+        //         }
+        //     });
+        //     return aFilters;
+        // },
 
         /**
          * When Click on Add button
          */
-        onAddVideo: function (oEvent) {
-            this.getRouter().navTo("createObject");
-        },
-
         onAddTraining: function (oEvent) {
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteAddEditT", {
@@ -156,51 +241,24 @@ sap.ui.define([
         },
 
         onListItemPressTraining: function (oEvent) {
-          var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-          console.log(sPath);
-          var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteTrainingTab", {
-            mode: "edit",
-            prop: window.encodeURIComponent(sPath),
-          });
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            console.log(sPath);
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteTrainingTab", {
+                mode: "view",
+                prop: window.encodeURIComponent(sPath),
+            });
         },
 
         onEditTraining: function (oEvent) {
-          var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-          console.log(sPath);
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            console.log(sPath);
 
-          var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteTrainingtab", {
-            mode: "edit",
-            prop: window.encodeURIComponent(sPath),
-          });
-        },
-
-        onRefreshView: function () {
-            var oModel = this.getModel();
-            oModel.refresh(true);
-        },
-
-        onEditVideo: function (oEvent) {
-            this._showObject(oEvent.getSource());
-        },
-
-        onListItemPressVideo: function (oEvent) {
-          this._showObject(oEvent.getSource());
-        },
-
-        onDeleteVideo: function (oEvent) {
-            var sPath = oEvent.getSource().getBindingContext().getPath();
-
-            function onYes() {
-                var data = sPath + "/IsArchived";
-                this.getModel().update(data, {
-                    IsArchived: true
-                }, {
-                    success: this.showToast.bind(this, "MSG_SUCCESS_VIDEO_REMOVE")
-                });
-            }
-            this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteAddEditT", {
+                mode: "edit",
+                id: window.encodeURIComponent(sPath),
+            });
         },
 
         onDeleteTraining: function (oEvent) {
@@ -217,12 +275,43 @@ sap.ui.define([
             this.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
         },
 
+        onRefreshView: function () {
+            var oModel = this.getModel();
+            oModel.refresh(true);
+        },
+
+        onAddVideo: function (oEvent) {
+            this.getRouter().navTo("createObject");
+        },
+
+        onEditVideo: function (oEvent) {
+            this._showObject(oEvent.getSource());
+        },
+
+        onListItemPressVideo: function (oEvent) {
+            this._showObject(oEvent.getSource());
+        },
+
+        onDeleteVideo: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+
+            function onYes() {
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
+                    IsArchived: true
+                }, {
+                    success: this.showToast.bind(this, "MSG_SUCCESS_VIDEO_REMOVE")
+                });
+            }
+            this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
+        },
+
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
 		 * and group settings and refreshes the list binding.
 		 * @public
 		 */
-        onRefresh : function () {
+        onRefresh: function () {
             var oTable = this.byId("table");
             oTable.getBinding("items").refresh();
         },
@@ -237,7 +326,7 @@ sap.ui.define([
 		 * @param {sap.m.ObjectListItem} oItem selected Item
 		 * @private
 		 */
-        _showObject : function (oItem) {
+        _showObject: function (oItem) {
             debugger;
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")
@@ -259,5 +348,5 @@ sap.ui.define([
             }
         }
 
-	});
+    });
 });

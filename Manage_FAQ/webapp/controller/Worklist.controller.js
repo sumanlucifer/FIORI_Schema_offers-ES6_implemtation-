@@ -40,7 +40,7 @@ sap.ui.define([
                 tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
                 tableBusyDelay: 0,
                 filterBar: {
-                    FAQCategoryId: null
+                    FAQCategoryId: ""
                 }
             });
             this.setModel(oViewModel, "worklistView");
@@ -114,18 +114,18 @@ sap.ui.define([
         },
 
         onReset: function () {
-          this._ResetFilterBar();
+            this._ResetFilterBar();
         },
         _ResetFilterBar: function () {
-          var aCurrentFilterValues = [];
-          var aResetProp = {
-            FAQCategoryId: null
-          };
-          var oViewModel = this.getView().getModel("oViewModel");
-          oViewModel.setProperty("/filterBar", aResetProp);
-          var oTable = this.byId("table");
-          var oBinding = oTable.getBinding("items");
-          oBinding.filter([]);
+            var aCurrentFilterValues = [];
+            var aResetProp = {
+                FAQCategoryId: ""
+            };
+            var oViewModel = this.getView().getModel("worklistView");
+            oViewModel.setProperty("/filterBar", aResetProp);
+            var oTable = this.byId("table");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
         },
 
         /**
@@ -150,22 +150,6 @@ sap.ui.define([
 
 
         onSearch: function (oEvent) {
-            // if (oEvent.getParameters().refreshButtonPressed) {
-            //     // Search field's 'refresh' button has been pressed.
-            //     // This is visible if you select any master list item.
-            //     // In this case no new search is triggered, we only
-            //     // refresh the list binding.
-            //     this.onRefresh();
-            // } else {
-            //     var aTableSearchState = [];
-            //     var sQuery = oEvent.getParameter("query");
-
-            //     if (sQuery && sQuery.length > 0) {
-            //         aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
-            //     }
-            //     this._applySearch(aTableSearchState);
-            // }
-
             var aFilters = this.getFiltersfromFB(),
                 oTable = this.getView().byId("table");
             oTable.getBinding("items").filter(aFilters);
@@ -185,7 +169,7 @@ sap.ui.define([
         getFiltersfromFB: function () {
             var oFBCtrl = this.getView().byId("filterbar"),
                 aFilters = [];
-
+            debugger;
             oFBCtrl.getAllFilterItems().forEach(function (ele) {
                 if (ele.getControl().getSelectedKey()) {
                     aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, ele.getControl().getSelectedKey()));

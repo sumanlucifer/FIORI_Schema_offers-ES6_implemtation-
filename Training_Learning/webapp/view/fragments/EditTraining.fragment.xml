@@ -1,6 +1,6 @@
-<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <VBox id="idVbxA" width="100%">
-        <f:SimpleForm id="TrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbxE" width="100%">
+        <f:SimpleForm id="TrainingEditDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>EditTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>TrainingDetails}"/>
                 <Label text="{i18n>colTrainingType}" required="true"/>
@@ -25,12 +25,6 @@
                 <TimePicker valueFormat="HH:mm" displayFormat="hh:mm a" value="{oModelView>/TrainingDetails/EndTime}"/>
 
                 <core:Title text="{i18n>TargetGroup}"/>
-                <Label text="{i18n>colSelectAll}"/>
-                <Switch state="{oModelView>/TrainingDetails/SelectGroup}" customTextOn="Yes" customTextOff="No">
-					<layoutData>
-						<FlexItemData growFactor="1"/>
-					</layoutData>
-				</Switch>
                 <Label text="{i18n>colZone}"/>
                 <Input value="{oModelView>/TrainingDetails/Zone}"/>
                 <Label text="{i18n>colDepot}"/>
