@@ -11,10 +11,10 @@
                     name="toolImageUploader"
                     width="100%"
                     tooltip="{i18n>fileUploaderTooltip}"
-                    change="uploadImage"
                     typeMissmatch="handleTypeMissmatch"
                     fileType="png,jpg,jpeg"
                     useMultipart="false"
+                    sendXHR="true"
                     uploadComplete="handleUploadComplete"/>
             </VBox>
         </content>

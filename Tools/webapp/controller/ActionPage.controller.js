@@ -16,6 +16,8 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
     return BaseController.extend("com.knpl.pragati.Tools.controller.ActionPage", {
         onInit: function () {
             this.oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
+            this.oPreviewImage = this.getView().byId("idPreviewImage");
+            this.oFileUploader = this.getView().byId("idFormToolImgUploader");
             //Router Object
             this.oRouter = this.getRouter();
             this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
@@ -24,6 +26,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         _onObjectMatched: function (oEvent) {
             this._action = oEvent.getParameter("arguments").action;
             this._property = oEvent.getParameter("arguments").property;
+            this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_TLS.uri;
             var oData = {
                 busy: false,
                 action: this._action,
@@ -40,7 +43,12 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 oData.Title = oItem.Title;
                 oData.Description = oItem.Description;
                 oData.Url = oItem.Url;
+                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+                this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
+            } else {
+                this.oPreviewImage.setVisible(false);
             }
+            this.oFileUploader.clear();
             var oViewModel = new JSONModel(oData);
             this.getView().setModel(oViewModel, "ActionViewModel");
             this._setDefaultValueState();
@@ -52,6 +60,48 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 
         onPressCancel: function () {
             this._navToHome();
+        },
+
+        onChangeFile: function (oEvent) {
+            if (oEvent.getSource().oFileUpload.files.length > 0) {
+                var file = oEvent.getSource().oFileUpload.files[0];
+                var path = URL.createObjectURL(file);
+                this.oPreviewImage.setSrc(path);
+                this.oPreviewImage.setVisible(true);
+            } else {
+                if (this._action === "add") {
+                    this.oPreviewImage.setSrc(path);
+                    this.oPreviewImage.setVisible(false);
+                } else {
+                    this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+                }
+            }
+        },
+
+        _uploadToolImage: function (oData) {
+            var oModel = this.getComponentModel();
+            if (this._action === "add") {
+                this.oFileUploader.setUploadUrl(this.sServiceURI + "MasterExternalLinksSet(" + oData.Id + ")/$value");
+            }
+            if (!this.oFileUploader.getValue()) {
+				MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+				return;
+			}
+			this.oFileUploader.checkFileReadable().then(function() {
+				// @ts-ignore
+				this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
+                this.oFileUploader.setHttpRequestMethod("PUT");
+                this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                this.oFileUploader.upload();
+			}.bind(this), function(error) {
+				MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+			}.bind(this)).then(function() {
+				this.oFileUploader.clear();
+			}.bind(this));
+        },
+
+        handleUploadComplete: function () {
+            this._showSuccessMsg();
         },
 
         onPressSaveOrUpdate: function () {
@@ -78,12 +128,12 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             }
         },
 
-        _onLoadSuccess: function (data) {
-            var oViewModel = this.getView().getModel("ActionViewModel");
-            oViewModel.setProperty("/busy", false);
-            var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
-            MessageToast.show(sMessage);
-            this._navToHome();
+        _onLoadSuccess: function (oData) {
+            if (this.oFileUploader.getValue()) {
+                this._uploadToolImage(oData);
+            } else {
+                this._showSuccessMsg();
+            }
         },
 
         _onLoadError: function (error) {
@@ -91,6 +141,14 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             oViewModel.setProperty("/busy", false);
             var oRespText = JSON.parse(error.responseText);
             MessageBox.error(oRespText["error"]["message"]["value"]);
+        },
+
+        _showSuccessMsg: function () {
+            var oViewModel = this.getView().getModel("ActionViewModel");
+            oViewModel.setProperty("/busy", false);
+            var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
+            MessageToast.show(sMessage);
+            this._navToHome();
         },
 
         onChangeValue: function (oEvent) {

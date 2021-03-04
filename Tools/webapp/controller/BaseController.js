@@ -1,8 +1,9 @@
 // @ts-nocheck
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    'sap/ui/core/BusyIndicator'
-], function (Controller, BusyIndicator) {
+    'sap/ui/core/BusyIndicator',
+    'sap/m/MessageToast'
+], function (Controller, BusyIndicator, MessageToast) {
     "use strict";
 
     return Controller.extend("com.knpl.pragati.Tools.controller.BaseController", {
@@ -67,6 +68,17 @@ sap.ui.define([
         _navToHome: function () {
             this.oRouter.navTo("RouteLandingPage");
         },
+
+        handleTypeMissmatch: function(oEvent) {
+            var oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
+			var aFileTypes = oEvent.getSource().getFileType();
+			// @ts-ignore
+			jQuery.each(aFileTypes, function(key, value) {aFileTypes[key] = "*." +  value;});
+			var sSupportedFileTypes = aFileTypes.join(", ");
+			MessageToast.show(oResourceBundle.getText("fileUploaderformatNotSupportedTxt1") + oEvent.getParameter("fileType") + " " +
+                                oResourceBundle.getText("fileUploaderformatNotSupportedTxt2") + " " +
+                                sSupportedFileTypes);
+		},
 
 
         /**
