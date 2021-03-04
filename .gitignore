@@ -2,13 +2,11 @@
 /node_modules/
 /resources/
 
-*/.gitignore/
-
 *.env*
+*.env1
 *.zip
 .vscode/
 */.gitignore/
-*.env*
 # auto generated wildcard
 ZSampGWCnct/GatewaySrvTest/.env4
 # auto generated wildcard

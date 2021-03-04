@@ -3,7 +3,8 @@ package-lock.json
 /dist/
 /.vscode/
 /*-content.zip/ 
-
+*/.gitignore/
+*.env*
 # auto generated wildcard
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard

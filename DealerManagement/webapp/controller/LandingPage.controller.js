@@ -103,6 +103,7 @@ sap.ui.define([
                 aCurrentFilterValues.push(this.getInputText("idFiscalYear"));
 
                 this.filterTable(aCurrentFilterValues);
+
             },
 
             getInputText: function (controlId) {
@@ -117,27 +118,36 @@ sap.ui.define([
                 return this.getView().byId("idDealerTable").getBinding("items");
             },
 
+
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
 
                 var aKeys = [
-                    "search","PlantCode", "Depot","SalesGroupName","FiscalYear"
+                    "search", "tolower(PlantCode)", "tolower(Depot)", "tolower(SalesGroupName)", "tolower(FiscalYear)"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
-                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search" )
-                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]))
-                    else if(aCurrentFilterValues[i].length > 0 && aKeys[i] == "search" )    
+                    if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
+                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
+                    else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
+                
                 return aFilters;
             },
+            SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-            SearchInAllFields: function(aKeys, aFilters, searchValue){
-                for(let i=1 ; i<aKeys.length; i++){
-                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains, searchValue))
+
+                for (let i = 1; i < aKeys.length; i++) {
+
+                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                    
                 }
+                
+
             },
+
+
 
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.SortDialog")
@@ -216,11 +226,38 @@ sap.ui.define([
                 });
                 this.presentBusyDialog();
             },
-            onReset :function (){
-                var oModel = this.getComponentModel();
-                console.log(oModel);
+            onReset: function () {
+               
+                this._ResetFilterBar();
+       
 
-            }
+            },
+            _ResetFilterBar: function () {
+          var aCurrentFilterValues = [];
+          var aResetProp = {
+            PlantCode: "",
+            Depot: "",
+            SalesGroupName: "",
+            FiscalYear: "",
+          };
+          var oViewModel = this.getView().getModel();
+          oViewModel.setProperty("/filterBar", aResetProp);
+          
+          var oTable = this.byId("idDealerTable");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter([]);
+        },
+
+            // handleSuggest: function (oEvent) {
+            //     var aFilters = [];
+            //     var sTerm = oEvent.getParameter("suggestValue");
+            //     if (sTerm) {
+            //         aFilters.push(new sap.ui.model.Filter("FiscalYear", sap.ui.model.FilterOperator.Contains, sTerm));
+            //     }
+            //     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+            //     //do not filter the provided suggestions before showing them to the user - important
+            //     oEvent.getSource().setFilterSuggests(false);
+            // }
 
             /*onDetailPress: function (oEvent) {
                 var oButton = oEvent.getSource();

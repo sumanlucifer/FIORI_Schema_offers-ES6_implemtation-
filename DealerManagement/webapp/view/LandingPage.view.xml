@@ -19,41 +19,33 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true" > 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="PlantCode" label="Plant Code" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idPlantCode" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{PlantCode}" />
-                                        </suggestionItems>
+                                    <Input id="idPlantCode"  placeholder="" showSuggestion="false" showValueHelp="false">
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idDepot" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Depot}" />
-                                        </suggestionItems>
+                                    <Input id="idDepot" placeholder="" showSuggestion="false" showValueHelp="false" >
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="SalesGroupName" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idSalesGroupName" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{SalesGroupName}" />
-                                        </suggestionItems>
+                                    <Input id="idSalesGroupName" placeholder="" showSuggestion="false" showValueHelp="false" >
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="FiscalYear" label="Fiscal Year" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idFiscalYear" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/DealerSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{FiscalYear}" />
-                                        </suggestionItems>
+                                    <Input id="idFiscalYear" placeholder="" showSuggestion="false" showValueHelp="false"  >
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -68,7 +60,7 @@
         <f:content>
             <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'},sorter : {
             path : 'DealerName' 
-         }}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+         }}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
