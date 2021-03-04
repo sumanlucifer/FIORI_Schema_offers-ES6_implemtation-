@@ -6,7 +6,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, History, formatter) {
 	"use strict";
 
-	return BaseController.extend("com.knpl.pragati.ComplaintManagement.ComplaintManagement.controller.Object", {
+	return BaseController.extend("com.knpl.pragati.ComplaintManagement.controller.Object", {
 
 		formatter: formatter,
 

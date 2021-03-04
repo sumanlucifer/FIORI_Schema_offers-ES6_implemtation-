@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/test/Opa5",
-	"com/knpl/pragati/ComplaintManagement/ComplaintManagement/localService/mockserver",
+	"com/knpl/pragati/ComplaintManagement/localService/mockserver",
 	"sap/ui/model/odata/v2/ODataModel"
 ], function(Opa5, mockserver, ODataModel) {
 	"use strict";
 
-	return Opa5.extend("com.knpl.pragati.ComplaintManagement.ComplaintManagement.test.integration.arrangements.Startup", {
+	return Opa5.extend("com.knpl.pragati.ComplaintManagement.test.integration.arrangements.Startup", {
 
 		/**
 		 * Initializes mock server, then starts the app component
@@ -29,7 +29,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "com.knpl.pragati.ComplaintManagement.ComplaintManagement",
+					name: "com.knpl.pragati.ComplaintManagement",
 					async: true
 				},
 				hash: oOptions.hash,

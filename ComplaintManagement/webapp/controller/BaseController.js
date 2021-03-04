@@ -8,7 +8,7 @@ sap.ui.define([
 	// shortcut for sap.m.URLHelper
 	var URLHelper = mobileLibrary.URLHelper;
 
-	return Controller.extend("com.knpl.pragati.ComplaintManagement.ComplaintManagement.controller.BaseController", {
+	return Controller.extend("com.knpl.pragati.ComplaintManagement.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
 		 * @public

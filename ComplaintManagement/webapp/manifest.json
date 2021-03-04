@@ -1,7 +1,7 @@
 {
   "_version": "1.12.0",
   "sap.app": {
-    "id": "com.knpl.pragati.ComplaintManagement.ComplaintManagement",
+    "id": "com.knpl.pragati.ComplaintManagement",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "title": "{{appTitle}}",
@@ -59,7 +59,7 @@
   },
   "sap.ui5": {
     "rootView": {
-      "viewName": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view.App",
+      "viewName": "com.knpl.pragati.ComplaintManagement.view.App",
       "type": "XML",
       "async": true,
       "id": "app"
@@ -80,7 +80,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.i18n.i18n"
+          "bundleName": "com.knpl.pragati.ComplaintManagement.i18n.i18n"
         }
       },
       "": {
@@ -99,7 +99,7 @@
       "config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
-        "viewPath": "com.knpl.pragati.ComplaintManagement.ComplaintManagement.view",
+        "viewPath": "com.knpl.pragati.ComplaintManagement.view",
         "controlId": "app",
         "controlAggregation": "pages",
         "bypassed": {
@@ -117,6 +117,16 @@
           "pattern": "ComplaintSet/{objectId}",
           "name": "object",
           "target": ["object"]
+        },
+        {
+          "pattern": "Add",
+          "name": "RouteAddCmp",
+          "target": ["TargetAddCmp"]
+        },
+        {
+          "pattern": "Edit/{prop}",
+          "name": "RouteEditCmp",
+          "target": ["TargetEditCmp"]
         }
       ],
       "targets": {
@@ -131,6 +141,18 @@
           "viewId": "object",
           "viewLevel": 2,
           "title": "{i18n>objectViewTitle}"
+        },
+        "TargetAddCmp": {
+          "viewName": "AddComplaint",
+          "viewId": "AddComplaint",
+          "viewLevel": 2,
+          "title": "{i18n>worklistViewTitle}"
+        },
+        "TargetEditCmp": {
+          "viewName": "EditComplaint",
+          "viewId": "EditComplaint",
+          "viewLevel": 2,
+          "title": "{i18n>worklistViewTitle}"
         },
         "objectNotFound": {
           "viewName": "ObjectNotFound",

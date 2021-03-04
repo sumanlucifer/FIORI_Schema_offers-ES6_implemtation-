@@ -1,0 +1,60 @@
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ComplaintManagement.controller.EditComplaint"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage showFooter="true" id="dynamicPageId" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                   <Title text="{ComplaintS}"/>
+                </f:heading>
+                	<f:breadcrumbs>
+						<Breadcrumbs currentLocationText="Update Complaint">
+                        <Link text="{i18n>worklistTitle}" press="onNavBack"/>
+                    </Breadcrumbs>
+					</f:breadcrumbs>
+                	<f:expandedContent>
+						<Label text="{ComplaintCode}"/>
+					</f:expandedContent>
+					<f:snappedContent>
+						<Label text="{ComplaintCode}"/>
+					</f:snappedContent>
+					<f:snappedTitleOnMobile>
+						<Title text="{ComplaintCode}"/>
+					</f:snappedTitleOnMobile>
+            </f:DynamicPageTitle>
+        </f:title>
+        	<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+							<ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
+							<ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
+							
+						</layout:VerticalLayout>
+
+						<layout:VerticalLayout>
+							<ObjectAttribute title="{i18n>ComplaintDetails}" />
+							
+						</layout:VerticalLayout>
+                        <layout:VerticalLayout>
+							<ObjectStatus
+                                class="sapMObjectStatusMedium"
+                                text="{ComplaintStatus}"
+                                state="None" />
+							
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+			</f:header>
+        <f:content>
+            <VBox id="idVbx" renderType="Bare">
+                           
+            </VBox>
+        </f:content>
+        <f:footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                    <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
+            </Toolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

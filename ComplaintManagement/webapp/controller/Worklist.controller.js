@@ -5,12 +5,28 @@ sap.ui.define(
     "../model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/Sorter",
+    "sap/ui/Device",
   ],
-  function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+  function (
+    BaseController,
+    JSONModel,
+    formatter,
+    Filter,
+    FilterOperator,
+    MessageBox,
+    MessageToast,
+    Fragment,
+    Sorter,
+    Device
+  ) {
     "use strict";
 
     return BaseController.extend(
-      "com.knpl.pragati.ComplaintManagement.ComplaintManagement.controller.Worklist",
+      "com.knpl.pragati.ComplaintManagement.controller.Worklist",
       {
         formatter: formatter,
 
@@ -23,6 +39,15 @@ sap.ui.define(
          * @public
          */
         onInit: function () {
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter
+            .getRoute("worklist")
+            .attachMatched(this._onRouteMatched, this);
+        },
+        _onRouteMatched: function () {
+          this._InitData();
+        },
+        _InitData: function () {
           var oViewModel,
             iOriginalBusyDelay,
             oTable = this.byId("table");
@@ -51,6 +76,13 @@ sap.ui.define(
               "tableNoDataText"
             ),
             tableBusyDelay: 0,
+            filterBar: {
+              ComplaintTypeId: "",
+              ComplaintSubTypeId: "",
+              CreatedAt: null,
+              ComplaintStatus: "",
+              Name: "",
+            },
           });
           this.setModel(oViewModel, "worklistView");
 
@@ -61,6 +93,205 @@ sap.ui.define(
             // Restore original busy indicator delay for worklist's table
             oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
           });
+          this.getView().getModel().refresh();
+          this._fiterBarSort();
+          this._addSearchFieldAssociationToFB();
+        },
+        _fiterBarSort: function () {
+          if (this._ViewSortDialog) {
+            var oDialog = this.getView().byId("viewSetting");
+            oDialog.setSortDescending(true);
+            oDialog.setSelectedSortItem("CreatedAt");
+            var otable = this.getView().byId("table");
+            var oSorter = new Sorter({ path: "CreatedAt", descending: true });
+            otable.getBinding("items").sort(oSorter);
+          }
+        },
+        onFilter: function () {
+          console.log("On FIlter");
+          var aCurrentFilterValues = [];
+          var oViewFilter = this.getView()
+            .getModel("worklistView")
+            .getProperty("/filterBar");
+          var aFlaEmpty = true;
+          for (let prop in oViewFilter) {
+            if (oViewFilter[prop]) {
+              if (prop === "ComplaintTypeId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "ComplaintTypeId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                );
+              } else if (prop === "ComplaintSubTypeId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "ComplaintSubTypeId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "CreatedAt") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "ComplaintStatus") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "Name") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    [
+                      new Filter(
+                        "tolower(Painter/Name)",
+                        FilterOperator.Contains,
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
+                      ),
+                      new Filter(
+                        "Painter/MembershipCard",
+                        FilterOperator.Contains,
+                        oViewFilter[prop].trim().toUpperCase()
+                      ),
+                      new Filter(
+                        "Painter/Mobile",
+                        FilterOperator.Contains,
+                        oViewFilter[prop].trim()
+                      ),
+                    ],
+                    false
+                  )
+                );
+              }
+            }
+          }
+
+          var endFilter = new Filter({
+            filters: aCurrentFilterValues,
+            and: true,
+          });
+          var oTable = this.getView().byId("table");
+          var oBinding = oTable.getBinding("items");
+          if (!aFlaEmpty) {
+            oBinding.filter(endFilter);
+          } else {
+            oBinding.filter([]);
+          }
+        },
+        onResetFilterBar: function () {
+          this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+          var aCurrentFilterValues = [];
+          var aResetProp = {
+            ComplaintTypeId: "",
+            ComplaintSubTypeId: "",
+            CreatedAt: null,
+            ComplaintStatus: "",
+            Name: "",
+          };
+          var oViewModel = this.getView().getModel("worklistView");
+          oViewModel.setProperty("/filterBar", aResetProp);
+          //oViewModel.setProperty("/searchBar", "");
+
+          //   for (let prop in aResetProp) {
+          //     aCurrentFilterValues.push(
+          //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
+          //     );
+          //   }
+          //   var endFilter = new Filter({
+          //     filters: aCurrentFilterValues,
+          //     and: false,
+          //   });
+          var oTable = this.byId("table");
+          var oBinding = oTable.getBinding("items");
+          oBinding.filter([]);
+        },
+        _addSearchFieldAssociationToFB: function () {
+          let oFilterBar = this.getView().byId("filterbar");
+          let oSearchField = oFilterBar.getBasicSearch();
+          var oBasicSearch;
+          var othat = this;
+          if (!oSearchField) {
+            // @ts-ignore
+            oBasicSearch = new sap.m.SearchField({
+              value: "{worklistView>/filterBar/Name}",
+              showSearchButton: true,
+              search: othat.onFilter.bind(othat),
+            });
+          } else {
+            oSearchField = null;
+          }
+
+          oFilterBar.setBasicSearch(oBasicSearch);
+
+          //   oBasicSearch.attachBrowserEvent(
+          //     "keyup",
+          //     function (e) {
+          //       if (e.which === 13) {
+          //         this.onSearch();
+          //       }
+          //     }.bind(this)
+          //   );
+        },
+        fmtStatus: function (mParam) {
+          if (mParam === "REGISTERED") {
+            return "Closed";
+          }
+          return "Open";
+        },
+        handleSortButtonPressed: function () {
+          this.getViewSettingsDialog(
+            "com.knpl.pragati.ComplaintManagement.view.fragments.SortDialog"
+          ).then(function (oViewSettingsDialog) {
+            oViewSettingsDialog.open();
+          });
+        },
+        getViewSettingsDialog: function (sDialogFragmentName) {
+          if (!this._ViewSortDialog) {
+            var othat = this;
+            this._ViewSortDialog = Fragment.load({
+              id: this.getView().getId(),
+              name: sDialogFragmentName,
+              controller: this,
+            }).then(function (oDialog) {
+              if (Device.system.desktop) {
+                othat.getView().addDependent(oDialog);
+                oDialog.addStyleClass("sapUiSizeCompact");
+              }
+              return oDialog;
+            });
+          }
+          return this._ViewSortDialog;
+        },
+        handleSortDialogConfirm: function (oEvent) {
+          var oTable = this.byId("table"),
+            mParams = oEvent.getParameters(),
+            oBinding = oTable.getBinding("items"),
+            sPath,
+            bDescending,
+            aSorters = [];
+
+          sPath = mParams.sortItem.getKey();
+          bDescending = mParams.sortDescending;
+          aSorters.push(new Sorter(sPath, bDescending));
+
+          // apply the selected sort and group settings
+          oBinding.sort(aSorters);
         },
 
         /* =========================================================== */
@@ -77,6 +308,7 @@ sap.ui.define(
          * @public
          */
         onUpdateFinished: function (oEvent) {
+          console.log("event");
           // update the worklist's object counter after the table update
           var sTitle,
             oTable = oEvent.getSource(),
@@ -136,6 +368,24 @@ sap.ui.define(
             this._applySearch(aTableSearchState);
           }
         },
+        onListItemPress: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext()
+            .getPath()
+            .substr(1);
+          console.log(sPath);
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("RouteEditCmp", {
+            prop: window.encodeURIComponent(sPath),
+          });
+        },
+
+        onPressAdd: function (oEvent) {
+          var oRouter = this.getOwnerComponent().getRouter();
+          oRouter.navTo("RouteAddCmp");
+        },
 
         /**
          * Event handler for refresh event. Keeps filter, sort
@@ -179,14 +429,6 @@ sap.ui.define(
               this.getResourceBundle().getText("worklistNoDataWithSearchText")
             );
           }
-        },
-        fmtStatus: function (mParam) {
-          var sLetter = mParam
-            .toLowerCase()
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
-          return sLetter;
         },
       }
     );
