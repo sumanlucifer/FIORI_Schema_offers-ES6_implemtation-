@@ -29,7 +29,9 @@ xmlns:f="sap.ui.layout.form">
                                   }
                               }"
                         placeholder="Enter Name ..."
-        				valueStateText="Enter a valid Name. Maximum 25 characters." />
+        				valueStateText="Enter a valid Name. Maximum 25 characters." 
+                        
+                        />
 
 				<Label text="Email" labelFor="email" design="Bold" required="true" />
 		<Input id="email" 
@@ -114,7 +116,7 @@ xmlns:f="sap.ui.layout.form">
                 
                 <Button text="Cancel"
                 
-						press="onCancelPress"
+						press="onCancelPressForAdd"
 						>
 					
 				</Button>

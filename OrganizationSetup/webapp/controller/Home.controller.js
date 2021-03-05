@@ -99,6 +99,7 @@ sap.ui.define([
                 // oRouter.navTo("detail", {
                 //     productId: selectedProductId
                 // });
+                
                 oRouter.navTo("AddRole");
 
             },
