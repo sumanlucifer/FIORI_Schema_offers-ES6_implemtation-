@@ -15,7 +15,7 @@
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQCategoryId" groupTitle="Filters" label="{i18n>colFAQCategory}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oViewModel>/filterBar/FAQCategoryId}">
+									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
 										<core:Item key="{Id}" text="{FAQCategory}"/>
 									</ComboBox>
 								</fb:control>
