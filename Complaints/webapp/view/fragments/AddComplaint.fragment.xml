@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbx" width="100%">
+        <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddComplaintDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>TypeOfComplaint}"/>
+                <Label text="{i18n>ComplaintType}"/>
+                <ComboBox change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',sorter:{path:'ComplaintType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                    <items>
+                        <core:Item text="{ComplaintType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>ComplaintDetails}"/>
+                <ComboBox change="" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }">
+                    <items>
+                        <core:Item text="{ComplaintSubtype}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Enter} {i18n>TokenCode}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8'? true:false}"/>
+                <Input id="idTokenCode" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8'? true:false}" required="true" value="{path:'oModelView>/addComplaint/TokenCode',type:'sap.ui.model.type.String',constraints:{minLength:1}}"/>
+                <Label text="{i18n>Enter} {i18n>GiftDetails}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '13'? true:false}"/>
+                 <ComboBox visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '13'? true:false}" id="idGifts"  required="true" items="{path:'/MasterRewardGiftSet',sorter:{path:'RewardGift'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/RewardGiftId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                    <items>
+                        <core:Item text="{RewardGift}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Points}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8' || ${oModelView>/addComplaint/ComplaintTypeId} === '13' }" />
+                <Input id="idPoints" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8' || ${oModelView>/addComplaint/ComplaintTypeId} === '13' }" required="true" value="{path:'oModelView>/addComplaint/RewardPoints', type:'sap.ui.model.type.String',constraints:{minLength:1}}"/>
+                <Label text="{i18n>Status}"/>
+                <Text text="{i18n>Open}" />
+                <core:Title text="{i18n>PainterDetails}"/>
+                <Label  text="{i18n>PrimaryMobileNo}"/>
+                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/addCompAddData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Label text="{i18n>PainterName}"/>
+                <Input editable="false" value="{oModelView>/addCompAddData/Name}" />
+                <Label text="{i18n>MembershipId}"/>
+                <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
+                <Label text="{i18n>AddResolution}"/>
+                <TextArea value="{oModelView>/addComplaint/Resolution}" ></TextArea>
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>
