@@ -3,6 +3,7 @@
     xmlns:layout="sap.ui.layout"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified"
     xmlns:form="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
     <f:DynamicPage id="idActionPage" class="actionPage" showFooter="true" busy="{ActionViewModel>/busy}">
@@ -65,6 +66,27 @@
                                         <TextArea id="idDescriptionInput" value="{ActionViewModel>/Description}" placeholder="{i18n>formDescriptionPlaceholder}" />
                                     </form:fields>
                                 </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>formToolImageLabel}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <HBox class="fileUploaderContainer">
+                                            <u:FileUploader
+                                                id="idFormToolImgUploader"
+                                                name="formToolImgUploader"
+                                                width="100%"
+                                                tooltip="{i18n>fileUploaderTooltip}"
+                                                change="onChangeFile"
+                                                typeMissmatch="handleTypeMissmatch"
+                                                fileType="png,jpg,jpeg"
+                                                useMultipart="false"
+                                                sendXHR="true"
+                                                uploadComplete="handleUploadComplete" />
+                                            <Image id="idPreviewImage" width="100px" height="100px" />
+                                        </HBox>
+                                    </form:fields>
+                                </form:FormElement>
                             </form:formElements>
                         </form:FormContainer>
                     </form:formContainers>
@@ -74,9 +96,9 @@
         <f:footer>
             <OverflowToolbar>
 				<ToolbarSpacer/>
-				<Button text="{=${ActionViewModel>/action} === 'add' ? ${i18n>saveBtnText} : ${i18n>updateBtnText}}" type="Emphasized" press="onPressSaveOrUpdate"/>
                 <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel"/>
-			</OverflowToolbar>
+				<Button text="{=${ActionViewModel>/action} === 'add' ? ${i18n>saveBtnText} : ${i18n>updateBtnText}}" type="Emphasized" press="onPressSaveOrUpdate"/>
+            </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
 </mvc:View>
