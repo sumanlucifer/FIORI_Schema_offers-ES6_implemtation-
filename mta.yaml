@@ -59,10 +59,6 @@ modules:
       name: Manage_Notifications
       target-path: resources/
     - artifacts:
-      - Training-content.zip
-      name: Training
-      target-path: resources/
-    - artifacts:
       - Catelogue-content.zip
       name: Catelogue
       target-path: resources/
@@ -149,14 +145,6 @@ modules:
 - name: Manage_Notifications
   type: html5
   path: Manage_Notifications
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: Training
-  type: html5
-  path: Training
   build-parameters:
     builder: custom
     commands:

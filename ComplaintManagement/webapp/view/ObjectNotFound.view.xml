@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.knpl.pragati.ComplaintManagement.ComplaintManagement.controller.NotFound"
+	controllerName="com.knpl.pragati.ComplaintManagement.controller.NotFound"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 

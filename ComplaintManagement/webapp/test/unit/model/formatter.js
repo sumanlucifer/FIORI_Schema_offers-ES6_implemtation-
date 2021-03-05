@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"com/knpl/pragati/ComplaintManagement/ComplaintManagement/model/formatter"
+	"com/knpl/pragati/ComplaintManagement/model/formatter"
 ], function (formatter) {
 	"use strict";
 
