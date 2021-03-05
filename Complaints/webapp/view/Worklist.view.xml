@@ -1,0 +1,97 @@
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.Worklist"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <vm:VariantManagement standardItemText="{i18n>appDescription}"></vm:VariantManagement>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintType" label="{i18n>ComplaintType}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox  items="{path:'/MasterComplaintTypeSet'}" selectedKey="{worklistView>/filterBar/ComplaintTypeId}">
+                                        <core:Item text="{ComplaintType}" key="{Id}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintDetails" label="{i18n>ComplaintDetails}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox  items="{path:'/MasterComplaintSubtypeSet'}" selectedKey="{worklistView>/filterBar/ComplaintSubTypeId}">
+                                        <core:Item text="{ComplaintSubtype}" key="{Id}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>Date}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'worklistView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox  selectedKey="{worklistView>/filterBar/ComplaintStatus}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Registered" key="REGISTERED"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{worklistView>/worklistTableTitle}"/>
+                        <ToolbarSpacer/>
+                        <Button icon="sap-icon://add" text="{i18n>AddComplaint}" type="Transparent" press=".onPressAdd" tooltip="{i18n>AddComplaint}"></Button>
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                    </Toolbar>
+                </headerToolbar>
+                <columns >
+                     <Column>
+                        <Text text="{i18n>PainterName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>MembershipId}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>PrimaryMobileNo}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ComplaintType}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ComplaintDetails}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>DateAndTime}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Status}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem press="onListItemPress" type="Navigation">
+                        <cells>
+                          <Text text="{Painter/Name}"/>
+                            <Text text="{Painter/MembershipCard}"/>
+                            <Text text="{Painter/Mobile}"/>
+                            <Text text="{ComplaintType/ComplaintType}"/>
+                            <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                            <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="{= ${ComplaintStatus} === 'RESOLVED' ? 'Success' : 'None' }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

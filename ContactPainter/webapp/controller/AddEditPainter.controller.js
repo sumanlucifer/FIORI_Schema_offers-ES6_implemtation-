@@ -268,7 +268,7 @@ sap.ui.define(
             oKycPayload = null;
           }
           // settting the username of the painter same as the mobile number
-          oPainterData["Username"] = oPainterData["Mobile"];
+          //oPainterData["Username"] = oPainterData["Mobile"];
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
@@ -474,7 +474,7 @@ sap.ui.define(
           }
           if (!sFlag) {
             oSource.clearSelection();
-            //oSource.setValue("");
+            oSource.setValue("");
             MessageToast.show(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );

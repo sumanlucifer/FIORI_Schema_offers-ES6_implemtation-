@@ -75,8 +75,8 @@ modules:
       name: Tools
       target-path: resources/
     - artifacts:
-      - ComplaintManagement.zip
-      name: ComplaintManagement
+      - Complaints.zip
+      name: Complaints
       target-path: resources/
 - name: MDM
   type: html5
@@ -182,9 +182,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: ComplaintManagement
+- name: Complaints
   type: html5
-  path: ComplaintManagement
+  path: Complaints
   build-parameters:
     builder: custom
     commands:
