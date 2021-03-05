@@ -80,7 +80,7 @@
                     <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                     
-        <ObjectAttribute title="Title" text="{Name}"/>
+        <ObjectAttribute title="Title" text="{Title}"/>
 		
 	
                     </uxap:ObjectPageSubSection>
@@ -113,7 +113,7 @@
 					<Button
 						id="versionButton"
 						text="Upload a new version"
-						press="onVersion"
+						press="onVersionImage"
 						enabled="false"
 						type="Transparent" />
 					<UploadCollectionToolbarPlaceholder/>
@@ -130,27 +130,25 @@
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
-					attributes="{
-						path: 'attributes',
-						templateShareable: false
-					}"
-					statuses="{
-						path: 'statuses',
-						templateShareable: false
-					}"
-					selected="{selected}">
+					
+					selected="{selectedImage}">
 					<attributes>
 						<ObjectAttribute
-							title="sdsdad"
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
 							text="
 							222222"
 							active="false" />
 					</attributes>
-					<statuses>
-						<ObjectStatus title="status"
-							text="{text}"
-							state="{state}" />
-					</statuses>
+                    
+					
 				</UploadCollectionItem>
 			</items>
 		</UploadCollection>
@@ -170,7 +168,7 @@
 			multiple="false"
 			change="onChange"
 			fileSizeExceed=""
-			selectionChange="onSelectionChange"
+			selectionChange="onSelectionChangePdf"
 			typeMissmatch=""
 			uploadComplete=""
 			beforeUploadStarts=""
@@ -183,13 +181,13 @@
 					<Button
 						id="downloadButton1"
 						text="Download"
-						press="onDownloadItem"
+						press="onDownloadPdf"
 						enabled="false"
 						type="Transparent" />
 					<Button
 						id="versionButton1"
 						text="Upload a new version"
-						press="onVersion"
+						press="onVersionPdf"
 						enabled="false"
 						type="Transparent" />
 					<UploadCollectionToolbarPlaceholder/>
@@ -206,29 +204,24 @@
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
-					attributes="{
-						path: 'attributes',
-						templateShareable: false
-					}"
-					statuses="{
-						path: 'statuses',
-						templateShareable: false
-					}"
-					selected="{selected}">
+					
+					selected="{selectedPdf}">
 					<attributes>
 						<ObjectAttribute
-							title="{title}"
-							text="{
-								parts: [ 'text', 'type' ],
-								formatter : '.formatAttribute'
-							}"
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
+							text="
+							222222"
 							active="false" />
 					</attributes>
-					<statuses>
-						<ObjectStatus title="{title}"
-							text="{text}"
-							state="{state}" />
-					</statuses>
+					
 				</UploadCollectionItem>
 			</items>
 		</UploadCollection>

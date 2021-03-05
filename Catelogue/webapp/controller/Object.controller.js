@@ -37,7 +37,7 @@ sap.ui.define([
 		 * @public
 		 */
         onInit: function () {
-            
+
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
             // between the busy indication for loading the view's meta data
@@ -58,7 +58,7 @@ sap.ui.define([
             }
             );
 
-           
+
 
         },
 
@@ -185,7 +185,7 @@ sap.ui.define([
 
         // onChange: function (oEvent) {
 
-            
+
         //     var oUploadCollection = oEvent.getSource();
         //     // Header Token
         //     var oCustomerHeaderToken = new UploadCollectionParameter({
@@ -199,55 +199,87 @@ sap.ui.define([
 
         //     collection.upload();
         // },
-        	onSelectionChangeImage: function() {
-			var oUploadCollection = this.byId("UploadCollectionImage");
-			// If there's any item selected, sets download button enabled
-			if (oUploadCollection.getSelectedItems().length > 0) {
-				this.byId("downloadButton").setEnabled(true);
-				if (oUploadCollection.getSelectedItems().length === 1) {
-					this.byId("versionButton").setEnabled(true);
-				} else {
-					this.byId("versionButton").setEnabled(false);
-				}
-			} else {
-				this.byId("downloadButton").setEnabled(false);
-				this.byId("versionButton").setEnabled(false);
-			}
+        onSelectionChangeImage: function () {
+            var oUploadCollection = this.byId("UploadCollectionImage");
+            // If there's any item selected, sets download button enabled
+            if (oUploadCollection.getSelectedItems().length > 0) {
+                this.byId("downloadButton").setEnabled(true);
+                if (oUploadCollection.getSelectedItems().length === 1) {
+                    this.byId("versionButton").setEnabled(true);
+                } else {
+                    this.byId("versionButton").setEnabled(false);
+                }
+            } else {
+                this.byId("downloadButton").setEnabled(false);
+                this.byId("versionButton").setEnabled(false);
+            }
         },
-        	onDownloadImage: function() {
-			var oUploadCollection = this.byId("UploadCollectionImage");
-			var aSelectedItems = oUploadCollection.getSelectedItems();
-			if (aSelectedItems) {
-				for (var i = 0; i < aSelectedItems.length; i++) {
-					oUploadCollection.downloadItem(aSelectedItems[i], true);
-				}
-			} else {
-				MessageToast.show("Select an item to download");
-			}
-		},
+        onDownloadImage: function () {
+            var oUploadCollection = this.byId("UploadCollectionImage");
+            var aSelectedItems = oUploadCollection.getSelectedItems();
+            if (aSelectedItems) {
+                for (var i = 0; i < aSelectedItems.length; i++) {
+                    oUploadCollection.downloadItem(aSelectedItems[i], true);
+                }
+            } else {
+                MessageToast.show("Select an item to download");
+            }
+        },
 
-		onVersion: function() {
-			var oUploadCollection = this.byId("UploadCollection");
-			this.bIsUploadVersion = true;
-			this.oItemToUpdate = oUploadCollection.getSelectedItem();
-			oUploadCollection.openFileDialog(this.oItemToUpdate);
-		},
-        
+        onVersionImage: function () {
+            var oUploadCollection = this.byId("UploadCollection");
+            this.bIsUploadVersion = true;
+            this.oItemToUpdate = oUploadCollection.getSelectedItem();
+            oUploadCollection.openFileDialog(this.oItemToUpdate);
+        },
+        onSelectionChangePdf: function () {
+            var oUploadCollection = this.byId("UploadCollectionPdf");
+            // If there's any item selected, sets download button enabled
+            if (oUploadCollection.getSelectedItems().length > 0) {
+                this.byId("downloadButton1").setEnabled(true);
+                if (oUploadCollection.getSelectedItems().length === 1) {
+                    this.byId("versionButton1").setEnabled(true);
+                } else {
+                    this.byId("versionButton1").setEnabled(false);
+                }
+            } else {
+                this.byId("downloadButton1").setEnabled(false);
+                this.byId("versionButton1").setEnabled(false);
+            }
+        },
+        onDownloadPdf: function () {
+            var oUploadCollection = this.byId("UploadCollectionPdf");
+            var aSelectedItems = oUploadCollection.getSelectedItems();
+            if (aSelectedItems) {
+                for (var i = 0; i < aSelectedItems.length; i++) {
+                    oUploadCollection.downloadItem(aSelectedItems[i], true);
+                }
+            } else {
+                MessageToast.show("Select an item to download");
+            }
+        },
+        onVersionPdf: function () {
+            var oUploadCollection = this.byId("UploadCollectionPdf");
+            this.bIsUploadVersion = true;
+            this.oItemToUpdate = oUploadCollection.getSelectedItem();
+            oUploadCollection.openFileDialog(this.oItemToUpdate);
+        },
 
-       
 
-       
-        
 
-      
 
-       
-       
 
-        
 
-        
-        
+
+
+
+
+
+
+
+
+
+
 
 
     });
