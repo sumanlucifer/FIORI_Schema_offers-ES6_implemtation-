@@ -56,3 +56,7 @@ knpl-influencer-web/ContactPainter/.env15
 Knpl-complaints/ComplaintManagement/.env2
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env1
+# auto generated wildcard
+ContactPainter/.env2
+# auto generated wildcard
+knpl-complaints/ComplaintManagement/.env1
