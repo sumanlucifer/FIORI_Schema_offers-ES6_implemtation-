@@ -113,17 +113,16 @@ sap.ui.define([
 
                 this.onClearPress();
 
-                // var oMessage = new Message({
-                //     message: msg,
-                //     type: MessageType.Success,
-                //     target: "/Dummy",
-                //     processor: this.getView().getModel()
-                // });
-                // sap.ui.getCore().getMessageManager().addMessages(oMessage);
-                var msg = 'Saved Successfully!';
+                if(msg=="Successfully created!"){
+                  this.onClearInputFields();  
+                }
+
+                
+               // var msg = 'Saved Successfully!';
                 MessageToast.show(msg);
+                
                  var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                oModel.refresh(true);
 
 
 
@@ -252,7 +251,7 @@ sap.ui.define([
                 oRouter.navTo("RouteHome");
 
                 var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                oModel.refresh(true);
 
             },
              onCancelPressForAdd: function (oEvent) {
@@ -265,7 +264,7 @@ sap.ui.define([
                 oRouter.navTo("RouteHome");
 
                 var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                oModel.refresh(true);
 
             },
             onValidateEdit: function () {
