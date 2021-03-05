@@ -83,7 +83,6 @@ floatingFooter="true"
         	<ComboBox
         
             id="role"
-           
             selectedKey="{data>RoleId}"
             
         				placeholder="Select Role ..."
