@@ -87,7 +87,8 @@ sap.ui.define(
           var oData = {
             modeEdit: false,
             bindProp: oProp,
-            iCtbar:true
+            iCtbar: true,
+            PainterId: oProp.replace(/[^0-9]/g,''),
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -101,13 +102,14 @@ sap.ui.define(
                 "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,Assets",
             });
           console.log(oDataValue);
+          this._initFilerForTables();
         },
         handleEditPress: function () {
           this._toggleButtonsAndView(true);
           var oView = this.getView();
-          var oCtrl2Model = oView.getModel("oModelControl2")
+          var oCtrl2Model = oView.getModel("oModelControl2");
           oCtrl2Model.setProperty("/modeEdit", true);
-          oCtrl2Model.setProperty("/iCtbar",false);
+          oCtrl2Model.setProperty("/iCtbar", false);
           var c1, c2, c3;
           var othat = this;
           c1 = othat._loadEditProfile("Edit");
@@ -157,7 +159,7 @@ sap.ui.define(
           });
           // setting the value property for the date this will help in resolving the date validation
           // at the time of calling the validation function
-          
+
           var oDate = oDataValue["JoiningDate"];
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
@@ -202,8 +204,7 @@ sap.ui.define(
 
           // setting up model to the view
           var oNewData = Object.assign({}, oDataValue);
-         
-      
+
           var oModel = new JSONModel(oDataValue);
           oView.setModel(oModel, "oModelView");
           // setting up the fields data so that the mobile user can also be viewed
@@ -419,6 +420,13 @@ sap.ui.define(
             {}
           );
           return oNew;
+        },
+        _initFilerForTables:function(){
+            var oView = this.getView();
+            var oPainterId = oView.getModel("oModelControl2").getProperty("/PainterId");
+            //console.log(oPainterId)
+            var oFilerByRId = new Filter ("ReferredBy",FilterOperator.EQ,oPainterId)
+            oView.byId("Referral").getBinding("items").filter(oFilerByRId);
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
@@ -846,9 +854,9 @@ sap.ui.define(
         handleCancelPress: function () {
           this._toggleButtonsAndView(false);
           var oView = this.getView();
-          var oCtrlModel2 =  oView.getModel("oModelControl2")
+          var oCtrlModel2 = oView.getModel("oModelControl2");
           oCtrlModel2.setProperty("/modeEdit", false);
-          oCtrlModel2.setProperty("/iCtbar",true);
+          oCtrlModel2.setProperty("/iCtbar", true);
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           oView.getModel().refresh(true);
