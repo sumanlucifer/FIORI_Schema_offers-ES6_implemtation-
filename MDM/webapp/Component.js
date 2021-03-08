@@ -87,9 +87,8 @@ sap.ui.define([
 				oSettings = {
 					defaultTwoColumnLayoutType: LayoutType.TwoColumnsMidExpanded,
 					defaultThreeColumnLayoutType: LayoutType.ThreeColumnsMidExpanded,
-					mode: oParams.get("mode"),
 					initialColumnsCount: 2,
-					maxColumnsCount: oParams.get("max")
+					maxColumnsCount: 2
 				};
 
 			return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);

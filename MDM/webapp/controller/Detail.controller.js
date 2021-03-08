@@ -95,7 +95,7 @@ sap.ui.define([
                 sPath = oSource.getBindingContext().getPath().substr(1),
                 oTabDataModel = this.getOwnerComponent().getModel("tabData"),
                 oTab = oTabDataModel.getProperty("/tabs/" + this._tab),
-                oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(3);
+                oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
             this.oRouter.navTo("detailDetail", {
                 name: window.encodeURIComponent(oTab.tabName),
                 prop: window.encodeURIComponent(sPath),
@@ -108,7 +108,7 @@ sap.ui.define([
         onPressAddBtn: function (oEvent) {
             var oTabDataModel = this.getOwnerComponent().getModel("tabData"),
                 oTab = oTabDataModel.getProperty("/tabs/" + this._tab),
-                oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(3);
+                oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
             this.oRouter.navTo("detailDetail", {
                 name: window.encodeURIComponent(oTab.tabName),
                 prop: window.encodeURIComponent(oTab.smartTblEntity),

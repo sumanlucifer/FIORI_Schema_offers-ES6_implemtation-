@@ -44,36 +44,30 @@
         },
         {
 			"tabId": 7,
-            "tabName": "External Links",
-            "smartTblEntity": "MasterExternalLinksSet",
-            "smartTblFields": "Title,Description,Url"
-        },
-        {
-			"tabId": 8,
             "tabName": "Marital Status",
             "smartTblEntity": "MasterMaritalStatusSet",
             "smartTblFields": "MaritalStatus"
         },
         {
-			"tabId": 9,
+			"tabId": 8,
             "tabName": "Language",
             "smartTblEntity": "MasterLanguageSet",
             "smartTblFields": "Language,LanguageCode,LanguageDescription"
         },
         {
-			"tabId": 10,
+			"tabId": 9,
             "tabName": "Complaint Type",
             "smartTblEntity": "MasterComplaintTypeSet",
             "smartTblFields": "ComplaintType"
         },
          {
-			"tabId": 11,
+			"tabId": 10,
             "tabName": "FAQ Category",
             "smartTblEntity": "MasterFAQCategorySet",
             "smartTblFields": "FAQCategory"
         },
          {
-			"tabId": 12,
+			"tabId": 11,
             "tabName": "Security Question",
             "smartTblEntity": "MasterSecurityQuestionSet",
             "smartTblFields": "Question"

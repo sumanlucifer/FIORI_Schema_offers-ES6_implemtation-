@@ -117,7 +117,6 @@
 					"name": "detailDetail",
 					"target": [
 						"master",
-						"detail",
 						"detailDetail"
 					]
 				}
@@ -133,7 +132,7 @@
 				},
 				"detailDetail": {
 					"viewName": "DetailDetail",
-					"controlAggregation": "endColumnPages"
+					"controlAggregation": "midColumnPages"
 				}
 			}
 		},
