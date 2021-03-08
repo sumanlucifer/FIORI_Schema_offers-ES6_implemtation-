@@ -2,7 +2,8 @@
 /node_modules/
 /resources/
 
-*.env1
+*.env*
+*/.gitignore
 *.zip
 .vscode/
 

@@ -45,7 +45,7 @@ sap.ui.define([
 		},
 		handleFullScreen: function () {
 			this.bFocusFullScreenButton = true;
-			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/endColumn/fullScreen");
+			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/fullScreen");
             this.oRouter.navTo("detailDetail",
                 {
                     name: this._name,
@@ -73,7 +73,7 @@ sap.ui.define([
 		},
 		handleClose: function () {
 			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/endColumn/closeColumn");
-			this.oRouter.navTo("detail", {layout: sNextLayout, tab: this._tab});
+			this.oRouter.navTo("detail", {layout: "TwoColumnsMidExpanded", tab: this._tab});
 		},
 		_onItemMatched: function (oEvent) {
             debugger;
