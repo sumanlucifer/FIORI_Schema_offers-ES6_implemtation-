@@ -6,3 +6,5 @@ package-lock.json
 
 # auto generated wildcard
 knpl-cp/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env14

@@ -18,6 +18,8 @@ modules:
       name: KNPL_PAINTER_API
       url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
+    disk-quota: 256M
+    memory: 256M
     routes:
     - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
 - name: knpl-influencer-web_ui_deployer
@@ -51,10 +53,6 @@ modules:
       name: OrganizationSetup
       target-path: resources/
     - artifacts:
-      - KnowledgeManagement-content.zip
-      name: KnowledgeManagement
-      target-path: resources/
-    - artifacts:
       - Manage_Notifications-content.zip
       name: Manage_Notifications
       target-path: resources/
@@ -75,7 +73,7 @@ modules:
       name: Tools
       target-path: resources/
     - artifacts:
-      - Complaints.zip
+      - Complaints-content.zip
       name: Complaints
       target-path: resources/
 - name: MDM
@@ -110,6 +108,8 @@ modules:
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  deployed-after:
+  - knpl-influencer-web_ui_deployer
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -129,14 +129,6 @@ modules:
 - name: OrganizationSetup
   type: html5
   path: OrganizationSetup
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: KnowledgeManagement
-  type: html5
-  path: KnowledgeManagement
   build-parameters:
     builder: custom
     commands:
@@ -207,12 +199,12 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     service: destination
-    service-plan: lite    
+    service-plan: lite
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      sizeLimit: 2
+      sizeLimit: 10
     service: html5-apps-repo
     service-plan: app-host
 - name: portal_resources_knpl-influencer-web

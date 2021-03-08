@@ -9,6 +9,10 @@
     "applicationVersion": {
       "version": "1.0.0"
     },
+    "sourceTemplate": {
+			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+			"version": "1.40.12"
+        },
     "ach": "set-ach",
     "resources": "resources.json",
     "dataSources": {

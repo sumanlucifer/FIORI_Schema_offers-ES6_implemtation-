@@ -88,7 +88,7 @@ sap.ui.define(
             modeEdit: false,
             bindProp: oProp,
             iCtbar: true,
-            PainterId: oProp.replace(/[^0-9]/g,''),
+            PainterId: oProp.replace(/[^0-9]/g, ""),
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -421,12 +421,18 @@ sap.ui.define(
           );
           return oNew;
         },
-        _initFilerForTables:function(){
-            var oView = this.getView();
-            var oPainterId = oView.getModel("oModelControl2").getProperty("/PainterId");
-            //console.log(oPainterId)
-            var oFilerByRId = new Filter ("ReferredBy",FilterOperator.EQ,oPainterId)
-            oView.byId("Referral").getBinding("items").filter(oFilerByRId);
+        _initFilerForTables: function () {
+          var oView = this.getView();
+          var oPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+          //console.log(oPainterId)
+          var oFilerByRId = new Filter(
+            "ReferredBy",
+            FilterOperator.EQ,
+            oPainterId
+          );
+          oView.byId("Referral").getBinding("items").filter(oFilerByRId);
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
@@ -558,7 +564,7 @@ sap.ui.define(
           var oModel = oView.getModel("oModelView");
           var oFamiDtlMdl = oModel.getProperty("/PainterFamily");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop.hasOwnProperty("editable")) {
                 if (prop["editable"] == true) {
@@ -566,10 +572,18 @@ sap.ui.define(
                   MessageToast.show(
                     "Save or delete the existing data in the table before adding a new data."
                   );
+                  return;
                   break;
                 }
               }
             }
+          }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 family members. Kinldy remove any existing data to add a new family member."
+            );
+            bFlag = false;
+            return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
@@ -705,7 +719,7 @@ sap.ui.define(
           var oModelControl = oView.getModel("oModelControl");
           var oFamiDtlMdl = oModel.getProperty("/Assets");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop.hasOwnProperty("editable")) {
                 if (prop["editable"] == true) {
@@ -713,10 +727,18 @@ sap.ui.define(
                   MessageToast.show(
                     "Save or delete the existing data in the 'Asset Details' table before adding a new data."
                   );
+                  return;
                   break;
                 }
               }
             }
+          }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 assets. Kinldy remove any existing data to add a new asset."
+            );
+            bFlag = false;
+            return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({

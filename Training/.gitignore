@@ -49,8 +49,6 @@ Knpl-complaints/ContactPainter/.env14
 knpl-influencer-web/ContactPainter/.env15
 # auto generated wildcard
 Knpl-complaints/ComplaintManagement/.env2
-<<<<<<< HEAD
-=======
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env1
 # auto generated wildcard
@@ -61,4 +59,5 @@ knpl-complaints/ComplaintManagement/.env1
 knpl-influencer-web/ContactPainter/.env3
 # auto generated wildcard
 knpl-cp/Complaints/.env1
->>>>>>> manik
+# auto generated wildcard
+knpl-cp/ContactPainter/.env14
