@@ -234,11 +234,12 @@ sap.ui.define([
             },
             _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
+          
           var aResetProp = {
             PlantCode: "",
             Depot: "",
             SalesGroupName: "",
-            FiscalYear: "",
+            FiscalYear: ""
           };
           var oViewModel = this.getView().getModel();
           oViewModel.setProperty("/filterBar", aResetProp);
@@ -246,7 +247,21 @@ sap.ui.define([
           var oTable = this.byId("idDealerTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
+          this.clearSearchFields();
+
         },
+
+        clearSearchFields: function () {
+         var  plantCode= this.getView().byId("idPlantCode");
+         plantCode.setValue("");
+         var  depot= this.getView().byId("idDepot");
+         depot.setValue("");
+         var  salesGroupName= this.getView().byId("idSalesGroupName");
+         salesGroupName.setValue("");
+         var  year= this.getView().byId("idFiscalYear");
+         year.setValue("");
+
+        }
 
             // handleSuggest: function (oEvent) {
             //     var aFilters = [];
