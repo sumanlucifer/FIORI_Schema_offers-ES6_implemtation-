@@ -21,7 +21,7 @@
                 </MultiComboBox>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
-                <Input maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                 <Label text="{i18n>EmailId}"/>
                 <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>PrimaryMobileNo}"/>
@@ -130,7 +130,7 @@
                             <ObjectIdentifier title="{path:'oModelView>RelationshipId',formatter:'.fmtLink'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input maxLength="50" width="90%" required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" width="90%" required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>Name}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>

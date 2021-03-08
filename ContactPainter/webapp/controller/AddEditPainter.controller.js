@@ -344,7 +344,7 @@ sap.ui.define(
           });
         },
         _setDataValue: function () {
-          var oInput = this.getView().byId("idAddAcntNum");
+          var oInput = this.getView().byId("idCnfAcntNum");
           oInput.addEventDelegate(
             {
               onAfterRendering: function () {
@@ -509,16 +509,25 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oFamiDtlMdl = oModel.getProperty("/PainterFamily");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop["editable"] == true) {
                 bFlag = false;
                 MessageToast.show(
                   "Save or delete the existing data in the table before adding a new data."
                 );
+                return;
                 break;
+                
               }
             }
+          }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 family members. Kinldy remove any existing data to add a new family member."
+            );
+            bFlag=false;
+            return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
@@ -628,16 +637,24 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oFamiDtlMdl = oModel.getProperty("/PainterAssets");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop["editable"] == true) {
                 bFlag = false;
                 MessageToast.show(
                   "Save or delete the existing data in the 'Asset Details' table before adding a new data."
                 );
+                return;
                 break;
               }
             }
+          }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 assets. Kinldy remove any existing data to add a new asset."
+            );
+            bFlag=false;
+            return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
