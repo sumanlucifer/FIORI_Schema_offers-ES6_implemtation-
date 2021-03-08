@@ -25,12 +25,16 @@ sap.ui.define([
         // shortcut for sap.ui.core.MessageType
         var MessageType = library.MessageType;
 
+        var DisclaimerVersion;
+
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.Home", {
             onInit: function () {
                 var oModel = this.getView().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/CompanySettingsSet(1)");
+                this.getView().bindElement("/MasterCompanySettingsSet(1)");
+
+                
 
                 // this._formFragments = {};
 
@@ -66,7 +70,7 @@ sap.ui.define([
                 this.getView().getModel("local").setProperty("/bEdit", true);
 
                 //Clone the data
-                this._oSupplier = Object.assign({}, this.getView().bindElement("/CompanySettingsSet(1)"));
+                this._oSupplier = Object.assign({}, this.getView().bindElement("/MasterCompanySettingsSet(1)"));
                 this._toggleButtonsAndView(true);
 
 
@@ -80,7 +84,7 @@ sap.ui.define([
                 var oModel = this.getView().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/CompanySettingsSet(1)");
+                this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
 
                 this._toggleButtonsAndView(false);
@@ -91,6 +95,8 @@ sap.ui.define([
             },
 
             handleSavePress: function () {
+
+                console.log(DisclaimerVersion);
 
                 var oDataModel = this.getView().getModel();
                 var oView = this.getView();
@@ -115,11 +121,12 @@ sap.ui.define([
                     AboutUs: oDataValue["AboutUs"],
                     Disclaimer: oDataValue["Disclaimer"],
                     CallCenterHelpline: oDataValue["CallCenterHelpline"],
+                    DisclaimerVersion:oDataValue["DisclaimerVersion"]+1,
                 }
 
 
-                //console.log(oData)
-                var editSet = "/CompanySettingsSet(1)";
+                console.log(oData)
+                var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
                 oModel.update(editSet, oData, { success: this.onSuccessPress() });
 
