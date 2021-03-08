@@ -22,8 +22,6 @@
                 <Text text="{oModelView>/TrainingDetails/EndTime}"/>
 
                 <core:Title text="{i18n>TargetGroup}"/>
-                <Label text="{i18n>colZone}"/>
-                <Text text="{oModelView>/TrainingDetails/Zone}"/>
                 <Label text="{i18n>colDepot}"/>
                 <Text text="{oModelView>/TrainingDetails/Depot}"/>
                 <Label text="{i18n>colDivision}"/>
@@ -35,20 +33,6 @@
 
                 <Label text="{i18n>colTrainingDescription}"/>
                 <Text text="{oModelView>/TrainingDetails/Description}"/>
-
-                <!-- <core:Title text="{i18n>Questionnaire}"/>
-                <List id="List" mode="Delete" delete="handleDelete" enableBusyIndicator="true" headerText="{i18n>colHighlights}" growing="true"
-					items="{path: 'oModelView>Highlights' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-					<headerToolbar>
-						<Toolbar>
-							<ToolbarSpacer/>
-				    		<Button press="addQuestionnaire" text="{i18n>btnAddQuestionnaire}"/>
-						</Toolbar>
-					</headerToolbar>
-					<CustomListItem>
-						<Input width="100%" value="{oModelView>Highlight}" visible="{= ${oModelView>/IsArchived} !== true }"/>
-					</CustomListItem>
-				</List> -->
 
             </f:content>
         </f:SimpleForm>

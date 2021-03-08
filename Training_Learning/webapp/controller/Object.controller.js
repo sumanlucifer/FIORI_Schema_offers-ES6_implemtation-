@@ -187,7 +187,7 @@ sap.ui.define([
                 oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TTL");
                 aCtrlMessage.push({
                     message: "MSG_PLS_ENTER_ERR_TTL",
-                    target: "/oDetails/Url"
+                    target: "/oDetails/Title"
                 });
             } else 
             if (data.Url === "" ) {

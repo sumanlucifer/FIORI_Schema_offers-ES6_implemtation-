@@ -46,7 +46,7 @@
                         <Text text="{uploadModel>Col4}"/>
                         <Text text="{uploadModel>Col5}"/>
                         <Text text="{uploadModel>Col6}"/>
-                        <Text text="{uploadModel>Col57"/>
+                        <Text text="{uploadModel>Col7}"/>
                     </cells>
                 </ColumnListItem>
             </items>
