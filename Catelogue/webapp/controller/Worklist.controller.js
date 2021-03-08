@@ -163,11 +163,13 @@ sap.ui.define([
          onSearch: function (oEvent) {
                 var aCurrentFilterValues = [];
 
-                aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
+               // aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
                 aCurrentFilterValues.push(this.getInputText("idNameInput"));
                 aCurrentFilterValues.push(this.getInputText("idCreationDate"));
                 aCurrentFilterValues.push(this.getInputText("idTitle"));
                 aCurrentFilterValues.push(this.getInputText("idCreatedBy"));
+
+                console.log(aCurrentFilterValues);
 
                 this.filterTable(aCurrentFilterValues);
             },
@@ -188,7 +190,7 @@ sap.ui.define([
                 var aFilters = [];
 
                 var aKeys = [
-                    "search","PlantCode", "Depot","SalesGroupName","FiscalYear"
+                    "search","CreatedAt", "Title","CreatedByDetails"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {

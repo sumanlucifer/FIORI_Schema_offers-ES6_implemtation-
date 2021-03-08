@@ -39,9 +39,7 @@ xmlns:f="sap.ui.layout.form">
                             value="{ 
                                   path : '/email', 
                                   type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                  		search : '\\S+@\\S+\\.\\S+' 
-                                	}
+                                  constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' }
                               }"
         				placeholder="Enter Email ..."
         				valueStateText="Email must not be empty."/>
@@ -50,7 +48,7 @@ xmlns:f="sap.ui.layout.form">
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Tel"
+        	                type="Text"
                             
                             value="{ 
                                   path : '/mobile', 

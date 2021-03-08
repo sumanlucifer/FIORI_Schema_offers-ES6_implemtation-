@@ -23,7 +23,7 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="PlantCode" label="Plant Code" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idPlantCode"  placeholder="" showSuggestion="false" showValueHelp="false">
+                                    <Input id="idPlantCode" placeholder="" showSuggestion="false" showValueHelp="false">
                                        
                                     </Input>
                                 </fb:control>

@@ -26,37 +26,29 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" placeholder="Search" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Name}" />
-                                        </suggestionItems>
+                                    <Input id="idNameInput" placeholder="Search" showSuggestion="true" showValueHelp="true">
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Creation Date" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idCreationDate" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Email}" />
-                                        </suggestionItems>
+                                    <Input id="idCreationDate" showSuggestion="false">
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="Title" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idTitle" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{CustomerCategory}" />
-                                        </suggestionItems>
+                                    <Input id="idTitle" placeholder="" showSuggestion="false">
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idCreatedBy" placeholder="" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Depot}" />
-                                        </suggestionItems>
+                                    <Input id="idCreatedBy" placeholder="" showSuggestion="false">
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
