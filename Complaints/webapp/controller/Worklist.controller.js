@@ -113,6 +113,7 @@ sap.ui.define(
           var oViewFilter = this.getView()
             .getModel("worklistView")
             .getProperty("/filterBar");
+        console.log(oViewFilter)
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
@@ -129,7 +130,7 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
-                    "ComplaintSubTypeId",
+                    "ComplaintSubtype/Id",
                     FilterOperator.EQ,
                     oViewFilter[prop]
                   )

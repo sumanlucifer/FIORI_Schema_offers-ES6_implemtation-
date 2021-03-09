@@ -14,6 +14,10 @@
 			"version": "1.40.12"
         },
     "ach": "set-ach",
+    "sourceTemplate": {
+      "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+      "version": "1.40.12"
+    },
     "resources": "resources.json",
     "dataSources": {
       "mainService": {

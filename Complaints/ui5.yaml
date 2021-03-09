@@ -1,6 +1,6 @@
 specVersion: '1.0'
 metadata:
-  name: Complaints
+  name: ComplaintManagement
 type: application
 resources:
   configuration:
@@ -19,7 +19,7 @@ builder:
   - name: webide-extension-task-resources
     afterTask: webide-extension-task-updateManifestJson
     configuration:
-      nameSpace: com/knpl/pragati
+      nameSpace: com/knpl/pragati/Complaints
   - name: webide-extension-task-copyFile
     afterTask: webide-extension-task-resources
     configuration:

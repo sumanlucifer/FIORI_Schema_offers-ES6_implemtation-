@@ -1,13 +1,16 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<SelectDialog
+      
 		id="selectDialog"
 		title="Painters"
-		items="{/PainterSet}"
+        growing="true"
+        growingThreshold="15"
+		items="{path:'/PainterSet',sorter:{path:'CreatedAt',descending:true}}"
 		search=".onValueHelpSearch"
 		confirm=".onValueHelpClose"
 		cancel=".onValueHelpClose">
-		<StandardListItem
+		<StandardListItem 
 			title="{Name}"
-			description="{Mobile}" />
+			description="Mob: {Mobile}" />
 	</SelectDialog>
 </core:FragmentDefinition>

@@ -42,11 +42,7 @@ sap.ui.define([
 
 		getMockServer : function () {
 			return new Promise(function (success) {
-<<<<<<< HEAD:ComplaintManagement/webapp/test/integration/pages/Common.js
-				Opa5.getWindow().sap.ui.require(["com/knpl/pragati/ComplaintManagement/localService/mockserver"], function (mockserver) {
-=======
 				Opa5.getWindow().sap.ui.require(["com/knpl/pragati/Complaints/localService/mockserver"], function (mockserver) {
->>>>>>> manik:Complaints/webapp/test/integration/pages/Common.js
 					success(mockserver.getMockServer());
 				});
 			});

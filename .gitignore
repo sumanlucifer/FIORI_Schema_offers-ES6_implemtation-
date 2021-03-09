@@ -7,6 +7,8 @@
 *.zip
 .vscode/
 */.gitignore/
+
+*/.gitignore
 # auto generated wildcard
 ZSampGWCnct/GatewaySrvTest/.env4
 # auto generated wildcard

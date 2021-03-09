@@ -1,4 +1,4 @@
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ComplaintManagement.controller.EditComplaint"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage showFooter="true" id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -6,7 +6,7 @@
                    <Title text="{ComplaintType/ComplaintType}"/>
                 </f:heading>
                 	<f:breadcrumbs>
-						<Breadcrumbs currentLocationText="Update Complaint">
+						<Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
                         <Link text="{i18n>worklistTitle}" press="onNavBack"/>
                     </Breadcrumbs>
 					</f:breadcrumbs>

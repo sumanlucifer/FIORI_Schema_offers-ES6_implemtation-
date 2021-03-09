@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "com/knpl/pragati/ComplaintManagement/controller/BaseController",
+    "com/knpl/pragati/Complaints/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
@@ -12,13 +12,13 @@ sap.ui.define(
     "sap/ui/core/message/Message",
     "sap/m/DatePicker",
     "sap/ui/core/ValueState",
-    "com/knpl/pragati/ComplaintManagement/controller/Validator",
+    "com/knpl/pragati/Complaints/controller/Validator",
     "sap/ui/model/type/Date",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
-    "com/knpl/pragati/ComplaintManagement/model/customInt",
+    "com/knpl/pragati/Complaints/model/customInt",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -46,7 +46,7 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend(
-      "com.knpl.pragati.ComplaintManagement.controller.AddComplaint",
+      "com.knpl.pragati.Complaints.controller.AddComplaint",
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
@@ -195,7 +195,7 @@ sap.ui.define(
             this._pValueHelpDialog = Fragment.load({
               id: oView.getId(),
               name:
-                "com.knpl.pragati.ComplaintManagement.view.fragments.ValueHelpDialog",
+                "com.knpl.pragati.Complaints.view.fragments.ValueHelpDialog",
               controller: this,
             }).then(function (oDialog) {
               oView.addDependent(oDialog);
@@ -276,7 +276,7 @@ sap.ui.define(
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
-            othat._setDataValue.call(othat);
+            
           });
         },
 
@@ -287,7 +287,7 @@ sap.ui.define(
           this._formFragments = Fragment.load({
             id: oView.getId(),
             name:
-              "com.knpl.pragati.ComplaintManagement.view.fragments." +
+              "com.knpl.pragati.Complaints.view.fragments." +
               sFragmentName,
             controller: othat,
           }).then(function (oFragament) {

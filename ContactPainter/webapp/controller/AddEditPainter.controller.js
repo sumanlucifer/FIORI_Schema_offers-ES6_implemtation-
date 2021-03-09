@@ -50,16 +50,7 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
-          sap.ui.getCore().attachValidationError(function (oEvent) {
-            if (oEvent.getParameter("element").getRequired()) {
-              oEvent.getParameter("element").setValueState(ValueState.Error);
-            } else {
-              oEvent.getParameter("element").setValueState(ValueState.None);
-            }
-          });
-          sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-            oEvent.getParameter("element").setValueState(ValueState.None);
-          });
+         C
 
           oRouter
             .getRoute("RouteAddEditP")

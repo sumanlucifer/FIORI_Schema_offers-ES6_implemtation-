@@ -1,6 +1,6 @@
 sap.ui.define(
   [
-    "com/knpl/pragati/ComplaintManagement/controller/BaseController",
+    "com/knpl/pragati/Complaints/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
@@ -12,13 +12,13 @@ sap.ui.define(
     "sap/ui/core/message/Message",
     "sap/m/DatePicker",
     "sap/ui/core/ValueState",
-    "com/knpl/pragati/ComplaintManagement/controller/Validator",
+    "com/knpl/pragati/Complaints/controller/Validator",
     "sap/ui/model/type/Date",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
-    "com/knpl/pragati/ComplaintManagement/model/customInt",
+    "com/knpl/pragati/Complaints/model/customInt",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -46,7 +46,7 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend(
-      "com.knpl.pragati.ComplaintManagement.controller.EditComplaint",
+      "com.knpl.pragati.Complaints.controller.EditComplaint",
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter(this);
@@ -151,7 +151,7 @@ sap.ui.define(
             id: oView.getId(),
             controller: othat,
             name:
-              "com.knpl.pragati.ComplaintManagement.view.fragments." +
+              "com.knpl.pragati.Complaints.view.fragments." +
               sFragName,
           }).then(function (oControlProfile) {
             oView.addDependent(oControlProfile);
@@ -160,7 +160,22 @@ sap.ui.define(
             return promise;
           });
         },
-        handleSavePress: function () {
+         handleSavePress: function () {
+          var oModel = this.getView().getModel("oModelView");
+          var oValidator = new Validator();
+          var oVbox = this.getView().byId("idVbx");
+          var bValidation = oValidator.validate(oVbox, true);
+          console.log(bValidation)
+          if (bValidation == false) {
+            MessageToast.show(
+              "Kindly input the fields in proper format to continue."
+            );
+          }
+          if (bValidation) {
+            this._postDataToSave();
+          }
+        },
+        _postDataToSave: function () {
           var oView = this.getView();
           var oData = oView.getModel();
           var sPath = oView.getElementBinding().getPath();
