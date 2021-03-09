@@ -55,8 +55,8 @@ modules:
       name: Training
       target-path: resources/
     - artifacts:
-      - ComplaintManagement-content.zip
-      name: ComplaintManagement
+      - Complaints-content.zip
+      name: Complaints
       target-path: resources/
 - name: MasterDataManagement
   type: html5
@@ -122,9 +122,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: ComplaintManagement
+- name: Complaints
   type: html5
-  path: ComplaintManagement
+  path: Complaints
   build-parameters:
     builder: custom
     commands:
