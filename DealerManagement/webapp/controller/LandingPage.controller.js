@@ -112,6 +112,8 @@ sap.ui.define([
 
             filterTable: function (aCurrentFilterValues) {
                 this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+               var results=  this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+              // console.log(results);
             },
 
             getTableItems: function () {
