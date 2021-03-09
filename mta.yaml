@@ -31,10 +31,6 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - MasterDataManagement-content.zip
-      name: MasterDataManagement
-      target-path: resources/
-    - artifacts:
       - ContactPainter-content.zip
       name: ContactPainter
       target-path: resources/
@@ -58,14 +54,6 @@ modules:
       - Complaints-content.zip
       name: Complaints
       target-path: resources/
-- name: MasterDataManagement
-  type: html5
-  path: MasterDataManagement
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
 - name: ContactPainter
   type: html5
   path: ContactPainter
