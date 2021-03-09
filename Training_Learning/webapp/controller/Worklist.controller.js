@@ -42,7 +42,6 @@ sap.ui.define([
                 tableNoDataTextVideo: this.getResourceBundle().getText("tableNoDataTextVideo"),
                 tableBusyDelay: 0,
                 filterBar: {
-                    TrainingTypeId: "",
                     StartDate: "",
                     Status: ""
                 }
@@ -83,11 +82,11 @@ sap.ui.define([
             // only update the counter if the length is final and
             // the table is not empty
             if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                sTitle = this.getResourceBundle().getText("trainingCount", [iTotalItems]);
+                sTitle = this.getResourceBundle().getText("onlineTrainingCount", [iTotalItems]);
             } else {
-                sTitle = this.getResourceBundle().getText("training");
+                sTitle = this.getResourceBundle().getText("onlineTraining");
             }
-            this.getModel("worklistView").setProperty("/training", sTitle);
+            this.getModel("worklistView").setProperty("/onlineTraining", sTitle);
         },
 
         onUpdateFinished1: function (oEvent) {
@@ -103,6 +102,21 @@ sap.ui.define([
                 sTitle = this.getResourceBundle().getText("video");
             }
             this.getModel("worklistView").setProperty("/video", sTitle);
+        },
+
+        onUpdateFinished2: function (oEvent) {
+            // update the worklist's object counter after the table update
+            var sTitle,
+                oTable = oEvent.getSource(),
+                iTotalItems = oEvent.getParameter("total");
+            // only update the counter if the length is final and
+            // the table is not empty
+            if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                sTitle = this.getResourceBundle().getText("offlineTrainingCount", [iTotalItems]);
+            } else {
+                sTitle = this.getResourceBundle().getText("offlineTraining");
+            }
+            this.getModel("worklistView").setProperty("/offlineTraining", sTitle);
         },
 
 		/**
@@ -121,15 +135,20 @@ sap.ui.define([
         _ResetFilterBar: function () {
             var aCurrentFilterValues = [];
             var aResetProp = {
-                TrainingTypeId: "",
                 Status: "",
                 StartDate: ""
             };
             var oViewModel = this.getView().getModel("worklistView");
             oViewModel.setProperty("/filterBar", aResetProp);
             var oTable = this.byId("table");
+            var oTable1 = this.byId("table1");
+            var oTable2 = this.byId("table2");
             var oBinding = oTable.getBinding("items");
+            var oBinding1 = oTable1.getBinding("items");
+            var oBinding2 = oTable2.getBinding("items");
             oBinding.filter([]);
+            oBinding1.filter([]);
+            oBinding2.filter([]);
         },
 
 		/**
@@ -151,12 +170,7 @@ sap.ui.define([
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
                     console.log(oViewFilter[prop]);
-                    if (prop === "TrainingTypeId") {
-                        aFlaEmpty = false;
-                        aCurrentFilterValues.push(
-                            new Filter("TrainingTypeId", FilterOperator.EQ, oViewFilter[prop])
-                        );
-                    } else if (prop === "StartDate") {
+                    if (prop === "StartDate") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
@@ -187,10 +201,21 @@ sap.ui.define([
             });
             var oTable = this.getView().byId("table");
             var oBinding = oTable.getBinding("items");
+
+            var oTable1 = this.getView().byId("table1");
+            var oBinding1 = oTable1.getBinding("items");
+
+            var oTable2 = this.getView().byId("table2");
+            var oBinding2 = oTable2.getBinding("items");
+
             if (!aFlaEmpty) {
                 oBinding.filter(endFilter);
+                oBinding1.filter(endFilter);
+                oBinding2.filter(endFilter);
             } else {
                 oBinding.filter([]);
+                oBinding1.filter([]);
+                oBinding2.filter([]);
             }
         },
 

@@ -53,6 +53,7 @@ sap.ui.define(
                             PainterType: null,
                             PainterArcheType: null,
                             Description: "",
+                            TrainingQuestionnaire: []
                         },
                     });
                     this.setModel(oViewModel, "oModelView");
@@ -129,8 +130,13 @@ sap.ui.define(
 
                         var sPath = "/" + mKey;
                         that.getModel().read(sPath, {
+                            urlParameters: {
+                                "$expand": "TrainingQuestionnaire,TrainingQuestionnaire/TrainingQuestionnaireOptions"
+                            },
                             success: function (data) {
+                                debugger;
                                 oViewModel.setProperty("/TrainingDetails", data);
+                                oViewModel.setProperty("/TrainingDetails/TrainingQuestionnaire", data.TrainingQuestionnaire.results);
 
                                 that._showFormFragment("EditTraining");
                                 that.getView().unbindElement();
@@ -211,6 +217,78 @@ sap.ui.define(
                 //     this._oMessageManager = sap.ui.getCore().getMessageManager();
                 //     this._oMessageManager.registerMessageProcessor(oMessageProcessor);
                 // },
+
+
+                addQuestionnaire: function () {
+                    debugger;
+                    this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                        Question: "",
+                        IsArchived: false
+                    });
+                    this.getModel("oModelView").refresh();
+                },
+
+                onViewOptions: function (oEvent) {
+                    debugger;
+                    var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
+                        oButton = oEvent.getSource();
+                        var oModelView = this.getModel("oModelView"),
+                        oThat = this;
+                    
+                    console.log(oModelView);
+                    // sPath = sPath + '/TrainingQuestionnaireOptions';
+                    console.log(sPath);
+                    // create popover
+                    if (!this._oPopover) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.Training_Learning.view.OptionsDialog",
+                            controller: this
+                        }).then(function (pPopover) {
+                            oThat._oPopover = pPopover;
+                            oThat.getView().addDependent(oThat._oPopover);
+                            // this._oPopover.bindElement(sPath);
+                            oThat._oPopover.bindElement({path: sPath, model: "oModelView"});
+                            oThat._oPopover.openBy(oButton);
+
+                        }.bind(this));
+                    } else {
+                        oThat._oPopover.openBy(oButton);
+                        // oThat._oPopover.bindElement(sPath);
+                        oThat._oPopover.bindElement({path: sPath, model: "oModelView"});
+                    }
+                },
+
+                onEditQuestionnaire: function (oEvent) {
+                    debugger;
+                    var sPath = oEvent.getSource().getBindingContext().getPath(),
+                        oButton = oEvent.getSource();
+                    // create popover
+                    if (!this._oPopover) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.Training_Learning.view.QuestionnaireOptionsDialog",
+                            controller: this
+                        }).then(function (pPopover) {
+                            this._oPopover = pPopover;
+                            this.getView().addDependent(this._oPopover);
+                            this._oPopover.bindElement(sPath);
+                            this._oPopover.openBy(oButton);
+
+                        }.bind(this));
+                    } else {
+                        this._oPopover.openBy(oButton);
+                        this._oPopover.bindElement(sPath);
+                    }
+                },
+
+                onDeleteQuestionnaire: function (oEvent) {
+                    var iIndex = +(oEvent.getParameter("listItem").getBindingContextPath().match(/\d+/g));
+                    if (this.getModel("oModelView").getData().sMode === "C" || !this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
+                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
+                    } else {
+                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].IsArchived = true;
+                    }
+                    this.getModel("oModelView").refresh();
+                },
 
                 /* 
                  * @function
