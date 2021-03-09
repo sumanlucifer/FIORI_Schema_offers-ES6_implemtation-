@@ -1,8 +1,4 @@
-<<<<<<< HEAD:Complaints/webapp/view/Worklist.view.xml
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.Worklist"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-=======
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
->>>>>>> complaints:Complaints/webapp/view/Worklist.view.xml
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -37,16 +33,10 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-<<<<<<< HEAD:Complaints/webapp/view/Worklist.view.xml
-                                    <ComboBox  selectedKey="{worklistView>/filterBar/ComplaintStatus}">
-                                        <core:Item text="Pending" key="PENDING"/>
-                                        <core:Item text="Registered" key="REGISTERED"/>
-=======
                                     <ComboBox selectedKey="{worklistView>/filterBar/ComplaintStatus}">
                                         <core:Item text="Registered" key="REGISTERED"/>
                                         <core:Item text="Resolved" key="RESOLVED"/>
                                         <core:Item text="Pending" key="PENDING"/>
->>>>>>> complaints:Complaints/webapp/view/Worklist.view.xml
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
