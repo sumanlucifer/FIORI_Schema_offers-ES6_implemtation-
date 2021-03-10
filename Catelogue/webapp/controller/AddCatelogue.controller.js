@@ -1,141 +1,138 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History",
-    "../model/formatter",
-    "jquery.sap.global",
-    "sap/base/util/deepExtend",
-    "sap/ui/core/syncStyleClass",
-    "sap/ui/core/mvc/Controller",
-    "sap/m/ObjectMarker",
-    "sap/m/MessageToast",
     "sap/m/UploadCollectionParameter",
-    "sap/m/library",
-    "sap/ui/core/format/FileSizeFormat",
-    "sap/ui/Device",
-    "sap/ui/core/Fragment"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
 
 
-], function (BaseController, JSONModel, History, formatter, jQuery, deepExtend, syncStyleClass, Controller,
-    ObjectMarker, MessageToast, UploadCollectionParameter, MobileLibrary,
-    FileSizeFormat, Device, Fragment,) {
+], function (BaseController, UploadCollectionParameter, JSONModel, MessageBox, MessageToast) {
     "use strict";
 
-
+    var token;
+    var catalogueId;
 
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.AddCatelogue", {
 
         onInit: function () {
-            // var oUploadCollection = this.getView().byId('UploadCollectionImage');
-            // oUploadCollection.setUploadUrl("odataUrl");
 
+            this.oUploadCollection = this.getView().byId("UploadCollectionImage");
 
         },
-        // onBeforeUploadStarts: function (oEvent) {
+        _onObjectMatched: function (oEvent) {
+            this._action = oEvent.getParameter("arguments").action;
+            this._property = oEvent.getParameter("arguments").property;
+            this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_DS.uri;
+            var oData = {
+                busy: false,
+                action: this._action,
+                Title: "",
+                Description: "",
+                Url: "",
+            };
+            if (this._action === "edit") {
+                var oComponentModel = this.getComponentModel();
+                var oItem = oComponentModel.getProperty("/" + this._property);
+                if (!oItem) {
+                    return this._navToHome();
+                }
+                oData.Title = oItem.Title;
+                oData.Description = oItem.Description;
+                oData.Url = oItem.Url;
+                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+                this.oUploadCollection.setUploadUrl(this.sServiceURI + this._property + "/$value");
+            } else {
+                this.oPreviewImage.setVisible(false);
+            }
+            this.oUploadCollection.clear();
+            var oViewModel = new JSONModel(oData);
+            this.getView().setModel(oViewModel, "ActionViewModel");
+            this._setDefaultValueState();
+        },
 
-        //     var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
-        //         name: "slug",
-        //         value: oEvent.getParameter("fileName")
-        //     });
-        //     oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+        onChange: function (oEvent) {
+            var oUploadCollection = oEvent.getSource();
+            // Header Token
+            var oCustomerHeaderToken = new UploadCollectionParameter({
+                name: "x-csrf-token",
+                value: "securityTokenFromModel"
+            });
+            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+            MessageToast.show("Event change triggered");
+        },
 
-        //     var oModel = this.getView().getModel();
-
-        //     oModel.refreshSecurityToken();
-
-        //     var oHeaders = oModel.oHeaders;
-
-        //     var sToken = oHeaders['x-csrf-token'];
-
-        //     var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
-
-        //         name: "x-csrf-token",
-
-        //         value: sToken
-
-        //     });
-
-        //     console.log(oCustomerHeaderToken);
-        //     oEvent.getParameters().addHeaderParameter(oCustomerHeaderToken);
-
-        // },
-        onSelectionChangeImage: function () {
+        onStartUpload: function (oEvent) {
             var oUploadCollection = this.byId("UploadCollectionImage");
-            // If there's any item selected, sets download button enabled
-            if (oUploadCollection.getSelectedItems().length > 0) {
-                this.byId("downloadButton").setEnabled(true);
-                if (oUploadCollection.getSelectedItems().length === 1) {
-                    this.byId("versionButton").setEnabled(true);
-                } else {
-                    this.byId("versionButton").setEnabled(false);
-                }
-            } else {
-                this.byId("downloadButton").setEnabled(false);
-                this.byId("versionButton").setEnabled(false);
-            }
-        },
-        onDownloadImage: function () {
-            var oUploadCollection = this.byId("UploadCollectionImage");
-            var aSelectedItems = oUploadCollection.getSelectedItems();
-            if (aSelectedItems) {
-                for (var i = 0; i < aSelectedItems.length; i++) {
-                    oUploadCollection.downloadItem(aSelectedItems[i], true);
-                }
-            } else {
-                MessageToast.show("Select an item to download");
-            }
-        },
+            var title = this.getView().byId("idTitle").getValue();
 
-        onVersionImage: function () {
-            var oUploadCollection = this.byId("UploadCollection");
-            this.bIsUploadVersion = true;
-            this.oItemToUpdate = oUploadCollection.getSelectedItem();
-            oUploadCollection.openFileDialog(this.oItemToUpdate);
-        },
-        onSelectionChangePdf: function () {
-            var oUploadCollection = this.byId("UploadCollectionPdf");
-            // If there's any item selected, sets download button enabled
-            if (oUploadCollection.getSelectedItems().length > 0) {
-                this.byId("downloadButton1").setEnabled(true);
-                if (oUploadCollection.getSelectedItems().length === 1) {
-                    this.byId("versionButton1").setEnabled(true);
-                } else {
-                    this.byId("versionButton1").setEnabled(false);
-                }
-            } else {
-                this.byId("downloadButton1").setEnabled(false);
-                this.byId("versionButton1").setEnabled(false);
+            var cFiles = oUploadCollection.getItems().length;
+            var uploadInfo = cFiles + " file(s)";
+
+            var oModel = this.getView().getModel();
+
+            var oData = {
+                Title: title,
+                Description: title
             }
-        },
-        onDownloadPdf: function () {
-            var oUploadCollection = this.byId("UploadCollectionPdf");
-            var aSelectedItems = oUploadCollection.getSelectedItems();
-            if (aSelectedItems) {
-                for (var i = 0; i < aSelectedItems.length; i++) {
-                    oUploadCollection.downloadItem(aSelectedItems[i], true);
-                }
-            } else {
-                MessageToast.show("Select an item to download");
-            }
-        },
-        onVersionPdf: function () {
-            var oUploadCollection = this.byId("UploadCollectionPdf");
-            this.bIsUploadVersion = true;
-            this.oItemToUpdate = oUploadCollection.getSelectedItem();
-            oUploadCollection.openFileDialog(this.oItemToUpdate);
-        },
-         onCancelPress: function () {
+
+
+            oModel.create("/MasterProductCatalogueSet", oData, {
+                success: function (oData, response) {
+                    //console.log(oData.Id);
+                  
+                    this.catalogueId = oData.Id;
+
+                    if (cFiles > 0) {
+                        // oUploadCollection.upload();
+
+                        if (this.catalogueId != null) {
+                            var id=this.catalogueId;
+                            
+                            // this.oUploadCollection = this.getView().byId("UploadCollectionImage");
+                            this.oUploadCollection.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + this.catalogueId + ")/$value?doc_type=image");
             
-                this.getRouter().navTo("");
-               
-              
-                // var oModel = this.getView().getModel("data");
-                // oModel.refresh();
+                            // @ts-ignore
+                            //this.oUploadCollection.insertHeaderParameter(new UploadCollectionParameter({ name: "slug", value: this.oUploadCollection.getItems() }));
+                            //this.oUploadCollection.setHttpRequestMethod("POST");
+                            //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                            this.oUploadCollection.upload();
+                        }
 
-            },
-            onSave: function () {
-                console.log("ONSAVE!");
-            }
+                    }
+
+                    //oData -  contains the data of the newly created entry
+                    //response -  parameter contains information about the response of the request (this may be your message)
+                },
+
+                error: function (oError) {
+                    //oError - contains additional error information.
+                }
+            });
+
+
+
+        },
+        
+        // uploadImage: function (Id) {
+        //     console.log(Id);
+            
+        //     this.oUploadCollection.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + Id + ")/$value?doc_type=image");
+        //     //    this.oUploadCollection.checkFileReadable().then(function() {
+        //     // @ts-ignore
+        //     this.oUploadCollection.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({ name: "slug", value: this.oUploadCollection.getItems() }));
+        //     this.oUploadCollection.setHttpRequestMethod("POST");
+        //     //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+        //     this.oUploadCollection.upload();
+        //     // }.bind(this), function(error) {
+        //     // 	MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+        //     // }.bind(this)).then(function() {
+        //     // 	this.oFileUploader.clear();
+        //     // }.bind(this));
+
+
+        // }
+
+
 
 
 

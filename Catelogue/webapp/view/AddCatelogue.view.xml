@@ -27,20 +27,15 @@
                 <Title  text="Catelogue Details"  />
                 <VBox class="sapUiMediumMargin">
                 <Label text="Title:" />
-		<Input placeholder="Enter Title" width="40%"/>
+		<Input id="idTitle" placeholder="Enter Title" width="40%"/>
                 </VBox>
                 <UploadCollection
 			id="UploadCollectionImage"
-			maximumFilenameLength="55"
-			maximumFileSize="10"
 			multiple="false"
 			change="onChange"
-			fileSizeExceed=""
-			selectionChange="onSelectionChangeImage"
-			typeMissmatch="onTypeMissmatch"
-			uploadComplete=""
-			beforeUploadStarts=""
-			mode="MultiSelect">
+            mode="MultiSelect"
+            instantUpload="false"
+            >
 			<toolbar>
 				<OverflowToolbar id="myId">
 					<Title id="attachmentTitle" />
@@ -60,51 +55,15 @@
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
 			</toolbar>
-			<items>
-				<UploadCollectionItem
-					documentId="{documentId}"
-					fileName="{Title}"
-					mimeType="{mimeType}"
-					thumbnailUrl=""
-					url=""
-					enableEdit="false"
-					enableDelete="false"
-					visibleDelete="false"
-					visibleEdit="false"
-					
-					selected="{selected}">
-					<attributes>
-						<ObjectAttribute
-							title="Uploaded By"
-							text=""
-							active="true" />
-                            <ObjectAttribute
-							title="Uploladed on"
-							text=""
-							active="false" />
-                            <ObjectAttribute
-							title="File size"
-							text=""
-							active="false" />
-					</attributes>
-                    
-					
-				</UploadCollectionItem>
-			</items>
+			
 		</UploadCollection>
 
          <UploadCollection
 			id="UploadCollectionPdf"
-			maximumFilenameLength="55"
-			maximumFileSize="10"
 			multiple="false"
 			change="onChange"
-			fileSizeExceed=""
-			selectionChange="onSelectionChangePdf"
-			typeMissmatch="onTypeMissmatch"
-			uploadComplete=""
-			beforeUploadStarts=""
-			mode="MultiSelect">
+            mode="MultiSelect"
+            instantUpload="false">
 			<toolbar>
 				<OverflowToolbar id="myId1">
 					<Title id="attachmentTitle1" />
@@ -124,37 +83,7 @@
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
 			</toolbar>
-			<items>
-				<UploadCollectionItem
-					documentId="{documentId}"
-					fileName="{Title}"
-					mimeType="{mimeType}"
-					thumbnailUrl=""
-					url=""
-					enableEdit="false"
-					enableDelete="false"
-					visibleDelete="false"
-					visibleEdit="false"
-					
-					selected="{selected}">
-					<attributes>
-						<ObjectAttribute
-							title="Uploaded By"
-							text=""
-							active="true" />
-                            <ObjectAttribute
-							title="Uploladed on"
-							text=""
-							active="false" />
-                            <ObjectAttribute
-							title="File size"
-							text=""
-							active="false" />
-					</attributes>
-                    
-					
-				</UploadCollectionItem>
-			</items>
+			
 		</UploadCollection>
         
         
@@ -177,7 +106,7 @@
 				
 				<Button text="Save"
                 type="Emphasized"
-				press="onSave"
+				press="onStartUpload"
 			    />
 					
 				
