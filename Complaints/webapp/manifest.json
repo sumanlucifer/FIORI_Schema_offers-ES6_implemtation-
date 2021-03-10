@@ -9,10 +9,6 @@
     "applicationVersion": {
       "version": "1.0.0"
     },
-    "sourceTemplate": {
-			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
-			"version": "1.40.12"
-        },
     "ach": "set-ach",
     "sourceTemplate": {
       "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
@@ -44,6 +40,10 @@
         }
       }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
   },
   "sap.ui": {
     "technology": "UI5",
