@@ -101,7 +101,7 @@ sap.ui.define(
               expand:
                 "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,Assets",
             });
-          console.log(oDataValue);
+
           this._initFilerForTables();
         },
         handleEditPress: function () {
@@ -132,12 +132,16 @@ sap.ui.define(
           var othat = this;
           var oControlModel2 = oView.getModel("oModelControl2");
           var sPath = oControlModel2.getProperty("/bindProp");
+          var iPainterId = parseInt(oControlModel2.getProperty("/PainterId"));
+
           var oDataCtrl = {
             modeEdit: false,
             bindProp: sPath,
+            PainterId: iPainterId,
             EditTb1FDL: false,
             EditTb2AST: false,
             AnotherMobField: false,
+            BankExistStatus: "",
             AddNewBank: false,
             PainterAddBanDetails: {
               AccountHolderName: "",
@@ -145,8 +149,7 @@ sap.ui.define(
               BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
-              PainterId: "",
-              Id: "",
+              PainterId: iPainterId,
               Status: "PENDING",
             },
             PainterAddDet: {
@@ -158,6 +161,7 @@ sap.ui.define(
               SMobile1: "",
               SMobile2: "",
               DOJ: "",
+              ConfrmAccNum: "",
             },
           };
           var oControlModel = new JSONModel(oDataCtrl);
@@ -202,13 +206,16 @@ sap.ui.define(
             oDealerArray
           );
           //setting up bank details data
-          var sIdExist = oDataValue["PainterBankDetails"]["Id"];
-          oControlModel.setProperty("/PainterAddBanDetails/Id", sIdExist);
-          var sPainterId = oDataValue["PainterBankDetails"]["PainterId"];
-          oControlModel.setProperty(
-            "/PainterAddBanDetails/PainterId",
-            sPainterId
-          );
+          if (oDataValue["PainterBankDetails"]) {
+            var sIdExist = oDataValue["PainterBankDetails"]["Id"];
+            oControlModel.setProperty("/PainterAddBanDetails/Id", sIdExist);
+            oControlModel.setProperty(
+              "/BankExistStatus",
+              oDataValue["PainterBankDetails"]["Status"]
+            );
+          } else {
+            oControlModel.setProperty("/BankExistStatus", null);
+          }
 
           // setting up the state/city filtering data
           var oCity = oView.byId("cmbCity"),
@@ -241,11 +248,11 @@ sap.ui.define(
             "PainterSegmentation/PainterExperience",
             "PainterSegmentation/SitePerMonthId",
             "PainterSegmentation/PotentialId",
-            "PainterBankDetails/IfscCode",
-            "PainterBankDetails/BankNameId",
-            "PainterBankDetails/AccountTypeId",
-            "PainterBankDetails/AccountNumber",
-            "PainterBankDetails/AccountHolderName",
+            // "PainterBankDetails/IfscCode",
+            // "PainterBankDetails/BankNameId",
+            // "PainterBankDetails/AccountTypeId",
+            // "PainterBankDetails/AccountNumber",
+            // "PainterBankDetails/AccountHolderName",
             "PainterKycDetails/KycTypeId",
             "PainterKycDetails/GovtId",
           ];
@@ -259,7 +266,6 @@ sap.ui.define(
                 toString.call(oModel.getProperty("/" + sPlit[0])) !==
                 "[object Object]"
               ) {
-                console.log(sPlit);
                 oModel.setProperty("/" + sPlit[0], {});
               }
             }
@@ -269,6 +275,7 @@ sap.ui.define(
           }
           console.log(oModel);
           oModel.refresh(true);
+          oControlModel.refresh(true);
           promise.resolve();
           return promise;
         },
@@ -323,7 +330,6 @@ sap.ui.define(
           if (bValidation && dTbleFamily && eTbleAssets && cValidation) {
             this._postDataToSave();
           }
-          console.log(bValidation);
         },
 
         _postDataToSave: function () {
@@ -331,6 +337,7 @@ sap.ui.define(
           var oCtrlModel = oView.getModel("oModelControl");
           var oViewModel = this.getView().getModel("oModelView");
           var oViewData = oViewModel.getData();
+          var othat = this;
           var oPayload = Object.assign({}, oViewData);
           for (var prop of oPayload["PainterFamily"]) {
             if (prop.hasOwnProperty("editable")) {
@@ -429,7 +436,8 @@ sap.ui.define(
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
-              oData.refresh(true);
+              othat.handleCancelPress();
+              //oData.refresh(true);
             },
             error: function (a) {
               MessageBox.error(
@@ -454,7 +462,7 @@ sap.ui.define(
           var oPainterId = oView
             .getModel("oModelControl2")
             .getProperty("/PainterId");
-          //console.log(oPainterId)
+
           var oFilerByRId = new Filter(
             "ReferredBy",
             FilterOperator.EQ,
@@ -498,7 +506,6 @@ sap.ui.define(
             .setProperty("/AnotherMobField", true);
         },
         onPrimaryNoChang: function (oEvent) {
-          console.log("Event Pressed", oEvent.getSource().getValue());
           var oSource = oEvent.getSource();
           if (oSource.getValueState() == "Error") {
             return;
@@ -507,7 +514,7 @@ sap.ui.define(
           var sBindValue = "";
           var oSouceBinding = oSource.getBinding("value").getPath();
           var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
-          console.log(aFieldGroup);
+
           var oModelView = this.getView().getModel("oModelView");
           for (var i of aFieldGroup) {
             if (oSource.getValue().trim() === "") {
@@ -555,7 +562,6 @@ sap.ui.define(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
           }
-          console.log(oSource.getSelectedKey());
         },
         secDealerChanged: function (oEvent) {
           // var oView = this.getView();
@@ -642,12 +648,12 @@ sap.ui.define(
             .getSource()
             .getBindingContext("oModelView")
             .getObject();
-          console.log(oObject);
+
           var oTable = oView.byId("idFamilyDetils");
           var oCells = oEvent.getSource().getParent().getParent().getCells();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          console.log(cFlag);
+
           var bFlag = true;
           // var cFlag = oValidator.validate();
           var oCheckProp = ["RelationshipId", "Mobile", "Name"];
@@ -856,6 +862,32 @@ sap.ui.define(
             oModelControl.setProperty("/EditTb2AST", false);
           }
         },
+        onPrimaryAcChange: function (oEvent) {
+          var oView = this.getView();
+          var oSource = oEvent.getSource();
+          var oSourceVal = oSource.getValue().trim();
+          var oSecAccNo = oView.byId("IdPrAbCnfAccNo");
+          var sSecAccVal = oSecAccNo.getValue().trim();
+          if (sSecAccVal === "") {
+            return;
+          } else {
+            MessageToast.show(
+              "Kindly enter the same account number in the 'Confirm Account Number' field."
+            );
+            oSecAccNo.setValue("");
+          }
+        },
+        onConfAccChng: function (oEvent) {
+          var oView = this.getView();
+          var oPrimAcNum = oView.byId("IdPrAbAccountNumber");
+          var oSecNumber = oEvent.getSource().getValue();
+          if (oSecNumber.trim() !== oPrimAcNum.getValue().trim()) {
+            MessageToast.show(
+              "Account Number doesn't match, kindly enter it again."
+            );
+            oEvent.getSource().setValue("");
+          }
+        },
         onAddNewBank: function (oEvent) {
           var oView = this.getView();
           var oModelCtrl = oView.getModel("oModelControl");
@@ -876,16 +908,22 @@ sap.ui.define(
           ];
           var oBject;
           aFields.forEach(function (a) {
-            oBject = oView.byId("IdAb" + a);
+            oBject = oView.byId("IdPrAb" + a);
             oBject.setValueState("None");
             oBject.setValue("");
             oModelCtrl.setProperty("/PainterAddBanDetails/" + a, "");
           });
+
+          //confirm account number field reset values
+          var oConfAcc = oView.byId("IdPrAbCnfAccNo");
+          oConfAcc.setValue("");
+          oConfAcc.setValueState("None");
+          oModelCtrl.setProperty("/PainterAddDet/ConfrmAccNum", "");
         },
         fmtBankStatus: function (mParam) {
-          var sLetter="";
+          var sLetter = "";
           if (mParam) {
-                sLetter = mParam
+            sLetter = mParam
               .toLowerCase()
               .split(" ")
               .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -897,7 +935,6 @@ sap.ui.define(
 
         _save: function () {
           var oModel = this.getView().getModel("oModelView");
-          console.log(oModel.getData());
         },
         dealerName: function (mParam) {
           return mParam.length;

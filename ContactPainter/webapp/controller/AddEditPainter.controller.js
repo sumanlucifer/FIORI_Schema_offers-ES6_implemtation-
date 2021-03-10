@@ -50,6 +50,7 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
+
           sap.ui.getCore().attachValidationError(function (oEvent) {
             if (oEvent.getParameter("element").getRequired()) {
               oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -77,6 +78,7 @@ sap.ui.define(
         },
         _GetServiceData: function () {},
         _initData: function (mParMode, mKey) {
+          var oView = this.getView();
           var oViewModel = new JSONModel({
             sIctbTitle: mParMode == "add" ? "Add" : "Edit",
             busy: false,
@@ -136,13 +138,17 @@ sap.ui.define(
               BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
-              Status:"PENDING"
+              Status: "PENDING",
             },
             PainterKycDetails: {
               KycTypeId: "",
               GovtId: "",
             },
           });
+          var oControlData = {
+            AddNewBank: false,
+          };
+          var oContrModel = new JSONModel(oControlData);
 
           if (mParMode == "add") {
             this._showFormFragment("AddPainter");
@@ -151,7 +157,8 @@ sap.ui.define(
           }
 
           this._formFragments; //used for the fragments of the add and edit forms
-          this.getView().setModel(oViewModel, "oModelView");
+          oView.setModel(oViewModel, "oModelView");
+          oView.setModel(oContrModel, "oModelControl");
           //this._initMessage(oViewModel);
           this.getView().getModel().resetChanges();
           //used to intialize the message class for displaying the messages
@@ -184,7 +191,9 @@ sap.ui.define(
           }
         },
         _postDataToSave: function () {
-          var oViewModel = this.getView().getModel("oModelView");
+          var oView = this.getView();
+          var oViewModel = oView.getModel("oModelView");
+          var oModelCtrl = oView.getModel("oModelControl");
           var oPainterData = this._ReturnObjects(
             oViewModel.getProperty("/PainterDetails")
           );
@@ -253,10 +262,14 @@ sap.ui.define(
           oDealers.push({ Id: parseInt(sPrimaryDealerId) });
 
           // creating the set for the banking details
-          var oBankingPayload = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
-          );
-          
+          var bAddNewBank = oModelCtrl.getProperty("/AddNewBank");
+          var oBankingPayload = null;
+          if (bAddNewBank) {
+            oBankingPayload = JSON.parse(
+              JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
+            );
+          }
+
           //Painter KYC Details
 
           var oNewKYCObj = this._ReturnObjects(
@@ -520,7 +533,6 @@ sap.ui.define(
                 );
                 return;
                 break;
-                
               }
             }
           }
@@ -528,7 +540,7 @@ sap.ui.define(
             MessageToast.show(
               "We can only add 5 family members. Kinldy remove any existing data to add a new family member."
             );
-            bFlag=false;
+            bFlag = false;
             return;
           }
           if (bFlag == true) {
@@ -655,7 +667,7 @@ sap.ui.define(
             MessageToast.show(
               "We can only add 5 assets. Kinldy remove any existing data to add a new asset."
             );
-            bFlag=false;
+            bFlag = false;
             return;
           }
           if (bFlag == true) {
@@ -743,6 +755,42 @@ sap.ui.define(
           } else {
             oModel.setProperty("/EditTb2AST", false);
           }
+        },
+        onAddNewBank: function () {
+          var oView = this.getView();
+          var oModelCtrl = oView
+            .getModel("oModelControl")
+            .setProperty("/AddNewBank", true);
+        },
+        onAddCanNewBank: function () {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelCtrl = oView
+            .getModel("oModelControl")
+            .setProperty("/AddNewBank", false);
+          var requiredInputs = [
+            "IdAbIfscCode",
+            "IdAbBankNameId",
+            "IdAbAccountTypeId",
+            "idAddAcntNum",
+            "idCnfAcntNum",
+            "IdAbAccountHolderName",
+          ];
+          var oBj;
+          requiredInputs.forEach(function (mField) {
+            oBj = oView.byId(mField);
+            oBj.setValueState("None");
+            oBj.setValue("");
+          });
+          oModelView.setProperty("/PainterBankDetails", {
+            AccountHolderName: "",
+            AccountTypeId: "",
+            BankNameId: "",
+            AccountNumber: "",
+            IfscCode: "",
+            Status: "PENDING",
+          });
+          oModelView.refresh();
         },
 
         onKycChange: function (oEvent) {

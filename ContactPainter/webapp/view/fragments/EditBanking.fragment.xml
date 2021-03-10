@@ -3,48 +3,48 @@
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>BankingDetails}"/>
-                <Label text="{i18n>IFSCCode}"/>
+                <Label text="{i18n>IFSCCode}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Text text="{PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                    <Input editable="false" value="{PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input id="IdPrAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
-                <Label text="{i18n>BankName}"/>
+                <Label text="{i18n>BankName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Text text="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <ComboBox id="IdAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <Input editable="false" value="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <ComboBox id="IdPrAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{BankName}" key="{Id}"></core:Item>
                         </items>
                     </ComboBox>
                 </VBox>
-                <Label text="{i18n>AccountType}"/>
+                <Label text="{i18n>AccountType}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Text text="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <ComboBox id="IdAbAccountTypeId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelControl>/PainterAddBanDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <Input editable="false" value="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <ComboBox id="IdPrAbAccountTypeId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelControl>/PainterAddBanDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{AccountType}" key="{Id}"/>
                         </items>
                     </ComboBox>
                 </VBox>
 
-                <Label text="{i18n>AccountNumber}"/>
+                <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Text text="{PainterBankDetails/AccountNumber}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdAbAccountNumber" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                    <Input editable="false" value="{PainterBankDetails/AccountNumber}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input id="IdPrAbAccountNumber" change="onPrimaryAcChange" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
+                    <Label text="{i18n>ConfirmAccNumber}" visible="{oModelControl>/AddNewBank}" required="true"/>
+                    <Input required="true" visible="{oModelControl>/AddNewBank}" id="IdPrAbCnfAccNo"  change="onConfAccChng" type="Number" value="{path:'oModelControl>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 </VBox>
 
-                <Label text="{i18n>AccountHolderName}"/>
+                <Label text="{i18n>AccountHolderName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Text text="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                    <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
-
-
                 <Label text=""/>
-                <HBox justifyContent="SpaceBetween" visible="{= ${PainterBankDetails/Status}==='APPROVED' }">
+                <HBox justifyContent="SpaceBetween" visible="{= ${PainterBankDetails/Status}==='APPROVED' || ${PainterBankDetails/Status} === null }">
                     <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank"/>
                     <Label/>
-                    <Link text="{i18n>AddNew}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank"/>
+                    <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank"/>
                 </HBox>
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectKYCDocument}"/>
