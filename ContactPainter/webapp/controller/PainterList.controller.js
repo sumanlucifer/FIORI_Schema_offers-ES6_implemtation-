@@ -33,14 +33,12 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
-          console.log("Painter Data Loaded");
+         
           oRouter
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
         },
         _onRouteMatched: function (oEvent) {
-          console.log("Painter List Loaded");
-
           this.getView().getModel().resetChanges();
           this._initData();
           this._addSearchFieldAssociationToFB();
@@ -94,8 +92,7 @@ sap.ui.define(
 
           return sLetter;
         },
-        onFilter: function (oEvent) {
-          console.log("On FIlter");
+        onFilter: function (oEvent) { console.log("On FIlter");
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelView")

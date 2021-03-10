@@ -35,7 +35,7 @@ sap.ui.define(
       },
       _initModel: function () {
         var oModel = this.getModel("uploadModel");
-        console.log(oModel);
+       
         var oData = [],
           obj;
         for (var i = 1; i <= 100; i++) {
@@ -53,7 +53,7 @@ sap.ui.define(
           oData.push(obj);
         }
         oModel.setData(oData);
-        console.log(oModel);
+    
       },
       destroy: function () {
         this._oErrorHandler.destroy();
