@@ -40,6 +40,8 @@
                     <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
+                <Label visible="{= ${PainterBankDetails/Status}==='PENDING' || ${PainterBankDetails/Status}==='APPROVED'  }" text="{i18n>BankDetailsStatus}" design="Bold"/>
+                <Text  visible="{= ${PainterBankDetails/Status}==='PENDING' || ${PainterBankDetails/Status}==='APPROVED'  }" text="{path:'PainterBankDetails/Status',formatter:'.fmtBankStatus'}" />
                 <Label text=""/>
                 <HBox justifyContent="SpaceBetween" visible="{= ${PainterBankDetails/Status}==='APPROVED' || ${PainterBankDetails/Status} === null }">
                     <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank"/>
