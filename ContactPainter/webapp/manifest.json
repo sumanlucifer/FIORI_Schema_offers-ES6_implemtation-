@@ -45,6 +45,10 @@
       }
     }
   },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
   "sap.ui": {
     "technology": "UI5",
     "icons": {

@@ -6,7 +6,16 @@
 *.env1
 *.zip
 .vscode/
-*/.gitignore/
+*.env*
+*/dist/
+*/.gitignore
+
+# auto generated wildcard
+Manage_FAQ/.env
+# auto generated wildcard
+OrgModule/.env
+# auto generated wildcard
+Manage_FAQ/.env6
 
 */.gitignore
 # auto generated wildcard
