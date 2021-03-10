@@ -14,26 +14,26 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintType" label="{i18n>ComplaintType}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox items="{path:'/MasterComplaintTypeSet'}" selectedKey="{worklistView>/filterBar/ComplaintTypeId}">
+                                    <ComboBox items="{path:'/MasterComplaintTypeSet',sorter:{path:'ComplaintType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{oModelControl>/filterBar/ComplaintTypeId}">
                                         <core:Item text="{ComplaintType}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintDetails" label="{i18n>ComplaintDetails}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox items="{path:'/MasterComplaintSubtypeSet'}" selectedKey="{worklistView>/filterBar/ComplaintSubTypeId}">
+                                    <ComboBox items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
                                         <core:Item text="{ComplaintSubtype}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>Date}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'worklistView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox selectedKey="{worklistView>/filterBar/ComplaintStatus}">
+                                    <ComboBox selectedKey="{oModelControl>/filterBar/ComplaintStatus}">
                                         <core:Item text="Registered" key="REGISTERED"/>
                                         <core:Item text="Resolved" key="RESOLVED"/>
                                         <core:Item text="Pending" key="PENDING"/>
@@ -66,6 +66,9 @@
                         <Text text="{i18n>PrimaryMobileNo}"/>
                     </Column>
                     <Column>
+                        <Text text="{i18n>ComplaintId}"/>
+                    </Column>
+                    <Column>
                         <Text text="{i18n>ComplaintType}"/>
                     </Column>
                     <Column>
@@ -75,7 +78,7 @@
                         <Text text="{i18n>DateAndTime}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>Status}"/>
+                        <Text text="{i18n>ComplaintStatus}"/>
                     </Column>
                 </columns>
 
@@ -85,6 +88,7 @@
                             <Text text="{Painter/Name}"/>
                             <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
+                            <Text text="{ComplaintCode}"/>
                             <Text text="{ComplaintType/ComplaintType}"/>
                             <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
