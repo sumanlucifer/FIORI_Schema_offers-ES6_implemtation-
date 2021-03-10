@@ -83,11 +83,15 @@ sap.ui.define(
           this._ResetFilterBar();
         },
         fmtStatus: function (mParam) {
-          var sLetter = mParam
-            .toLowerCase()
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
+          var sLetter = "";
+          if (mParam) {
+            sLetter = mParam
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ");
+          }
+
           return sLetter;
         },
         onFilter: function (oEvent) {
@@ -350,6 +354,7 @@ sap.ui.define(
           }
           this._pPopover.then(function (oPopover) {
             oPopover.openBy(oSource);
+            console.log(sPath);
             oPopover.bindElement({
               path: sPath,
               parameters: {
@@ -397,7 +402,7 @@ sap.ui.define(
           MessageBox.confirm(
             "Kindly confirm to deactivated the painter- " + oBject["Name"],
             {
-              actions: [MessageBox.Action.CLOSE,MessageBox.Action.OK],
+              actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
               emphasizedAction: MessageBox.Action.OK,
               onClose: function (sAction) {
                 if (sAction == "OK") {

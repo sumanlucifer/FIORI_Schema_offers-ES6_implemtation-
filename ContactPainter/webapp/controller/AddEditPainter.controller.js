@@ -136,6 +136,7 @@ sap.ui.define(
               BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
+              Status:"PENDING"
             },
             PainterKycDetails: {
               KycTypeId: "",
@@ -255,6 +256,7 @@ sap.ui.define(
           var oBankingPayload = JSON.parse(
             JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
           );
+          
           //Painter KYC Details
 
           var oNewKYCObj = this._ReturnObjects(

@@ -52,7 +52,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'AgeGroup,Dealers' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'AgeGroup,Dealers,PainterBankDetails' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
@@ -108,7 +108,7 @@
                             <Text text="{DealerId}"/>
                             <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/>
                             <Text text="Pending"/>
-                            <Text text="Pending"/>
+                            <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>

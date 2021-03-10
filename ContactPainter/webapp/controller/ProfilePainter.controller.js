@@ -138,6 +138,17 @@ sap.ui.define(
             EditTb1FDL: false,
             EditTb2AST: false,
             AnotherMobField: false,
+            AddNewBank: false,
+            PainterAddBanDetails: {
+              AccountHolderName: "",
+              AccountTypeId: "",
+              BankNameId: "",
+              AccountNumber: "",
+              IfscCode: "",
+              PainterId: "",
+              Id: "",
+              Status: "PENDING",
+            },
             PainterAddDet: {
               JoiningDate: "",
               StateKey: "",
@@ -190,6 +201,15 @@ sap.ui.define(
             "/PainterAddDet/SecondryDealer",
             oDealerArray
           );
+          //setting up bank details data
+          var sIdExist = oDataValue["PainterBankDetails"]["Id"];
+          oControlModel.setProperty("/PainterAddBanDetails/Id", sIdExist);
+          var sPainterId = oDataValue["PainterBankDetails"]["PainterId"];
+          oControlModel.setProperty(
+            "/PainterAddBanDetails/PainterId",
+            sPainterId
+          );
+
           // setting up the state/city filtering data
           var oCity = oView.byId("cmbCity"),
             sStateKey = oDataValue["PainterAddress"]["StateId"] || "",
@@ -355,6 +375,14 @@ sap.ui.define(
           // }
 
           oPayload["Dealers"] = oDealers;
+          //setting up painter banking post data
+          var BisAddbank = oCtrlModel.getProperty("/AddNewBank");
+          if (BisAddbank) {
+            oPayload["PainterBankDetails"] = Object.assign(
+              {},
+              oCtrlModel.getProperty("/PainterAddBanDetails")
+            );
+          }
 
           // setting up painter kyc data
           var oNewKYCObj = this._ReturnObjects(
@@ -827,6 +855,44 @@ sap.ui.define(
           } else {
             oModelControl.setProperty("/EditTb2AST", false);
           }
+        },
+        onAddNewBank: function (oEvent) {
+          var oView = this.getView();
+          var oModelCtrl = oView.getModel("oModelControl");
+          var oProp = oModelCtrl.getProperty("/AddNewBank");
+          oModelCtrl.setProperty("/AddNewBank", true);
+        },
+        onAddCanNewBank: function () {
+          var oView = this.getView();
+          var oModelCtrl = oView.getModel("oModelControl");
+          var oProp = oModelCtrl.getProperty("/AddNewBank");
+          oModelCtrl.setProperty("/AddNewBank", false);
+          var aFields = [
+            "IfscCode",
+            "BankNameId",
+            "AccountTypeId",
+            "AccountNumber",
+            "AccountHolderName",
+          ];
+          var oBject;
+          aFields.forEach(function (a) {
+            oBject = oView.byId("IdAb" + a);
+            oBject.setValueState("None");
+            oBject.setValue("");
+            oModelCtrl.setProperty("/PainterAddBanDetails/" + a, "");
+          });
+        },
+        fmtBankStatus: function (mParam) {
+          var sLetter="";
+          if (mParam) {
+                sLetter = mParam
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ");
+          }
+
+          return sLetter;
         },
 
         _save: function () {
