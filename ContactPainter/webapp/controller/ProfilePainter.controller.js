@@ -462,13 +462,17 @@ sap.ui.define(
           var oPainterId = oView
             .getModel("oModelControl2")
             .getProperty("/PainterId");
-
+        
           var oFilerByRId = new Filter(
             "ReferredBy",
             FilterOperator.EQ,
             oPainterId
           );
           oView.byId("Referral").getBinding("items").filter(oFilerByRId);
+           var oFilComplaints = new Filter("Painter/Id",FilterOperator.EQ,oPainterId);
+            oView.byId("IdTblComplaints").getBinding("items").filter(oFilComplaints);
+         //IdTblComplaints
+
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
@@ -920,7 +924,7 @@ sap.ui.define(
           oConfAcc.setValueState("None");
           oModelCtrl.setProperty("/PainterAddDet/ConfrmAccNum", "");
         },
-        fmtBankStatus: function (mParam) {
+        fmtLowerCase: function (mParam) {
           var sLetter = "";
           if (mParam) {
             sLetter = mParam
