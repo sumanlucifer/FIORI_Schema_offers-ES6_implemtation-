@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<SelectDialog
-      
+        resizable="false"
+        contentWidth="30%"
 		id="selectDialog"
 		title="Painters"
         growing="true"
