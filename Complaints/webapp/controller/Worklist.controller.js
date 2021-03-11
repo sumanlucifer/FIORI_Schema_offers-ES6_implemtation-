@@ -50,7 +50,7 @@ sap.ui.define(
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
-          this.getView().setModel(oMdlCtrl,"oModelControl")
+          this.getView().setModel(oMdlCtrl, "oModelControl");
           oRouter
             .getRoute("worklist")
             .attachMatched(this._onRouteMatched, this);
@@ -178,6 +178,11 @@ sap.ui.define(
                         FilterOperator.Contains,
                         oViewFilter[prop].trim()
                       ),
+                      new Filter(
+                        "ComplaintCode",
+                        FilterOperator.Contains,
+                        oViewFilter[prop].trim()
+                      ),
                     ],
                     false
                   )
@@ -255,11 +260,15 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (mParam) {
-          var sLetter = mParam
-            .toLowerCase()
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
+          var sLetter = "";
+          if (mParam) {
+            sLetter = mParam
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ");
+          }
+
           return sLetter;
         },
         handleSortButtonPressed: function () {
