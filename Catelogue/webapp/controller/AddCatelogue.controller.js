@@ -4,6 +4,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
+   
 
 
 ], function (BaseController, UploadCollectionParameter, JSONModel, MessageBox, MessageToast) {
@@ -60,8 +61,10 @@ sap.ui.define([
             // oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
             MessageToast.show("Event change triggered");
         },
+       
 
         onStartUpload: function (oEvent) {
+
             //var oUploadCollection =this.getView().byId("")
             var title = this.getView().byId("idTitle").getValue();
 
@@ -91,11 +94,15 @@ sap.ui.define([
                         console.log(uri);
 
                         that.oUploadCollection.setProperty("uploadUrl", uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
-  
+                        //that.oUploadCollection._oFileUploader.setUploadUrl(uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
+                        
                         that.oUploadCollection._oFileUploader.setHttpRequestMethod("PUT");
 
+                        var url = that.oUploadCollection._oFileUploader.getUploadUrl();
+                        console.log(url);
 
-                        that.oUploadCollection._oFileUploader.upload();
+
+                        that.oUploadCollection.upload();
                         // }
 
                     }
