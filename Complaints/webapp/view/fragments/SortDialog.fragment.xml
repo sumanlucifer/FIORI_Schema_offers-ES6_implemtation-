@@ -7,6 +7,7 @@
 			<ViewSettingsItem text="{i18n>PainterName}" key="Painter/Name" />
 			<ViewSettingsItem text="{i18n>MembershipId}" key="Painter/MembershipCard" />
             <ViewSettingsItem text="{i18n>PrimaryMobileNo}" key="Painter/Mobile" />
+            <ViewSettingsItem text="{i18n>ComplaintId}" key="ComplaintCode" />
             <ViewSettingsItem text="{i18n>ComplaintType}" key="ComplaintType/ComplaintType" />
              <ViewSettingsItem text="{i18n>ComplaintDetails}" key="ComplaintSubtype/ComplaintSubtype" />
             <ViewSettingsItem text="{i18n>DateAndTime}" key="CreatedAt" selected="true" />

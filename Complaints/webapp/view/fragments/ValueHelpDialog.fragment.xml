@@ -5,7 +5,7 @@
 		title="Painters"
         growing="true"
         growingThreshold="15"
-		items="{path:'/PainterSet',sorter:{path:'CreatedAt',descending:true}}"
+		items="{path:'/PainterSet',sorter:{path:'Name'}}"
 		search=".onValueHelpSearch"
 		confirm=".onValueHelpClose"
 		cancel=".onValueHelpClose">

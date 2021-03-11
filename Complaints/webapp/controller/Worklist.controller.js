@@ -40,9 +40,21 @@ sap.ui.define(
          */
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
+          var oDataControl = {
+            filterBar: {
+              ComplaintTypeId: "",
+              ComplaintSubTypeId: "",
+              CreatedAt: null,
+              ComplaintStatus: "",
+              Name: "",
+            },
+          };
+          var oMdlCtrl = new JSONModel(oDataControl);
+          this.getView().setModel(oMdlCtrl,"oModelControl")
           oRouter
             .getRoute("worklist")
             .attachMatched(this._onRouteMatched, this);
+          console.log("Init View");
         },
         _onRouteMatched: function () {
           this._InitData();
@@ -76,13 +88,6 @@ sap.ui.define(
               "tableNoDataText"
             ),
             tableBusyDelay: 0,
-            filterBar: {
-              ComplaintTypeId: "",
-              ComplaintSubTypeId: "",
-              CreatedAt: null,
-              ComplaintStatus: "",
-              Name: "",
-            },
           });
           this.setModel(oViewModel, "worklistView");
 
@@ -94,7 +99,7 @@ sap.ui.define(
             oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
           });
           this.getView().getModel().refresh();
-          this._fiterBarSort();
+          //this._fiterBarSort();
           this._addSearchFieldAssociationToFB();
         },
         _fiterBarSort: function () {
@@ -111,9 +116,9 @@ sap.ui.define(
           console.log("On FIlter");
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
-            .getModel("worklistView")
+            .getModel("oModelControl")
             .getProperty("/filterBar");
-        console.log(oViewFilter)
+          console.log(oViewFilter);
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
@@ -205,7 +210,7 @@ sap.ui.define(
             ComplaintStatus: "",
             Name: "",
           };
-          var oViewModel = this.getView().getModel("worklistView");
+          var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
           //oViewModel.setProperty("/searchBar", "");
 
@@ -230,7 +235,7 @@ sap.ui.define(
           if (!oSearchField) {
             // @ts-ignore
             oBasicSearch = new sap.m.SearchField({
-              value: "{worklistView>/filterBar/Name}",
+              value: "{oModelControl>/filterBar/Name}",
               showSearchButton: true,
               search: othat.onFilter.bind(othat),
             });
@@ -250,7 +255,7 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (mParam) {
-           var sLetter = mParam
+          var sLetter = mParam
             .toLowerCase()
             .split(" ")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

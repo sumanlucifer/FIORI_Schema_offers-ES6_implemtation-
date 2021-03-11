@@ -207,7 +207,21 @@ sap.ui.define(
             oDialog
               .getBinding("items")
               .filter([
-                new Filter("Name", FilterOperator.Contains, sInputValue),
+                new Filter(
+                  [
+                    new Filter(
+                      "tolower(Name)",
+                      FilterOperator.Contains,
+                      "'" + sInputValue.trim().toLowerCase().replace("'", "''") + "'"
+                    ),
+                    new Filter(
+                      "Mobile",
+                      FilterOperator.Contains,
+                      sInputValue.trim()
+                    )
+                  ],
+                  false
+                ),
               ]);
             // Open ValueHelpDialog filtered by the input's value
             oDialog.open(sInputValue);
@@ -276,7 +290,6 @@ sap.ui.define(
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
-            
           });
         },
 
@@ -286,9 +299,7 @@ sap.ui.define(
           // if (!this._formFragments) {
           this._formFragments = Fragment.load({
             id: oView.getId(),
-            name:
-              "com.knpl.pragati.Complaints.view.fragments." +
-              sFragmentName,
+            name: "com.knpl.pragati.Complaints.view.fragments." + sFragmentName,
             controller: othat,
           }).then(function (oFragament) {
             return oFragament;
