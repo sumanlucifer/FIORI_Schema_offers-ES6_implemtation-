@@ -32,13 +32,13 @@
         },
         {
 			"tabId": 5,
-            "tabName": "Business Group",
+            "tabName": "Sales Group",
             "smartTblEntity": "MasterBusinessGroupSet",
             "smartTblFields": "BusinessGroup"
         },
         {
 			"tabId": 6,
-            "tabName": "Business Category",
+            "tabName": "Sales Category",
             "smartTblEntity": "MasterBusinessCategorySet",
             "smartTblFields": "BusinessCategory"
         },
