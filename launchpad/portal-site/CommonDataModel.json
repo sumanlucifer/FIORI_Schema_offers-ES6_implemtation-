@@ -55,6 +55,10 @@
 					"id": "com.knpl.pragati.Complaints-7-1615211249037",
 					"appId": "com.knpl.pragati.Complaints",
 					"vizId": "Manage-CM"
+				}, {
+					"id": "com.knpl.pragati.CallbackRequests-8-1615527937953",
+					"appId": "com.knpl.pragati.CallbackRequests",
+					"vizId": "Manage-CBR"
 				}]
 			}
 		}, {
