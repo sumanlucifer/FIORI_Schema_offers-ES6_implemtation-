@@ -11,11 +11,11 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true">
+					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true" showRestoreOnFB="true">
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQCategoryId" groupTitle="Filters" label="{i18n>colFAQCategory}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
 										<core:Item key="{Id}" text="{FAQCategory}"/>
 									</ComboBox>
 								</fb:control>

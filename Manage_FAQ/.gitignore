@@ -7,5 +7,3 @@
 *.env1
 *.zip
 .vscode/
-# auto generated wildcard
-Manage_FAQ/.env

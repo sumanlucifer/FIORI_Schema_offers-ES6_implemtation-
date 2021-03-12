@@ -1,0 +1,123 @@
+<mvc:View xmlns:vbm="sap.ui.vbm" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:m="sap.m" controllerName="com.knpl.pragati.ContactPainter.controller.ProfilePainter" height="100%">
+    <uxap:ObjectPageLayout useIconTabBar="{oModelControl2>/iCtbar}" showFooter="true" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:breadcrumbs>
+                    <Breadcrumbs id="breadcrumbsId" currentLocationText="{i18n>PainterDetails}">
+                        <Link text="{i18n>Painters}" press="onNavBack"/>
+                    </Breadcrumbs>
+                </uxap:breadcrumbs>
+                <uxap:expandedHeading>
+                    <m:Title class="sapUiSmallMarginBegin" text="{Name}" wrapping="true"/>
+                </uxap:expandedHeading>
+                <uxap:expandedContent>
+                    <m:Text class="sapUiSmallMarginBegin" text="{MembershipCard}"/>
+                </uxap:expandedContent>
+
+                <uxap:snappedHeading>
+                    <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                        <m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/>
+                        <FlexBox direction="Column" renderType="Bare">
+                            <Title text="{Name}" wrapping="true"/>
+                            <Text text="{MembershipCard}"/>
+                        </FlexBox>
+                    </m:FlexBox>
+                </uxap:snappedHeading>
+            </uxap:ObjectPageDynamicHeaderTitle>
+
+
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
+
+                <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
+                    <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
+                    <m:ObjectStatus title="{i18n>AgeGroup}" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}"/>
+                </m:FlexBox>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
+                    <m:ObjectStatus title="{i18n>Address}" text="{parts:['PainterAddress/AddressLine1','PainterAddress/CityDetails/City','PainterAddress/StateDetails/State'], formatter:'.fmtAddress' }"/>
+
+                </layout:VerticalLayout>
+
+
+            </m:FlexBox>
+        </uxap:headerContent>
+
+        <uxap:sections>
+            <uxap:ObjectPageSection titleUppercase="false" title="Profile">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbProfile" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Profile" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>BankingKycDetails}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbBanking" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Banking" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.LoyaltyPoints" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Offers}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Offers" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Referral}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Referral" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="Complaints">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Complaints" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+        <uxap:footer>
+            <Bar>
+                <contentRight>
+                    <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                     <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                </contentRight>
+            </Bar>
+        </uxap:footer>
+    </uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,69 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox width="100%">
+        <Table width="auto" items="{path: 'uploadModel>/'}" noDataText="{i18n>tableNoDataText}"  busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <SegmentedButton selectedKey="Accural">
+                        <items>
+                            <SegmentedButtonItem text="Accural" key="Accural"/>
+                            <SegmentedButtonItem text="Redeemed"/>
+                        </items>
+                    </SegmentedButton>
+                    <ToolbarSpacer/>
+                        <SearchField width="20%"></SearchField>
+                        <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                        <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                        <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column>
+                        <Text text="Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="Painter Id"/>
+                    </Column>
+                    <Column>
+                        <Text text="Mobile Number"/>
+                    </Column>
+                    <Column>
+                        <Text text="Redeem Points"/>
+                    </Column>
+                    <Column>
+                        <Text text="Available Points"/>
+                    </Column>
+                    <Column>
+                        <Text text="Type of Accural"/>
+                    </Column>
+                    <Column>
+                        <Text text="Type of Accural"/>
+                    </Column>
+                    <Column>
+                        <Text text="Date and Time"/>
+                    </Column>
+                    <Column>
+                        <Text text="Status"/>
+                    </Column>
+
+
+                </columns>
+                <items>
+                    <ColumnListItem press="onListItemPress">
+                        <cells>
+                            <Text text="{uploadModel>Col1}"/>
+                            <Text text="{uploadModel>Col2}"/>
+                            <Text text="{uploadModel>Col3}"/>
+                             <Text text="{uploadModel>Col4}"/>
+                              <Text text="{uploadModel>Col5}"/>
+                                <Text text="{uploadModel>Col6}"/>
+                                  <Text text="{uploadModel>Col7}"/>
+                                    <Text text="{uploadModel>Col8}"/>
+                            
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+        </VBox>
+    </core:FragmentDefinition>

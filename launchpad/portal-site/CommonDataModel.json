@@ -27,20 +27,11 @@
 			},
 			"payload": {
 				"viz": [{
-					"appId": "com.knpl.pragati.MasterDataManagement",
-					"vizId": "Manage-MDM"
-				}, {
-					"appId": "com.knpl.pragati.OrganizationSetup",
-					"vizId": "Manage-ORG"
-				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
 				}, {
 					"appId": "com.knpl.pragati.DealerManagement",
 					"vizId": "Manage-DLR"
-				}, {
-					"appId": "com.knpl.pragati.KnowledgeManagement",
-					"vizId": "Manage-KWM"
 				}, {
 					"appId": "com.knpl.pragati.Manage_FAQ",
 					"vizId": "Manage-FAQ"
@@ -48,6 +39,40 @@
 					"id": "com.knpl.pragati.Manage_Notifications-6-1611902399399",
 					"appId": "com.knpl.pragati.Manage_Notifications",
 					"vizId": "Manage-Notifications"
+				}, {
+					"id": "com.knpl.pragati.MDM-5-1614158582160",
+					"appId": "com.knpl.pragati.MDM",
+					"vizId": "Manage-MDM"
+				}, {
+					"id": "com.knpl.pragati.Training_Learning-5-1614334447383",
+					"appId": "com.knpl.pragati.Training_Learning",
+					"vizId": "Manage-Training"
+				}, {
+					"id": "com.knpl.pragati.Tools-6-1614575221046",
+					"appId": "com.knpl.pragati.Tools",
+					"vizId": "Manage-TLS"
+				}, {
+					"id": "com.knpl.pragati.Complaints-7-1615211249037",
+					"appId": "com.knpl.pragati.Complaints",
+					"vizId": "Manage-CM"
+				}]
+			}
+		}, {
+			"_version": "3.0.0",
+			"identification": {
+				"id": "new-group",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/new-group.properties"
+			},
+			"payload": {
+				"viz": [{
+					"id": "com.knpl.pragati.CompanySettings-7-1613476783058",
+					"appId": "com.knpl.pragati.CompanySettings",
+					"vizId": "Manage-CMPSET"
+				}, {
+					"appId": "com.knpl.pragati.OrganizationSetup",
+					"vizId": "Manage-ORG"
 				}]
 			}
 		}],
@@ -75,11 +100,11 @@
 						}
 					}
 				},
-				"groupsOrder": ["defaultGroupId"],
+				"groupsOrder": ["defaultGroupId", "new-group"],
 				"sap.cloud.portal": {
 					"config": {
 						"theme.id": "sap_fiori_3",
-						"theme.active": ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize_hcb", "sap_belize_hcw"]
+						"theme.active": ["sap_fiori_3", "KNPL_theme", "sap_fiori_3_dark", "sap_belize_hcb", "sap_belize_hcw"]
 					}
 				}
 			}

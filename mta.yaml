@@ -18,6 +18,8 @@ modules:
       name: KNPL_PAINTER_API
       url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
+    disk-quota: 256M
+    memory: 256M
     routes:
     - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
 - name: knpl-influencer-web_ui_deployer
@@ -31,8 +33,8 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - MasterDataManagement-content.zip
-      name: MasterDataManagement
+      - MDM-content.zip
+      name: MDM
       target-path: resources/
     - artifacts:
       - ContactPainter-content.zip
@@ -51,16 +53,8 @@ modules:
       name: OrganizationSetup
       target-path: resources/
     - artifacts:
-      - KnowledgeManagement-content.zip
-      name: KnowledgeManagement
-      target-path: resources/
-    - artifacts:
       - Manage_Notifications-content.zip
       name: Manage_Notifications
-      target-path: resources/
-    - artifacts:
-      - Training-content.zip
-      name: Training
       target-path: resources/
     - artifacts:
       - Catelogue-content.zip
@@ -70,9 +64,21 @@ modules:
       - CompanySettings-content.zip
       name: CompanySettings
       target-path: resources/
-- name: MasterDataManagement
+    - artifacts:
+      - Training_Learning-content.zip
+      name: Training_Learning
+      target-path: resources/
+    - artifacts:
+      - Tools-content.zip
+      name: Tools
+      target-path: resources/
+    - artifacts:
+      - Complaints-content.zip
+      name: Complaints
+      target-path: resources/
+- name: MDM
   type: html5
-  path: MasterDataManagement
+  path: MDM
   build-parameters:
     builder: custom
     commands:
@@ -102,6 +108,8 @@ modules:
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+  deployed-after:
+  - knpl-influencer-web_ui_deployer
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -126,25 +134,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: KnowledgeManagement
-  type: html5
-  path: KnowledgeManagement
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
 - name: Manage_Notifications
   type: html5
   path: Manage_Notifications
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: Training
-  type: html5
-  path: Training
   build-parameters:
     builder: custom
     commands:
@@ -166,6 +158,30 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: Training_Learning
+  type: html5
+  path: Training_Learning
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Tools
+  type: html5
+  path: Tools
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Complaints
+  type: html5
+  path: Complaints
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
@@ -179,18 +195,18 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
-- name: knpl-influencer-web_html_repo_host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      sizeLimit: 2
-    service: html5-apps-repo
-    service-plan: app-host
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
     service: destination
     service-plan: lite
+- name: knpl-influencer-web_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      sizeLimit: 10
+    service: html5-apps-repo
+    service-plan: app-host
 - name: portal_resources_knpl-influencer-web
   type: org.cloudfoundry.managed-service
   parameters:

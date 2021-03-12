@@ -1,12 +1,249 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
-        <f:content>
-            <Label text="Name"/>
-            <Input value="{oModelView>/addData/Name}"   fieldGroupIds="InpGoup" required="true" id="Name" />
-            <Label text="Mobile No"/>
-            <Input value="{oModelView>/addData/Mobile}" type="Number" fieldGroupIds="InpGoup" id="Mobile" maxLength="10" required="true"  />
-             <Label text="Email"/>
-            <Input value="{oModelView>/addData/Email}" type="Email" fieldGroupIds="InpGoup" id="Email" required="false"  />
-        </f:content>
-    </f:SimpleForm>
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbx" width="100%">
+        <f:SimpleForm id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddPainterDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>PainterDetails}"/>
+                <Label text="{i18n>DateOfJoining}"/>
+                <DatePicker required="false" editable="false" value="{path:'oModelView>/PainterDetails/JoiningDate', type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy' } }"/>
+                <Label text="{i18n>PrimaryMobileNo}"/>
+                <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
+                <Label text="{i18n>SecondryMobileNo}"/>
+                <VBox>
+                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }"/>
+
+                    <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
+                    </HBox>
+                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
+                </VBox>
+
+                <Label text="{i18n>AgeGroup}"/>
+                <ComboBox required="true" items="{path:'/MasterAgeGroupSet',sorter:{path:'AgeGroup'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{AgeGroup}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>PreferredLanguage}"/>
+                <ComboBox required="true" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Language}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <core:Title text="{i18n>PersonalDetails}"/>
+                <Label text="{i18n>FullName}"/>
+                <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
+                <Label text="{i18n>EmailId}"/>
+                <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
+                <Label text="{i18n>LinkPrimaryDealer}"/>
+                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelView>/PainterAddDet/DealerId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{DealerName}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>LinkSecondryDealer}"/>
+                <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKeys="{path:'oModelView>/PainterAddDet/SecondryDealer'}">
+                    <items>
+                        <core:Item text="{DealerName}" key="{Id}"/>
+                    </items>
+                </MultiComboBox>
+                <core:Title text="{i18n>LocationDetails}"/>
+
+                <Label text="{i18n>State}"/>
+                <ComboBox items="{path:'/MasterStateSet',sorter:{path:'State'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectionChange="onStateChange" required="true" selectedKey="{path:'oModelView>/PainterAddress/StateId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{State}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>City}" required="true"/>
+                <ComboBox valueStateText="Kindly select the city according to state." editable="{= ${oModelView>/PainterAddress/StateId} !== '' }" items="{path:'/MasterCitySet',sorter:{path:'City'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterAddress/CityId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" id="cmbCity" required="true">
+                    <items>
+                        <core:Item text="{City}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Area}"/>
+                <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <core:Title text="{i18n>SecurityQuestions}"/>
+                <Label text="{i18n>Question}"/>
+                <ComboBox required="true" items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Question}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Answer}"/>
+                <Input required="true" maxLength="50" value="{path : 'oModelView>/Preference/SecurityAnswer', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }"/>
+                <core:Title text="{i18n>SegmentationDetails}"/>
+                <Label text="{i18n>TeamSize}"/>
+                <ComboBox items="{path:'/MasterTeamSizeSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" required="true" selectedKey="{path:'oModelView>/PainterSegmentation/TeamSizeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{TeamSize}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Experiences}"/>
+                <ComboBox required="true" valueStateText="Kindlty input a valid value." items="{path:'/MasterExperienceSet',sorter:{path:'Id'}, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterSegmentation/PainterExperience',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Experience}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>SitePerMonth}"/>
+                <ComboBox items="{path:'/MasterSitePerMonthSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterSegmentation/SitePerMonthId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{SitePerMonth}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>AnnualPaidPotential}"/>
+                <ComboBox items="{path:'/MasterPotentialSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterSegmentation/PotentialId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Potential}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+
+            </f:content>
+        </f:SimpleForm>
+        <Table id="idFamilyDetils" width="auto" items="{path: 'oModelView>/PainterFamily', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>FamilyDetails}"/>
+                    <ToolbarSpacer/>
+                    <Button text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>SelectRelation}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>Name}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>ContactNumber}"/>
+                </Column>
+
+                <Column width="10%">
+                    <Text text="{i18n>Action}"/>
+                </Column>
+
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <VBox>
+                            <Select visible="{= ${oModelView>editable} === true }" items="{path:'/MasterRelationshipSet', sorter:{path:'Relationship'}, templateShareable:false,filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>RelationshipId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                                <items>
+                                    <core:Item text="{Relationship}" key="{Id}"/>
+                                </items>
+                            </Select>
+                            <ObjectIdentifier title="{path:'oModelView>RelationshipId',formatter:'.fmtLink'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
+                        </VBox>
+                        <VBox>
+                            <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed" maxLength="50" width="70%" required="true" value="{path:'oModelView>Name',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLngth:50, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Text text="{oModelView>Name}" visible="{= ${oModelView>editable} !== true }"/>
+                        </VBox>
+                        <VBox>
+                            <Input width="70%" valueStateText="Kindly enter the mobile number of 10 digits." required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Text text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }"/>
+                        </VBox>
+                        <HBox>
+                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
+                            <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" type="Transparent" press="onPressFDLSave"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelView>/PainterAssets',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>AssetDetails}"/>
+                    <ToolbarSpacer/>
+                    <Button text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>TypeOfAssets}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>AssetName}"/>
+                </Column>
+                <Column>
+                    <Text/>
+                </Column>
+                <Column width="10%">
+                    <Text text="{i18n>Action}"/>
+                </Column>
+
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                        <VBox>
+                            <Select items="{path:'/MasterAssetTypeSet',sorter:{path:'AssetType'},templateShareable:false, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>AssetTypeId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                                <items>
+                                    <core:Item text="{AssetType}" key="{Id}"/>
+                                </items>
+                            </Select>
+                            <ObjectIdentifier title="{path:'oModelView>AssetTypeId',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }"/>
+                        </VBox>
+                        <VBox>
+                            <Input maxLength="25" width="70%" required="true" value="{path:'oModelView>AssetName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Text text="{oModelView>AssetName}" visible="{= ${oModelView>editable} !== true }"/>
+                        </VBox>
+                        <Text/>
+                        <HBox justifyContent="SpaceBetween">
+                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onAssetEdit"></Button>
+                            <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" type="Transparent" press="onAsetSave"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveAsset"></Button>
+                        </HBox>
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>BankingDetails}"/>
+                <Label text="{i18n>IFSCCode}"/>
+                <Input id="IdAbIfscCode" enabled="{oModelControl>/AddNewBank}" valueStateText="IFSC Code should have letters followed by numbers." required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                <Label text="{i18n>BankName}"/>
+                <ComboBox id="IdAbBankNameId" enabled="{oModelControl>/AddNewBank}" required="{oModelControl>/AddNewBank}" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterBankDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{BankName}" key="{Id}"></core:Item>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>AccountType}"/>
+                <ComboBox id="IdAbAccountTypeId" enabled="{oModelControl>/AddNewBank}" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="{oModelControl>/AddNewBank}" selectedKey="{path:'oModelView>/PainterBankDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{AccountType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>AccountNumber}"/>
+                <Input enabled="{oModelControl>/AddNewBank}" id="idAddAcntNum" change="onPrimaryAcChange" valueStateText="Account Number should be of min 10 digits." required="{oModelControl>/AddNewBank}" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Label text="{i18n>ConfirmAccNumber}"/>
+                <Input  enabled="{oModelControl>/AddNewBank}" id="idCnfAcntNum" required="{oModelControl>/AddNewBank}" change="onConfAccChng" type="Number" value="{path:'oModelView>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Label text="{i18n>AccountHolderName}"/>
+                <Input id="IdAbAccountHolderName" enabled="{oModelControl>/AddNewBank}" valueStateText="Kindly enter a valid name.Max 50 chars allowed" maxLength="50" required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                <Label text=""/>
+                <HBox justifyContent="SpaceBetween" >
+                    <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank"/>
+                    <Label/>
+                    <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank"/>
+                </HBox>
+                <core:Title text="{i18n>KYCDetails}"/>
+                <Label text="{i18n>SelectKYCDocument}"/>
+                <ComboBox change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                    <items>
+                        <core:Item text="{KycType}" key="{Id}"></core:Item>
+                    </items>
+                </ComboBox>
+                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <Label text=""/>
+
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
 </core:FragmentDefinition>

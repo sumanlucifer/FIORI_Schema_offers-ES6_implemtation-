@@ -1,4 +1,4 @@
-<mvc:View height="100%" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -10,101 +10,110 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" label="Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
+                                                                                                                                                                            <fb:control>
+                                                                                                                                                                                <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
+                                                                                                                                                                                        				path: '/PainterSet'
+                                                                                                                                                                                        			}">
+                                                                                                                                                                                    <SuggestionItem text="{Name}"/>
+                                                                                                                                                                                </SearchField>
+                                                                                                                                                                                
+                                                                                                                                                                            </fb:control>
+                                                                                                                                                                        </fb:FilterGroupItem> -->
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" value="{oModelView>/filterBar/Name}" submit="onFilter" placeholder="Name" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Name}"/>
-                                        </suggestionItems>
-                                    </Input>
+                                    <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
+                                        <core:Item text="{AgeGroup}" key="{Id}"/>
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Email" label="Email" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>RegistrationDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idEmailInput" submit="onFilter" value="{oModelView>/filterBar/Email}" placeholder="Email" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Email}"/>
-                                        </suggestionItems>
-                                    </Input>
+                                    <!-- <ComboBox id="cmbxRegDate" items="{path:'/PainterSet',sorter:{path:'CreatedAt',group:true,descending:true}}" selectedKey="{oModelView>/filterBar/CreatedAt}">
+                                                                                                                                                    <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
+                                                                                                            
+                                                                                                                                                </ComboBox> -->
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Mobile" label="Mobile" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idMobileInput" submit="onFilter" value="{oModelView>/filterBar/Mobile}" type="Number" placeholder="Mobile" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Mobile}"/>
-                                        </suggestionItems>
-                                    </Input>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Registration Status" label="Registration Status" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idRegistrationStatus" submit="onFilter" value="{oModelView>/filterBar/RegistrationStatus}" placeholder="Registration Status" showSuggestion="true" showValueHelp="false" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{RegistrationStatus}"/>
-                                        </suggestionItems>
-                                    </Input>
+                                    <ComboBox id="cmbx" selectedKey="{oModelView>/filterBar/RegistrationStatus}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Registered" key="REGISTERED"/>
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
             </f:DynamicPageHeader>
-
-
         </f:header>
-
         <f:content>
-            <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', filters:[{ path:'IsArchived', operator:'EQ', value1:false}],sorter: { path: 'UpdatedAt', descending: true} }" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="25" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'AgeGroup,Dealers,PainterBankDetails' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <!-- <SearchField width="20%" id="searchField" suggest="onSuggest" suggestionItems="{path: '/PainterSet',sorter: { path: 'Name' } }" tooltip="{i18n>SearchPainters}" search="onSearch" placeholder="{i18n>SearchPainters}">
-                                                                                <SuggestionItem text="{Name}" key="{Id}"/>
-                                                                            </SearchField> -->
-                        <Button
-                        tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
-                    <!-- <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
-
                 <columns>
-                    <Column>
+                    <Column width="15%" id="nameColumn">
                         <Text text="{i18n>Name}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>Email}"/>
+                        <Text text="{i18n>MembershipId}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>Mobile}"/>
+                        <Text text="{i18n>RegistrationDate}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>RegistrationStatus}"/>
+                        <Text text="{i18n>MobileNumber}"/>
                     </Column>
-                    <Column width="10%">
-                        <Text text="{i18n>Edit}"/>
+                    <Column>
+                        <Text text="{i18n>AgeGroup}"/>
                     </Column>
-                    <Column width="10%">
-                        <Text text="{i18n>Deactivate}"/>
+                    <Column>
+                        <Text text="{i18n>LinkPrimaryDealer}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>LinkSecondryDealer}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>KycStatus}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>BankDetailsStatus}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>RegStatus}"/>
+                    </Column>
+                    <Column width="8%">
+                        <Text text="{i18n>Action}"/>
                     </Column>
                 </columns>
 
                 <items>
-                    <ColumnListItem press="onListItemPress">
-                        <dependents>
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.ActionSheet" type="XML"/>
-                        </dependents>
+                    <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
-                            <ObjectIdentifier title="{Name}" titleActive="false"/>
-                            <Text text="{Email}"/>
+                            <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
+                            <Text text="{MembershipCard}"/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
-                            <Text text="{RegistrationStatus}"/>
-                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEditPainter" tooltip="Edit"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate" tooltip="Deactivate"></Button>
+                            <Text text="{AgeGroup/AgeGroup}"/>
+                            <Text text="{DealerId}"/>
+                            <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/>
+                            <Text text="Pending"/>
+                            <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
+                            <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
+                            <HBox>
+                                <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>

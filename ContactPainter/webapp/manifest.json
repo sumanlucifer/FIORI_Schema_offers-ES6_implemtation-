@@ -23,23 +23,31 @@
           "odataVersion": "2.0",
           "localUri": "localService/metadata.xml"
         }
+      },
+      "uploadData": {
+        "uri": "model/uploaditems.json",
+        "type": "JSON"
       }
     },
     "crossNavigation": {
-            "inbounds": {
-                "intent1": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "Manage",
-                    "action": "CP",
-                    "title": "{{appTitle}}",
-                    "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://employee-pane"
-                }
-            }
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "Manage",
+          "action": "CP",
+          "title": "{{appTitle}}",
+          "subTitle": "{{appSubTitle}}",
+          "icon": "sap-icon://employee-pane"
+        }
+      }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
   },
   "sap.ui": {
     "technology": "UI5",
@@ -90,9 +98,13 @@
         "settings": {
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "Inline",
-          "refreshAfterChange": false,
-          "useBatch":false
+          "refreshAfterChange": true,
+          "defaultUpdateMethod": "Put",
+          "useBatch": false
         }
+      },
+      "uploadModel": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -116,16 +128,17 @@
         {
           "name": "RoutePList",
           "pattern": "",
-          "target": [
-            "TargetPList"
-          ]
+          "target": ["TargetPList"]
         },
         {
           "name": "RouteAddEditP",
           "pattern": "PainterManage/{mode}/{id}",
-          "target": [
-            "TargetRouteAddEditP"
-          ]
+          "target": ["TargetRouteAddEditP"]
+        },
+        {
+          "name": "RouteProfile",
+          "pattern": "Profile/{mode}/{prop}",
+          "target": ["TargetProfile"]
         }
       ],
       "targets": {
@@ -136,12 +149,19 @@
           "viewId": "PainterList",
           "viewName": "PainterList"
         },
-         "TargetRouteAddEditP": {
+        "TargetRouteAddEditP": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "AddEditPainter",
           "viewName": "AddEditPainter"
+        },
+        "TargetProfile": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "ProfilePainter",
+          "viewName": "ProfilePainter"
         }
       }
     }

@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog id="viewSetting" sortDescending="true"
+		confirm="handleSortDialogConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>PainterName}" key="Painter/Name" />
+			<ViewSettingsItem text="{i18n>MembershipId}" key="Painter/MembershipCard" />
+            <ViewSettingsItem text="{i18n>PrimaryMobileNo}" key="Painter/Mobile" />
+            <ViewSettingsItem text="{i18n>ComplaintId}" key="ComplaintCode" />
+            <ViewSettingsItem text="{i18n>ComplaintType}" key="ComplaintType/ComplaintType" />
+             <ViewSettingsItem text="{i18n>ComplaintDetails}" key="ComplaintSubtype/ComplaintSubtype" />
+            <ViewSettingsItem text="{i18n>DateAndTime}" key="CreatedAt" selected="true" />
+             <ViewSettingsItem text="{i18n>Status}" key="ComplaintStatus" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

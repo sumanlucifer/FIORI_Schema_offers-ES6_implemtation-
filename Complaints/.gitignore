@@ -1,0 +1,29 @@
+/node_modules/
+/dist/
+
+# auto generated wildcard
+knpl-influencer-web/ComplaintManagement/.env1
+# auto generated wildcard
+Knpl-complaints/ComplaintManagement/.env1
+# auto generated wildcard
+Knpl-complaints/ContactPainter/.env14
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env15
+# auto generated wildcard
+Knpl-complaints/ComplaintManagement/.env2
+# auto generated wildcard
+knpl-complaints/ComplaintManagement/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env3
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-cp/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env14
+# auto generated wildcard
+knpl-complaints/ComplaintManagement/.env2
+# auto generated wildcard
+knpl-complaints/Complaints/.env3
+# auto generated wildcard
+knpl-cp/ContactPainter/.env15
