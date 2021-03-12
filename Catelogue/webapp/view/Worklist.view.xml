@@ -93,6 +93,10 @@
                     <Column>
                         <Text text="{i18n>action}"/>
                     </Column>
+                    <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                            
                    
                    
                     
@@ -108,6 +112,7 @@
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <Text text="{Status}"/>
+                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
                             
                             
                         </cells>

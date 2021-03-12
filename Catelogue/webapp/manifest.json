@@ -139,6 +139,13 @@
                     "target": [
                         "AddCatelogue"
                     ]
+                },
+                {
+                    "pattern": "EditProducts/{objectId}",
+                    "name": "Edit",
+                    "target": [
+                        "EditCatelogue"
+                    ]
                 }
             ],
             "targets": {
@@ -165,6 +172,10 @@
                 "AddCatelogue": {
                     "viewName": "AddCatelogue",
                     "viewId": "AddCatelogue"
+                },
+                "EditCatelogue": {
+                    "viewName": "EditCatelogue",
+                    "viewId": "EditCatelogue"
                 }
             }
         }

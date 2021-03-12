@@ -93,16 +93,16 @@ sap.ui.define([
                         var uri = that.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_DS.uri;
                         console.log(uri);
 
-                        that.oUploadCollection.setProperty("uploadUrl", uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
-                        //that.oUploadCollection._oFileUploader.setUploadUrl(uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
+                       // that.oUploadCollection.setProperty("uploadUrl", uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
+                        that.oUploadCollection._oFileUploader.setUploadUrl(uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
                         
                         that.oUploadCollection._oFileUploader.setHttpRequestMethod("PUT");
 
                         var url = that.oUploadCollection._oFileUploader.getUploadUrl();
                         console.log(url);
+                        
 
-
-                        that.oUploadCollection.upload();
+                        that.oUploadCollection._oFileUploader.upload();
                         // }
 
                     }
