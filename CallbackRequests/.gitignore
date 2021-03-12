@@ -1,0 +1,11 @@
+/node_modules/
+/dist/
+
+# auto generated wildcard
+knpl-influencer-web/CallbackRequests/.env
+# auto generated wildcard
+LoyaltyManagement/.env
+# auto generated wildcard
+MasterDataManagement/.env18
+# auto generated wildcard
+knpl-influencer-web/Tools/.env
