@@ -158,9 +158,11 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 
         _validateRequiredFields: function () {
             var oTitleControl = this.getView().byId("idTitleInput"),
-                oUrlControl = this.getView().byId("idUrlInput");
+                oUrlControl = this.getView().byId("idUrlInput"),
+                sTitle = oTitleControl.getValue(),
+                sUrl = oUrlControl.getValue();
             this._setControlValueState([oTitleControl, oUrlControl]);
-            if (oTitleControl.getValue() && oUrlControl.getValue()) {
+            if (sTitle && sUrl && this._isUrlValid(sUrl)) {
                 return true;
             } else {
                 return false;
@@ -179,7 +181,8 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         _setControlValueState: function (aControl) {
             for (var i = 0; i < aControl.length; i++) {
                 var oControl = aControl[i],
-                    sValue = oControl.getValue();
+                    sValue = oControl.getValue(),
+                    sControlName = oControl.getAggregation("customData")[0].getValue();
                 if (sValue) {
                     oControl.setValueState("None");
                     oControl.setValueStateText("");
@@ -187,7 +190,18 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                     oControl.setValueState("Error");
                     oControl.setValueStateText(this.oResourceBundle.getText("requiredValueText"));
                 }
+
+                if (sValue && sControlName === "Url" && !this._isUrlValid(sValue)) {
+                    oControl.setValueState("Error");
+                    oControl.setValueStateText(this.oResourceBundle.getText("invalidUrlText"));
+                }
             }
+        },
+
+        _isUrlValid: function (sValue) {
+            var sRegexQuery = "^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$";
+            var oUrlRegex = new RegExp(sRegexQuery,"i");
+            return oUrlRegex.test(sValue); 
         }
     });
 });

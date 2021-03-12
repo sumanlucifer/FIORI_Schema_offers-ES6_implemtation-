@@ -5,6 +5,7 @@
     xmlns:f="sap.f"
     xmlns:u="sap.ui.unified"
     xmlns:form="sap.ui.layout.form"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:core="sap.ui.core">
     <f:DynamicPage id="idActionPage" class="actionPage" showFooter="true" busy="{ActionViewModel>/busy}">
         <f:title>
@@ -47,7 +48,7 @@
                                         <Label text="{i18n>formTitleLabel}" required="true" />
                                     </form:label>
                                     <form:fields>
-                                        <Input id="idTitleInput" value="{ActionViewModel>/Title}" placeholder="{i18n>formTitlePlaceholder}" change="onChangeValue" />
+                                        <Input id="idTitleInput" type="Text" value="{ActionViewModel>/Title}" maxLength="100" data:name="Title" placeholder="{i18n>formTitlePlaceholder}" change="onChangeValue" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement>
@@ -55,7 +56,7 @@
                                         <Label text="{i18n>formUrlLabel}" required="true" />
                                     </form:label>
                                     <form:fields>
-                                        <Input id="idUrlInput" value="{ActionViewModel>/Url}" placeholder="{i18n>formUrlPlaceholder}" change="onChangeValue" />
+                                        <Input id="idUrlInput" type="Url" value="{ActionViewModel>/Url}" data:name="Url" placeholder="{i18n>formUrlPlaceholder}" change="onChangeValue" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement>
@@ -63,7 +64,7 @@
                                         <Label text="{i18n>formDescriptionLabel}" />
                                     </form:label>
                                     <form:fields>
-                                        <TextArea id="idDescriptionInput" value="{ActionViewModel>/Description}" placeholder="{i18n>formDescriptionPlaceholder}" />
+                                        <TextArea id="idDescriptionInput" value="{ActionViewModel>/Description}" maxLength="500" placeholder="{i18n>formDescriptionPlaceholder}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement>
