@@ -154,7 +154,13 @@ sap.ui.define([
                 };
                 function onYes() {
                     var oModel = this.getView().getModel("data");
-                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers") });
+                    var that=this;
+                    oModel.update(removeSet, oParam, { success:function () {that.onRemoveSuccess("tableUsers") },error: function (oError) {
+                    //oError - contains additional error information.
+                    var msg = 'Error!';
+                MessageToast.show(msg);
+                    
+                } });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);

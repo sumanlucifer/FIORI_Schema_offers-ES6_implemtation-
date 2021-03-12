@@ -4,6 +4,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
+   
 
 
 ], function (BaseController, UploadCollectionParameter, JSONModel, MessageBox, MessageToast) {
@@ -30,20 +31,20 @@ sap.ui.define([
                 Description: "",
                 Url: "",
             };
-            if (this._action === "edit") {
-                var oComponentModel = this.getComponentModel();
-                var oItem = oComponentModel.getProperty("/" + this._property);
-                if (!oItem) {
-                    return this._navToHome();
-                }
-                oData.Title = oItem.Title;
-                oData.Description = oItem.Description;
-                oData.Url = oItem.Url;
-                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
-                this.oUploadCollection.setUploadUrl(this.sServiceURI + this._property + "/$value");
-            } else {
-                this.oPreviewImage.setVisible(false);
-            }
+            // if (this._action === "edit") {
+            //     var oComponentModel = this.getComponentModel();
+            //     var oItem = oComponentModel.getProperty("/" + this._property);
+            //     if (!oItem) {
+            //         return this._navToHome();
+            //     }
+            //     oData.Title = oItem.Title;
+            //     oData.Description = oItem.Description;
+            //     oData.Url = oItem.Url;
+            //     this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+            //     this.oUploadCollection.setUploadUrl(this.sServiceURI + this._property + "/$value");
+            // } else {
+            this.oPreviewImage.setVisible(false);
+            // }
             this.oUploadCollection.clear();
             var oViewModel = new JSONModel(oData);
             this.getView().setModel(oViewModel, "ActionViewModel");
@@ -51,21 +52,23 @@ sap.ui.define([
         },
 
         onChange: function (oEvent) {
-            var oUploadCollection = oEvent.getSource();
-            // Header Token
-            var oCustomerHeaderToken = new UploadCollectionParameter({
-                name: "x-csrf-token",
-                value: "securityTokenFromModel"
-            });
-            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+            // var oUploadCollection = oEvent.getSource();
+            // // Header Token
+            // var oCustomerHeaderToken = new UploadCollectionParameter({
+            //     name: "x-csrf-token",
+            //     value: "securityTokenFromModel"
+            // });
+            // oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
             MessageToast.show("Event change triggered");
         },
+       
 
         onStartUpload: function (oEvent) {
-            var oUploadCollection = this.byId("UploadCollectionImage");
+
+            //var oUploadCollection =this.getView().byId("")
             var title = this.getView().byId("idTitle").getValue();
 
-            var cFiles = oUploadCollection.getItems().length;
+            var cFiles = this.oUploadCollection.getItems().length;
             var uploadInfo = cFiles + " file(s)";
 
             var oModel = this.getView().getModel();
@@ -75,28 +78,32 @@ sap.ui.define([
                 Description: title
             }
 
-
+            var that = this;
             oModel.create("/MasterProductCatalogueSet", oData, {
                 success: function (oData, response) {
                     //console.log(oData.Id);
-                  
-                    this.catalogueId = oData.Id;
+
+                    // that.catalogueId = oData.Id;
 
                     if (cFiles > 0) {
-                        // oUploadCollection.upload();
 
-                        if (this.catalogueId != null) {
-                            var id=this.catalogueId;
-                            
-                            // this.oUploadCollection = this.getView().byId("UploadCollectionImage");
-                            this.oUploadCollection.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + this.catalogueId + ")/$value?doc_type=image");
-            
-                            // @ts-ignore
-                            //this.oUploadCollection.insertHeaderParameter(new UploadCollectionParameter({ name: "slug", value: this.oUploadCollection.getItems() }));
-                            //this.oUploadCollection.setHttpRequestMethod("POST");
-                            //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-                            this.oUploadCollection.upload();
-                        }
+                        // if (that.catalogueId != null) {
+                        var id = oData.Id;
+                        console.log(id);
+                        var uri = that.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_DS.uri;
+                        console.log(uri);
+
+                       // that.oUploadCollection.setProperty("uploadUrl", uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
+                        that.oUploadCollection._oFileUploader.setUploadUrl(uri + "MasterProductCatalogueSet(" + id + ")/$value?doc_type=image");
+                        
+                        that.oUploadCollection._oFileUploader.setHttpRequestMethod("PUT");
+
+                        var url = that.oUploadCollection._oFileUploader.getUploadUrl();
+                        console.log(url);
+                        
+
+                        that.oUploadCollection._oFileUploader.upload();
+                        // }
 
                     }
 
@@ -112,10 +119,10 @@ sap.ui.define([
 
 
         },
-        
+
         // uploadImage: function (Id) {
         //     console.log(Id);
-            
+
         //     this.oUploadCollection.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + Id + ")/$value?doc_type=image");
         //     //    this.oUploadCollection.checkFileReadable().then(function() {
         //     // @ts-ignore

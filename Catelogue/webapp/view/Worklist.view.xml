@@ -60,7 +60,10 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails'} }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails'},sorter:{
+                    path: 'Id', 
+                    descending: true
+                } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
@@ -90,6 +93,10 @@
                     <Column>
                         <Text text="{i18n>action}"/>
                     </Column>
+                    <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                    <Text text="{i18n>GenericEdit}"/>
+                                </Column>
+                            
                    
                    
                     
@@ -105,6 +112,7 @@
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <Text text="{Status}"/>
+                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
                             
                             
                         </cells>

@@ -209,6 +209,18 @@ sap.ui.define([
             },
             handleAddCateloguePressed : function () {
                 this.getRouter().navTo("Add");
+            },
+            onPressEdit : function (oEvent) {
+
+                this._showEditView(oEvent.getSource());
+              
+
+            },
+            _showEditView : function (oItem) {
+                 this.getRouter().navTo("Edit", {
+				objectId: oItem.getBindingContext().getProperty("Id")
+            });
+
             }
 
 	});

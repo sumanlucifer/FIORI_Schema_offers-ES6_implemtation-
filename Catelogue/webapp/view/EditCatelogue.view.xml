@@ -1,0 +1,193 @@
+<mvc:View
+	controllerName="com.knpl.pragati.Catelogue.controller.EditCatelogue"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+    class="sapUiSizeCompact">
+    	 
+    <Page
+		id="idPage"
+		class= "sapUiResponsivePadding--header">
+		
+
+		<content>
+			
+			<form:SimpleForm
+				minWidth="1024"
+				maxContainerCols="2"
+                title="Edit Catelogue Details" 
+                
+				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
+                
+				
+                <VBox >
+                <Title  text="Catelogue Details"  />
+                <VBox class="sapUiMediumMargin">
+                <Label text="Title:" />
+		<Input id="idTitle" placeholder="Enter Title" value="{Title}" width="40%"/>
+                </VBox>
+               <UploadCollection
+			id="UploadCollectionImage"
+			maximumFilenameLength="55"
+			maximumFileSize="10"
+			multiple="false"
+			change="onChange"
+			fileSizeExceed=""
+			selectionChange="onSelectionChangeImage"
+			typeMissmatch="onTypeMissmatch"
+			uploadComplete=""
+			beforeUploadStarts=""
+			mode="MultiSelect">
+			<toolbar>
+				<OverflowToolbar id="myId">
+					<Title id="attachmentTitle" />
+					<ToolbarSpacer />
+					<Button
+						id="downloadButton"
+						text="Download"
+						press="onDownloadImage"
+						enabled="false"
+						type="Transparent" />
+					<Button
+						id="versionButton"
+						text="Upload a new version"
+						press="onVersionImage"
+						enabled="false"
+						type="Transparent" />
+					<UploadCollectionToolbarPlaceholder/>
+				</OverflowToolbar>
+			</toolbar>
+			<items>
+				<UploadCollectionItem
+					documentId="{documentId}"
+					fileName="{Title}"
+					mimeType="{mimeType}"
+					thumbnailUrl="{= ${__metadata/media_src}.concat('?doc_type=image')}"
+					url="{= ${__metadata/media_src}.concat('?doc_type=image')}"
+					enableEdit="false"
+					enableDelete="false"
+					visibleDelete="false"
+					visibleEdit="false"
+					
+					selected="{selectedImage}">
+					<attributes>
+						<ObjectAttribute
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
+							text="
+							222222"
+							active="false" />
+					</attributes>
+                    
+					
+				</UploadCollectionItem>
+			</items>
+		</UploadCollection>
+
+        <UploadCollection
+			id="UploadCollectionPdf"
+			maximumFilenameLength="55"
+			maximumFileSize="10"
+			multiple="false"
+			change="onChange"
+			fileSizeExceed=""
+			selectionChange="onSelectionChangePdf"
+			typeMissmatch=""
+			uploadComplete=""
+			beforeUploadStarts=""
+			
+			mode="MultiSelect">
+			<toolbar>
+				<OverflowToolbar id="myId1">
+					<Title id="attachmentTitle1" />
+					<ToolbarSpacer />
+					<Button
+						id="downloadButton1"
+						text="Download"
+						press="onDownloadPdf"
+						enabled="false"
+						type="Transparent" />
+					<Button
+						id="versionButton1"
+						text="Upload a new version"
+						press="onVersionPdf"
+						enabled="false"
+						type="Transparent" />
+					<UploadCollectionToolbarPlaceholder/>
+				</OverflowToolbar>
+			</toolbar>
+			<items>
+				<UploadCollectionItem
+					documentId="{documentId}"
+					fileName="{Title}"
+					mimeType="{mimeType}"
+					thumbnailUrl="{thumbnailUrl}"
+					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
+					enableEdit="false"
+					enableDelete="false"
+					visibleDelete="false"
+					visibleEdit="false"
+					
+					selected="{selectedPdf}">
+					<attributes>
+						<ObjectAttribute
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
+							text="
+							222222"
+							active="false" />
+					</attributes>
+					
+				</UploadCollectionItem>
+			</items>
+		</UploadCollection>
+        
+        
+        
+     
+                </VBox>
+              
+			</form:SimpleForm>
+			
+		</content>
+            <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+                
+
+                <Button text="Cancel"
+						press="onCancelPress"
+						/>
+					
+				
+				<Button text="Save"
+                type="Emphasized"
+				press="onStartUpload"
+			    />
+					
+				
+                  
+			</OverflowToolbar>
+		</footer>
+	</Page>
+    
+
+	
+
+</mvc:View>
+
