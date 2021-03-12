@@ -40,7 +40,7 @@
                         <Text text="{ReferralEmail}"/>
                          <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:MM a'}}"/>
                           <Text text="{= ${RegisteredAt} === null ? 'Pending':'Registered' }"/>
-                          <Text text="{RewardPoints}"/>
+                          <Text text="{= ${RegisteredAt}!==null ? ${RewardPoints}:0 }"/>
                        
                     </cells>
                 </ColumnListItem>

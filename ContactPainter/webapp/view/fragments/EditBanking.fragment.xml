@@ -40,23 +40,25 @@
                     <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
-                <Label visible="{= ${PainterBankDetails/Status}==='PENDING' || ${PainterBankDetails/Status}==='APPROVED'  }" text="{i18n>BankDetailsStatus}" design="Bold"/>
-                <Text  visible="{= ${PainterBankDetails/Status}==='PENDING' || ${PainterBankDetails/Status}==='APPROVED'  }" text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
-                <Label text=""/>
-                <HBox justifyContent="SpaceBetween" visible="{= ${PainterBankDetails/Status}==='APPROVED' || ${PainterBankDetails/Status} === null }">
-                    <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank"/>
-                    <Label/>
-                    <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank"/>
-                </HBox>
+                <Label text="{i18n>Status}" visible="{= ${PainterBankDetails} === null? false: true }" />
+                <RadioButtonGroup visible="{= ${PainterBankDetails} === null? false: true }" select="onRbBankStatus" selectedIndex="{path:'oModelView>/PainterBankDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
+                    <RadioButton text="{i18n>Approved}"/>
+                    <RadioButton text="{i18n>Reject}"/>
+                </RadioButtonGroup>
                 <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>SelectKYCDocument}"/>
-                <ComboBox change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                <Label text="{i18n>SelectedKYCDocument}"/>
+                <ComboBox editable="false" change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
                     <items>
                         <core:Item text="{KycType}" key="{Id}"></core:Item>
                     </items>
                 </ComboBox>
-                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} === null? false: true }"/>
+                <Input editable="false" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null? false: true }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" />
+                <RadioButtonGroup visible="{= ${PainterKycDetails} === null? false: true }" select="onRbKycStatus" selectedIndex="{path:'oModelView>/PainterKycDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
+                    <RadioButton text="{i18n>Approved}"/>
+                    <RadioButton text="{i18n>Reject}"/>
+                </RadioButtonGroup>
             </f:content>
         </f:SimpleForm>
     </VBox>

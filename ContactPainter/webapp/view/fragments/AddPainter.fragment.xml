@@ -34,9 +34,9 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="false" selectedKey="{path:'oModelView>/PainterDetails/DealerId' }">
+                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}" >
                     <items>
-                        <core:Item text="{DealerName}" key="{Id}"/>
+                        <core:Item text="{DealerName}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>LinkSecondryDealer}"/>

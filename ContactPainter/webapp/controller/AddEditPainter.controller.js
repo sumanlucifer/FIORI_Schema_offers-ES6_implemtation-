@@ -20,7 +20,7 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "sap/m/UploadCollectionParameter",
     "com/knpl/pragati/ContactPainter/model/customInt",
-    "com/knpl/pragati/ContactPainter/model/customInt2",
+    "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -44,7 +44,9 @@ sap.ui.define(
     FilterOperator,
     DateFormat,
     History,
-    UploadCollectionParameter
+    UploadCollectionParameter,
+    custDatatype1,
+    custDatatype2
   ) {
     "use strict";
 
@@ -278,16 +280,12 @@ sap.ui.define(
               oViewModel.getProperty("/PainterAddDet/SecondryDealer")
             )
           );
-          //   var sPrimaryDealerId = JSON.parse(
-          //     JSON.stringify(oViewModel.getProperty("/PainterAddDet/DealerId"))
-          //   );
           var oDealers = [];
           for (var i of oSecMainDealers) {
             oDealers.push({
               Id: parseInt(i),
             });
           }
-          // oDealers.push({ Id: parseInt(sPrimaryDealerId) });
 
           //**** creating the set for the banking details ****//
           var bAddNewBank = oModelCtrl.getProperty("/AddNewBank");
@@ -332,7 +330,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
-              //othat.navPressBack();
+              othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -503,13 +501,34 @@ sap.ui.define(
             oBindingCity.filter(aFilter);
           }
         },
+        onPrimDealerChanged:function(oEvent){
+            var oSource = oEvent.getSource();
+            var oView = this.getView();
+            var oModel= oView.getModel("oModelView");
+            var sKey = oEvent.getSource().getSelectedKey();
+            if(sKey==7){
+                console.log(sKey);
+                oSource.clearSelection();
+                oModel.setProperty("/PainterDetails/DealerId","");
+                oSource.setSelectedKey("");
+                oSource.removeAllAssociation()
+                oSource.fireSelectionChange({
+                    selectedItem:null
+                })
+            }
+            if(sKey==""){
+                console.log("key is null");
+                oSource.setValue("");
+            }
+        },
+
         onLinkPrimryChange: function (oEvent) {
           var oSource = oEvent.getSource();
           var sSkey = oSource.getSelectedKey();
           var sItem = oSource.getSelectedItem();
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
-          var pCmbx = oView.byId("cmbxPDlr");
+         
           var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
           var sFlag = true;
           for (var i of mCmbx) {
@@ -519,11 +538,22 @@ sap.ui.define(
           }
           console.log(oSource,sFlag)
           if (!sFlag) {
-            pCmbx.setSelectedKey("");
+            oSource.clearSelection();
+            oSource.setSelectedKey("");
+            oSource.setValue("");
             MessageToast.show(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
           }
+        },
+        onChangePDealer:function(oEvent){
+            var oSource = oEvent.getSource();
+            var sKey = oSource.getSelectedKey();
+           
+            if(sKey==""){
+                oSource.setValue("");
+                //oSource.removeAssociation("selectedItem")
+            }
         },
         secDealerChanged: function (oEvent) {
           var oView = this.getView();
@@ -796,6 +826,7 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
           }
+         
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
