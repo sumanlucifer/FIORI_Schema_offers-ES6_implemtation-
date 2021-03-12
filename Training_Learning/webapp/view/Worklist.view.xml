@@ -11,7 +11,7 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true" showRestoreOnFB="true">
+					<fb:FilterBar showRestoreButton="false" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
 						<fb:filterGroupItems>
 							<!-- <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
