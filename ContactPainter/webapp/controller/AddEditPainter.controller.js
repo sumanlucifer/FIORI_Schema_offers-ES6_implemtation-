@@ -18,7 +18,9 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "sap/m/UploadCollectionParameter",
     "com/knpl/pragati/ContactPainter/model/customInt",
+    "com/knpl/pragati/ContactPainter/model/customInt2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -41,7 +43,8 @@ sap.ui.define(
     Filter,
     FilterOperator,
     DateFormat,
-    History
+    History,
+    UploadCollectionParameter
   ) {
     "use strict";
 
@@ -74,17 +77,17 @@ sap.ui.define(
             oEvent.getParameter("arguments").id
           );
           this._GetServiceData();
-          this._initData(sArgMode, sArgId);
+          this._initData("add");
         },
         _GetServiceData: function () {},
-        _initData: function (mParMode, mKey) {
+        _initData: function (mParMode) {
           var oView = this.getView();
           var oViewModel = new JSONModel({
-            sIctbTitle: mParMode == "add" ? "Add" : "Edit",
+            sIctbTitle: "Add",
             busy: false,
-            mPainterKey: mKey,
-            mode: mParMode,
-            edit: mParMode == "add" ? false : true,
+            mPainterKey: "",
+            mode: "Add",
+            edit: false,
             EditTb1FDL: false,
             EditTb2AST: false,
             AnotherMobField: false,
@@ -94,6 +97,7 @@ sap.ui.define(
               Name: "",
               Email: "",
               JoiningDate: new Date(),
+              DealerId: ""
             },
             Preference: {
               LanguageId: "",
@@ -143,6 +147,7 @@ sap.ui.define(
             PainterKycDetails: {
               KycTypeId: "",
               GovtId: "",
+              Status: "PENDING",
             },
           });
           var oControlData = {
@@ -162,6 +167,29 @@ sap.ui.define(
           //this._initMessage(oViewModel);
           this.getView().getModel().resetChanges();
           //used to intialize the message class for displaying the messages
+        },
+        onStartUpload: function () {
+          var oUploadCollection = this.byId("UploadCollection");
+          //var oTextArea = this.byId("TextArea");
+          var cFiles = oUploadCollection.getItems().length;
+          var uploadInfo = cFiles + " file(s)";
+          oUploadCollection.upload();
+          console.log(cFiles);
+        },
+        onUploadComplete: function (oEvent) {
+          console.log("Upload Complete");
+        },
+        onBeforeUploadStarts: function (oEvent) {
+          // Header Slug
+          console.log("on Before Upload");
+          var oCustomerHeaderSlug = new UploadCollectionParameter({
+            name: "slug",
+            value: oEvent.getParameter("fileName"),
+          });
+          oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+          setTimeout(function () {
+            MessageToast.show("Event beforeUploadStarts triggered");
+          }, 4000);
         },
         onPressSave: function () {
           var oModel = this.getView().getModel("oModelView");
@@ -250,18 +278,18 @@ sap.ui.define(
               oViewModel.getProperty("/PainterAddDet/SecondryDealer")
             )
           );
-          var sPrimaryDealerId = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterAddDet/DealerId"))
-          );
+          //   var sPrimaryDealerId = JSON.parse(
+          //     JSON.stringify(oViewModel.getProperty("/PainterAddDet/DealerId"))
+          //   );
           var oDealers = [];
           for (var i of oSecMainDealers) {
             oDealers.push({
               Id: parseInt(i),
             });
           }
-          oDealers.push({ Id: parseInt(sPrimaryDealerId) });
+          // oDealers.push({ Id: parseInt(sPrimaryDealerId) });
 
-          // creating the set for the banking details
+          //**** creating the set for the banking details ****//
           var bAddNewBank = oModelCtrl.getProperty("/AddNewBank");
           var oBankingPayload = null;
           if (bAddNewBank) {
@@ -276,7 +304,7 @@ sap.ui.define(
             oViewModel.getProperty("/PainterKycDetails")
           );
           var oKycPayload;
-          if (Object.keys(oNewKYCObj).length !== 0) {
+          if (Object.keys(oNewKYCObj).length === 3) {
             oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
             oKycPayload = oNewKYCObj;
           } else {
@@ -304,7 +332,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function () {
               MessageToast.show("Painter Sucessfully Created");
-              othat.navPressBack();
+              //othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -480,6 +508,8 @@ sap.ui.define(
           var sSkey = oSource.getSelectedKey();
           var sItem = oSource.getSelectedItem();
           var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var pCmbx = oView.byId("cmbxPDlr");
           var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
           var sFlag = true;
           for (var i of mCmbx) {
@@ -487,9 +517,9 @@ sap.ui.define(
               sFlag = false;
             }
           }
+          console.log(oSource,sFlag)
           if (!sFlag) {
-            oSource.clearSelection();
-            oSource.setValue("");
+            pCmbx.setSelectedKey("");
             MessageToast.show(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
@@ -756,6 +786,28 @@ sap.ui.define(
             oModel.setProperty("/EditTb2AST", false);
           }
         },
+        onRbBankStatus: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+
+          if (iIndex == 0) {
+            oModelView.setProperty("/PainterBankDetails/Status", "PENDING");
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+          }
+        },
+        onRbKycStatus: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+
+          if (iIndex == 0) {
+            oModelView.setProperty("/PainterKycDetails/Status", "PENDING");
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
+          }
+        },
         onAddNewBank: function () {
           var oView = this.getView();
           var oModelCtrl = oView
@@ -795,12 +847,11 @@ sap.ui.define(
 
         onKycChange: function (oEvent) {
           var oModel = this.getView().getModel("oModelView");
-
           var oView = this.getView();
-          if (oEvent.getSource().getSelectedKey() == "") {
-            oView.byId("kycIdNo").setValueState("None");
-            oModel.setProperty("/PainterKycDetails/GovtId", "");
-          }
+          oView.byId("kycIdNo").setValueState("None");
+          oModel.setProperty("/PainterKycDetails/GovtId", "");
+          oView.byId("idRKyc").setSelectedIndex(0);
+          oModel.setProperty("/PainterKycDetails/Status", "PENDING");
         },
         fmtLabel: function (mParam1) {
           var oData = this.getView().getModel(),

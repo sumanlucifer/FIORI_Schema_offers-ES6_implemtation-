@@ -98,3 +98,7 @@ knpl-complaints/ComplaintManagement/.env2
 knpl-complaints/Complaints/.env3
 # auto generated wildcard
 knpl-cp/ContactPainter/.env15
+# auto generated wildcard
+knpl-cp/ContactPainter/.env16
+# auto generated wildcard
+ZSample/HTML5Module/.env1

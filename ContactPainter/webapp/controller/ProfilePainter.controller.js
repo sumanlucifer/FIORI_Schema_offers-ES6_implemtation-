@@ -119,6 +119,7 @@ sap.ui.define(
               c3 = othat._initEditData();
               c3.then(function () {
                 othat.getView().getModel("oModelView").refresh(true);
+                othat._setCopyForFragment()
               });
             });
           });
@@ -286,6 +287,9 @@ sap.ui.define(
             return false;
           }
           return true;
+        },
+        _setCopyForFragment:function(){
+
         },
         handleSavePress: function () {
           // this._toggleButtonsAndView(false);

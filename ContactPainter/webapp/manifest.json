@@ -132,7 +132,7 @@
         },
         {
           "name": "RouteAddEditP",
-          "pattern": "PainterManage/{mode}/{id}",
+          "pattern": "PainterAdd",
           "target": ["TargetRouteAddEditP"]
         },
         {

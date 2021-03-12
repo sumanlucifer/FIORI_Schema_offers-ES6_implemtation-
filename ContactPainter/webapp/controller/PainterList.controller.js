@@ -197,8 +197,6 @@ sap.ui.define(
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteAddEditP", {
-            mode: "add",
-            id: "null",
           });
         },
         onSuggest: function (event) {

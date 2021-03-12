@@ -34,7 +34,7 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelView>/PainterAddDet/DealerId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox change="onLinkPrimryChange" id="cmbxPDlr" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="false" selectedKey="{path:'oModelView>/PainterDetails/DealerId' }">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}"/>
                     </items>
@@ -223,25 +223,36 @@
                 <Label text="{i18n>AccountNumber}"/>
                 <Input enabled="{oModelControl>/AddNewBank}" id="idAddAcntNum" change="onPrimaryAcChange" valueStateText="Account Number should be of min 10 digits." required="{oModelControl>/AddNewBank}" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 <Label text="{i18n>ConfirmAccNumber}"/>
-                <Input  enabled="{oModelControl>/AddNewBank}" id="idCnfAcntNum" required="{oModelControl>/AddNewBank}" change="onConfAccChng" type="Number" value="{path:'oModelView>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
+                <Input enabled="{oModelControl>/AddNewBank}" id="idCnfAcntNum" required="{oModelControl>/AddNewBank}" change="onConfAccChng" type="Number" value="{path:'oModelView>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
                 <Label text="{i18n>AccountHolderName}"/>
                 <Input id="IdAbAccountHolderName" enabled="{oModelControl>/AddNewBank}" valueStateText="Kindly enter a valid name.Max 50 chars allowed" maxLength="50" required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                <Label text="{i18n>Status}"/>
+                <RadioButtonGroup enabled="{oModelControl>/AddNewBank}" select="onRbBankStatus" selectedIndex="0" columns="2" width="100%">
+                    <RadioButton text="{i18n>Pending}"/>
+                    <RadioButton text="{i18n>Approved}"/>
+                </RadioButtonGroup>
                 <Label text=""/>
-                <HBox justifyContent="SpaceBetween" >
+                <HBox justifyContent="SpaceBetween">
                     <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank"/>
                     <Label/>
                     <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank"/>
                 </HBox>
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectKYCDocument}"/>
-                <ComboBox change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                <ComboBox change=".onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
                     <items>
                         <core:Item text="{KycType}" key="{Id}"></core:Item>
                     </items>
                 </ComboBox>
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
                 <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                <Label text=""/>
+                <Label text="{i18n>Status}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
+                <RadioButtonGroup id="idRKyc" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" select="onRbKycStatus" selectedIndex="0" columns="2" width="100%">
+                    <RadioButton text="{i18n>Pending}"/>
+                    <RadioButton text="{i18n>Approved}"/>
+                </RadioButtonGroup>
+                <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
+                <UploadCollection visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" uploadUrl="/PainterKycDetailsSet(94)/$value?image_type=front" id="UploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="true" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileSizeExceed="onFileSizeExceed" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts"/>
 
             </f:content>
         </f:SimpleForm>
