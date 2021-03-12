@@ -99,6 +99,17 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             });
         },
 
+        onResetFilters: function () {
+            var oModel = this.getViewModel("ViewModel");
+            oModel.setProperty("/filterBar", {
+                search: "",
+                createdAt: "",
+                title: "",
+                createdBy: ""
+            });
+            this.getView().byId("idCreatedByInput").setValue("");
+        },
+
         onSearch: function (oEvent) {
             var aFilterControls = oEvent.getParameter("selectionSet");
             var aFilters = [], sValue;
@@ -119,7 +130,12 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                     case "Creation Date": 
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("CreatedAt", FilterOperator.LE, sValue + "T23:59:59"));
+                            aFilters.push(new Filter({
+                                path: "CreatedAt",
+                                operator: FilterOperator.BT,
+                                value1: sValue + "T00:00:00",
+                                value2: sValue + "T23:59:59"
+                            }));
                         }
                         break;
                     case "Title":
@@ -129,9 +145,9 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                         }
                         break;
                     case "Created By":
-                        sValue = oControl.getSelectedKey();
+                        sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("CreatedBy", FilterOperator.EQ, sValue));
+                            aFilters.push(new Filter("CreatedByDetails/Name", FilterOperator.Contains, sValue));
                         }
                         break;
                 }
