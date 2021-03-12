@@ -1,0 +1,87 @@
+<mvc:View controllerName="com.knpl.pragati.CallbackRequests.controller.LandingPage" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:smartTable="sap.ui.comp.smarttable">
+    <f:DynamicPage busy="{ViewModel>/busy}" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>landingPageViewTitle}"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Content -->
+        <f:content>
+            <IconTabBar
+                id="idIconTabBar"
+                headerMode="Inline"
+                expanded="{device>/isNoPhone}"
+                class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter
+                        text="{i18n>pendingRequestIconTabarTitle}"
+                        key="pending">
+                        <smartTable:SmartTable
+                            id="idPendingSmartTable"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebind"
+                            entitySet="PainterRequestSet"
+                            tableType="ResponsiveTable"
+                            header="{i18n>tblPendingTitle}"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="true"
+                            placeToolbarInTable="true"
+                            persistencyKey="PendingSmartTableKey"
+                            ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                            <Table>
+                                <columns>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 6}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColAction}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </smartTable:SmartTable>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        text="{i18n>completedRequestIconTabarTitle}"
+                        key="completed">
+                        <smartTable:SmartTable
+                            id="idCompletedSmartTable"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebind"
+                            entitySet="PainterRequestSet"
+                            tableType="ResponsiveTable"
+                            header="{i18n>tblCompletedTitle}"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="true"
+                            placeToolbarInTable="true"
+                            persistencyKey="CompletedSmartTableKey"
+                            ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                        </smartTable:SmartTable>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
