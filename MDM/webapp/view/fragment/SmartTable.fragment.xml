@@ -15,14 +15,14 @@
         persistencyKey="SmartTablePKey"
         initiallyVisibleFields="{tabData>smartTblFields}"
         ignoreFromPersonalisation="CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsArchived,DivisionId">
-        <smartTable:customToolbar>
+        <!-- <smartTable:customToolbar>
             <OverflowToolbar>
                 <ToolbarSpacer/>
                 <Button type="Transparent" press="onPressAddBtn" icon="sap-icon://add" text="Add {tabData>tabName}" tooltip="Add {tabData>tabName}"/>
             </OverflowToolbar>
-        </smartTable:customToolbar>
+        </smartTable:customToolbar> -->
         <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
-            <columns>
+             <!-- <columns>
                 <Column width="12%">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 3}'/>
@@ -36,16 +36,16 @@
                     <Text text="Delete"/>
                 </Column>
             </columns>
-            <items>
+           <items>
                 <ColumnListItem>
                     <cells>
                         <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
                     </cells>
                     <cells>
                         <Button icon="sap-icon://delete" type="Transparent" press="onPressRemove" tooltip="Remove"></Button>
-                    </cells>
+                    </cells> 
                 </ColumnListItem>
-            </items>
+            </items> -->
         </Table>
     </smartTable:SmartTable>
 
