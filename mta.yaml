@@ -16,7 +16,7 @@ modules:
     properties:
       forwardAuthToken: true
       name: KNPL_PAINTER_API
-      url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
+      url: https://uat-knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
     disk-quota: 256M
     memory: 256M
