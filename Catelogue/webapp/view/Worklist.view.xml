@@ -73,7 +73,7 @@
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
-                        <Button text="Add Catelogue" press="handleAddCateloguePressed" />
+                        <Button text="Add Catelogue" press="onPressAdd" />
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                         

@@ -21,7 +21,7 @@ sap.ui.define([
         var dealerID;
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.DealerDetails", {
 
-                        formatter: formatter,
+            formatter: formatter,
 
             onInit: function () {
 
@@ -122,9 +122,38 @@ sap.ui.define([
                     var sQuery = oEvent.getParameter("query");
 
                     if (sQuery && sQuery.length > 0) {
-                        aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
+                        // aTableSearchState = [new Filter("tolower(Name)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
+                        //  new Filter("tolower(MembershipCard)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
+                        //     new Filter("tolower(Mobile)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'")  ];
+                        var oFilter = new Filter({
+
+                            filters: [
+
+                                new Filter(
+                                    "tolower(Name)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                ),
+                                new Filter(
+                                    "tolower(MembershipCard)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                ),
+                                new Filter(
+                                    "tolower(Mobile)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                )
+
+                            ]
+
+                        });
                     }
-                    this._applySearch(aTableSearchState);
+                    // this._applySearch(aTableSearchState);
+                    var oList = this.getView().byId("idPainterTable");
+                    var oBinding = oList.getBinding("items");
+
+                    oBinding.filter(oFilter);
                 }
             },
 
@@ -263,9 +292,9 @@ sap.ui.define([
             },
             onRemoveSuccess: function (oTable) {
 
-            
-            var model=this.getView().getModel();
-            model.refresh();
+
+                var model = this.getView().getModel();
+                model.refresh();
                 var msg = 'Unlinked Successfully!';
                 MessageToast.show(msg);
 
@@ -320,12 +349,12 @@ sap.ui.define([
             },
             onValueHelpOkPress: function (oEvent) {
                 var aTokens = oEvent.getParameter("tokens");
-               
+
                 if (aTokens.length > 1) {
                     var dataToSend = [];
                     for (var i = 0; i < aTokens.length; i++) {
                         dataToSend.push(aTokens[i].getKey());
-                        
+
 
                     }
                 } else {

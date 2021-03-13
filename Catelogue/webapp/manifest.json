@@ -133,18 +133,11 @@
                         "object"
                     ]
                 },
-                {
-                    "pattern": "Add",
-                    "name": "Add",
+                 {
+                    "name": "ActionPage",
+                    "pattern": "ActionPage/{action}/:property:",
                     "target": [
-                        "AddCatelogue"
-                    ]
-                },
-                {
-                    "pattern": "EditProducts/{objectId}",
-                    "name": "Edit",
-                    "target": [
-                        "EditCatelogue"
+                        "TargetActionPage"
                     ]
                 }
             ],
@@ -169,13 +162,12 @@
                     "viewName": "NotFound",
                     "viewId": "notFound"
                 },
-                "AddCatelogue": {
-                    "viewName": "AddCatelogue",
-                    "viewId": "AddCatelogue"
-                },
-                "EditCatelogue": {
-                    "viewName": "EditCatelogue",
-                    "viewId": "EditCatelogue"
+                "TargetActionPage": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "ActionPage",
+                    "viewLevel": 1,
+                    "viewId": "actionPage"
                 }
             }
         }
