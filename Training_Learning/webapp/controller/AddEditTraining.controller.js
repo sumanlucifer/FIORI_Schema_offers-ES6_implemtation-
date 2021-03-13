@@ -61,6 +61,10 @@ sap.ui.define(
                         // },
                     });
                     this.setModel(oViewModel, "oModelView");
+
+                    oViewModel.setProperty("/onlineTrType", "9");
+                    oViewModel.setProperty("/offlineTrType", "10");
+
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
                             oEvent.getParameter("element").setValueState(ValueState.Error);

@@ -322,7 +322,7 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-            sTitle = this.getResourceBundle().getText("PainterList");
+            sTitle = this.getResourceBundle().getText("tablePainterList");
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
