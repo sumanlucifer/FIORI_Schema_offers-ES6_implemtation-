@@ -90,7 +90,7 @@
                                 <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}"/>
                             </HBox>
                             <HBox items="{oModelView>TrainingQuestionnaireOptions}">
-                                <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiSmallMarginBeginEnd"/>
+                                <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiSmallMarginBeginEnd"/>
                             </HBox>
                         </VBox>
                     </CustomListItem>
