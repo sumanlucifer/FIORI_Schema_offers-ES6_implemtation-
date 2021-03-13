@@ -1,12 +1,12 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table width="auto" items="{path: 'uploadModel>/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblOffers" width="auto" items="{path: '/PainterTokenScanHistorySet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter'} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
 
 
                     <ToolbarSpacer/>
-                     <SearchField width="20%"></SearchField>
+                    <SearchField width="20%"></SearchField>
                     <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
@@ -15,30 +15,26 @@
 
             <columns>
                 <Column>
-                    <Text text="Scan Token Number"/>
+                    <Text text="{i18n>ScanTokenNo}"/>
                 </Column>
                 <Column>
-                    <Text text="Mobile Number"/>
+                    <Text text="{i18n>MobileNumber}"/>
                 </Column>
                 <Column>
-                    <Text text="Points"/>
+                    <Text text="{i18n>Points}"/>
                 </Column>
                 <Column>
-                    <Text text="Date and Time"/>
-                </Column>
-                <Column>
-                    <Text text="Quantity"/>
+                    <Text text="{i18n>DateAndTime}"/>
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                       <Text text="{uploadModel>Col1}"/>
-                            <Text text="{uploadModel>Col2}"/>
-                            <Text text="{uploadModel>Col3}"/>
-                             <Text text="{uploadModel>Col4}"/>
-                              <Text text="{uploadModel>Col5}"/>
+                        <Text text="{TokenCode}"/>
+                        <Text text="{Painter/Mobile}"/>
+                        <Text text="{RewardPoints}"/>
+                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                     </cells>
                 </ColumnListItem>
             </items>

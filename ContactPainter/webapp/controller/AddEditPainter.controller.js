@@ -93,6 +93,9 @@ sap.ui.define(
             EditTb1FDL: false,
             EditTb2AST: false,
             AnotherMobField: false,
+            painterList: this.getResourceBundle().getText(
+              "tablePainterList"
+            ),
             PainterDetails: {
               Mobile: "",
               AgeGroupId: "",

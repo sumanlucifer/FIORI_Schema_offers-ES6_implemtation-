@@ -19,7 +19,7 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
     "com/knpl/pragati/ContactPainter/model/customInt",
-    "com/knpl/pragati/ContactPainter/model/cmbxDtype2"
+    "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -240,14 +240,14 @@ sap.ui.define(
             "PainterSegmentation/TeamSizeId",
             "PainterSegmentation/PainterExperience",
             "PainterSegmentation/SitePerMonthId",
-            "PainterSegmentation/PotentialId"
+            "PainterSegmentation/PotentialId",
             // "PainterBankDetails/IfscCode",
             // "PainterBankDetails/BankNameId",
             // "PainterBankDetails/AccountTypeId",
             // "PainterBankDetails/AccountNumber",
             // "PainterBankDetails/AccountHolderName",
-           // "PainterKycDetails/KycTypeId",
-           // "PainterKycDetails/GovtId",
+            // "PainterKycDetails/KycTypeId",
+            // "PainterKycDetails/GovtId",
           ];
           var sValue = "",
             sPlit;
@@ -364,14 +364,13 @@ sap.ui.define(
           var oSecondryDealer = oCtrlModel.getProperty(
             "/PainterAddDet/SecondryDealer"
           );
-          
+
           var oDealers = [];
           for (var i of oSecondryDealer) {
             oDealers.push({ Id: parseInt(i) });
           }
-        
+
           oPayload["Dealers"] = oDealers;
-         
 
           //removing the empty values from gen data, painteraddress,preference,segmentation
           var oData = this.getView().getModel();
@@ -444,6 +443,17 @@ sap.ui.define(
             .byId("IdTblComplaints")
             .getBinding("items")
             .filter(oFilComplaints);
+
+          var oFilOffers = new Filter(
+            "PainterId",
+            FilterOperator.EQ,
+            oPainterId
+          );
+          oView
+            .byId("idTblOffers")
+            .getBinding("items")
+            .filter(oFilOffers);
+
           //IdTblComplaints
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
