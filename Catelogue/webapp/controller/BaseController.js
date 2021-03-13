@@ -59,6 +59,17 @@ sap.ui.define([
 				oViewModel.getProperty("/shareSendEmailSubject"),
 				oViewModel.getProperty("/shareSendEmailMessage")
 			);
-		}	});
+        },
+        getComponentModel: function () {
+            return this.getOwnerComponent().getModel();
+        },
+         onPressBreadcrumbLink: function () {
+            this._navToHome();
+        },
+
+        _navToHome: function () {
+            this.oRouter.navTo("");
+        },	
+    });
 
 });

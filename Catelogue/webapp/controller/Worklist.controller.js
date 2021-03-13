@@ -48,7 +48,8 @@ sap.ui.define([
 			oTable.attachEventOnce("updateFinished", function(){
 				// Restore original busy indicator delay for worklist's table
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
-			});
+            });
+             this.oRouter = this.getRouter();
 		},
 
 		/* =========================================================== */
@@ -210,18 +211,20 @@ sap.ui.define([
             handleAddCateloguePressed : function () {
                 this.getRouter().navTo("Add");
             },
-            onPressEdit : function (oEvent) {
-
-                this._showEditView(oEvent.getSource());
-              
-
-            },
-            _showEditView : function (oItem) {
-                 this.getRouter().navTo("Edit", {
-				objectId: oItem.getBindingContext().getProperty("Id")
+            onPressAdd: function (oEvent) {
+            this.oRouter.navTo("ActionPage", {
+                action: "add",
+                property: ""
             });
+        },
 
-            }
+        onPressEdit: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            this.oRouter.navTo("ActionPage", {
+                action: "edit",
+                property: sPath.substr(1)
+            });
+        },
 
 	});
 });
