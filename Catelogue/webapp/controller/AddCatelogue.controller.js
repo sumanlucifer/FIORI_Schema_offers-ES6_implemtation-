@@ -120,25 +120,7 @@ sap.ui.define([
 
         },
 
-        // uploadImage: function (Id) {
-        //     console.log(Id);
-
-        //     this.oUploadCollection.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + Id + ")/$value?doc_type=image");
-        //     //    this.oUploadCollection.checkFileReadable().then(function() {
-        //     // @ts-ignore
-        //     this.oUploadCollection.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({ name: "slug", value: this.oUploadCollection.getItems() }));
-        //     this.oUploadCollection.setHttpRequestMethod("POST");
-        //     //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-        //     this.oUploadCollection.upload();
-        //     // }.bind(this), function(error) {
-        //     // 	MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-        //     // }.bind(this)).then(function() {
-        //     // 	this.oFileUploader.clear();
-        //     // }.bind(this));
-
-
-        // }
-
+        
 
 
 
