@@ -202,7 +202,6 @@ sap.ui.define([
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
-                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                         );
                     } else if (prop === "Title") {
                         aFlaEmpty = false;
@@ -259,39 +258,6 @@ sap.ui.define([
                 oBinding2.filter([]);
             }
         },
-
-        // onSearch: function (oEvent) {
-        //     var aFilters = this.getFiltersfromFB(),
-        //         oTable = this.getView().byId("table"),
-        //         oTable1 = this.getView().byId("table1");
-        //     oTable.getBinding("items").filter(aFilters);
-        //     if (aFilters.length !== 0) {
-        //         if (aFilters[0].sPath === "TrainingTypeId") {
-        //             this.getModel("worklistView").setProperty("/TrainingTypeId", aFilters[0].oValue1);
-        //         } else {
-        //             this.getModel("worklistView").setProperty("/TrainingTypeId", null);
-        //         }
-
-        //         this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-        //     } else {
-        //         this.getModel("worklistView").setProperty("/TrainingTypeId", null);
-        //     }
-        // },
-
-        // getFiltersfromFB: function () {
-        //     var oFBCtrl = this.getView().byId("filterbar"),
-        //         aFilters = [];
-        //     var oViewFilter = this.getView()
-        //         .getModel("worklistView")
-        //         .getProperty("/filterBar");
-        //     oFBCtrl.getAllFilterItems().forEach(function (ele) {
-        //         var typeId = ele.getControl().getSelectedKey();
-        //         if (typeId) {
-        //             aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, typeId));
-        //         }
-        //     });
-        //     return aFilters;
-        // },
 
         /**
          * When Click on Add button
@@ -370,17 +336,7 @@ sap.ui.define([
             this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
         },
 
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
-        onRefresh: function () {
-            var oTable = this.byId("table");
-            oTable.getBinding("items").refresh();
-        },
-
-        /* =========================================================== */
+		        /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
 
@@ -394,21 +350,6 @@ sap.ui.define([
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")
             });
-        },
-
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-		 * @private
-		 */
-        _applySearch: function (aTableSearchState) {
-            var oTable = this.byId("table"),
-                oViewModel = this.getModel("worklistView");
-            oTable.getBinding("items").filter(aTableSearchState, "Application");
-            // changes the noDataText of the list in case there are no filter results
-            if (aTableSearchState.length !== 0) {
-                oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-            }
         }
 
     });

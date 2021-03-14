@@ -65,7 +65,7 @@
 							</headerToolbar>
 							<columns>
 								<Column width="35%">
-									<Text text="{i18n>colTrainingName}"/>
+									<Text text="{i18n>colTitle}"/>
 								</Column>
                                 <Column width="13%">
 									<Text text="{i18n>colStartDate}"/>
@@ -129,7 +129,7 @@
 							</headerToolbar>
 							<columns>
 								<Column width="35%">
-									<Text text="{i18n>colTrainingName}"/>
+									<Text text="{i18n>colTitle}"/>
 								</Column>
                                 <Column width="13%">
 									<Text text="{i18n>colStartDate}"/>
