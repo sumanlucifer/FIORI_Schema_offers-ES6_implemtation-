@@ -123,9 +123,9 @@ sap.ui.define([
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
-
+                    var aFinFilter= new Filter({"filters":aFilters,and:false})
                 var aKeys = [
-                    "search", "tolower(PlantCode)", "tolower(Depot)", "tolower(SalesGroupName)", "tolower(FiscalYear)"
+                    "search","PlantCode", "Depot", "SalesGroupName", "FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
@@ -135,15 +135,16 @@ sap.ui.define([
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
                 
-                return aFilters;
+                return aFinFilter;
             },
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-
+                    aFilters.push(new Filter({path:"DealerName", operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
                 for (let i = 1; i < aKeys.length; i++) {
                    
 
-                    aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                   // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                    aFilters.push(new Filter({path:aKeys[i], operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
                      
                 }
                 
