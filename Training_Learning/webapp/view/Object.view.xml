@@ -3,8 +3,8 @@
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>TtlAddVideo}">
-                        <Link text="{i18n>TrainingVideo}" press="navPressBack"/>
+                    <Breadcrumbs currentLocationText="{objectView>/AddEditVideo}">
+                        <Link text="{i18n>TrainingVideo}" press="onCancel"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>
@@ -13,7 +13,7 @@
             <f:SimpleForm id="VideoDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddVideoDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
                 <f:content>
 				        <Label required="true" text="{i18n>colTitle}"/>
-				        <Input width="100%" value="{objectView>Title}" maxLength="300"/>
+				        <Input width="100%" value="{objectView>Title}" maxLength="100"/>
 				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
                         <Label text="{i18n>colImage}"/>

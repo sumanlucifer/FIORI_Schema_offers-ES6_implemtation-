@@ -94,6 +94,9 @@ sap.ui.define([
             this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
             this.oFileUploader.clear();
 
+            var EditVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditVideo");
+            this.getModel("objectView").setProperty("/AddEditVideo", EditVideo);
+
             this.getModel("objectView").setProperty("/sMode", "E");
             this.getModel("objectView").setProperty("/busy", true);
             var Id = oEvent.getParameter("arguments").Id;
@@ -115,6 +118,10 @@ sap.ui.define([
         _onCreateObjectMatched: function () {
             this.oPreviewImage.setVisible(false);
             this.oFileUploader.clear();
+
+            var AddVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlAddVideo");
+            this.getModel("objectView").setProperty("/AddEditVideo", AddVideo);
+
             this.getModel("objectView").setProperty("/sMode", "C");
             this.getModel("objectView").setProperty("/busy", true);
             this._setView();

@@ -34,13 +34,13 @@
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
                 
                 <Label text="{i18n>colDepot}"/>
-                <ComboBox items="{path:'/MasterDepotSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/DepotTypeId}">
+                <ComboBox items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotTypeId}">
                     <items>
                         <core:Item text="{Depot}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colDivision}"/>
-                <ComboBox items="{path:'/MasterDivisionSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/DivisionTypeId}">
+                <ComboBox items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionTypeId}">
                     <items>
                         <core:Item text="{Division}" key="{Id}"/>
                     </items>
