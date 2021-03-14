@@ -147,6 +147,10 @@ sap.ui.define(
             AnotherMobField: false,
             BankExistStatus: "",
             AddNewBank: false,
+            KycImage: {
+              Image1: "",
+              Image2: "",
+            },
             PainterAddBanDetails: {
               AccountHolderName: "",
               AccountTypeId: "",
@@ -220,6 +224,23 @@ sap.ui.define(
               new Filter("StateId", FilterOperator.EQ, sStateKey)
             );
             oBindingCity.filter(aFilterCity);
+          }
+          // setting up kyc data
+          //var oKycData = oDataValue["PainterBankDetails"];
+          if (oDataValue.hasOwnProperty("PainterKycDetails")) {
+            var oKycData = oDataValue["PainterKycDetails"];
+            if (oKycData.hasOwnProperty("Id")) {
+              var sKycImageUrl1 =
+                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterKycDetailsSet(" +
+                oKycData["Id"] +
+                ")/$value?image_type=front";
+              var sKycImageUrl2 =
+                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterKycDetailsSet(" +
+                oKycData["Id"] +
+                ")/$value?image_type=back";
+              oControlModel.setProperty("/KycImage/Image1", sKycImageUrl1);
+              oControlModel.setProperty("/KycImage/Image2", sKycImageUrl2);
+            }
           }
 
           // setting up model to the view
@@ -367,7 +388,7 @@ sap.ui.define(
 
           var oDealers = [];
           for (var i of oSecondryDealer) {
-            oDealers.push({ Id: parseInt(i) });
+            oDealers.push({ Id: i.toString() });
           }
 
           oPayload["Dealers"] = oDealers;
@@ -449,10 +470,7 @@ sap.ui.define(
             FilterOperator.EQ,
             oPainterId
           );
-          oView
-            .byId("idTblOffers")
-            .getBinding("items")
-            .filter(oFilOffers);
+          oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
         },
@@ -887,7 +905,7 @@ sap.ui.define(
         fmtBankStatus: function (mParam) {
           if (mParam == "APPROVED") {
             return 0;
-          } else if (mParam == "REJECT") {
+          } else if (mParam == "REJECTED") {
             return 1;
           }
         },
@@ -899,7 +917,7 @@ sap.ui.define(
           if (iIndex == 0) {
             oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
           } else if (iIndex == 1) {
-            oModelView.setProperty("/PainterBankDetails/Status", "REJECT");
+            oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
           console.log(oModelView);
         },
@@ -911,8 +929,34 @@ sap.ui.define(
           if (iIndex == 0) {
             oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
           } else if (iIndex == 1) {
-            oModelView.setProperty("/PainterKycDetails/Status", "REJECT");
+            oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
           }
+        },
+        onKycView: function (oEvent) {
+          var oButton = oEvent.getSource();
+          var oView = this.getView();
+          if (!this._pKycDialog) {
+            Fragment.load({
+              name: "com.knpl.pragati.ContactPainter.view.fragments.KycDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pKycDialog = oDialog;
+                oView.addDependent(this._pKycDialog);
+                this._pKycDialog.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._pKycDialog);
+            this._pKycDialog.open();
+          }
+        },
+        onPressCloseDialog: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+          this._pKycDialog.open().destroy();
+          delete this._pKycDialog;
         },
         onAddNewBank: function (oEvent) {
           var oView = this.getView();
