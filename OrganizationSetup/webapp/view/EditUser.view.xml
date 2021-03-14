@@ -78,7 +78,7 @@ floatingFooter="true"
         				valueStateText="Country Code must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" required="true" />
-        	<ComboBox
+        	<Select
         
             id="role"
             selectedKey="{data>RoleId}"
@@ -88,7 +88,7 @@ floatingFooter="true"
 				 items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
-			</ComboBox>
+			</Select>
 		
 			</f:content>
 		</f:SimpleForm>

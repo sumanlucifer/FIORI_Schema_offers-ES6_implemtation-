@@ -80,7 +80,7 @@ xmlns:f="sap.ui.layout.form">
         				valueStateText="CountryCode must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" required="true"/>
-        	<ComboBox
+        	<Select
             id="role"
                         value="{ 
                                   path : '/role', 
@@ -90,12 +90,11 @@ xmlns:f="sap.ui.layout.form">
                                       
                                   }
                               }"
-            placeholder="Select Role ..."
             valueStateText="Role must not be empty."
 				 items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
-			</ComboBox>
+			</Select>
 		
 			</f:content>
 		</f:SimpleForm>
