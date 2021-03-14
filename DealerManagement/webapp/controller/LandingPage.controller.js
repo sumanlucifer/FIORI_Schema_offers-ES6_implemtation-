@@ -113,7 +113,7 @@ sap.ui.define([
             filterTable: function (aCurrentFilterValues) {
                 this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
                var results=  this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-              // console.log(results);
+               console.log(results);
             },
 
             getTableItems: function () {
@@ -141,9 +141,10 @@ sap.ui.define([
 
 
                 for (let i = 1; i < aKeys.length; i++) {
+                   
 
                     aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
-                    
+                     
                 }
                 
 

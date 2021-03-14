@@ -168,6 +168,9 @@ sap.ui.define([
             },
 
             add: function () {
+
+                
+                
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
 
@@ -323,6 +326,10 @@ sap.ui.define([
               inputEmail.setValueState(sap.ui.core.ValueState.None);
 
               var inputMobile=this.getView().byId("mobile");
+              inputMobile.setValue("");
+              inputMobile.setValueState(sap.ui.core.ValueState.None);
+
+              var inputMobile=this.getView().byId("role");
               inputMobile.setValue("");
               inputMobile.setValueState(sap.ui.core.ValueState.None);
 
