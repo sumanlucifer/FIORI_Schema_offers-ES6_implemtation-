@@ -59,6 +59,12 @@
                     <RadioButton text="{i18n>Approved}"/>
                     <RadioButton text="{i18n>Reject}"/>
                 </RadioButtonGroup>
+                <Label text="" visible="{= ${PainterKycDetails} === null? false: true }" />
+                <HBox justifyContent="End" visible="{= ${PainterKycDetails} === null? false: true }" >
+                    <Link text="View KYC Documents" press="onKycView" />
+                </HBox>
+                
+               
             </f:content>
         </f:SimpleForm>
     </VBox>
