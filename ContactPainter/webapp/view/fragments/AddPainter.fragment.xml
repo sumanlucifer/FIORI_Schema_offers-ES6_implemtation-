@@ -252,7 +252,7 @@
                     <RadioButton text="{i18n>Approved}"/>
                 </RadioButtonGroup>
                 <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                <UploadCollection id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" change="onChange"/>
+                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
 
             </f:content>
         </f:SimpleForm>
