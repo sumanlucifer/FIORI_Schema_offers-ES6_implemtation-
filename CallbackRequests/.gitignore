@@ -9,3 +9,5 @@ LoyaltyManagement/.env
 MasterDataManagement/.env18
 # auto generated wildcard
 knpl-influencer-web/Tools/.env
+# auto generated wildcard
+CallbackRequests/.env1
