@@ -34,9 +34,9 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}" >
+                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>
-                        <core:Item text="{DealerName}" key="{Id}" />
+                        <core:Item text="{DealerName}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>LinkSecondryDealer}"/>
@@ -246,13 +246,13 @@
                 </ComboBox>
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
                 <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                <Label text="{i18n>Status}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
+                <Label text="{i18n>Status}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
                 <RadioButtonGroup id="idRKyc" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" select="onRbKycStatus" selectedIndex="0" columns="2" width="100%">
                     <RadioButton text="{i18n>Pending}"/>
                     <RadioButton text="{i18n>Approved}"/>
                 </RadioButtonGroup>
-                <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
-                <UploadCollection visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" uploadUrl="/PainterKycDetailsSet(94)/$value?image_type=front" id="UploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="true" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileSizeExceed="onFileSizeExceed" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts"/>
+                <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <UploadCollection id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" change="onChange"/>
 
             </f:content>
         </f:SimpleForm>
