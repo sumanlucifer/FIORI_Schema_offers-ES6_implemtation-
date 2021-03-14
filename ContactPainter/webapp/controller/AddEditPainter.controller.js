@@ -1078,6 +1078,9 @@ sap.ui.define(
           oModel.setProperty("/PainterKycDetails/Status", "PENDING");
           oView.byId("idUploadCollection").removeAllItems();
         },
+        onUploadFileTypeMis:function(){
+            MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
+        },
         fmtLabel: function (mParam1) {
           var oData = this.getView().getModel(),
             oPayload = "";
