@@ -18,9 +18,20 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
             onInit: function () {
+                var oRouter = this.getOwnerComponent().getRouter();
+
+                oRouter
+                    .getRoute("RouteHome")
+                    .attachMatched(this._onRouteMatched, this);
 
 
             },
+             _onRouteMatched: function (oEvent) {
+         this.getView().getModel("data").resetChanges();
+          
+          
+        },
+
 
 
             onFilterUsers: function (oEvent) {
@@ -99,7 +110,7 @@ sap.ui.define([
                 // oRouter.navTo("detail", {
                 //     productId: selectedProductId
                 // });
-                
+
                 oRouter.navTo("AddRole");
 
             },
@@ -154,13 +165,15 @@ sap.ui.define([
                 };
                 function onYes() {
                     var oModel = this.getView().getModel("data");
-                    var that=this;
-                    oModel.update(removeSet, oParam, { success:function () {that.onRemoveSuccess("tableUsers") },error: function (oError) {
-                    //oError - contains additional error information.
-                    var msg = 'Error!';
-                MessageToast.show(msg);
-                    
-                } });
+                    var that = this;
+                    oModel.update(removeSet, oParam, {
+                        success: function () { that.onRemoveSuccess("tableUsers") }, error: function (oError) {
+                            //oError - contains additional error information.
+                            var msg = 'Error!';
+                            MessageToast.show(msg);
+
+                        }
+                    });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);
