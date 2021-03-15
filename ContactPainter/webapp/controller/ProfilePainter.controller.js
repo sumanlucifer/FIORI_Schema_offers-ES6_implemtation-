@@ -92,6 +92,8 @@ sap.ui.define(
             bindProp: oProp,
             iCtbar: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
+            //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
+            ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value",
             Search:{
                 Referral:"",
                 Offers:"",
