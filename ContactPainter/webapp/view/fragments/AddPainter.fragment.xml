@@ -40,7 +40,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>LinkSecondryDealer}"/>
-                <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{path:'/DealerSet',sorter:{path:'DealerName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKeys="{path:'oModelView>/PainterAddDet/SecondryDealer'}">
+                <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{path:'/DealerSet',sorter:{path:'DealerName'} }" selectedKeys="{path:'oModelView>/PainterAddDet/SecondryDealer'}">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}"/>
                     </items>
