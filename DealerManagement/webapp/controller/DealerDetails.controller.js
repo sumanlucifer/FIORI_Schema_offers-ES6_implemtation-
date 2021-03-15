@@ -268,6 +268,7 @@ sap.ui.define([
                 //console.log(removeSet);
                 function onYes() {
                     var oModel = this.getView().getModel();
+                    var that=this;
                     oModel.callFunction(
                         "/ChangePainterLinkStatus", {
                         method: "GET",
@@ -276,12 +277,13 @@ sap.ui.define([
                             DealerId: dealerID,
 
                         },
-                        success:
-                            this.onRemoveSuccess("idPainterTable")
-                        ,
-                        error: function (oError) {
+                         success: function () {  that.onRemoveSuccess("idPainterTable") }, 
+                         error: function (oError) {
+                            
 
                         }
+                       
+                        
                     });
 
 
