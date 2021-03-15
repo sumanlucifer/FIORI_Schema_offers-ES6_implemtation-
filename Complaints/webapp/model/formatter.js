@@ -20,10 +20,8 @@ sap.ui.define([], function () {
 
             if(sURL)
             {
-                return ("KNPL_PAINTER_API").concat(new URL(sURL).pathname);
+                return ("https://").concat(location.host, "/KNPL_PAINTER_API" ,new URL(sURL).pathname);
             }
-
-
         }
 
 	};

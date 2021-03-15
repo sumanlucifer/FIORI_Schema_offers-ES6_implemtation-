@@ -259,17 +259,26 @@ sap.ui.define(
           //     }.bind(this)
           //   );
         },
-        fmtStatus: function (mParam) {
-          var sLetter = "";
-          if (mParam) {
-            sLetter = mParam
-              .toLowerCase()
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
-          }
+        fmtStatus: function (sStatus) {
+        //   var sLetter = "";
+        //   if (mParam) {
+        //     sLetter = mParam
+        //       .toLowerCase()
+        //       .split(" ")
+        //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        //       .join(" ");
+        //   }
+            if(sStatus)
+            {
+                sStatus = sStatus.toLowerCase();
+                var aCharStatus = sStatus.split("");
+                aCharStatus[0] = aCharStatus[0].toUpperCase();
+                sStatus = aCharStatus.join("");
+            }
+        
 
-          return sLetter;
+
+          return sStatus;
         },
         handleSortButtonPressed: function () {
           this.getViewSettingsDialog(
