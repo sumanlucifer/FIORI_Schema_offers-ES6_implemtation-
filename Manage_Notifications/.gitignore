@@ -38,3 +38,11 @@ knpl-influencer-web/CompanySettings/.env3
 knpl-influencer-web/DealerManagement/.env5
 # auto generated wildcard
 knpl-influencer-web/Catelogue/.env1
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env6
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env4
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env2
