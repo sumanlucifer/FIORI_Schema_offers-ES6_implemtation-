@@ -1,6 +1,15 @@
 /node_modules/
 /dist/
 
+*.env*
+*.env1
+*.zip
+.vscode/
+*.env*
+*/dist/
+/.gitignore
+
+
 # auto generated wildcard
 knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
