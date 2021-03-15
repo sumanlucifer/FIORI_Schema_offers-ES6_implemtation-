@@ -111,7 +111,7 @@
                         <cells>
                             <ObjectIdentifier title="{DealerName}" titleActive="true"/>
                             <Text text="{PlantCode}"/>
-                            <Text text="{Depot}"/>
+                            <Text text="{DealerSalesDetails/Depot}"/>
                             <Text text="{DealerSalesDetails/SalesGroup/Id}"/>
                             <Text text="{DealerSalesDetails/SalesGroup/Description}"/>
                             
