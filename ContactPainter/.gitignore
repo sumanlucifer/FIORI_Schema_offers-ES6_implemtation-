@@ -1,6 +1,15 @@
 /node_modules/
 /dist/
 
+*.env*
+*.env1
+*.zip
+.vscode/
+*.env*
+*/dist/
+/.gitignore
+
+
 # auto generated wildcard
 knpl-influencer-web/FAQ/.env1
 # auto generated wildcard
@@ -99,3 +108,5 @@ knpl-cp/ContactPainter/.env16
 ZSample/HTML5Module/.env1
 # auto generated wildcard
 ZSample/HTML5Module/.env2
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1

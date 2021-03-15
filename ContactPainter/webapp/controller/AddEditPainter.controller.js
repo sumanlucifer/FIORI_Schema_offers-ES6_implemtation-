@@ -363,9 +363,7 @@ sap.ui.define(
               }
               MessageBox.error(sMessage, {
                 title: "Error Code: " + a.statusCode,
-                onClose:function(){
-                    
-                }
+                onClose: function () {},
               });
             }
           );
@@ -380,7 +378,7 @@ sap.ui.define(
           oData.create("/PainterSet", oPayload, {
             success: function (Data) {
               MessageToast.show("Painter Sucessfully Created", {
-                duration: 5000
+                duration: 5000,
               });
               promise.resolve(Data);
               //othat.navPressBack();
@@ -403,7 +401,7 @@ sap.ui.define(
               promise.resolve(oData);
             },
             error: function () {
-                promise.reject();
+              promise.reject();
             },
             // ...
           });
@@ -426,6 +424,9 @@ sap.ui.define(
           var sUrl2 = "";
           var async_request = [];
           var oItems = UploadCollection.getItems();
+          if (oItems.length <= 0) {
+            promise.resolve("FileNot Uplaoded");
+          }
           for (var x = 0; x < oItems.length; x++) {
             var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader())
               .oFileUpload.files[0];
@@ -448,13 +449,16 @@ sap.ui.define(
             );
           }
           if (oItems.length > 0) {
-            jQuery.when.apply(null, async_request).then(function () {
-              console.log("All the services call made");
-              promise.resolve("FileUpdated");
-            },function(){
-                console.log("Services call unable to make")
-                promise.resolve("FileNot Uplaoded")
-            });
+            jQuery.when.apply(null, async_request).then(
+              function () {
+                console.log("All the services call made");
+                promise.resolve("FileUpdated");
+              },
+              function () {
+                console.log("Services call unable to make");
+                promise.resolve("FileNot Uplaoded");
+              }
+            );
           }
           return promise;
         },
@@ -1078,8 +1082,8 @@ sap.ui.define(
           oModel.setProperty("/PainterKycDetails/Status", "PENDING");
           oView.byId("idUploadCollection").removeAllItems();
         },
-        onUploadFileTypeMis:function(){
-            MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
+        onUploadFileTypeMis: function () {
+          MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
         },
         fmtLabel: function (mParam1) {
           var oData = this.getView().getModel(),
