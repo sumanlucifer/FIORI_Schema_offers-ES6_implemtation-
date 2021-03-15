@@ -14,7 +14,17 @@ sap.ui.define([], function () {
 				return "";
 			}
 			return parseFloat(sValue).toFixed(2);
-		}
+        },
+        
+        formatURL: function(sURL){
+
+            if(sURL)
+            {
+                return ("KNPL_PAINTER_API").concat(new URL(sURL).pathname);
+            }
+
+
+        }
 
 	};
 
