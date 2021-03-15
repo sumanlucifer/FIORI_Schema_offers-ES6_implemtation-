@@ -1,14 +1,14 @@
-<core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable"  xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-     <Table id="Referral" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Referral" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-                <Toolbar>
+                <!-- <Toolbar>
                     <ToolbarSpacer/>
                     <SearchField width="20%"></SearchField>
-                   <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                </Toolbar>
+                    <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                </Toolbar> -->
             </headerToolbar>
 
             <columns>
@@ -38,16 +38,15 @@
                         <Text text="{ReferralName}"/>
                         <Text text="{ReferralMobile}"/>
                         <Text text="{ReferralEmail}"/>
-                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:MM a'}}"/>
-                          <Text text="{= ${RegisteredAt} === null ? 'Pending':'Registered' }"/>
-                          <Text text="{= ${RegisteredAt}!==null ? ${RewardPoints}:0 }"/>
-                       
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:MM a'}}"/>
+                        <Text text="{= ${RegisteredAt} === null ? 'Pending':'Registered' }"/>
+                        <Text text="{= ${RegisteredAt}!==null ? ${RewardPoints}:0 }"/>
+
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
 
-    
 
     </VBox>
 </core:FragmentDefinition>

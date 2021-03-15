@@ -563,7 +563,7 @@ sap.ui.define(
           var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
           var oUploadCol = this.getView().byId("idUploadCollection");
           if (sKycTypeId !== "") {
-            if (sKycTypeId == "4") {
+            if (sKycTypeId == "1") {
               if (mParam >= 2) {
                 oUploadCol.setUploadButtonInvisible(true);
               } else if (mParam < 2) {

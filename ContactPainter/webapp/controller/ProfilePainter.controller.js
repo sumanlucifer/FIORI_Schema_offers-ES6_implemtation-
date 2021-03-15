@@ -92,6 +92,11 @@ sap.ui.define(
             bindProp: oProp,
             iCtbar: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
+            Search:{
+                Referral:"",
+                Offers:"",
+                Complaints:""
+            }
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
