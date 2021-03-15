@@ -20,9 +20,8 @@
                 <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                 <Label text="{i18n>ComplaintStatus}" required="true"/>
                 <Select selectedKey="{oModelView>/ComplaintStatus}">
-                    <core:Item text="Registered" key="REGISTERED"/>
-                    <core:Item text="Pending" key="PENDING"/>
-                    <core:Item text="Resolved" key="RESOLVED"/>
+                     <core:Item text="Closed" key="CLOSED"/>
+                     <core:Item text="Open" key="OPEN"/>
                 </Select>
 
                 <core:Title text="{i18n>PainterDetails}"/>
