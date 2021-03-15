@@ -2,7 +2,7 @@
     <VBox width="100%">
         <Table id="idTblOffers" width="auto" items="{path: '/PainterTokenScanHistorySet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter'} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-                <Toolbar>
+                <!-- <Toolbar>
 
 
                     <ToolbarSpacer/>
@@ -10,7 +10,7 @@
                     <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                </Toolbar>
+                </Toolbar> -->
             </headerToolbar>
 
             <columns>

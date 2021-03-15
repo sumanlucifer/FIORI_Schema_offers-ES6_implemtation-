@@ -34,9 +34,8 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ComplaintStatus}">
-                                        <core:Item text="Registered" key="REGISTERED"/>
-                                        <core:Item text="Resolved" key="RESOLVED"/>
-                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Closed" key="CLOSED"/>
+                                        <core:Item text="Open" key="OPEN"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -92,7 +91,7 @@
                             <Text text="{ComplaintType/ComplaintType}"/>
                             <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                            <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="{= ${ComplaintStatus} === 'RESOLVED' ? 'Success' : 'None' }"/>
+                            <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="{= ${ComplaintStatus} === 'CLOSED' ? 'Success' : 'None' }"/>
                         </cells>
                     </ColumnListItem>
                 </items>
