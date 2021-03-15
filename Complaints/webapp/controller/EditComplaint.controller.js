@@ -18,6 +18,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "../model/formatter",
     "com/knpl/pragati/Complaints/model/customInt",
   ],
   /**
@@ -41,13 +42,16 @@ sap.ui.define(
     Filter,
     FilterOperator,
     DateFormat,
-    History
+    History,
+    formatter,
+    customInt
   ) {
     "use strict";
 
     return BaseController.extend(
       "com.knpl.pragati.Complaints.controller.EditComplaint",
       {
+        formatter: formatter,
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter(this);
           sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -94,7 +98,7 @@ sap.ui.define(
           c1.then(function () {
             c2 = othat._setDisplayData(oProp);
             c2.then(function () {
-                c3=othat._initEditData(oProp)
+              c3 = othat._initEditData(oProp);
             });
           });
         },
@@ -112,11 +116,9 @@ sap.ui.define(
               events: {
                 dataRequested: function (oEvent) {
                   oView.setBusy(true);
-                 
                 },
                 dataReceived: function (oEvent) {
                   oView.setBusy(false);
-                  
                 },
               },
             });
@@ -127,18 +129,14 @@ sap.ui.define(
         _initEditData: function (oProp) {
           var oView = this.getView();
           var oDataValue = "";
-          oView.getModel().read("/" + oProp, { success: function (data) {
-             var oViewModel = new JSONModel(data);
-             console.log(data)
-             oView.setModel(oViewModel, "oModelView");
-          },
-          error:function(){
-
-          } });
-         
-         
-        
-          
+          oView.getModel().read("/" + oProp, {
+            success: function (data) {
+              var oViewModel = new JSONModel(data);
+              console.log(data);
+              oView.setModel(oViewModel, "oModelView");
+            },
+            error: function () {},
+          });
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -150,9 +148,7 @@ sap.ui.define(
           return Fragment.load({
             id: oView.getId(),
             controller: othat,
-            name:
-              "com.knpl.pragati.Complaints.view.fragments." +
-              sFragName,
+            name: "com.knpl.pragati.Complaints.view.fragments." + sFragName,
           }).then(function (oControlProfile) {
             oView.addDependent(oControlProfile);
             oVboxProfile.addItem(oControlProfile);
@@ -160,12 +156,12 @@ sap.ui.define(
             return promise;
           });
         },
-         handleSavePress: function () {
+        handleSavePress: function () {
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox, true);
-          console.log(bValidation)
+          console.log(bValidation);
           if (bValidation == false) {
             MessageToast.show(
               "Kindly input the fields in proper format to continue."
@@ -180,15 +176,13 @@ sap.ui.define(
           var oData = oView.getModel();
           var sPath = oView.getElementBinding().getPath();
           var oDataValue = oView.getModel("oModelView").getData();
-       
 
           console.log(oDataValue);
           var othat = this;
           oData.update(sPath, oDataValue, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
-              oData.refresh(true)
-              
+              oData.refresh(true);
             },
             error: function (a) {
               MessageBox.error(othat._sErrorText, {
@@ -196,7 +190,6 @@ sap.ui.define(
               });
             },
           });
-         
 
           //var oProp =
         },
