@@ -27,3 +27,22 @@ debasisa_web/Manage_FAQ/.env1
 debasisa_web/Manage_FAQ/.env2
 # auto generated wildcard
 debasisa_web/Training_Learning/.env8
+
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env1
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env2
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env3
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env5
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env1
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env6
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env4
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env2

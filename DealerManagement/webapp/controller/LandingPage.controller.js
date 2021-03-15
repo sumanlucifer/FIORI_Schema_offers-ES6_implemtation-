@@ -125,12 +125,13 @@ sap.ui.define([
                 var aFilters = [];
                     var aFinFilter= new Filter({"filters":aFilters,and:false})
                 var aKeys = [
-                    "search","PlantCode", "Depot", "SalesGroupName", "FiscalYear"
+                    "search","PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
                     if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
-                        aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
+                       // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
+                       aFilters.push(new Filter({path:aKeys[i],operator: sap.ui.model.FilterOperator.Contains,value1:aCurrentFilterValues[i].trim(),caseSensitive:false}))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
