@@ -12,7 +12,7 @@
                 <Label text="{i18n>PreferredLanguage}"/>
                 <ObjectStatus state="None" text="{Preference/Language/Language}"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}" >
+                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}" >
                     <items>
                         <core:Item text="{DealerName}" key="{Id}" />
                     </items>
