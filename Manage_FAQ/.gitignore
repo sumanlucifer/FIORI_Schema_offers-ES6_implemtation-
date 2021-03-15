@@ -7,3 +7,10 @@
 *.env1
 *.zip
 .vscode/
+
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env2
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env3
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env5
