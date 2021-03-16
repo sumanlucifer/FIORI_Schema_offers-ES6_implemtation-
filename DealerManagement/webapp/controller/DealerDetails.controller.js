@@ -75,17 +75,7 @@ sap.ui.define([
                 //console.log(oViewModel);
                 this.getView().setModel(oViewModel, "viewId");
 
-                var oTable = this.getView().byId("idPainterTable");
-                oTable.getBinding("items").filter(new Filter({
-                    filters: [
-                        new Filter({
-                            filters: [
-                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID),
-                                new Filter("Dealers/Id", sap.ui.model.FilterOperator.EQ, dealerID)
-                            ], and: false
-                        })
-                    ]
-                }));
+               this.primaryFilter();
 
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
@@ -114,6 +104,19 @@ sap.ui.define([
                 tableId.bindItems({ path: spath, template: this.oPainterTableTemplate.clone() });
 
             },
+            primaryFilter: function () {
+                 var oTable = this.getView().byId("idPainterTable");
+                oTable.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID),
+                                new Filter("Dealers/Id", sap.ui.model.FilterOperator.EQ, dealerID)
+                            ], and: false
+                        })
+                    ]
+                }));
+            },
 
             onUpdateFinished: function (oEvent) {
                 // update the worklist's object counter after the table update
@@ -141,10 +144,10 @@ sap.ui.define([
                     var aTableSearchState = [];
                     var sQuery = oEvent.getParameter("query");
 
+                    var aFilter=[]
+
                     if (sQuery && sQuery.length > 0) {
-                        // aTableSearchState = [new Filter("tolower(Name)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
-                        //  new Filter("tolower(MembershipCard)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
-                        //     new Filter("tolower(Mobile)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'")  ];
+                       
                         var oFilter = new Filter({
 
                             filters: [
@@ -169,12 +172,36 @@ sap.ui.define([
                             ],and: false
 
                         });
+                        aFilter.push(oFilter);
+                        
                     }
+                    var oFilter2 = new Filter({
+
+                            filters: [
+                               
+
+                                new Filter(
+                                    "DealerId",
+                                    FilterOperator.EQ,
+                                    dealerID
+                                ),
+                                new Filter(
+                                    "Dealers/Id",
+                                    FilterOperator.EQ,
+                                    dealerID
+                                )
+                               
+
+                            ],and: false
+
+                        });
+                        //var oFilter2= new Filter("DealerId",FilterOperator.EQ,dealerID);
+                    aFilter.push(oFilter2);
                     // this._applySearch(aTableSearchState);
                     var oList = this.getView().byId("idPainterTable");
                     var oBinding = oList.getBinding("items");
 
-                    oBinding.filter(oFilter);
+                    oBinding.filter(aFilter);
                 }
             },
 
@@ -186,6 +213,7 @@ sap.ui.define([
             onRefresh: function () {
                 var oTable = this.byId("idPainterTable");
                 oTable.getBinding("items").refresh();
+                //this.primaryFilter();
             },
 
             _applySearch: function (aTableSearchState) {

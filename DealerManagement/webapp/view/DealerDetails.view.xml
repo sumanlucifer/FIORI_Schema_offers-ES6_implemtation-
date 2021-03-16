@@ -53,9 +53,9 @@
                         <items>
                             <!-- <ObjectAttribute title="{i18n>name}" text="{DealerName}"/> -->
                             
-                            <ObjectAttribute title="{i18n>depot}" text="{Depot}" />
+                            <ObjectAttribute title="{i18n>depot}" text="{DealerSalesDetails/Depot}" />
                              <ObjectAttribute title="{i18n>salesGroupID}" text="{DealerSalesDetails/SalesGroup/Id}"/>
-                            <ObjectAttribute title="{i18n>salesGroupName}" text="{SalesGroupName}"/>
+                            <ObjectAttribute title="{i18n>salesGroupName}" text="{DealerSalesDetails/SalesGroup/Description}"/>
                         </items>
                     </FlexBox>
 
@@ -82,17 +82,17 @@
                         <uxap:ObjectPageSubSection>
                             <VBox renderType="Bare">
                             	
-                                <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', expand:'PainterAddress,AgeGroup'}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', parameters:{expand:'PainterAddress,AgeGroup'}}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
                                             <ToolbarSpacer />
                                             <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
-                                            <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
+                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                                                 <layoutData>
                                                     <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                                 </layoutData>
-                                            </SearchField> -->
+                                            </SearchField>
                                             <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                             <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                             <Button tooltip="group" icon="sap-icon://group-2" press="handleGroupButtonPressed" />
@@ -131,9 +131,9 @@
 
                                     <items>
                                         <ColumnListItem  id="idColumnListItem" type="Active" press="onListItemPress">
-                                            <dependents>
+                                            <!-- <dependents>
                                                 <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.detailPageFragments.ActionSheet" type="XML" />
-                                            </dependents>
+                                            </dependents> -->
                                             <cells>
                                                 <ObjectIdentifier title="{Name}" titleActive="true"/>
                                                 <Text text="{MembershipCard}"/>
