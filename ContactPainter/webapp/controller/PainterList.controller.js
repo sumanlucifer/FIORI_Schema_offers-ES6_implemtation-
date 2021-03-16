@@ -33,7 +33,7 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
-         
+
           oRouter
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
@@ -92,7 +92,8 @@ sap.ui.define(
 
           return sLetter;
         },
-        onFilter: function (oEvent) { console.log("On FIlter");
+        onFilter: function (oEvent) {
+          console.log("On FIlter");
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelView")
@@ -128,9 +129,14 @@ sap.ui.define(
                           "'"
                       ),
                       new Filter(
-                        "MembershipCard",
+                        "tolower(MembershipCard)",
                         FilterOperator.Contains,
-                        oViewFilter[prop].trim().toUpperCase()
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
                       ),
                       new Filter(
                         "Mobile",
@@ -196,10 +202,7 @@ sap.ui.define(
         },
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteAddEditP", {
-            mode: "add",
-            id: "null",
-          });
+          oRouter.navTo("RouteAddEditP", {});
         },
         onSuggest: function (event) {
           var oSearchField = this.getView().byId("searchField");
@@ -324,7 +327,7 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-            sTitle = this.getResourceBundle().getText("PainterList");
+            sTitle = this.getResourceBundle().getText("tablePainterList");
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
