@@ -2,12 +2,14 @@
 /node_modules/
 /resources/
 
+
 *.env1
 *.zip
 .vscode/
 *.env*
 */dist/
-/.gitignore
+*/.gitignore
+
 # auto generated wildcard
 Manage_FAQ/.env
 # auto generated wildcard
