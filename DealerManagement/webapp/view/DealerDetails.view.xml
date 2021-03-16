@@ -80,15 +80,19 @@
                 <uxap:ObjectPageSection titleUppercase="false" title="Linked Painters">
                     <uxap:subSections>
                         <uxap:ObjectPageSubSection>
-                            <VBox renderType="Bare">
-                            	
+                            <IconTabBar
+                                id="idIconTabBarNoIcons"
+                                expanded="{device>/isNoPhone}"
+                                class="sapUiResponsiveContentPadding">
+                                 <items>
+                            	<IconTabFilter text="Primary Painters" key="pPianters">
                                 <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', parameters:{expand:'PainterAddress,AgeGroup'}}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
                                             <ToolbarSpacer />
                                             <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
-                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
+                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearchPrimary" placeholder="{i18n>worklistSearchTooltip}">
                                                 <layoutData>
                                                     <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                                 </layoutData>
@@ -150,7 +154,79 @@
                                         
                                     </items>
                                 </Table>
-                            </VBox>
+                                </IconTabFilter>
+                                <IconTabFilter text="Secondary Painters" key="sPianters">
+                                <Table id="idPainterTable2" width="auto" items="{path: '/PainterSet', parameters:{expand:'PainterAddress,AgeGroup'}}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
+                                            <ToolbarSpacer />
+                                            <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
+                                            <SearchField id="searchField1" tooltip="{i18n>worklistSearchTooltip}" search=".onSearchSecondary" placeholder="{i18n>worklistSearchTooltip}">
+                                                <layoutData>
+                                                    <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+                                                </layoutData>
+                                            </SearchField>
+                                            <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                            <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                            <Button tooltip="group" icon="sap-icon://group-2" press="handleGroupButtonPressed" />
+                                            <!-- <Button text="Edit Dealer Details" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+
+                                    <columns>
+                                        <Column>
+                                            <Text text="{i18n>name}"/>
+                                        </Column>
+            
+                                        <Column>
+                                            <Text text="{i18n>membershipId}"/>
+                                        </Column>
+                                         <Column width="10%">
+                                            <Text text="{i18n>mobile}"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>painterId}"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>address}"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>ageGroup}"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>date}"/>
+                                        </Column>
+                                        
+                                        <Column width="10%">
+                                            <Text text="{i18n>action}"/>
+                                        </Column>
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem  id="idColumnListItem1" type="Active" press="onListItemPress">
+                                            <!-- <dependents>
+                                                <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.detailPageFragments.ActionSheet" type="XML" />
+                                            </dependents> -->
+                                            <cells>
+                                                <ObjectIdentifier title="{Name}" titleActive="true"/>
+                                                <Text text="{MembershipCard}"/>
+                                                <Text text="{Mobile}"/>
+                                                <Text text="{Id}"/>
+                                                <Text text="{PainterAddress/AddressLine1}"/>
+                                                <Text text="{AgeGroup/AgeGroup}"/>
+                                                <Text  text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                                                
+                                                <Button text="Unlink" type="Reject" press="changeLinkStatus"></Button>
+                                            </cells>
+                                        </ColumnListItem>
+                                        
+                                        
+                                    </items>
+                                </Table>
+                                </IconTabFilter>
+                                 </items>
+                            </IconTabBar>
                         </uxap:ObjectPageSubSection>
                     </uxap:subSections>
                 </uxap:ObjectPageSection>

@@ -100,7 +100,7 @@
 			uploadComplete=""
 			beforeUploadStarts=""
 			mode="MultiSelect">
-			<toolbar>
+			<!-- <toolbar>
 				<OverflowToolbar id="myId">
 					<Title id="attachmentTitle" />
 					<ToolbarSpacer />
@@ -118,7 +118,7 @@
 						type="Transparent" />
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
-			</toolbar>
+			</toolbar> -->
 			<items>
 				<UploadCollectionItem
 					documentId="{documentId}"
@@ -174,7 +174,7 @@
 			beforeUploadStarts=""
 			
 			mode="MultiSelect">
-			<toolbar>
+			<!-- <toolbar>
 				<OverflowToolbar id="myId1">
 					<Title id="attachmentTitle1" />
 					<ToolbarSpacer />
@@ -192,7 +192,7 @@
 						type="Transparent" />
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
-			</toolbar>
+			</toolbar> -->
 			<items>
 				<UploadCollectionItem
 					documentId="{documentId}"

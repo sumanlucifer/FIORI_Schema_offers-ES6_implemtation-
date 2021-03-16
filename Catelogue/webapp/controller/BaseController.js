@@ -69,6 +69,7 @@ sap.ui.define([
 
         _navToHome: function () {
             this.oRouter.navTo("");
+           
         },	
     });
 
