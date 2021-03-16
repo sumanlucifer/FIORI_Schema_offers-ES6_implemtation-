@@ -12,44 +12,53 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
+
+                // var oModel = new sap.ui.model.odata.ODataModel("/KNPL_PAINTER_API/api/v2/odata.svc/", { useBatch: true });
+                // // console.log(oModel)
+                // var oJsonModel = new JSONModel(oModel);
+                // // console.log(oJsonModel);
+                // this.getView().setModel(oJsonModel, "Json");
+                
+            
+
                 //Initializations
                 var oViewModel,
-                    iOriginalBusyDelay,
-                    oTable = this.byId("idDealerTable");
+            iOriginalBusyDelay,
+            oTable = this.byId("idDealerTable");
 
-                //adding searchfield association to filterbar                        
-                this._addSearchFieldAssociationToFB();
+            //adding searchfield association to filterbar                        
+            this._addSearchFieldAssociationToFB();
 
-                //Router Object
-                this.oRouter = this.getRouter();
-                this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
+            //Router Object
+            this.oRouter = this.getRouter();
+            this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
 
-                // Put down worklist table's original value for busy indicator delay,
-                // so it can be restored later on. Busy handling on the table is
-                // taken care of by the table itself.
-                iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
-                // keeps the search state
-                this._aTableSearchState = [];
+            // Put down worklist table's original value for busy indicator delay,
+            // so it can be restored later on. Busy handling on the table is
+            // taken care of by the table itself.
+            iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
+            // keeps the search state
+            this._aTableSearchState = [];
 
-                // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
-                this._mViewSettingsDialogs = {};
+            // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
+            this._mViewSettingsDialogs = {};
 
-                // Model used to manipulate control states
-                oViewModel = new JSONModel({
-                    worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
-                    tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
-                    tableBusyDelay: 0
-                });
-                this.setModel(oViewModel, "worklistViewModel");
+            // Model used to manipulate control states
+            oViewModel = new JSONModel({
+                worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
+                tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
+                tableBusyDelay: 0
+            });
+            this.setModel(oViewModel, "worklistViewModel");
 
-                // Make sure, busy indication is showing immediately so there is no
-                // break after the busy indication for loading the view's meta data is
-                // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-                oTable.attachEventOnce("updateFinished", function () {
-                    // Restore original busy indicator delay for worklist's table
-                    oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
-                });
-            },
+            // Make sure, busy indication is showing immediately so there is no
+            // break after the busy indication for loading the view's meta data is
+            // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
+            oTable.attachEventOnce("updateFinished", function () {
+                // Restore original busy indicator delay for worklist's table
+                oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+            });
+        },
 
             _onObjectMatched: function (oEvent) { },
 
@@ -112,8 +121,8 @@ sap.ui.define([
 
             filterTable: function (aCurrentFilterValues) {
                 this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-               var results=  this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-               console.log(results);
+                var results = this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+                console.log(results);
             },
 
             getTableItems: function () {
@@ -123,32 +132,32 @@ sap.ui.define([
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
-                    var aFinFilter= new Filter({"filters":aFilters,and:false})
+                var aFinFilter = new Filter({ "filters": aFilters, and: false })
                 var aKeys = [
-                    "search","PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
+                    "search", "PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
                     if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
-                       // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
-                       aFilters.push(new Filter({path:aKeys[i],operator: sap.ui.model.FilterOperator.Contains,value1:aCurrentFilterValues[i].trim(),caseSensitive:false}))
+                        // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
+                        aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: aCurrentFilterValues[i].trim(), caseSensitive: false }))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
-                
+
                 return aFinFilter;
             },
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-                    aFilters.push(new Filter({path:"DealerName", operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
+                aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
                 for (let i = 1; i < aKeys.length; i++) {
-                   
 
-                   // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
-                    aFilters.push(new Filter({path:aKeys[i], operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
-                     
+
+                    // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                    aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+
                 }
-                
+
 
             },
 
@@ -232,41 +241,41 @@ sap.ui.define([
                 this.presentBusyDialog();
             },
             onReset: function () {
-               
+
                 this._ResetFilterBar();
-       
+
 
             },
             _ResetFilterBar: function () {
-          var aCurrentFilterValues = [];
-          
-          var aResetProp = {
-            PlantCode: "",
-            Depot: "",
-            SalesGroupName: "",
-            FiscalYear: ""
-          };
-          var oViewModel = this.getView().getModel();
-          oViewModel.setProperty("/filterBar", aResetProp);
-          
-          var oTable = this.byId("idDealerTable");
-          var oBinding = oTable.getBinding("items");
-          oBinding.filter([]);
-          this.clearSearchFields();
+                var aCurrentFilterValues = [];
 
-        },
+                var aResetProp = {
+                    PlantCode: "",
+                    Depot: "",
+                    SalesGroupName: "",
+                    FiscalYear: ""
+                };
+                var oViewModel = this.getView().getModel();
+                oViewModel.setProperty("/filterBar", aResetProp);
 
-        clearSearchFields: function () {
-         var  plantCode= this.getView().byId("idPlantCode");
-         plantCode.setValue("");
-         var  depot= this.getView().byId("idDepot");
-         depot.setValue("");
-         var  salesGroupName= this.getView().byId("idSalesGroupName");
-         salesGroupName.setValue("");
-         var  year= this.getView().byId("idFiscalYear");
-         year.setValue("");
+                var oTable = this.byId("idDealerTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter([]);
+                this.clearSearchFields();
 
-        }
+            },
+
+            clearSearchFields: function () {
+                var plantCode = this.getView().byId("idPlantCode");
+                plantCode.setValue("");
+                var depot = this.getView().byId("idDepot");
+                depot.setValue("");
+                var salesGroupName = this.getView().byId("idSalesGroupName");
+                salesGroupName.setValue("");
+                var year = this.getView().byId("idFiscalYear");
+                year.setValue("");
+
+            }
 
             // handleSuggest: function (oEvent) {
             //     var aFilters = [];

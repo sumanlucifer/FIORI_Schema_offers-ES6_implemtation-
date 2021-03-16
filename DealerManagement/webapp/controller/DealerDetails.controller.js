@@ -71,13 +71,32 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
                 dealerID = sObjectId;
+                var oViewModel = new JSONModel({ dealerID: dealerID });
+                //console.log(oViewModel);
+                this.getView().setModel(oViewModel, "viewId");
+
+                var oTable = this.getView().byId("idPainterTable");
+                oTable.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID),
+                                new Filter("Dealers/Id", sap.ui.model.FilterOperator.EQ, dealerID)
+                            ], and: false
+                        })
+                    ]
+                }));
+
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
                     });
-                    //console.log(sObjectPath);
-                    this._bindView("/" + sObjectPath);
-                    this._bindPainterTable("/" + sObjectPath + "/Painter");
+                    // console.log(sObjectPath);
+
+                    // this._bindView("/" + sObjectPath);
+                    //this._bindPainterTable("/" + sObjectPath + "/Painter");
+                    // this._bindPainterTable("/PainterSet");
+
                 }.bind(this));
                 this.dismissBusyDialog();
             },
@@ -91,6 +110,7 @@ sap.ui.define([
                 this.oPainterTableTemplate = this.oPainterTableTemplate ? this.oPainterTableTemplate : this.getView().byId("idColumnListItem");
 
                 var tableId = this.getView().byId("idPainterTable");
+
                 tableId.bindItems({ path: spath, template: this.oPainterTableTemplate.clone() });
 
             },
@@ -128,6 +148,7 @@ sap.ui.define([
                         var oFilter = new Filter({
 
                             filters: [
+                               
 
                                 new Filter(
                                     "tolower(Name)",
@@ -145,7 +166,7 @@ sap.ui.define([
                                     "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                                 )
 
-                            ]
+                            ],and: false
 
                         });
                     }
@@ -268,7 +289,7 @@ sap.ui.define([
                 //console.log(removeSet);
                 function onYes() {
                     var oModel = this.getView().getModel();
-                    var that=this;
+                    var that = this;
                     oModel.callFunction(
                         "/ChangePainterLinkStatus", {
                         method: "GET",
@@ -277,13 +298,13 @@ sap.ui.define([
                             DealerId: dealerID,
 
                         },
-                         success: function () {  that.onRemoveSuccess("idPainterTable") }, 
-                         error: function (oError) {
-                            
+                        success: function () { that.onRemoveSuccess("idPainterTable") },
+                        error: function (oError) {
+
 
                         }
-                       
-                        
+
+
                     });
 
 

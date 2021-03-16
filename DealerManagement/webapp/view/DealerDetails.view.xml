@@ -54,7 +54,7 @@
                             <!-- <ObjectAttribute title="{i18n>name}" text="{DealerName}"/> -->
                             
                             <ObjectAttribute title="{i18n>depot}" text="{Depot}" />
-                             <ObjectAttribute title="{i18n>salesGroupID}" text="{SalesGroupId}"/>
+                             <ObjectAttribute title="{i18n>salesGroupID}" text="{DealerSalesDetails/SalesGroup/Id}"/>
                             <ObjectAttribute title="{i18n>salesGroupName}" text="{SalesGroupName}"/>
                         </items>
                     </FlexBox>
@@ -74,24 +74,25 @@
                     </FlexBox>
                 </FlexBox>
             </uxap:headerContent>
+             
 
             <uxap:sections>
-                <uxap:ObjectPageSection titleUppercase="false" title="Painter Linked">
+                <uxap:ObjectPageSection titleUppercase="false" title="Linked Painters">
                     <uxap:subSections>
                         <uxap:ObjectPageSubSection>
                             <VBox renderType="Bare">
                             	
-                                <Table id="idPainterTable" width="auto" items="{path: 'Painter'}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                                <Table id="idPainterTable" width="auto" items="{path: '/PainterSet', expand:'PainterAddress,AgeGroup'}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{oViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
                                             <ToolbarSpacer />
                                             <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
-                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
+                                            <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                                                 <layoutData>
                                                     <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                                 </layoutData>
-                                            </SearchField>
+                                            </SearchField> -->
                                             <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                             <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                             <Button tooltip="group" icon="sap-icon://group-2" press="handleGroupButtonPressed" />
@@ -138,13 +139,15 @@
                                                 <Text text="{MembershipCard}"/>
                                                 <Text text="{Mobile}"/>
                                                 <Text text="{Id}"/>
-                                                <Text text="{PainterAddress}"/>
-                                                <Text text="{AgeGroup}"/>
+                                                <Text text="{PainterAddress/AddressLine1}"/>
+                                                <Text text="{AgeGroup/AgeGroup}"/>
                                                 <Text  text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                                 
                                                 <Button text="Unlink" type="Reject" press="changeLinkStatus"></Button>
                                             </cells>
                                         </ColumnListItem>
+                                        
+                                        
                                     </items>
                                 </Table>
                             </VBox>
