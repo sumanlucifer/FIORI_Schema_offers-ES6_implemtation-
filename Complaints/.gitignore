@@ -36,16 +36,6 @@ ZSample/HTML5Module/.env2
 # auto generated wildcard
 ZSample/HTML5Module/.env3
 # auto generated wildcard
-knpl-influencer-web/Catelogue/.env1
+knpl-cp/ContactPainter/.env17
 # auto generated wildcard
-knpl-influencer-web/DealerManagement/.env6
-# auto generated wildcard
-knpl-influencer-web/OrganizationSetup/.env3
-# auto generated wildcard
-knpl-influencer-web/CompanySettings/.env4
-# auto generated wildcard
-knpl-influencer-web/Catelogue/.env2
-# auto generated wildcard
-knpl-influencer-web/DealerManagement/.env7
-# auto generated wildcard
-knpl-influencer-web/DealerManagement/.env8
+knpl-complaints/Complaints/.env1

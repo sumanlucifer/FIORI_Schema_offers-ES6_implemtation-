@@ -2,6 +2,7 @@
     <VBox id="idVbx" width="100%">
         <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddComplaintDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
+                <core:Title text="{i18n>ComplaintDetails}"/>
                 <Label text="{i18n>ComplaintType}"/>
                 <ComboBox change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',sorter:{path:'ComplaintType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
