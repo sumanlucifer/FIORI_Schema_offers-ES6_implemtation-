@@ -74,19 +74,7 @@
                     </FlexBox>
                 </FlexBox>
             </uxap:headerContent>
-             <uxap:sections>
-              <uxap:ObjectPageSection >
-               <uxap:subSections>
-                        <uxap:ObjectPageSubSection>
-                            <VBox class="sapUiSmallMargin">
-		                         <Text text="{viewId>/dealerID}" />
-	                        </VBox>
-                         
-                        </uxap:ObjectPageSubSection>
-                        </uxap:subSections>
-               </uxap:ObjectPageSection >
              
-              </uxap:sections>
 
             <uxap:sections>
                 <uxap:ObjectPageSection titleUppercase="false" title="Linked Painters">
@@ -100,11 +88,11 @@
                                             <Title text="{oViewModel>/detailPageWorklistTableTitle}" level="H4" class="stdTitleColor"/>
                                             <ToolbarSpacer />
                                             <!-- <Button type="Emphasized" text="Link painters" press="linkPainters" /> -->
-                                            <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
+                                            <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                                                 <layoutData>
                                                     <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                                                 </layoutData>
-                                            </SearchField>
+                                            </SearchField> -->
                                             <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                             <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                             <Button tooltip="group" icon="sap-icon://group-2" press="handleGroupButtonPressed" />

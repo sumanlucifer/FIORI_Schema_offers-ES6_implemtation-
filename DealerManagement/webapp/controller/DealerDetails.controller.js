@@ -148,6 +148,7 @@ sap.ui.define([
                         var oFilter = new Filter({
 
                             filters: [
+                               
 
                                 new Filter(
                                     "tolower(Name)",
@@ -165,7 +166,7 @@ sap.ui.define([
                                     "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                                 )
 
-                            ]
+                            ],and: false
 
                         });
                     }
