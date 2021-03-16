@@ -2,14 +2,14 @@
     <VBox width="100%">
         <Table id="IdTblComplaints" width="auto" growing="true" growingThreshold="20" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype' }}"  growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-                <Toolbar>
+                <!-- <Toolbar>
 
 
                     <ToolbarSpacer/>
                     <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                     <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                </Toolbar>
+                </Toolbar> -->
             </headerToolbar>
 
             <columns>
@@ -49,7 +49,7 @@
                         <Text text="{ComplaintType/ComplaintType}"/>
                         <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                        <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtLowerCase'}" state="{= ${ComplaintStatus} === 'RESOLVED' ? 'Success' : 'None' }"/>
+                        <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtLowerCase'}" />
                     </cells>
                 </ColumnListItem>
             </items>

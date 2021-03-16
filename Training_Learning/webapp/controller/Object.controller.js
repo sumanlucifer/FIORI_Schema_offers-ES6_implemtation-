@@ -2,8 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History",
-    "../model/formatter"
-], function (BaseController, JSONModel, History, formatter) {
+    "../model/formatter",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (BaseController, JSONModel, History, formatter, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Training_Learning.controller.Object", {
@@ -27,6 +29,10 @@ sap.ui.define([
                     busy: true,
                     delay: 0
                 });
+
+            debugger;
+            this.oPreviewImage = this.getView().byId("idPreviewImage");
+            this.oFileUploader = this.getView().byId("idFormVideoImgUploader");
 
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
             this.getRouter().getRoute("createObject").attachPatternMatched(this._onCreateObjectMatched, this);
@@ -79,9 +85,20 @@ sap.ui.define([
 		 */
         _onObjectMatched: function (oEvent) {
             debugger;
+            var sObjectId = oEvent.getParameter("arguments").objectId;
+            this._property = "/LearningSet" + "(" + sObjectId + ")";
+            // property;
+            this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
+
+            this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+            this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
+            this.oFileUploader.clear();
+
+            var EditVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditVideo");
+            this.getModel("objectView").setProperty("/AddEditVideo", EditVideo);
+
             this.getModel("objectView").setProperty("/sMode", "E");
             this.getModel("objectView").setProperty("/busy", true);
-            var sObjectId = oEvent.getParameter("arguments").objectId;
             var Id = oEvent.getParameter("arguments").Id;
             this.getModel().metadataLoaded().then(function () {
                 var sObjectPath = this.getModel().createKey("/LearningSet", {
@@ -99,6 +116,12 @@ sap.ui.define([
 		 * @function 
 		 */
         _onCreateObjectMatched: function () {
+            this.oPreviewImage.setVisible(false);
+            this.oFileUploader.clear();
+
+            var AddVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlAddVideo");
+            this.getModel("objectView").setProperty("/AddEditVideo", AddVideo);
+
             this.getModel("objectView").setProperty("/sMode", "C");
             this.getModel("objectView").setProperty("/busy", true);
             this._setView();
@@ -143,6 +166,73 @@ sap.ui.define([
             this.getRouter().navTo("worklist", true);
         },
 
+        onChangeFile: function (oEvent) {
+            if (oEvent.getSource().oFileUpload.files.length > 0) {
+                var file = oEvent.getSource().oFileUpload.files[0];
+                var path = URL.createObjectURL(file);
+                this.oPreviewImage.setSrc(path);
+                this.oPreviewImage.setVisible(true);
+            } else {
+                if (this._action === "add") {
+                    this.oPreviewImage.setSrc(path);
+                    this.oPreviewImage.setVisible(false);
+                } else {
+                    this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+                }
+            }
+        },
+
+        _uploadVideoImage: function (oData) {
+            // var oModel = this.getComponentModel();
+            var oViewModel = this.getView().getModel("objectView");
+            if (oViewModel.getProperty("/sMode") === "C") {
+                this.oFileUploader.setUploadUrl(this.sServiceURI + "LearningSet(" + oData.Id + ")/$value");
+            }
+            if (!this.oFileUploader.getValue()) {
+                MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("fileUploaderChooseFirstValidationTxt"));
+                return;
+            }
+            this.oFileUploader.checkFileReadable().then(function () {
+                // @ts-ignore
+                this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({ name: "slug", value: this.oFileUploader.getValue() }));
+                this.oFileUploader.setHttpRequestMethod("PUT");
+                this.getView().getModel("objectView").setProperty("/busy", true);
+                this.oFileUploader.upload();
+            }.bind(this), function (error) {
+                MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("fileUploaderNotReadableTxt"));
+            }.bind(this)).then(function () {
+                this.oFileUploader.clear();
+            }.bind(this));
+        },
+
+        handleUploadComplete: function () {
+            this._showSuccessMsg();
+        },
+
+        _onLoadSuccess: function (oData) {
+            if (this.oFileUploader.getValue()) {
+                this._uploadVideoImage(oData);
+            } else {
+                this._showSuccessMsg();
+            }
+        },
+
+        _onLoadError: function (error) {
+            var oViewModel = this.getView().getModel("objectView");
+            oViewModel.setProperty("/busy", false);
+            var oRespText = JSON.parse(error.responseText);
+            MessageBox.error(oRespText["error"]["message"]["value"]);
+        },
+
+        _showSuccessMsg: function () {
+            var oViewModel = this.getView().getModel("objectView");
+            oViewModel.setProperty("/busy", false);
+            var sMessage = (oViewModel.getProperty("/sMode") === "C") ? this.getView().getModel("i18n").getResourceBundle().getText("MSG_SUCCESS_CREATE") : this.getView().getModel("i18n").getResourceBundle().getText("MSG_SUCCESS_UPDATE");
+            MessageToast.show(sMessage);
+            // this._navToHome();
+            this.getRouter().navTo("worklist", true);
+        },
+
 		/* 
 		 * @function
 		 * Save edit or create FAQ details 
@@ -181,7 +271,7 @@ sap.ui.define([
                 url = data.Url,
                 aCtrlMessage = [];
             var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-            
+
             if (data.Title === "") {
                 oReturn.IsNotValid = true;
                 oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TTL");
@@ -189,23 +279,23 @@ sap.ui.define([
                     message: "MSG_PLS_ENTER_ERR_TTL",
                     target: "/oDetails/Title"
                 });
-            } else 
-            if (data.Url === "" ) {
-                oReturn.IsNotValid = true;
-                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
-                aCtrlMessage.push({
-                    message: "MSG_PLS_ENTER_ERR_URL",
-                    target: "/oDetails/Url"
-                });
-            } else 
-            if (data.Url !== "" && !url.match(regex)) {
-                oReturn.IsNotValid = true;
-                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
-                aCtrlMessage.push({
-                    message: "MSG_VALDTN_ERR_URL",
-                    target: "/oDetails/Url"
-                });
-            }
+            } else
+                if (data.Url === "") {
+                    oReturn.IsNotValid = true;
+                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                    aCtrlMessage.push({
+                        message: "MSG_PLS_ENTER_ERR_URL",
+                        target: "/oDetails/Url"
+                    });
+                } else
+                    if (data.Url !== "" && !url.match(regex)) {
+                        oReturn.IsNotValid = true;
+                        oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                        aCtrlMessage.push({
+                            message: "MSG_VALDTN_ERR_URL",
+                            target: "/oDetails/Url"
+                        });
+                    }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
             return oReturn;
@@ -238,45 +328,49 @@ sap.ui.define([
             var oViewModel = this.getModel("objectView");
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this;
-            return new Promise(function (res, rej) {
-                if (oViewModel.getProperty("/sMode") === "E") {
-                    var sKey = that.getModel().createKey("/LearningSet", {
-                        Id: oClonePayload.Id
-                    });
-                    that.getModel().update(sKey, oClonePayload, {
-                        success: function () {
-                            oViewModel.setProperty("/busy", false);
-                            that.getRouter().navTo("worklist", true);
-                            that.showToast.call(that, "MSG_SUCCESS_UPDATE");
-                            res(oClonePayload);
-                            // that.onCancel();
-                        },
-                        error: function () {
-                            oViewModel.setProperty("/busy", false);
-                            rej();
-                        }
-                    });
-                } else {
-                    // delete oClonePayload.IsArchived;
-                    // oClonePayload.Id = +oClonePayload.Id;
-                    debugger;
-                    that.getModel().create("/LearningSet", oClonePayload, {
-                        success: function (data) {
-                            debugger;
-                            oViewModel.setProperty("/busy", false);
-                            that.getRouter().navTo("worklist", true);
-                            that.showToast.call(that, "MSG_SUCCESS_CREATE");
-                            res(data);
-                            // that.onCancel();
-                        },
-                        error: function () {
-                            oViewModel.setProperty("/busy", false);
-                            rej();
-                        }
-                    });
-                }
+            // return new Promise(function (res, rej) {
+            if (oViewModel.getProperty("/sMode") === "E") {
+                var sKey = that.getModel().createKey("/LearningSet", {
+                    Id: oClonePayload.Id
+                });
+                that.getModel().update(sKey, oClonePayload, {
+                    // success: function () {
+                    //     oViewModel.setProperty("/busy", false);
+                    //     that.getRouter().navTo("worklist", true);
+                    //     that.showToast.call(that, "MSG_SUCCESS_UPDATE");
+                    //     res(oClonePayload);
+                    //     // that.onCancel();
+                    // },
+                    // error: function () {
+                    //     oViewModel.setProperty("/busy", false);
+                    //     rej();
+                    // }
+                    success: that._onLoadSuccess.bind(that),
+                    error: that._onLoadError.bind(that)
+                });
+            } else {
+                // delete oClonePayload.IsArchived;
+                // oClonePayload.Id = +oClonePayload.Id;
+                debugger;
+                that.getModel().create("/LearningSet", oClonePayload, {
+                    // success: function (data) {
+                    //     debugger;
+                    //     oViewModel.setProperty("/busy", false);
+                    //     that.getRouter().navTo("worklist", true);
+                    //     that.showToast.call(that, "MSG_SUCCESS_CREATE");
+                    //     res(data);
+                    //     // that.onCancel();
+                    // },
+                    // error: function () {
+                    //     oViewModel.setProperty("/busy", false);
+                    //     rej();
+                    // }
+                    success: that._onLoadSuccess.bind(that),
+                    error: that._onLoadError.bind(that)
+                });
+            }
 
-            });
+            // });
         }
     });
 

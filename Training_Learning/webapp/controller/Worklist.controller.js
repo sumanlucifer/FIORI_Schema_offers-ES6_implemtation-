@@ -43,7 +43,8 @@ sap.ui.define([
                 tableBusyDelay: 0,
                 filterBar: {
                     StartDate: "",
-                    Status: ""
+                    Status: "",
+                    Title: ""
                 }
             });
             this.setModel(oViewModel, "worklistView");
@@ -59,6 +60,27 @@ sap.ui.define([
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
+            // this._ResetFilterBar();
+            this._addSearchFieldAssociationToFB();
+        },
+
+        _addSearchFieldAssociationToFB: function () {
+            let oFilterBar = this.getView().byId("filterbar");
+            let oSearchField = oFilterBar.getBasicSearch();
+            var oBasicSearch;
+            var othat = this;
+            if (!oSearchField) {
+                // @ts-ignore
+                oBasicSearch = new sap.m.SearchField({
+                    value: "{worklistView>/filterBar/Title}",
+                    showSearchButton: true,
+                    search: othat.onSearch.bind(othat),
+                });
+            } else {
+                oSearchField = null;
+            }
+
+            oFilterBar.setBasicSearch(oBasicSearch);
         },
 
         /* =========================================================== */
@@ -136,7 +158,8 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var aResetProp = {
                 Status: "",
-                StartDate: ""
+                StartDate: "",
+                searchBar: ""
             };
             var oViewModel = this.getView().getModel("worklistView");
             oViewModel.setProperty("/filterBar", aResetProp);
@@ -162,7 +185,6 @@ sap.ui.define([
         },
 
         onSearch: function (oEvent) {
-            debugger;
             console.log("On FIlter");
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
@@ -180,7 +202,25 @@ sap.ui.define([
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
-                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                        );
+                    } else if (prop === "Title") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "tolower(Title)",
+                                        FilterOperator.Contains,
+                                        "'" +
+                                        oViewFilter[prop]
+                                            .trim()
+                                            .toLowerCase()
+                                            .replace("'", "''") +
+                                        "'"
+                                    )
+                                ],
+                                false
+                            )
                         );
                     } else {
                         aFlaEmpty = false;
@@ -218,41 +258,6 @@ sap.ui.define([
                 oBinding2.filter([]);
             }
         },
-
-        // onSearch: function (oEvent) {
-        //     var aFilters = this.getFiltersfromFB(),
-        //         oTable = this.getView().byId("table"),
-        //         oTable1 = this.getView().byId("table1");
-        //     debugger;
-        //     oTable.getBinding("items").filter(aFilters);
-        //     if (aFilters.length !== 0) {
-        //         if (aFilters[0].sPath === "TrainingTypeId") {
-        //             this.getModel("worklistView").setProperty("/TrainingTypeId", aFilters[0].oValue1);
-        //         } else {
-        //             this.getModel("worklistView").setProperty("/TrainingTypeId", null);
-        //         }
-
-        //         this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-        //     } else {
-        //         this.getModel("worklistView").setProperty("/TrainingTypeId", null);
-        //     }
-        // },
-
-        // getFiltersfromFB: function () {
-        //     var oFBCtrl = this.getView().byId("filterbar"),
-        //         aFilters = [];
-        //     debugger;
-        //     var oViewFilter = this.getView()
-        //         .getModel("worklistView")
-        //         .getProperty("/filterBar");
-        //     oFBCtrl.getAllFilterItems().forEach(function (ele) {
-        //         var typeId = ele.getControl().getSelectedKey();
-        //         if (typeId) {
-        //             aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, typeId));
-        //         }
-        //     });
-        //     return aFilters;
-        // },
 
         /**
          * When Click on Add button
@@ -314,7 +319,7 @@ sap.ui.define([
         },
 
         onListItemPressVideo: function (oEvent) {
-            this._showObject(oEvent.getSource());
+            // this._showObject(oEvent.getSource());
         },
 
         onDeleteVideo: function (oEvent) {
@@ -331,17 +336,7 @@ sap.ui.define([
             this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
         },
 
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
-        onRefresh: function () {
-            var oTable = this.byId("table");
-            oTable.getBinding("items").refresh();
-        },
-
-        /* =========================================================== */
+		        /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
 
@@ -352,25 +347,9 @@ sap.ui.define([
 		 * @private
 		 */
         _showObject: function (oItem) {
-            debugger;
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")
             });
-        },
-
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-		 * @private
-		 */
-        _applySearch: function (aTableSearchState) {
-            var oTable = this.byId("table"),
-                oViewModel = this.getModel("worklistView");
-            oTable.getBinding("items").filter(aTableSearchState, "Application");
-            // changes the noDataText of the list in case there are no filter results
-            if (aTableSearchState.length !== 0) {
-                oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-            }
         }
 
     });

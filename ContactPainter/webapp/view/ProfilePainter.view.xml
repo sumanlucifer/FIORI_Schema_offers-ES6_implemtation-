@@ -16,7 +16,7 @@
 
                 <uxap:snappedHeading>
                     <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
-                        <m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/>
+                        <m:Avatar fallbackIcon="sap-icon://picture" src="{oModelControl2>/ProfilePic}" class="sapUiTinyMarginEnd"/>
                         <FlexBox direction="Column" renderType="Bare">
                             <Title text="{Name}" wrapping="true"/>
                             <Text text="{MembershipCard}"/>
@@ -30,7 +30,7 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
+                <m:Avatar fallbackIcon="sap-icon://picture" src="{oModelControl2>/ProfilePic}" displaySize="L" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
@@ -64,7 +64,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
+            <!-- <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -81,7 +81,7 @@
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
-            </uxap:ObjectPageSection>
+            </uxap:ObjectPageSection> -->
             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Offers}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
@@ -100,7 +100,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="Complaints">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Complaints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">

@@ -185,10 +185,10 @@ sap.ui.define([
             this.getRouter().navTo("createObject");
         },
 
-        onRefreshView: function () {
-            var oModel = this.getModel();
-            oModel.refresh(true);
-        },
+        // onRefreshView: function () {
+        //     var oModel = this.getModel();
+        //     oModel.refresh(true);
+        // },
 
         onEdit: function (oEvent) {
             this._showObject(oEvent.getSource());

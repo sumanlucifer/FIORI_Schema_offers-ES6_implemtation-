@@ -22,7 +22,7 @@
 							</VBox>
 							<VBox>
 								<Label required="true" text="{i18n>colAnswer}"/>
-								<TextArea width="100%" value="{objectView>Answer}" showExceededText="true" maxLength="600" rows="6"/>
+								<TextArea width="100%" value="{objectView>Answer}" maxLength="600" rows="6"/>
 							</VBox>
 						</l:Grid>
 					</uxap:ObjectPageSubSection>
