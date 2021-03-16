@@ -10,7 +10,7 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                    <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                             <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
                                                                                                                                                                             <fb:control>
@@ -24,7 +24,7 @@
                                                                                                                                                                         </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>AgeGroup}" id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
                                         <core:Item text="{AgeGroup}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
@@ -40,7 +40,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox id="cmbx" selectedKey="{oModelView>/filterBar/RegistrationStatus}">
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelView>/filterBar/RegistrationStatus}">
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Registered" key="REGISTERED"/>
                                     </ComboBox>
@@ -52,7 +52,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'AgeGroup,Dealers' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Dealers,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
@@ -105,10 +105,10 @@
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{AgeGroup/AgeGroup}"/>
-                            <Text text="{DealerId}"/>
+                            <Text text="{PrimaryDealerDetails/DealerName}"/>
                             <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/>
-                            <Text text="Pending"/>
-                            <Text text="Pending"/>
+                            <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
+                            <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>

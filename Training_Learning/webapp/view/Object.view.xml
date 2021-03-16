@@ -1,0 +1,43 @@
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.Object" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+    <Page busy="{oModelView>/busy}" binding="{objectView>/oDetails}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+        <headerContent>
+            <Bar>
+                <contentLeft>
+                    <Breadcrumbs currentLocationText="{objectView>/AddEditVideo}">
+                        <Link text="{i18n>TrainingVideo}" press="onCancel"/>
+                    </Breadcrumbs>
+                </contentLeft>
+            </Bar>
+        </headerContent>
+        <VBox id="idVbxVideo" width="100%">
+            <f:SimpleForm id="VideoDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddVideoDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+                <f:content>
+				        <Label required="true" text="{i18n>colTitle}"/>
+				        <Input width="100%" value="{objectView>Title}" maxLength="100"/>
+				        <Label required="true" text="{i18n>colLink}"/>
+				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
+                        <Label text="{i18n>colImage}"/>
+                        <u:FileUploader
+                            id="idFormVideoImgUploader"
+                            name="formVideoImgUploader"
+                            width="100%"
+                            tooltip="{i18n>fileUploaderTrainingtip}"
+                            change="onChangeFile"
+                            typeMissmatch="handleTypeMissmatch"
+                            fileType="png,jpg,jpeg"
+                            useMultipart="false"
+                            sendXHR="true"
+                            uploadComplete="handleUploadComplete" />
+                        <Image id="idPreviewImage" width="100px" height="100px" />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnCancel}" press="onCancel"/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press="onSaveVideo"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

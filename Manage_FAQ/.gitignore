@@ -7,27 +7,22 @@
 *.env1
 *.zip
 .vscode/
+
 # auto generated wildcard
-Manage_FAQ/.env
+knpl-influencer-web/OrganizationSetup/.env2
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env14
+knpl-influencer-web/CompanySettings/.env3
 # auto generated wildcard
-Knpl-complaints/ContactPainter/.env14
+knpl-influencer-web/DealerManagement/.env5
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env15
+knpl-influencer-web/DealerManagement/.env6
 # auto generated wildcard
-Knpl-complaints/ComplaintManagement/.env2
+knpl-influencer-web/OrganizationSetup/.env3
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env3
+knpl-influencer-web/CompanySettings/.env4
 # auto generated wildcard
-knpl-cp/ContactPainter/.env14
+knpl-influencer-web/Catelogue/.env2
 # auto generated wildcard
-knpl-complaints/ComplaintManagement/.env2
+knpl-influencer-web/DealerManagement/.env7
 # auto generated wildcard
-knpl-complaints/Complaints/.env3
-# auto generated wildcard
-knpl-cp/ContactPainter/.env15
-# auto generated wildcard
-knpl-cp/ContactPainter/.env16
-# auto generated wildcard
-knpl-cp/ContactPainter/.env17
+knpl-influencer-web/DealerManagement/.env8

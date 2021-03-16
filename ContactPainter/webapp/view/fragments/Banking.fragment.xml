@@ -15,15 +15,16 @@
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountHolderName}"/>
                 <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>BankDetailsStatus}"/>
-                <Text text="Pending"/>
-                <Text/>
+                <Label text="{i18n>BankDetailsStatus}" design="Bold"/>
+                <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
                 <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
                 <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-
+                <Label text="{i18n>Status}"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                
             </f:content>
         </f:SimpleForm>
     </VBox>

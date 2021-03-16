@@ -5,25 +5,25 @@ package-lock.json
 /*-content.zip/ 
 
 # auto generated wildcard
-knpl1/Training/.env1
+knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
-knpl1/MasterDataManagement/.env11
+knpl-influencer-web/OrganizationSetup/.env2
 # auto generated wildcard
-knpl1/ContactPainter/.env8
+knpl-influencer-web/CompanySettings/.env3
 # auto generated wildcard
-ZSample2/HTML5Module/.env2
+knpl-influencer-web/DealerManagement/.env5
 # auto generated wildcard
-knpl1/MasterDataManagement/.env12
+knpl-influencer-web/Catelogue/.env1
 # auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env13
+knpl-influencer-web/DealerManagement/.env6
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env9
+knpl-influencer-web/OrganizationSetup/.env3
 # auto generated wildcard
-ContactPainter/ContactPainter/.env12
+knpl-influencer-web/CompanySettings/.env4
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env10
+knpl-influencer-web/Catelogue/.env2
 # auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env14
+knpl-influencer-web/DealerManagement/.env7
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env15
 # auto generated wildcard

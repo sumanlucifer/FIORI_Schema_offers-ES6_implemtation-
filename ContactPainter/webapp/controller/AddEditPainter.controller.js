@@ -18,7 +18,10 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "sap/m/UploadCollectionParameter",
+    "sap/m/Title",
     "com/knpl/pragati/ContactPainter/model/customInt",
+    "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -41,7 +44,11 @@ sap.ui.define(
     Filter,
     FilterOperator,
     DateFormat,
-    History
+    History,
+    UploadCollectionParameter,
+    Title,
+    custDatatype1,
+    custDatatype2
   ) {
     "use strict";
 
@@ -50,7 +57,17 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
-         C
+
+          sap.ui.getCore().attachValidationError(function (oEvent) {
+            if (oEvent.getParameter("element").getRequired()) {
+              oEvent.getParameter("element").setValueState(ValueState.Error);
+            } else {
+              oEvent.getParameter("element").setValueState(ValueState.None);
+            }
+          });
+          sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+            oEvent.getParameter("element").setValueState(ValueState.None);
+          });
 
           oRouter
             .getRoute("RouteAddEditP")
@@ -64,25 +81,28 @@ sap.ui.define(
             oEvent.getParameter("arguments").id
           );
           this._GetServiceData();
-          this._initData(sArgMode, sArgId);
+          this._initData("add");
         },
         _GetServiceData: function () {},
-        _initData: function (mParMode, mKey) {
+        _initData: function (mParMode) {
+          var oView = this.getView();
           var oViewModel = new JSONModel({
-            sIctbTitle: mParMode == "add" ? "Add" : "Edit",
+            sIctbTitle: "Add",
             busy: false,
-            mPainterKey: mKey,
-            mode: mParMode,
-            edit: mParMode == "add" ? false : true,
+            mPainterKey: "",
+            mode: "Add",
+            edit: false,
             EditTb1FDL: false,
             EditTb2AST: false,
             AnotherMobField: false,
+            painterList: this.getResourceBundle().getText("tablePainterList"),
             PainterDetails: {
               Mobile: "",
               AgeGroupId: "",
               Name: "",
               Email: "",
               JoiningDate: new Date(),
+              DealerId: "",
             },
             Preference: {
               LanguageId: "",
@@ -127,12 +147,18 @@ sap.ui.define(
               BankNameId: "",
               AccountNumber: "",
               IfscCode: "",
+              Status: "PENDING",
             },
             PainterKycDetails: {
               KycTypeId: "",
               GovtId: "",
+              Status: "PENDING",
             },
           });
+          var oControlData = {
+            AddNewBank: false,
+          };
+          var oContrModel = new JSONModel(oControlData);
 
           if (mParMode == "add") {
             this._showFormFragment("AddPainter");
@@ -141,40 +167,98 @@ sap.ui.define(
           }
 
           this._formFragments; //used for the fragments of the add and edit forms
-          this.getView().setModel(oViewModel, "oModelView");
+          oView.setModel(oViewModel, "oModelView");
+          oView.setModel(oContrModel, "oModelControl");
           //this._initMessage(oViewModel);
           this.getView().getModel().resetChanges();
           //used to intialize the message class for displaying the messages
         },
+        _CheckTheKyc: function () {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sKYCId = oModel.getProperty("/PainterKycDetails/KycTypeId");
+          var oUpload = oView.byId("idUploadCollection");
+          var iItems = oUpload.getItems().length;
+          if (sKYCId !== "") {
+            if (sKYCId == "1") {
+              if (iItems < 2) {
+                return [
+                  false,
+                  "Kinldy Upload front and back image of Aadhaar Card",
+                ];
+              }
+            }
+            if (iItems == 0) {
+              return [false, "Kindly upload the image of the selected KYC."];
+            }
+          }
+          return [true, ""];
+        },
+        onStartUpload: function () {
+          var oUploadCollection = this.byId("UploadCollection");
+          //var oTextArea = this.byId("TextArea");
+          var cFiles = oUploadCollection.getItems().length;
+          var uploadInfo = cFiles + " file(s)";
+          oUploadCollection.upload();
+        },
+        onUploadComplete: function (oEvent) {},
+        onBeforeUploadStarts: function (oEvent) {
+          // Header Slug
+          var oCustomerHeaderSlug = new UploadCollectionParameter({
+            name: "slug",
+            value: oEvent.getParameter("fileName"),
+          });
+          oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+          setTimeout(function () {
+            MessageToast.show("Event beforeUploadStarts triggered");
+          }, 4000);
+        },
+
         onPressSave: function () {
+          this.sServiceURI = this.getOwnerComponent(this)
+            .getManifestObject()
+            .getEntry("/sap.app").dataSources.mainService.uri;
+
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox, true);
           var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
           var dTbleAssets = !oModel.getProperty("/EditTb2AST");
+          var eValidation = this._CheckTheKyc();
 
           if (cTbleFamily == false) {
             MessageToast.show(
-              "Kindly save the details in the 'Family Details' table to continue."
+              "Kindly save the details in the 'Family Details' table to continue registration."
             );
+            return;
           }
           if (dTbleAssets == false) {
             MessageToast.show(
-              "Kindly save the details in the 'Asset Details' table to continue."
+              "Kindly save the details in the 'Vehicle Details' table to continue registration."
             );
+            return;
           }
           if (bValidation == false) {
             MessageToast.show(
-              "Kindly input all the mandatory(*) fields to continue."
+              "Kindly input all the mandatory(*) fields to continue registration."
             );
+            return;
           }
-          if (bValidation && cTbleFamily && dTbleAssets) {
+          if (!eValidation[0]) {
+            MessageToast.show(eValidation[1]);
+            return;
+          }
+          if (bValidation && cTbleFamily && dTbleAssets && eValidation[0]) {
             this._postDataToSave();
           }
         },
+
         _postDataToSave: function () {
-          var oViewModel = this.getView().getModel("oModelView");
+          var oView = this.getView();
+          oView.setBusy(true);
+          var oViewModel = oView.getModel("oModelView");
+          var oModelCtrl = oView.getModel("oModelControl");
           var oPainterData = this._ReturnObjects(
             oViewModel.getProperty("/PainterDetails")
           );
@@ -231,34 +315,37 @@ sap.ui.define(
               oViewModel.getProperty("/PainterAddDet/SecondryDealer")
             )
           );
-          var sPrimaryDealerId = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterAddDet/DealerId"))
-          );
           var oDealers = [];
           for (var i of oSecMainDealers) {
             oDealers.push({
-              Id: parseInt(i),
+              Id: i.toString(),
             });
           }
-          oDealers.push({ Id: parseInt(sPrimaryDealerId) });
 
-          // creating the set for the banking details
-          var oBankingPayload = JSON.parse(
-            JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
-          );
+          //**** creating the set for the banking details ****//
+          var bAddNewBank = oModelCtrl.getProperty("/AddNewBank");
+          var oBankingPayload = null;
+          if (bAddNewBank) {
+            oBankingPayload = JSON.parse(
+              JSON.stringify(oViewModel.getProperty("/PainterBankDetails"))
+            );
+          }
+
           //Painter KYC Details
 
           var oNewKYCObj = this._ReturnObjects(
             oViewModel.getProperty("/PainterKycDetails")
           );
           var oKycPayload;
-          if (Object.keys(oNewKYCObj).length !== 0) {
+          if (Object.keys(oNewKYCObj).length === 3) {
             oNewKYCObj["KycTypeId"] = parseInt(oNewKYCObj["KycTypeId"]);
             oKycPayload = oNewKYCObj;
           } else {
             oKycPayload = null;
           }
-
+          // settting the username of the painter same as the mobile number
+          //oPainterData["Username"] = oPainterData["Mobile"];
+          
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
@@ -267,29 +354,165 @@ sap.ui.define(
               Dealers: oDealers,
               PainterSegmentation: oPainterSeg,
               PainterFamily: oPtrFamily,
-              Assets: oPayloadDevice,
+              Vehicles: oPayloadDevice,
               PainterBankDetails: oBankingPayload,
               PainterKycDetails: oKycPayload,
             },
             oPainterData
           );
-          console.log(oPayload, oViewModel);
+          console.log(oPayload);
+          var c1, c2, c3, c4;
           var oData = this.getView().getModel();
           var othat = this;
+          c1 = this._postCreateData(oPayload);
+
+          c1.then(
+            function (oData) {
+              oView.setBusy(true);
+              c2 = othat._getCreatedPainterData(oData);
+              c2.then(function (oData) {
+                oView.setBusy(true);
+                c3 = othat._checkFileUpload(oData);
+                c3.then(function (data) {
+                  othat.navPressBack();
+                  oView.setBusy(false);
+                }, othat._RejectCall.bind(othat));
+              }, othat._RejectCall.bind(othat));
+            },
+            function (a) {
+              oView.setBusy(false);
+              var sMessage = "";
+              if (a.statusCode == 409) {
+                sMessage = "Painter already exist with the same mobile number";
+              } else {
+                sMessage = "Unable to create a painter due to server issues.";
+              }
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+                onClose: function () {},
+              });
+            }
+          );
+        },
+        _RejectCall: function () {
+          var oView = this.getView();
+
+          oView.setBusy(false);
+          this.navPressBack();
+        },
+        _postCreateData: function (oPayload) {
+          var promise = jQuery.Deferred();
+          var oData = this.getView().getModel();
           oData.create("/PainterSet", oPayload, {
-            success: function () {
-              MessageToast.show("Painter Sucessfully Created");
-              othat.navPressBack();
+            success: function (Data) {
+              MessageToast.show("Painter Sucessfully Created", {
+                duration: 5000,
+              });
+              promise.resolve(Data);
+              //othat.navPressBack();
             },
             error: function (a) {
-              MessageBox.error(
-                "Unable to create a painter due to the server issues",
-                {
-                  title: "Error Code: " + a.statusCode,
-                }
-              );
+              promise.reject(a);
             },
           });
+          return promise;
+        },
+        _getCreatedPainterData: function (mParam) {
+          var promise = jQuery.Deferred();
+          var oData = this.getView().getModel();
+          var sPath = "/PainterSet(" + mParam["Id"] + ")";
+          oData.read(sPath, {
+            urlParameters: {
+              $expand: "PainterKycDetails",
+            },
+            success: function (oData) {
+              promise.resolve(oData);
+            },
+            error: function () {
+              promise.reject();
+            },
+            // ...
+          });
+          return promise;
+        },
+        _checkFileUpload: function (oData) {
+          var promise = jQuery.Deferred();
+          var UploadCollection = this.getView().byId("idUploadCollection");
+          var oItems = UploadCollection.getItems();
+          var othat = this;
+          var bFlag = false;
+          if (oData.hasOwnProperty("PainterKycDetails")) {
+            var oKycData = oData["PainterKycDetails"];
+            if (oKycData !== null) {
+              if (oKycData.hasOwnProperty("Id")) {
+                if (oItems.length > 0) {
+                  bFlag = true;
+                }
+              }
+            }
+          }
+          if (!bFlag) {
+            promise.resolve("NoFileUploadRequired");
+            return promise;
+          }
+          var sUrl =
+            this.sServiceURI +
+            "PainterKycDetailsSet(" +
+            oKycData["Id"] +
+            ")/$value?image_type=";
+
+          var sUrl2 = "";
+          var async_request = [];
+
+          for (var x = 0; x < oItems.length; x++) {
+            var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader())
+              .oFileUpload.files[0];
+            sUrl2 = x == 0 ? "front" : "back";
+            async_request.push(
+              jQuery.ajax({
+                method: "PUT",
+                url: sUrl + sUrl2,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: sFile,
+                success: function (data) {},
+                error: function () {},
+              })
+            );
+          }
+          if (oItems.length > 0) {
+            jQuery.when.apply(null, async_request).then(
+              function () {
+                //promise.resolve("FileUpdated");
+                
+              },
+              function () {
+                //promise.resolve("FileNot Uplaoded");
+                
+              }
+            );
+          }
+          promise.resolve();
+          return promise;
+         
+        },
+        _fileUpload: function (mParam) {
+          var oUploadCollection = this.getView().byId("idUploadCollection");
+          var oItems = oUploadCollection.getItems();
+          var sUrl = this.sServiceURI;
+          var oData = this.getView().getModel();
+          var sGetPath = "/Painter(" + mParam["Id"] + ")";
+
+          if (oItems.length > 0) {
+            oData.get(sGetPath, {
+              urlParameters: {
+                $expand: "PainterKycDetails",
+              },
+              success: function (oData) {},
+              error: function () {},
+            });
+          }
         },
         _ReturnObjects: function (mParam) {
           var obj = Object.assign({}, mParam);
@@ -303,6 +526,7 @@ sap.ui.define(
           //var oModel = this.getView().getModel("oModelView");
           //this._initMessage(oModel);
         },
+
         _initMessage: function (oViewModel) {
           this._onClearMgsClass();
           this._oMessageManager = sap.ui.getCore().getMessageManager();
@@ -331,10 +555,65 @@ sap.ui.define(
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
             othat._setDataValue.call(othat);
+            othat._setUploadCollectionMethod.call(othat);
           });
         },
+        _setUploadCollectionMethod: function () {
+          var oUploadCollection = this.getView().byId("idUploadCollection");
+
+          var othat = this;
+          oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+            count
+          ) {
+            var nItems = count || 0;
+            var sText;
+            // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
+            if (this._oItemToUpdate) {
+              nItems--;
+            }
+            if (this.getNumberOfAttachmentsText()) {
+              sText = this.getNumberOfAttachmentsText();
+            } else {
+              sText = this._oRb.getText("UPLOADCOLLECTION_ATTACHMENTS", [
+                nItems,
+              ]);
+            }
+            if (!this._oNumberOfAttachmentsTitle) {
+              this._oNumberOfAttachmentsTitle = new Title(
+                this.getId() + "-numberOfAttachmentsTitle",
+                {
+                  text: sText,
+                }
+              );
+            } else {
+              this._oNumberOfAttachmentsTitle.setText(sText);
+            }
+
+            othat._CheckAddBtnForUpload.call(othat, nItems);
+          };
+        },
+        _CheckAddBtnForUpload: function (mParam) {
+          var oModel = this.getView().getModel("oModelView");
+          var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
+          var oUploadCol = this.getView().byId("idUploadCollection");
+          if (sKycTypeId !== "") {
+            if (sKycTypeId == "1") {
+              if (mParam >= 2) {
+                oUploadCol.setUploadButtonInvisible(true);
+              } else if (mParam < 2) {
+                oUploadCol.setUploadButtonInvisible(false);
+              }
+            } else {
+              if (mParam >= 1) {
+                oUploadCol.setUploadButtonInvisible(true);
+              } else if (mParam < 1) {
+                oUploadCol.setUploadButtonInvisible(false);
+              }
+            }
+          }
+        },
         _setDataValue: function () {
-          var oInput = this.getView().byId("idAddAcntNum");
+          var oInput = this.getView().byId("idCnfAcntNum");
           oInput.addEventDelegate(
             {
               onAfterRendering: function () {
@@ -433,7 +712,6 @@ sap.ui.define(
             );
             oEvent.getSource().setValue("");
           }
-          //console.log(oView.getModel("oModelView"));
         },
         onStateChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -450,11 +728,32 @@ sap.ui.define(
             oBindingCity.filter(aFilter);
           }
         },
+        onPrimDealerChanged: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sKey = oEvent.getSource().getSelectedKey();
+          if (sKey == 7) {
+            oSource.clearSelection();
+            oModel.setProperty("/PainterDetails/DealerId", "");
+            oSource.setSelectedKey("");
+            oSource.removeAllAssociation();
+            oSource.fireSelectionChange({
+              selectedItem: null,
+            });
+          }
+          if (sKey == "") {
+            oSource.setValue("");
+          }
+        },
+
         onLinkPrimryChange: function (oEvent) {
           var oSource = oEvent.getSource();
           var sSkey = oSource.getSelectedKey();
           var sItem = oSource.getSelectedItem();
           var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+
           var mCmbx = oView.byId("mcmbxDlr").getSelectedKeys();
           var sFlag = true;
           for (var i of mCmbx) {
@@ -462,12 +761,23 @@ sap.ui.define(
               sFlag = false;
             }
           }
+
           if (!sFlag) {
             oSource.clearSelection();
-            //oSource.setValue("");
+            oSource.setSelectedKey("");
+            oSource.setValue("");
             MessageToast.show(
               "Kindly select a different dealer as its already selected as secondry dealer."
             );
+          }
+        },
+        onChangePDealer: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var sKey = oSource.getSelectedKey();
+
+          if (sKey == "") {
+            oSource.setValue("");
+            //oSource.removeAssociation("selectedItem")
           }
         },
         secDealerChanged: function (oEvent) {
@@ -499,16 +809,24 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oFamiDtlMdl = oModel.getProperty("/PainterFamily");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop["editable"] == true) {
                 bFlag = false;
                 MessageToast.show(
                   "Save or delete the existing data in the table before adding a new data."
                 );
+                return;
                 break;
               }
             }
+          }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 family members. Kinldy remove any existing data to add a new family member."
+            );
+            bFlag = false;
+            return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
@@ -589,10 +907,10 @@ sap.ui.define(
           }
         },
         fmtAsset: function (mParam) {
-          var sPath = "/MasterAssetTypeSet(" + mParam + ")";
+          var sPath = "/MasterVehicleTypeSet(" + mParam + ")";
           var oData = this.getView().getModel().getProperty(sPath);
           if (oData !== undefined && oData !== null) {
-            return oData["AssetType"];
+            return oData["VehicleType"];
           }
         },
         _setFDLTbleFlag() {
@@ -618,21 +936,29 @@ sap.ui.define(
           var oModel = this.getView().getModel("oModelView");
           var oFamiDtlMdl = oModel.getProperty("/PainterAssets");
           var bFlag = true;
-          if (oFamiDtlMdl.length > 0) {
+          if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
               if (prop["editable"] == true) {
                 bFlag = false;
                 MessageToast.show(
-                  "Save or delete the existing data in the 'Asset Details' table before adding a new data."
+                  "Save or delete the existing data in the 'Vehicle Details' table before adding a new data."
                 );
+                return;
                 break;
               }
             }
           }
+          if (oFamiDtlMdl.length >= 5) {
+            MessageToast.show(
+              "We can only add 5 Vehicles. Kinldy remove any existing data to add a new vehicle."
+            );
+            bFlag = false;
+            return;
+          }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              AssetTypeId: "",
-              AssetName: "",
+              VehicleTypeId: "",
+              VehicleName: "",
               editable: true,
             });
             oModel.setProperty("/EditTb2AST", true);
@@ -662,7 +988,7 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          var oCheckProp = ["AssetTypeId", "AssetName"];
+          var oCheckProp = ["VehicleTypeId", "VehicleName"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -677,7 +1003,7 @@ sap.ui.define(
             oObject["editable"] = false;
           } else {
             MessageToast.show(
-              "Kindly input 'asset' values in porper format to save."
+              "Kindly input 'vehicle' values in porper format to save."
             );
           }
           oModel.refresh(true);
@@ -715,15 +1041,76 @@ sap.ui.define(
             oModel.setProperty("/EditTb2AST", false);
           }
         },
+        onRbBankStatus: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+
+          if (iIndex == 0) {
+            oModelView.setProperty("/PainterBankDetails/Status", "PENDING");
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+          }
+        },
+        onRbKycStatus: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+
+          if (iIndex == 0) {
+            oModelView.setProperty("/PainterKycDetails/Status", "PENDING");
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
+          }
+        },
+        onAddNewBank: function () {
+          var oView = this.getView();
+          var oModelCtrl = oView
+            .getModel("oModelControl")
+            .setProperty("/AddNewBank", true);
+        },
+        onAddCanNewBank: function () {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelCtrl = oView
+            .getModel("oModelControl")
+            .setProperty("/AddNewBank", false);
+          var requiredInputs = [
+            "IdAbIfscCode",
+            "IdAbBankNameId",
+            "IdAbAccountTypeId",
+            "idAddAcntNum",
+            "idCnfAcntNum",
+            "IdAbAccountHolderName",
+          ];
+          var oBj;
+          requiredInputs.forEach(function (mField) {
+            oBj = oView.byId(mField);
+            oBj.setValueState("None");
+            oBj.setValue("");
+          });
+          oModelView.setProperty("/PainterBankDetails", {
+            AccountHolderName: "",
+            AccountTypeId: "",
+            BankNameId: "",
+            AccountNumber: "",
+            IfscCode: "",
+            Status: "PENDING",
+          });
+          oModelView.refresh();
+        },
 
         onKycChange: function (oEvent) {
           var oModel = this.getView().getModel("oModelView");
-
           var oView = this.getView();
-          if (oEvent.getSource().getSelectedKey() == "") {
-            oView.byId("kycIdNo").setValueState("None");
-            oModel.setProperty("/PainterKycDetails/GovtId", "");
-          }
+          oView.byId("kycIdNo").setValueState("None");
+          oModel.setProperty("/PainterKycDetails/GovtId", "");
+          oView.byId("idRKyc").setSelectedIndex(0);
+          oModel.setProperty("/PainterKycDetails/Status", "PENDING");
+          oView.byId("idUploadCollection").removeAllItems();
+        },
+        onUploadFileTypeMis: function () {
+          MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
         },
         fmtLabel: function (mParam1) {
           var oData = this.getView().getModel(),

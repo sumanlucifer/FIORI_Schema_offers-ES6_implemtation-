@@ -45,6 +45,10 @@
       }
     }
   },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
   "sap.ui": {
     "technology": "UI5",
     "icons": {
@@ -100,8 +104,7 @@
         }
       },
       "uploadModel": {
-        "type": "sap.ui.model.json.JSONModel",
-        "dataSource": "uploadData"
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -129,7 +132,7 @@
         },
         {
           "name": "RouteAddEditP",
-          "pattern": "PainterManage/{mode}/{id}",
+          "pattern": "PainterAdd",
           "target": ["TargetRouteAddEditP"]
         },
         {

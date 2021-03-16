@@ -38,7 +38,10 @@ sap.ui.define([
                 shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
                 tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
-                tableBusyDelay: 0
+                tableBusyDelay: 0,
+                filterBar: {
+                    FAQCategoryId: ""
+                }
             });
             this.setModel(oViewModel, "worklistView");
 
@@ -110,6 +113,21 @@ sap.ui.define([
             // })
         },
 
+        onReset: function () {
+            this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+            var aCurrentFilterValues = [];
+            var aResetProp = {
+                FAQCategoryId: ""
+            };
+            var oViewModel = this.getView().getModel("worklistView");
+            oViewModel.setProperty("/filterBar", aResetProp);
+            var oTable = this.byId("table");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
+        },
+
         /**
          * Event handler when a table item gets pressed
          * @param {sap.ui.base.Event} oEvent the table selectionChange event
@@ -132,22 +150,6 @@ sap.ui.define([
 
 
         onSearch: function (oEvent) {
-            // if (oEvent.getParameters().refreshButtonPressed) {
-            //     // Search field's 'refresh' button has been pressed.
-            //     // This is visible if you select any master list item.
-            //     // In this case no new search is triggered, we only
-            //     // refresh the list binding.
-            //     this.onRefresh();
-            // } else {
-            //     var aTableSearchState = [];
-            //     var sQuery = oEvent.getParameter("query");
-
-            //     if (sQuery && sQuery.length > 0) {
-            //         aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
-            //     }
-            //     this._applySearch(aTableSearchState);
-            // }
-
             var aFilters = this.getFiltersfromFB(),
                 oTable = this.getView().byId("table");
             oTable.getBinding("items").filter(aFilters);
@@ -167,7 +169,7 @@ sap.ui.define([
         getFiltersfromFB: function () {
             var oFBCtrl = this.getView().byId("filterbar"),
                 aFilters = [];
-
+            debugger;
             oFBCtrl.getAllFilterItems().forEach(function (ele) {
                 if (ele.getControl().getSelectedKey()) {
                     aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, ele.getControl().getSelectedKey()));
@@ -183,10 +185,10 @@ sap.ui.define([
             this.getRouter().navTo("createObject");
         },
 
-        onRefreshView: function () {
-            var oModel = this.getModel();
-            oModel.refresh(true);
-        },
+        // onRefreshView: function () {
+        //     var oModel = this.getModel();
+        //     oModel.refresh(true);
+        // },
 
         onEdit: function (oEvent) {
             this._showObject(oEvent.getSource());
@@ -196,10 +198,8 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath();
 
             function onYes() {
-                var data = this.getModel().getData(sPath);
-                this.getModel().update(sPath, {
-                    FAQQuestion: data.FAQQuestion,
-                    FAQAnswer: data.FAQAnswer,
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
                     IsArchived: true
                 }, {
                     success: this.showToast.bind(this, "MSG_SUCCESS_FAQ_REMOVE")

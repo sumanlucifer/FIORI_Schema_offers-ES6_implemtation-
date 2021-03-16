@@ -3,9 +3,9 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "com/knpl/pragati/ContactPainter/model/models",
-    "com/knpl/pragati/ContactPainter/controller/ErrorHandler",
+    "com/knpl/pragati/ContactPainter/controller/ErrorHandler"
   ],
-  function (UIComponent, Device, models,ErrorHandler) {
+  function (UIComponent, Device, models, ErrorHandler) {
     "use strict";
 
     return UIComponent.extend("com.knpl.pragati.ContactPainter.Component", {
@@ -19,6 +19,10 @@ sap.ui.define(
        * @override
        */
       init: function () {
+
+        // initialize the error handler with the component
+		this._oErrorHandler = new ErrorHandler(this);
+
         // call the base component's init function
         UIComponent.prototype.init.apply(this, arguments);
 
@@ -27,6 +31,7 @@ sap.ui.define(
 
         // set the device model
         this.setModel(models.createDeviceModel(), "device");
+        
       },
       destroy: function () {
         this._oErrorHandler.destroy();

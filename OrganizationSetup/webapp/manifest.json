@@ -155,7 +155,7 @@
             "target": "TargetAddCompanySettings"                    
             },
             {
-            "pattern": "EditCompanySettings/",
+            "pattern": "EditCompanySettings/{settingsId}",
             "name": "EditCompanySettings",
             "target": "TargetEditCompanySettings"                    
             }

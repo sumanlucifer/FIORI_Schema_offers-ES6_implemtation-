@@ -1,23 +1,72 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.Role" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
-<Page
-		title="{i18n>detailPageTitle}"
-		showNavButton="true"
-		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		<Label text="Role" labelFor="role" design="Bold" />
-		<Input id="role" required="true" value="{data>Role}"/>
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
+<Page id="editRole"
+floatingFooter="true"
+ title="Edit Role">
+         <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="editRoleForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Role Details"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				<!-- <Label text="Role" labelFor="role" design="Bold" required="true" />
+		<Input id="role"  type="Text"
+        				placeholder="Enter Role ..."
+        				valueStateText="Role must not be empty."
+                          value="{ 
+                                  path : 'data>Role', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                  }
+                              }" /> -->
 
+        <Label text="Description" labelFor="role" design="Bold" required="true" />
+		<Input id="description"  type="Text"
+        				placeholder="Enter Description ..."
+        				valueStateText="Description must not be empty."
+                        value="{ 
+                                  path : 'data>Description', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                  }
+                              }"/>
 		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+	
+    <footer>
+			<OverflowToolbar>
+            <!-- <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
+				<ToolbarSpacer/>
+                
 
-        <Button text="Update"
+                <Button text="Cancel"
+						press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
+                type="Emphasized"
 						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+                  
+			</OverflowToolbar>
+		</footer>
     </Page>
 </mvc:View>

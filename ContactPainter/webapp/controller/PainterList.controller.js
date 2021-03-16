@@ -33,14 +33,12 @@ sap.ui.define(
       {
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
-          console.log("Painter Data Loaded");
+
           oRouter
             .getRoute("RoutePList")
             .attachMatched(this._onRouteMatched, this);
         },
         _onRouteMatched: function (oEvent) {
-          console.log("Painter List Loaded");
-
           this.getView().getModel().resetChanges();
           this._initData();
           this._addSearchFieldAssociationToFB();
@@ -83,11 +81,15 @@ sap.ui.define(
           this._ResetFilterBar();
         },
         fmtStatus: function (mParam) {
-          var sLetter = mParam
-            .toLowerCase()
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
+          var sLetter = "";
+          if (mParam) {
+            sLetter = mParam
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ");
+          }
+
           return sLetter;
         },
         onFilter: function (oEvent) {
@@ -127,9 +129,14 @@ sap.ui.define(
                           "'"
                       ),
                       new Filter(
-                        "MembershipCard",
+                        "tolower(MembershipCard)",
                         FilterOperator.Contains,
-                        oViewFilter[prop].trim().toUpperCase()
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
                       ),
                       new Filter(
                         "Mobile",
@@ -195,10 +202,7 @@ sap.ui.define(
         },
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
-          oRouter.navTo("RouteAddEditP", {
-            mode: "add",
-            id: "null",
-          });
+          oRouter.navTo("RouteAddEditP", {});
         },
         onSuggest: function (event) {
           var oSearchField = this.getView().byId("searchField");
@@ -323,7 +327,7 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-            sTitle = this.getResourceBundle().getText("PainterList");
+            sTitle = this.getResourceBundle().getText("tablePainterList");
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
@@ -350,6 +354,7 @@ sap.ui.define(
           }
           this._pPopover.then(function (oPopover) {
             oPopover.openBy(oSource);
+            console.log(sPath);
             oPopover.bindElement({
               path: sPath,
               parameters: {
@@ -395,10 +400,10 @@ sap.ui.define(
           var othat = this;
           console.log(sPath, oBject);
           MessageBox.confirm(
-            "Kindly confirm to deactivated the painter " + oBject["Name"],
+            "Kindly confirm to deactivated the painter- " + oBject["Name"],
             {
-              actions: [MessageBox.Action.OK, MessageBox.Action.CLOSE],
-
+              actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+              emphasizedAction: MessageBox.Action.OK,
               onClose: function (sAction) {
                 if (sAction == "OK") {
                   othat._Deactivate(oData, sPath, oBject);

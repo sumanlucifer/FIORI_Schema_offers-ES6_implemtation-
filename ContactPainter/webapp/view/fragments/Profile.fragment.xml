@@ -7,7 +7,7 @@
                 <Text text="{MembershipCard}"/>
                 <Label required="false" text="{i18n>DateOfJoining}"/>
                 <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
-
+                
                 <Label text="{i18n>AgeGroup}"/>
 
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
@@ -16,7 +16,7 @@
 
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <Text/>
+                <Text text="{PrimaryDealerDetails/DealerName}"/>
                 <Label text="{i18n>LinkSecondryDealer}"/>
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
 
@@ -90,12 +90,12 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Assets/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Vehicles/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>
                     <ToolbarSpacer/>
-                    <Button visible="false" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    
                 </Toolbar>
             </headerToolbar>
 
@@ -116,8 +116,8 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{AssetTypeDetails/AssetType}" titleActive="true"/>
-                        <Text text="{AssetName}"/>
+                        <ObjectIdentifier title="{VehicleTypeDetails/VehicleType}" titleActive="true"/>
+                        <Text text="{VehicleName}"/>
                     </cells>
                 </ColumnListItem>
             </items>

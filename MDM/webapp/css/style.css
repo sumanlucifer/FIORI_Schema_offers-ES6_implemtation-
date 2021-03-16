@@ -1,0 +1,16 @@
+/* Global css here */
+html {
+    height: 100%;
+}
+
+.masterPage .sapFDynamicPageTitleMainHeading, .masterPage .sapFDynamicPageTitleMainHeading .sapFDynamicPageTitleMainHeadingInner {
+    width: 100%;
+}
+
+.headerToolbar {
+    border-bottom: none;
+}
+
+.searchFieldRightMargin {
+    margin-right: 0.5rem !important;
+}

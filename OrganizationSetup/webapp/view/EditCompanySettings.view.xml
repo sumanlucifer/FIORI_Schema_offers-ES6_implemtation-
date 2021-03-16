@@ -1,29 +1,97 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
-<Page
-		title="{i18n>detailPageTitle}"
-		showNavButton="true"
-		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		        <Label text="Disclaimer"  design="Bold"/>
-				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
+<Page id="editCompanySettings"
+floatingFooter="true"
+ title="Edit Company Settings" >
+         <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="editCompanySettingsForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Company Settings Details"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				
+				
 
-                <Label text="AboutUs"  design="Bold"/>
-				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Label text="About Us"  design="Bold"/>
+                <TextArea id="about" required="true" 
+                width="100%" rows="4"
+        				placeholder="Enter About Us ..."
+        				valueStateText="About Us must not be empty."
+                        value="{ 
+                                  path : 'data>AboutUs', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }" />
 
-                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" width="20%" />
+                <Label text="Disclaimer"  design="Bold"/>
+                <TextArea id="disclaimer" required="true"  width="100%" rows="4"
+        				placeholder="Enter Disclaimer ..."
+        				valueStateText="Disclaimer must not be empty."
+                         value="{ 
+                                  path : 'data>Disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                      
+                                  }
+                              }"/>
+				
 
-        
+                <Label text="Call Center Number" labelFor="callcenter" design="Bold" />
+		        <Input id="callcenter" required="true"  type="Text"
+                maxLength="10"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty."
+                        value="{ 
+                                  path : 'data>CallCenterHelpline', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"/>
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
 
-        <Button text="Add"
-						press="add"
+	
+    <footer>
+    <OverflowToolbar>
+				
+				<!-- <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
+				<ToolbarSpacer/>
+                
+                <Button text="Cancel"
+                
+						press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
+                type="Emphasized"
+						press="update"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+                  
+			</OverflowToolbar>
+			
+		</footer>
     </Page>
 </mvc:View>

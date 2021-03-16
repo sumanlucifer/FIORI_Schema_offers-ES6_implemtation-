@@ -1,0 +1,12 @@
+/* Global css here */
+.sapUiAFLayout .sapUiAFLayoutItem:first-child .sapMLabelTextWrapper::after {
+    content: "" !important;
+}
+
+.sapFDynamicPageTitleTop {
+    height: 100%;
+}
+
+.sapUiFormElementLbl {
+    margin-top: 0.5rem;
+}

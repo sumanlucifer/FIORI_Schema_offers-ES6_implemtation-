@@ -1,0 +1,238 @@
+<mvc:View
+	controllerName="com.knpl.pragati.Catelogue.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:tnt="sap.tnt"
+    class="sapUiSizeCompact"
+    >
+ <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
+            <uxap:headerTitle>
+                <uxap:ObjectPageDynamicHeaderTitle>
+                    <uxap:breadcrumbs>
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
+                            <Link text="Catelogues" press="handleAllCatelogueLinkPress"/>
+                        </Breadcrumbs>
+                    </uxap:breadcrumbs>
+
+                    <uxap:expandedHeading>
+                        <Title text="{Name}" class="sapUiTinyMarginEnd"/>
+                    </uxap:expandedHeading>
+
+                    <uxap:snappedHeading>
+                        <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                            <f:Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
+                            <FlexBox direction="Column" renderType="Bare">
+                                <Title text="{Name}" wrapping="true"/>
+                                <!-- <Text text="{Id}"/> -->
+                            </FlexBox>
+                        </FlexBox>
+                    </uxap:snappedHeading>
+
+                    <!-- <uxap:expandedContent>
+                        <Text text="{Name}"/>
+                    </uxap:expandedContent> -->
+                     
+
+                    <uxap:snappedTitleOnMobile>
+                        <Title text="{Name}"/>
+                    </uxap:snappedTitleOnMobile>
+
+                   
+                </uxap:ObjectPageDynamicHeaderTitle>
+
+
+            </uxap:headerTitle>
+            <uxap:headerContent>
+                <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                    
+                    <f:Avatar class="sapUiSmallMarginEnd" displayShape="Square" displaySize="XL"/>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           
+                            <ObjectAttribute title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                             
+                        </items>
+                    </FlexBox>
+
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           <ObjectAttribute title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
+                            
+                        </items>
+                    </FlexBox>
+
+                   
+                </FlexBox>
+            </uxap:headerContent>
+
+            
+            
+
+            <uxap:sections>
+                <uxap:ObjectPageSection >
+                    <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                    
+        <ObjectAttribute title="Title" text="{Title}"/>
+		
+	
+                    </uxap:ObjectPageSubSection>
+                        <uxap:ObjectPageSubSection  class="sapUiMediumMargin">
+                              
+               
+            
+            	<UploadCollection
+			id="UploadCollectionImage"
+			maximumFilenameLength="55"
+			maximumFileSize="10"
+			multiple="false"
+			change="onChange"
+			fileSizeExceed=""
+			selectionChange="onSelectionChangeImage"
+			typeMissmatch="onTypeMissmatch"
+			uploadComplete=""
+			beforeUploadStarts=""
+			mode="MultiSelect">
+			<toolbar>
+				<OverflowToolbar id="myId">
+					<Title id="attachmentTitle" />
+					<ToolbarSpacer />
+					<Button
+						id="downloadButton"
+						text="Download"
+						press="onDownloadImage"
+						enabled="false"
+						type="Transparent" />
+					<Button
+						id="versionButton"
+						text="Upload a new version"
+						press="onVersionImage"
+						enabled="false"
+						type="Transparent" />
+					<UploadCollectionToolbarPlaceholder/>
+				</OverflowToolbar>
+			</toolbar>
+			<items>
+				<UploadCollectionItem
+					documentId="{documentId}"
+					fileName="{Title}"
+					mimeType="{mimeType}"
+					thumbnailUrl="{= ${__metadata/media_src}.concat('?doc_type=image')}"
+					url="{= ${__metadata/media_src}.concat('?doc_type=image')}"
+					enableEdit="false"
+					enableDelete="false"
+					visibleDelete="false"
+					visibleEdit="false"
+					
+					selected="{selectedImage}">
+					<attributes>
+						<ObjectAttribute
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
+							text="
+							222222"
+							active="false" />
+					</attributes>
+                    
+					
+				</UploadCollectionItem>
+			</items>
+		</UploadCollection>
+        
+        
+        
+                                          
+                            
+                        </uxap:ObjectPageSubSection>
+                        <uxap:ObjectPageSubSection class="sapUiMediumMargin">
+
+                        
+        	<UploadCollection
+			id="UploadCollectionPdf"
+			maximumFilenameLength="55"
+			maximumFileSize="10"
+			multiple="false"
+			change="onChange"
+			fileSizeExceed=""
+			selectionChange="onSelectionChangePdf"
+			typeMissmatch=""
+			uploadComplete=""
+			beforeUploadStarts=""
+			
+			mode="MultiSelect">
+			<toolbar>
+				<OverflowToolbar id="myId1">
+					<Title id="attachmentTitle1" />
+					<ToolbarSpacer />
+					<Button
+						id="downloadButton1"
+						text="Download"
+						press="onDownloadPdf"
+						enabled="false"
+						type="Transparent" />
+					<Button
+						id="versionButton1"
+						text="Upload a new version"
+						press="onVersionPdf"
+						enabled="false"
+						type="Transparent" />
+					<UploadCollectionToolbarPlaceholder/>
+				</OverflowToolbar>
+			</toolbar>
+			<items>
+				<UploadCollectionItem
+					documentId="{documentId}"
+					fileName="{Title}"
+					mimeType="{mimeType}"
+					thumbnailUrl="{thumbnailUrl}"
+					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
+					enableEdit="false"
+					enableDelete="false"
+					visibleDelete="false"
+					visibleEdit="false"
+					
+					selected="{selectedPdf}">
+					<attributes>
+						<ObjectAttribute
+							title="Uploaded By"
+							text="{path:'CreatedByDetails/Name'}"
+							active="true" />
+                            <ObjectAttribute
+							title="Uploladed on"
+							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
+							active="false" />
+                            <ObjectAttribute
+							title="File size"
+							text="
+							222222"
+							active="false" />
+					</attributes>
+					
+				</UploadCollectionItem>
+			</items>
+		</UploadCollection>
+
+                        </uxap:ObjectPageSubSection>
+                        
+                    </uxap:subSections>
+                </uxap:ObjectPageSection>
+            </uxap:sections>
+        </uxap:ObjectPageLayout>
+
+</mvc:View>
+
+	

@@ -1,0 +1,90 @@
+<mvc:View xmlns:vbm="sap.ui.vbm" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:m="sap.m" controllerName="com.knpl.pragati.Training_Learning.controller.TrainingTab" height="100%">
+    <uxap:ObjectPageLayout showFooter="true" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:breadcrumbs>
+                    <Breadcrumbs id="breadcrumbsId" currentLocationText="{i18n>TrainingDetails}">
+                        <Link text="{i18n>TrainingVideo}" press="onCancel"/>
+                    </Breadcrumbs>
+                </uxap:breadcrumbs>
+                <uxap:expandedHeading>
+                    <m:Title text="{oModelView>/TrainingDetails/Title}" wrapping="true"/>
+                </uxap:expandedHeading>
+
+                <uxap:snappedHeading>
+                    <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
+                        <!-- <m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/> -->
+                        <!-- <FlexBox direction="Column" renderType="Bare">
+                            <Title text="{Title}" wrapping="true"/>
+                        </FlexBox> -->
+                    </m:FlexBox>
+                </uxap:snappedHeading>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
+                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
+
+                <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
+                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{oModelView>/TrainingDetails/CreatedAt}"/>
+                    <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
+                    <m:ObjectStatus title="{i18n>colStartDate}" text="{oModelView>/TrainingDetails/StartDate}"/>
+                </m:FlexBox>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
+                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{oModelView>/TrainingDetails/CreatedByName}"/>
+                    <m:ObjectStatus title="{i18n>colStartTime}" text="{oModelView>/TrainingDetails/StartTime}"/>
+                    <m:ObjectStatus title="{i18n>colEndTime}" text="{oModelView>/TrainingDetails/EndTime}"/>
+                </layout:VerticalLayout>
+            </m:FlexBox>
+        </uxap:headerContent>
+
+        <uxap:sections>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TrainingDetails}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbTrDetails" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.ViewTraining" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbQuestionnaire" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.Questionnaire" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbEnrollment" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.Enrollment" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbAttendance" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.Attendance" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+        <!-- <uxap:footer>
+            <Bar>
+                <contentRight>
+                    <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                </contentRight>
+            </Bar>
+        </uxap:footer> -->
+    </uxap:ObjectPageLayout>
+</mvc:View>

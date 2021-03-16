@@ -1,0 +1,23 @@
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.AddEditTraining" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+    <Page busy="{oModelView>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+        <headerContent>
+            <Bar>
+                <contentLeft>
+                    <Breadcrumbs currentLocationText="{oModelView>/AddEditTraining}">
+                        <Link text="{i18n>TrainingVideo}" press="onCancel"/>
+                    </Breadcrumbs>
+                </contentLeft>
+            </Bar>
+        </headerContent>
+        <content>
+            <VBox width="100%" id="oVbxSmtTbl"></VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnCancel}" press="onCancel"/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press="onSaveTraining"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

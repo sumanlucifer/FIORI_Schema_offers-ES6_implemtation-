@@ -1,0 +1,44 @@
+{
+        "results": [
+            {
+                "__metadata": {
+                    "id": "https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com:443/api/v2/odata.svc/MasterAdminRoleSet(1)",
+                    "uri": "https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com:443/api/v2/odata.svc/MasterAdminRoleSet(1)",
+                    "type": "com.knpl.pragati.entity.MasterAdminRoleModel"
+                },
+                "Id": 1,
+                "Role": "SUPER_ADMIN",
+                "Description": "Super Admin ",
+                "IsArchived": false,
+                "CreatedAt": "/Date(1611224899420)/",
+                "CreatedBy": "Admin",
+                "UpdatedAt": "/Date(1612788155280)/",
+                "UpdatedBy": 1,
+                "IsSelected": false,
+                "file":"http://www.pdf995.com/samples/pdf.pdf"
+            },
+            {
+                "__metadata": {
+                    "id": "https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com:443/api/v2/odata.svc/MasterAdminRoleSet(2)",
+                    "uri": "https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com:443/api/v2/odata.svc/MasterAdminRoleSet(2)",
+                    "type": "com.knpl.pragati.entity.MasterAdminRoleModel"
+                },
+                "Id": 2,
+                "Role": "CALL_CENTER",
+                "Description": "Call Center",
+                "IsArchived": false,
+                "CreatedAt": "/Date(1611224899425)/",
+                "CreatedBy": "Admin",
+                "UpdatedAt": "/Date(1611224899425)/",
+                "UpdatedBy": null,
+                "IsSelected": false,
+                "file":"http://www.pdf995.com/samples/pdf.pdf"
+
+
+            }
+            
+       
+            
+        ]
+
+}

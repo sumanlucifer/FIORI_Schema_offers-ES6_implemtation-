@@ -1,0 +1,102 @@
+<mvc:View controllerName="com.knpl.pragati.LoyaltyManagement.controller.AddLoyaltyPoint" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <f:DynamicPage id="idAddLoyaltyPointPage" showFooter="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="Add New Loyalty Point">
+                        <Link press="onPressBreadcrumbLink" text="Loyalty Management" />
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox class="sapUiSmallMargin">
+                <form:Form id="idDetailForm" editable="false">
+                    <form:title>
+                        <core:Title text="Add Loyalty Point" />
+                    </form:title>
+                    <form:layout>
+                        <form:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="12"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="2"
+                            singleContainerFullSize="false" />
+                    </form:layout>
+                    <form:formContainers>
+                        <form:FormContainer title="">
+                            <form:formElements>
+                                <form:FormElement label="Membership ID">
+                                    <form:fields>
+                                        <Input placeholder="Enter Membership ID" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Painter Name">
+                                    <form:fields>
+                                        <Input placeholder="Enter Painter Name" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Primary Mobile Number">
+                                    <form:fields>
+                                        <Input type="Number" placeholder="Enter Primary Mobile Number" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Status">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="Pending" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        <form:FormContainer title="">
+                            <form:formElements>
+                                <form:FormElement label="Request Type">
+                                    <form:fields>
+                                        <ComboBox placeholder="Select Request Type" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Category">
+                                    <form:fields>
+                                        <ComboBox placeholder="Select Category" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Token Number">
+                                    <form:fields>
+                                        <Input placeholder="Enter Token Number" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Points">
+                                    <form:fields>
+                                        <Input type="Number" placeholder="Enter Points" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:formContainers>
+                </form:Form>
+            </VBox>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Submit" type="Emphasized" press="onPressSaveBtn"/>
+                <Button text="Cancel" type="Transparent" press="onPressCancelBtn"/>
+			</OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
