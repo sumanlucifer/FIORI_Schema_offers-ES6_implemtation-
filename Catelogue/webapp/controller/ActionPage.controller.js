@@ -8,18 +8,20 @@ sap.ui.define([
     'sap/ui/Device',
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-    
-   
+
+
 
 
 ], function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageToast, MessageBox) {
     "use strict";
-return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage", {
+    return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage", {
 
-     onInit: function () {
+        onInit: function () {
             this.oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
             this.oPreviewImage = this.getView().byId("idPreviewImage");
+            this.oPreviewPdf = this.getView().byId("idPreviewPdf");
             this.oFileUploader = this.getView().byId("idFormToolImgUploader");
+            this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
             //Router Object
             this.oRouter = this.getRouter();
             this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
@@ -58,7 +60,9 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
         },
 
         onPressBreadcrumbLink: function () {
-            this._navToHome();
+            //this._navToHome();
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+              oRouter.navTo("");
         },
 
         onPressCancel: function () {
@@ -84,23 +88,44 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
         _uploadToolImage: function (oData) {
             var oModel = this.getComponentModel();
             if (this._action === "add") {
-                this.oFileUploader.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value");
+                this.oFileUploader.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=image");
             }
             if (!this.oFileUploader.getValue()) {
-				MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
-				return;
-			}
-			this.oFileUploader.checkFileReadable().then(function() {
-				// @ts-ignore
-				this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+                return;
+            }
+            this.oFileUploader.checkFileReadable().then(function () {
+                // @ts-ignore
+                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
                 this.oFileUploader.setHttpRequestMethod("PUT");
                 this.getView().getModel("ActionViewModel").setProperty("/busy", true);
                 this.oFileUploader.upload();
-			}.bind(this), function(error) {
-				MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-			}.bind(this)).then(function() {
-				this.oFileUploader.clear();
-			}.bind(this));
+            }.bind(this), function (error) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+            }.bind(this)).then(function () {
+                this.oFileUploader.clear();
+            }.bind(this));
+        },
+         _uploadPdf: function (oData) {
+            var oModel = this.getComponentModel();
+            if (this._action === "add") {
+                this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf");
+            }
+            if (!this.oFileUploaderPdf.getValue()) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+                return;
+            }
+            this.oFileUploaderPdf.checkFileReadable().then(function () {
+                // @ts-ignore
+                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
+                this.oFileUploaderPdf.setHttpRequestMethod("PUT");
+                this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                this.oFileUploaderPdf.upload();
+            }.bind(this), function (error) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+            }.bind(this)).then(function () {
+                this.oFileUploader.clear();
+            }.bind(this));
         },
 
         handleUploadComplete: function () {
@@ -113,21 +138,45 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
                 var oViewModel = this.getView().getModel("ActionViewModel");
                 var oPayload = {
                     Title: oViewModel.getProperty("/Title"),
-                    Description: oViewModel.getProperty("/Description"),
-                    Url: oViewModel.getProperty("/Url")
+                    Description: oViewModel.getProperty("/Title"),
+                    // Url: oViewModel.getProperty("/Url")
                 };
-                oViewModel.setProperty("/busy", true);
-                if (this._action === "add") {
-                    oDataModel.create("/MasterExternalLinksSet", oPayload, {
-                        success: this._onLoadSuccess.bind(this),
-                        error: this._onLoadError.bind(this)
-                    });
-                } else {
-                    oDataModel.update("/" + this._property, oPayload, {
-                        success: this._onLoadSuccess.bind(this),
-                        error: this._onLoadError.bind(this)
-                    });
+                console.log(oPayload);
+                var cFiles=[];
+                cFiles.push( this.oFileUploader.getValue());
+                cFiles.push( this.oFileUploaderPdf.getValue());
+                //  console.log(cFiles);
+                if (cFiles) {
+                    console.log("inside");
+                    oViewModel.setProperty("/busy", true);
+                    if (this._action === "add") {
+                        var that=this
+                        oDataModel.create("/MasterProductCatalogueSet", oPayload, {
+                            success: function (oData, response) {
+                                var id = oData.Id;
+                                console.log(id);
+                                that._uploadToolImage(oData);
+                                that._uploadPdf(oData);
+                            },
+                            error: function (oError) {
+                                console.log("Error!");
+                            }
+                        });
+                    } else {
+                        oDataModel.update("/" + this._property, oPayload, {
+                             success: function (oData, response) {
+                               // var id = oData.Id;
+                                console.log(oData);
+                                // that._uploadToolImage(oData);
+                                // that._uploadPdf(oData);
+                            },
+                            error: function (oError) {
+                                console.log("Error!");
+                            }
+                        });
+                    }
                 }
+
             }
         },
 
@@ -161,7 +210,7 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
 
         _validateRequiredFields: function () {
             var oTitleControl = this.getView().byId("idTitle")
-               
+
             this._setControlValueState([oTitleControl]);
             if (oTitleControl.getValue()) {
                 return true;
@@ -172,7 +221,7 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
 
         _setDefaultValueState: function () {
             var oTitleControl = this.getView().byId("idTitle");
-                //oUrlControl = this.getView().byId("idUrlInput");
+            //oUrlControl = this.getView().byId("idUrlInput");
             oTitleControl.setValueState("None");
             oTitleControl.setValueStateText("");
             // oUrlControl.setValueState("None");
@@ -192,9 +241,9 @@ return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage",
                 }
             }
         },
-        
-  
-        
+
+
+
 
 
 

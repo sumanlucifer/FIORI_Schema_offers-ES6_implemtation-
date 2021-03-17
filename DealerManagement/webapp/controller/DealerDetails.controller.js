@@ -110,7 +110,16 @@ sap.ui.define([
                     filters: [
                         new Filter({
                             filters: [
-                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID),
+                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID)
+                            ], and: false
+                        })
+                    ]
+                }));
+                 var oTable = this.getView().byId("idPainterTable2");
+                oTable.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
                                 new Filter("Dealers/Id", sap.ui.model.FilterOperator.EQ, dealerID)
                             ], and: false
                         })
@@ -133,7 +142,7 @@ sap.ui.define([
                 this.getViewModel("oViewModel").setProperty("/detailPageWorklistTableTitle", sTitle);
             },
 
-            onSearch: function (oEvent) {
+            onSearchPrimary: function (oEvent) {
                 if (oEvent.getParameters().refreshButtonPressed) {
                     // Search field's 'refresh' button has been pressed.
                     // This is visible if you select any master list item.
@@ -184,7 +193,72 @@ sap.ui.define([
                                     "DealerId",
                                     FilterOperator.EQ,
                                     dealerID
+                                )
+                                // new Filter(
+                                //     "Dealers/Id",
+                                //     FilterOperator.EQ,
+                                //     dealerID
+                                // )
+                               
+
+                            ],and: false
+
+                        });
+                        //var oFilter2= new Filter("DealerId",FilterOperator.EQ,dealerID);
+                    aFilter.push(oFilter2);
+                    // this._applySearch(aTableSearchState);
+                    var oList = this.getView().byId("idPainterTable");
+                    var oBinding = oList.getBinding("items");
+
+                    oBinding.filter(aFilter);
+                }
+            },
+            onSearchSecondary: function (oEvent) {
+                if (oEvent.getParameters().refreshButtonPressed) {
+                    // Search field's 'refresh' button has been pressed.
+                    // This is visible if you select any master list item.
+                    // In this case no new search is triggered, we only
+                    // refresh the list binding.
+                    this.onRefresh();
+                } else {
+                    var aTableSearchState = [];
+                    var sQuery = oEvent.getParameter("query");
+
+                    var aFilter=[]
+
+                    if (sQuery && sQuery.length > 0) {
+                       
+                        var oFilter = new Filter({
+
+                            filters: [
+                               
+
+                                new Filter(
+                                    "tolower(Name)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                                 ),
+                                new Filter(
+                                    "tolower(MembershipCard)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                ),
+                                new Filter(
+                                    "tolower(Mobile)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                )
+
+                            ],and: false
+
+                        });
+                        aFilter.push(oFilter);
+                        
+                    }
+                    var oFilter2 = new Filter({
+
+                            filters: [
+                               
                                 new Filter(
                                     "Dealers/Id",
                                     FilterOperator.EQ,
@@ -198,7 +272,7 @@ sap.ui.define([
                         //var oFilter2= new Filter("DealerId",FilterOperator.EQ,dealerID);
                     aFilter.push(oFilter2);
                     // this._applySearch(aTableSearchState);
-                    var oList = this.getView().byId("idPainterTable");
+                    var oList = this.getView().byId("idPainterTable2");
                     var oBinding = oList.getBinding("items");
 
                     oBinding.filter(aFilter);

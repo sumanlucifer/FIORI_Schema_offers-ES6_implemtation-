@@ -11,7 +11,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="{=${ActionViewModel>/action} === 'add' ? ${i18n>addActionText} : ${i18n>editActionText}} {i18n>currentBreadcrumbText}">
+                    <Breadcrumbs currentLocationText="Catelogue Details">
                         <Link press="onPressBreadcrumbLink" text="Catelogue" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -76,6 +76,20 @@
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
                                             <Image id="idPreviewImage" width="100px" height="100px" />
+                                        </HBox>
+                                        <HBox class="fileUploaderContainer">
+                                            <u:FileUploader
+                                                id="idFormToolPdfUploader"
+                                                name="formToolPdfUploader"
+                                                width="100%"
+                                                tooltip="{i18n>fileUploaderTooltip}"
+                                                change="onChangeFile"
+                                                typeMissmatch="handleTypeMissmatch"
+                                                fileType="pdf"
+                                                useMultipart="false"
+                                                sendXHR="true"
+                                                uploadComplete="handleUploadComplete" />
+                                            <Image id="idPreviewPdf" width="100px" height="100px" />
                                         </HBox>
         
         
