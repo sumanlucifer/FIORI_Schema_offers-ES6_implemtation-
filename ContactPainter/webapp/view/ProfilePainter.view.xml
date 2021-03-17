@@ -64,7 +64,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <!-- <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
+           <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -73,7 +73,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
+             <!-- <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">

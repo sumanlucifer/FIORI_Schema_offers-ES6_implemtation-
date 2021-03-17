@@ -93,19 +93,20 @@ sap.ui.define(
             iCtbar: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
-            ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value",
-            Search:{
-                Referral:"",
-                Offers:"",
-                Complaints:""
-            }
+            ProfilePic:
+              "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
+            Search: {
+              Referral: "",
+              Offers: "",
+              Complaints: "",
+            },
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
-         
+
           this._initFilerForTables();
         },
         handleEditPress: function () {
@@ -474,6 +475,13 @@ sap.ui.define(
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
+        },
+        onLoyaltySelChange: function (oEvent) {
+          console.log(oEvent.getSource().getSelectedItem());
+          var sKey = oEvent.getParameter("item").getKey();
+          if (sKey == "0") {
+          } else {
+          }
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
