@@ -15,7 +15,8 @@
                     </HBox>
                     <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 </VBox>
-
+                <Label text="{i18n>PainterType}"/>
+                <ComboBox></ComboBox>
                 <Label text="{i18n>AgeGroup}"/>
                 <ComboBox required="true" items="{path:'/MasterAgeGroupSet',sorter:{path:'AgeGroup'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
@@ -33,6 +34,14 @@
                 <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
+                <Label text="{i18n>MaritalStatus}" />
+                <ComboBox items="{/MasterMaritalStatusSet}">
+                    <core:Item text="{MaritalStatus}" key="{Id}"/>
+                </ComboBox>
+                <Label text="{i18n>Religion}" />
+                 <ComboBox items="{/MasterReligionSet}">
+                    <core:Item text="{Religion}" key="{Id}"/>
+                </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>
@@ -94,6 +103,19 @@
                     <items>
                         <core:Item text="{Potential}" key="{Id}"/>
                     </items>
+                </ComboBox>
+                <core:Title text="{i18n>BusinessDetails}"/>
+                <Label text="{i18n>BusinessCategory}" />
+                 <ComboBox items="{path:'/MasterBusinessCategorySet'}" >
+                    <core:Item text="{BusinessCategory}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>BusinessGroup}" />
+                <ComboBox items="{path:'/MasterBusinessGroupSet'}" >
+                    <core:Item text="{BusinessGroup}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>ArcheType}" />
+                <ComboBox items="{/MasterArcheTypeSet}">
+                    <core:Item text="{ArcheType}" key="{Id}" />
                 </ComboBox>
             </f:content>
         </f:SimpleForm>
