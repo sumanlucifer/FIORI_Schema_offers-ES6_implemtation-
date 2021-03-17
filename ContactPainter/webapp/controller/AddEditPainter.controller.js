@@ -235,7 +235,7 @@ sap.ui.define(
           }
           if (dTbleAssets == false) {
             MessageToast.show(
-              "Kindly save the details in the 'Asset Details' table to continue registration."
+              "Kindly save the details in the 'Vehicle Details' table to continue registration."
             );
             return;
           }
@@ -345,6 +345,7 @@ sap.ui.define(
           }
           // settting the username of the painter same as the mobile number
           //oPainterData["Username"] = oPainterData["Mobile"];
+          
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
@@ -353,13 +354,13 @@ sap.ui.define(
               Dealers: oDealers,
               PainterSegmentation: oPainterSeg,
               PainterFamily: oPtrFamily,
-              Assets: oPayloadDevice,
+              Vehicles: oPayloadDevice,
               PainterBankDetails: oBankingPayload,
               PainterKycDetails: oKycPayload,
             },
             oPainterData
           );
-
+          console.log(oPayload);
           var c1, c2, c3, c4;
           var oData = this.getView().getModel();
           var othat = this;
@@ -906,10 +907,10 @@ sap.ui.define(
           }
         },
         fmtAsset: function (mParam) {
-          var sPath = "/MasterAssetTypeSet(" + mParam + ")";
+          var sPath = "/MasterVehicleTypeSet(" + mParam + ")";
           var oData = this.getView().getModel().getProperty(sPath);
           if (oData !== undefined && oData !== null) {
-            return oData["AssetType"];
+            return oData["VehicleType"];
           }
         },
         _setFDLTbleFlag() {
@@ -940,7 +941,7 @@ sap.ui.define(
               if (prop["editable"] == true) {
                 bFlag = false;
                 MessageToast.show(
-                  "Save or delete the existing data in the 'Asset Details' table before adding a new data."
+                  "Save or delete the existing data in the 'Vehicle Details' table before adding a new data."
                 );
                 return;
                 break;
@@ -949,15 +950,15 @@ sap.ui.define(
           }
           if (oFamiDtlMdl.length >= 5) {
             MessageToast.show(
-              "We can only add 5 assets. Kinldy remove any existing data to add a new asset."
+              "We can only add 5 Vehicles. Kinldy remove any existing data to add a new vehicle."
             );
             bFlag = false;
             return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              AssetTypeId: "",
-              AssetName: "",
+              VehicleTypeId: "",
+              VehicleName: "",
               editable: true,
             });
             oModel.setProperty("/EditTb2AST", true);
@@ -987,7 +988,7 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          var oCheckProp = ["AssetTypeId", "AssetName"];
+          var oCheckProp = ["VehicleTypeId", "VehicleName"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -1002,7 +1003,7 @@ sap.ui.define(
             oObject["editable"] = false;
           } else {
             MessageToast.show(
-              "Kindly input 'asset' values in porper format to save."
+              "Kindly input 'vehicle' values in porper format to save."
             );
           }
           oModel.refresh(true);
