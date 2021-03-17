@@ -90,12 +90,12 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Assets/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Vehicles/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}"/>
                     <ToolbarSpacer/>
-                    <Button visible="false" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    
                 </Toolbar>
             </headerToolbar>
 
@@ -116,8 +116,8 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{AssetTypeDetails/AssetType}" titleActive="true"/>
-                        <Text text="{AssetName}"/>
+                        <ObjectIdentifier title="{VehicleTypeDetails/VehicleType}" titleActive="true"/>
+                        <Text text="{VehicleName}"/>
                     </cells>
                 </ColumnListItem>
             </items>
