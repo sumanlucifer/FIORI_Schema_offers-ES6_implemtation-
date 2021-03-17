@@ -71,9 +71,9 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
                 dealerID = sObjectId;
-                var oViewModel = new JSONModel({ dealerID: dealerID });
-                //console.log(oViewModel);
-                this.getView().setModel(oViewModel, "viewId");
+                // var oViewModel = new JSONModel({ dealerID: dealerID });
+                // //console.log(oViewModel);
+                // this.getView().setModel(oViewModel, "viewId");
 
                this.primaryFilter();
 
@@ -83,7 +83,7 @@ sap.ui.define([
                     });
                     // console.log(sObjectPath);
 
-                    // this._bindView("/" + sObjectPath);
+                     this._bindView("/" + sObjectPath);
                     //this._bindPainterTable("/" + sObjectPath + "/Painter");
                     // this._bindPainterTable("/PainterSet");
 

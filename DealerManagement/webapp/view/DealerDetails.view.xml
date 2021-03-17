@@ -14,22 +14,22 @@
                     </uxap:breadcrumbs>
 
                     <uxap:expandedHeading>
-                        <Title text="{Name}" class="sapUiTinyMarginEnd"/>
+                        <Title text="{DealerName}" class="sapUiTinyMarginEnd"/>
                     </uxap:expandedHeading>
 
                     <uxap:snappedHeading>
                         <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
                             <Avatar class="sapUiTinyMarginEnd"/>
                             <FlexBox direction="Column" renderType="Bare">
-                                <Title text="{Name}" wrapping="true"/>
+                                <Title text="{DealerName}" wrapping="true"/>
                                 <Text text="{Id}"/>
                             </FlexBox>
                         </FlexBox>
                     </uxap:snappedHeading>
 
-                    <uxap:expandedContent>
+                    <!-- <uxap:expandedContent>
                         <Text text="{DealerName}"/>
-                    </uxap:expandedContent>
+                    </uxap:expandedContent> -->
                      
 
                     <uxap:snappedTitleOnMobile>

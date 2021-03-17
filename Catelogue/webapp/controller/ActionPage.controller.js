@@ -141,13 +141,13 @@ sap.ui.define([
                     Description: oViewModel.getProperty("/Title"),
                     // Url: oViewModel.getProperty("/Url")
                 };
-                console.log(oPayload);
+                console.log("Payload :"+oPayload);
                 var cFiles=[];
                 cFiles.push( this.oFileUploader.getValue());
                 cFiles.push( this.oFileUploaderPdf.getValue());
                 //  console.log(cFiles);
                 if (cFiles) {
-                    console.log("inside");
+                   
                     oViewModel.setProperty("/busy", true);
                     if (this._action === "add") {
                         var that=this
@@ -163,6 +163,7 @@ sap.ui.define([
                             }
                         });
                     } else {
+                        console.log("Else");
                         oDataModel.update("/" + this._property, oPayload, {
                              success: function (oData, response) {
                                // var id = oData.Id;

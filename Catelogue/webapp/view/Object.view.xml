@@ -99,6 +99,7 @@
 			typeMissmatch="onTypeMissmatch"
 			uploadComplete=""
 			beforeUploadStarts=""
+            uploadEnabled="false"
 			mode="MultiSelect">
 			<!-- <toolbar>
 				<OverflowToolbar id="myId">
@@ -172,6 +173,7 @@
 			typeMissmatch=""
 			uploadComplete=""
 			beforeUploadStarts=""
+            uploadEnabled="false"
 			
 			mode="MultiSelect">
 			<!-- <toolbar>

@@ -149,7 +149,8 @@ sap.ui.define([
             },
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-                aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+                aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }));
+                aFilters.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
                 for (let i = 1; i < aKeys.length; i++) {
 
 
