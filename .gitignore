@@ -1,0 +1,59 @@
+/mta_archives/
+/node_modules/
+/resources/
+
+*.env1
+*.zip
+.vscode/
+*.env*
+*/dist/
+*/.gitignore
+
+# auto generated wildcard
+Manage_FAQ/.env
+# auto generated wildcard
+OrgModule/.env
+# auto generated wildcard
+Manage_FAQ/.env6
+
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env
+
+# auto generated wildcard
+knpl1/MasterDataManagement/.env10
+# auto generated wildcard
+knpl1/ContactPainter/.env7
+# auto generated wildcard
+ZSampGWCnct/GatewaySrvTest/.env3
+# auto generated wildcard
+ZSampGWCnct/GatewaySrvTest/.env4
+# auto generated wildcard
+knpl1/MasterDataManagement/.env11
+# auto generated wildcard
+knpl1/ContactPainter/.env8
+# auto generated wildcard
+ZSample2/HTML5Module/.env2
+# auto generated wildcard
+knpl1/MasterDataManagement/.env12
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env13
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env9
+# auto generated wildcard
+ContactPainter/ContactPainter/.env12
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env10
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env14
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env15
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env11
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env16
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env18
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env13
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env14
