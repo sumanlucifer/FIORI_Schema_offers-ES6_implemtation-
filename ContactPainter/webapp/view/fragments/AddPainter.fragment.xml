@@ -82,6 +82,10 @@
                 </ComboBox>
                 <Label text="{i18n>Area}"/>
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <!-- <Label text="{i18n>AddressLine2}"/>
+                <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine2', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <Label text="{i18n>PinCode}"/>
+                <Input required="false" type="Number" value="{path : 'oModelView>/PainterAddress/PinCode', type : 'sap.ui.model.type.String', constraints : { minLength:1 , maxLength:10 } }"/> -->
                 <core:Title text="{i18n>SecurityQuestions}"/>
                 <Label text="{i18n>Question}"/>
                 <ComboBox required="true" items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">

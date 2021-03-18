@@ -295,7 +295,7 @@ sap.ui.define(
               oModel.setProperty("/" + k, "");
             }
           }
-          console.log(oModel);
+          
           oModel.refresh(true);
           oControlModel.refresh(true);
           promise.resolve();
@@ -484,7 +484,7 @@ sap.ui.define(
           //IdTblComplaints
         },
         onLoyaltySelChange: function (oEvent) {
-          console.log(oEvent.getSource().getSelectedItem());
+          
           var sKey = oEvent.getParameter("item").getKey();
           if (sKey == "0") {
           } else {
@@ -935,7 +935,7 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
-          console.log(oModelView);
+          
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
