@@ -24,17 +24,21 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
+                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelControl2>/ProfilePic}" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
-                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{oModelView>/TrainingDetails/CreatedAt}"/>
+                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                    <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/StartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}"/>
                     <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
-                    <m:ObjectStatus title="{i18n>colStartDate}" text="{oModelView>/TrainingDetails/StartDate}"/>
                 </m:FlexBox>
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
-                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{oModelView>/TrainingDetails/CreatedByName}"/>
-                    <m:ObjectStatus title="{i18n>colStartTime}" text="{oModelView>/TrainingDetails/StartTime}"/>
-                    <m:ObjectStatus title="{i18n>colEndTime}" text="{oModelView>/TrainingDetails/EndTime}"/>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
+                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/EndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}"/>
+                </layout:VerticalLayout>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
+                    <m:ObjectStatus title="{i18n>colAddress}"/>
+                    <m:ObjectStatus text="{oModelView>/TrainingDetails/State/State} {oModelView>/TrainingDetails/City/City}"/>
+                    <!-- <m:ObjectStatus text="{oModelView>/TrainingDetails/EndTime}"/> -->
                 </layout:VerticalLayout>
             </m:FlexBox>
         </uxap:headerContent>
@@ -49,7 +53,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}" visible="{= ${appView>/trainingType} === 'ONLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbQuestionnaire" renderType="Bare">
@@ -58,7 +62,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}" visible="{= ${appView>/trainingType} === 'ONLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbEnrollment" renderType="Bare">
@@ -80,9 +84,9 @@
         <!-- <uxap:footer>
             <Bar>
                 <contentRight>
-                    <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button id="edit" text="{i18n>btnEdit}" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button id="save" text="{i18n>btnSave}" type="Emphasized" visible="false" press="handleSavePress"/>
+                    <Button id="cancel" text="{i18n>btnCancel}" type="Ghost" visible="false" press="handleCancelPress"/>
                 </contentRight>
             </Bar>
         </uxap:footer> -->

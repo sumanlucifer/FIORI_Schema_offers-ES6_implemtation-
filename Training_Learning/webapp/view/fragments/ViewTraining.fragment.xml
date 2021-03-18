@@ -13,34 +13,40 @@
                 <Label text="{i18n>colTrainingDescription}"/>
                 <Text text="{oModelView>/TrainingDetails/Description}"/>
 
-                <!-- <Label text="{i18n>colStartDate}"/>
-                <Text text="{path:'oModelView>/TrainingDetails/StartDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" -->
+                <Label text="{i18n>colStartDateTime}"/>
+                <Text text="{oModelView>/TrainingDetails/StartDate}"/>
 
-                <Label text="{i18n>colStartTime}"/>
-                <Text text="{oModelView>/TrainingDetails/StartTime}"/>
-
-                <Label text="{i18n>colEndTime}"/>
-                <Text text="{oModelView>/TrainingDetails/EndTime}"/>
-
-                <core:Title text="{i18n>TargetGroup}"/>
+                <Label text="{i18n>colEndDateTime}"/>
+                <Text text="{oModelView>/TrainingDetails/EndDate}"/>
 
                 <Label text="{i18n>colRewardPoints}"/>
                 <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
 
+                <core:Title text="{i18n>TargetGroup}"/>
+
                 <Label text="{i18n>colLink}"/>
                 <Text text="{oModelView>/TrainingDetails/Url}"/>
 
-                <Label text="{i18n>colDepot}"/>
-                <Text text="{oModelView>/TrainingDetails/DepotId/Depot}"/>
+                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/Depot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
-                <Label text="{i18n>colDivision}"/>
-                <Text text="{oModelView>/TrainingDetails/DivisionId/Division}"/>
+                <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/Division}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
-                <Label text="{i18n>colPainterType}"/>
-                <Text text="{oModelView>/TrainingDetails/PainterTypeId/PainterType}"/>
+                <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/Description}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
-                <Label text="{i18n>colPainterArcheType}"/>
-                <Text text="{oModelView>/TrainingDetails/PainterArcheTypeId/ArcheType}"/>
+                <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/PainterArcheType/ArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+
+                <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/State/State}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+
+                <Label text="{i18n>colCity}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/City/City}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+
+                <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <!-- <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/> -->
 
             </f:content>
         </f:SimpleForm>

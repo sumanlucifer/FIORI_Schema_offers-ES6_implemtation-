@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <VBox id="idVbxA" width="100%">
-        <f:SimpleForm id="AddTrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+    <VBox id="idVbxOn" width="100%">
+        <f:SimpleForm id="OnlineTrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{oModelView>/AddEditTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>TrainingDetails}"/>
                 <Label text="{i18n>colTrainingType}" required="true"/>
-                <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingTypeId}">
+                <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingTypeId}" editable="false">
                     <items>
                         <core:Item text="{TrainingType}" key="{Id}"/>
                     </items>
@@ -13,34 +13,30 @@
                 <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}"/>
 
                 <Label text="{i18n>colTrainingDescription}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" showExceededText="true" maxLength="1000"/>
+                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000"/>
 
-                <Label text="{i18n>colStartDate}" required="true"/>
-                <DatePicker valueStateText="Enter a valid date, less than or equal to today." value="{oModelView>/TrainingDetails/StartDate}" valueFormat="dd MMM yyyy" displayFormat="dd MMM yyyy" required="true"/>
-                <!-- <DateTimePicker valueStateText="Enter a valid date and time" value="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true"/> -->
+                <Label text="{i18n>colStartDateTime}" required="true"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true"/>
 
-                <Label required="true" text="{i18n>colStartTime}"/>
-                <TimePicker valueFormat="HH:mm" displayFormat="hh:mm a" value="{oModelView>/TrainingDetails/StartTime}"/>
-
-                <Label required="true" text="{i18n>colEndTime}"/>
-                <TimePicker valueFormat="HH:mm" displayFormat="hh:mm a" value="{oModelView>/TrainingDetails/EndTime}"/>
-
-                <core:Title text="{i18n>TargetGroup}"/>
+                <Label text="{i18n>colEndDateTime}" required="true"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input value="{oModelView>/TrainingDetails/RewardPoints}"/>
+
+                <core:Title text="{i18n>TargetGroup}"/>
 
                 <Label text="{i18n>colLink}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
                 
                 <Label text="{i18n>colDepot}"/>
-                <ComboBox items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotTypeId}">
+                <ComboBox items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
                         <core:Item text="{Depot}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colDivision}"/>
-                <ComboBox items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionTypeId}">
+                <ComboBox items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
                         <core:Item text="{Division}" key="{Id}"/>
                     </items>
@@ -59,9 +55,8 @@
                 </ComboBox>
 
                 <Label text="{i18n>colImage}"/>
-                <!-- <HBox class="fileUploaderContainer"> -->
                     <u:FileUploader
-                        id="idFormTrainingImgUploaderAdd"
+                        id="idFormTrainingImgUploaderOnline"
                         name="formTrainingImgUploader"
                         width="100%"
                         tooltip="{i18n>fileUploaderTrainingtip}"
@@ -71,8 +66,7 @@
                         useMultipart="false"
                         sendXHR="true"
                         uploadComplete="handleUploadComplete" />
-                    <Image id="idPreviewImageAdd" width="100px" height="100px" />
-                <!-- </HBox> -->
+                    <Image id="idPreviewImageOnline" width="100px" height="100px" />
 
                 <core:Title text="{i18n>Questionnaire}"/>
                 <List id="List" mode="Delete" delete="onDeleteQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
