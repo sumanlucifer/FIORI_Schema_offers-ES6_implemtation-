@@ -169,9 +169,14 @@ sap.ui.define(
                           "'"
                       ),
                       new Filter(
-                        "Painter/MembershipCard",
+                        "tolower(Painter/MembershipCard)",
                         FilterOperator.Contains,
-                        oViewFilter[prop].trim().toUpperCase()
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
                       ),
                       new Filter(
                         "Painter/Mobile",
@@ -205,6 +210,20 @@ sap.ui.define(
         },
         onResetFilterBar: function () {
           this._ResetFilterBar();
+        },
+        onComplaintsChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          console.log(sKey);
+          var oView = this.getView();
+          var oCmbxSubType = oView.byId("idFileSubType");
+          var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
+          oCmbxSubType.clearSelection();
+          oCmbxSubType.setValue("");
+          if (sKey == "") {
+            oCmbxSubType.getBinding("items").filter(null);
+          } else {
+            oCmbxSubType.getBinding("items").filter(oFilter);
+          }
         },
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
@@ -260,23 +279,20 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (sStatus) {
-        //   var sLetter = "";
-        //   if (mParam) {
-        //     sLetter = mParam
-        //       .toLowerCase()
-        //       .split(" ")
-        //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        //       .join(" ");
-        //   }
-            if(sStatus)
-            {
-                sStatus = sStatus.toLowerCase();
-                var aCharStatus = sStatus.split("");
-                aCharStatus[0] = aCharStatus[0].toUpperCase();
-                sStatus = aCharStatus.join("");
-            }
-        
-
+          //   var sLetter = "";
+          //   if (mParam) {
+          //     sLetter = mParam
+          //       .toLowerCase()
+          //       .split(" ")
+          //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          //       .join(" ");
+          //   }
+          if (sStatus) {
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
+          }
 
           return sStatus;
         },

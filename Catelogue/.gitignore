@@ -33,3 +33,7 @@ knpl-influencer-web/DealerManagement/.env7
 knpl-influencer-web/DealerManagement/.env8
 # auto generated wildcard
 knpl-influencer-web/DealerManagement/.env1
+# auto generated wildcard
+knpl-complaints1/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1

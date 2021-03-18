@@ -9,3 +9,7 @@ LoyaltyManagement/.env
 MasterDataManagement/.env18
 # auto generated wildcard
 knpl-influencer-web/Tools/.env
+# auto generated wildcard
+knpl-complaints1/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1

@@ -46,7 +46,7 @@
 			</f:header>
         <f:content>
             <VBox id="idVbx" renderType="Bare">
-                           
+            
             </VBox>
         </f:content>
         <f:footer>
