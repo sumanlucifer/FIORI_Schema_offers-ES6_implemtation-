@@ -7,7 +7,8 @@
                 <Text text="{MembershipCard}"/>
                 <Label required="false" text="{i18n>DateOfJoining}"/>
                 <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                
+                <Label text="{i18n>PainterType}" />
+                <Text/>
                 <Label text="{i18n>AgeGroup}"/>
 
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
@@ -25,6 +26,10 @@
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label required="false" text="{i18n>EmailId}"/>
                 <Text text="{Email}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                 <Label text="{i18n>MaritalStatus}" />
+                 <Text />
+                <Label text="{i18n>Religion}" />
+                <Text />
                 <Label required="false" text="{i18n>PrimaryMobileNo}"/>
                 <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
@@ -53,7 +58,14 @@
                 <Text text="{PainterSegmentation/SitePerMonthDetails/SitePerMonth}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AnnualPaidPotential}"/>
                 <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-
+                  <core:Title text="{i18n>BusinessDetails}"/>
+                <Label text="{i18n>BusinessCategory}" />
+                 <Text />
+                <Label text="{i18n>BusinessGroup}" />
+                 <Text />
+                <Label text="{i18n>ArcheType}" />
+                   <Text />
+              
             </f:content>
         </f:SimpleForm>
         <Table id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
