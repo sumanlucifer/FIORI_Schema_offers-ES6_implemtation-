@@ -473,6 +473,7 @@ sap.ui.define(
             oPainterId
           );
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
+          oView.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
         },
