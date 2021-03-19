@@ -1,13 +1,13 @@
 {
     "resources": [
         {
-            "name": "view/Object.view.xml"
-        },
-        {
-            "name": "model/models.js"
+            "name": "view/Worklist.view.xml"
         },
         {
             "name": "manifest.json"
+        },
+        {
+            "name": "model/models.js"
         },
         {
             "name": "model/formatter.js"
@@ -41,7 +41,7 @@
             "merged": true
         },
         {
-            "name": "controller/BaseController-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -65,7 +65,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/BaseController-dbg.js",
             "isDebug": true
         },
         {
@@ -80,14 +80,14 @@
             "name": "../../../../sap-ui-version.json"
         },
         {
-            "name": "view/Worklist.view.xml"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "view/ObjectNotFound.view.xml"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "view/Object.view.xml"
         },
         {
             "name": "view/NotFound.view.xml"

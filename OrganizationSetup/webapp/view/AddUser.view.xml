@@ -1,39 +1,131 @@
 <mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.User" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
 xmlns:l="sap.ui.layout"
-xmlns:core="sap.ui.core">
-<Page
-		title="{i18n>detailPageTitle}"
-		showNavButton="true"
-		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		<Label text="Name" labelFor="name" design="Bold" />
-		<Input id="name" required="true" />
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
+<Page id="addUser"
+ floatingFooter="true"
+ title="Add User">
+        <VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="addUserForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="User Details"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			>
+			<f:content>
+				<Label text="Name" labelFor="name" design="Bold" required="true"/>
+		<Input id="name" 
+        liveChange="onLiveChangeInputValidate"
+        	                type="Text"
+                            value="{ 
+                                  path : '/name', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1,
+                                      maxLength :25
+                                      
+                                  }
+                              }"
+                        placeholder="Enter Name ..."
+        				valueStateText="Enter a valid Name. Maximum 25 characters." 
+                        
+                        />
 
-		<Label text="Email" labelFor="email" design="Bold" />
-		<Input id="email" required="true" />
+				<Label text="Email" labelFor="email" design="Bold" required="true" />
+		<Input id="email" 
+        	                type="Text"
+                            value="{ 
+                                  path : '/email', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' }
+                              }"
+        				placeholder="Enter Email ..."
+        				valueStateText="Email must not be empty."/>
 
-        <Label text="DialCode" labelFor="dialcode" design="Bold" />
-		<Input id="dialcode" required="true" />
+        
 
-         <Label text="Mobile" labelFor="mobile" design="Bold" />
-		<Input id="mobile" required="true" />
+				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
+		<Input id="mobile" 
+        	                type="Text"
+                            
+                            value="{ 
+                                  path : '/mobile', 
+                                  type : 'sap.ui.model.type.String', 
+                                   constraints : { 
+                                      minLength : 10,
+                                      maxLength : 10
+                                      
+                                      
+                                      
+                                  }
+                                  }"
+        				placeholder="Enter Mobile Number ..."
+        				valueStateText="Mobile Number must not be empty or Enter a valid Mobile Number" />
 
-         <Label text="CountryCode" labelFor="countrycode" design="Bold" />
-		<Input id="countrycode" required="true" />
+         <Label text="Country Code" labelFor="countrycode" design="Bold" required="true" />
+		<Input id="countrycode" 
+        	                type="Text"
+                            editable="false"
+                            value="{ 
+                                  path : '/countrycode', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+        				placeholder="Enter Country Code ..."
+        				valueStateText="CountryCode must not be empty."/>
 
-        	<ComboBox
+            <Label text="Role" labelFor="role" design="Bold" required="true"/>
+        	<Select
             id="role"
-				items="{path: 'data>/MasterAdminRoleSet'}">
+                        value="{ 
+                                  path : '/role', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+            valueStateText="Role must not be empty."
+				 items="{path: 'data>/MasterAdminRoleSet',
+                filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
-			</ComboBox>
-        <Button text="Add"
-						press="add"
-						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+			</Select>
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+	
+    <footer>
+			<OverflowToolbar>
+            <!-- <Button
+                    icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Emphasized"
+                    press="onMessagePopoverPress" />
+                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
+				<ToolbarSpacer/>
+                
+                <Button text="Cancel"
+                
+						press="onCancelPressForAdd"
+						>
 					
 				</Button>
-               
-                
-                 
-	</l:VerticalLayout>
+				<Button text="Save"
+                type="Emphasized"
+						press="add"
+						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
+
+					
+				</Button>
+                  
+			</OverflowToolbar>
+		</footer>
     </Page>
 </mvc:View>

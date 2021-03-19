@@ -1,0 +1,115 @@
+<mvc:View controllerName="com.knpl.pragati.Tools.controller.DetailPage" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <f:DynamicPage headerExpanded="true" class="sapUiNoContentPadding" busy="{DetailViewModel>/busy}">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{DetailViewModel>/Title}"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="{i18n>currentDetailPageBreadcrumbText}">
+                        <Link press="onPressBreadcrumbLink" text="{i18n>homeBreadcrumbText}" />
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <HBox id="idToolImgContainer">
+                            <Avatar
+                                id="idToolImg"
+                                displaySize="L"
+                                displayShape="Circle" />
+                            <Button class="toolImgUploaderBtn" icon="sap-icon://edit" tooltip="{i18n>imageEditBtnTooltip}" type="Emphasized" press="onPressEditImage"/>
+                        </HBox>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <layout:HorizontalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreationDate}"/>
+                            <Text text="{path: 'DetailViewModel>/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}" />
+                        </layout:HorizontalLayout>
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
+                            <Text text="{DetailViewModel>/CreatedByDetails/Name}" />
+                        </layout:HorizontalLayout>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="statusLabel sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
+                            <SegmentedButton
+                                width="{=${device>/system/desktop} ? '9rem' : '17rem'}"
+                                selectedKey="{=${DetailViewModel>/Status} ? 'active' : 'inactive'}"
+                                selectionChange="onChangeStatus">
+                                <items>
+                                    <SegmentedButtonItem text="{i18n>statusActive}" key="active" />
+                                    <SegmentedButtonItem text="{i18n>statusInActive}" key="inactive" />
+                                </items>
+                            </SegmentedButton>
+                        </layout:HorizontalLayout>
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <VBox class="formContainer sapUiSmallMargin">
+                <form:Form id="idDetailForm"
+                    editable="false">
+                    <form:layout>
+                        <form:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="12"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="2"
+                            singleContainerFullSize="false" />
+                    </form:layout>
+                    <form:formContainers>
+                        <form:FormContainer title="">
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label class="sapUiTinyMarginBottom" text="{i18n>formFieldTitle}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginBottom" text="{DetailViewModel>/Title}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label class="sapUiTinyMarginBottom" text="{i18n>formFieldUrl}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Link class="sapUiTinyMarginBottom" text="{DetailViewModel>/Url}" href="{DetailViewModel>/Url}" target="blank" tooltip="{DetailViewModel>/Url}"/>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>formFieldDescription}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{DetailViewModel>/Description}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:formContainers>
+                </form:Form>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

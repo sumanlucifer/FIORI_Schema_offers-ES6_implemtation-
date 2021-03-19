@@ -1,0 +1,51 @@
+/* Global css here */
+.sapUiAFLayout .sapUiAFLayoutItem:first-child .sapMLabelTextWrapper::after {
+    content: "" !important;
+}
+
+.sapFDynamicPageTitleTop {
+    height: 100%;
+}
+
+.statusWidth {
+    width: 3.3rem;
+}
+
+.actionPage .sapUiFormElementLbl {
+    margin-top: 0.5rem;
+}
+
+.valueHelpDialog {
+    max-width: 29rem !important;
+}
+
+.toolStatus {
+    margin-top: 1px !important;
+}
+
+.statusLabel {
+    margin-top: 0.5rem !important;
+}
+
+.toolImgUploaderBtn {
+    position: relative;
+    left: -22px;
+    top: 50px;
+}
+
+.toolImgUploaderBtn .sapMBtnInner {
+    border: .0625rem solid #0a6ed1;
+    border-radius: 50%;
+}
+
+.fileUploaderContainer .sapMFlexItem:first-child {
+    width: 100% !important;
+}
+
+.fileUploaderContainer .sapMImg {
+    margin-left: 0.5rem;
+}
+
+.fileUploaderContainer .sapMImg.sapMNoImg {
+    display: none;
+}

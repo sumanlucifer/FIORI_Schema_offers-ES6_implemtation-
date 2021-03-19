@@ -1,0 +1,13 @@
+{
+	"cols": [
+		
+		{
+			"label": "Painter Name",
+			"template": "Name"
+		},
+		{
+			"label": "Mobile",
+			"template": "Mobile"
+		}
+	]
+}

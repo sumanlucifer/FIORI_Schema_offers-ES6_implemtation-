@@ -1,5 +1,5 @@
 {
-  "xsappname": "knpl-cp",
+  "xsappname": "knpl-influencer-web",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
   "scopes": [

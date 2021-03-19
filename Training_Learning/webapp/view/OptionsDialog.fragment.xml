@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" >
+	<Popover title="{oModelView>Question}">
+        <List id="ListViewOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" growing="true"
+			items="{path: 'oModelView>TrainingQuestionnaireOptions/results/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+            <CustomListItem>
+                <RadioButtonGroup>
+                    <RadioButton text="{oModelView>Option}" selected = "{oModelView>IsCorrect}" editable="false"/>
+                </RadioButtonGroup>
+				<!-- <Text width="80%" text="{oModelView>Option}"/> -->
+			</CustomListItem>
+		</List>
+	</Popover>
+</core:FragmentDefinition>

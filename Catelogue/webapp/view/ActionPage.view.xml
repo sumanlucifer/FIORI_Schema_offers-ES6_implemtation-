@@ -1,0 +1,115 @@
+<mvc:View
+	controllerName="com.knpl.pragati.Catelogue.controller.ActionPage"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified"
+    class="sapUiSizeCompact">
+    <f:DynamicPage id="idActionPage" class="actionPage" showFooter="true" busy="{ActionViewModel>/busy}">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="Catelogue Details">
+                        <Link press="onPressBreadcrumbLink" text="Catelogue" />
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+			
+			<form:SimpleForm
+				minWidth="1024"
+				maxContainerCols="2"
+                title="Add Catelogue Details" 
+                
+				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
+                
+				
+                <VBox >
+                <Title  text="Catelogue Details"  />
+                <VBox class="sapUiMediumMargin">
+                <Label text="Title:" />
+		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="{i18n>formTitlePlaceholder}" change="onChangeValue" width="40%"/>
+                </VBox>
+                <!-- <UploadCollection
+			id="UploadCollectionImage"
+			multiple="false"
+			change="onChange"
+            mode="MultiSelect"
+            instantUpload="false"
+            >
+			<toolbar>
+				<OverflowToolbar id="myId">
+					<Title id="attachmentTitle" />
+					<ToolbarSpacer />
+					<Button
+						id="downloadButton"
+						text="Download"
+						press="onDownloadImage"
+						enabled="false"
+						type="Transparent" />
+					<Button
+						id="versionButton"
+						text="Upload a new version"
+						press="onVersionImage"
+						enabled="false"
+						type="Transparent" />
+					<UploadCollectionToolbarPlaceholder/>
+				</OverflowToolbar>
+			</toolbar>
+			
+		</UploadCollection> -->
+
+          <HBox class="fileUploaderContainer">
+                                            <u:FileUploader
+                                                id="idFormToolImgUploader"
+                                                name="formToolImgUploader"
+                                                width="100%"
+                                                tooltip="{i18n>fileUploaderTooltip}"
+                                                change="onChangeFile"
+                                                typeMissmatch="handleTypeMissmatch"
+                                                fileType="png,jpg,jpeg"
+                                                useMultipart="false"
+                                                sendXHR="true"
+                                                uploadComplete="handleUploadComplete" />
+                                            <Image id="idPreviewImage" width="100px" height="100px" />
+                                        </HBox>
+                                        <HBox class="fileUploaderContainer">
+                                            <u:FileUploader
+                                                id="idFormToolPdfUploader"
+                                                name="formToolPdfUploader"
+                                                width="100%"
+                                                tooltip="{i18n>fileUploaderTooltip}"
+                                                change="onChangeFile"
+                                                typeMissmatch="handleTypeMissmatch"
+                                                fileType="pdf"
+                                                useMultipart="false"
+                                                sendXHR="true"
+                                                uploadComplete="handleUploadComplete" />
+                                            <Image id="idPreviewPdf" width="100px" height="100px" />
+                                        </HBox>
+        
+        
+        
+     
+                </VBox>
+              
+			</form:SimpleForm>
+			
+		</f:content>
+        <f:footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+                <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel"/>
+				<Button text="{=${ActionViewModel>/action} === 'add' ? ${i18n>saveBtnText} : ${i18n>updateBtnText}}" type="Emphasized" press="onPressSaveOrUpdate"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+
+	
+
+</mvc:View>
+

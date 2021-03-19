@@ -1,0 +1,34 @@
+<mvc:View displayBlock="true" controllerName="com.knpl.pragati.MDM.controller.DetailDetail" height="100%"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.f"
+		xmlns:m="sap.m">
+
+	<DynamicPage toggleHeaderOnTitleClick="false" busy="{oModelView>/busy}" busyIndicatorDelay="0" showFooter="true">
+		<title>
+			<DynamicPageTitle>
+				<heading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:Title text="{oModelView>/titleP1} {oModelView>/titleP2}" wrapping="true" class="sapUiTinyMarginEnd"/>
+					</m:FlexBox>
+				</heading>
+
+				<navigationActions>
+					<!-- <m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press="handleFullScreen" id="enterFullScreenBtn" tooltip="Enter Full Screen Mode" visible="{= ${/actionButtonsInfo/endColumn/fullScreen} !== null }"/>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press="handleExitFullScreen" id="exitFullScreenBtn" tooltip="Exit Full Screen Mode" visible="{= ${/actionButtonsInfo/endColumn/exitFullScreen} !== null }"/>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press="handleClose"  tooltip="Close column" visible="{= ${/actionButtonsInfo/endColumn/closeColumn} !== null }"/> -->
+				</navigationActions>
+
+			</DynamicPageTitle>
+		</title>
+		<content>
+			<m:VBox id="oVbxSmtTbl"></m:VBox>
+		</content>
+        <footer>
+            <m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+                <m:Button text="Cancel" type="Transparent" press="handleClose"/>
+                	<m:Button text="{= ${oModelView>/edit} === true ? 'Update' : 'Add' }" type="Emphasized" press="onPressSave"/>
+			</m:OverflowToolbar>
+        </footer>
+	</DynamicPage>
+</mvc:View>

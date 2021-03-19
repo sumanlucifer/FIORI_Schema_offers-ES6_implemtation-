@@ -1,109 +1,34 @@
 /node_modules/
 package-lock.json
 
-
-
-
-
 # auto generated wildcard
-knpl-influencer-web/FAQ/.env1
+knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
-knpl-influencer-web/FAQ/.env2
+knpl-influencer-web/OrganizationSetup/.env2
 # auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env2
+knpl-influencer-web/CompanySettings/.env3
 # auto generated wildcard
-knpl-influencer-web/Manage_FAQ/.env1
+knpl-influencer-web/DealerManagement/.env5
 # auto generated wildcard
-knpl-influencer-web/Manage_FAQ/.env2
+knpl-influencer-web/Catelogue/.env1
 # auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env3
+knpl-influencer-web/DealerManagement/.env6
 # auto generated wildcard
-knpl-influencer-web/FAQ1/.env1
+knpl-influencer-web/OrganizationSetup/.env3
 # auto generated wildcard
-knpl-influencer-web/Manage_FAQ/.env
+knpl-influencer-web/CompanySettings/.env4
 # auto generated wildcard
-Manage_FAQ/.env
+knpl-influencer-web/Catelogue/.env2
 # auto generated wildcard
-OrgModule/.env
+knpl-influencer-web/DealerManagement/.env7
 # auto generated wildcard
-Manage_FAQ/.env6
-knpl-influencer-web/MasterDataManagement/.env
-knpl-influencer-web/DealerManagement/.env
-
+knpl-influencer-web/DealerManagement/.env8
 # auto generated wildcard
-knpl1/MasterDataManagement/.env10
+knpl-influencer-web/DealerManagement/.env1
 # auto generated wildcard
-knpl1/ContactPainter/.env7
+knpl-complaints1/Complaints/.env1
 # auto generated wildcard
-ZSampGWCnct/GatewaySrvTest/.env3
-# auto generated wildcard
-ZSampGWCnct/GatewaySrvTest/.env4
-# auto generated wildcard
-knpl1/Training/.env1
-# auto generated wildcard
-knpl1/MasterDataManagement/.env11
-# auto generated wildcard
-knpl1/ContactPainter/.env8
-# auto generated wildcard
-ZSample2/HTML5Module/.env2
-# auto generated wildcard
-knpl1/MasterDataManagement/.env12
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env13
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env9
-# auto generated wildcard
-ContactPainter/ContactPainter/.env12
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env10
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env14
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env15
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env11
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env16
-# auto generated wildcard
-knpl-influencer-web/MasterDataManagement/.env18
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env13
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env14
-# auto generated wildcard
-knpl-influencer-web/ComplaintManagement/.env1
-# auto generated wildcard
-Knpl-complaints/ComplaintManagement/.env1
-# auto generated wildcard
-Knpl-complaints/ContactPainter/.env14
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env15
-# auto generated wildcard
-Knpl-complaints/ComplaintManagement/.env2
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env1
-# auto generated wildcard
-ContactPainter/.env2
-# auto generated wildcard
-knpl-complaints/ComplaintManagement/.env1
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env3
-# auto generated wildcard
-knpl-cp/Complaints/.env1
-# auto generated wildcard
-knpl-cp/ContactPainter/.env14
-# auto generated wildcard
-knpl-complaints/ComplaintManagement/.env2
-# auto generated wildcard
-knpl-complaints/Complaints/.env3
-# auto generated wildcard
-knpl-cp/ContactPainter/.env15
-# auto generated wildcard
-knpl-cp/ContactPainter/.env16
-# auto generated wildcard
-ZSample/HTML5Module/.env1
-# auto generated wildcard
-ZSample/HTML5Module/.env2
+knpl-cp/ContactPainter/.env1
 # auto generated wildcard
 knpl-cp/ContactPainter/.env1
 # auto generated wildcard

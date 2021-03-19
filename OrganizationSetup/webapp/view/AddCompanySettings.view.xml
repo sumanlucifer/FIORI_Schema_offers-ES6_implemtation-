@@ -1,29 +1,94 @@
-<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout">
-<Page
-		title="{i18n>detailPageTitle}"
-		showNavButton="true"
-		navButtonPress=".onNavBack">
-	<l:VerticalLayout class="sapUiContentPadding" width="100%">
-		        <Label text="Disclaimer"  design="Bold"/>
-				<l:VerticalLayout id="disclaimerVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+<mvc:View controllerName="com.knpl.pragati.OrganizationSetup.controller.CompanySettings" 
+    xmlns:re="sap/ui/richtexteditor/RichTextEditor"
+    class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.ui.layout.form">
+<Page id="addCompanySettings"
+        floatingFooter="true"
+        title="Add Company Settings">
+        <VBox class="sapUiSmallMargin">
+        <f:SimpleForm id="addCompanySettingsForm"
+			editable="true"
+			layout="ColumnLayout"
+			title="Company Settings Details"
+			columnsM="2"
+			columnsL="3"
+			columnsXL="4"
+			><f:content>
+				 
+				
+            
+                <Label text="About Us"  design="Bold" required="true"/>
+                <TextArea id="about"  width="100%" rows="4"
+                maxLength="1000"
+                        value="{ 
+                                  path : '/about', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+        				placeholder="Enter About Us ..."
+        				valueStateText="About Us must not be empty." />
 
-                <Label text="AboutUs"  design="Bold"/>
-				<l:VerticalLayout id="aboutUsVerticalLayout" class="sapUiContentPadding" width="100%"></l:VerticalLayout>
+                <Label text="Disclaimer"  design="Bold" required="true"/>
+                <TextArea id="disclaimer"  width="100%" rows="4"
+                maxLength="1000"
+                            value="{ 
+                                  path : '/disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+        				placeholder="Enter Disclaimer ..."
+        				valueStateText="Disclaimer must not be empty."/>
+				
 
-                <Label text="CallCenter Number" labelFor="callcenter" design="Bold" />
-		        <Input id="callcenter" required="true" width="20%" />
+                <Label text="Call Center Number" labelFor="callcenter" design="Bold" required="true" />
+		        <Input id="callcenter"  type="Number" 
+                maxLength="10"
+                             value="{ 
+                                  path : '/callcenter', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty." />
+		
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+    
 
-        
+	
+    <footer>
+			<OverflowToolbar>
+            
+				<ToolbarSpacer/>
+                
 
-        <Button text="Add"
+                <Button text="Cancel"
+                
+						press="onCancelPress"
+						>
+					
+				</Button>
+				<Button text="Save"
+                type="Emphasized"
 						press="add"
 						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 					
 				</Button>
-               
                 
                  
-	</l:VerticalLayout>
+			</OverflowToolbar>
+		</footer>
     </Page>
 </mvc:View>

@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbxV" width="100%">
+        <f:SimpleForm id="ViewTrainingDetails" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>TrainingDetails}"/>
+
+                <Label text="{i18n>colTrainingType}"/>
+                <Text text="{oModelView>/TrainingDetails/TrainingType/TrainingType}"/>
+
+                <Label text="{i18n>colTitle}"/>
+                <Text text="{oModelView>/TrainingDetails/Title}"/>
+
+                <Label text="{i18n>colTrainingDescription}"/>
+                <Text text="{oModelView>/TrainingDetails/Description}"/>
+
+                <!-- <Label text="{i18n>colStartDate}"/>
+                <Text text="{path:'oModelView>/TrainingDetails/StartDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" -->
+
+                <Label text="{i18n>colStartTime}"/>
+                <Text text="{oModelView>/TrainingDetails/StartTime}"/>
+
+                <Label text="{i18n>colEndTime}"/>
+                <Text text="{oModelView>/TrainingDetails/EndTime}"/>
+
+                <core:Title text="{i18n>TargetGroup}"/>
+
+                <Label text="{i18n>colRewardPoints}"/>
+                <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
+
+                <Label text="{i18n>colLink}"/>
+                <Text text="{oModelView>/TrainingDetails/Url}"/>
+
+                <Label text="{i18n>colDepot}"/>
+                <Text text="{oModelView>/TrainingDetails/DepotId/Depot}"/>
+
+                <Label text="{i18n>colDivision}"/>
+                <Text text="{oModelView>/TrainingDetails/DivisionId/Division}"/>
+
+                <Label text="{i18n>colPainterType}"/>
+                <Text text="{oModelView>/TrainingDetails/PainterTypeId/PainterType}"/>
+
+                <Label text="{i18n>colPainterArcheType}"/>
+                <Text text="{oModelView>/TrainingDetails/PainterArcheTypeId/ArcheType}"/>
+
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

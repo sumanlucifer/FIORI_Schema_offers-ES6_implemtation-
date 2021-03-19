@@ -1,0 +1,60 @@
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage showFooter="true" id="dynamicPageId" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                   <Title text="{ComplaintType/ComplaintType}"/>
+                </f:heading>
+                	<f:breadcrumbs>
+						<Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
+                        <Link text="{i18n>worklistTitle}" press="onNavBack"/>
+                    </Breadcrumbs>
+					</f:breadcrumbs>
+                	<f:expandedContent>
+						<Label text="{ComplaintCode}"/>
+					</f:expandedContent>
+					<f:snappedContent>
+						<Label text="{ComplaintCode}"/>
+					</f:snappedContent>
+					<f:snappedTitleOnMobile>
+						<Title text="{ComplaintType/ComplaintType}"/>
+					</f:snappedTitleOnMobile>
+            </f:DynamicPageTitle>
+        </f:title>
+        	<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="false">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+							<ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
+							<ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
+							
+						</layout:VerticalLayout>
+
+						 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
+                                <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                        </layout:VerticalLayout>
+                        <layout:VerticalLayout>
+                            <Label text="{i18n>Status}:"/>
+							<ObjectStatus
+                                class="sapMObjectStatusLarge"
+                                text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"
+                                state="None" />
+							
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+			</f:header>
+        <f:content>
+            <VBox id="idVbx" renderType="Bare">
+            
+            </VBox>
+        </f:content>
+        <f:footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
+                    <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
+            </Toolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
