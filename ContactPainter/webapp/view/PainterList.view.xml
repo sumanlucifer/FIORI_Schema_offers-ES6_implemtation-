@@ -1,4 +1,13 @@
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+<mvc:View height="100%"
+    xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.ContactPainter.controller.PainterList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -12,16 +21,6 @@
                 <f:content>
                     <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Name" visibleInFilterBar="true">
-                                                                                                                                                                            <fb:control>
-                                                                                                                                                                                <SearchField id="searchField" width="50%" placeholder="Search for..." value="{oModelView>/searchBar}" enableSuggestions="true" search=".onSearch" suggestionItems="{
-                                                                                                                                                                                        				path: '/PainterSet'
-                                                                                                                                                                                        			}">
-                                                                                                                                                                                    <SuggestionItem text="{Name}"/>
-                                                                                                                                                                                </SearchField>
-                                                                                                                                                                                
-                                                                                                                                                                            </fb:control>
-                                                                                                                                                                        </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>Enter} {i18n>AgeGroup}" id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
@@ -29,13 +28,14 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="RegistrationStatus" label="{i18n>RegistrationDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <!-- <ComboBox id="cmbxRegDate" items="{path:'/PainterSet',sorter:{path:'CreatedAt',group:true,descending:true}}" selectedKey="{oModelView>/filterBar/CreatedAt}">
-                                                                                                                                                    <core:Item text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" key="{CreatedAt}"/>
-                                                                                                            
-                                                                                                                                                </ComboBox> -->
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelView>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -52,7 +52,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Dealers,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Dealers,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
@@ -104,10 +104,14 @@
                     <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
                             <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
-                            <Text text="{MembershipCard}"/>
+                            <VBox width="100%" >
+                                <Text text="{MembershipCard}" visible="{= ${MembershipCard} !== null }"/>
+                                <Button width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
+                            </VBox>
+                            
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{Mobile}"/>
-                            <Text />
+                            <Text text="{PainterType/PainterType}" />
                             <!-- <Text text="{AgeGroup/AgeGroup}"/> -->
                             <Text text="{PrimaryDealerDetails/DealerName}"/>
                             <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/>
