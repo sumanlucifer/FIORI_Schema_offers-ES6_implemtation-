@@ -35,6 +35,7 @@
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
                     <m:ObjectStatus title="{i18n>AgeGroup}" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}"/>
+                     <m:ObjectStatus title="{i18n>TotalPoints}" text="{path:'RewardPoints' }"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
                     <m:ObjectStatus title="{i18n>Address}" text="{parts:['PainterAddress/AddressLine1','PainterAddress/CityDetails/City','PainterAddress/StateDetails/State'], formatter:'.fmtAddress' }"/>

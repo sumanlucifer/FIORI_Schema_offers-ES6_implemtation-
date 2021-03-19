@@ -54,7 +54,8 @@ sap.ui.define(
             busy: false,
             filterBar: {
               AgeGroupId: "",
-              CreatedAt: null,
+              StartDate: null,
+              EndDate: null,
               RegistrationStatus: "",
               Name: "",
             },
@@ -93,7 +94,6 @@ sap.ui.define(
           return sLetter;
         },
         onFilter: function (oEvent) {
-          console.log("On FIlter");
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelView")
@@ -101,16 +101,27 @@ sap.ui.define(
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
-              console.log(oViewFilter[prop]);
               if (prop === "AgeGroupId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
                 );
-              } else if (prop === "CreatedAt") {
+              } else if (prop === "StartDate") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                  new Filter(
+                    "CreatedAt",
+                    FilterOperator.GE,
+                    new Date(oViewFilter[prop])
+                  )
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "EndDate") {
+                aFlaEmpty = false;
+                var oDate = new Date(oViewFilter[prop]);
+                oDate.setDate(oDate.getDate() + 1);
+                aCurrentFilterValues.push(
+                  new Filter("CreatedAt", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "Name") {
@@ -179,7 +190,8 @@ sap.ui.define(
           var aCurrentFilterValues = [];
           var aResetProp = {
             AgeGroupId: "",
-            CreatedAt: null,
+            StartDate: null,
+            EndDate: null,
             RegistrationStatus: "",
             searchBar: "",
           };
@@ -377,6 +389,7 @@ sap.ui.define(
             prop: window.encodeURIComponent(sPath),
           });
         },
+
         onPressEditPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           var sPath = oEvent
@@ -390,6 +403,29 @@ sap.ui.define(
           oRouter.navTo("RouteProfile", {
             mode: "edit",
             prop: window.encodeURIComponent(sPath),
+          });
+        },
+        onGenMemId: function (oEvent) {
+          var oBject = oEvent.getSource().getBindingContext().getObject();
+          var oView = this.getView();
+          var oDataModel = oView.getModel();
+          oDataModel.read("/GenerateMembershipId", {
+            urlParameters: {
+              PainterId: oBject["Id"],
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData["Status"]) {
+                    MessageBox.success((oData["Message"]));
+                    oDataModel.refresh();
+                } else {
+                    MessageBox.information((oData["Message"]))
+                }
+              }
+            },
+            error: function () {
+              MessageBox.error("Unable to create the Membership Id due to server error.");
+            },
           });
         },
         onDeactivate: function (oEvent) {

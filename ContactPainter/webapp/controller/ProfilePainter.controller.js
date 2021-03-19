@@ -295,7 +295,7 @@ sap.ui.define(
               oModel.setProperty("/" + k, "");
             }
           }
-          
+
           oModel.refresh(true);
           oControlModel.refresh(true);
           promise.resolve();
@@ -484,7 +484,6 @@ sap.ui.define(
           //IdTblComplaints
         },
         onLoyaltySelChange: function (oEvent) {
-          
           var sKey = oEvent.getParameter("item").getKey();
           if (sKey == "0") {
           } else {
@@ -935,7 +934,6 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
-          
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -1007,16 +1005,22 @@ sap.ui.define(
           oModelCtrl.setProperty("/PainterAddDet/ConfrmAccNum", "");
         },
         fmtLowerCase: function (mParam) {
-          var sLetter = "";
+          var sStatus = "";
           if (mParam) {
-            sLetter = mParam
-              .toLowerCase()
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
+            sStatus = mParam;
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                aCharStatus.indexOf("_") + 1
+              ].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
           }
 
-          return sLetter;
+          return sStatus;
         },
 
         _save: function () {
