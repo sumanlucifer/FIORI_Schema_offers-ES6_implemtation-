@@ -55,7 +55,7 @@ sap.ui.define(
           oRouter
             .getRoute("worklist")
             .attachMatched(this._onRouteMatched, this);
-          console.log("Init View");
+          //console.log("Init View");
         },
         _onRouteMatched: function () {
           this._InitData();
@@ -114,12 +114,12 @@ sap.ui.define(
           }
         },
         onFilter: function () {
-          console.log("On FIlter");
+         
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelControl")
             .getProperty("/filterBar");
-          console.log(oViewFilter);
+          
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
@@ -226,7 +226,7 @@ sap.ui.define(
         },
         onComplaintsChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
-          console.log(sKey);
+          
           var oView = this.getView();
           var oCmbxSubType = oView.byId("idFileSubType");
           var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
@@ -363,7 +363,7 @@ sap.ui.define(
          * @public
          */
         onUpdateFinished: function (oEvent) {
-          console.log("event");
+          
           // update the worklist's object counter after the table update
           var sTitle,
             oTable = oEvent.getSource(),
@@ -430,7 +430,7 @@ sap.ui.define(
             .getBindingContext()
             .getPath()
             .substr(1);
-          console.log(sPath);
+         
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteEditCmp", {
             prop: window.encodeURIComponent(sPath),

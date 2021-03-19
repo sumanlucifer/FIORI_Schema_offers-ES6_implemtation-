@@ -129,7 +129,7 @@ sap.ui.define(
           );
           var othat = this;
           var oData = this.getView().getModel();
-          console.log(oPayLoad);
+         // console.log(oPayLoad);
           oData.create("/PainterComplainsSet", oPayLoad, {
             success: function (oData) {
               MessageToast.show("Complaint Sucessfully Created");

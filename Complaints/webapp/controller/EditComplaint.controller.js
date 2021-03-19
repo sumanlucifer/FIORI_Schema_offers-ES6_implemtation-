@@ -78,7 +78,7 @@ sap.ui.define(
           var oView = this.getView();
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
 
-          console.log(oProp);
+          //console.log(oProp);
 
           this._initData(oProp);
         },
@@ -138,7 +138,7 @@ sap.ui.define(
           oView.getModel().read("/" + oProp, {
             success: function (data) {
               var oViewModel = new JSONModel(data);
-              console.log(data);
+              //console.log(data);
               oView.setModel(oViewModel, "oModelView");
               othat._setInitData();
             },
@@ -225,7 +225,7 @@ sap.ui.define(
               }
             },
             error: function () {
-              console.log(oData);
+              
             },
           });
         },
@@ -285,7 +285,7 @@ sap.ui.define(
             }
           }
           var othat = this;
-          console.log(oPayload);
+          //console.log(oPayload);
           oData.update(sPath, oPayload, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
