@@ -42,7 +42,7 @@ sap.ui.define([
                 tableNoDataTextVideo: this.getResourceBundle().getText("tableNoDataTextVideo"),
                 tableBusyDelay: 0,
                 filterBar: {
-                    StartDate: "",
+                    StartDate: null,
                     Status: "",
                     Title: ""
                 }
@@ -189,6 +189,7 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
+            debugger;
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
                     console.log(oViewFilter[prop]);
@@ -196,7 +197,8 @@ sap.ui.define([
                     if (prop === "StartDate") {
 
                         debugger;
-                        var dateValue = oViewFilter[prop].toDateString();
+                        // var dateValue = oViewFilter[prop].toDateString();
+                        var dateValue = oViewFilter[prop];
                         var pattern = "dd/MM/yyyy";
                         var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                             pattern: pattern
@@ -207,7 +209,7 @@ sap.ui.define([
 
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
-                            new Filter(prop, FilterOperator.Contains, newDate)
+                            new Filter(prop, FilterOperator.GE, oNow)
                             //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                         );
                     } else if (prop === "Status") {

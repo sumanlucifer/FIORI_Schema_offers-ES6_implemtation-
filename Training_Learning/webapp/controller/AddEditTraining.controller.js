@@ -110,7 +110,6 @@ sap.ui.define(
                         oViewModel.setProperty("/AddEditTrainingDetails", AddEditTrainingDetails);
 
                         var trainingType = this.getModel("appView").getProperty("/trainingType");
-                        debugger;
                         if (trainingType === 'ONLINE') {
                             this._showFormFragment("OnlineTraining");
                             oViewModel.setProperty("/TrainingDetails/TrainingTypeId", "1");
@@ -142,7 +141,6 @@ sap.ui.define(
                         var AddEditTrainingDetails = this.getView().getModel("i18n").getResourceBundle().getText("EditTrainingDetails");
                         oViewModel.setProperty("/AddEditTrainingDetails", AddEditTrainingDetails);
 
-                        debugger;
                         var trainingType = this.getModel("appView").getProperty("/trainingType");
 
                         var sPath = "/" + sArgId;
@@ -167,10 +165,10 @@ sap.ui.define(
                                 }
 
                                 oViewModel.setProperty("/TrainingDetails", data);
-                                // that._showFormFragment("EditTraining");
                                 if (trainingType === 'ONLINE') {
                                     that._showFormFragment("OnlineTraining");
                                 } else {
+                                    that.setInitCity(data.StateId);
                                     that._showFormFragment("OfflineTraining");
                                 }
 
@@ -183,6 +181,53 @@ sap.ui.define(
                             }
                         });
                     }
+                },
+
+                setInitCity: function (sStateId) {
+                    this._fnbusyItems({
+                        getId: function () {
+                            return "dataRequested";
+                        }
+                    });
+                    var sKey = this.getModel().createKey("/MasterStateSet", {
+                        Id: sStateId
+                    });
+                    var that = this;
+                    this.getModel().read(sKey, {
+                        success: function (data) {
+                            that.bindCityCtrl(data.Id);
+                        }
+                    })
+                },
+
+                bindCityCtrl: function (StateId) {
+
+                    var oCtrl = this.getView().byId("cmbCity");
+
+                    oCtrl.bindItems({
+                        template: new sap.ui.core.Item({
+                            key: "{Id}",
+                            text: "{City}"
+                        }),
+                        path: "/MasterCitySet",
+                        events: {
+                            dataRequested: this._fnbusyItems.bind(this),
+                            dataReceived: this._fnbusyItems.bind(this)
+                        },
+                        filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("StateId", FilterOperator.EQ, StateId)],
+                        templateShareable: true
+                    });
+
+                },
+
+                _fnbusyItems: function (oEvent) {
+                    var oViewModel = this.getModel("oModelView");
+                    if (oEvent.getId() === "dataRequested") {
+                        oViewModel.setProperty("/bCityItemsBusy", true);
+                    } else {
+                        oViewModel.setProperty("/bCityItemsBusy", false);
+                    }
+
                 },
 
                 _showFormFragment: function (sFragmentName) {
@@ -434,9 +479,9 @@ sap.ui.define(
                     }.bind(this));
                 },
 
-                handleUploadComplete: function () {
-                    this._showSuccessMsg();
-                },
+                // handleUploadComplete: function () {
+                //     this._showSuccessMsg();
+                // },
 
                 _onLoadSuccess: function (oData) {
                     // if (this.oFileUploader.getValue()) {
@@ -481,17 +526,29 @@ sap.ui.define(
                 },
 
                 onStateChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oCity = oView.byId("cmbCity"),
-                        oBindingCity,
-                        aFilter = [];
-                    if (sKey !== "") {
-                        oCity.clearSelection();
-                        oCity.setValue("");
-                        oBindingCity = oCity.getBinding("items");
-                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
-                        oBindingCity.filter(aFilter);
+                    debugger;
+                    // var sKey = oEvent.getSource().getSelectedKey();
+                    // var oView = this.getView();
+                    // var oCity = oView.byId("cmbCity"),
+                    //     oBindingCity,
+                    //     aFilter = [];
+                    // if (sKey !== "") {
+                    //     oCity.clearSelection();
+                    //     oCity.setValue("");
+                    //     oBindingCity = oCity.getBinding("items");
+                    //     aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                    //     oBindingCity.filter(aFilter);
+                    // }
+
+                    var oSelectedItem = oEvent.getSource().getSelectedItem();
+                    var oObject = oSelectedItem.getBindingContext().getObject();
+                    this.bindCityCtrl(oObject.Id);
+                    this.getModel("oModelView").setProperty("/TrainingDetails/CityId", null);
+                },
+
+                onChangeCity: function (oEvent) {
+                    if (oEvent.getParameter("itemPressed") === false) {
+                        oEvent.getSource().setValue("");
                     }
                 },
 
@@ -506,6 +563,7 @@ sap.ui.define(
                  * 
                  */
                 _fnValidation: function (data) {
+                    debugger;
                     var oReturn = {
                         IsNotValid: false,
                         sMsg: []
@@ -529,7 +587,7 @@ sap.ui.define(
                             target: "/TrainingDetails/Title"
                         });
                     } else
-                        if (data.StartDate === "") {
+                        if (data.StartDate === null) {
                             oReturn.IsNotValid = true;
                             oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TSDATE");
                             aCtrlMessage.push({
@@ -537,7 +595,7 @@ sap.ui.define(
                                 target: "/TrainingDetails/StartDate"
                             });
                         } else
-                            if (data.EndDate === "") {
+                            if (data.EndDate === null) {
                                 oReturn.IsNotValid = true;
                                 oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TEDATE");
                                 aCtrlMessage.push({
@@ -545,7 +603,7 @@ sap.ui.define(
                                     target: "/TrainingDetails/EndDate"
                                 });
                             } else
-                                if (data.EndDate && data.EndDate < data.StartDate) {
+                                if (data.EndDate <= data.StartDate) {
                                     oReturn.IsNotValid = true;
                                     oReturn.sMsg.push("MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE");
                                     aCtrlMessage.push({
@@ -597,6 +655,7 @@ sap.ui.define(
                 },
 
                 CUOperation: function (oPayload) {
+                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
@@ -628,6 +687,7 @@ sap.ui.define(
                             error: that._onLoadError.bind(that)
                         });
                     } else {
+                        
                         that.getModel().create("/TrainingSet", oClonePayload, {
                             // success: function (data) {
                             //     oViewModel.setProperty("/busy", false);

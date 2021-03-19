@@ -30,14 +30,14 @@
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
 
                 <Label text="{i18n>colState}"/>
-                <ComboBox items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectionChange="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}">
+                <ComboBox items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" change="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}">
                     <items>
                         <core:Item text="{State}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 
                 <Label text="{i18n>colCity}"/>
-                <ComboBox id="cmbCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== '' }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
+                <ComboBox id="cmbCity" busy="{oModelView>/bCityItemsBusy}" busyIndicatorDelay="0" change="onChangeCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== '' }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
                     <items>
                         <core:Item text="{City}" key="{Id}"/>
                     </items>
