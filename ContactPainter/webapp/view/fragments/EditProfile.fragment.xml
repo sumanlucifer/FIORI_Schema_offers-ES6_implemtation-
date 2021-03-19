@@ -1,4 +1,11 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
     <VBox width="100%">
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
@@ -11,10 +18,12 @@
                 <ObjectStatus state="None" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" />
                 <Label text="{i18n>PreferredLanguage}"/>
                 <ObjectStatus state="None" text="{Preference/Language/Language}"/>
-                   <Label text="{i18n>PainterType}"/>
-                <ComboBox></ComboBox>
+                <Label text="{i18n>PainterType}"/>
+                <ComboBox items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
+                    <core:Item text="{PainterType}" key="{Id}"/>
+                </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
-                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}" >
+                <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>
                         <core:Item text="{DealerName}" key="{Id}" />
                     </items>
@@ -30,12 +39,12 @@
                 <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
                 <Label text="{i18n>EmailId}"/>
                 <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
-                 <Label text="{i18n>MaritalStatus}" />
-                <ComboBox items="{/MasterMaritalStatusSet}">
+                <Label text="{i18n>MaritalStatus}" />
+                <ComboBox items="{/MasterMaritalStatusSet}" selectedKey="{path:'oModelView>/MaritalStatusId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{MaritalStatus}" key="{Id}"/>
                 </ComboBox>
                 <Label text="{i18n>Religion}" />
-                 <ComboBox items="{/MasterReligionSet}">
+                <ComboBox items="{/MasterReligionSet}" selectedKey="{path:'oModelView>/ReligionId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{Religion}" key="{Id}"/>
                 </ComboBox>
                 <Label text="{i18n>PrimaryMobileNo}"/>
@@ -44,7 +53,8 @@
                 <VBox>
                     <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
 
-                    <HBox justifyContent="End"><Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelControl>/AnotherMobField} === false }"/>
+                    <HBox justifyContent="End">
+                        <Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelControl>/AnotherMobField} === false }"/>
                     </HBox>
                     <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
                 </VBox>
@@ -56,8 +66,7 @@
                         <core:Item text="{State}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <Label
-                text="{i18n>City}" required="true"/>
+                <Label text="{i18n>City}" required="true"/>
                 <!-- <ComboBox valueStateText="Kindly select the city according to state." editable="{= ${oModelView>/PainterAddress/StateId} !== '' }" items="{path:'/MasterCitySet',sorter:{path:'City'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterAddress/CityId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" id="cmbCity" required="true">
                                     <items>
                                         <core:Item text="{City}" key="{Id}"/>
@@ -104,17 +113,17 @@
                         <core:Item text="{Potential}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                  <core:Title text="{i18n>BusinessDetails}"/>
+                <core:Title text="{i18n>BusinessDetails}"/>
                 <Label text="{i18n>BusinessCategory}" />
-                 <ComboBox items="{path:'/MasterBusinessCategorySet'}" >
+                <ComboBox items="{path:'/MasterBusinessCategorySet'}" selectedKey="{path:'oModelView>/BusinessCategoryId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{BusinessCategory}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>BusinessGroup}" />
-                <ComboBox items="{path:'/MasterBusinessGroupSet'}" >
+                <ComboBox items="{path:'/MasterBusinessGroupSet'}" selectedKey="{path:'oModelView>/BusinessGroupId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{BusinessGroup}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>ArcheType}" />
-                <ComboBox items="{/MasterArcheTypeSet}">
+                <ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'oModelView>/ArcheTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{ArcheType}" key="{Id}" />
                 </ComboBox>
 
@@ -189,7 +198,7 @@
                 <Column>
                     <Text text="{i18n>AssetName}"/>
                 </Column>
-                 <Column >
+                <Column >
                     <Text />
                 </Column>
                 <Column width="10%">

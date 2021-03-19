@@ -103,6 +103,12 @@ sap.ui.define(
               Email: "",
               JoiningDate: new Date(),
               DealerId: "",
+              PainterTypeId: "",
+              MaritalStatusId: "",
+              ReligionId: "",
+              BusinessCategoryId: "",
+              BusinessGroupId: "",
+              ArcheTypeId: ""
             },
             Preference: {
               LanguageId: "",
@@ -124,8 +130,10 @@ sap.ui.define(
             },
             PainterAddress: {
               AddressLine1: "",
+             // AddressLine2: "",
               CityId: "",
-              StateId: "",
+              StateId: ""
+              //PinCode:""
             },
             PainterSegmentation: {
               TeamSizeId: "",
@@ -345,7 +353,7 @@ sap.ui.define(
           }
           // settting the username of the painter same as the mobile number
           //oPainterData["Username"] = oPainterData["Mobile"];
-          
+
           var oPayload = Object.assign(
             {
               PainterAddress: oPainterAddress,
@@ -485,17 +493,14 @@ sap.ui.define(
             jQuery.when.apply(null, async_request).then(
               function () {
                 //promise.resolve("FileUpdated");
-                
               },
               function () {
                 //promise.resolve("FileNot Uplaoded");
-                
               }
             );
           }
           promise.resolve();
           return promise;
-         
         },
         _fileUpload: function (mParam) {
           var oUploadCollection = this.getView().byId("idUploadCollection");

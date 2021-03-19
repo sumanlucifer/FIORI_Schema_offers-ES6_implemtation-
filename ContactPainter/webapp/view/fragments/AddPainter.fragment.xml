@@ -26,7 +26,9 @@
                     <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/>
                 </VBox>
                 <Label text="{i18n>PainterType}"/>
-                <ComboBox></ComboBox>
+                <ComboBox items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterDetails/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
+                    <core:Item text="{PainterType}" key="{Id}"/>
+                </ComboBox>
                 <Label text="{i18n>AgeGroup}"/>
                 <ComboBox required="true" items="{path:'/MasterAgeGroupSet',sorter:{path:'AgeGroup'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
@@ -45,11 +47,11 @@
                 <Label text="{i18n>EmailId}"/>
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }"/>
                 <Label text="{i18n>MaritalStatus}" />
-                <ComboBox items="{/MasterMaritalStatusSet}">
+                <ComboBox items="{/MasterMaritalStatusSet}" selectedKey="{path:'oModelView>/PainterDetails/MaritalStatusId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{MaritalStatus}" key="{Id}"/>
                 </ComboBox>
                 <Label text="{i18n>Religion}" />
-                <ComboBox items="{/MasterReligionSet}">
+                <ComboBox items="{/MasterReligionSet}" selectedKey="{path:'oModelView>/PainterDetails/ReligionId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{Religion}" key="{Id}"/>
                 </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
@@ -80,6 +82,10 @@
                 </ComboBox>
                 <Label text="{i18n>Area}"/>
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <!-- <Label text="{i18n>AddressLine2}"/>
+                <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine2', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <Label text="{i18n>PinCode}"/>
+                <Input required="false" type="Number" value="{path : 'oModelView>/PainterAddress/PinCode', type : 'sap.ui.model.type.String', constraints : { minLength:1 , maxLength:10 } }"/> -->
                 <core:Title text="{i18n>SecurityQuestions}"/>
                 <Label text="{i18n>Question}"/>
                 <ComboBox required="true" items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
@@ -116,15 +122,15 @@
                 </ComboBox>
                 <core:Title text="{i18n>BusinessDetails}"/>
                 <Label text="{i18n>BusinessCategory}" />
-                <ComboBox items="{path:'/MasterBusinessCategorySet'}">
+                <ComboBox items="{path:'/MasterBusinessCategorySet'}" selectedKey="{path:'oModelView>/PainterDetails/BusinessCategoryId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{BusinessCategory}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>BusinessGroup}" />
-                <ComboBox items="{path:'/MasterBusinessGroupSet'}">
+                <ComboBox items="{path:'/MasterBusinessGroupSet'}" selectedKey="{path:'oModelView>/PainterDetails/BusinessGroupId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{BusinessGroup}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>ArcheType}" />
-                <ComboBox items="{/MasterArcheTypeSet}">
+                <ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'oModelView>/PainterDetails/ArcheTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{ArcheType}" key="{Id}" />
                 </ComboBox>
             </f:content>

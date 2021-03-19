@@ -74,7 +74,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+            "AgeGroup,PainterType,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -255,6 +255,12 @@ sap.ui.define(
             "Email",
             "Mobile",
             "Name",
+            "PainterTypeId",
+            "MaritalStatusId",
+            "ReligionId",
+            "BusinessCategoryId",
+            "BusinessGroupId",
+            "ArcheTypeId",
             "PainterAddress/AddressLine1",
             "PainterAddress/CityId",
             "PainterAddress/StateId",
@@ -289,7 +295,7 @@ sap.ui.define(
               oModel.setProperty("/" + k, "");
             }
           }
-          console.log(oModel);
+          
           oModel.refresh(true);
           oControlModel.refresh(true);
           promise.resolve();
@@ -478,7 +484,7 @@ sap.ui.define(
           //IdTblComplaints
         },
         onLoyaltySelChange: function (oEvent) {
-          console.log(oEvent.getSource().getSelectedItem());
+          
           var sKey = oEvent.getParameter("item").getKey();
           if (sKey == "0") {
           } else {
@@ -929,7 +935,7 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
-          console.log(oModelView);
+          
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
