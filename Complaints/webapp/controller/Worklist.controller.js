@@ -44,7 +44,8 @@ sap.ui.define(
             filterBar: {
               ComplaintTypeId: "",
               ComplaintSubTypeId: "",
-              CreatedAt: null,
+              StartDate: null,
+              EndDate: null,
               ComplaintStatus: "",
               Name: "",
             },
@@ -141,10 +142,22 @@ sap.ui.define(
                   )
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
-              } else if (prop === "CreatedAt") {
+              } else if (prop === "StartDate") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                  new Filter(
+                    "CreatedAt",
+                    FilterOperator.GE,
+                    new Date(oViewFilter[prop])
+                  )
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "EndDate") {
+                aFlaEmpty = false;
+                var oDate = new Date(oViewFilter[prop]);
+                oDate.setDate(oDate.getDate() + 1);
+                aCurrentFilterValues.push(
+                  new Filter("CreatedAt", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "ComplaintStatus") {
@@ -230,7 +243,8 @@ sap.ui.define(
           var aResetProp = {
             ComplaintTypeId: "",
             ComplaintSubTypeId: "",
-            CreatedAt: null,
+            StartDate: null,
+            EndDate: null,
             ComplaintStatus: "",
             Name: "",
           };
@@ -279,23 +293,22 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (sStatus) {
-          //   var sLetter = "";
-          //   if (mParam) {
-          //     sLetter = mParam
-          //       .toLowerCase()
-          //       .split(" ")
-          //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          //       .join(" ");
-          //   }
           if (sStatus) {
             sStatus = sStatus.toLowerCase();
             var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                aCharStatus.indexOf("_") + 1
+              ].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
             aCharStatus[0] = aCharStatus[0].toUpperCase();
             sStatus = aCharStatus.join("");
           }
 
           return sStatus;
         },
+
         handleSortButtonPressed: function () {
           this.getViewSettingsDialog(
             "com.knpl.pragati.Complaints.view.fragments.SortDialog"

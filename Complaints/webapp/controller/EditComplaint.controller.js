@@ -229,6 +229,33 @@ sap.ui.define(
             },
           });
         },
+        onViewAttachment: function (oEvent) {
+          var oButton = oEvent.getSource();
+          var oView = this.getView();
+          if (!this._pKycDialog) {
+            Fragment.load({
+              name:
+                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pKycDialog = oDialog;
+                oView.addDependent(this._pKycDialog);
+                this._pKycDialog.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._pKycDialog);
+            this._pKycDialog.open();
+          }
+        },
+        onPressCloseDialog: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+          this._pKycDialog.open().destroy();
+          delete this._pKycDialog;
+        },
         handleSavePress: function () {
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
@@ -263,6 +290,7 @@ sap.ui.define(
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
               oData.refresh(true);
+              othat.onNavBack();
             },
             error: function (a) {
               MessageBox.error(othat._sErrorText, {
@@ -286,6 +314,20 @@ sap.ui.define(
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("worklist", {}, true);
           }
+        },
+        fmtStatus: function (sStatus) {
+          if (sStatus) {
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1]=aCharStatus[aCharStatus.indexOf("_") + 1].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
+          }
+
+          return sStatus;
         },
       }
     );
