@@ -62,10 +62,10 @@
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="15%" id="nameColumn">
+                    <Column width="14%" id="nameColumn">
                         <Text text="{i18n>Name}"/>
                     </Column>
-                    <Column>
+                    <Column width="10%">
                         <Text text="{i18n>MembershipId}"/>
                     </Column>
                     <Column>
@@ -106,7 +106,7 @@
                             <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
                             <VBox width="100%" >
                                 <Text text="{MembershipCard}" visible="{= ${MembershipCard} !== null }"/>
-                                <Button width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
+                                <Button tooltip="Generate Membership Id" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
                             </VBox>
                             
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>

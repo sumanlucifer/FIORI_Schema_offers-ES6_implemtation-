@@ -416,7 +416,7 @@ sap.ui.define(
             success: function (oData) {
               if (oData !== null) {
                 if (oData["Status"]) {
-                    MessageBox.success((oData["Message"]));
+                    MessageBox.success("Membership Id- "+(oData["Message"])+" successfully created.");
                     oDataModel.refresh();
                 } else {
                     MessageBox.information((oData["Message"]))
