@@ -78,7 +78,7 @@ sap.ui.define(
           var oView = this.getView();
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
 
-          console.log(oProp);
+          //console.log(oProp);
 
           this._initData(oProp);
         },
@@ -138,7 +138,7 @@ sap.ui.define(
           oView.getModel().read("/" + oProp, {
             success: function (data) {
               var oViewModel = new JSONModel(data);
-              console.log(data);
+              //console.log(data);
               oView.setModel(oViewModel, "oModelView");
               othat._setInitData();
             },
@@ -225,9 +225,36 @@ sap.ui.define(
               }
             },
             error: function () {
-              console.log(oData);
+              
             },
           });
+        },
+        onViewAttachment: function (oEvent) {
+          var oButton = oEvent.getSource();
+          var oView = this.getView();
+          if (!this._pKycDialog) {
+            Fragment.load({
+              name:
+                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pKycDialog = oDialog;
+                oView.addDependent(this._pKycDialog);
+                this._pKycDialog.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._pKycDialog);
+            this._pKycDialog.open();
+          }
+        },
+        onPressCloseDialog: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+          this._pKycDialog.open().destroy();
+          delete this._pKycDialog;
         },
         handleSavePress: function () {
           var oModel = this.getView().getModel("oModelView");
@@ -258,11 +285,12 @@ sap.ui.define(
             }
           }
           var othat = this;
-          console.log(oPayload);
+          //console.log(oPayload);
           oData.update(sPath, oPayload, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
               oData.refresh(true);
+              othat.onNavBack();
             },
             error: function (a) {
               MessageBox.error(othat._sErrorText, {
@@ -286,6 +314,20 @@ sap.ui.define(
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("worklist", {}, true);
           }
+        },
+        fmtStatus: function (sStatus) {
+          if (sStatus) {
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1]=aCharStatus[aCharStatus.indexOf("_") + 1].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
+          }
+
+          return sStatus;
         },
       }
     );

@@ -37,7 +37,7 @@
                             <Label text="{i18n>Status}:"/>
 							<ObjectStatus
                                 class="sapMObjectStatusLarge"
-                                text="{ComplaintStatus}"
+                                text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"
                                 state="None" />
 							
 						</layout:VerticalLayout>
