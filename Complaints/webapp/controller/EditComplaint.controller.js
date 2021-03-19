@@ -20,6 +20,7 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "../model/formatter",
     "com/knpl/pragati/Complaints/model/customInt",
+    "com/knpl/pragati/Complaints/model/cmbxDtype2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -44,7 +45,8 @@ sap.ui.define(
     DateFormat,
     History,
     formatter,
-    customInt
+    customInt,
+    cmbxDtype2
   ) {
     "use strict";
 
@@ -76,7 +78,7 @@ sap.ui.define(
           var oView = this.getView();
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
 
-          console.log(oProp);
+          //console.log(oProp);
 
           this._initData(oProp);
         },
@@ -84,6 +86,8 @@ sap.ui.define(
           var oData = {
             modeEdit: false,
             bindProp: oProp,
+            TokenCode: true,
+            tokenCodeValue: "",
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -129,14 +133,40 @@ sap.ui.define(
         _initEditData: function (oProp) {
           var oView = this.getView();
           var oDataValue = "";
+          var othat = this;
+
           oView.getModel().read("/" + oProp, {
             success: function (data) {
               var oViewModel = new JSONModel(data);
-              console.log(data);
+              //console.log(data);
               oView.setModel(oViewModel, "oModelView");
+              othat._setInitData();
             },
             error: function () {},
           });
+        },
+        _setInitData: function () {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+
+          var sReqFields = ["TokenCode", "RewardPoints"];
+          var sValue = "",
+            sPlit;
+          for (var k of sReqFields) {
+            sValue = oModelView.getProperty("/" + k);
+            sPlit = k.split("/");
+            if (sPlit.length > 1) {
+              if (
+                toString.call(oModelView.getProperty("/" + sPlit[0])) !==
+                "[object Object]"
+              ) {
+                oModelView.setProperty("/" + sPlit[0], {});
+              }
+            }
+            if (sValue == undefined) {
+              oModelView.setProperty("/" + k, "");
+            }
+          }
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -156,12 +186,81 @@ sap.ui.define(
             return promise;
           });
         },
+        onPressTokenCode: function (oEvent) {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
+          var sTokenCode = oModelControl.getProperty("/tokenCodeValue").trim();
+          if (sTokenCode == "") {
+            MessageToast.show("Kindly enter the token code to continue");
+            return;
+          }
+
+          var oData = oView.getModel();
+
+          oData.read("/QRCodeValidationAdmin", {
+            urlParameters: {
+              qrcode: "'" + sTokenCode + "'",
+              painterid: oModelView.getProperty("/PainterId"),
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData.hasOwnProperty("Status")) {
+                  if (oData["Status"] == true) {
+                    oModelView.setProperty(
+                      "/RewardPoints",
+                      oData["RewardPoints"]
+                    );
+                    oModelControl.setProperty("/TokenCode", false);
+                    oModelView.setProperty("/TokenCode", sTokenCode);
+                    MessageToast.show(oData["Message"]);
+                  } else if (oData["Status"] == false) {
+                    oModelView.setProperty("/RewardPoints", "");
+                    oModelView.setProperty("/TokenCode", "");
+                    oModelControl.setProperty("/tokenCodeValue", "");
+                    oModelControl.setProperty("/TokenCode", true);
+                    MessageToast.show(oData["Message"]);
+                  }
+                }
+              }
+            },
+            error: function () {
+              
+            },
+          });
+        },
+        onViewAttachment: function (oEvent) {
+          var oButton = oEvent.getSource();
+          var oView = this.getView();
+          if (!this._pKycDialog) {
+            Fragment.load({
+              name:
+                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pKycDialog = oDialog;
+                oView.addDependent(this._pKycDialog);
+                this._pKycDialog.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._pKycDialog);
+            this._pKycDialog.open();
+          }
+        },
+        onPressCloseDialog: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+          this._pKycDialog.open().destroy();
+          delete this._pKycDialog;
+        },
         handleSavePress: function () {
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox, true);
-          console.log(bValidation);
           if (bValidation == false) {
             MessageToast.show(
               "Kindly input the fields in proper format to continue."
@@ -173,16 +272,25 @@ sap.ui.define(
         },
         _postDataToSave: function () {
           var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
+
           var oData = oView.getModel();
           var sPath = oView.getElementBinding().getPath();
-          var oDataValue = oView.getModel("oModelView").getData();
-
-          console.log(oDataValue);
+          var oViewData = oView.getModel("oModelView").getData();
+          var oPayload = Object.assign({}, oViewData);
+          for (var a in oPayload) {
+            if (oPayload[a] === "") {
+              oPayload[a] = null;
+            }
+          }
           var othat = this;
-          oData.update(sPath, oDataValue, {
+          //console.log(oPayload);
+          oData.update(sPath, oPayload, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
               oData.refresh(true);
+              othat.onNavBack();
             },
             error: function (a) {
               MessageBox.error(othat._sErrorText, {
@@ -206,6 +314,20 @@ sap.ui.define(
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("worklist", {}, true);
           }
+        },
+        fmtStatus: function (sStatus) {
+          if (sStatus) {
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1]=aCharStatus[aCharStatus.indexOf("_") + 1].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
+          }
+
+          return sStatus;
         },
       }
     );

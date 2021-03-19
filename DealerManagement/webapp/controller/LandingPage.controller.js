@@ -12,6 +12,15 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
+
+                // var oModel = new sap.ui.model.odata.ODataModel("/KNPL_PAINTER_API/api/v2/odata.svc/", { useBatch: true });
+                // // console.log(oModel)
+                // var oJsonModel = new JSONModel(oModel);
+                // // console.log(oJsonModel);
+                // this.getView().setModel(oJsonModel, "Json");
+
+
+
                 //Initializations
                 var oViewModel,
                     iOriginalBusyDelay,
@@ -96,13 +105,28 @@ sap.ui.define([
                 //console.log(oEvent.getSource().getBasicSearchValue());
                 var aCurrentFilterValues = [];
 
-                aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
-                aCurrentFilterValues.push(this.getInputText("idPlantCode"));
-                aCurrentFilterValues.push(this.getInputText("idDepot"));
-                aCurrentFilterValues.push(this.getInputText("idSalesGroupName"));
-                aCurrentFilterValues.push(this.getInputText("idFiscalYear"));
+                var genericSearch = oEvent.getSource().getBasicSearchValue();
+                var plantCode = this.getInputText("idPlantCode");
+                var depot = this.getInputText("idDepot");
+                var salesGroupName = this.getInputText("idSalesGroupName");
+                var fiscalYear = this.getInputText("idFiscalYear");
+                if (genericSearch == "" && plantCode == "" && depot == "" && salesGroupName == "" && fiscalYear == "") {
+                    console.log("empty");
+                }
+                else {
 
-                this.filterTable(aCurrentFilterValues);
+                    aCurrentFilterValues.push(genericSearch);
+                    aCurrentFilterValues.push(plantCode);
+                    aCurrentFilterValues.push(depot);
+                    aCurrentFilterValues.push(salesGroupName);
+                    aCurrentFilterValues.push(fiscalYear);
+                    
+
+                     this.filterTable(aCurrentFilterValues);
+
+                }
+
+                //this.filterTable(aCurrentFilterValues);
 
             },
 
@@ -112,8 +136,8 @@ sap.ui.define([
 
             filterTable: function (aCurrentFilterValues) {
                 this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-               var results=  this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-               console.log(results);
+                var results = this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
+                console.log(results);
             },
 
             getTableItems: function () {
@@ -123,32 +147,33 @@ sap.ui.define([
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
-                    var aFinFilter= new Filter({"filters":aFilters,and:false})
+                var aFinFilter = new Filter({ "filters": aFilters, and: false })
                 var aKeys = [
-                    "search","PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
+                    "search", "PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
                 ];
 
                 for (let i = 0; i < aKeys.length; i++) {
                     if (aCurrentFilterValues[i].length > 0 && aKeys[i] !== "search")
-                       // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
-                       aFilters.push(new Filter({path:aKeys[i],operator: sap.ui.model.FilterOperator.Contains,value1:aCurrentFilterValues[i].trim(),caseSensitive:false}))
+                        // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
+                        aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: aCurrentFilterValues[i].trim(), caseSensitive: false }))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
                 }
-                
+
                 return aFinFilter;
             },
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
 
-                    aFilters.push(new Filter({path:"DealerName", operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
+                aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }));
+                aFilters.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
                 for (let i = 1; i < aKeys.length; i++) {
-                   
 
-                   // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
-                    aFilters.push(new Filter({path:aKeys[i], operator:sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(),caseSensitive:false}))
-                     
+
+                    // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
+                    aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+
                 }
-                
+
 
             },
 
@@ -232,41 +257,41 @@ sap.ui.define([
                 this.presentBusyDialog();
             },
             onReset: function () {
-               
+
                 this._ResetFilterBar();
-       
+
 
             },
             _ResetFilterBar: function () {
-          var aCurrentFilterValues = [];
-          
-          var aResetProp = {
-            PlantCode: "",
-            Depot: "",
-            SalesGroupName: "",
-            FiscalYear: ""
-          };
-          var oViewModel = this.getView().getModel();
-          oViewModel.setProperty("/filterBar", aResetProp);
-          
-          var oTable = this.byId("idDealerTable");
-          var oBinding = oTable.getBinding("items");
-          oBinding.filter([]);
-          this.clearSearchFields();
+                var aCurrentFilterValues = [];
 
-        },
+                var aResetProp = {
+                    PlantCode: "",
+                    Depot: "",
+                    SalesGroupName: "",
+                    FiscalYear: ""
+                };
+                var oViewModel = this.getView().getModel();
+                oViewModel.setProperty("/filterBar", aResetProp);
 
-        clearSearchFields: function () {
-         var  plantCode= this.getView().byId("idPlantCode");
-         plantCode.setValue("");
-         var  depot= this.getView().byId("idDepot");
-         depot.setValue("");
-         var  salesGroupName= this.getView().byId("idSalesGroupName");
-         salesGroupName.setValue("");
-         var  year= this.getView().byId("idFiscalYear");
-         year.setValue("");
+                var oTable = this.byId("idDealerTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter([]);
+                this.clearSearchFields();
 
-        }
+            },
+
+            clearSearchFields: function () {
+                var plantCode = this.getView().byId("idPlantCode");
+                plantCode.setValue("");
+                var depot = this.getView().byId("idDepot");
+                depot.setValue("");
+                var salesGroupName = this.getView().byId("idSalesGroupName");
+                salesGroupName.setValue("");
+                var year = this.getView().byId("idFiscalYear");
+                year.setValue("");
+
+            }
 
             // handleSuggest: function (oEvent) {
             //     var aFilters = [];

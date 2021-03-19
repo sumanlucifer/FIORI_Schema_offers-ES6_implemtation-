@@ -71,13 +71,22 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 var sObjectId = oEvent.getParameter("arguments").dealerID;
                 dealerID = sObjectId;
+                // var oViewModel = new JSONModel({ dealerID: dealerID });
+                // //console.log(oViewModel);
+                // this.getView().setModel(oViewModel, "viewId");
+
+               this.primaryFilter();
+
                 this.KNPLModel.metadataLoaded().then(function () {
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
                     });
-                    //console.log(sObjectPath);
-                    this._bindView("/" + sObjectPath);
-                    this._bindPainterTable("/" + sObjectPath + "/Painter");
+                    // console.log(sObjectPath);
+
+                     this._bindView("/" + sObjectPath);
+                    //this._bindPainterTable("/" + sObjectPath + "/Painter");
+                    // this._bindPainterTable("/PainterSet");
+
                 }.bind(this));
                 this.dismissBusyDialog();
             },
@@ -91,8 +100,31 @@ sap.ui.define([
                 this.oPainterTableTemplate = this.oPainterTableTemplate ? this.oPainterTableTemplate : this.getView().byId("idColumnListItem");
 
                 var tableId = this.getView().byId("idPainterTable");
+
                 tableId.bindItems({ path: spath, template: this.oPainterTableTemplate.clone() });
 
+            },
+            primaryFilter: function () {
+                 var oTable = this.getView().byId("idPainterTable");
+                oTable.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("DealerId", sap.ui.model.FilterOperator.EQ, dealerID)
+                            ], and: false
+                        })
+                    ]
+                }));
+                 var oTable = this.getView().byId("idPainterTable2");
+                oTable.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("Dealers/Id", sap.ui.model.FilterOperator.EQ, dealerID)
+                            ], and: false
+                        })
+                    ]
+                }));
             },
 
             onUpdateFinished: function (oEvent) {
@@ -110,7 +142,7 @@ sap.ui.define([
                 this.getViewModel("oViewModel").setProperty("/detailPageWorklistTableTitle", sTitle);
             },
 
-            onSearch: function (oEvent) {
+            onSearchPrimary: function (oEvent) {
                 if (oEvent.getParameters().refreshButtonPressed) {
                     // Search field's 'refresh' button has been pressed.
                     // This is visible if you select any master list item.
@@ -121,13 +153,14 @@ sap.ui.define([
                     var aTableSearchState = [];
                     var sQuery = oEvent.getParameter("query");
 
+                    var aFilter=[]
+
                     if (sQuery && sQuery.length > 0) {
-                        // aTableSearchState = [new Filter("tolower(Name)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
-                        //  new Filter("tolower(MembershipCard)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'"),
-                        //     new Filter("tolower(Mobile)", FilterOperator.Contains,  "'" +sQuery.trim().toLowerCase().replace("'", "''") + "'")  ];
+                       
                         var oFilter = new Filter({
 
                             filters: [
+                               
 
                                 new Filter(
                                     "tolower(Name)",
@@ -145,15 +178,104 @@ sap.ui.define([
                                     "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
                                 )
 
-                            ]
+                            ],and: false
 
                         });
+                        aFilter.push(oFilter);
+                        
                     }
+                    var oFilter2 = new Filter({
+
+                            filters: [
+                               
+
+                                new Filter(
+                                    "DealerId",
+                                    FilterOperator.EQ,
+                                    dealerID
+                                )
+                                // new Filter(
+                                //     "Dealers/Id",
+                                //     FilterOperator.EQ,
+                                //     dealerID
+                                // )
+                               
+
+                            ],and: false
+
+                        });
+                        //var oFilter2= new Filter("DealerId",FilterOperator.EQ,dealerID);
+                    aFilter.push(oFilter2);
                     // this._applySearch(aTableSearchState);
                     var oList = this.getView().byId("idPainterTable");
                     var oBinding = oList.getBinding("items");
 
-                    oBinding.filter(oFilter);
+                    oBinding.filter(aFilter);
+                }
+            },
+            onSearchSecondary: function (oEvent) {
+                if (oEvent.getParameters().refreshButtonPressed) {
+                    // Search field's 'refresh' button has been pressed.
+                    // This is visible if you select any master list item.
+                    // In this case no new search is triggered, we only
+                    // refresh the list binding.
+                    this.onRefresh();
+                } else {
+                    var aTableSearchState = [];
+                    var sQuery = oEvent.getParameter("query");
+
+                    var aFilter=[]
+
+                    if (sQuery && sQuery.length > 0) {
+                       
+                        var oFilter = new Filter({
+
+                            filters: [
+                               
+
+                                new Filter(
+                                    "tolower(Name)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                ),
+                                new Filter(
+                                    "tolower(MembershipCard)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                ),
+                                new Filter(
+                                    "tolower(Mobile)",
+                                    FilterOperator.Contains,
+                                    "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                                )
+
+                            ],and: false
+
+                        });
+                        aFilter.push(oFilter);
+                        
+                    }
+                    var oFilter2 = new Filter({
+
+                            filters: [
+                               
+                                new Filter(
+                                    "Dealers/Id",
+                                    FilterOperator.EQ,
+                                    dealerID
+                                )
+                               
+
+                            ],and: false
+
+                        });
+                        //var oFilter2= new Filter("DealerId",FilterOperator.EQ,dealerID);
+                    aFilter.push(oFilter2);
+                    // this._applySearch(aTableSearchState);
+                    var oList = this.getView().byId("idPainterTable2");
+                    var oBinding = oList.getBinding("items");
+
+                    oBinding.filter(aFilter);
                 }
             },
 
@@ -165,6 +287,7 @@ sap.ui.define([
             onRefresh: function () {
                 var oTable = this.byId("idPainterTable");
                 oTable.getBinding("items").refresh();
+                //this.primaryFilter();
             },
 
             _applySearch: function (aTableSearchState) {
@@ -268,7 +391,7 @@ sap.ui.define([
                 //console.log(removeSet);
                 function onYes() {
                     var oModel = this.getView().getModel();
-                    var that=this;
+                    var that = this;
                     oModel.callFunction(
                         "/ChangePainterLinkStatus", {
                         method: "GET",
@@ -277,13 +400,13 @@ sap.ui.define([
                             DealerId: dealerID,
 
                         },
-                         success: function () {  that.onRemoveSuccess("idPainterTable") }, 
-                         error: function (oError) {
-                            
+                        success: function () { that.onRemoveSuccess("idPainterTable") },
+                        error: function (oError) {
+
 
                         }
-                       
-                        
+
+
                     });
 
 

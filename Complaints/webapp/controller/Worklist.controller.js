@@ -44,7 +44,8 @@ sap.ui.define(
             filterBar: {
               ComplaintTypeId: "",
               ComplaintSubTypeId: "",
-              CreatedAt: null,
+              StartDate: null,
+              EndDate: null,
               ComplaintStatus: "",
               Name: "",
             },
@@ -54,7 +55,7 @@ sap.ui.define(
           oRouter
             .getRoute("worklist")
             .attachMatched(this._onRouteMatched, this);
-          console.log("Init View");
+          //console.log("Init View");
         },
         _onRouteMatched: function () {
           this._InitData();
@@ -113,12 +114,12 @@ sap.ui.define(
           }
         },
         onFilter: function () {
-          console.log("On FIlter");
+         
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelControl")
             .getProperty("/filterBar");
-          console.log(oViewFilter);
+          
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
@@ -141,10 +142,22 @@ sap.ui.define(
                   )
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
-              } else if (prop === "CreatedAt") {
+              } else if (prop === "StartDate") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.LE, oViewFilter[prop])
+                  new Filter(
+                    "CreatedAt",
+                    FilterOperator.GE,
+                    new Date(oViewFilter[prop])
+                  )
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "EndDate") {
+                aFlaEmpty = false;
+                var oDate = new Date(oViewFilter[prop]);
+                oDate.setDate(oDate.getDate() + 1);
+                aCurrentFilterValues.push(
+                  new Filter("CreatedAt", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "ComplaintStatus") {
@@ -169,9 +182,14 @@ sap.ui.define(
                           "'"
                       ),
                       new Filter(
-                        "Painter/MembershipCard",
+                        "tolower(Painter/MembershipCard)",
                         FilterOperator.Contains,
-                        oViewFilter[prop].trim().toUpperCase()
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
                       ),
                       new Filter(
                         "Painter/Mobile",
@@ -206,12 +224,27 @@ sap.ui.define(
         onResetFilterBar: function () {
           this._ResetFilterBar();
         },
+        onComplaintsChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          
+          var oView = this.getView();
+          var oCmbxSubType = oView.byId("idFileSubType");
+          var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
+          oCmbxSubType.clearSelection();
+          oCmbxSubType.setValue("");
+          if (sKey == "") {
+            oCmbxSubType.getBinding("items").filter(null);
+          } else {
+            oCmbxSubType.getBinding("items").filter(oFilter);
+          }
+        },
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
             ComplaintTypeId: "",
             ComplaintSubTypeId: "",
-            CreatedAt: null,
+            StartDate: null,
+            EndDate: null,
             ComplaintStatus: "",
             Name: "",
           };
@@ -260,26 +293,22 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (sStatus) {
-        //   var sLetter = "";
-        //   if (mParam) {
-        //     sLetter = mParam
-        //       .toLowerCase()
-        //       .split(" ")
-        //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        //       .join(" ");
-        //   }
-            if(sStatus)
-            {
-                sStatus = sStatus.toLowerCase();
-                var aCharStatus = sStatus.split("");
-                aCharStatus[0] = aCharStatus[0].toUpperCase();
-                sStatus = aCharStatus.join("");
+          if (sStatus) {
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                aCharStatus.indexOf("_") + 1
+              ].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
             }
-        
-
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
+          }
 
           return sStatus;
         },
+
         handleSortButtonPressed: function () {
           this.getViewSettingsDialog(
             "com.knpl.pragati.Complaints.view.fragments.SortDialog"
@@ -334,7 +363,7 @@ sap.ui.define(
          * @public
          */
         onUpdateFinished: function (oEvent) {
-          console.log("event");
+          
           // update the worklist's object counter after the table update
           var sTitle,
             oTable = oEvent.getSource(),
@@ -401,7 +430,7 @@ sap.ui.define(
             .getBindingContext()
             .getPath()
             .substr(1);
-          console.log(sPath);
+         
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteEditCmp", {
             prop: window.encodeURIComponent(sPath),

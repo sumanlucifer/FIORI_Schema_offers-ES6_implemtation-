@@ -50,7 +50,31 @@ sap.ui.define([
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
              this.oRouter = this.getRouter();
-		},
+        },
+        _initData: function () {
+          var oViewModel = new JSONModel({
+            pageTitle: this.getResourceBundle().getText("PainterList"),
+            tableNoDataText: this.getResourceBundle().getText(
+              "tableNoDataText"
+            ),
+            tableBusyDelay: 0,
+            prop1: "",
+            busy: false,
+            filterBar: {
+              AgeGroupId: "",
+              CreatedAt: null,
+              RegistrationStatus: "",
+              Name: "",
+            },
+
+            SortSettings: true,
+          });
+          this.setModel(oViewModel, "oModelView");
+          this.getView().getModel().refresh();
+        //   this._fiterBarSort();
+        //   this._FilterInit();
+        },
+
 
 		/* =========================================================== */
 		/* event handlers                                              */

@@ -58,7 +58,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter,DealerSalesDetails/SalesGroup'},sorter : {
+            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'DealerSalesDetails/SalesGroup '},sorter : {
             path : 'DealerName' 
          }}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
@@ -79,6 +79,9 @@
                 <columns>
                     <Column>
                         <Text text="{i18n>name}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>code}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>plantCode}"/>
@@ -110,6 +113,7 @@
                         </dependents>
                         <cells>
                             <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                             <Text text="{Id}"/>
                             <Text text="{PlantCode}"/>
                             <Text text="{DealerSalesDetails/Depot}"/>
                             <Text text="{DealerSalesDetails/SalesGroup/Id}"/>

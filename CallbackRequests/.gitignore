@@ -11,3 +11,9 @@ MasterDataManagement/.env18
 knpl-influencer-web/Tools/.env
 # auto generated wildcard
 CallbackRequests/.env1
+# auto generated wildcard
+knpl-complaints1/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1
+# auto generated wildcard
+complaints/Complaints/.env1

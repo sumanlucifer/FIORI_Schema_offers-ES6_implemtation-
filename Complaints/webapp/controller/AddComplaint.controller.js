@@ -129,7 +129,7 @@ sap.ui.define(
           );
           var othat = this;
           var oData = this.getView().getModel();
-          console.log(oPayLoad);
+         // console.log(oPayLoad);
           oData.create("/PainterComplainsSet", oPayLoad, {
             success: function (oData) {
               MessageToast.show("Complaint Sucessfully Created");
@@ -186,6 +186,12 @@ sap.ui.define(
               oView.byId(sId).setValueState("None");
             });
           }
+
+          var oCmbxSubType = oView.byId("idCompainSubType");
+          var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
+          oCmbxSubType.clearSelection();
+          oCmbxSubType.setValue("");
+          oCmbxSubType.getBinding("items").filter(oFilter);
         },
         onValueHelpRequest: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
@@ -212,13 +218,15 @@ sap.ui.define(
                     new Filter(
                       "tolower(Name)",
                       FilterOperator.Contains,
-                      "'" + sInputValue.trim().toLowerCase().replace("'", "''") + "'"
+                      "'" +
+                        sInputValue.trim().toLowerCase().replace("'", "''") +
+                        "'"
                     ),
                     new Filter(
                       "Mobile",
                       FilterOperator.Contains,
                       sInputValue.trim()
-                    )
+                    ),
                   ],
                   false
                 ),

@@ -37,7 +37,7 @@
                             <Label text="{i18n>Status}:"/>
 							<ObjectStatus
                                 class="sapMObjectStatusLarge"
-                                text="{ComplaintStatus}"
+                                text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"
                                 state="None" />
 							
 						</layout:VerticalLayout>
@@ -46,7 +46,7 @@
 			</f:header>
         <f:content>
             <VBox id="idVbx" renderType="Bare">
-                           
+            
             </VBox>
         </f:content>
         <f:footer>

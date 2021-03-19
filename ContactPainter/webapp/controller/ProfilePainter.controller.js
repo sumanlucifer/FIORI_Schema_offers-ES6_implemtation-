@@ -74,7 +74,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Assets/AssetTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+            "AgeGroup,PainterType,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -93,24 +93,19 @@ sap.ui.define(
             iCtbar: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
-            ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value",
-            Search:{
-                Referral:"",
-                Offers:"",
-                Complaints:""
-            }
+            ProfilePic:
+              "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
+            Search: {
+              Referral: "",
+              Offers: "",
+              Complaints: "",
+            },
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
-          var oDataValue = this.getView()
-            .getModel()
-            .getObject("/" + oProp, {
-              expand:
-                "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,Assets",
-            });
 
           this._initFilerForTables();
         },
@@ -185,7 +180,7 @@ sap.ui.define(
 
           var oDataValue = oView.getModel().getObject("/" + sPath, {
             expand:
-              "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Assets,Dealers",
+              "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers",
           });
           // setting the value property for the date this will help in resolving the date validation
           // at the time of calling the validation function
@@ -260,6 +255,12 @@ sap.ui.define(
             "Email",
             "Mobile",
             "Name",
+            "PainterTypeId",
+            "MaritalStatusId",
+            "ReligionId",
+            "BusinessCategoryId",
+            "BusinessGroupId",
+            "ArcheTypeId",
             "PainterAddress/AddressLine1",
             "PainterAddress/CityId",
             "PainterAddress/StateId",
@@ -294,7 +295,7 @@ sap.ui.define(
               oModel.setProperty("/" + k, "");
             }
           }
-          console.log(oModel);
+
           oModel.refresh(true);
           oControlModel.refresh(true);
           promise.resolve();
@@ -335,7 +336,7 @@ sap.ui.define(
           }
           if (eTbleAssets == false) {
             MessageToast.show(
-              "Kindly save the details in the 'Asset Details' table to continue."
+              "Kindly save the details in the 'Vehicles Details' table to continue."
             );
           }
           if (bValidation == false) {
@@ -366,7 +367,7 @@ sap.ui.define(
               delete prop["editable"];
             }
           }
-          for (var prop of oPayload["Assets"]) {
+          for (var prop of oPayload["Vehicles"]) {
             if (prop.hasOwnProperty("editable")) {
               delete prop["editable"];
             }
@@ -478,8 +479,15 @@ sap.ui.define(
             oPainterId
           );
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
+          oView.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
+        },
+        onLoyaltySelChange: function (oEvent) {
+          var sKey = oEvent.getParameter("item").getKey();
+          if (sKey == "0") {
+          } else {
+          }
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
@@ -727,10 +735,10 @@ sap.ui.define(
           }
         },
         fmtAsset: function (mParam1) {
-          var sPath = "/MasterAssetTypeSet(" + mParam1 + ")";
+          var sPath = "/MasterVehicleTypeSet(" + mParam1 + ")";
           var oData = this.getView().getModel().getProperty(sPath);
           if (oData !== undefined && oData !== null) {
-            return oData["AssetType"];
+            return oData["VehicleType"];
           } else {
             return mParam1;
           }
@@ -772,7 +780,7 @@ sap.ui.define(
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
-          var oFamiDtlMdl = oModel.getProperty("/Assets");
+          var oFamiDtlMdl = oModel.getProperty("/Vehicles");
           var bFlag = true;
           if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length <= 5) {
             for (var prop of oFamiDtlMdl) {
@@ -780,7 +788,7 @@ sap.ui.define(
                 if (prop["editable"] == true) {
                   bFlag = false;
                   MessageToast.show(
-                    "Save or delete the existing data in the 'Asset Details' table before adding a new data."
+                    "Save or delete the existing data in the 'vehicle Details' table before adding a new data."
                   );
                   return;
                   break;
@@ -790,15 +798,15 @@ sap.ui.define(
           }
           if (oFamiDtlMdl.length >= 5) {
             MessageToast.show(
-              "We can only add 5 assets. Kinldy remove any existing data to add a new asset."
+              "We can only add 5 Vehicles. Kinldy remove any existing data to add a new vehicle."
             );
             bFlag = false;
             return;
           }
           if (bFlag == true) {
             oFamiDtlMdl.push({
-              AssetTypeId: "",
-              AssetName: "",
+              VehicleTypeId: "",
+              VehicleName: "",
               editable: true,
             });
             oModelControl.setProperty("/EditTb2AST", true);
@@ -828,7 +836,7 @@ sap.ui.define(
           var oCells = oEvent.getSource().getParent().getParent();
           var oValidator = new Validator();
           var cFlag = oValidator.validate(oCells);
-          var oCheckProp = ["AssetTypeId", "AssetName"];
+          var oCheckProp = ["VehicleTypeId", "VehicleName"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -843,7 +851,7 @@ sap.ui.define(
             oObject["editable"] = false;
           } else {
             MessageToast.show(
-              "Kindly input 'asset' values in porper format to save."
+              "Kindly input 'vehicle' values in porper format to save."
             );
           }
           oModel.refresh(true);
@@ -858,7 +866,7 @@ sap.ui.define(
             .getBindingContext("oModelView")
             .getPath()
             .split("/");
-          var aFamilyDetails = oModel.getProperty("/Assets");
+          var aFamilyDetails = oModel.getProperty("/Vehicles");
           aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
           this._setASTTbleFlag();
           oModel.refresh();
@@ -867,7 +875,7 @@ sap.ui.define(
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
           var oModel = this.getView().getModel("oModelView");
-          var oFamiDtlMdl = oModel.getProperty("/Assets");
+          var oFamiDtlMdl = oModel.getProperty("/Vehicles");
           var bFlag = true;
           if (oFamiDtlMdl.length > 0) {
             for (var prop of oFamiDtlMdl) {
@@ -926,7 +934,6 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
-          console.log(oModelView);
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -998,16 +1005,22 @@ sap.ui.define(
           oModelCtrl.setProperty("/PainterAddDet/ConfrmAccNum", "");
         },
         fmtLowerCase: function (mParam) {
-          var sLetter = "";
+          var sStatus = "";
           if (mParam) {
-            sLetter = mParam
-              .toLowerCase()
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
+            sStatus = mParam;
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                aCharStatus.indexOf("_") + 1
+              ].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
           }
 
-          return sLetter;
+          return sStatus;
         },
 
         _save: function () {
