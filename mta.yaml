@@ -1,32 +1,32 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
-version: 1.0.1
+version: 1.0.0
 modules:
-- name: knpl-influencer-web-approuter
+- name: knpl-influencer-web-approuter-uat
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
   properties:
-    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-uat.${default-domain}
   requires:
-  - name: uaa_knpl-influencer-web
-  - name: knpl-influencer-web_html_repo_runtime
-  - name: destination-knpl-pragati
-  - name: portal_resources_knpl-influencer-web
+  - name: uaa_knpl-influencer-web-uat
+  - name: knpl-influencer-web_html_repo_runtime-uat
+  - name: destination-knpl-pragati-uat
+  - name: portal_resources_knpl-influencer-web-uat
     group: destinations
     properties:
       forwardAuthToken: true
       name: KNPL_PAINTER_API
-      url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
+      url: https://uat-knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
     disk-quota: 256M
     memory: 256M
     routes:
-    - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
-- name: knpl-influencer-web_ui_deployer
+    - route: knpl-painter-dev-knpl-influencer-web-approuter-uat.${default-domain}
+- name: knpl-influencer-web_ui_deployer-uat
   type: com.sap.application.content
   path: .
   requires:
-  - name: knpl-influencer-web_html_repo_host
+  - name: knpl-influencer-web_html_repo_host-uat
     parameters:
       content-target: true
   build-parameters:
@@ -100,20 +100,20 @@ modules:
   type: com.sap.application.content
   path: launchpad
   requires:
-  - name: portal_resources_knpl-influencer-web
+  - name: portal_resources_knpl-influencer-web-uat
     parameters:
       content-target: true
       service-key:
         config:
           content-endpoint: developer
         name: content-deploy-key
-  - name: knpl-influencer-web_html_repo_host
-  - name: uaa_knpl-influencer-web
+  - name: knpl-influencer-web_html_repo_host-uat
+  - name: uaa_knpl-influencer-web-uat
   parameters:
     config:
-      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
+      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-uat.${default-domain}
   deployed-after:
-  - knpl-influencer-web_ui_deployer
+  - knpl-influencer-web_ui_deployer-uat
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -195,31 +195,32 @@ modules:
     - npm run build
     supported-platforms: []
 resources:
-- name: uaa_knpl-influencer-web
+- name: uaa_knpl-influencer-web-uat
   type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: knpl-pragati-uaa
+    service-name: uat-knpl-pragati-uaa
     service-plan: application
-- name: knpl-influencer-web_html_repo_runtime
+- name: knpl-influencer-web_html_repo_runtime-uat
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
-- name: destination-knpl-pragati
-  type: org.cloudfoundry.managed-service
+- name: destination-knpl-pragati-uat
+  type: org.cloudfoundry.existing-service
   parameters:
     service: destination
     service-plan: lite
-- name: knpl-influencer-web_html_repo_host
+    service-name: uat-destination-knpl-pragati
+- name: knpl-influencer-web_html_repo_host-uat
   type: org.cloudfoundry.managed-service
   parameters:
     config:
       sizeLimit: 10
     service: html5-apps-repo
     service-plan: app-host
-- name: portal_resources_knpl-influencer-web
+- name: portal_resources_knpl-influencer-web-uat
   type: org.cloudfoundry.managed-service
   parameters:
     service: portal

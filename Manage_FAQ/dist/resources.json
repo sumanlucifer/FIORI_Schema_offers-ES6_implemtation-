@@ -10,7 +10,8 @@
             "name": "model/models.js"
         },
         {
-            "name": "model/formatter.js"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/Worklist.controller.js"
@@ -22,7 +23,7 @@
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "controller/ErrorHandler.js"
+            "name": "manifest.json"
         },
         {
             "name": "controller/BaseController.js"
@@ -61,7 +62,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/ErrorHandler-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
