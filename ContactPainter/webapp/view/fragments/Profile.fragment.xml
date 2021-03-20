@@ -24,7 +24,12 @@
                 <Text text="{PrimaryDealerDetails/DealerName}"/>
                 <Label text="{i18n>LinkSecondryDealer}"/>
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
-
+                 <Label text="{i18n>Zone}"/>
+                 <Text text="{ZoneId}"/>
+                 <Label text="{i18n>Depot}"/>
+                   <Text text="{DepotId}"/>
+                 <Label text="{i18n>Division}"/>
+                  <Text text="{DivisionId}"/>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"/>

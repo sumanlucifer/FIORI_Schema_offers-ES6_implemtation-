@@ -108,7 +108,10 @@ sap.ui.define(
               ReligionId: "",
               BusinessCategoryId: "",
               BusinessGroupId: "",
-              ArcheTypeId: ""
+              ArcheTypeId: "",
+              DivisionId:"",
+              DepotId:"",
+              ZoneId:""
             },
             Preference: {
               LanguageId: "",
