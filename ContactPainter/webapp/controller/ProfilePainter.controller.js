@@ -267,6 +267,7 @@ sap.ui.define(
                         "PainterAddress/AddressLine1",
                         "PainterAddress/CityId",
                         "PainterAddress/StateId",
+                         "PainterAddress/PinCode",
                         "Preference/SecurityQuestionId",
                         "Preference/SecurityAnswer",
                         "PainterSegmentation/TeamSizeId",

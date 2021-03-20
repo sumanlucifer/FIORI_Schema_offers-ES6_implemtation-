@@ -135,8 +135,8 @@ sap.ui.define(
               AddressLine1: "",
              // AddressLine2: "",
               CityId: "",
-              StateId: ""
-              //PinCode:""
+              StateId: "",
+              PinCode:""
             },
             PainterSegmentation: {
               TeamSizeId: "",
