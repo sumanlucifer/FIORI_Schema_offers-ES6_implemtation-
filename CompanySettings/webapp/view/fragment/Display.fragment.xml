@@ -2,8 +2,10 @@
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
+    xmlns:richtexteditor="sap.ui.richtexteditor"
 	xmlns:core="sap.ui.core">
 	<VBox class="sapUiSmallMargin">
+        
 		<f:SimpleForm 
 			editable="false"
 			layout="ColumnLayout"
@@ -24,6 +26,7 @@
 			<f:content>
             
 				<core:Title text="About Us" />
+                
 				 <TextArea  required="true" 
                 width="100%" rows="10"
         				placeholder="Enter About Us ..."
@@ -38,11 +41,11 @@
                                   }
                               }" />
 				
-				<core:Title text="Disclaimer" />
+				<core:Title text="Privacy Policy" />
 				<TextArea  required="true"  width="100%" rows="10"
-        				placeholder="Enter Disclaimer ..."
+        				placeholder="Enter Privacy policy ..."
                         editable="false"
-        				valueStateText="Disclaimer must not be empty."
+        				valueStateText="Privacy policy must not be empty."
                          value="{ 
                                   path : 'Disclaimer', 
                                   type : 'sap.ui.model.type.String', 

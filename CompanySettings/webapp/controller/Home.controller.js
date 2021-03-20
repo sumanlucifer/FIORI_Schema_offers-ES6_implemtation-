@@ -91,6 +91,7 @@ sap.ui.define([
 
             },
             handleEmptyFields: function (oEvent) {
+                console.log("empty");
                 this.onDialogPress();
             },
 
@@ -116,6 +117,9 @@ sap.ui.define([
                     this.handleEmptyFields();
                     return false;
                 }
+              
+
+               
 
                 var oData = {
                     AboutUs: oDataValue["AboutUs"],
@@ -125,10 +129,14 @@ sap.ui.define([
                 }
 
 
-                console.log(oData)
+                console.log(oData);
+                var that=this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, { success: this.onSuccessPress() });
+                oModel.update(editSet, oData, { success:function() {
+                    that.onSuccessPress()
+                } });
+                 
 
             },
             onSuccessPress: function (msg) {
@@ -158,30 +166,7 @@ sap.ui.define([
                 this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
-            // _getFormFragment: function (sFragmentName) {
-
-            //     var pFormFragment = this._formFragments[sFragmentName],
-            //         oView = this.getView();
-
-            //     if (!pFormFragment) {
-            //         pFormFragment = Fragment.load({
-            //             id: oView.getId(),
-            //             name: "com.knpl.pragati.CompanySettings.view.fragment." + sFragmentName
-            //         });
-            //         this._formFragments[sFragmentName] = pFormFragment;
-            //     }
-
-            //     return pFormFragment;
-            // },
-
-            // _showFormFragment: function (sFragmentName) {
-            //     var oPage = this.byId("CompanySettings");
-
-            //     oPage.removeAllContent();
-            //     this._getFormFragment(sFragmentName).then(function (oVBox) {
-            //         oPage.insertContent(oVBox);
-            //     });
-            // },
+            
 
             onValidate: function () {
                 // Create new validator instance

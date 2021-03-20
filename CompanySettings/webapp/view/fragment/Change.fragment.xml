@@ -2,8 +2,64 @@
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+    xmlns:richtexteditor="sap.ui.richtexteditor">
 	<VBox class="sapUiSmallMargin" >
+    <!-- <HBox class="sapUiTinyMargin">
+    <Title text="Company Settings Details" />
+    </HBox>
+
+    <HBox width="100%">
+            <VBox class="sapUiTinyMargin" width="100%">
+                 <Title text="About Us"/>
+                <richtexteditor:RichTextEditor 
+                width="100%"
+                required="true"
+                        value="{ 
+                                  path : 'AboutUs', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }">
+                </richtexteditor:RichTextEditor>
+            </VBox>
+            <VBox class="sapUiTinyMargin" width="100%">
+               <Title text="Disclaimer"/>
+                <richtexteditor:RichTextEditor
+                 width="100%"
+                 required="true"
+                 value="{ 
+                                  path : 'Disclaimer', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                      
+                                  }
+                              }">
+                 </richtexteditor:RichTextEditor>
+            </VBox>
+        </HBox>
+        <HBox class="sapUiTinyMargin" width="100%">
+            <VBox class="sapUiTinyMargin"  width="100%">
+            <Title text="Call Center Number"/>
+            <Input   required="true"  type="Text"
+                maxLength="15"
+                width="30%"
+        				placeholder="Enter Call Center Number ..."
+        				valueStateText="Call Center Number must not be empty."
+                        value="{ 
+                                  path : 'CallCenterHelpline', 
+                                  type : 'sap.ui.model.type.String', 
+                                  constraints : { 
+                                      minLength : 1
+                                      
+                                  }
+                              }"/>
+                              </VBox>
+        </HBox> -->
 		<f:SimpleForm 
 			editable="false"
 			layout="ColumnLayout"
@@ -37,10 +93,10 @@
                                   }
                               }" />
 				
-				<core:Title text="Disclaimer" />
+				<core:Title text="Privacy Policy" />
 				<TextArea  required="true"  width="100%" rows="10"
-        				placeholder="Enter Disclaimer ..."
-        				valueStateText="Disclaimer must not be empty."
+        				placeholder="Enter Privacy policy ..."
+        				valueStateText="Privacy policy must not be empty."
                          value="{ 
                                   path : 'Disclaimer', 
                                   type : 'sap.ui.model.type.String', 
