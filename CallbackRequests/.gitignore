@@ -17,3 +17,5 @@ knpl-complaints1/Complaints/.env1
 knpl-cp/ContactPainter/.env1
 # auto generated wildcard
 complaints/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1

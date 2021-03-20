@@ -81,7 +81,7 @@ sap.ui.define(
               PainterId: "",
               ComplaintTypeId: "",
               ComplaintSubtypeId: "",
-              Resolution: "",
+              ResolutionOthers: "",
               TokenCode: "",
               RewardPoints: "",
               RewardGiftId: "",
