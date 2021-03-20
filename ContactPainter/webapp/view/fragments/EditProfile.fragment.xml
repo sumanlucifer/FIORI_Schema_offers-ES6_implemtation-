@@ -25,13 +25,13 @@
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>
-                        <core:Item text="{DealerName}" key="{Id}" />
+                        <core:Item text="{DealerName} - {Id}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>LinkSecondryDealer}"/>
                 <MultiComboBox id="mcmbxDlr" selectionChange="secDealerChanged" items="{path:'/DealerSet',sorter:{path:'DealerName'} }" selectedKeys="{path:'oModelControl>/PainterAddDet/SecondryDealer'}">
                     <items>
-                        <core:Item text="{DealerName}" key="{Id}"/>
+                        <core:Item text="{DealerName} - {Id}" key="{Id}"/>
                     </items>
                 </MultiComboBox>
                  <Label text="{i18n>Zone}"/>
