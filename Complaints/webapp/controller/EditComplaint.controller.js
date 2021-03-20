@@ -285,7 +285,6 @@ sap.ui.define(
             }
           }
           var othat = this;
-          //console.log(oPayload);
           oData.update(sPath, oPayload, {
             success: function () {
               MessageToast.show("Complaint Sucessfully Updated");
