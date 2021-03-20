@@ -25,4 +25,6 @@ knpl-influencer-web/Catelogue/.env2
 # auto generated wildcard
 knpl-influencer-web/DealerManagement/.env7
 # auto generated wildcard
-knpl-influencer-web/DealerManagement/.env8
+knpl-cp/ContactPainter/.env16
+# auto generated wildcard
+knpl-cp/ContactPainter/.env2

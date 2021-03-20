@@ -74,7 +74,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+            "AgeGroup,PainterType,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -93,19 +93,20 @@ sap.ui.define(
             iCtbar: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
-            ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value",
-            Search:{
-                Referral:"",
-                Offers:"",
-                Complaints:""
-            }
+            ProfilePic:
+              "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
+            Search: {
+              Referral: "",
+              Offers: "",
+              Complaints: "",
+            },
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
-         
+
           this._initFilerForTables();
         },
         handleEditPress: function () {
@@ -254,6 +255,12 @@ sap.ui.define(
             "Email",
             "Mobile",
             "Name",
+            "PainterTypeId",
+            "MaritalStatusId",
+            "ReligionId",
+            "BusinessCategoryId",
+            "BusinessGroupId",
+            "ArcheTypeId",
             "PainterAddress/AddressLine1",
             "PainterAddress/CityId",
             "PainterAddress/StateId",
@@ -288,7 +295,7 @@ sap.ui.define(
               oModel.setProperty("/" + k, "");
             }
           }
-          console.log(oModel);
+
           oModel.refresh(true);
           oControlModel.refresh(true);
           promise.resolve();
@@ -472,8 +479,15 @@ sap.ui.define(
             oPainterId
           );
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
+          oView.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
+        },
+        onLoyaltySelChange: function (oEvent) {
+          var sKey = oEvent.getParameter("item").getKey();
+          if (sKey == "0") {
+          } else {
+          }
         },
         fmtAddress: function (mParam1, mParam2, mParam3) {
           if (mParam1) {
@@ -920,7 +934,6 @@ sap.ui.define(
           } else if (iIndex == 1) {
             oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
           }
-          console.log(oModelView);
         },
         onRbKycStatus: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -992,16 +1005,22 @@ sap.ui.define(
           oModelCtrl.setProperty("/PainterAddDet/ConfrmAccNum", "");
         },
         fmtLowerCase: function (mParam) {
-          var sLetter = "";
+          var sStatus = "";
           if (mParam) {
-            sLetter = mParam
-              .toLowerCase()
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
+            sStatus = mParam;
+            sStatus = sStatus.toLowerCase();
+            var aCharStatus = sStatus.split("");
+            if (aCharStatus.indexOf("_") !== -1) {
+              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                aCharStatus.indexOf("_") + 1
+              ].toUpperCase();
+              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+            }
+            aCharStatus[0] = aCharStatus[0].toUpperCase();
+            sStatus = aCharStatus.join("");
           }
 
-          return sLetter;
+          return sStatus;
         },
 
         _save: function () {
