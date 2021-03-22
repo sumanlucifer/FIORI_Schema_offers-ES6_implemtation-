@@ -293,20 +293,18 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (sStatus) {
-          if (sStatus) {
-            sStatus = sStatus.toLowerCase();
-            var aCharStatus = sStatus.split("");
-            if (aCharStatus.indexOf("_") !== -1) {
-              aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
-                aCharStatus.indexOf("_") + 1
-              ].toUpperCase();
-              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
-            }
-            aCharStatus[0] = aCharStatus[0].toUpperCase();
-            sStatus = aCharStatus.join("");
+            var newStatus="";
+          if (sStatus==="REGISTERED") {
+            newStatus="Registered"
+          }else if (sStatus==="INREVIEW"){
+            newStatus="In Review"
+          }else if (sStatus==="RESOLVED"){
+              newStatus="Resolved"
+          }else if (sStatus==="WITHDRAWN"){
+              newStatus="Withdrawn"
           }
 
-          return sStatus;
+          return newStatus;
         },
 
         handleSortButtonPressed: function () {
