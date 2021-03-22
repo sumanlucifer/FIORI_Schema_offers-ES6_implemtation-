@@ -48,7 +48,7 @@
                 </ComboBox>
                  <Label text="{i18n>Depot}"/>
                 <ComboBox items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Depot}" key="{Id}"/>
+                    <core:Item text="{Id}" key="{Id}"/>
                 </ComboBox>
                  <Label text="{i18n>Division}"/>
                 <ComboBox items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
@@ -66,6 +66,13 @@
                 <Label text="{i18n>Religion}" />
                 <ComboBox items="{/MasterReligionSet}" selectedKey="{path:'oModelView>/PainterDetails/ReligionId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{Religion}" key="{Id}"/>
+                </ComboBox>
+                <Label text="{i18n>HouseType}"/>
+                <ComboBox  selectedKey="{oModelView>/PainterDetails/HouseType}">
+                       <core:Item text="Own" key="OWN"/>
+                        <core:Item text="Rented" key="RENTED"/>
+                        <core:Item text="Both" key="BOTH"/>
+                    
                 </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
@@ -95,6 +102,8 @@
                 </ComboBox>
                 <Label text="{i18n>Area}"/>
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
+                <Label text="{i18n>HomeTown}" />
+                <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/Town', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
                 <Label text="{i18n>PinCode}"/>
                 <Input required="false" type="Number" value="{path : 'oModelView>/PainterAddress/PinCode', type : 'sap.ui.model.type.String' }"/>
                 <!-- <Label text="{i18n>AddressLine2}"/>

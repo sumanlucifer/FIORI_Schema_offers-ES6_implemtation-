@@ -83,7 +83,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection> -->
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Offers}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Tokens}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
