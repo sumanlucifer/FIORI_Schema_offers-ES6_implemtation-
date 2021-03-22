@@ -88,6 +88,7 @@ sap.ui.define(
               TokenCode: "",
               RewardPoints: "",
               RewardGiftId: "",
+              ResolutionOthers:""
             },
             addCompAddData: {
               MembershipCard: "",
@@ -132,7 +133,7 @@ sap.ui.define(
           );
           var othat = this;
           var oData = this.getView().getModel();
-         // console.log(oPayLoad);
+          console.log(oPayLoad);
           oData.create("/PainterComplainsSet", oPayLoad, {
             success: function (oData) {
               MessageToast.show("Complaint Sucessfully Created");
@@ -281,6 +282,15 @@ sap.ui.define(
 
           oView.setModel(this._oMessageManager.getMessageModel(), "message");
           this._oMessageManager.registerObject(oView, true);
+        },
+        onChangeResolution:function(oEvent){
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            var sKey = oEvent.getSource().getSelectedKey();
+            if(sKey!==22){
+                oModel.setProperty("/addComplaint/ResolutionOthers","");
+            }
+            console.log(oModel);
         },
         navPressBack: function () {
           var oHistory = History.getInstance();
