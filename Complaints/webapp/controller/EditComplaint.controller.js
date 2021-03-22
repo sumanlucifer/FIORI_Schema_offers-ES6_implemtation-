@@ -277,7 +277,7 @@ sap.ui.define(
             if(sKey!==22){
                 oModel.setProperty("/ResolutionOthers","");
             }
-            console.log(oModel);
+            //console.log(oModel);
         },
         _postDataToSave: function () {
           var oView = this.getView();
