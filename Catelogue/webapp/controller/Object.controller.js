@@ -157,7 +157,8 @@ sap.ui.define([
                 oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         },
         handleAllCatelogueLinkPress: function () {
-            this.oRouter.navTo("");
+            
+            this._navToHome();
         },
         createObjectMarker: function (sId, oContext) {
             var mSettings = null;

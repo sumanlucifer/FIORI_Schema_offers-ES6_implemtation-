@@ -15,7 +15,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Catelogues"/>
+                    <Title text="Catalogues"/>
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
@@ -23,7 +23,7 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                <fb:control>
@@ -77,7 +77,7 @@
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
-                        <Button text="Add Catelogue" press="onPressAdd" />
+                        <Button text="Add Catalogue" press="onPressAdd" />
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                         
@@ -94,9 +94,9 @@
                     <Column>
                         <Text text="{i18n>createdBy}"/>
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>action}"/>
-                    </Column>
+                    </Column> -->
                     <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
                                     <Text text="{i18n>GenericEdit}"/>
                                 </Column>
@@ -115,7 +115,7 @@
                             <ObjectIdentifier title="{Title}" />
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <Text text="{Status}"/>
+                            <!-- <Text text="{Status}"/> -->
                             <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
                             
                             

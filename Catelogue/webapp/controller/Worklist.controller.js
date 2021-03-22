@@ -3,8 +3,11 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    'sap/ui/core/Fragment',
+    'sap/ui/Device',
+    'sap/ui/model/Sorter',
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,Device,Sorter) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.Worklist", {
@@ -30,6 +33,8 @@ sap.ui.define([
             iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
             // keeps the search state
             this._aTableSearchState = [];
+            // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
+                this._mViewSettingsDialogs = {};
 
             // Model used to manipulate control states
             oViewModel = new JSONModel({
@@ -138,24 +143,7 @@ sap.ui.define([
         },
 
 
-        // onSearch : function (oEvent) {
-        // 	if (oEvent.getParameters().refreshButtonPressed) {
-        // 		// Search field's 'refresh' button has been pressed.
-        // 		// This is visible if you select any master list item.
-        // 		// In this case no new search is triggered, we only
-        // 		// refresh the list binding.
-        // 		this.onRefresh();
-        // 	} else {
-        // 		var aTableSearchState = [];
-        // 		var sQuery = oEvent.getParameter("query");
 
-        // 		if (sQuery && sQuery.length > 0) {
-        // 			aTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
-        // 		}
-        // 		this._applySearch(aTableSearchState);
-        // 	}
-
-        // },
 
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
@@ -163,7 +151,7 @@ sap.ui.define([
 		 * @public
 		 */
         onRefresh: function () {
-            var oTable = this.byId("table");
+            var oTable = this.byId("idCatlogueTable");
             oTable.getBinding("items").refresh();
         },
 
@@ -198,19 +186,7 @@ sap.ui.define([
                 oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
             }
         },
-        //  onSearch: function (oEvent) {
-        //         var aCurrentFilterValues = [];
 
-        //        // aCurrentFilterValues.push(oEvent.getSource().getBasicSearchValue());
-        //         aCurrentFilterValues.push(this.getInputText("idNameInput"));
-        //         aCurrentFilterValues.push(this.getInputText("idCreationDate"));
-        //         aCurrentFilterValues.push(this.getInputText("idTitle"));
-        //         aCurrentFilterValues.push(this.getInputText("idCreatedBy"));
-
-        //         console.log(aCurrentFilterValues);
-
-        //         this.filterTable(aCurrentFilterValues);
-        //     },
 
         getInputText: function (controlId) {
             return this.getView().byId(controlId).getValue();
@@ -273,7 +249,7 @@ sap.ui.define([
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter([
-                                new Filter({path:"Title", operator: FilterOperator.Contains,value1:sValue.trim(), caseSensitive: false})
+                                new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                                 // new Filter("Description", FilterOperator.Contains, sValue),
                                 // new Filter("Url", FilterOperator.Contains, sValue)
                             ], false));
@@ -293,13 +269,13 @@ sap.ui.define([
                     case "Title":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter({path:"Title",operator: FilterOperator.Contains,value1:sValue.trim(), caseSensitive: false}));
+                            aFilters.push(new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                     case "Created By":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter({path:"CreatedByDetails/Name", operator: FilterOperator.Contains,value1:sValue.trim(), caseSensitive: false}));
+                            aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                 }
@@ -318,6 +294,7 @@ sap.ui.define([
             }
         },
         onResetFilters: function () {
+
             var oModel = this.getViewModel("ViewModel");
             oModel.setProperty("/filterBar", {
                 search: "",
@@ -326,7 +303,74 @@ sap.ui.define([
                 createdBy: ""
             });
             this.getView().byId("idCreatedByInput").setValue("");
+            var oTable = this.byId("idCatlogueTable");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
         },
+        handleSortButtonPressed: function () {
+            this.getViewSettingsDialog("com.knpl.pragati.Catelogue.view.fragments.SortDialog")
+                .then(function (oViewSettingsDialog) {
+                    oViewSettingsDialog.open();
+                });
+        },
+
+        handleFilterButtonPressed: function () {
+            this.getViewSettingsDialog("com.knpl.pragati.Catelogue.view.fragments.FilterDialog")
+                .then(function (oViewSettingsDialog) {
+                    oViewSettingsDialog.open();
+                });
+        },
+        getViewSettingsDialog: function (sDialogFragmentName) {
+                var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+
+                if (!pDialog) {
+                    pDialog = Fragment.load({
+                        id: this.getView().getId(),
+                        name: sDialogFragmentName,
+                        controller: this
+                    }).then(function (oDialog) {
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+                }
+                return pDialog;
+            },
+
+            handleSortDialogConfirm: function (oEvent) {
+                var oTable = this.byId("idCatlogueTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    aSorters = [];
+
+                sPath = mParams.sortItem.getKey();
+                bDescending = mParams.sortDescending;
+                aSorters.push(new Sorter(sPath, bDescending));
+
+                // apply the selected sort and group settings
+                oBinding.sort(aSorters);
+            },
+
+            handleFilterDialogConfirm: function (oEvent) {
+                var oTable = this.byId("idCatlogueTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
+
+                var sPath = Object.keys(mParams.filterCompoundKeys)[0],
+                    sOperator = "EQ",
+                    sValue1 = mParams.filterKeys.false ? false : true,
+                    oFilter = new Filter(sPath, sOperator, sValue1);
+
+                aFilters.push(oFilter);
+
+                // apply filter settings
+                oBinding.filter(aFilters);
+            },
 
     });
 });

@@ -11,7 +11,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="Catelogue Details">
+                    <Breadcrumbs currentLocationText="Catalogue Details">
                         <Link press="onPressBreadcrumbLink" text="Catelogue" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -23,46 +23,18 @@
 			<form:SimpleForm
 				minWidth="1024"
 				maxContainerCols="2"
-                title="Add Catelogue Details" 
+                title="Add Catalogue" 
                 
 				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
                 
 				
                 <VBox >
-                <Title  text="Catelogue Details"  />
+                <Title  text="Catalogue Details"  />
                 <VBox class="sapUiMediumMargin" width="50%" >
                 <Label text="Title:" />
 		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/>
                 </VBox>
-                <!-- <UploadCollection
-			id="UploadCollectionImage"
-			multiple="false"
-			change="onChange"
-            mode="MultiSelect"
-            instantUpload="false"
-            >
-			<toolbar>
-				<OverflowToolbar id="myId">
-					<Title id="attachmentTitle" />
-					<ToolbarSpacer />
-					<Button
-						id="downloadButton"
-						text="Download"
-						press="onDownloadImage"
-						enabled="false"
-						type="Transparent" />
-					<Button
-						id="versionButton"
-						text="Upload a new version"
-						press="onVersionImage"
-						enabled="false"
-						type="Transparent" />
-					<UploadCollectionToolbarPlaceholder/>
-				</OverflowToolbar>
-			</toolbar>
-			
-		</UploadCollection> -->
-
+                
          
          
           <VBox class="sapUiMediumMargin" width="50%">

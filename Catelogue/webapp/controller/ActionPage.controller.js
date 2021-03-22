@@ -35,8 +35,8 @@ sap.ui.define([
                 busy: false,
                 action: this._action,
                 Title: "",
-                Description: "",
-                Url: "",
+                // Description: "",
+                // Url: "",
             };
             if (this._action === "edit") {
                 var oComponentModel = this.getComponentModel();
@@ -51,6 +51,7 @@ sap.ui.define([
                 this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
                 this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
             } else {
+                
                 this.oPreviewImage.setVisible(false);
             }
             this.oFileUploader.clear();
@@ -60,9 +61,9 @@ sap.ui.define([
         },
 
         onPressBreadcrumbLink: function () {
-            //this._navToHome();
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-              oRouter.navTo("");
+            this._navToHome();
+            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            //   oRouter.navTo("");
         },
 
         onPressCancel: function () {
