@@ -35,7 +35,11 @@
                 <Label text="{i18n>MembershipId}"/>
                 <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
                 <Label text="{i18n>AddResolution}"/>
-                <TextArea value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}" ></TextArea>
+                 <ComboBox  selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
+                    <items>
+                        <core:Item text="{Resolution}" key="{Id}"/>
+                    </items>
+                </ComboBox>
             </f:content>
         </f:SimpleForm>
     </VBox>

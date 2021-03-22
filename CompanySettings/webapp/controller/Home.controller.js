@@ -34,12 +34,11 @@ sap.ui.define([
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
-                
 
-                // this._formFragments = {};
 
-                // Set the initial form to be the display one
-                // this._showFormFragment("Display");
+
+
+
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -49,12 +48,12 @@ sap.ui.define([
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
 
-                var oViewModel = new JSONModel({
-                    about: "",
-                    disclaimer: "",
-                    callcenter: "",
-                });
-                this.getView().setModel(oViewModel, "oModelView");
+                // var oViewModel = new JSONModel({
+                //     AboutUs: "",
+                //     Disclaimer: "",
+                //     Callcenter: "",
+                // });
+                // this.getView().setModel(oViewModel, "oModelView");
 
 
                 var oLocaModel = new JSONModel({
@@ -91,17 +90,18 @@ sap.ui.define([
 
             },
             handleEmptyFields: function (oEvent) {
+                console.log("empty");
                 this.onDialogPress();
             },
 
             handleSavePress: function () {
 
-                console.log(DisclaimerVersion);
+                // console.log(DisclaimerVersion);
 
                 var oDataModel = this.getView().getModel();
                 var oView = this.getView();
-                var oModelView = oView.getModel("oModelView");
-                oModelView.setProperty("/busy", true);
+                // var oModelView = oView.getModel("oModelView");
+                // oModelView.setProperty("/busy", true);
                 var sEntityPath = oView.getElementBinding().getPath();
                 var oDataValue = oDataModel.getObject(sEntityPath);
                 //var oPrpReq = oModelView.getProperty("/prop2");
@@ -117,18 +117,27 @@ sap.ui.define([
                     return false;
                 }
 
+
+
+
                 var oData = {
                     AboutUs: oDataValue["AboutUs"],
                     Disclaimer: oDataValue["Disclaimer"],
                     CallCenterHelpline: oDataValue["CallCenterHelpline"],
-                    DisclaimerVersion:oDataValue["DisclaimerVersion"]+1,
+                    DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
                 }
 
 
-                console.log(oData)
+                //console.log(oData);
+                var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, { success: this.onSuccessPress() });
+                oModel.update(editSet, oData, {
+                    success: function () {
+                        that.onSuccessPress()
+                    }
+                });
+
 
             },
             onSuccessPress: function (msg) {
@@ -158,30 +167,7 @@ sap.ui.define([
                 this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
-            // _getFormFragment: function (sFragmentName) {
 
-            //     var pFormFragment = this._formFragments[sFragmentName],
-            //         oView = this.getView();
-
-            //     if (!pFormFragment) {
-            //         pFormFragment = Fragment.load({
-            //             id: oView.getId(),
-            //             name: "com.knpl.pragati.CompanySettings.view.fragment." + sFragmentName
-            //         });
-            //         this._formFragments[sFragmentName] = pFormFragment;
-            //     }
-
-            //     return pFormFragment;
-            // },
-
-            // _showFormFragment: function (sFragmentName) {
-            //     var oPage = this.byId("CompanySettings");
-
-            //     oPage.removeAllContent();
-            //     this._getFormFragment(sFragmentName).then(function (oVBox) {
-            //         oPage.insertContent(oVBox);
-            //     });
-            // },
 
             onValidate: function () {
                 // Create new validator instance

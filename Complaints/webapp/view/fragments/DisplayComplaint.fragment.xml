@@ -35,7 +35,7 @@
             <Label text="{i18n>ComplaintStatus}" required="true"/>
             <Select selectedKey="{oModelView>/ComplaintStatus}">
                 <core:Item text="Registered" key="REGISTERED"/>
-                <core:Item text="In Review" key="IN_REVIEW"/>
+                <core:Item text="In Review" key="INREVIEW"/>
                 <core:Item text="Resolved" key="RESOLVED"/>
                 <core:Item text="Withdrawn" key="WITHDRAWN"/>
             </Select>
@@ -47,7 +47,11 @@
             <Label text="{i18n>PrimaryMobileNo}"/>
             <Text text="{Painter/Mobile}"/>
             <Label text="{i18n>AddResolution}"/>
-            <TextArea value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'} }"></TextArea>
+             <ComboBox  selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
+                    <items>
+                        <core:Item text="{Resolution}" key="{Id}"/>
+                    </items>
+                </ComboBox>
             <Label text="{i18n>Attachment}" />
             <Link text="{i18n>ViewAttachment}" press="onViewAttachment" />
 

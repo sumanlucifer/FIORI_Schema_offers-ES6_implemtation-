@@ -19,6 +19,7 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
     "com/knpl/pragati/Complaints/model/customInt",
+    "com/knpl/pragati/Complaints/model/cmbxDtype2"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -41,7 +42,9 @@ sap.ui.define(
     Filter,
     FilterOperator,
     DateFormat,
-    History
+    History,
+    customInt,
+    cmbxDtype2
   ) {
     "use strict";
 
@@ -81,7 +84,7 @@ sap.ui.define(
               PainterId: "",
               ComplaintTypeId: "",
               ComplaintSubtypeId: "",
-              ResolutionOthers: "",
+              ResolutionId: "",
               TokenCode: "",
               RewardPoints: "",
               RewardGiftId: "",

@@ -48,8 +48,8 @@ sap.ui.define([
                 oData.Title = oItem.Title;
                 // oData.Description = oItem.Description;
                 // oData.Url = oItem.Url;
-                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
-                this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
+                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
+                this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
             } else {
                 this.oPreviewImage.setVisible(false);
             }
@@ -106,6 +106,27 @@ sap.ui.define([
                 this.oFileUploader.clear();
             }.bind(this));
         },
+        _updateImage: function (propertySet) {
+            var oModel = this.getComponentModel();
+            // if (this._action === "add") {
+            //     this.oFileUploader.setUploadUrl(this.sServiceURI + propertySet+"/$value?doc_type=image");
+            // }
+            if (!this.oFileUploader.getValue()) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+                return;
+            }
+            this.oFileUploader.checkFileReadable().then(function () {
+                // @ts-ignore
+                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
+                this.oFileUploader.setHttpRequestMethod("PUT");
+                this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                this.oFileUploader.upload();
+            }.bind(this), function (error) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+            }.bind(this)).then(function () {
+                this.oFileUploader.clear();
+            }.bind(this));
+        },
          _uploadPdf: function (oData) {
             var oModel = this.getComponentModel();
             if (this._action === "add") {
@@ -127,7 +148,27 @@ sap.ui.define([
                 this.oFileUploader.clear();
             }.bind(this));
         },
-
+        _updatePdf: function (propertySet) {
+            var oModel = this.getComponentModel();
+            // if (this._action === "add") {
+            //     this.oFileUploaderPdf.setUploadUrl(this.sServiceURI +propertySet+"/$value?doc_type=pdf");
+            // }
+            if (!this.oFileUploaderPdf.getValue()) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+                return;
+            }
+            this.oFileUploaderPdf.checkFileReadable().then(function () {
+                // @ts-ignore
+                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
+                this.oFileUploaderPdf.setHttpRequestMethod("PUT");
+                this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                this.oFileUploaderPdf.upload();
+            }.bind(this), function (error) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
+            }.bind(this)).then(function () {
+                this.oFileUploader.clear();
+            }.bind(this));
+        },
         handleUploadComplete: function () {
             this._showSuccessMsg();
         },
@@ -141,7 +182,7 @@ sap.ui.define([
                     Description: oViewModel.getProperty("/Title"),
                     // Url: oViewModel.getProperty("/Url")
                 };
-                console.log("Payload :"+oPayload);
+                console.log(oPayload);
                 var cFiles=[];
                 cFiles.push( this.oFileUploader.getValue());
                 cFiles.push( this.oFileUploaderPdf.getValue());
@@ -164,12 +205,12 @@ sap.ui.define([
                         });
                     } else {
                         console.log("Else");
+                        var that=this;
                         oDataModel.update("/" + this._property, oPayload, {
-                             success: function (oData, response) {
-                               // var id = oData.Id;
-                                console.log(oData);
-                                // that._uploadToolImage(oData);
-                                // that._uploadPdf(oData);
+                             success: function () {
+                               
+                                 that._updateImage(this._property);
+                                 that._updatePdf(this._property);
                             },
                             error: function (oError) {
                                 console.log("Error!");
@@ -197,11 +238,11 @@ sap.ui.define([
         },
 
         _showSuccessMsg: function () {
-            var oViewModel = this.getView().getModel("ActionViewModel");
-            oViewModel.setProperty("/busy", false);
-            var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
-            MessageToast.show(sMessage);
-            this._navToHome();
+            // var oViewModel = this.getView().getModel("ActionViewModel");
+            // oViewModel.setProperty("/busy", false);
+            // var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
+            // MessageToast.show(sMessage);
+            // this._navToHome();
         },
 
         onChangeValue: function (oEvent) {
