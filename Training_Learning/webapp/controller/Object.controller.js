@@ -86,13 +86,15 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             debugger;
             var sObjectId = oEvent.getParameter("arguments").objectId;
-            this._property = "/LearningSet" + "(" + sObjectId + ")";
+            this._property = "LearningSet" + "(" + sObjectId + ")";
             // property;
             this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
 
-            this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
-            this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
-            this.oFileUploader.clear();
+            this.oPreviewImage.setSrc("/" + this.sServiceURI + this._property + "/$value");
+            this.oFileUploader.setUploadUrl("/" + this.sServiceURI + this._property + "/$value");
+            // var ProfilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + this._property + "/$value";
+            // this.getModel("objectView").setProperty("/ProfilePic", ProfilePic);
+            // this.oFileUploader.clear();
 
             var EditVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditVideo");
             this.getModel("objectView").setProperty("/AddEditVideo", EditVideo);
@@ -145,6 +147,7 @@ sap.ui.define([
                 return;
             }
             oViewModel.setProperty("/oDetails", {
+                TrainingTypeId: 3,
                 Title: "",
                 Url: ""
             });
