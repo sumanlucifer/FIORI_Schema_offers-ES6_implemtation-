@@ -111,7 +111,8 @@ sap.ui.define(
               ArcheTypeId: "",
               DivisionId:"",
               DepotId:"",
-              ZoneId:""
+              ZoneId:"",
+              HouseType:""
             },
             Preference: {
               LanguageId: "",

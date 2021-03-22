@@ -258,6 +258,7 @@ sap.ui.define(
                         "PainterTypeId",
                         "MaritalStatusId",
                         "ReligionId",
+                        "HouseType",
                         "BusinessCategoryId",
                         "BusinessGroupId",
                         "ArcheTypeId",

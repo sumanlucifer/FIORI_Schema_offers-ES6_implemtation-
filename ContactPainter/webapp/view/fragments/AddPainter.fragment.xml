@@ -67,6 +67,13 @@
                 <ComboBox items="{/MasterReligionSet}" selectedKey="{path:'oModelView>/PainterDetails/ReligionId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }" >
                     <core:Item text="{Religion}" key="{Id}"/>
                 </ComboBox>
+                <Label text="{i18n>HouseType}"/>
+                <ComboBox  selectedKey="{oModelView>/PainterDetails/HouseType}">
+                       <core:Item text="Own" key="OWN"/>
+                        <core:Item text="Rented" key="RENTED"/>
+                        <core:Item text="Both" key="BOTH"/>
+                    
+                </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/PainterDetails/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>

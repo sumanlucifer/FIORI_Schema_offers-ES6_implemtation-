@@ -39,6 +39,8 @@
                 <Text text="{MaritalStatus/MaritalStatus}" />
                 <Label text="{i18n>Religion}" />
                 <Text text="{Religion/Religion}"/>
+                <Label text="{i18n>HouseType}"/>
+                <Text text="{path:'HouseType',formatter:'.fmtLowerCase'}" />
                 <Label required="false" text="{i18n>PrimaryMobileNo}"/>
                 <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>SecondryMobileNo}"/>
@@ -111,8 +113,9 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <ObjectIdentifier title="{RelationshipDetails/Relationship}" titleActive="true"/>
-                        <Text text="{Mobile}"/>
+                       
                         <Text text="{Name}"/>
+                         <Text text="{Mobile}"/>
                     </cells>
                 </ColumnListItem>
             </items>
