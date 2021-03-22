@@ -270,6 +270,15 @@ sap.ui.define(
             this._postDataToSave();
           }
         },
+          onChangeResolution:function(oEvent){
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            var sKey = oEvent.getSource().getSelectedKey();
+            if(sKey!==22){
+                oModel.setProperty("/ResolutionOthers","");
+            }
+            console.log(oModel);
+        },
         _postDataToSave: function () {
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");

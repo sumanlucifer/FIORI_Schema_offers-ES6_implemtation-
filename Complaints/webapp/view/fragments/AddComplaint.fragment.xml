@@ -35,11 +35,13 @@
                 <Label text="{i18n>MembershipId}"/>
                 <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
                 <Label text="{i18n>AddResolution}"/>
-                 <ComboBox  selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
+                 <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
                     <items>
                         <core:Item text="{Resolution}" key="{Id}"/>
                     </items>
                 </ComboBox>
+                <Label />
+                <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}" ></TextArea>
             </f:content>
         </f:SimpleForm>
     </VBox>
