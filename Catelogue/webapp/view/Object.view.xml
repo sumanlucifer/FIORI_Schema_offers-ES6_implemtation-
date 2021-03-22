@@ -80,7 +80,14 @@
                     <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                     
-        <ObjectAttribute title="Title" text="{Title}"/>
+        <!-- <ObjectAttribute title="Title" text="{Title}"/> -->
+         <VBox >
+                <Title  text="Catelogue Details"  />
+                <VBox class="sapUiMediumMarginTop" width="50%" >
+                <Title text="Title:"/>
+                <Text text="{Title}"/>
+                </VBox>
+                </VBox>
 		
 	
                     </uxap:ObjectPageSubSection>
@@ -100,8 +107,8 @@
 			uploadComplete=""
 			beforeUploadStarts=""
             uploadEnabled="false"
-			mode="MultiSelect">
-			<!-- <toolbar>
+            mode="MultiSelect">
+			<toolbar>
 				<OverflowToolbar id="myId">
 					<Title id="attachmentTitle" />
 					<ToolbarSpacer />
@@ -111,15 +118,10 @@
 						press="onDownloadImage"
 						enabled="false"
 						type="Transparent" />
-					<Button
-						id="versionButton"
-						text="Upload a new version"
-						press="onVersionImage"
-						enabled="false"
-						type="Transparent" />
+					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
-			</toolbar> -->
+			</toolbar>
 			<items>
 				<UploadCollectionItem
 					documentId="{documentId}"
@@ -131,8 +133,7 @@
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
-					
-					selected="{selectedImage}">
+					>
 					<attributes>
 						<ObjectAttribute
 							title="Uploaded By"
@@ -174,9 +175,9 @@
 			uploadComplete=""
 			beforeUploadStarts=""
             uploadEnabled="false"
-			
-			mode="MultiSelect">
-			<!-- <toolbar>
+            mode="MultiSelect"
+			>
+            <toolbar>
 				<OverflowToolbar id="myId1">
 					<Title id="attachmentTitle1" />
 					<ToolbarSpacer />
@@ -186,28 +187,23 @@
 						press="onDownloadPdf"
 						enabled="false"
 						type="Transparent" />
-					<Button
-						id="versionButton1"
-						text="Upload a new version"
-						press="onVersionPdf"
-						enabled="false"
-						type="Transparent" />
+					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
-			</toolbar> -->
+			</toolbar>
+			
 			<items>
 				<UploadCollectionItem
 					documentId="{documentId}"
 					fileName="{Title}"
 					mimeType="{mimeType}"
-					thumbnailUrl="{thumbnailUrl}"
+					thumbnailUrl="sap-icon://pdf-attachment"
 					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
 					enableEdit="false"
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
-					
-					selected="{selectedPdf}">
+					>
 					<attributes>
 						<ObjectAttribute
 							title="Uploaded By"
@@ -226,7 +222,9 @@
 					
 				</UploadCollectionItem>
 			</items>
-		</UploadCollection>
+		</UploadCollection> 
+        
+
 
                         </uxap:ObjectPageSubSection>
                         

@@ -30,9 +30,9 @@
 				
                 <VBox >
                 <Title  text="Catelogue Details"  />
-                <VBox class="sapUiMediumMargin">
+                <VBox class="sapUiMediumMargin" width="50%" >
                 <Label text="Title:" />
-		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="{i18n>formTitlePlaceholder}" change="onChangeValue" width="40%"/>
+		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/>
                 </VBox>
                 <!-- <UploadCollection
 			id="UploadCollectionImage"
@@ -63,7 +63,11 @@
 			
 		</UploadCollection> -->
 
-          <HBox class="fileUploaderContainer">
+         
+         
+          <VBox class="sapUiMediumMargin" width="50%">
+          
+                                            <Label text="Upload Image" class="sapUiTinyMargin"/>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
                                                 name="formToolImgUploader"
@@ -75,22 +79,31 @@
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
-                                            <Image id="idPreviewImage" width="100px" height="100px" />
-                                        </HBox>
-                                        <HBox class="fileUploaderContainer">
+                                            <Image id="idPreviewImage" width="400px" height="200px" />
+                                            
+                                             <Label text="Upload Pdf" class="sapUiTinyMargin"/>
+                                        
+                                       
                                             <u:FileUploader
                                                 id="idFormToolPdfUploader"
                                                 name="formToolPdfUploader"
                                                 width="100%"
                                                 tooltip="{i18n>fileUploaderTooltip}"
-                                                change="onChangeFile"
+                                                change="onChange"
                                                 typeMissmatch="handleTypeMissmatch"
                                                 fileType="pdf"
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
                                             <Image id="idPreviewPdf" width="100px" height="100px" />
-                                        </HBox>
+                                            
+                                        
+          </VBox>
+         
+                                           
+                                       
+
+                                        
         
         
         
