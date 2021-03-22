@@ -1,17 +1,16 @@
 {
     "resources": [
         {
-            "name": "view/Worklist.view.xml"
-        },
-        {
-            "name": "manifest.json"
+            "name": "controller/ErrorHandler.js"
         },
         {
             "name": "model/models.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "manifest.json"
+        },
+        {
+            "name": "model/formatter.js"
         },
         {
             "name": "controller/Worklist.controller.js"
@@ -23,7 +22,8 @@
             "name": "controller/NotFound.controller.js"
         },
         {
-            "name": "manifest.json"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "controller/BaseController.js"
@@ -42,7 +42,7 @@
             "merged": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/Object-dbg.controller.js",
             "isDebug": true
         },
         {
@@ -54,7 +54,7 @@
             "isDebug": true
         },
         {
-            "name": "controller/Object-dbg.controller.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
@@ -62,7 +62,7 @@
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "controller/ErrorHandler-dbg.js",
             "isDebug": true
         },
         {
@@ -81,8 +81,7 @@
             "name": "../../../../sap-ui-version.json"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "view/Worklist.view.xml"
         },
         {
             "name": "view/ObjectNotFound.view.xml"
