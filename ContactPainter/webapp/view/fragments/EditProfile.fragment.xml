@@ -63,7 +63,7 @@
                 <ComboBox  selectedKey="{oModelView>/HouseType}">
                        <core:Item text="Own" key="OWN"/>
                         <core:Item text="Rented" key="RENTED"/>
-                        <core:Item text="Both" key="BOTH"/>
+                      
                     
                 </ComboBox>
                 <Label text="{i18n>PrimaryMobileNo}"/>

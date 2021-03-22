@@ -47,11 +47,13 @@
             <Label text="{i18n>PrimaryMobileNo}"/>
             <Text text="{Painter/Mobile}"/>
             <Label text="{i18n>AddResolution}"/>
-             <ComboBox  selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
+              <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
                     <items>
                         <core:Item text="{Resolution}" key="{Id}"/>
                     </items>
                 </ComboBox>
+             <Label />
+                <TextArea visible="{= ${oModelView>/ResolutionId} === 22  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}" ></TextArea>
             <Label text="{i18n>Attachment}" />
             <Link text="{i18n>ViewAttachment}" press="onViewAttachment" />
 
