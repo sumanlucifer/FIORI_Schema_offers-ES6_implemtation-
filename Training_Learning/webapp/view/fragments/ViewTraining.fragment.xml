@@ -10,17 +10,17 @@
                 <Label text="{i18n>colTitle}"/>
                 <Text text="{oModelView>/TrainingDetails/Title}"/>
 
-                <Label text="{i18n>colTrainingDescription}"/>
-                <Text text="{oModelView>/TrainingDetails/Description}"/>
+                <Label text="{i18n>colTrainingDescription}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Text text="{oModelView>/TrainingDetails/Description}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <Label text="{i18n>colStartDateTime}"/>
-                <Text text="{oModelView>/TrainingDetails/StartDate}"/>
+                <Label text="{i18n>colStartDateTime}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Text text="{oModelView>/TrainingDetails/ViewStartDate}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <Label text="{i18n>colEndDateTime}"/>
-                <Text text="{oModelView>/TrainingDetails/EndDate}"/>
+                <Label text="{i18n>colEndDateTime}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Text text="{oModelView>/TrainingDetails/ViewEndDate}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <Label text="{i18n>colRewardPoints}"/>
-                <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
+                <Label text="{i18n>colRewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Text text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
                 <core:Title text="{i18n>TargetGroup}"/>
 
@@ -28,10 +28,10 @@
                 <Text text="{oModelView>/TrainingDetails/Url}"/>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/Depot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/Division/DepotId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/Division}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/Division/Division}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/Description}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>

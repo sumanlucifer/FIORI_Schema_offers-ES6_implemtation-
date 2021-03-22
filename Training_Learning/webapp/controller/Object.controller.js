@@ -147,6 +147,7 @@ sap.ui.define([
                 return;
             }
             oViewModel.setProperty("/oDetails", {
+                TrainingTypeId: 3,
                 Title: "",
                 Url: ""
             });

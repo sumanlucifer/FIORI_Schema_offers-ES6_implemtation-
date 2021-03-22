@@ -134,10 +134,10 @@
                     ]
                 },
                 {
-                    "name": "RouteAddEditT",
+                    "name": "RouteAddT",
                     "pattern": "TrainingManage/{mode}/{id}",
                     "target": [
-                        "TargetRouteAddEditT"
+                        "TargetRouteAddT"
                     ]
                 },
                 {
@@ -161,12 +161,12 @@
                     "viewLevel": 2,
                     "title": "{i18n>objectViewTitle}"
                 },
-                "TargetRouteAddEditT": {
+                "TargetRouteAddT": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "AddEditTraining",
-                    "viewName": "AddEditTraining"
+                    "viewId": "AddTraining",
+                    "viewName": "AddTraining"
                 },
                 "TargetTrainingTab": {
                     "viewType": "XML",

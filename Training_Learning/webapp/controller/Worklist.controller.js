@@ -196,7 +196,6 @@ sap.ui.define([
 
                     if (prop === "StartDate") {
 
-                        debugger;
                         // var dateValue = oViewFilter[prop].toDateString();
                         var dateValue = oViewFilter[prop];
                         var pattern = "dd/MM/yyyy";
@@ -269,7 +268,6 @@ sap.ui.define([
                 debugger;
                 if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
                     for (var i = 0; i < endFilter.aFilters.length; i++) {
-                        // var oFilter = endFilter.aFilters[i];
                         if (endFilter.aFilters[i].sPath === "StartDate") {
                             delete endFilter.aFilters[i];
                         }
@@ -290,7 +288,7 @@ sap.ui.define([
         onAddOnlineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteAddEditT", {
+                oRouter.navTo("RouteAddT", {
                 mode: "add",
                 id: "null",
             });
@@ -299,7 +297,7 @@ sap.ui.define([
         onAddOfflineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteAddEditT", {
+            oRouter.navTo("RouteAddT", {
                 mode: "add",
                 id: "null",
             });
@@ -333,8 +331,8 @@ sap.ui.define([
             console.log(sPath);
 
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteAddEditT", {
-                mode: "edit",
+            oRouter.navTo("RouteTrainingTab", {
+                mode: "view",
                 id: window.encodeURIComponent(sPath),
             });
         },
@@ -345,8 +343,8 @@ sap.ui.define([
             console.log(sPath);
 
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteAddEditT", {
-                mode: "edit",
+            oRouter.navTo("RouteTrainingTab", {
+                mode: "view",
                 id: window.encodeURIComponent(sPath),
             });
         },
@@ -371,15 +369,24 @@ sap.ui.define([
         },
 
         onAddVideo: function (oEvent) {
+            this.getModel("appView").setProperty("/trainingType", "VIDEO");
             this.getRouter().navTo("createObject");
         },
 
         onEditVideo: function (oEvent) {
+            this.getModel("appView").setProperty("/trainingType", "VIDEO");
             this._showObject(oEvent.getSource());
         },
 
         onListItemPressVideo: function (oEvent) {
-            // this._showObject(oEvent.getSource());
+            this.getModel("appView").setProperty("/trainingType", "VIDEO");
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            console.log(sPath);
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteTrainingTab", {
+                mode: "view",
+                prop: window.encodeURIComponent(sPath),
+            });
         },
 
         onDeleteVideo: function (oEvent) {
