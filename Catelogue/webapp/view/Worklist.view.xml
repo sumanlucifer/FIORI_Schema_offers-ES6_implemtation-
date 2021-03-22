@@ -7,6 +7,7 @@
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:vm="sap.ui.comp.variants"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:semantic="sap.f.semantic">
 
 <f:DynamicPage headerExpanded="true">
@@ -22,33 +23,36 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idNameInput" placeholder="Search" showSuggestion="true" showValueHelp="true">
-                                       
-                                    </Input>
+                               <fb:control>
+                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Creation Date" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idCreationDate" showSuggestion="false">
-                                        
-                                    </Input>
+                               <fb:control>
+                                    <DatePicker id="idCreationDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy" placeholder="{i18n>creationDateFilterPlaceholder}"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="Title" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/CreatedAt', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
-                                       
-        
+                                 <fb:control>
+                                    <Input id="idTitleInput" data:filterName="Title" value="{ViewModel>/filterBar/title}" placeholder="{i18n>titleFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idCreatedBy" placeholder="" showSuggestion="false">
-                                       
+                                    <Input
+                                        id="idCreatedByInput"
+                                        data:filterName="Created By"
+                                        value="{Viewmodel>/filterBar/createdBy}"
+                                        placeholder="{i18n>createdByFilterPlaceholder}"
+                                        showSuggestion="false"
+                                        autocomplete="false"
+                                        showValueHelp="false"
+						
+                                       >
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>

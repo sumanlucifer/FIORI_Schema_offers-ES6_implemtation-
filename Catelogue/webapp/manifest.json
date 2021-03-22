@@ -166,7 +166,7 @@
                     "viewType": "XML",
                     "transition": "slide",
                     "viewName": "ActionPage",
-                    "viewLevel": 1,
+                    "viewLevel": 2,
                     "viewId": "actionPage"
                 }
             }
