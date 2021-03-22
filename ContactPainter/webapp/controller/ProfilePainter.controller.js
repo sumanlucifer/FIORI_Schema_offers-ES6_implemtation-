@@ -265,6 +265,7 @@ sap.ui.define(
                         "DepotId",
                         "ZoneId",
                         "PainterAddress/AddressLine1",
+                        "PainterAddress/Town",
                         "PainterAddress/CityId",
                         "PainterAddress/StateId",
                          "PainterAddress/PinCode",
