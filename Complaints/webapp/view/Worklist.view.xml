@@ -40,7 +40,7 @@
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ComplaintStatus}">
                                         <core:Item text="Registered" key="REGISTERED"/>
-                                        <core:Item text="In Review" key="IN_REVIEW"/>
+                                        <core:Item text="In Review" key="INREVIEW"/>
                                         <core:Item text="Resolved" key="RESOLVED"/>
                                         <core:Item text="Withdrawn" key="WITHDRAWN"/>
                                     </ComboBox>
