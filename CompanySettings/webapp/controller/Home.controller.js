@@ -34,12 +34,11 @@ sap.ui.define([
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
-                
 
-                // this._formFragments = {};
 
-                // Set the initial form to be the display one
-                // this._showFormFragment("Display");
+
+
+
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -49,12 +48,12 @@ sap.ui.define([
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
 
-                var oViewModel = new JSONModel({
-                    about: "",
-                    disclaimer: "",
-                    callcenter: "",
-                });
-                this.getView().setModel(oViewModel, "oModelView");
+                // var oViewModel = new JSONModel({
+                //     AboutUs: "",
+                //     Disclaimer: "",
+                //     Callcenter: "",
+                // });
+                // this.getView().setModel(oViewModel, "oModelView");
 
 
                 var oLocaModel = new JSONModel({
@@ -97,12 +96,12 @@ sap.ui.define([
 
             handleSavePress: function () {
 
-                console.log(DisclaimerVersion);
+                // console.log(DisclaimerVersion);
 
                 var oDataModel = this.getView().getModel();
                 var oView = this.getView();
-                var oModelView = oView.getModel("oModelView");
-                oModelView.setProperty("/busy", true);
+                // var oModelView = oView.getModel("oModelView");
+                // oModelView.setProperty("/busy", true);
                 var sEntityPath = oView.getElementBinding().getPath();
                 var oDataValue = oDataModel.getObject(sEntityPath);
                 //var oPrpReq = oModelView.getProperty("/prop2");
@@ -117,26 +116,28 @@ sap.ui.define([
                     this.handleEmptyFields();
                     return false;
                 }
-              
 
-               
+
+
 
                 var oData = {
                     AboutUs: oDataValue["AboutUs"],
                     Disclaimer: oDataValue["Disclaimer"],
                     CallCenterHelpline: oDataValue["CallCenterHelpline"],
-                    DisclaimerVersion:oDataValue["DisclaimerVersion"]+1,
+                    DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
                 }
 
 
-                console.log(oData);
-                var that=this;
+                //console.log(oData);
+                var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, { success:function() {
-                    that.onSuccessPress()
-                } });
-                 
+                oModel.update(editSet, oData, {
+                    success: function () {
+                        that.onSuccessPress()
+                    }
+                });
+
 
             },
             onSuccessPress: function (msg) {
@@ -166,7 +167,7 @@ sap.ui.define([
                 this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
-            
+
 
             onValidate: function () {
                 // Create new validator instance

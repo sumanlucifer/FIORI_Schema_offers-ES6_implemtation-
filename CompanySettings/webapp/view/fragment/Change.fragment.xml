@@ -5,7 +5,7 @@
 	xmlns:core="sap.ui.core"
     xmlns:richtexteditor="sap.ui.richtexteditor">
 	<VBox class="sapUiSmallMargin" >
-    <!-- <HBox class="sapUiTinyMargin">
+    <HBox class="sapUiTinyMargin">
     <Title text="Company Settings Details" />
     </HBox>
 
@@ -26,7 +26,7 @@
                 </richtexteditor:RichTextEditor>
             </VBox>
             <VBox class="sapUiTinyMargin" width="100%">
-               <Title text="Disclaimer"/>
+               <Title text="Privacy Policy"/>
                 <richtexteditor:RichTextEditor
                  width="100%"
                  required="true"
@@ -59,68 +59,7 @@
                                   }
                               }"/>
                               </VBox>
-        </HBox> -->
-		<f:SimpleForm 
-			editable="false"
-			layout="ColumnLayout"
-			title="Company Settings Details"
-			labelSpanXL="4"
-			labelSpanL="4"
-			labelSpanM="4"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="0"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="3"
-			columnsL="2"
-			columnsM="2"
-			singleContainerFullSize="false" >
-			<f:content>
-            
-				<core:Title text="About Us"/>
-				 <TextArea   required="true" 
-                width="100%" rows="10"
-        				placeholder="Enter About Us ..."
-        				valueStateText="About Us must not be empty."
-                        value="{ 
-                                  path : 'AboutUs', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                  }
-                              }" />
-				
-				<core:Title text="Privacy Policy" />
-				<TextArea  required="true"  width="100%" rows="10"
-        				placeholder="Enter Privacy policy ..."
-        				valueStateText="Privacy policy must not be empty."
-                         value="{ 
-                                  path : 'Disclaimer', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                      
-                                  }
-                              }"/>
-				
-				<core:Title text="Call Center Number" />
-				<Input   required="true"  type="Text"
-                maxLength="15"
-        				placeholder="Enter Call Center Number ..."
-        				valueStateText="Call Center Number must not be empty."
-                        value="{ 
-                                  path : 'CallCenterHelpline', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                  }
-                              }"/>
-			</f:content>
-		</f:SimpleForm>
+        </HBox>
+	
 	</VBox>
 </core:FragmentDefinition>
