@@ -45,7 +45,7 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingType' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 9 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
@@ -56,7 +56,7 @@
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
 									</Button>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddTraining">
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -64,16 +64,16 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
+								<Column width="28%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colStartDate}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colStartDateTime}"/>
 								</Column>
-                                <Column width="10%">
-									<Text text="{i18n>colTime}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colEndDateTime}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
                                 <Column width="13%">
@@ -87,19 +87,19 @@
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem press="onListItemPressTraining" type="Navigation">
+								<ColumnListItem press="onListItemPressOnlineTraining" type="Navigation">
 									<cells>
 										<Text text="{Title}"/>
-                                        <Text text="{StartDate}"/>
-                                        <Text text="{StartTime}-{EndTime}"/>
+                                        <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
+                                        <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/>
                                         <HBox>
                                             <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
-                                            <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>
@@ -109,7 +109,7 @@
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
 						<Table id="table2" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingType' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 10 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
@@ -120,7 +120,7 @@
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
 									</Button>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddTraining">
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOfflineTraining">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -128,16 +128,16 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
+								<Column width="28%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colStartDate}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colStartDateTime}"/>
 								</Column>
-                                <Column width="10%">
-									<Text text="{i18n>colTime}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colEndDateTime}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
                                 <Column width="13%">
@@ -151,19 +151,19 @@
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem press="onListItemPressTraining" type="Navigation">
+								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
 									<cells>
 										<Text text="{Title}"/>
-                                        <Text text="{StartDate}"/>
-                                        <Text text="{StartTime}-{EndTime}"/>
+                                        <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
+                                        <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/>
                                         <HBox>
                                             <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
-                                            <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>
@@ -173,7 +173,7 @@
 					</IconTabFilter>
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
-							items="{ path: '/LearningSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/LearningSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
@@ -192,11 +192,11 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
-									<Text text="{i18n>colLink}"/>
-								</Column>
-                                <Column width="22%">
+								<Column width="22%">
 									<Text text="{i18n>colTitle}"/>
+								</Column>
+                                <Column width="35%">
+									<Text text="{i18n>colLink}"/>
 								</Column>
                                 <Column width="13%">
 									<Text text="{i18n>colCreationDate}"/>
@@ -214,10 +214,10 @@
 							<items>
 								<ColumnListItem press="onListItemPressVideo" type="Navigation">
 									<cells>
-                                        <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{Title}"/>
+                                        <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/>
                                         <HBox>
                                             <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
