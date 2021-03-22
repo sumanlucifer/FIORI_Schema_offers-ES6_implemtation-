@@ -111,7 +111,8 @@ sap.ui.define(
               ArcheTypeId: "",
               DivisionId:"",
               DepotId:"",
-              ZoneId:""
+              ZoneId:"",
+              HouseType:""
             },
             Preference: {
               LanguageId: "",
@@ -136,7 +137,8 @@ sap.ui.define(
              // AddressLine2: "",
               CityId: "",
               StateId: "",
-              PinCode:""
+              PinCode:"",
+              Town:""
             },
             PainterSegmentation: {
               TeamSizeId: "",
