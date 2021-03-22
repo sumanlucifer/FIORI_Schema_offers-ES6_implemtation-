@@ -35,7 +35,7 @@
                 <Label text="{i18n>MembershipId}"/>
                 <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
                 <Label text="{i18n>AddResolution}"/>
-                 <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet'}">
+                 <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
                     <items>
                         <core:Item text="{Resolution}" key="{Id}"/>
                     </items>
