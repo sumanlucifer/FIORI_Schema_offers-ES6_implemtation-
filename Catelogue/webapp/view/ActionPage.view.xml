@@ -61,7 +61,7 @@
                                                 name="formToolPdfUploader"
                                                 width="100%"
                                                 tooltip="{i18n>fileUploaderTooltip}"
-                                                change="onChange"
+                                                change="onChangePdf"
                                                 typeMissmatch="handleTypeMissmatch"
                                                 fileType="pdf"
                                                 useMultipart="false"
