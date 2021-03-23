@@ -40,7 +40,7 @@
                         <Text text="{ReferralEmail}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'ReferralStatus',formatter:'.fmtLowerCase'}"/>
-                        <Text text="{RewardPoints}"/>
+                        <Text text="{= ${ReferralStatus} === 'PENDING' ? '': ${RewardPoints} }"/>
 
                     </cells>
                 </ColumnListItem>
