@@ -607,6 +607,68 @@ sap.ui.define(
                     });
                 },
 
+                onUploadAttendance: function (oEvent) {
+                    debugger;
+                    var oFile = oEvent.getSource().FUEl.files[0];
+                    this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+                    // }
+                    // var file = jQuery.sap.domById("idFileUpload").files[0];
+                    // try {
+                    // if () {
+                    //         this._bUploading = true;
+                    //         var that = this;
+                    //         /****************To Fetch CSRF Token*******************/
+                    //         //var a = "/Yourservice URL or Metadata URL ";
+                    //         var a = "/sap/opu/odata/sap/YNGWBPS_SRV";
+                    //         var f = {
+                    //             headers: {
+                    //                 "X-Requested-With": "XMLHttpRequest",
+                    //                 "Content-Type": "application/atom+xml",
+                    //                 DataServiceVersion: "2.0",
+                    //                 "X-CSRF-Token": "Fetch",
+                    //             },
+                    //             requestUri: a,
+                    //             method: "GET"
+                    //         };
+
+                    //         var oHeaders;
+                    //         var sUrl = a + "/FileSet";
+                    //         var oModel = new sap.ui.model.odata.ODataModel(sUrl, true);
+                    //         sap.ui.getCore().setModel(oModel);
+                    //         OData.request(f, function (data, oSuccess) {
+                    //             var oToken = oSuccess.headers['x-csrf-token'];
+                    //             oHeaders = {
+                    //                 "x-csrf-token": oToken,
+                    //                 "slug": "QF",
+                    //             };
+                    //             // /****************To Fetch CSRF Token*******************/
+                    //             // /*******************To Upload File************************/
+                    //             //var filetype = "text/csv";           
+                    //             var filetype = file.type;
+                    //             var oURL = a + "/FileSet";
+                    //             jQuery.ajax({
+                    //                 type: 'POST',
+                    //                 url: oURL,
+                    //                 headers: oHeaders,
+                    //                 cache: false,
+                    //                 contentType: filetype,
+                    //                 processData: false,
+                    //                 data: file,
+                    //                 success: function (data) {
+                    //                     var rec = data.getElementsByTagName("entry")[0].children[5].getAttribute("src");
+                    //                     sap.m.MessageToast.show("File Uploaded Successfully" + rec);
+                    //                 },
+                    //                 error: function (data) {
+                    //                     sap.m.MessageToast.show("File Uploaded Successfully  111");
+                    //                 }
+                    //             });
+                    //         });
+                    // }
+                    // } catch (oException) {
+                    //     jQuery.sap.log.error("File upload failed:\n" + oException.message);
+                    // }
+                },
+
                 _initFilerForTables: function (trainingId) {
                     var oView = this.getView();
 
@@ -660,19 +722,15 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrlModel2 = oView.getModel("oModelControl2");
                     oCtrlModel2.setProperty("/modeEdit", false);
-                    // oCtrlModel2.setProperty("/iCtbar", true);
                     this._loadEditTrainingDetail("Display");
-                    // this._showFormFragment("ViewTraining");
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     if (trainingType === 'ONLINE') {
                         this._loadEditQuestion("Display");
-                        // this._showFormFragment("Questionnaire");
                     }
                     oView.getModel().refresh(true);
                 },
 
                 handleEditPress: function () {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
@@ -733,9 +791,7 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     });
-                },
-
-                _setCopyForFragment: function () { },
+                }
 
             }
         );

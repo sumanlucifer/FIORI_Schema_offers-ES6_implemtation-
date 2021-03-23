@@ -86,12 +86,12 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             debugger;
             var sObjectId = oEvent.getParameter("arguments").objectId;
-            this._property = "LearningSet" + "(" + sObjectId + ")";
-            // property;
-            this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
+            // this._property = "LearningSet" + "(" + sObjectId + ")";
+            // // property;
+            // this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
 
-            this.oPreviewImage.setSrc("/" + this.sServiceURI + this._property + "/$value");
-            this.oFileUploader.setUploadUrl("/" + this.sServiceURI + this._property + "/$value");
+            // this.oPreviewImage.setSrc("/" + this.sServiceURI + this._property + "/$value");
+            // this.oFileUploader.setUploadUrl("/" + this.sServiceURI + this._property + "/$value");
             // var ProfilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + this._property + "/$value";
             // this.getModel("objectView").setProperty("/ProfilePic", ProfilePic);
             // this.oFileUploader.clear();
@@ -118,8 +118,8 @@ sap.ui.define([
 		 * @function 
 		 */
         _onCreateObjectMatched: function () {
-            this.oPreviewImage.setVisible(false);
-            this.oFileUploader.clear();
+            // this.oPreviewImage.setVisible(false);
+            // this.oFileUploader.clear();
 
             var AddVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlAddVideo");
             this.getModel("objectView").setProperty("/AddEditVideo", AddVideo);
@@ -169,23 +169,87 @@ sap.ui.define([
             this.getRouter().navTo("worklist", true);
         },
 
-        onChangeFile: function (oEvent) {
-            if (oEvent.getSource().oFileUpload.files.length > 0) {
-                var file = oEvent.getSource().oFileUpload.files[0];
-                var path = URL.createObjectURL(file);
-                this.oPreviewImage.setSrc(path);
-                this.oPreviewImage.setVisible(true);
-            } else {
-                if (this._action === "add") {
-                    this.oPreviewImage.setSrc(path);
-                    this.oPreviewImage.setVisible(false);
-                } else {
-                    this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
-                }
-            }
+        onUpload: function (oEvent) {
+            var oFile = oEvent.getSource().FUEl.files[0];
+            this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+            // if (oEvent.getSource().oFileUpload.files.length > 0) {
+            //     var file = oEvent.getSource().oFileUpload.files[0];
+            //     var path = URL.createObjectURL(file);
+            //     this.oPreviewImage.setSrc(path);
+            //     this.oPreviewImage.setVisible(true);
+            // } else {
+            //     if (this._action === "add") {
+            //         this.oPreviewImage.setSrc(path);
+            //         this.oPreviewImage.setVisible(false);
+            //     } else {
+            //         this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+            //     }
+            // }
         },
 
-        _uploadVideoImage: function (oData) {
+        getImageBinary: function (oFile) {
+            var oFileReader = new FileReader();
+            var sFileName = oFile.name;
+            return new Promise(function (res, rej) {
+
+                if (!(oFile instanceof File)) {
+                    res(oFile);
+                    return;
+                }
+
+                oFileReader.onload = function () {
+                    res({
+                        Image: oFileReader.result,
+                        name: sFileName
+                    });
+                };
+                res({
+                    Image: oFile,
+                    name: sFileName
+                });
+            });
+        },
+
+        _fnAddFile: function (oItem) {
+            this.getModel("objectView").setProperty("/oImage", {
+                Image: oItem.Image, //.slice(iIndex),
+                FileName: oItem.name,
+                IsArchived: false
+            });
+
+            this.getModel("objectView").refresh();
+        },
+
+        _UploadImage: function (sPath, oImage) {
+            var that = this;
+
+            return new Promise(function (res, rej) {
+                if (!oImage) {
+                    res();
+                    return;
+                }
+
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                    //	data : fd,
+                    data: oImage.Image,
+                    method: "PUT",
+                    headers: that.getModel().getHeaders(),
+                    contentType: "multipart/form-data",
+                    processData: false,
+                    success: function () {
+                        res.apply(that);
+                    },
+                    error: function () {
+                        rej.apply(that);
+                    }
+                };
+
+                $.ajax(settings);
+            });
+        },
+
+        _uploadVideo: function (oData) {
             // var oModel = this.getComponentModel();
             var oViewModel = this.getView().getModel("objectView");
             if (oViewModel.getProperty("/sMode") === "C") {
@@ -240,7 +304,7 @@ sap.ui.define([
 		 * @function
 		 * Save edit or create FAQ details 
 		 */
-        onSaveVideo: function () {
+        onSaveVideo: function (oEvent) {
             debugger;
             this._oMessageManager.removeAllMessages();
 
@@ -253,7 +317,7 @@ sap.ui.define([
                 return;
             }
             oViewModel.setProperty("/busy", true);
-            this.CUOperation(oPayload);
+            this.CUOperation(oPayload, oEvent);
         },
 
 		/*
@@ -326,54 +390,55 @@ sap.ui.define([
             }).join("");
         },
 
-        CUOperation: function (oPayload) {
+        CUOperation: function (oPayload, oEvent) {
             debugger;
             var oViewModel = this.getModel("objectView");
             var oClonePayload = $.extend(true, {}, oPayload),
-                that = this;
+                that = this,
+                sPath = "/LearningSet";
             // return new Promise(function (res, rej) {
             if (oViewModel.getProperty("/sMode") === "E") {
                 var sKey = that.getModel().createKey("/LearningSet", {
                     Id: oClonePayload.Id
                 });
                 that.getModel().update(sKey, oClonePayload, {
-                    // success: function () {
-                    //     oViewModel.setProperty("/busy", false);
-                    //     that.getRouter().navTo("worklist", true);
-                    //     that.showToast.call(that, "MSG_SUCCESS_UPDATE");
-                    //     res(oClonePayload);
-                    //     // that.onCancel();
-                    // },
-                    // error: function () {
-                    //     oViewModel.setProperty("/busy", false);
-                    //     rej();
-                    // }
-                    success: that._onLoadSuccess.bind(that),
-                    error: that._onLoadError.bind(that)
+
+                    // success: that._onLoadSuccess.bind(that),
+                    // error: that._onLoadError.bind(that)
+                    success: that._UploadImage(sKey, oViewModel.getProperty("/oImage")).then(that._Success.bind(that, oEvent), that._Error.bind(
+                        that)),
+                    error: that._Error.bind(that)
                 });
             } else {
-                // delete oClonePayload.IsArchived;
-                // oClonePayload.Id = +oClonePayload.Id;
                 debugger;
                 that.getModel().create("/LearningSet", oClonePayload, {
-                    // success: function (data) {
-                    //     debugger;
-                    //     oViewModel.setProperty("/busy", false);
-                    //     that.getRouter().navTo("worklist", true);
-                    //     that.showToast.call(that, "MSG_SUCCESS_CREATE");
-                    //     res(data);
-                    //     // that.onCancel();
-                    // },
-                    // error: function () {
-                    //     oViewModel.setProperty("/busy", false);
-                    //     rej();
-                    // }
-                    success: that._onLoadSuccess.bind(that),
-                    error: that._onLoadError.bind(that)
+                    // success: that._onLoadSuccess.bind(that),
+                    // error: that._onLoadError.bind(that)
+                    success: function (createddata) {
+                        var newSpath = sPath + "(" + createddata.Id + ")";
+                        that._UploadImage(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
+                            .bind(
+                                that))
+                    },
+                    error: this._Error.bind(this)
                 });
             }
+        },
 
-            // });
+        _Error: function (error) {
+			MessageToast.show(error.toString());
+		},
+
+        _Success: function () {
+            this.getRouter().navTo("worklist", true);
+            MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_UPDATE"));
+            var oModel = this.getModel();
+            oModel.refresh(true);
+        },
+
+        _SuccessAdd: function () {
+            this.getRouter().navTo("worklist", true);
+            MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_CREATE"));
         }
     });
 

@@ -22,10 +22,10 @@
                 <Label text="{i18n>colRewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
                 <Text text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <core:Title text="{i18n>TargetGroup}"/>
-
                 <Label text="{i18n>colLink}"/>
                 <Text text="{oModelView>/TrainingDetails/Url}"/>
+
+                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/Division/DepotId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
@@ -46,7 +46,7 @@
                 <Text text="{oModelView>/TrainingDetails/City/City}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
                 <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <!-- <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/> -->
+                <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
             </f:content>
         </f:SimpleForm>

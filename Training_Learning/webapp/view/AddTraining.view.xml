@@ -34,10 +34,10 @@
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input value="{oModelView>/TrainingDetails/RewardPoints}"/>
 
-                <core:Title text="{i18n>TargetGroup}"/>
-
                 <Label text="{i18n>colLink}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
+
+                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} === 'OFFLINE'}" items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" change="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}">
@@ -53,10 +53,18 @@
                     </items>
                 </ComboBox>
 
+                <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+
+                <!-- <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+                    <core:Item text="{DivisionId}" key="{Id}"/>
+                </ComboBox> -->
+
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
-                        <core:Item text="{DepotId}" key="{Id}"/>
+                        <core:Item text="{Id}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
@@ -78,9 +86,9 @@
                     </items>
                 </ComboBox>
                 
-                <Label text="{i18n>colImage}"/>
+                <!-- <Label text="{i18n>colImage}"/>
                     <u:FileUploader
-                        id="idFormTrainingImgUploaderOffline"
+                        id="idFormTrainingImgUploader"
                         name="formTrainingImgUploader"
                         width="100%"
                         tooltip="{i18n>fileUploaderTrainingtip}"
@@ -90,7 +98,12 @@
                         useMultipart="false"
                         sendXHR="true"
                         uploadComplete="handleUploadComplete" />
-                    <Image id="idPreviewImageOffline" width="100px" height="100px" />
+                    <Image id="idPreviewImage" width="100px" height="100px" /> -->
+
+                    <Image width="5rem" class="sapUiTinyMargin" height="5rem"
+					    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				        <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+					    buttonText="{i18n>fileUploaderTrainingtip}"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Questionnaire' : '' }"/>
                 <List visible="{= ${appView>/trainingType} === 'ONLINE'}" id="List" mode="Delete" delete="onDeleteQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
