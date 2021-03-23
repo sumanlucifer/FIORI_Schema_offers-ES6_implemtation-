@@ -193,7 +193,7 @@ sap.ui.define(
           return promise;
         },
         _checkFileUpload: function (oData) {
-          console.log(oData);
+          
           var promise = jQuery.Deferred();
           var UploadCollection = this.getView().byId("idUploadCollection");
           var oItems = UploadCollection.getItems();
