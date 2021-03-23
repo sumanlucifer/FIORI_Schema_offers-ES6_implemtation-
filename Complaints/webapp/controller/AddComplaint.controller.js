@@ -103,6 +103,14 @@ sap.ui.define(
           } else {
           }
 
+           var oDataControl = {
+            TokenCode: true,
+            tokenCodeValue: "",
+          };
+         
+          var oModelControl = new JSONModel(oDataControl);
+          this.getView().setModel(oModelControl, "oModelControl");
+
           this._formFragments; //used for the fragments of the add and edit forms
           this.getView().setModel(oViewModel, "oModelView");
           //this._initMessage(oViewModel);
@@ -126,11 +134,18 @@ sap.ui.define(
             this._postDataToSave();
           }
         },
+
         _postDataToSave: function () {
           var oViewModel = this.getView().getModel("oModelView");
-          var oPayLoad = this._ReturnObjects(
-            oViewModel.getProperty("/addComplaint")
-          );
+          var oAddCompData = oViewModel.getProperty("/addComplaint");
+          var oModelContrl = this.getView().getModel("oModelControl");
+
+          // if tokecode property is set to true, we have make the string empty
+          if(oModelContrl.getProperty("/TokenCode")==true){
+            oAddCompData["RewardPoints"]="";
+            oAddCompData["TokenCode"]="";
+          }
+          var oPayLoad = this._ReturnObjects(oAddCompData);
           var othat = this;
           var oData = this.getView().getModel();
           console.log(oPayLoad);
@@ -172,30 +187,66 @@ sap.ui.define(
           var sKey = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oViewModel = oView.getModel("oModelView");
-          if (sKey.toString() !== "8") {
-            oViewModel.setProperty("/addComplaint/TokenCode", "");
-            oViewModel.setProperty("/addComplaint/RewardPoints", "");
-            var aArray1 = ["idTokenCode", "idPoints"];
-            aArray1.forEach(function (sId) {
-              oView.byId(sId).setValue("");
-              oView.byId(sId).setValueState("None");
-            });
-          }
-          if (sKey.toString() !== "14") {
-            oViewModel.setProperty("/addComplaint/RewardGiftId", "");
-            oViewModel.setProperty("/addComplaint/RewardPoints", "");
-            var aArray1 = ["idGifts", "idPoints"];
-            aArray1.forEach(function (sId) {
-              oView.byId(sId).setValue("");
-              oView.byId(sId).setValueState("None");
-            });
-          }
-
+         var oModelControl = oView.getModel("oModelControl");
           var oCmbxSubType = oView.byId("idCompainSubType");
           var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
           oCmbxSubType.clearSelection();
           oCmbxSubType.setValue("");
           oCmbxSubType.getBinding("items").filter(oFilter);
+          if(sKey=="1" || sKey=="2"){
+            oViewModel.setProperty("/addComplaint/RewardPoints", "");
+            oViewModel.setProperty("/addComplaint/TokenCode", "");
+            oModelControl.setProperty("/tokenCodeValue", "");
+            oModelControl.setProperty("/TokenCode", true);
+          }
+        },
+        onPressTokenCode:function(){
+            var oView = this.getView();
+            var oModelView = oView.getModel("oModelView");
+            var oModelControl = oView.getModel("oModelControl");
+            var oData = oView.getModel();
+            var sPainterId=oModelView.getProperty("/addComplaint/PainterId");
+            var sTokenCode = oModelControl.getProperty("/tokenCodeValue");
+
+            if(sPainterId==""){
+                MessageToast.show("Kindly select a valid painter")
+                return                
+            }
+            if(sTokenCode==""){
+                MessageToast.show("Kindly Input the token code.");
+                return;    
+            }
+            oData.read("/QRCodeValidationAdmin", {
+            urlParameters: {
+              qrcode: "'" + sTokenCode + "'",
+              painterid: sPainterId,
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData.hasOwnProperty("Status")) {
+                  if (oData["Status"] == true) {
+                    oModelView.setProperty(
+                      "/addComplaint/RewardPoints",
+                      oData["RewardPoints"]
+                    );
+                     oModelView.setProperty("/addComplaint/TokenCode", sTokenCode);
+                    oModelControl.setProperty("/TokenCode", false);
+                    MessageToast.show(oData["Message"]);
+                  } else if (oData["Status"] == false) {
+                    oModelView.setProperty("/addComplaint/RewardPoints", "");
+                    oModelView.setProperty("/addComplaint/TokenCode", "");
+                    oModelControl.setProperty("/tokenCodeValue", "");
+                    oModelControl.setProperty("/TokenCode", true);
+                    MessageToast.show(oData["Message"]);
+                  }
+                }
+              }
+            },
+            error: function () {
+              
+            },
+          });
+
         },
         onValueHelpRequest: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
