@@ -42,6 +42,12 @@
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
                             <Table>
                                 <columns>
+                                    <Column>
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 0}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRequestId}"/>
+                                    </Column>
                                     <Column hAlign="Center">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 6}'/>
@@ -52,6 +58,7 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
+                                            <Text text="{Id}"/>
                                             <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
                                         </cells>
                                     </ColumnListItem>
@@ -78,6 +85,23 @@
                             placeToolbarInTable="true"
                             persistencyKey="CompletedSmartTableKey"
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                            <Table>
+                                <columns>
+                                    <Column>
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 0}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRequestId}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Id}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
                         </smartTable:SmartTable>
                     </IconTabFilter>
                 </items>
