@@ -6,3 +6,5 @@ package-lock.json
 
 # auto generated wildcard
 knpl-influencer-web/CompanySettings/.env2
+# auto generated wildcard
+knpl-influencer-web/LoyaltyManagement/.env1

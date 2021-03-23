@@ -5,6 +5,7 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:vm="sap.ui.comp.variants">
     <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
@@ -23,13 +24,15 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <SearchField id="idSearchInput" placeholder="{i18n>searchFilterPlaceholder}" />
+                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Request Type" label="{i18n>requestTypeFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                     <ComboBox id="idRequestTypeInput" selectedKey="all" placeholder="{i18n>requestTypeFilterPlaceholder}">
                                         <core:Item key="all" text="All" />
+                                         <core:Item key="accured" text="Accural" />
+                                          <core:Item key="redemption" text="Redemption" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -42,7 +45,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DatePicker id="idDateInput" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -61,9 +64,8 @@
                 <items>
                     <IconTabFilter
                         text="{i18n>allRequestIconTabarTitle}"
-                        key="all"
-                        count="200">
-                        <Table id="idAllRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        key="all">
+                        <Table id="idAllRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -106,13 +108,13 @@
                                         <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
                                     </dependents>
                                     <cells>
-                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
-                                        <Text text="{PlantCode}"/>
-                                        <Text text="{Depot}"/>
-                                        <Text text="{SalesGroupId}"/>
-                                        <Text text="{SalesGroupName}"/>
-                                        <Text text="{CustomerId}"/>
-                                        <Text text="{FiscalYear}"/>
+                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
+                                        <Text text="{Painter/MembershipCard}"/>
+                                        <Text text="{Painter/Mobile}"/>
+                                        <Text text="{PointTransactionType}"/>
+                                        <Text text="{PointType}"/>
+                                        <Text text="{RewardPoints}"/>
+                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         <Text text="{CustomerClass}"/>
                                     </cells>
                                 </ColumnListItem>
@@ -122,8 +124,8 @@
                     <IconTabFilter
                         text="{i18n>accrualRequestIconTabarTitle}"
                         key="accrual"
-                        count="100">
-                        <Table id="idAccrualRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                       >
+                        <Table id="idAccrualRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -143,7 +145,10 @@
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfAccrual}"/>
+                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
@@ -159,13 +164,14 @@
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
                                     <cells>
-                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
-                                        <Text text="{PlantCode}"/>
-                                        <Text text="{Depot}"/>
-                                        <Text text="{SalesGroupId}"/>
-                                        <Text text="{SalesGroupName}"/>
-                                        <Text text="{CustomerId}"/>
-                                        <Text text="{FiscalYear}"/>
+                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
+                                        <Text text="{Painter/MembershipCard}"/>
+                                        <Text text="{Painter/Mobile}"/>
+                                        <Text text="{PointTransactionType}"/>
+                                        <Text text="{PointType}"/>
+                                        <Text text="{RewardPoints}"/>
+                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                                        <Text text="{CustomerClass}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -174,8 +180,8 @@
                     <IconTabFilter
                         text="{i18n>redemptionRequestIconTabarTitle}"
                         key="redemption"
-                        count="100">
-                        <Table id="idRedemptionRequestTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        >
+                        <Table id="idRedemptionRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -195,7 +201,10 @@
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRedeem}"/>
+                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                </Column>
+                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
@@ -210,14 +219,15 @@
 
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
-                                    <cells>
-                                        <ObjectIdentifier title="{DealerName}" titleActive="true"/>
-                                        <Text text="{PlantCode}"/>
-                                        <Text text="{Depot}"/>
-                                        <Text text="{SalesGroupId}"/>
-                                        <Text text="{SalesGroupName}"/>
-                                        <Text text="{CustomerId}"/>
-                                        <Text text="{FiscalYear}"/>
+                                     <cells>
+                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
+                                        <Text text="{Painter/MembershipCard}"/>
+                                        <Text text="{Painter/Mobile}"/>
+                                        <Text text="{PointTransactionType}"/>
+                                        <Text text="{PointType}"/>
+                                        <Text text="{RewardPoints}"/>
+                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                                        <Text text="{CustomerClass}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>
