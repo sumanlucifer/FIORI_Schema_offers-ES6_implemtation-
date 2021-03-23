@@ -1,10 +1,28 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:u="sap.ui.unified" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
         <Table id="idTblAttendance" width="auto" items="{path: 'uploadModel>/'}" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                    <ToolbarSpacer/>
-                     <SearchField width="20%"></SearchField>
+                    <!-- <u:FileUploader
+                        id="idFileUpload"
+                        name="fileUploader"
+                        width="70%"
+                        tooltip="{i18n>fileUploaderTrainingtip}"
+                        change="oAttendanceFileBrowser"
+                        typeMissmatch="handleTypeMissmatch"
+                        fileType="pdf"
+                        useMultipart="false"
+                        sendXHR="true"
+                        uploadComplete="handleUploadComplete" /> -->
+                        <u:FileUploader maximumFileSize="2" fileAllowed="onUploadAttendance" tooltip="{i18n>btnUpload}" buttonOnly="true"
+					    buttonText="{i18n>fileUploaderTrainingtip}"/>
+                        <ToolbarSpacer/>
+                        <!-- <Button text="{i18n>btnUpload}" icon="sap-icon://upload" press="onUploadAttendance"> -->
+							<layoutData>
+								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+							</layoutData>
+						<!-- </Button> -->
+                        <SearchField width="20%"></SearchField>
                 </Toolbar>
             </headerToolbar>
 

@@ -23,7 +23,7 @@
 				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
                         <Label text="{i18n>colImage}"/>
-                        <u:FileUploader
+                        <!-- <u:FileUploader
                             id="idFormVideoImgUploader"
                             name="formVideoImgUploader"
                             width="100%"
@@ -34,7 +34,11 @@
                             useMultipart="false"
                             sendXHR="true"
                             uploadComplete="handleUploadComplete" />
-                        <Image id="idPreviewImage" width="100px" height="100px" />
+                        <Image id="idPreviewImage" width="100px" height="100px" /> -->
+                        <Image width="5rem" class="sapUiTinyMargin" height="5rem"
+					    src="{ parts : [{path : 'objectView>__metadata'}, { path : 'objectView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				        <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+					    buttonText="{i18n>fileUploaderTrainingtip}"/>
                 </f:content>
             </f:SimpleForm>
         </VBox>

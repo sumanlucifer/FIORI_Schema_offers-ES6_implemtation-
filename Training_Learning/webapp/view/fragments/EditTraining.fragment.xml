@@ -24,10 +24,10 @@
                 <Label text="{i18n>colRewardPoints}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
                 <Input value="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <core:Title text="{i18n>TargetGroup}"/>
-
                 <Label text="{i18n>colLink}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
+
+                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
                 <ComboBox items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" change="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}"  visible="{= ${appView>/trainingType} === 'OFFLINE'}">
@@ -42,6 +42,9 @@
                         <core:Item text="{City}" key="{Id}"/>
                     </items>
                 </ComboBox>
+
+                <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
