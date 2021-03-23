@@ -45,8 +45,8 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							growingThreshold="15" items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>

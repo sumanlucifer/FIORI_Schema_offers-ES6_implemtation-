@@ -85,9 +85,8 @@
                         <core:Item text="{ArcheType}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                
-                <!-- <Label text="{i18n>colImage}"/>
-                    <u:FileUploader
+            
+                    <!-- <u:FileUploader
                         id="idFormTrainingImgUploader"
                         name="formTrainingImgUploader"
                         width="100%"
@@ -100,6 +99,7 @@
                         uploadComplete="handleUploadComplete" />
                     <Image id="idPreviewImage" width="100px" height="100px" /> -->
 
+                    <Label text="{i18n>colImage}"/>
                     <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 					    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
 				        <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"

@@ -11,7 +11,8 @@ sap.ui.define(
         "sap/ui/model/FilterOperator",
         "sap/ui/core/ValueState",
         "sap/m/MessageToast",
-        "sap/m/MessageBox"
+        "sap/m/MessageBox",
+        "../model/formatter",
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -28,13 +29,15 @@ sap.ui.define(
         FilterOperator,
         ValueState,
         MessageToast,
-        MessageBox
+        MessageBox,
+        formatter
     ) {
         "use strict";
 
         return BaseController.extend(
             "com.knpl.pragati.Training_Learning.controller.AddTraining",
             {
+                formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
                     var oViewModel = new JSONModel({
@@ -67,6 +70,13 @@ sap.ui.define(
                         .attachMatched(this._onRouteMatched, this);
                     this._ValueState = library.ValueState;
                     this._MessageType = library.MessageType;
+
+                    var iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
+                    this.getOwnerComponent().getModel().metadataLoaded().then(function () {
+                        // Restore original busy indicator delay for the object view
+                        oViewModel.setProperty("/delay", iOriginalBusyDelay);
+                    }
+                    );
                 },
 
                 _onRouteMatched: function (oEvent) {
@@ -586,11 +596,13 @@ sap.ui.define(
                 },
 
                 onUpload: function (oEvent) {
+                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
                 getImageBinary: function (oFile) {
+                    debugger;
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;
                     return new Promise(function (res, rej) {
@@ -614,6 +626,7 @@ sap.ui.define(
                 },
 
                 _fnAddFile: function (oItem) {
+                    debugger;
                     this.getModel("oModelView").setProperty("/oImage", {
                         Image: oItem.Image, //.slice(iIndex),
                         FileName: oItem.name,
