@@ -154,7 +154,7 @@ sap.ui.define(
           var oPayLoad = this._ReturnObjects(oAddCompData);
           var othat = this;
           var oData = this.getView().getModel();
-          console.log(oPayLoad);
+        
           var c1, c2;
           c1 = this._postCreateData(oPayLoad);
 
@@ -213,7 +213,7 @@ sap.ui.define(
           }
           var sUrl =
             this.sServiceURI +
-            "ComplaintSet(" +
+            "PainterComplainsSet(" +
             oData["Id"] +
             ")/$value";
 
