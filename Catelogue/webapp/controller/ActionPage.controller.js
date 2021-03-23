@@ -89,14 +89,14 @@ sap.ui.define([
             if (oEvent.getSource().oFileUpload.files.length > 0) {
                 var file = oEvent.getSource().oFileUpload.files[0];
                 var path = URL.createObjectURL(file);
-                this.oPreviewImage.setSrc(path);
-                this.oPreviewImage.setVisible(true);
+                this.oPreviewPdf.setSrc(path);
+                this.oPreviewPdf.setVisible(true);
             } else {
                 if (this._action === "add") {
-                    this.oPreviewImage.setSrc(path);
-                    this.oPreviewImage.setVisible(false);
+                    this.oPreviewPdf.setSrc(path);
+                    this.oPreviewPdf.setVisible(false);
                 } else {
-                    this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
+                    this.oPreviewPdf.setSrc(this.sServiceURI + this._property + "/$value");
                 }
             }
         },
