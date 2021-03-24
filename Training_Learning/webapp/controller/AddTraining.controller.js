@@ -205,7 +205,6 @@ sap.ui.define(
                     this._oMessageManager.registerMessageProcessor(oMessageProcessor);
                 },
 
-
                 onAddQuestionnaire: function (oEvent) {
                     var addQsFlag = true;
                     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
@@ -247,20 +246,24 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                    if (addQsFlag === true) {
-                        this.getModel("oModelView").setProperty("/addQsFlag", false);
-                        var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    if (addTr.Question === "") {
+                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                    } else {
+                        var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                        if (addQsFlag === true) {
+                            this.getModel("oModelView").setProperty("/addQsFlag", false);
+                            debugger;
+                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                Question: addTr.Question,
+                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                IsArchived: false
+                            });
+                        }
 
-                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                            Question: addTr.Question,
-                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                            IsArchived: false
-                        });
+                        this.byId("QuestionnaireOptionsDialog").close();
+                        this.getModel("oModelView").refresh();
                     }
-
-                    this.byId("QuestionnaireOptionsDialog").close();
-                    this.getModel("oModelView").refresh();
                 },
 
                 closeOptionsDialog: function () {
@@ -311,9 +314,9 @@ sap.ui.define(
                 },
 
                 onDeleteQuestionnaire: function (oEvent) {
-                    var iIndex = +(oEvent.getParameter("listItem").getBindingContextPath().match(/\d+/g));
+                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
                     function onYes() {
-                        if (this.getModel("oModelView").getData().sMode === "C" || !this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
+                        if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
                         } else {
                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].IsArchived = true;

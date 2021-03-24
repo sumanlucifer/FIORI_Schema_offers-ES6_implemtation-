@@ -3,26 +3,13 @@
         <Table id="idTblAttendance" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
             <headerToolbar>
                 <Toolbar>
-                    <!-- <u:FileUploader
-                        id="idFileUpload"
-                        name="fileUploader"
-                        width="70%"
-                        tooltip="{i18n>fileUploaderTrainingtip}"
-                        change="oAttendanceFileBrowser"
-                        typeMissmatch="handleTypeMissmatch"
-                        fileType="pdf"
-                        useMultipart="false"
-                        sendXHR="true"
-                        uploadComplete="handleUploadComplete" /> -->
-                        <u:FileUploader maximumFileSize="2" fileAllowed="onUploadAttendance" tooltip="{i18n>btnUpload}" buttonOnly="true"
-					    buttonText="{i18n>fileUploaderAttendance}"/>
-                        <ToolbarSpacer/>
-                        <!-- <Button text="{i18n>btnUpload}" icon="sap-icon://upload" press="onUploadAttendance"> -->
-							<layoutData>
-								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-							</layoutData>
-						<!-- </Button> -->
-                        <SearchField width="20%" id="searchAttendance"></SearchField>
+                    <!-- <Label text="File Name"></Label> -->
+                    <HBox>
+                        <u:FileUploader id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
+                        </u:FileUploader>
+                        <Button text="Upload" press="onUploadAttendance"></Button>
+                    </HBox>    
+                    <SearchField width="20%" id="searchAttendance"></SearchField>
                 </Toolbar>
             </headerToolbar>
 

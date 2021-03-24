@@ -22,6 +22,8 @@
 				        <Input width="100%" value="{objectView>Title}" maxLength="100"/>
 				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
+                        <Label required="true" text="{i18n>colDuration}"/>
+				        <Input width="100%" value="{objectView>Duration}" maxLength="10"/>
                         
                         <!-- <u:FileUploader
                             id="idFormVideoImgUploader"

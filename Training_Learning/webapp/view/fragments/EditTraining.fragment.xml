@@ -27,6 +27,9 @@
                 <Label text="{i18n>colLink}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
 
+                <Label required="true" text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+				<Input width="100%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>

@@ -65,6 +65,17 @@ sap.ui.define([], function () {
             
             if (ImageData)
 		 	return URL.createObjectURL(ImageData.Image);	
+        },
+        
+        giveAttendance : function(oMetadata, AttendanceData){
+            if(oMetadata && oMetadata.media_src && !AttendanceData  )
+            {  
+                var sPathname = new URL(oMetadata.media_src).pathname;
+                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+            }
+            
+            if (AttendanceData)
+		 	return URL.createObjectURL(AttendanceData.Image);	
 		}
 
     };

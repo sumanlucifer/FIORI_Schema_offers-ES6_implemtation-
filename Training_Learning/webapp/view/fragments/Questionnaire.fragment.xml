@@ -2,13 +2,13 @@
     <VBox id="idVbxQView" width="100%">
         <f:SimpleForm id="ViewTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <List id="ListViewQ" enableBusyIndicator="true" growing="true"
+                <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true"
 					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
                     <CustomListItem type="Active">
                         <VBox renderType="Bare">
                             <Text text=""/>
-                                <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
-                                <Text text=""/>
+                            <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
+                            <Text text=""/>
                             <HBox items="{oModelView>TrainingQuestionnaireOptions}">
                                 <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiSmallMarginBeginEnd" visible="{= ${oModelView>IsArchived} === false}"/>
                             </HBox>
