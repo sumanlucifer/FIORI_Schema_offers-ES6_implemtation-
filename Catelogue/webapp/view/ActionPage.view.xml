@@ -38,7 +38,7 @@
          
          
           <VBox class="sapUiMediumMargin" width="50%">
-          
+                 <VBox class="sapUiTinyMargin">
                                             <Label text="Upload Image" class="sapUiTinyMargin"/>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
@@ -52,7 +52,8 @@
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
                                             <Image id="idPreviewImage" width="400px" height="200px" />
-                                            
+                                            </VBox>
+                                            <VBox class="sapUiTinyMargin">
                                              <Label text="Upload Pdf" class="sapUiTinyMargin"/>
                                         
                                        
@@ -68,6 +69,7 @@
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
                                             <Image id="idPreviewPdf" width="100px" height="100px" />
+                                            </VBox>
                                             
                                         
           </VBox>
