@@ -109,10 +109,10 @@ sap.ui.define(
               BusinessCategoryId: "",
               BusinessGroupId: "",
               ArcheTypeId: "",
-              DivisionId:"",
-              DepotId:"",
-              ZoneId:"",
-              HouseType:""
+              DivisionId: "",
+              DepotId: "",
+              ZoneId: "",
+              HouseType: "",
             },
             Preference: {
               LanguageId: "",
@@ -134,11 +134,11 @@ sap.ui.define(
             },
             PainterAddress: {
               AddressLine1: "",
-             // AddressLine2: "",
+              // AddressLine2: "",
               CityId: "",
               StateId: "",
-              PinCode:"",
-              Town:""
+              PinCode: "",
+              Town: "",
             },
             PainterSegmentation: {
               TeamSizeId: "",
@@ -233,6 +233,7 @@ sap.ui.define(
             .getEntry("/sap.app").dataSources.mainService.uri;
 
           var oModel = this.getView().getModel("oModelView");
+          console.log(oModel);
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
           var bValidation = oValidator.validate(oVbox, true);
@@ -271,6 +272,7 @@ sap.ui.define(
           var oView = this.getView();
           oView.setBusy(true);
           var oViewModel = oView.getModel("oModelView");
+          
           var oModelCtrl = oView.getModel("oModelControl");
           var oPainterData = this._ReturnObjects(
             oViewModel.getProperty("/PainterDetails")
@@ -684,8 +686,7 @@ sap.ui.define(
           }
           var oJson = {
             "/PainterDetails/Mobile": "Primary Mobile",
-            "/PainterAddDet/SMobile1": "Secondry Mobile"
-           
+            "/PainterAddDet/SMobile1": "Secondry Mobile",
           };
           if (!bFlag) {
             oSource.setValue("");
@@ -712,6 +713,41 @@ sap.ui.define(
             oSecAccNo.setValue("");
           }
         },
+        onZoneChange: function (oEvent) {
+          var sId = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oPainterDetail = oModelView.getProperty("/PainterDetails");
+          var oDivision = oView.byId("idDivision");
+          var oDivItems = oDivision.getBinding("items");
+          var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+          // remove the division filtering if the division is not of the same zone else clear it
+          //   if (oDivSelItm !== null) {
+          //     var oDivObj = oDivSelItm.getBindingContext().getObject();
+          //     if (oDivObj["Id"] !== sId) {
+          //       oDivision.clearSelection();
+          //       oDivision.setValue("");
+          //     }
+          //   }
+          oDivision.clearSelection();
+          oDivision.setValue("");
+          oDivItems.filter(new Filter("Id", FilterOperator.EQ, sId));
+
+          //setting the data for depot;
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+        },
+        onDivisionChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oDepot = oView.byId("idDepot");
+          var oDepBindItems = oDepot.getBinding("items");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+          oDepBindItems.filter(new Filter("Id",FilterOperator.EQ,sKey));
+        },
+
         onConfAccChng: function (oEvent) {
           var oView = this.getView();
           var oPrimAcNum = oView.byId("idAddAcntNum");
