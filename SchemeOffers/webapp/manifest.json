@@ -36,6 +36,10 @@
                 "settings": {
                     "localUri": "localService/metadata.xml"
                 }
+            },
+            "mockData_alias": {
+                "uri": "model/data.json",
+                "type": "JSON"
             }
         }
     },
@@ -92,6 +96,10 @@
                 },
                 "dataSource": "KNPL_SO",
                 "preload": true
+            },
+            "MockData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "mockData_alias"
             }
         },
         "resources": {

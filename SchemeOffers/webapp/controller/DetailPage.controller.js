@@ -29,7 +29,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 
         _onObjectMatched: function (oEvent) {
             this._property = oEvent.getParameter("arguments").property;
-            var oDataModel = this.getComponentModel();
+            /* var oDataModel = this.getComponentModel();
             this.getView().getModel("DetailViewModel").setProperty("/busy", true);
             oDataModel.read("/" + this._property, {
                 urlParameters: {
@@ -39,7 +39,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 error: this._onLoadError.bind(this)
             });
             this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_TLS.uri;
-            this._setToolImageSrc(true);
+            this._setToolImageSrc(true); */
         },
 
         _onLoadSuccess: function (oData) {

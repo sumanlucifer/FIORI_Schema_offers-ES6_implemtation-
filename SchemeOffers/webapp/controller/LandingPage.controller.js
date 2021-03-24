@@ -26,9 +26,9 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 busy: true,
                 filterBar: {
                     search: "",
-                    createdAt: "",
-                    title: "",
-                    createdBy: ""
+                    offerType: "all",
+                    date: "",
+                    status: ""
                 }
             });
             this.getView().setModel(oModel, "ViewModel");
@@ -47,9 +47,9 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         },
 
         onPressListItem: function (oEvent) {
-            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var sPath = oEvent.getSource().getBindingContext("MockData").getPath();
             this.oRouter.navTo("DetailPage", {
-                property: sPath.substr(1)
+                property: sPath.split("/")[2]
             });
         },
 
