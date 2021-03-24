@@ -80,6 +80,10 @@ modules:
       - CallbackRequests-content.zip
       name: CallbackRequests
       target-path: resources/
+    - artifacts:
+      - LoyaltyManagement-content.zip
+      name: LoyaltyManagement
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -189,6 +193,14 @@ modules:
 - name: CallbackRequests
   type: html5
   path: CallbackRequests
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: LoyaltyManagement
+  type: html5
+  path: LoyaltyManagement
   build-parameters:
     builder: custom
     commands:

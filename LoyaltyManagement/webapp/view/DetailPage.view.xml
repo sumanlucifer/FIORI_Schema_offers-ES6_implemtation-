@@ -13,15 +13,15 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs>
-                        <Link text="Loyalty Management" />
+                        <Link text="Loyalty Management"/>
                         <Link text="Accrual Details" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="M-ID1015"/>
+                    <Label text="{Id}"/>
                 </f:expandedContent>
                 <f:snappedContent>
-                    <Label text="M-ID1015"/>
+                    <Label text="{Id}"/>
                 </f:snappedContent>
             </f:DynamicPageTitle>
         </f:title>
@@ -30,7 +30,7 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <ObjectAttribute title="Type of Accrual"/>
-                        <ObjectStatus text="QR Scan" />
+                        <ObjectStatus text="{PointType}" />
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout>
@@ -62,21 +62,22 @@
                             singleContainerFullSize="false" />
                     </form:layout>
                     <form:formContainers>
-                        <form:FormContainer title="">
+                        <form:FormContainer >
+                        
                             <form:formElements>
                                 <form:FormElement label="Type of Request">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="Accrual" />
+                                        <Text class="sapUiSmallMarginBottom" text="{PointTransactionType}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Type of Accrual">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="QR Scan" />
+                                        <Text  class="sapUiSmallMarginBottom"  text="{PointType}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Request ID">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="M-ID1015" />
+                                        <Text class="sapUiSmallMarginBottom" text="{Id}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Requested Through">
@@ -90,17 +91,18 @@
                             <form:formElements>
                                 <form:FormElement label="Painter Name">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="John Doe" />
+                                        <Text class="sapUiSmallMarginBottom" text="{Painter/Name}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Point">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="100" />
+                                        <Text class="sapUiSmallMarginBottom" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
+                            
                                 <form:FormElement label="Date &amp; Time">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="Jan 7, 2021 11:57 AM" />
+                                        <Text class="sapUiSmallMarginBottom" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
