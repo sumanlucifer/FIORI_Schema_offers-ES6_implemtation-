@@ -93,7 +93,11 @@ sap.ui.define([
 
             _bindView: function (sObjectPath) {
                 this.getView().bindElement({
-                    path: sObjectPath
+                    path: sObjectPath,
+                    parameters:{
+                        expand:"DealerSalesDetails/SalesGroup"
+                    }
+                    
                 });
             },
             _bindPainterTable: function (spath) {
