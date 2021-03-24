@@ -7,7 +7,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Table width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'CreatedAt',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'TotalPoints',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar>
                 <SegmentedButton selectedKey="0" selectionChange="onLoyaltySelChange">
