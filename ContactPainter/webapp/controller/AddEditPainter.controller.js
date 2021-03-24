@@ -378,7 +378,6 @@ sap.ui.define(
           var oData = this.getView().getModel();
           var othat = this;
           c1 = this._postCreateData(oPayload);
-
           c1.then(
             function (oData) {
               oView.setBusy(true);
