@@ -913,7 +913,7 @@ sap.ui.define(
 
           var bFlag = true;
           //var cFlag = oValidator.validate();
-          var oCheckProp = ["RelationshipId", "Mobile", "Name"];
+          var oCheckProp = ["RelationshipId", "Name"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
