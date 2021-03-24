@@ -44,7 +44,7 @@
                 </ComboBox>
                 <Label text="{i18n>Depot}" />
                 <ComboBox id="idDepot" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/DepotId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Division}" key="{DepotId}" />
+                     <core:Item text="{Division}  ( {DepotId} )" key="{DepotId}" />
                 </ComboBox>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>

@@ -76,9 +76,9 @@ sap.ui.define(
             var oDialog = this.getView().byId("viewSetting");
             oDialog.setSortDescending(true);
             oDialog.setSelectedSortItem("CreatedAt");
-            var otable = this.getView().byId("idPainterTable");
-            var oSorter = new Sorter({ path: "CreatedAt", descending: true });
-            otable.getBinding("items").sort(oSorter);
+            // var otable = this.getView().byId("idPainterTable");
+            // var oSorter = new Sorter({ path: "CreatedAt", descending: true });
+            // otable.getBinding("items").sort(oSorter);
           }
         },
 
@@ -205,6 +205,7 @@ sap.ui.define(
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
           oBinding.sort( new Sorter({ path: "CreatedAt", descending: true }));
+          this._fiterBarSort();
         },
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();

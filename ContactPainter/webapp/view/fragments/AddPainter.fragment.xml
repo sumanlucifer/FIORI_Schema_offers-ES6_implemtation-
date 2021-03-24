@@ -42,8 +42,9 @@
                     <core:Item text="{DivisionId}" key="{DivisionId}" />
                 </ComboBox>
                 <Label text="{i18n>Depot}" />
-                <ComboBox id="idDepot" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Division}" key="{Division}" />
+                <ComboBox  id="idDepot" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Division} ( {DepotId} )" key="{DepotId}" />
+                    	
                 </ComboBox>
 
                 <core:Title text="{i18n>PersonalDetails}" />
