@@ -65,7 +65,7 @@
                     <IconTabFilter
                         text="{i18n>allRequestIconTabarTitle}"
                         key="all">
-                        <Table id="idAllRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        <Table id="idAllRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter,PainterTokenScanHistory'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -115,7 +115,7 @@
                                         <Text text="{PointType}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        <Text text="{CustomerClass}"/>
+                                        <Text text="{PainterTokenScanHistory/ScanStatus}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>
