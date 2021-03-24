@@ -684,8 +684,8 @@ sap.ui.define(
           }
           var oJson = {
             "/PainterDetails/Mobile": "Primary Mobile",
-            "/PainterAddDet/SMobile1": "Secondry Mobile",
-            "/PainterAddDet/SMobile2": "Secondry Mobile",
+            "/PainterAddDet/SMobile1": "Secondry Mobile"
+           
           };
           if (!bFlag) {
             oSource.setValue("");

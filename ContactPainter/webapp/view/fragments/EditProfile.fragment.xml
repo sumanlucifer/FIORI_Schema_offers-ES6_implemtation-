@@ -72,10 +72,10 @@
                 <VBox>
                     <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
 
-                    <HBox justifyContent="End">
+                    <!-- <HBox justifyContent="End">
                         <Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelControl>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
+                    <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/> -->
                 </VBox>
                 <core:Title text="{i18n>LocationDetails}"/>
 

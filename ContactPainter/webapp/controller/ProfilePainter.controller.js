@@ -74,7 +74,7 @@ sap.ui.define(
                     );
                     var oView = this.getView();
                     var sExpandParam =
-                        "AgeGroup,PainterType,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+                        "AgeGroup,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
                     console.log(oProp);
                     if (oProp.trim() !== "") {
                         oView.bindElement({
