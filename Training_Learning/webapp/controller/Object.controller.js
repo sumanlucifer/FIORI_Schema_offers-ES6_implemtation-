@@ -149,7 +149,8 @@ sap.ui.define([
             oViewModel.setProperty("/oDetails", {
                 TrainingTypeId: 3,
                 Title: "",
-                Url: ""
+                Url: "",
+                Duration: null
             });
         },
 
@@ -362,6 +363,14 @@ sap.ui.define([
                             message: "MSG_VALDTN_ERR_URL",
                             target: "/oDetails/Url"
                         });
+                    } else
+                    if (data.Duration === null || data.Duration === "") {
+                        oReturn.IsNotValid = true;
+                        oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
+                        aCtrlMessage.push({
+                            message: "MSG_VALDTN_ERR_DURATION",
+                            target: "/oDetails/Duration"
+                        });
                     }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
@@ -393,6 +402,7 @@ sap.ui.define([
         CUOperation: function (oPayload, oEvent) {
             debugger;
             var oViewModel = this.getModel("objectView");
+            oPayload.Duration = parseInt(oPayload.Duration);
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this,
                 sPath = "/LearningSet";

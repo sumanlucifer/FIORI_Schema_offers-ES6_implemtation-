@@ -25,6 +25,9 @@
                 <Label text="{i18n>colLink}"/>
                 <Text text="{oModelView>/TrainingDetails/Url}"/>
 
+                <Label text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+				<Text text="{oModelView>/TrainingDetails/Duration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>

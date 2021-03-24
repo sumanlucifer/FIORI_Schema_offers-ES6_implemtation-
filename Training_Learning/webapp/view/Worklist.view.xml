@@ -76,10 +76,10 @@
                                 <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="8%">
@@ -140,10 +140,10 @@
                                 <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="8%">
@@ -201,10 +201,10 @@
                                 <Column width="13%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="9%">

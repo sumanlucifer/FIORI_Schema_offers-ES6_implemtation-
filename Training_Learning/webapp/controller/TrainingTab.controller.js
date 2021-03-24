@@ -96,6 +96,7 @@ sap.ui.define(
 
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var sPath = "/" + oProp;
+                    oViewModel.setProperty("/sPath", sPath);
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         that.getModel().read(sPath, {
                             urlParameters: {
@@ -312,20 +313,23 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                    if (addQsFlag === true) {
-                        this.getModel("oModelView").setProperty("/addQsFlag", false);
-                        var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    if (addTr.Question === "") {
+                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                    } else {
+                        var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                        if (addQsFlag === true) {
+                            this.getModel("oModelView").setProperty("/addQsFlag", false);
+                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                Question: addTr.Question,
+                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                IsArchived: false
+                            });
+                        }
 
-                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                            Question: addTr.Question,
-                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                            IsArchived: false
-                        });
+                        this.byId("QuestionnaireOptionsDialog").close();
+                        this.getModel("oModelView").refresh();
                     }
-
-                    this.byId("QuestionnaireOptionsDialog").close();
-                    this.getModel("oModelView").refresh();
                 },
 
                 closeOptionsDialog: function () {
@@ -376,7 +380,7 @@ sap.ui.define(
                 },
 
                 onDeleteQuestionnaire: function (oEvent) {
-                    var iIndex = +(oEvent.getParameter("listItem").getBindingContextPath().match(/\d+/g));
+                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
                     function onYes() {
                         if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
@@ -525,7 +529,15 @@ sap.ui.define(
                                 message: "MSG_VALDTN_ERR_URL",
                                 target: "/TrainingDetails/Url"
                             });
-                        }
+                        } else
+                            if (data.Duration === null || data.Duration === "") {
+                                oReturn.IsNotValid = true;
+                                oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
+                                aCtrlMessage.push({
+                                    message: "MSG_VALDTN_ERR_DURATION",
+                                    target: "/TrainingDetails/Duration"
+                                });
+                            }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -560,9 +572,10 @@ sap.ui.define(
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.CityId = parseInt(oPayload.CityId);
                     oPayload.StateId = parseInt(oPayload.StateId);
-                    // }
                     oPayload.PainterArcheId = parseInt(oPayload.PainterArcheId);
                     oPayload.PainterType = parseInt(oPayload.PainterType);
+
+                    delete oPayload.Duration;
 
                     var dateValue = oPayload.StartDate.toDateString();
                     var timeValue = oPayload.StartDate.toLocaleTimeString();
@@ -612,6 +625,7 @@ sap.ui.define(
                     delete oPayload.StartDate;
                     delete oPayload.EndDate;
 
+                    oPayload.Duration = parseInt(oPayload.Duration);
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this;
 
@@ -632,7 +646,7 @@ sap.ui.define(
                 },
 
                 _Success: function () {
-                    this.getRouter().navTo("worklist", true);
+                    // this.getRouter().navTo("worklist", true);
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_UPATE"));
@@ -641,6 +655,7 @@ sap.ui.define(
                     }
                     var oModel = this.getModel();
                     oModel.refresh(true);
+                    this.handleCancelPress();
                 },
 
                 onUpload: function (oEvent) {
@@ -710,75 +725,45 @@ sap.ui.define(
                     });
                 },
 
-                onUploadAttendance: function (oEvent) {
+                onUploadAttendance: function (e) {
+                    var t = this;
                     debugger;
-                    var oFile = oEvent.getSource().FUEl.files[0];
-                    this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
-                    // }
-                    // var file = jQuery.sap.domById("idFileUpload").files[0];
+                    var fU = this.getView().byId("idAttendanceFileUploader");
+                    var domRef = fU.getFocusDomRef();
+                    var file = domRef.files[0];
+                    var dublicateValue = [];
+                    var sPath = this.getModel("oModelView").getProperty("/sPath");
                     // try {
-                    // if () {
-                    //         this._bUploading = true;
-                    //         var that = this;
-                    //         /****************To Fetch CSRF Token*******************/
-                    //         //var a = "/Yourservice URL or Metadata URL ";
-                    //         var a = "/sap/opu/odata/sap/YNGWBPS_SRV";
-                    //         var f = {
-                    //             headers: {
-                    //                 "X-Requested-With": "XMLHttpRequest",
-                    //                 "Content-Type": "application/atom+xml",
-                    //                 DataServiceVersion: "2.0",
-                    //                 "X-CSRF-Token": "Fetch",
-                    //             },
-                    //             requestUri: a,
-                    //             method: "GET"
-                    //         };
+                    if (file) {
+                        var that = this;
+                        // that._oBusyDialog.open();
 
-                    //         var oHeaders;
-                    //         var sUrl = a + "/FileSet";
-                    //         var oModel = new sap.ui.model.odata.ODataModel(sUrl, true);
-                    //         sap.ui.getCore().setModel(oModel);
-                    //         OData.request(f, function (data, oSuccess) {
-                    //             var oToken = oSuccess.headers['x-csrf-token'];
-                    //             oHeaders = {
-                    //                 "x-csrf-token": oToken,
-                    //                 "slug": "QF",
-                    //             };
-                    //             // /****************To Fetch CSRF Token*******************/
-                    //             // /*******************To Upload File************************/
-                    //             //var filetype = "text/csv";           
-                    //             var filetype = file.type;
-                    //             var oURL = a + "/FileSet";
-                    //             jQuery.ajax({
-                    //                 type: 'POST',
-                    //                 url: oURL,
-                    //                 headers: oHeaders,
-                    //                 cache: false,
-                    //                 contentType: filetype,
-                    //                 processData: false,
-                    //                 data: file,
-                    //                 success: function (data) {
-                    //                     var rec = data.getElementsByTagName("entry")[0].children[5].getAttribute("src");
-                    //                     sap.m.MessageToast.show("File Uploaded Successfully" + rec);
-                    //                 },
-                    //                 error: function (data) {
-                    //                     sap.m.MessageToast.show("File Uploaded Successfully  111");
-                    //                 }
-                    //             });
-                    //         });
-                    // }
-                    // } catch (oException) {
-                    //     jQuery.sap.log.error("File upload failed:\n" + oException.message);
-                    // }
+                        /*******************To Upload File************************/
+
+                        var oURL = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
+                        $.ajax({
+                            type: 'PUT',
+                            url: oURL,
+                            cache: false,
+                            contentType: "text/csv",
+                            processData: false,
+                            data: file,
+                            success: function (data) {
+                                /******* Error  *********/
+                                debugger;
+                                MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPATE"));
+                                // that._oBusyDialog.close();
+                            },
+                            error: function (error) {
+                                MessageToast.show(error.toString());
+                                // that._oBusyDialog.close();
+                            }
+                        });
+                    }
                 },
 
                 _initFilerForTables: function (trainingId) {
                     var oView = this.getView();
-                    // var oFilter = new Filter(
-                    //     "TrainingId",
-                    //     FilterOperator.EQ,
-                    //     trainingId
-                    // );
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
                             new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),

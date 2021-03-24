@@ -99,14 +99,14 @@
                         uploadComplete="handleUploadComplete" />
                     <Image id="idPreviewImage" width="100px" height="100px" /> -->
 
-                    <Label text="{i18n>colImage}"/>
-                    <Image width="5rem" class="sapUiTinyMargin" height="5rem"
-					    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
-				        <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-					    buttonText="{i18n>fileUploaderTrainingtip}"/>
+                <Label text="{i18n>colImage}"/>
+                <Image width="5rem" class="sapUiTinyMargin" height="5rem"
+				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+				    buttonText="{i18n>fileUploaderTrainingtip}"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Questionnaire' : '' }"/>
-                <List visible="{= ${appView>/trainingType} === 'ONLINE'}" id="List" mode="Delete" delete="onDeleteQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
+                <List visible="{= ${appView>/trainingType} === 'ONLINE'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
 					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>
@@ -116,9 +116,12 @@
 					</headerToolbar>
                     <CustomListItem type="Active">
                         <VBox renderType="Bare">
-                            <HBox>
+                            <HBox alignItems="Start" justifyContent="SpaceBetween">
                                 <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
-                                <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}"/>
+                                <FlexBox alignItems="Start" justifyContent="End">
+				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
+				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Remove}" />
+			                    </FlexBox>
                             </HBox>
                             <HBox items="{oModelView>TrainingQuestionnaireOptions}">
                                 <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiSmallMarginBeginEnd"/>
