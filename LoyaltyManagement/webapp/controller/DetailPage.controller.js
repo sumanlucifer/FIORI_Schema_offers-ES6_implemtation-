@@ -35,7 +35,7 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sObjectPath,
                      parameters: {
-                                expand: "Painter",
+                                expand: "Painter,PainterTokenScanHistory",
                             },
 
 

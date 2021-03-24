@@ -35,7 +35,7 @@
 
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Status"/>
-                        <ObjectStatus text="Pending" state="Warning" />
+                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" />
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
