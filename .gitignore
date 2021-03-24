@@ -5,8 +5,10 @@
 *.env1
 *.zip
 .vscode/
-
+*.env*
 */dist/
+*/.gitignore
+
 
 # auto generated wildcard
 Manage_FAQ/.env
