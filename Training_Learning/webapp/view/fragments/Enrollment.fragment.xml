@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblEnrollment" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>EnrollmenttableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblEnrollment" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>EnrollmenttableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
-                     <SearchField width="20%"></SearchField>
+                     <SearchField width="20%" id="searchEnrollment"></SearchField>
                 </Toolbar>
             </headerToolbar>
 
@@ -33,15 +33,15 @@
             </columns>
 
             <items>
-                <ColumnListItem press="onListItemPress">
+                <ColumnListItem>
                     <cells>
-                        <Text text="{uploadModel>Col1}"/>
-                        <Text text="{uploadModel>Col2}"/>
-                        <Text text="{uploadModel>Col3}"/>
-                        <Text text="{uploadModel>Col4}"/>
-                        <Text text="{uploadModel>Col5}"/>
-                        <Text text="{uploadModel>Col6}"/>
-                        <Text text="{uploadModel>Col7}"/>
+                        <ObjectIdentifier title="{PainterDetails/Name}" titleActive="true"/>
+                        <Text text="{PainterDetails/MembershipCard}"/>
+                        <Text text="{PainterDetails/Mobile}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <Text text="{EarnedPoints}"/>
+                        <ObjectStatus text="{path:'Status',formatter:'.fmtStatus'}" state="{= ${Status} === 'ENROLLED' ? 'Success' : 'None' }"/>
                     </cells>
                 </ColumnListItem>
             </items>
