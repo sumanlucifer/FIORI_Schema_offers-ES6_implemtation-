@@ -28,3 +28,5 @@ knpl-influencer-web/DealerManagement/.env7
 knpl-cp/ContactPainter/.env16
 # auto generated wildcard
 knpl-cp/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2

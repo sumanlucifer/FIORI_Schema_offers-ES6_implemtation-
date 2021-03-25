@@ -59,6 +59,14 @@
 					"id": "com.knpl.pragati.CallbackRequests-8-1615527937953",
 					"appId": "com.knpl.pragati.CallbackRequests",
 					"vizId": "Manage-CBR"
+				}, {
+					"id": "com.knpl.pragati.LoyaltyManagement-9-1616563596336",
+					"appId": "com.knpl.pragati.LoyaltyManagement",
+					"vizId": "Manage-LTM"
+				}, {
+					"id": "com.knpl.pragati.Catelogue-10-1616563596336",
+					"appId": "com.knpl.pragati.Catelogue",
+					"vizId": "Manage-CTL"
 				}]
 			}
 		}, {

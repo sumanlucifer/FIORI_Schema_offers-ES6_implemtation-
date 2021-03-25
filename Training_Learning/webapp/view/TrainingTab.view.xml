@@ -37,8 +37,8 @@
                 </layout:VerticalLayout>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
                     <m:ObjectStatus title="{i18n>colAddress}"/>
-                    <m:ObjectStatus text="{oModelView>/TrainingDetails/State/State} {oModelView>/TrainingDetails/City/City}"/>
-                    <!-- <m:ObjectStatus text="{oModelView>/TrainingDetails/EndTime}"/> -->
+                    <m:ObjectStatus text="{oModelView>/TrainingDetails/Address}"/>
+                    <m:ObjectStatus text="{oModelView>/TrainingDetails/City/City} {oModelView>/TrainingDetails/State/State}"/>
                 </layout:VerticalLayout>
             </m:FlexBox>
         </uxap:headerContent>

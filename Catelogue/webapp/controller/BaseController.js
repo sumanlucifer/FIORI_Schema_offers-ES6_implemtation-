@@ -66,9 +66,12 @@ sap.ui.define([
          onPressBreadcrumbLink: function () {
             this._navToHome();
         },
+        getViewModel: function (sName) {
+            return this.getView().getModel(sName);
+        },
 
         _navToHome: function () {
-            this.oRouter.navTo("");
+            this.oRouter.navTo("worklist");
            
         },	
     });
