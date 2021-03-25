@@ -88,6 +88,7 @@ sap.ui.define(
             bindProp: oProp,
             TokenCode: true,
             tokenCodeValue: "",
+            ImageLoaded: false,
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -103,6 +104,9 @@ sap.ui.define(
             c2 = othat._setDisplayData(oProp);
             c2.then(function () {
               c3 = othat._initEditData(oProp);
+              c3.then(function () {
+                c4 = othat._CheckImage(oProp);
+              });
             });
           });
         },
@@ -131,6 +135,7 @@ sap.ui.define(
           return promise;
         },
         _initEditData: function (oProp) {
+          var promise = jQuery.Deferred();
           var oView = this.getView();
           var oDataValue = "";
           var othat = this;
@@ -144,10 +149,13 @@ sap.ui.define(
             },
             error: function () {},
           });
+          promise.resolve();
+          return promise;
         },
         _setInitData: function () {
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
 
           var sReqFields = ["TokenCode", "RewardPoints"];
           var sValue = "",
@@ -167,6 +175,27 @@ sap.ui.define(
               oModelView.setProperty("/" + k, "");
             }
           }
+          if (oModelView.getProperty("/TokenCode") !== "") {
+            oModelControl.setProperty(
+              "/tokenCodeValue",
+              oModelView.getProperty("/TokenCode")
+            );
+            oModelControl.setProperty("/TokenCode", false);
+          }
+        },
+        _CheckImage: function (oProp) {
+            var oView = this.getView();
+            var oModelControl = this.getView().getModel("oModelControl");
+            var sImageUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value"
+          jQuery.get(sImageUrl)
+            .done(function () {
+                oModelControl.setProperty("/ImageLoaded",true);
+              console.log("Image Exist");
+            })
+            .fail(function () {
+                oModelControl.setProperty("/ImageLoaded",false);
+              console.log("Image Doesnt Exist")
+            });
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -224,9 +253,7 @@ sap.ui.define(
                 }
               }
             },
-            error: function () {
-              
-            },
+            error: function () {},
           });
         },
         onViewAttachment: function (oEvent) {
@@ -270,14 +297,14 @@ sap.ui.define(
             this._postDataToSave();
           }
         },
-          onChangeResolution:function(oEvent){
-            var oView = this.getView();
-            var oModel = oView.getModel("oModelView");
-            var sKey = oEvent.getSource().getSelectedKey();
-            if(sKey!==22){
-                oModel.setProperty("/ResolutionOthers","");
-            }
-            //console.log(oModel);
+        onChangeResolution: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sKey = oEvent.getSource().getSelectedKey();
+          if (sKey !== 22) {
+            oModel.setProperty("/ResolutionOthers", "");
+          }
+          //console.log(oModel);
         },
         _postDataToSave: function () {
           var oView = this.getView();
@@ -324,18 +351,18 @@ sap.ui.define(
           }
         },
         fmtStatus: function (sStatus) {
-          if (sStatus) {
-            sStatus = sStatus.toLowerCase();
-            var aCharStatus = sStatus.split("");
-            if (aCharStatus.indexOf("_") !== -1) {
-              aCharStatus[aCharStatus.indexOf("_") + 1]=aCharStatus[aCharStatus.indexOf("_") + 1].toUpperCase();
-              aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
-            }
-            aCharStatus[0] = aCharStatus[0].toUpperCase();
-            sStatus = aCharStatus.join("");
+          var newStatus = "";
+          if (sStatus === "REGISTERED") {
+            newStatus = "Registered";
+          } else if (sStatus === "INREVIEW") {
+            newStatus = "In Review";
+          } else if (sStatus === "RESOLVED") {
+            newStatus = "Resolved";
+          } else if (sStatus === "WITHDRAWN") {
+            newStatus = "Withdrawn";
           }
 
-          return sStatus;
+          return newStatus;
         },
       }
     );
