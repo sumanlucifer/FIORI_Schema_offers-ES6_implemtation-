@@ -3,6 +3,7 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:smartTable="sap.ui.comp.smarttable">
     <f:DynamicPage busy="{ViewModel>/busy}" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
@@ -93,7 +94,7 @@
                                         </customData>
                                         <Text text="{i18n>tblColRequestId}"/>
                                     </Column>
-                                    <Column>
+                                    <Column hAlign="Center">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 5}'/>
                                         </customData>
@@ -104,7 +105,7 @@
                                     <ColumnListItem>
                                         <cells>
                                             <Text text="{Id}"/>
-                                            <Text text="{Remarks}"/>
+                                            <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
