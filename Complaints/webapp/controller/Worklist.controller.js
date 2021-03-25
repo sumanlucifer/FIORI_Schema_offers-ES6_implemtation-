@@ -108,18 +108,14 @@ sap.ui.define(
             var oDialog = this.getView().byId("viewSetting");
             oDialog.setSortDescending(true);
             oDialog.setSelectedSortItem("CreatedAt");
-            var otable = this.getView().byId("table");
-            var oSorter = new Sorter({ path: "CreatedAt", descending: true });
-            otable.getBinding("items").sort(oSorter);
           }
         },
         onFilter: function () {
-         
           var aCurrentFilterValues = [];
           var oViewFilter = this.getView()
             .getModel("oModelControl")
             .getProperty("/filterBar");
-          
+
           var aFlaEmpty = true;
           for (let prop in oViewFilter) {
             if (oViewFilter[prop]) {
@@ -226,7 +222,7 @@ sap.ui.define(
         },
         onComplaintsChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
-          
+
           var oView = this.getView();
           var oCmbxSubType = oView.byId("idFileSubType");
           var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
@@ -250,20 +246,13 @@ sap.ui.define(
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
-          //oViewModel.setProperty("/searchBar", "");
 
-          //   for (let prop in aResetProp) {
-          //     aCurrentFilterValues.push(
-          //       new Filter(prop, FilterOperator.Contains, aResetProp[prop])
-          //     );
-          //   }
-          //   var endFilter = new Filter({
-          //     filters: aCurrentFilterValues,
-          //     and: false,
-          //   });
           var oTable = this.byId("table");
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
+          oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+          //reset the sort order of the dialog box
+          this._fiterBarSort() 
         },
         _addSearchFieldAssociationToFB: function () {
           let oFilterBar = this.getView().byId("filterbar");
@@ -293,15 +282,15 @@ sap.ui.define(
           //   );
         },
         fmtStatus: function (sStatus) {
-            var newStatus="";
-          if (sStatus==="REGISTERED") {
-            newStatus="Registered"
-          }else if (sStatus==="INREVIEW"){
-            newStatus="In Review"
-          }else if (sStatus==="RESOLVED"){
-              newStatus="Resolved"
-          }else if (sStatus==="WITHDRAWN"){
-              newStatus="Withdrawn"
+          var newStatus = "";
+          if (sStatus === "REGISTERED") {
+            newStatus = "Registered";
+          } else if (sStatus === "INREVIEW") {
+            newStatus = "In Review";
+          } else if (sStatus === "RESOLVED") {
+            newStatus = "Resolved";
+          } else if (sStatus === "WITHDRAWN") {
+            newStatus = "Withdrawn";
           }
 
           return newStatus;
@@ -361,7 +350,6 @@ sap.ui.define(
          * @public
          */
         onUpdateFinished: function (oEvent) {
-          
           // update the worklist's object counter after the table update
           var sTitle,
             oTable = oEvent.getSource(),
@@ -428,7 +416,7 @@ sap.ui.define(
             .getBindingContext()
             .getPath()
             .substr(1);
-         
+
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteEditCmp", {
             prop: window.encodeURIComponent(sPath),

@@ -93,11 +93,18 @@
                                         </customData>
                                         <Text text="{i18n>tblColRequestId}"/>
                                     </Column>
+                                    <Column>
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 5}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRemarks}"/>
+                                    </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
                                         <cells>
                                             <Text text="{Id}"/>
+                                            <Text text="{Remarks}"/>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

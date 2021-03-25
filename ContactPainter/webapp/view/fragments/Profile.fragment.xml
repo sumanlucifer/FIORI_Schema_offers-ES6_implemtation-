@@ -13,16 +13,17 @@
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                <Label text="{i18n>LinkPrimaryDealer}" />
-                <Text text="{PrimaryDealerDetails/DealerName}" />
-                <Label text="{i18n>LinkSecondryDealer}" />
-                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
                 <Label text="{i18n>Zone}" />
                 <Text text="{ZoneId}" />
                 <Label text="{i18n>Division}" />
                 <Text text="{DivisionId}" />
                 <Label text="{i18n>Depot}" />
                 <Text text="{DepotId}" />
+                <Label text="{i18n>LinkPrimaryDealer}" />
+                <Text text="{PrimaryDealerDetails/DealerName}" />
+                <Label text="{i18n>LinkSecondryDealer}" />
+                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
+
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
