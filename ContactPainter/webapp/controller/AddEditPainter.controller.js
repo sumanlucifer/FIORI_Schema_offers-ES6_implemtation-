@@ -75,6 +75,7 @@ sap.ui.define(
           this._ValueState = library.ValueState;
           this._MessageType = library.MessageType;
         },
+
         _onRouteMatched: function (oEvent) {
           var sArgMode = oEvent.getParameter("arguments").mode;
           var sArgId = window.decodeURIComponent(
@@ -272,7 +273,7 @@ sap.ui.define(
           var oView = this.getView();
           oView.setBusy(true);
           var oViewModel = oView.getModel("oModelView");
-          
+
           var oModelCtrl = oView.getModel("oModelControl");
           var oPainterData = this._ReturnObjects(
             oViewModel.getProperty("/PainterDetails")
@@ -745,7 +746,7 @@ sap.ui.define(
           var oDepBindItems = oDepot.getBinding("items");
           oDepot.clearSelection();
           oDepot.setValue("");
-          oDepBindItems.filter(new Filter("Division",FilterOperator.EQ,sKey));
+          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
         },
 
         onConfAccChng: function (oEvent) {
@@ -773,6 +774,35 @@ sap.ui.define(
             aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
             oBindingCity.filter(aFilter);
           }
+        },
+        onPinSuggest: function (oEvent) {
+          var sTerm = oEvent.getParameter("suggestValue");
+          var aFilters = [];
+          if (sTerm) {
+            aFilters.push(
+              new Filter("Pincode", FilterOperator.StartsWith, sTerm)
+            );
+          }
+
+          oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+        },
+        onPinCodeSelect: function (oEvent) {
+          console.log("suggestion item selected");
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getParameter("selectedItem")
+            .getBindingContext()
+            .getObject();
+          var iStateId = oObject["StateId"];
+          var iCity = oObject["CityId"];
+          var oCity = oView.byId("cmbCity");
+          var oState = oView.byId("cmBxState");
+          oCity
+            .getBinding("items")
+            .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
+          oState.setSelectedKey(iStateId);
+          oCity.setSelectedKey(iCity);
         },
         onPrimDealerChanged: function (oEvent) {
           var oSource = oEvent.getSource();
