@@ -2,6 +2,7 @@
 sap.ui.define(
   [
     "com/knpl/pragati/CallbackRequests/controller/BaseController",
+    "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
@@ -18,6 +19,7 @@ sap.ui.define(
   ],
   function (
     BaseController,
+    Sorter,
     Filter,
     FilterOperator,
     JSONModel,
@@ -68,9 +70,8 @@ sap.ui.define(
               })
             );
           }
-          oBindingParams.filters.push(
-            new Filter("IsArchived", FilterOperator.EQ, false)
-          );
+          oBindingParams.filters.push(new Filter("IsArchived", FilterOperator.EQ, false));
+          oBindingParams.sorter.push(new Sorter("CreatedAt", true));
         },
 
         onPressComplete: function (oEvent) {
@@ -96,7 +97,7 @@ sap.ui.define(
 						}),
 						new TextArea("confirmNote", {
                             width: "100%",
-                            maxLength: 512,
+                            maxLength: 200,
 							placeholder: oResourceBundle.getText("remarkInputPlaceholder")
 						})
 					],
@@ -139,6 +140,28 @@ sap.ui.define(
             Core.byId("confirmNote").setValue("");
 			this.oDialog.open();
         },
+
+        onPressRemarks: function (oEvent) {
+            var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            var sRemarks = oEvent.getSource().getCustomData("remarks")[0].getValue();
+            if (!this.oRemarksMessageDialog) {
+				this.oRemarksMessageDialog = new Dialog({
+					type: DialogType.Message,
+					title: oResourceBundle.getText("remarksDialogTitle"),
+                    content: new Text("idRemarksText", { text: sRemarks }),
+                    styleClass: ['sapUiSizeCompact'],
+					beginButton: new Button({
+						type: ButtonType.Emphasized,
+						text: "OK",
+						press: function () {
+							this.oRemarksMessageDialog.close();
+						}.bind(this)
+					})
+				});
+			}
+            Core.byId("idRemarksText").setText(sRemarks);
+			this.oRemarksMessageDialog.open();
+        }
       }
     );
   }
