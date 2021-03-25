@@ -54,10 +54,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         },
 
         onPressAdd: function (oEvent) {
-            this.oRouter.navTo("ActionPage", {
-                action: "add",
-                property: ""
-            });
+            this.oRouter.navTo("AddOfferPage");
         },
 
         onPressEdit: function (oEvent) {

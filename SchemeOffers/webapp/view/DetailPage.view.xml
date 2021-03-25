@@ -72,7 +72,12 @@
                 expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="offerDetails">
-                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.DisplayDetail" type="XML" />
+                        <VBox visible="{=!${DetailViewModel>/editable}}">
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.DisplayDetail" type="XML" />
+                        </VBox>
+                        <VBox visible="{=${DetailViewModel>/editable}}">
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" />
+                        </VBox>
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>historyTabFilter}" key="history">
                         
@@ -83,7 +88,9 @@
         <f:footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
-                <Button text="Edit" type="Emphasized" />
+                <Button visible="{=!${DetailViewModel>/editable}}" text="Edit" tooltip="Edit" type="Emphasized" press="onPressEdit" />
+                <Button visible="{=${DetailViewModel>/editable}}" text="Cancel" tooltip="Cancel" press="onPressCancel" />
+                <Button visible="{=${DetailViewModel>/editable}}" text="Save" tooltip="Save" type="Emphasized" press="onPressSave" />
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

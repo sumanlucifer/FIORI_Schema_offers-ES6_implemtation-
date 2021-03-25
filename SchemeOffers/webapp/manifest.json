@@ -134,10 +134,10 @@
                     ]
                 },
                 {
-                    "name": "ActionPage",
-                    "pattern": "ActionPage/{action}/:property:",
+                    "name": "AddOfferPage",
+                    "pattern": "AddOfferPage",
                     "target": [
-                        "TargetActionPage"
+                        "TargetAddOfferPage"
                     ]
                 }
             ],
@@ -156,12 +156,12 @@
                     "viewLevel": 1,
                     "viewId": "detailPage"
                 },
-                "TargetActionPage": {
+                "TargetAddOfferPage": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "viewName": "ActionPage",
+                    "viewName": "AddOfferPage",
                     "viewLevel": 1,
-                    "viewId": "actionPage"
+                    "viewId": "addOfferPage"
                 }
             }
         }

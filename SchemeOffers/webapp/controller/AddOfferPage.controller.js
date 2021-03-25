@@ -13,37 +13,18 @@ sap.ui.define([
 function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageToast, MessageBox) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.ActionPage", {
+    return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.AddOfferPage", {
         onInit: function () {
+            var oViewModel = new JSONModel({});
+            this.getView().setModel(oViewModel, "AddOfferViewModel");
             this.oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
             //Router Object
             this.oRouter = this.getRouter();
-            this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
+            this.oRouter.getRoute("AddOfferPage").attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) {
-            this._action = oEvent.getParameter("arguments").action;
-            this._property = oEvent.getParameter("arguments").property;
-            var oData = {
-                busy: false,
-                action: this._action,
-                Title: "",
-                Description: "",
-                Url: "",
-            };
-            if (this._action === "edit") {
-                var oComponentModel = this.getComponentModel();
-                var oItem = oComponentModel.getProperty("/" + this._property);
-                if (!oItem) {
-                    return this._navToHome();
-                }
-                oData.Title = oItem.Title;
-                oData.Description = oItem.Description;
-                oData.Url = oItem.Url;
-            }
-            var oViewModel = new JSONModel(oData);
-            this.getView().setModel(oViewModel, "ActionViewModel");
-            this._setDefaultValueState();
+            
         },
 
         onPressBreadcrumbLink: function () {
@@ -91,45 +72,6 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             oViewModel.setProperty("/busy", false);
             var oRespText = JSON.parse(error.responseText);
             MessageBox.error(oRespText["error"]["message"]["value"]);
-        },
-
-        onChangeValue: function (oEvent) {
-            var oControl = oEvent.getSource();
-            this._setControlValueState([oControl]);
-        },
-
-        _validateRequiredFields: function () {
-            var oTitleControl = this.getView().byId("idTitleInput"),
-                oUrlControl = this.getView().byId("idUrlInput");
-            this._setControlValueState([oTitleControl, oUrlControl]);
-            if (oTitleControl.getValue() && oUrlControl.getValue()) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
-        _setDefaultValueState: function () {
-            var oTitleControl = this.getView().byId("idTitleInput"),
-                oUrlControl = this.getView().byId("idUrlInput");
-            oTitleControl.setValueState("None");
-            oTitleControl.setValueStateText("");
-            oUrlControl.setValueState("None");
-            oUrlControl.setValueStateText("");
-        },
-
-        _setControlValueState: function (aControl) {
-            for (var i = 0; i < aControl.length; i++) {
-                var oControl = aControl[i],
-                    sValue = oControl.getValue();
-                if (sValue) {
-                    oControl.setValueState("None");
-                    oControl.setValueStateText("");
-                } else {
-                    oControl.setValueState("Error");
-                    oControl.setValueStateText(this.oResourceBundle.getText("requiredValueText"));
-                }
-            }
         }
     });
 });

@@ -45,7 +45,7 @@
 				</f:FormContainer>
 				<f:FormContainer title="Region">
 					<f:formElements>
-						<f:FormElement label="Select Zone">
+						<f:FormElement label="Zone">
 							<f:fields>
 								<Text text="North" />
 							</f:fields>
@@ -74,9 +74,9 @@
 						</f:FormElement>
 						<f:FormElement label="By Arche type">
 							<f:fields>
-								<MultiInput id="archeTypeInput" enabled="false" showValueHelp="false">
+								<MultiComboBox id="archeTypeInput" enabled="false">
                                     <core:Item key="1" text="Loyalty" />
-                                </MultiInput>
+                                </MultiComboBox>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="By Annual Purchase  Potential">
@@ -86,10 +86,10 @@
 						</f:FormElement>
 						<f:FormElement label="By Product">
 							<f:fields>
-								<MultiInput id="byProductInput" enabled="false" showValueHelp="false">
+								<MultiComboBox id="byProductInput" enabled="false">
                                     <core:Item key="1" text="Emulsion" />
                                     <core:Item key="2" text="Mica Marbel" />
-                                </MultiInput>
+                                </MultiComboBox>
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="By Point Slab">
@@ -103,18 +103,18 @@
 					<f:formElements>
 						<f:FormElement label="Applicable Products">
 							<f:fields>
-								<MultiInput id="applicableProductsInput" enabled="false" showValueHelp="false">
+								<MultiComboBox id="applicableProductsInput" enabled="false">
                                     <core:Item key="1" text="Emulsion" />
                                     <core:Item key="2" text="Mica Marbel" />
-                                </MultiInput>
+                                </MultiComboBox>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="Applicable Packs">
 							<f:fields>
-								<MultiInput id="applicablePacksInput" enabled="false" showValueHelp="false">
+								<MultiComboBox id="applicablePacksInput" enabled="false">
                                     <core:Item key="1" text="Emulsion" />
                                     <core:Item key="2" text="Mica Marbel" />
-                                </MultiInput>
+                                </MultiComboBox>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="Purchase Volume Required">
@@ -165,9 +165,9 @@
 						</f:FormElement>
 						<f:FormElement label="Bonus Applicable Products">
 							<f:fields>
-								<MultiInput id="bonusApplicableInput" enabled="false" showValueHelp="false">
+								<MultiComboBox id="bonusApplicableInput" enabled="false">
                                     <core:Item key="1" text="Loyalty" />
-                                </MultiInput>
+                                </MultiComboBox>
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="By Point Slab">
