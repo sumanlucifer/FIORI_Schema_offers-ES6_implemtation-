@@ -18,7 +18,7 @@
                 <Label text="{i18n>Division}" />
                 <Text text="{DivisionId}" />
                 <Label text="{i18n>Depot}" />
-                <Text text="{DepotId}" />
+                <Text text="{Depot/Depot}" />
                 <Label text="{i18n>LinkPrimaryDealer}" />
                 <Text text="{PrimaryDealerDetails/DealerName}" />
                 <Label text="{i18n>LinkSecondryDealer}" />
