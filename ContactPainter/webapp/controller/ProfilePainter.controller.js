@@ -449,8 +449,12 @@ sap.ui.define(
               //oData.refresh(true);
             },
             error: function (a) {
+                var sMessage="Unable to update a painter due to the server issues";
+                if(a.statusCode==409){
+                    sMessage="Mobile Number already exist, kindly enter a different mobile number."
+                }
               MessageBox.error(
-                "Unable to update a painter due to the server issues",
+                sMessage,
                 {
                   title: "Error Code: " + a.statusCode,
                 }
