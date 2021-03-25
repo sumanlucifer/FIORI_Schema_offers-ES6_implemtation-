@@ -69,6 +69,7 @@
         <f:content>
             <IconTabBar
                 id="idIconTabBar"
+                expandable="false"
                 expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="offerDetails">
@@ -80,7 +81,40 @@
                         </VBox>
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>historyTabFilter}" key="history">
-                        
+                        <Table id="idHistoryTable">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer/>
+                                    <SearchField width="15rem" placeholder="Search"/>
+                                    <Button
+                                        tooltip="Sort"
+                                        icon="sap-icon://sort"
+                                        press="handleSortButtonPressed"/>
+                                    <Button
+                                        tooltip="Settings"
+                                        icon="sap-icon://action-settings"
+                                        press="handleSettingsButtonPressed"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column><Text text="Painter ID" /></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Painter Name" /></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Mobile Number" /></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Color Bought" /></Column>
+                                <Column><Text text="Status" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem type="Navigation">
+                                    <cells>
+                                        <Text text="{SupplierName}" />
+                                        <Text text="{SupplierName}" />
+                                        <Text text="{SupplierName}" />
+                                        <Text text="{SupplierName}" />
+                                        <Text text="{SupplierName}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
