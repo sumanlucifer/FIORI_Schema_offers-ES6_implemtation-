@@ -94,9 +94,9 @@
                     <Column>
                         <Text text="{i18n>createdBy}"/>
                     </Column>
-                    <!-- <Column>
+                    <Column>
                         <Text text="{i18n>action}"/>
-                    </Column> -->
+                    </Column>
                     <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
                                     <Text text="{i18n>GenericEdit}"/>
                                 </Column>
@@ -115,7 +115,21 @@
                             <ObjectIdentifier title="{Title}" />
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <!-- <Text text="{Status}"/> -->
+                            <ObjectStatus xmlns="sap.m"
+                            state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
+                
+                               text="{
+                                    path: 'Status',
+                                    formatter: '.formatter.status'
+                                }"
+                                
+                                />
+                            <!-- <Text 
+                            text="{
+                                    path: 'Status',
+                                    formatter: '.formatter.status'
+                                }"/> -->
+                            
                             <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
                             
                             

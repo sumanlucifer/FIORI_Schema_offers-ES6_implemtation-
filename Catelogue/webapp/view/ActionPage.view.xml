@@ -50,11 +50,11 @@
                                                 fileType="png,jpg,jpeg"
                                                 useMultipart="false"
                                                 sendXHR="true"
-                                                uploadComplete="handleUploadComplete" />
+                                                uploadComplete="handleUploadCompleteImage" />
                                             <Image id="idPreviewImage" width="400px" height="200px" />
                                             </VBox>
                                             <VBox class="sapUiTinyMargin">
-                                             <Label text="Upload Pdf" class="sapUiTinyMargin"/>
+                                             <Label text="Upload Catalogue" class="sapUiTinyMargin"/>
                                         
                                        
                                             <u:FileUploader
@@ -67,7 +67,7 @@
                                                 fileType="pdf"
                                                 useMultipart="false"
                                                 sendXHR="true"
-                                                uploadComplete="handleUploadComplete" />
+                                                uploadComplete="handleUploadCompletePdf" />
                                             <Image id="idPreviewPdf" width="100px" height="100px" />
                                             </VBox>
                                             
