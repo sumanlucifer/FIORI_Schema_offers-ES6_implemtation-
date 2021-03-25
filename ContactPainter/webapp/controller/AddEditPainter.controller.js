@@ -731,7 +731,7 @@ sap.ui.define(
           //   }
           oDivision.clearSelection();
           oDivision.setValue("");
-          oDivItems.filter(new Filter("Id", FilterOperator.EQ, sId));
+          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
 
           //setting the data for depot;
           var oDepot = oView.byId("idDepot");
@@ -745,7 +745,7 @@ sap.ui.define(
           var oDepBindItems = oDepot.getBinding("items");
           oDepot.clearSelection();
           oDepot.setValue("");
-          oDepBindItems.filter(new Filter("Id",FilterOperator.EQ,sKey));
+          oDepBindItems.filter(new Filter("Division",FilterOperator.EQ,sKey));
         },
 
         onConfAccChng: function (oEvent) {

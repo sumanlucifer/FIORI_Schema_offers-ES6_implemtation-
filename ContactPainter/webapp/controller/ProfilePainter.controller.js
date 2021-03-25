@@ -74,7 +74,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+            "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -129,7 +129,7 @@ sap.ui.define(
             });
           });
 
-          // this._initEditData();
+        
           // this._initSaveModel();
         },
         _initEditData: function () {
@@ -230,11 +230,11 @@ sap.ui.define(
           //setting up the filtering data for the Depot, Divisio
           var sZoneId = oDataValue["ZoneId"];
           if(sZoneId!==null){
-              oView.byId("idDivision").getBinding("items").filter(new Filter("Id",FilterOperator.EQ,sZoneId))
+              oView.byId("idDivision").getBinding("items").filter(new Filter("Zone",FilterOperator.EQ,sZoneId))
           }
           var sDivisionId = oDataValue["DivisionId"];
           if(sDivisionId!==null){
-            oView.byId("idDepot").getBinding("items").filter(new Filter("Id",FilterOperator.EQ,sDivisionId))
+            oView.byId("idDepot").getBinding("items").filter(new Filter("Division",FilterOperator.EQ,sDivisionId))
           }
           // setting up kyc data
           //var oKycData = oDataValue["PainterBankDetails"];
@@ -641,7 +641,7 @@ sap.ui.define(
           var sId = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
-          //var oPainterDetail = oModelView.getProperty("/PainterDetails");
+          var oPainterDetail = oModelView.getProperty("/PainterDetails");
           var oDivision = oView.byId("idDivision");
           var oDivItems = oDivision.getBinding("items");
           var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
@@ -655,7 +655,7 @@ sap.ui.define(
           //   }
           oDivision.clearSelection();
           oDivision.setValue("");
-          oDivItems.filter(new Filter("Id", FilterOperator.EQ, sId));
+          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
 
           //setting the data for depot;
           var oDepot = oView.byId("idDepot");
@@ -669,7 +669,7 @@ sap.ui.define(
           var oDepBindItems = oDepot.getBinding("items");
           oDepot.clearSelection();
           oDepot.setValue("");
-          oDepBindItems.filter(new Filter("Id", FilterOperator.EQ, sKey));
+          oDepBindItems.filter(new Filter("Division",FilterOperator.EQ,sKey));
         },
 
         onPressAddFamliy: function () {
