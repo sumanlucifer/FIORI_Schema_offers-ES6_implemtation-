@@ -12,23 +12,23 @@
                 <Label text="{i18n>colTitle}" required="true"/>
                 <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}"/>
 
-                <Label text="{i18n>colTrainingDescription}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Label text="{i18n>colTrainingDescription}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000"/>
 
                 <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
                 <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <Label text="{i18n>colRewardPoints}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <Input value="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Label text="{i18n>colRewardPoints}" required="true"/>
+                <Input value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>
 
                 <Label text="{i18n>colLink}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
 
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
-				<Input width="100%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+				<Input width="100%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}" type="Number"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
@@ -81,11 +81,11 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colImage}"/>
+                <!-- <Label text="{i18n>colImage}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 				src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
 				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-			    buttonText="{i18n>fileUploaderTrainingtip}"/>
+			    buttonText="{i18n>fileUploaderTrainingtip}"/> -->
 
             </f:content>
         </f:SimpleForm>
