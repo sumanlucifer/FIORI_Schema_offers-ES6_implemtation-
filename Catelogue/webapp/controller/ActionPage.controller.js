@@ -147,15 +147,11 @@ sap.ui.define([
             var oModel = this.getComponentModel();
 
             this.oFileUploader.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=image");
-            // if (!this.oFileUploader.getValue()) {
-            //     MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
-            //     return;
-            // }
             this.oFileUploader.checkFileReadable().then(function () {
                 // @ts-ignore
                 //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
                 this.oFileUploader.setHttpRequestMethod("PUT");
-               // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
                 this.oFileUploader.upload();
             }.bind(this), function (error) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
@@ -167,12 +163,11 @@ sap.ui.define([
         _updatePdf: function (propertySet) {
             var oModel = this.getComponentModel();
             this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=pdf");
-
             this.oFileUploaderPdf.checkFileReadable().then(function () {
                 // @ts-ignore
                 //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
                 this.oFileUploaderPdf.setHttpRequestMethod("PUT");
-               // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
                 this.oFileUploaderPdf.upload();
             }.bind(this), function (error) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
@@ -259,8 +254,8 @@ sap.ui.define([
 
         _showSuccessMsg: function () {
             var oViewModel = this.getView().getModel("ActionViewModel");
-           // oViewModel.setProperty("/busy", false);
-    
+            // oViewModel.setProperty("/busy", false);
+
             var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
             MessageToast.show(sMessage);
             this._navToHome();
