@@ -78,9 +78,14 @@
                     <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/> -->
                 </VBox>
                 <core:Title text="{i18n>LocationDetails}" />
-
+                <Label text="{i18n>PinCode}" />
+                <Input value="{path:'oModelView>/PainterAddress/PinCode',  type : 'sap.ui.model.type.String'  }" autocomplete="false" showSuggestion="true" suggestionItemSelected="onPinCodeSelect" suggest="onPinSuggest" suggestionItems="{path:'/MasterAreaPincodeSet', parameters:{expand:'State',select:'Pincode,StateId,CityId,State/State'} }">
+                    <suggestionItems>
+                        <core:ListItem text="{Pincode}" additionalText="{State/State}" />
+                    </suggestionItems>
+                </Input>
                 <Label text="{i18n>State}" />
-                <ComboBox items="{path:'/MasterStateSet',sorter:{path:'State'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectionChange="onStateChange" required="true" selectedKey="{path:'oModelView>/PainterAddress/StateId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                <ComboBox id="cmBxState" items="{path:'/MasterStateSet',sorter:{path:'State'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectionChange="onStateChange" required="true" selectedKey="{path:'oModelView>/PainterAddress/StateId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                     <items>
                         <core:Item text="{State}" key="{Id}" />
                     </items>
@@ -95,8 +100,8 @@
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
                 <Label text="{i18n>HomeTown}" />
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/Town', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
-                <Label text="{i18n>PinCode}" />
-                <Input required="false" type="Number" value="{path : 'oModelView>/PainterAddress/PinCode', type : 'sap.ui.model.type.String' }" />
+
+
                 <!-- <Label text="{i18n>AddressLine2}"/>
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine2', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
                 <Label text="{i18n>PinCode}"/>

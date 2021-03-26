@@ -449,8 +449,12 @@ sap.ui.define(
               //oData.refresh(true);
             },
             error: function (a) {
+                var sMessage="Unable to update a painter due to the server issues";
+                if(a.statusCode==409){
+                    sMessage="Mobile Number already exist, kindly enter a different mobile number."
+                }
               MessageBox.error(
-                "Unable to update a painter due to the server issues",
+                sMessage,
                 {
                   title: "Error Code: " + a.statusCode,
                 }
@@ -576,6 +580,35 @@ sap.ui.define(
                 " kindly eneter a new number"
             );
           }
+        },
+        onPinSuggest: function (oEvent) {
+          var sTerm = oEvent.getParameter("suggestValue");
+          var aFilters = [];
+          if (sTerm) {
+            aFilters.push(
+              new Filter("Pincode", FilterOperator.StartsWith, sTerm)
+            );
+          }
+
+          oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+        },
+        onPinCodeSelect: function (oEvent) {
+          
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getParameter("selectedItem")
+            .getBindingContext()
+            .getObject();
+          var iStateId = oObject["StateId"];
+          var iCity = oObject["CityId"];
+          var oCity = oView.byId("cmbCity");
+          var oState = oView.byId("cmBxState");
+          oCity
+            .getBinding("items")
+            .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
+          oState.setSelectedKey(iStateId);
+          oCity.setSelectedKey(iCity);
         },
         onLinkPrimryChange: function (oEvent) {
           var oSource = oEvent.getSource();
