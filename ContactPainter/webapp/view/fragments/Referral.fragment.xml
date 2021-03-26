@@ -2,13 +2,11 @@
     <VBox width="100%">
         <Table id="Referral" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-                <!-- <Toolbar>
+                <Toolbar>
                     <ToolbarSpacer/>
-                    <SearchField width="20%"></SearchField>
-                    <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                    <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                    <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                </Toolbar> -->
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
+                    
+                </Toolbar>
             </headerToolbar>
 
             <columns>

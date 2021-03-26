@@ -1130,6 +1130,8 @@ sap.ui.define(
             this._SearchTokens(sValue, sPainterId);
           } else if (sPath.match("Complains")) {
             this._SearchComplains(sValue, sPainterId);
+          } else if (sPath.match("Referral")) {
+            this._SearchReferral(sValue, sPainterId);
           }
         },
         _SearchLoyaltyPoints: function (sValue, sPainterId) {
@@ -1273,6 +1275,63 @@ sap.ui.define(
 
           aCurrentFilter.push(
             new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchReferral: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("Referral");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "ReferralMobile",
+                    FilterOperator.Contains,
+                    sValue.trim()
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "tolower(ReferralName)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                  new Filter(
+                    "tolower(ReferralEmail)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                   new Filter(
+                    "tolower(ReferralStatus)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                ],
+                false
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("ReferredBy", FilterOperator.EQ, parseInt(sPainterId))
           );
           var endFilter = new Filter({
             filters: aCurrentFilter,
