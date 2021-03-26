@@ -100,7 +100,7 @@ sap.ui.define(
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         that.getModel().read(sPath, {
                             urlParameters: {
-                                "$expand": "PainterTypeDetails, Creator, City, State, Depot, Division, PainterArcheType, TrainingType, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
+                                "$expand": "PainterTypeDetails, Creator, City, State, Depot, PainterArcheType, TrainingType, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
                             },
                             success: function (data) {
 
@@ -141,11 +141,11 @@ sap.ui.define(
                                 oViewModel.setProperty("/TrainingDetails/ViewEndDate", oDateFormat.format(oNow));
                                 var trainingId = data.Id;
                                 that._initFilerForTables(trainingId);
-                                if (trainingType === 'OFFLINE') {
-                                    if (data.StateId) {
-                                        that.setInitCity(data.StateId);
-                                    }
-                                }
+                                // if (trainingType === 'OFFLINE') {
+                                //     if (data.StateId) {
+                                //         that.setInitCity(data.StateId);
+                                //     }
+                                // }
 
                             }
                         })
@@ -161,13 +161,13 @@ sap.ui.define(
                     }
 
                     // that._showFormFragment("ViewTraining");
-                    this._loadEditTrainingDetail("Display");
+                    that._loadEditTrainingDetail("Display");
 
                     if (trainingType === 'ONLINE') {
                         var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("OnlineTrainingDetails");
                         oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
                         // that._showFormFragment("Questionnaire");
-                        this._loadEditQuestion("Display");
+                        that._loadEditQuestion("Display");
                     } else if (trainingType === 'OFFLINE') {
                         var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("OfflineTrainingDetails");
                         oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
@@ -175,7 +175,7 @@ sap.ui.define(
                         var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("VideoDetails");
                         oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
                     }
-                    this._toggleButtonsAndView(false);
+                    that._toggleButtonsAndView(false);
                     that.getView().unbindElement();
 
                     that.getView().setModel(oViewModel, "oModelView");
@@ -245,13 +245,58 @@ sap.ui.define(
                     var oSelectedItem = oEvent.getSource().getSelectedItem();
                     var oObject = oSelectedItem.getBindingContext().getObject();
                     this.bindCityCtrl(oObject.Id);
-                    // this.getModel("oModelView").setProperty("/TrainingDetails/CityId", null);
+                    this.getModel("oModelView").setProperty("/TrainingDetails/CityId", null);
                 },
 
                 onChangeCity: function (oEvent) {
                     if (oEvent.getParameter("itemPressed") === false) {
                         oEvent.getSource().setValue("");
                     }
+                },
+
+                onStateChanged: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oCity = oView.byId("cmbCity"),
+                        oBindingCity,
+                        aFilter = [],
+                        oView = this.getView();
+                    if (sKey !== "") {
+                        oCity.clearSelection();
+                        oCity.setValue("");
+                        oBindingCity = oCity.getBinding("items");
+                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                        oBindingCity.filter(aFilter);
+                    }
+                },
+
+                onZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oPainterDetail = oModelView.getProperty("/TrainingDetails");
+                    var oDivision = oView.byId("idDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem();
+
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+
+                    //setting the data for depot;
+                    var oDepot = oView.byId("idDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                },
+
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = oView.byId("idDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
                 },
 
                 onCancel: function () {
@@ -319,16 +364,25 @@ sap.ui.define(
                     } else {
                         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
                         if (addQsFlag === true) {
-                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                Question: addTr.Question,
-                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                IsArchived: false
-                            });
+                            if (addTr.TrainingQuestionnaireOptions.length) {
+                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                            Question: addTr.Question,
+                                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                            IsArchived: false
+                                        });
+                                        this.byId("QuestionnaireOptionsDialog").close();
+                                        this.getModel("oModelView").refresh();
+                                    } else {
+                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                    }
+                                }
+                            } else {
+                                this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
+                            }
                         }
-
-                        this.byId("QuestionnaireOptionsDialog").close();
-                        this.getModel("oModelView").refresh();
                     }
                 },
 
@@ -421,6 +475,7 @@ sap.ui.define(
                  * Save edit or create FAQ details 
                  */
                 handleSavePress: function (oEvent) {
+                    debugger;
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
                     var oPayload = oViewModel.getProperty("/TrainingDetails");
@@ -566,6 +621,7 @@ sap.ui.define(
                 },
 
                 CUOperationTraining: function (oPayload, oEvent) {
+                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
@@ -576,7 +632,6 @@ sap.ui.define(
                     oPayload.PainterType = parseInt(oPayload.PainterType);
 
                     delete oPayload.Duration;
-
                     var dateValue = oPayload.StartDate.toDateString();
                     var timeValue = oPayload.StartDate.toLocaleTimeString();
                     var patternDate = "dd/MM/yyyy hh:mm a";
@@ -619,6 +674,7 @@ sap.ui.define(
                     delete oPayload.PainterType;
                     delete oPayload.CityId;
                     delete oPayload.StateId;
+                    delete oPayload.ZoneId;
                     delete oPayload.Division;
                     delete oPayload.Depot;
                     delete oPayload.LearningQuestionnaire;
@@ -727,7 +783,6 @@ sap.ui.define(
 
                 onUploadAttendance: function (e) {
                     var t = this;
-                    debugger;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
@@ -739,7 +794,7 @@ sap.ui.define(
                         // that._oBusyDialog.open();
 
                         /*******************To Upload File************************/
-
+                        var oView = that.getView();
                         var oURL = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
                         $.ajax({
                             type: 'PUT',
@@ -750,8 +805,8 @@ sap.ui.define(
                             data: file,
                             success: function (data) {
                                 /******* Error  *********/
-                                debugger;
-                                MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPATE"));
+                                oView.getModel().refresh(true);
+                                MessageToast.show(that.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPATE"));
                                 // that._oBusyDialog.close();
                             },
                             error: function (error) {
@@ -829,24 +884,64 @@ sap.ui.define(
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
-                    var StateId = this.getModel("oModelView").getProperty("/TrainingDetails/StateId");
+                    var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
                     var oModelControl2 = oView.getModel("oModelControl2");
                     oModelControl2.setProperty("/modeEdit", true);
                     oModelControl2.setProperty("/iCtbar", false);
                     var othat = this;
+                    var c1, c2, c3;
                     if (trainingType === 'ONLINE') {
-                        othat._loadEditTrainingDetail("Edit");
-                        othat._loadEditQuestion("Edit");
-                        othat.getView().getModel("oModelView").refresh(true);
+                        c1 = othat._loadEditTrainingDetail("Edit");
+                        c1.then(function () {
+                            c2 = othat._loadEditQuestion("Edit");
+                            c2.then(function () {
+                                c3 = othat._initEditData();
+                                c3.then(function () {
+                                    othat.getView().getModel("oModelView").refresh(true);
+                                    othat._setCopyForFragment();
+                                });
+                            });
+                        });
                     } else {
-                        othat._loadEditTrainingDetail("Edit");
-                        if (trainingType === 'OFFLINE') {
-                            if (StateId) {
-                                othat.setInitCity(StateId);
-                            }
-                        }
-                        othat.getView().getModel("oModelView").refresh(true);
+                        c1 = othat._loadEditTrainingDetail("Edit");
+                        c1.then(function () {
+                            c2 = othat._initEditData();
+                            c2.then(function () {
+                                othat.getView().getModel("oModelView").refresh(true);
+                                othat._setCopyForFragment();
+                            });
+                        });
                     }
+                },
+
+                _setCopyForFragment: function () { },
+
+                _initEditData: function () {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var trainingType = this.getModel("appView").getProperty("/trainingType");
+                    var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
+
+                    if (trainingType === 'ONLINE') {
+                        //setting up the filtering data for the Depot, Divisio
+                        if (TrainingDetails.ZoneId) {
+                            oView.byId("idDivision").getBinding("items").filter(new Filter("Zone", FilterOperator.EQ, TrainingDetails.ZoneId))
+                        }
+                        if (TrainingDetails.DivisionId) {
+                            oView.byId("idDepot").getBinding("items").filter(new Filter("Division", FilterOperator.EQ, TrainingDetails.DivisionId))
+                        }
+                    }
+                    if (trainingType === 'OFFLINE') {
+                        if (TrainingDetails.StateId) {
+                            oView.byId("cmbCity").getBinding("items").filter(new Filter("StateId", FilterOperator.EQ, TrainingDetails.StateId))
+                        }
+                        // if (StateId) {
+                        //     othat.setInitCity(StateId);
+                        // }
+                    }
+                    promise.resolve();
+                    return promise;
+
                 },
 
                 _loadEditTrainingDetail: function (mParam) {

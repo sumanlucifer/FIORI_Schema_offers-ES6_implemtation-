@@ -40,7 +40,7 @@
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'OFFLINE'}" items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" change="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}">
+                <ComboBox visible="{= ${appView>/trainingType} === 'OFFLINE'}" items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectionChange="onStateChanged" selectedKey="{oModelView>/TrainingDetails/StateId}">
                     <items>
                         <core:Item text="{State}" key="{Id}"/>
                     </items>
@@ -56,29 +56,32 @@
                 <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
                 <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
-                <!-- <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
-                    <core:Item text="{DivisionId}" key="{Id}"/>
-                </ComboBox> -->
+                <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox selectionChange="onZoneChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
+                    <core:Item text="{Id}" key="{Id}"/>
+                </ComboBox>
 
-                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
                         <core:Item text="{Id}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+
+                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox id="idDepot" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
-                        <core:Item text="{Division}" key="{Id}"/>
+                        <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
                     </items>
                 </ComboBox>
+
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
                         <core:Item text="{PainterType}" key="{Id}"/>
                     </items>
                 </ComboBox>
+
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
                     <items>

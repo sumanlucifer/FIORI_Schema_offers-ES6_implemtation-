@@ -30,11 +30,14 @@
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
-                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/Division/DepotId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/ZoneId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/Division/Division}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/DivisionId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+
+                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/Depot/Depot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/Description}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>

@@ -104,6 +104,7 @@ sap.ui.define(
                         oViewModel.setProperty("/TrainingDetails/StartDate", null);
                         oViewModel.setProperty("/TrainingDetails/Url", "");
                         oViewModel.setProperty("/TrainingDetails/EndDate", null);
+                        oViewModel.setProperty("/TrainingDetails/ZoneId", "");
                         oViewModel.setProperty("/TrainingDetails/DepotId", "");
                         oViewModel.setProperty("/TrainingDetails/DivisionId", "");
                         oViewModel.setProperty("/TrainingDetails/PainterType", null);
@@ -246,25 +247,54 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
+                    debugger;
                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                     if (addTr.Question === "") {
                         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
                     } else {
                         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
                         if (addQsFlag === true) {
-                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                            debugger;
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                Question: addTr.Question,
-                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                IsArchived: false
-                            });
+                            if (addTr.TrainingQuestionnaireOptions.length) {
+                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                            Question: addTr.Question,
+                                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                            IsArchived: false
+                                        });
+                                        this.byId("QuestionnaireOptionsDialog").close();
+                                        this.getModel("oModelView").refresh();
+                                    } else {
+                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                    }
+                                }
+                            } else {
+                                this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
+                            }
                         }
-
-                        this.byId("QuestionnaireOptionsDialog").close();
-                        this.getModel("oModelView").refresh();
                     }
                 },
+
+                // updateOptions: function () {
+                //     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                //     if (addTr.Question === "") {
+                //         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                //     } else {
+                //         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                //         if (addQsFlag === true) {
+                //             this.getModel("oModelView").setProperty("/addQsFlag", false);
+                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                //                 Question: addTr.Question,
+                //                 TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                //                 IsArchived: false
+                //             });
+                //         }
+
+                //         this.byId("QuestionnaireOptionsDialog").close();
+                //         this.getModel("oModelView").refresh();
+                //     }
+                // },
 
                 closeOptionsDialog: function () {
                     this.byId("QuestionnaireOptionsDialog").close();
@@ -448,6 +478,50 @@ sap.ui.define(
                     }
                 },
 
+                onStateChanged: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oCity = oView.byId("cmbCity"),
+                        oBindingCity,
+                        aFilter = [],
+                        oView = this.getView();
+                    if (sKey !== null) {
+                        oCity.clearSelection();
+                        oCity.setValue("");
+                        oBindingCity = oCity.getBinding("items");
+                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                        oBindingCity.filter(aFilter);
+                    }
+                },
+
+                onZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oPainterDetail = oModelView.getProperty("/TrainingDetails");
+                    var oDivision = oView.byId("idDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem();
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+
+                    //setting the data for depot;
+                    var oDepot = oView.byId("idDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                },
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = oView.byId("idDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+                },
+
+
                 /*
                  * To validate values of payload
                  * @constructor  
@@ -599,7 +673,6 @@ sap.ui.define(
                 },
 
                 onUpload: function (oEvent) {
-                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
