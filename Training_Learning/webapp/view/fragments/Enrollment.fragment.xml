@@ -4,7 +4,7 @@
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
-                     <SearchField width="20%" id="searchEnrollment"></SearchField>
+                     <!-- <SearchField width="20%" id="searchEnrollment"></SearchField> -->
                 </Toolbar>
             </headerToolbar>
 
@@ -21,9 +21,9 @@
                 <Column>
                     <Text text="{i18n>colEnrollmentDate}"/>
                 </Column>
-                <Column>
+                <!-- <Column>
                     <Text text="{i18n>colStartDate}"/>
-                </Column>
+                </Column> -->
                 <Column>
                     <Text text="{i18n>colEarnedPoint}"/>
                 </Column>
@@ -39,7 +39,7 @@
                         <Text text="{PainterDetails/MembershipCard}"/>
                         <Text text="{PainterDetails/Mobile}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <!-- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/> -->
                         <Text text="{EarnedPoints}"/>
                         <ObjectStatus text="{path:'Status',formatter:'.fmtStatus'}" state="{= ${Status} === 'ENROLLED' ? 'Success' : 'None' }"/>
                     </cells>

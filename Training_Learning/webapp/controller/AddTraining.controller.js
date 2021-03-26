@@ -46,6 +46,7 @@ sap.ui.define(
                         edit: false,
                         mode: "",
                         sIctbTitle: "",
+                        currDate: new Date(),
                         TrainingDetails: {
                         }
                     });
@@ -114,6 +115,12 @@ sap.ui.define(
                         oViewModel.setProperty("/TrainingDetails/Address", "");
                         oViewModel.setProperty("/TrainingDetails/Description", "");
                         oViewModel.setProperty("/TrainingDetails/TrainingQuestionnaire", []);
+
+                        oViewModel.setProperty("/__metadata", "");
+                        oViewModel.setProperty("/oImage", "");
+
+                        var fU = this.getView().byId("idAttendanceFileUploader");
+                        fU.setValue("");
 
                         var AddEditTraining = this.getView().getModel("i18n").getResourceBundle().getText("AddNewTraining");
                         oViewModel.setProperty("/AddEditTraining", AddEditTraining);
@@ -712,25 +719,46 @@ sap.ui.define(
                     this.getModel("oModelView").refresh();
                 },
 
-                _UploadImage: function (sPath, oImage) {
+                _UploadImage: function (sPath, oImage, oEvent) {
                     var that = this;
+                    $.ajax({
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                        //	data : fd,
+                        data: oImage.Image,
+                        method: "PUT",
+                        headers: that.getModel().getHeaders(),
+                        contentType: "multipart/form-data",
+                        processData: false,
+                        success: that.onUploadAttendance(sPath, oEvent).then(that._SuccessAdd.bind(that, oEvent), that._Error.bind(
+                            that)),
+                        error: that._Error.bind(that)
+                    });
+                },
+
+                onUploadAttendance: function (sPath, oEvent) {
+                    var that = this;
+                    var fU = this.getView().byId("idAttendanceFileUploader");
+                    var domRef = fU.getFocusDomRef();
+                    var file = domRef.files[0];
+                    var dublicateValue = [];
 
                     return new Promise(function (res, rej) {
-                        if (!oImage) {
+                        if (!file) {
                             res();
                             return;
                         }
 
                         var settings = {
                             url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
-                            //	data : fd,
-                            data: oImage.Image,
+                            data: file,
                             method: "PUT",
-                            headers: that.getModel().getHeaders(),
-                            contentType: "multipart/form-data",
+                            cache: false,
+                            // headers: that.getModel().getHeaders(),
+                            contentType: "text/csv",
                             processData: false,
                             success: function () {
                                 res.apply(that);
+
                             },
                             error: function () {
                                 rej.apply(that);
