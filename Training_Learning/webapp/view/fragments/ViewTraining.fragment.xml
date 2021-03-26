@@ -22,10 +22,13 @@
                 <Label text="{i18n>colRewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
                 <Text text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <core:Title text="{i18n>TargetGroup}"/>
-
                 <Label text="{i18n>colLink}"/>
                 <Text text="{oModelView>/TrainingDetails/Url}"/>
+
+                <Label text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+				<Text text="{oModelView>/TrainingDetails/Duration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+
+                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/Division/DepotId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
@@ -46,7 +49,13 @@
                 <Text text="{oModelView>/TrainingDetails/City/City}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
                 <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <!-- <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/> -->
+                <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+
+                <Label text="{i18n>colImage}"/>
+                <Image width="5rem" class="sapUiTinyMargin" height="5rem"
+				src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				<!-- <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+			    buttonText="{i18n>fileUploaderTrainingtip}"/> -->
 
             </f:content>
         </f:SimpleForm>

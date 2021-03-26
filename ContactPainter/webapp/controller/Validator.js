@@ -40,7 +40,6 @@ sap.ui.define(
     Validator.prototype.validate = function (oControl, mParam) {
       this._isValid = true;
       if (mParam) {
-        console.log("inside this method.")
         sap.ui.getCore().getMessageManager().removeAllMessages();
       }
 
@@ -131,7 +130,14 @@ sap.ui.define(
                       else {
                         var sPathB = oControlBinding.getPath();
                         var oModel = oControlBinding.getModel("oModelView");
-                        oModel.setProperty(sPathB, "");
+                        //oModel.setProperty(sPathB, "");
+
+                        if (oControl.getBindingContext("oModelView") === undefined) {
+                          oModel.setProperty(sPathB, "");
+                        } else {
+                          var oBindCtxtPath = oControl.getBindingContext("oModelView").getPath() +"/" +sPathB;
+                          oControlBinding.getModel("oModelView").setProperty(oBindCtxtPath, "");
+                        }
                       }
                     }
                   }

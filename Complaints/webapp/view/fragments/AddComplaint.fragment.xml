@@ -2,46 +2,45 @@
     <VBox id="idVbx" width="100%">
         <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddComplaintDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <core:Title text="{i18n>ComplaintDetails}"/>
-                <Label text="{i18n>ComplaintType}"/>
+                <core:Title text="{i18n>ComplaintDetails}" />
+                <Label text="{i18n>ComplaintType}" />
                 <ComboBox change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
-                        <core:Item text="{ComplaintType}" key="{Id}"/>
+                        <core:Item text="{ComplaintType}" key="{Id}" />
                     </items>
                 </ComboBox>
-                <Label text="{i18n>ComplaintDetails}"/>
+                <Label text="{i18n>ComplaintDetails}" />
                 <ComboBox enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }">
                     <items>
-                        <core:Item text="{ComplaintSubtype}" key="{Id}"/>
+                        <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
                 </ComboBox>
-                <Label text="{i18n>Enter} {i18n>TokenCode}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8'? true:false}"/>
-                <Input id="idTokenCode" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8'? true:false}" required="true" value="{path:'oModelView>/addComplaint/TokenCode',type:'sap.ui.model.type.String',constraints:{minLength:1}}"/>
-                <Label text="{i18n>Enter} {i18n>GiftDetails}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '13'? true:false}"/>
-                 <ComboBox visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '13'? true:false}" id="idGifts"  required="true" items="{path:'/MasterRewardGiftSet',sorter:{path:'RewardGift'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/RewardGiftId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
-                    <items>
-                        <core:Item text="{RewardGift}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-                <Label text="{i18n>Points}" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8' || ${oModelView>/addComplaint/ComplaintTypeId} === '13' }" />
-                <Input id="idPoints" visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '8' || ${oModelView>/addComplaint/ComplaintTypeId} === '13' }" required="true" value="{path:'oModelView>/addComplaint/RewardPoints', type:'sap.ui.model.type.String',constraints:{minLength:1}}"/>
-                <Label text="{i18n>Status}"/>
+                <Label visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" text="{i18n>TokenCode}" />
+                <Input visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
+                    <layoutData>
+                        <l:GridData span="XL10 L10 M10 S12" />
+                    </layoutData>
+                </Input>
+                <Button visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" text="{i18n>Apply}"  press="onPressTokenCode" enabled="{oModelControl>/TokenCode}" />
+                <Label text="{i18n>Status}" />
                 <Text text="{i18n>Open}" />
-                <core:Title text="{i18n>PainterDetails}"/>
-                <Label  text="{i18n>PrimaryMobileNo}"/>
+                <Label text="{i18n>Images}"/>
+                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" /> 
+                <core:Title text="{i18n>PainterDetails}" />
+                <Label text="{i18n>PrimaryMobileNo}" />
                 <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/addCompAddData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
-                <Label text="{i18n>PainterName}"/>
+                <Label text="{i18n>PainterName}" />
                 <Input editable="false" value="{oModelView>/addCompAddData/Name}" />
-                <Label text="{i18n>MembershipId}"/>
+                <Label text="{i18n>MembershipId}" />
                 <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
-                <Label text="{i18n>AddResolution}"/>
-                 <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
+                <Label text="{i18n>AddResolution}" />
+                <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
                     <items>
-                        <core:Item text="{Resolution}" key="{Id}"/>
+                        <core:Item text="{Resolution}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label />
-                <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}" ></TextArea>
+                <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
             </f:content>
         </f:SimpleForm>
     </VBox>

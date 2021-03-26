@@ -3,6 +3,7 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:smartTable="sap.ui.comp.smarttable">
     <f:DynamicPage busy="{ViewModel>/busy}" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
@@ -42,6 +43,12 @@
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
                             <Table>
                                 <columns>
+                                    <Column>
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 0}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRequestId}"/>
+                                    </Column>
                                     <Column hAlign="Center">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 6}'/>
@@ -52,6 +59,7 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
+                                            <Text text="{Id}"/>
                                             <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
                                         </cells>
                                     </ColumnListItem>
@@ -78,6 +86,30 @@
                             placeToolbarInTable="true"
                             persistencyKey="CompletedSmartTableKey"
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                            <Table>
+                                <columns>
+                                    <Column>
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 0}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRequestId}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 5}'/>
+                                        </customData>
+                                        <Text text="{i18n>tblColRemarks}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Id}"/>
+                                            <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
                         </smartTable:SmartTable>
                     </IconTabFilter>
                 </items>

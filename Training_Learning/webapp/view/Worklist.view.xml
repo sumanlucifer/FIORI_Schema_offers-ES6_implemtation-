@@ -45,8 +45,8 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							growingThreshold="15" items="{ path: '/TrainingSet', parameters : { expand : 'Creator' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -76,10 +76,10 @@
                                 <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="8%">
@@ -140,10 +140,10 @@
                                 <Column width="11%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="8%">
@@ -201,10 +201,10 @@
                                 <Column width="13%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
 									<Text text="{i18n>colCreatedBy}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="6%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
                                 <Column width="9%">

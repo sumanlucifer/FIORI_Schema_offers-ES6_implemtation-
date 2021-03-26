@@ -18,8 +18,9 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "sap/m/Title",
     "com/knpl/pragati/Complaints/model/customInt",
-    "com/knpl/pragati/Complaints/model/cmbxDtype2"
+    "com/knpl/pragati/Complaints/model/cmbxDtype2",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -43,6 +44,7 @@ sap.ui.define(
     FilterOperator,
     DateFormat,
     History,
+    Title,
     customInt,
     cmbxDtype2
   ) {
@@ -88,7 +90,7 @@ sap.ui.define(
               TokenCode: "",
               RewardPoints: "",
               RewardGiftId: "",
-              ResolutionOthers:""
+              ResolutionOthers: "",
             },
             addCompAddData: {
               MembershipCard: "",
@@ -103,6 +105,14 @@ sap.ui.define(
           } else {
           }
 
+          var oDataControl = {
+            TokenCode: true,
+            tokenCodeValue: "",
+          };
+
+          var oModelControl = new JSONModel(oDataControl);
+          this.getView().setModel(oModelControl, "oModelControl");
+
           this._formFragments; //used for the fragments of the add and edit forms
           this.getView().setModel(oViewModel, "oModelView");
           //this._initMessage(oViewModel);
@@ -110,6 +120,9 @@ sap.ui.define(
           //used to intialize the message class for displaying the messages
         },
         onPressSave: function () {
+          this.sServiceURI = this.getOwnerComponent(this)
+            .getManifestObject()
+            .getEntry("/sap.app").dataSources.mainService.uri;
           var oModel = this.getView().getModel("oModelView");
           var oValidator = new Validator();
           var oVbox = this.getView().byId("idVbx");
@@ -126,18 +139,46 @@ sap.ui.define(
             this._postDataToSave();
           }
         },
+
         _postDataToSave: function () {
-          var oViewModel = this.getView().getModel("oModelView");
-          var oPayLoad = this._ReturnObjects(
-            oViewModel.getProperty("/addComplaint")
-          );
+          var oView = this.getView();
+          var oViewModel = oView.getModel("oModelView");
+          var oAddCompData = oViewModel.getProperty("/addComplaint");
+          var oModelContrl = oView.getModel("oModelControl");
+
+          // if tokecode property is set to true, we have make the string empty
+          if (oModelContrl.getProperty("/TokenCode") == true) {
+            oAddCompData["RewardPoints"] = "";
+            oAddCompData["TokenCode"] = "";
+          }
+          var oPayLoad = this._ReturnObjects(oAddCompData);
           var othat = this;
           var oData = this.getView().getModel();
-          console.log(oPayLoad);
+        
+          var c1, c2;
+          c1 = this._postCreateData(oPayLoad);
+
+          var oUploadItems = oView.byId("idUploadCollection").getItems();
+          c1.then(function (oData) {
+            if (oUploadItems.length > 0) {
+              c2 = othat._checkFileUpload(oData);
+              c2.then(function () {
+                othat.navPressBack();
+              });
+            } else {
+              othat.navPressBack();
+            }
+          });
+        },
+        _postCreateData: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oData = this.getView().getModel();
+          var othat = this;
           oData.create("/PainterComplainsSet", oPayLoad, {
             success: function (oData) {
               MessageToast.show("Complaint Sucessfully Created");
-              othat.navPressBack();
+              promise.resolve(oData);
+              //othat.navPressBack();
             },
             error: function (a) {
               MessageBox.error(
@@ -146,8 +187,67 @@ sap.ui.define(
                   title: "Error Code: " + a.statusCode,
                 }
               );
+              promise.reject(a);
             },
           });
+          return promise;
+        },
+        _checkFileUpload: function (oData) {
+          
+          var promise = jQuery.Deferred();
+          var UploadCollection = this.getView().byId("idUploadCollection");
+          var oItems = UploadCollection.getItems();
+          var othat = this;
+          var bFlag = false;
+          if (oData.hasOwnProperty("Id")) {
+            if (oData["Id"] !== null) {
+              if (oItems.length > 0) {
+                bFlag = true;
+              }
+            }
+          }
+
+          if (!bFlag) {
+            promise.resolve("NoFileUploadRequired");
+            return promise;
+          }
+          var sUrl =
+            this.sServiceURI +
+            "PainterComplainsSet(" +
+            oData["Id"] +
+            ")/$value";
+
+          var async_request = [];
+
+          for (var x = 0; x < oItems.length; x++) {
+            var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader())
+              .oFileUpload.files[0];
+           
+            async_request.push(
+              jQuery.ajax({
+                method: "PUT",
+                url: sUrl,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: sFile,
+                success: function (data) {},
+                error: function () {},
+              })
+            );
+          }
+          if (oItems.length > 0) {
+            jQuery.when.apply(null, async_request).then(
+              function () {
+                //promise.resolve("FileUpdated");
+              },
+              function () {
+                //promise.resolve("FileNot Uplaoded");
+              }
+            );
+          }
+          promise.resolve();
+          return promise;
         },
         _ReturnObjects: function (mParam) {
           var obj = Object.assign({}, mParam);
@@ -168,34 +268,71 @@ sap.ui.define(
           }
           return oNew;
         },
+
         onCmpTypChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oViewModel = oView.getModel("oModelView");
-          if (sKey.toString() !== "8") {
-            oViewModel.setProperty("/addComplaint/TokenCode", "");
-            oViewModel.setProperty("/addComplaint/RewardPoints", "");
-            var aArray1 = ["idTokenCode", "idPoints"];
-            aArray1.forEach(function (sId) {
-              oView.byId(sId).setValue("");
-              oView.byId(sId).setValueState("None");
-            });
-          }
-          if (sKey.toString() !== "14") {
-            oViewModel.setProperty("/addComplaint/RewardGiftId", "");
-            oViewModel.setProperty("/addComplaint/RewardPoints", "");
-            var aArray1 = ["idGifts", "idPoints"];
-            aArray1.forEach(function (sId) {
-              oView.byId(sId).setValue("");
-              oView.byId(sId).setValueState("None");
-            });
-          }
-
+          var oModelControl = oView.getModel("oModelControl");
           var oCmbxSubType = oView.byId("idCompainSubType");
           var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
           oCmbxSubType.clearSelection();
           oCmbxSubType.setValue("");
           oCmbxSubType.getBinding("items").filter(oFilter);
+          if (sKey == "1" || sKey == "2") {
+            oViewModel.setProperty("/addComplaint/RewardPoints", "");
+            oViewModel.setProperty("/addComplaint/TokenCode", "");
+            oModelControl.setProperty("/tokenCodeValue", "");
+            oModelControl.setProperty("/TokenCode", true);
+          }
+        },
+        onPressTokenCode: function () {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
+          var oData = oView.getModel();
+          var sPainterId = oModelView.getProperty("/addComplaint/PainterId");
+          var sTokenCode = oModelControl.getProperty("/tokenCodeValue");
+
+          if (sPainterId == "") {
+            MessageToast.show("Kindly select a valid painter");
+            return;
+          }
+          if (sTokenCode == "") {
+            MessageToast.show("Kindly Input the token code.");
+            return;
+          }
+          oData.read("/QRCodeValidationAdmin", {
+            urlParameters: {
+              qrcode: "'" + sTokenCode + "'",
+              painterid: sPainterId,
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData.hasOwnProperty("Status")) {
+                  if (oData["Status"] == true) {
+                    oModelView.setProperty(
+                      "/addComplaint/RewardPoints",
+                      oData["RewardPoints"]
+                    );
+                    oModelView.setProperty(
+                      "/addComplaint/TokenCode",
+                      sTokenCode
+                    );
+                    oModelControl.setProperty("/TokenCode", false);
+                    MessageToast.show(oData["Message"]);
+                  } else if (oData["Status"] == false) {
+                    oModelView.setProperty("/addComplaint/RewardPoints", "");
+                    oModelView.setProperty("/addComplaint/TokenCode", "");
+                    oModelControl.setProperty("/tokenCodeValue", "");
+                    oModelControl.setProperty("/TokenCode", true);
+                    MessageToast.show(oData["Message"]);
+                  }
+                }
+              }
+            },
+            error: function () {},
+          });
         },
         onValueHelpRequest: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
@@ -271,10 +408,8 @@ sap.ui.define(
           oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
           oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
         },
-        onAfterRendering: function () {
-          //var oModel = this.getView().getModel("oModelView");
-          //this._initMessage(oModel);
-        },
+        onAfterRendering: function () {},
+
         _initMessage: function (oViewModel) {
           this._onClearMgsClass();
           this._oMessageManager = sap.ui.getCore().getMessageManager();
@@ -283,14 +418,17 @@ sap.ui.define(
           oView.setModel(this._oMessageManager.getMessageModel(), "message");
           this._oMessageManager.registerObject(oView, true);
         },
-        onChangeResolution:function(oEvent){
-            var oView = this.getView();
-            var oModel = oView.getModel("oModelView");
-            var sKey = oEvent.getSource().getSelectedKey();
-            if(sKey!==22){
-                oModel.setProperty("/addComplaint/ResolutionOthers","");
-            }
-            console.log(oModel);
+        onUploadFileTypeMis: function () {
+          MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
+        },
+        onChangeResolution: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var sKey = oEvent.getSource().getSelectedKey();
+          if (sKey !== 22) {
+            oModel.setProperty("/addComplaint/ResolutionOthers", "");
+          }
+          console.log(oModel);
         },
         navPressBack: function () {
           var oHistory = History.getInstance();
@@ -311,6 +449,7 @@ sap.ui.define(
           this._getFormFragment(sFragmentName).then(function (oVBox) {
             oView.addDependent(oVBox);
             objSection.addItem(oVBox);
+            othat._setUploadCollectionMethod.call(othat);
           });
         },
 
@@ -330,6 +469,49 @@ sap.ui.define(
           return this._formFragments;
         },
 
+        _setUploadCollectionMethod: function () {
+          var oUploadCollection = this.getView().byId("idUploadCollection");
+
+          var othat = this;
+          oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+            count
+          ) {
+            var nItems = count || 0;
+            var sText;
+            // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
+            if (this._oItemToUpdate) {
+              nItems--;
+            }
+            if (this.getNumberOfAttachmentsText()) {
+              sText = this.getNumberOfAttachmentsText();
+            } else {
+              sText = this._oRb.getText("UPLOADCOLLECTION_ATTACHMENTS", [
+                nItems,
+              ]);
+            }
+            if (!this._oNumberOfAttachmentsTitle) {
+              this._oNumberOfAttachmentsTitle = new Title(
+                this.getId() + "-numberOfAttachmentsTitle",
+                {
+                  text: sText,
+                }
+              );
+            } else {
+              this._oNumberOfAttachmentsTitle.setText(sText);
+            }
+
+            othat._CheckAddBtnForUpload.call(othat, nItems);
+          };
+        },
+        _CheckAddBtnForUpload: function (mParam) {
+          var oUploadCol = this.getView().byId("idUploadCollection");
+
+          if (mParam == 1) {
+            oUploadCol.setUploadButtonInvisible(true);
+          } else if (mParam < 1) {
+            oUploadCol.setUploadButtonInvisible(false);
+          }
+        },
         onExit: function () {},
       }
     );

@@ -54,7 +54,29 @@ sap.ui.define([], function () {
             var oNow = new Date(oDateTime);
             return oDateFormat.format(oNow); //string in the same format as "Thu, Jan 29, 2017"
 
-        }
+        },
+
+        giveImage : function(oMetadata, ImageData){
+            if(oMetadata && oMetadata.media_src && !ImageData  )
+            {  
+                var sPathname = new URL(oMetadata.media_src).pathname;
+                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+            }
+            
+            if (ImageData)
+		 	return URL.createObjectURL(ImageData.Image);	
+        },
+        
+        giveAttendance : function(oMetadata, AttendanceData){
+            if(oMetadata && oMetadata.media_src && !AttendanceData  )
+            {  
+                var sPathname = new URL(oMetadata.media_src).pathname;
+                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+            }
+            
+            if (AttendanceData)
+		 	return URL.createObjectURL(AttendanceData.Image);	
+		}
 
     };
 

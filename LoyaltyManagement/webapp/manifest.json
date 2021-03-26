@@ -120,7 +120,7 @@
                 },
                 {
                     "name": "DetailPage",
-                    "pattern": "DetailPage",
+                    "pattern": "DetailPage/{Id}",
                     "target": [
                         "TargetDetailPage"
                     ]

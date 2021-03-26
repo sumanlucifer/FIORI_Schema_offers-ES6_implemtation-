@@ -1,5 +1,8 @@
 /node_modules/
+package-lock.json
 /dist/
+/.vscode/
+/*-content.zip/
 
 # auto generated wildcard
 knpl-influencer-web/LoyaltyManagement/.env
@@ -39,3 +42,7 @@ knpl-cp/ContactPainter/.env1
 complaints/Complaints/.env1
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1

@@ -22,7 +22,20 @@
                 <ComboBox items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{PainterType}" key="{Id}"/>
                 </ComboBox>
-                <Label text="{i18n>LinkPrimaryDealer}"/>
+               
+                 <Label text="{i18n>Zone}" />
+                <ComboBox selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/ZoneId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Id}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>Division}" />
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/DivisionId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Id}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>Depot}" />
+                <ComboBox id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/DepotId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                </ComboBox>
+                 <Label text="{i18n>LinkPrimaryDealer}"/>
                 <ComboBox change="onChangePDealer" id="cmbxPDlr" selectedKey="{path:'oModelView>/DealerId',type:'sap.ui.model.type.String'}" selectionChange="onLinkPrimryChange" items="{path:'/DealerSet', sorter:{path:'DealerName'}}">
                     <items>
                         <core:Item text="{DealerName} - {Id}" key="{Id}" />
@@ -34,18 +47,6 @@
                         <core:Item text="{DealerName} - {Id}" key="{Id}"/>
                     </items>
                 </MultiComboBox>
-                 <Label text="{i18n>Zone}"/>
-                <ComboBox items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/ZoneId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{DivisionId}" key="{Id}"/>
-                </ComboBox>
-                 <Label text="{i18n>Depot}"/>
-                <ComboBox items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/DepotId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Id}" key="{Id}"/>
-                </ComboBox>
-                 <Label text="{i18n>Division}"/>
-                <ComboBox items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/DivisionId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Division}" key="{Id}"/>
-                </ComboBox>
                 <core:Title text="{i18n>PersonalDetails}"/>
                 <Label text="{i18n>FullName}"/>
                 <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }"/>
@@ -72,10 +73,10 @@
                 <VBox>
                     <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
 
-                    <HBox justifyContent="End">
+                    <!-- <HBox justifyContent="End">
                         <Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelControl>/AnotherMobField} === false }"/>
                     </HBox>
-                    <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/>
+                    <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." visible="{= ${oModelControl>/AnotherMobField} === true }" type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }"/> -->
                 </VBox>
                 <core:Title text="{i18n>LocationDetails}"/>
 
@@ -193,7 +194,7 @@
                             <Text text="{oModelView>Name}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <VBox>
-                            <Input width="90%" valueStateText="Kindly enter the mobile number of 10 digits." required="true" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
+                            <Input width="90%" valueStateText="Kindly enter the mobile number of 10 digits." required="false" type="Number" value="{path:'oModelView>Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" visible="{= ${oModelView>editable} === true }"/>
                             <Text text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }"/>
                         </VBox>
                         <HBox>
