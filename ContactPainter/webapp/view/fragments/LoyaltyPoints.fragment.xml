@@ -16,6 +16,9 @@
                         <SegmentedButtonItem text="{i18n>Redemption}" key="1"/>
                     </items>
                 </SegmentedButton>
+                <ToolbarSpacer ></ToolbarSpacer>
+                <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/LoyaltyPoints}"></SearchField>
+            
             </Toolbar>
         </headerToolbar>
         <columns>

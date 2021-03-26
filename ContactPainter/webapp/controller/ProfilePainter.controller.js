@@ -97,8 +97,9 @@ sap.ui.define(
               "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
             Search: {
               Referral: "",
-              Offers: "",
-              Complaints: "",
+              Tokens: "",
+              Complains: "",
+              LoyaltyPoints: "",
             },
           };
           var oModel = new JSONModel(oData);
@@ -129,7 +130,6 @@ sap.ui.define(
             });
           });
 
-        
           // this._initSaveModel();
         },
         _initEditData: function () {
@@ -229,12 +229,18 @@ sap.ui.define(
           }
           //setting up the filtering data for the Depot, Divisio
           var sZoneId = oDataValue["ZoneId"];
-          if(sZoneId!==null){
-              oView.byId("idDivision").getBinding("items").filter(new Filter("Zone",FilterOperator.EQ,sZoneId))
+          if (sZoneId !== null) {
+            oView
+              .byId("idDivision")
+              .getBinding("items")
+              .filter(new Filter("Zone", FilterOperator.EQ, sZoneId));
           }
           var sDivisionId = oDataValue["DivisionId"];
-          if(sDivisionId!==null){
-            oView.byId("idDepot").getBinding("items").filter(new Filter("Division",FilterOperator.EQ,sDivisionId))
+          if (sDivisionId !== null) {
+            oView
+              .byId("idDepot")
+              .getBinding("items")
+              .filter(new Filter("Division", FilterOperator.EQ, sDivisionId));
           }
           // setting up kyc data
           //var oKycData = oDataValue["PainterBankDetails"];
@@ -449,16 +455,15 @@ sap.ui.define(
               //oData.refresh(true);
             },
             error: function (a) {
-                var sMessage="Unable to update a painter due to the server issues";
-                if(a.statusCode==409){
-                    sMessage="Mobile Number already exist, kindly enter a different mobile number."
-                }
-              MessageBox.error(
-                sMessage,
-                {
-                  title: "Error Code: " + a.statusCode,
-                }
-              );
+              var sMessage =
+                "Unable to update a painter due to the server issues";
+              if (a.statusCode == 409) {
+                sMessage =
+                  "Mobile Number already exist, kindly enter a different mobile number.";
+              }
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+              });
             },
           });
         },
@@ -593,7 +598,6 @@ sap.ui.define(
           oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
         },
         onPinCodeSelect: function (oEvent) {
-          
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
           var oObject = oEvent
@@ -702,7 +706,7 @@ sap.ui.define(
           var oDepBindItems = oDepot.getBinding("items");
           oDepot.clearSelection();
           oDepot.setValue("");
-          oDepBindItems.filter(new Filter("Division",FilterOperator.EQ,sKey));
+          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
         },
 
         onPressAddFamliy: function () {
@@ -1111,6 +1115,230 @@ sap.ui.define(
         },
         dealerName: function (mParam) {
           return mParam.length;
+        },
+        onTablesSearch: function (oEvent) {
+          var oView = this.getView();
+          var sPath = oEvent.getSource().getBinding("value").getPath();
+          var sValue = oEvent.getSource().getValue();
+          var sPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+          console.log(sPainterId);
+          if (sPath.match("LoyaltyPoints")) {
+            this._SearchLoyaltyPoints(sValue, sPainterId);
+          } else if (sPath.match("Tokens")) {
+            this._SearchTokens(sValue, sPainterId);
+          } else if (sPath.match("Complains")) {
+            this._SearchComplains(sValue, sPainterId);
+          } else if (sPath.match("Referral")) {
+            this._SearchReferral(sValue, sPainterId);
+          }
+        },
+        _SearchLoyaltyPoints: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("idLoyaltyPoints");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "TotalPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                "tolower(PointType)",
+                FilterOperator.Contains,
+                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchTokens: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("idTblOffers");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "Painter/Mobile",
+                    FilterOperator.Contains,
+                    sValue.trim()
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "tolower(TokenCode)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                ],
+                false
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchComplains: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+          var oTable = oView.byId("IdTblComplaints");
+
+          // this is the same case
+
+          aCurrentFilter.push(
+            new Filter(
+              [
+                new Filter(
+                  "tolower(Painter/Name)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(Painter/MembershipCard)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintCode)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "Painter/Mobile",
+                  FilterOperator.EQ,
+                  sValue.trim().substring(0, 10)
+                ),
+                new Filter(
+                  "tolower(ComplaintType/ComplaintType)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintSubtype/ComplaintSubtype)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintStatus)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+              ],
+              false
+            )
+          );
+
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchReferral: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("Referral");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "ReferralMobile",
+                    FilterOperator.Contains,
+                    sValue.trim()
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "tolower(ReferralName)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                  new Filter(
+                    "tolower(ReferralEmail)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                   new Filter(
+                    "tolower(ReferralStatus)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                ],
+                false
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("ReferredBy", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
