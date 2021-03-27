@@ -82,3 +82,5 @@ ZSample/HTML5Module/.env3
 knpl-cp/ContactPainter/.env1
 # auto generated wildcard
 complaints/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env2
