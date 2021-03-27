@@ -18,6 +18,9 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/VBox",
     "com/knpl/pragati/ContactPainter/model/customInt",
     "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
@@ -43,6 +46,9 @@ sap.ui.define(
     FilterOperator,
     DateFormat,
     History,
+    Dialog,
+    Button,
+    VBox,
     customInt1,
     customInt2
   ) {
@@ -101,6 +107,7 @@ sap.ui.define(
               Complains: "",
               LoyaltyPoints: "",
             },
+            ApplyLoyaltyPoints: "",
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -1320,7 +1327,7 @@ sap.ui.define(
                     FilterOperator.Contains,
                     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
                   ),
-                   new Filter(
+                  new Filter(
                     "tolower(ReferralStatus)",
                     FilterOperator.Contains,
                     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
@@ -1339,6 +1346,87 @@ sap.ui.define(
           });
 
           oTable.getBinding("items").filter(endFilter);
+        },
+        onPressOpenTokenDialog: function (oEvent) {
+          var othat = this;
+          var oModelControl = this.getView().getModel("oModelControl2")
+          if (!this.oDefaultDialog) {
+            this.oDefaultDialog = new Dialog({
+              title: "{i18n>ApplyToken}",
+              afterClose: function () {
+                othat.oDefaultDialog.destroy();
+                console.log("onCloseTrigerred");
+                delete othat.oDefaultDialog;
+                oModelControl.setProperty("/ApplyLoyaltyPoints","");
+              },
+              content: [
+                new VBox({
+                  alignItems: "Center",
+                  items: [
+                    new Input({
+                      width: "120%",
+                      placeholder: "Enter Token Code",
+                      value: "{oModelControl2>/ApplyLoyaltyPoints}",
+                    }),
+                  ],
+                }),
+              ],
+              beginButton: new Button({
+                text: "{i18n>Cencel}",
+                type: "Default",
+                press: function () {
+                  othat.oDefaultDialog.close();
+                
+                },
+              }),
+              endButton: new Button({
+                text: "{i18n>Ok}",
+                type: "Emphasized",
+                press: othat._onApplyLoyalyPoints.bind(othat),
+              }),
+            });
+
+            // to get access to the controller's model
+            this.getView().addDependent(this.oDefaultDialog);
+          }
+
+          this.oDefaultDialog.open();
+        },
+        _onApplyLoyalyPoints: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oModelControl = oView.getModel("oModelControl2");
+          var sTokenCode = oModelControl
+            .getProperty("/ApplyLoyaltyPoints")
+            .trim();
+          if (sTokenCode == "") {
+            MessageToast.show("Kindly enter the token code to continue");
+            return;
+          }
+
+          var oData = oView.getModel();
+
+          oData.read("/QRCodeValidationAdmin", {
+            urlParameters: {
+              qrcode: "'" + sTokenCode + "'",
+              painterid: oModelControl.getProperty("/PainterId"),
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData.hasOwnProperty("Status")) {
+                  if (oData["Status"] == true) {
+                    MessageToast.show(oData["Message"]);
+                    
+                    othat.oDefaultDialog.close();
+                    
+                  } else if (oData["Status"] == false) {
+                    MessageToast.show(oData["Message"]);
+                  }
+                }
+              }
+            },
+            error: function () {},
+          });
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
