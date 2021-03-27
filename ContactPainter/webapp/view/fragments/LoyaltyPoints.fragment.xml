@@ -18,7 +18,7 @@
                 </SegmentedButton>
                 <ToolbarSpacer ></ToolbarSpacer>
                 <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/LoyaltyPoints}"></SearchField>
-            
+               
             </Toolbar>
         </headerToolbar>
         <columns>
