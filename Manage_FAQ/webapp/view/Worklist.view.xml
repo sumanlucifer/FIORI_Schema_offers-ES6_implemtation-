@@ -34,7 +34,7 @@
 					<OverflowToolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
 						<ToolbarSpacer/>
-						<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+						<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }">
 							<layoutData>
 								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							</layoutData>
@@ -64,8 +64,8 @@
 							<Text text="{FAQCategory/FAQCategory}"/>
 							<Text text="{Question}"/>
 							<Text text="{Answer}"/>
-							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
-							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
+							<Button icon="sap-icon://edit" press="onEdit" type="Transparent" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
+							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
 						</cells>
 					</ColumnListItem>
 				</items>
