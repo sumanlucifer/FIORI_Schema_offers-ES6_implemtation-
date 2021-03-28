@@ -48,9 +48,20 @@ sap.ui.define([
             // Make sure, busy indication is showing immediately so there is no
             // break after the busy indication for loading the view's meta data is
             // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
+            var dat = this;
             oTable.attachEventOnce("updateFinished", function () {
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+
+                //Fetch loggedIn User ID to disable delete button for loggedIn user
+                var oModel = dat.getModel();
+                oModel.callFunction("/GetLoggedInAdmin", {
+                    method: "GET",
+                    success: function (data) {
+                        oViewModel.setProperty("/loggedUserId", data.results[0].Id);
+                        oViewModel.setProperty("/loggedUserRoleId", data.results[0].RoleId);
+                    }
+                });
             });
         },
 
