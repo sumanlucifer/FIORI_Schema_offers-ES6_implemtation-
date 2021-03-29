@@ -306,6 +306,7 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: sPainterId,
+              channel:"'Complains'"
             },
             success: function (oData) {
               if (oData !== null) {

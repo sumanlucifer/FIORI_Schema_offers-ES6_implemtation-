@@ -15,15 +15,15 @@
                         <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
                 </ComboBox>
-                <Label visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" text="{i18n>TokenCode}" />
-                <Input visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
+                <Label visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' }" text="{i18n>TokenCode}" />
+                <Input visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
                     <layoutData>
                         <l:GridData span="XL10 L10 M10 S12" />
                     </layoutData>
                 </Input>
-                <Button visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" text="{i18n>Apply}" press="onPressTokenCode" enabled="{oModelControl>/TokenCode}" />
-                <Label visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" text="{i18n>Points}" />
-                <Input visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' || ${oModelView>/addComplaint/ComplaintTypeId} === '2' }" editable="false" value="{path:'oModelView>/addComplaint/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
+                <Button visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1'  }" text="{i18n>Apply}" press="onPressTokenCode" enabled="{oModelControl>/TokenCode}" />
+                <Label visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1' }" text="{i18n>Points}" />
+                <Input visible="{= ${oModelView>/addComplaint/ComplaintTypeId} === '1'}" editable="false" value="{path:'oModelView>/addComplaint/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
 
                 <Label text="{i18n>Status}" />
                 <Text text="{i18n>Open}" />
