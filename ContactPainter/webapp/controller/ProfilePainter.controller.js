@@ -1372,7 +1372,7 @@ sap.ui.define(
                 }),
               ],
               beginButton: new Button({
-                text: "{i18n>Cencel}",
+                text: "{i18n>Cancel}",
                 type: "Default",
                 press: function () {
                   othat.oDefaultDialog.close();
@@ -1419,7 +1419,7 @@ sap.ui.define(
                     MessageToast.show(oData["Message"]);
                     
                     othat.oDefaultDialog.close();
-                    
+                    oData.refresh();
                   } else if (oData["Status"] == false) {
                     MessageToast.show(oData["Message"]);
                   }
