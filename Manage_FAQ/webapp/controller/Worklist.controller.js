@@ -81,7 +81,8 @@ sap.ui.define([
         onUpdateFinished: function (oEvent) {
             // // update the worklist's object counter after the table update
             var sTitle,
-                oTable = oEvent.getSource(),
+                // oTable = oEvent.getSource(),
+                oTable = this.getView().byId("table"),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty

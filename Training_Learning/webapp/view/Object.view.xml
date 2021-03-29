@@ -24,7 +24,7 @@
                         <TextArea value="{objectView>Description}" rows="5" maxLength="1000"/>
                         <Label text="{i18n>colRewardPoints}" required="true"/>
                         <Input width="100%" value="{objectView>RewardPoints}" maxLength="10" type="Number"/>
-				        <Label text="{i18n>colLink}"/>
+				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
                         <Label required="true" text="{i18n>colDuration}"/>
 				        <Input width="100%" value="{objectView>Duration}" maxLength="10" type="Number"/>
