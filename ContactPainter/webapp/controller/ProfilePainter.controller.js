@@ -1215,6 +1215,11 @@ sap.ui.define(
                     FilterOperator.Contains,
                     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
                   ),
+                  new Filter(
+                    "tolower(Channel)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
                 ],
                 false
               )
