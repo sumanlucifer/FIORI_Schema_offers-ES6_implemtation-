@@ -1215,6 +1215,11 @@ sap.ui.define(
                     FilterOperator.Contains,
                     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
                   ),
+                  new Filter(
+                    "tolower(Channel)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
                 ],
                 false
               )
@@ -1372,7 +1377,7 @@ sap.ui.define(
                 }),
               ],
               beginButton: new Button({
-                text: "{i18n>Cencel}",
+                text: "{i18n>Cancel}",
                 type: "Default",
                 press: function () {
                   othat.oDefaultDialog.close();
@@ -1410,6 +1415,7 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: oModelControl.getProperty("/PainterId"),
+              channel:"'Painter Profile'"
             },
             success: function (oData) {
               if (oData !== null) {
@@ -1418,15 +1424,18 @@ sap.ui.define(
                     MessageToast.show(oData["Message"]);
                     
                     othat.oDefaultDialog.close();
-                    
+                   
                   } else if (oData["Status"] == false) {
                     MessageToast.show(oData["Message"]);
+                    
                   }
+                  othat.getView().getModel().refresh(true);
                 }
               }
             },
             error: function () {},
           });
+          
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();

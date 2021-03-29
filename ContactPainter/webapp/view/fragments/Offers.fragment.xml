@@ -23,7 +23,7 @@
                     <Text text="{i18n>DateAndTime}" />
                 </Column>
                  <Column>
-                    <Text text="{i18n>Status}" />
+                    <Text text="{i18n>AppliedBy}" />
                 </Column>
             </columns>
 
@@ -34,7 +34,7 @@
                         <Text text="{Painter/Mobile}" />
                         <Text text="{RewardPoints}" />
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
-                          <Text text="{path:'ScanStatus', formatter:'.fmtLowerCase'}" />
+                        <Text text="{path:'Channel', formatter:'.fmtLowerCase'}" />
                     </cells>
                 </ColumnListItem>
             </items>
