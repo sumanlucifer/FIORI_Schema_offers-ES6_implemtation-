@@ -1410,7 +1410,7 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: oModelControl.getProperty("/PainterId"),
-              channel:"'channelName'"
+              channel:"'Painter Profile'"
             },
             success: function (oData) {
               if (oData !== null) {
