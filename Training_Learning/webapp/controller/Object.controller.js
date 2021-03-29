@@ -368,14 +368,14 @@ sap.ui.define([
                             target: "/oDetails/RewardPoints"
                         });
                     } else
-                        // if (data.Url === "") {
-                        //     oReturn.IsNotValid = true;
-                        //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
-                        //     aCtrlMessage.push({
-                        //         message: "MSG_PLS_ENTER_ERR_URL",
-                        //         target: "/oDetails/Url"
-                        //     });
-                        // } else
+                        if (data.Url === "") {
+                            oReturn.IsNotValid = true;
+                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                            aCtrlMessage.push({
+                                message: "MSG_PLS_ENTER_ERR_URL",
+                                target: "/oDetails/Url"
+                            });
+                        } else
                             if (data.Url !== "" && !url.match(regex)) {
                                 oReturn.IsNotValid = true;
                                 oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
@@ -476,6 +476,8 @@ sap.ui.define([
         _SuccessAdd: function () {
             this.getRouter().navTo("worklist", true);
             MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_CREATE"));
+            var oModel = this.getModel();
+            oModel.refresh(true);
         }
     });
 

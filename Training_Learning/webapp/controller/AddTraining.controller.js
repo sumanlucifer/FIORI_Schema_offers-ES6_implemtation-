@@ -54,6 +54,9 @@ sap.ui.define(
 
                     oViewModel.setProperty("/onlineTrType", "1");
                     oViewModel.setProperty("/offlineTrType", "2");
+                    // debugger;
+                    // var currDate = new Date();
+                    // var currTime = currDate.getTime();
 
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
@@ -179,7 +182,6 @@ sap.ui.define(
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("StateId", FilterOperator.EQ, StateId)],
                         templateShareable: true
                     });
-
                 },
 
                 _fnbusyItems: function (oEvent) {
@@ -254,7 +256,8 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
-                    debugger;
+                    var selectCorrectFlag;
+                    selectCorrectFlag = false;
                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                     if (addTr.Question === "") {
                         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
@@ -272,9 +275,11 @@ sap.ui.define(
                                         });
                                         this.byId("QuestionnaireOptionsDialog").close();
                                         this.getModel("oModelView").refresh();
-                                    } else {
-                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                        selectCorrectFlag = true;
                                     }
+                                }
+                                if (selectCorrectFlag === false) {
+                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
                                 }
                             } else {
                                 this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
@@ -282,26 +287,6 @@ sap.ui.define(
                         }
                     }
                 },
-
-                // updateOptions: function () {
-                //     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
-                //     if (addTr.Question === "") {
-                //         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
-                //     } else {
-                //         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                //         if (addQsFlag === true) {
-                //             this.getModel("oModelView").setProperty("/addQsFlag", false);
-                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                //                 Question: addTr.Question,
-                //                 TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                //                 IsArchived: false
-                //             });
-                //         }
-
-                //         this.byId("QuestionnaireOptionsDialog").close();
-                //         this.getModel("oModelView").refresh();
-                //     }
-                // },
 
                 closeOptionsDialog: function () {
                     this.byId("QuestionnaireOptionsDialog").close();
@@ -587,14 +572,22 @@ sap.ui.define(
                                             target: "/TrainingDetails/RewardPoints"
                                         });
                                     } else
-                                        if (data.Url !== "" && !url.match(regex)) {
+                                        if (data.Url === "") {
                                             oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                             aCtrlMessage.push({
-                                                message: "MSG_VALDTN_ERR_URL",
+                                                message: "MSG_PLS_ENTER_ERR_URL",
                                                 target: "/TrainingDetails/Url"
                                             });
-                                        }
+                                        } else
+                                            if (data.Url !== "" && !url.match(regex)) {
+                                                oReturn.IsNotValid = true;
+                                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                aCtrlMessage.push({
+                                                    message: "MSG_VALDTN_ERR_URL",
+                                                    target: "/TrainingDetails/Url"
+                                                });
+                                            }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -677,6 +670,8 @@ sap.ui.define(
                 _SuccessAdd: function () {
                     this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
+                    var oModel = this.getModel();
+                    oModel.refresh(true);
                 },
 
                 onUpload: function (oEvent) {

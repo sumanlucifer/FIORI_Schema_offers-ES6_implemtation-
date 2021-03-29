@@ -352,6 +352,8 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
+                    var selectCorrectFlag;
+                    selectCorrectFlag = false;
                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                     if (addTr.Question === "") {
                         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
@@ -369,9 +371,11 @@ sap.ui.define(
                                         });
                                         this.byId("QuestionnaireOptionsDialog").close();
                                         this.getModel("oModelView").refresh();
-                                    } else {
-                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                        selectCorrectFlag = true;
                                     }
+                                }
+                                if (selectCorrectFlag === false) {
+                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
                                 }
                             } else {
                                 this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
@@ -547,6 +551,14 @@ sap.ui.define(
                                                 target: "/TrainingDetails/RewardPoints"
                                             });
                                         } else
+                                        if (data.Url === "") {
+                                            oReturn.IsNotValid = true;
+                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                                            aCtrlMessage.push({
+                                                message: "MSG_PLS_ENTER_ERR_URL",
+                                                target: "/TrainingDetails/Url"
+                                            });
+                                        } else
                                             if (data.Url !== "" && !url.match(regex)) {
                                                 oReturn.IsNotValid = true;
                                                 oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
@@ -592,30 +604,38 @@ sap.ui.define(
                                     target: "/TrainingDetails/RewardPoints"
                                 });
                             } else
-                                if (data.Url !== "" && !url.match(regex)) {
+                                if (data.Url === "") {
                                     oReturn.IsNotValid = true;
-                                    oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                     aCtrlMessage.push({
-                                        message: "MSG_VALDTN_ERR_URL",
+                                        message: "MSG_PLS_ENTER_ERR_URL",
                                         target: "/TrainingDetails/Url"
                                     });
                                 } else
-                                    if (data.Duration === null || data.Duration === "" ) {
+                                    if (data.Url !== "" && !url.match(regex)) {
                                         oReturn.IsNotValid = true;
-                                        oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
+                                        oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
                                         aCtrlMessage.push({
-                                            message: "MSG_VALDTN_ERR_DURATION",
-                                            target: "/TrainingDetails/Duration"
+                                            message: "MSG_VALDTN_ERR_URL",
+                                            target: "/TrainingDetails/Url"
                                         });
                                     } else
-                                        if (data.Duration == 0) {
+                                        if (data.Duration === null || data.Duration === "") {
                                             oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_ENTER_DURATION_MORETHAN_ZERO");
+                                            oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
                                             aCtrlMessage.push({
-                                                message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
+                                                message: "MSG_VALDTN_ERR_DURATION",
                                                 target: "/TrainingDetails/Duration"
                                             });
-                                        }
+                                        } else
+                                            if (data.Duration == 0) {
+                                                oReturn.IsNotValid = true;
+                                                oReturn.sMsg.push("MSG_ENTER_DURATION_MORETHAN_ZERO");
+                                                aCtrlMessage.push({
+                                                    message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
+                                                    target: "/TrainingDetails/Duration"
+                                                });
+                                            }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;

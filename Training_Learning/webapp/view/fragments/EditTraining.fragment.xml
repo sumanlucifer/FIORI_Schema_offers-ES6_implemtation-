@@ -24,7 +24,7 @@
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>
 
-                <Label text="{i18n>colLink}"/>
+                <Label text="{i18n>colLink}" required="true"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
 
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
@@ -40,7 +40,7 @@
                 </ComboBox>
                 
                 <Label text="{i18n>colCity}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <ComboBox id="cmbCity" busy="{oModelView>/bCityItemsBusy}" visible="{= ${appView>/trainingType} === 'OFFLINE'}" busyIndicatorDelay="0" change="onChangeCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== '' }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
+                <ComboBox id="cmbCity" busy="{oModelView>/bCityItemsBusy}" visible="{= ${appView>/trainingType} === 'OFFLINE'}" busyIndicatorDelay="0" change="onChangeCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== null }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
                     <items>
                         <core:Item text="{City}" key="{Id}"/>
                     </items>
@@ -55,14 +55,14 @@
                 </ComboBox>
 
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
                         <core:Item text="{Id}" key="{Id}"/>
                     </items>
                 </ComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox id="idDepot" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                <ComboBox id="idDepot" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
                         <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
                     </items>
