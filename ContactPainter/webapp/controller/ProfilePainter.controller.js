@@ -1419,15 +1419,18 @@ sap.ui.define(
                     MessageToast.show(oData["Message"]);
                     
                     othat.oDefaultDialog.close();
-                    oData.refresh();
+                   
                   } else if (oData["Status"] == false) {
                     MessageToast.show(oData["Message"]);
+                    
                   }
+                  othat.getView().getModel().refresh(true);
                 }
               }
             },
             error: function () {},
           });
+          
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
