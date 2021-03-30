@@ -2,39 +2,39 @@
     <VBox width="100%">
         <Table id="idTblOffers" width="auto" items="{path: '/PainterTokenScanHistorySet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter'},filters:[{path:'ScanStatus',operator:'EQ',value1:'COMPLETED'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-                <!-- <Toolbar>
-
-
-                    <ToolbarSpacer/>
-                    <SearchField width="20%"></SearchField>
-                    <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                    <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                    <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                </Toolbar> -->
+                <Toolbar>
+                    <ToolbarSpacer />
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Tokens}"></SearchField>
+                    <Button type="Ghost" text="{i18n>ApplyToken}" press="onPressOpenTokenDialog"></Button>
+                </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Text text="{i18n>ScanTokenNo}"/>
+                    <Text text="{i18n>ScanTokenNo}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>MobileNumber}"/>
+                    <Text text="{i18n>MobileNumber}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>Points}"/>
+                    <Text text="{i18n>Points}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>DateAndTime}"/>
+                    <Text text="{i18n>DateAndTime}" />
+                </Column>
+                 <Column>
+                    <Text text="{i18n>AppliedBy}" />
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Text text="{TokenCode}"/>
-                        <Text text="{Painter/Mobile}"/>
-                        <Text text="{RewardPoints}"/>
-                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{TokenCode}" />
+                        <Text text="{Painter/Mobile}" />
+                        <Text text="{RewardPoints}" />
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                        <Text text="{path:'Channel', formatter:'.fmtLowerCase'}" />
                     </cells>
                 </ColumnListItem>
             </items>
