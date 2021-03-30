@@ -4,7 +4,7 @@
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
-                     <!-- <SearchField width="20%" id="searchEnrollment"></SearchField> -->
+                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Enrollment}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 
