@@ -115,7 +115,7 @@
                             <ObjectIdentifier title="{Title}" />
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <ObjectStatus xmlns="sap.m"
+                            <!-- <ObjectStatus xmlns="sap.m"
                             state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
                 
                                text="{
@@ -123,7 +123,12 @@
                                     formatter: '.formatter.status'
                                 }"
                                 
-                                />
+                                /> -->
+                                <Button 
+                                type="Transparent"
+                                text="{path: 'Status',
+                                    formatter: '.formatter.status'}"
+                                data:remarks="{Status}" press="onPressStatus"/>
                             <!-- <Text 
                             text="{
                                     path: 'Status',

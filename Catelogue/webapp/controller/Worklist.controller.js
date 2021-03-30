@@ -7,7 +7,9 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device',
     'sap/ui/model/Sorter',
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,Device,Sorter) {
+    'sap/m/MessageToast',
+    'sap/m/MessageBox'
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter,MessageToast,MessageBox) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.Worklist", {
@@ -34,7 +36,7 @@ sap.ui.define([
             // keeps the search state
             this._aTableSearchState = [];
             // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
-                this._mViewSettingsDialogs = {};
+            this._mViewSettingsDialogs = {};
 
             // Model used to manipulate control states
             oViewModel = new JSONModel({
@@ -321,55 +323,109 @@ sap.ui.define([
                 });
         },
         getViewSettingsDialog: function (sDialogFragmentName) {
-                var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+            var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
 
-                if (!pDialog) {
-                    pDialog = Fragment.load({
-                        id: this.getView().getId(),
-                        name: sDialogFragmentName,
-                        controller: this
-                    }).then(function (oDialog) {
-                        if (Device.system.desktop) {
-                            oDialog.addStyleClass("sapUiSizeCompact");
+            if (!pDialog) {
+                pDialog = Fragment.load({
+                    id: this.getView().getId(),
+                    name: sDialogFragmentName,
+                    controller: this
+                }).then(function (oDialog) {
+                    if (Device.system.desktop) {
+                        oDialog.addStyleClass("sapUiSizeCompact");
+                    }
+                    return oDialog;
+                });
+                this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+            }
+            return pDialog;
+        },
+
+        handleSortDialogConfirm: function (oEvent) {
+            var oTable = this.byId("idCatlogueTable"),
+                mParams = oEvent.getParameters(),
+                oBinding = oTable.getBinding("items"),
+                sPath,
+                bDescending,
+                aSorters = [];
+
+            sPath = mParams.sortItem.getKey();
+            bDescending = mParams.sortDescending;
+            aSorters.push(new Sorter(sPath, bDescending));
+
+            // apply the selected sort and group settings
+            oBinding.sort(aSorters);
+        },
+
+        handleFilterDialogConfirm: function (oEvent) {
+            var oTable = this.byId("idCatlogueTable"),
+                mParams = oEvent.getParameters(),
+                oBinding = oTable.getBinding("items"),
+                aFilters = [];
+
+            var sPath = Object.keys(mParams.filterCompoundKeys)[0],
+                sOperator = "EQ",
+                sValue1 = mParams.filterKeys.false ? false : true,
+                oFilter = new Filter(sPath, sOperator, sValue1);
+
+            aFilters.push(oFilter);
+
+            // apply filter settings
+            oBinding.filter(aFilters);
+        },
+
+        onPressStatus: function (oEvent) {
+            var oItem = oEvent.getSource();
+            var removeSet = oItem.getBindingContext().getPath();
+            var oTable = this.getView().byId("idCatlogueTable");
+
+            var oSelectedItem = oEvent.getSource().getBindingContext().getObject()
+
+            var currentStatus = oSelectedItem.Status;
+            var changedStatus;
+            if (currentStatus == true) {
+                changedStatus = false
+            }
+            else {
+                changedStatus = true
+            }
+            var oParam = {
+                Status: changedStatus,
+
+            };
+           console.log(oParam);
+            function onYes() {
+                var oModel = this.getView().getModel();
+                var that = this;
+                oModel.update(removeSet, oParam, {
+                    success: function () { that.onRemoveSuccess("idCatlogueTable") }, error: function (oError) {
+                        //oError - contains additional error information.
+                        var msg = 'Error!';
+                        MessageToast.show(msg);
+
+                    }
+                });
+            }
+            this.showWarning("MSG_CONFIRM_CHANGE_STATUS", onYes);
+        },
+        onRemoveSuccess: function (){
+                var msg = 'Status Changed Successfully!';
+                MessageToast.show(msg);
+
+
+                var oModel = this.getView().getModel();
+                oModel.refresh();
+        },
+        showWarning: function (sMsgTxt, _fnYes) {
+                var that = this;
+                MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            _fnYes && _fnYes.apply(that);
                         }
-                        return oDialog;
-                    });
-                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
-                }
-                return pDialog;
-            },
-
-            handleSortDialogConfirm: function (oEvent) {
-                var oTable = this.byId("idCatlogueTable"),
-                    mParams = oEvent.getParameters(),
-                    oBinding = oTable.getBinding("items"),
-                    sPath,
-                    bDescending,
-                    aSorters = [];
-
-                sPath = mParams.sortItem.getKey();
-                bDescending = mParams.sortDescending;
-                aSorters.push(new Sorter(sPath, bDescending));
-
-                // apply the selected sort and group settings
-                oBinding.sort(aSorters);
-            },
-
-            handleFilterDialogConfirm: function (oEvent) {
-                var oTable = this.byId("idCatlogueTable"),
-                    mParams = oEvent.getParameters(),
-                    oBinding = oTable.getBinding("items"),
-                    aFilters = [];
-
-                var sPath = Object.keys(mParams.filterCompoundKeys)[0],
-                    sOperator = "EQ",
-                    sValue1 = mParams.filterKeys.false ? false : true,
-                    oFilter = new Filter(sPath, sOperator, sValue1);
-
-                aFilters.push(oFilter);
-
-                // apply filter settings
-                oBinding.filter(aFilters);
+                    }
+                });
             },
 
     });
