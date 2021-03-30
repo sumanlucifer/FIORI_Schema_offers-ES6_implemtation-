@@ -186,14 +186,13 @@ sap.ui.define(
                         .getProperty("/trainingId");
                     console.log(sTrainingId);
                     if (sPath.match("Attendance")) {
-                        // this._SearchAttendance(sValue, sTrainingId);
+                        this._SearchAttendance(sValue, sTrainingId);
                     } else if (sPath.match("Enrollment")) {
-                        // this._SearchEnrollment(sValue, sTrainingId);
+                        this._SearchEnrollment(sValue, sTrainingId);
                     }
                 },
 
                 _SearchAttendance: function (sValue, sTrainingId) {
-                    debugger;
                     var oView = this.getView();
                     var aCurrentFilter = [];
 
@@ -203,13 +202,8 @@ sap.ui.define(
                             new Filter(
                                 [
                                     new Filter(
-                                        "MembershipCard",
-                                        FilterOperator.EQ,
-                                        sValue.trim().substring(0, 8)
-                                    ),
-                                    new Filter(
-                                        "Mobile",
-                                        FilterOperator.EQ,
+                                        "PainterDetails/Mobile",
+                                        FilterOperator.Contains,
                                         sValue.trim().substring(0, 8)
                                     ),
                                 ],
@@ -219,9 +213,20 @@ sap.ui.define(
                     } else {
                         aCurrentFilter.push(
                             new Filter(
-                                "tolower(Name)",
-                                FilterOperator.Contains,
-                                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                [
+                                    new Filter(
+                                        "tolower(PainterDetails/Name)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(PainterDetails/MembershipCard)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    
+                                ],
+                                false
                             )
                         );
                     }
@@ -246,13 +251,8 @@ sap.ui.define(
                             new Filter(
                                 [
                                     new Filter(
-                                        "MembershipCard",
-                                        FilterOperator.EQ,
-                                        sValue.trim().substring(0, 8)
-                                    ),
-                                    new Filter(
-                                        "Mobile",
-                                        FilterOperator.EQ,
+                                        "PainterDetails/Mobile",
+                                        FilterOperator.Contains,
                                         sValue.trim().substring(0, 8)
                                     ),
                                 ],
@@ -262,9 +262,20 @@ sap.ui.define(
                     } else {
                         aCurrentFilter.push(
                             new Filter(
-                                "tolower(Name)",
-                                FilterOperator.Contains,
-                                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                [
+                                    new Filter(
+                                        "tolower(PainterDetails/Name)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(PainterDetails/MembershipCard)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    
+                                ],
+                                false
                             )
                         );
                     }
