@@ -10,6 +10,9 @@
                 <uxap:expandedHeading>
                     <m:Title text="{oModelView>/TrainingDetails/Title}" wrapping="true"/>
                 </uxap:expandedHeading>
+                <uxap:expandedContent>
+                    <m:Text text="{oModelView>/TrainingDetails/TrainingCode}"/>
+                </uxap:expandedContent>
 
                 <uxap:snappedHeading>
                     <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">

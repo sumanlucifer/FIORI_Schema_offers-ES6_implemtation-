@@ -208,8 +208,8 @@ sap.ui.define([
 
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
-                            new Filter(prop, FilterOperator.GE, oNow)
-                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                            // new Filter(prop, FilterOperator.GE, oNow)
+                            new Filter(prop, FilterOperator.GE, new Date(oViewFilter[prop]))
                         );
                     } else if (prop === "Status") {
                         aFlaEmpty = false;
@@ -414,6 +414,16 @@ sap.ui.define([
                 });
             }
             this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
+        },
+
+        onActivateTraining: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+                var data = sPath + "/Status";
+                this.getModel().update(data, {
+                    Status: true
+                }, {
+                    success: this.showToast.bind(this, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
+                });
         },
 
         /* =========================================================== */

@@ -40,7 +40,7 @@
                 <Text text="{oModelView>/TrainingDetails/Depot/Depot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/Description}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/PainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/PainterArcheType/ArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>

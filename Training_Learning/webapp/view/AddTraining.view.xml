@@ -137,7 +137,6 @@
 			                    </FlexBox>
                             </HBox>
                             <HBox items="{oModelView>TrainingQuestionnaireOptions}">
-                                <!-- <CheckBox select="{oModelView>IsCorrect}"/> -->
                                 <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiSmallMarginBeginEnd"/>
                             </HBox>
                         </VBox>

@@ -177,6 +177,119 @@ sap.ui.define(
                     that.getView().getModel().resetChanges();
                 },
 
+                onTablesSearch: function (oEvent) {
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBinding("value").getPath();
+                    var sValue = oEvent.getSource().getValue();
+                    var sTrainingId = oView
+                        .getModel("oModelControl2")
+                        .getProperty("/trainingId");
+                    console.log(sTrainingId);
+                    if (sPath.match("Attendance")) {
+                        this._SearchAttendance(sValue, sTrainingId);
+                    } else if (sPath.match("Enrollment")) {
+                        this._SearchEnrollment(sValue, sTrainingId);
+                    }
+                },
+
+                _SearchAttendance: function (sValue, sTrainingId) {
+                    var oView = this.getView();
+                    var aCurrentFilter = [];
+
+                    var oTable = oView.byId("idTblAttendance");
+                    if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+                        aCurrentFilter.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "PainterDetails/Mobile",
+                                        FilterOperator.Contains,
+                                        sValue.trim().substring(0, 8)
+                                    ),
+                                ],
+                                false
+                            )
+                        );
+                    } else {
+                        aCurrentFilter.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "tolower(PainterDetails/Name)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(PainterDetails/MembershipCard)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    
+                                ],
+                                false
+                            )
+                        );
+                    }
+                    aCurrentFilter.push(
+                        new Filter("TrainingId", FilterOperator.EQ, parseInt(sTrainingId))
+                    );
+                    var endFilter = new Filter({
+                        filters: aCurrentFilter,
+                        and: true,
+                    });
+
+                    oTable.getBinding("items").filter(endFilter);
+                },
+
+                _SearchEnrollment: function (sValue, sTrainingId) {
+                    var oView = this.getView();
+                    var aCurrentFilter = [];
+
+                    var oTable = oView.byId("idTblEnrollment");
+                    if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+                        aCurrentFilter.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "PainterDetails/Mobile",
+                                        FilterOperator.Contains,
+                                        sValue.trim().substring(0, 8)
+                                    ),
+                                ],
+                                false
+                            )
+                        );
+                    } else {
+                        aCurrentFilter.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "tolower(PainterDetails/Name)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(PainterDetails/MembershipCard)",
+                                        FilterOperator.Contains,
+                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                    ),
+                                    
+                                ],
+                                false
+                            )
+                        );
+                    }
+                    aCurrentFilter.push(
+                        new Filter("TrainingId", FilterOperator.EQ, parseInt(sTrainingId))
+                    );
+                    var endFilter = new Filter({
+                        filters: aCurrentFilter,
+                        and: true,
+                    });
+
+                    oTable.getBinding("items").filter(endFilter);
+                },
+
                 setInitCity: function (sStateId) {
                     this._fnbusyItems({
                         getId: function () {
@@ -551,22 +664,22 @@ sap.ui.define(
                                                 target: "/TrainingDetails/RewardPoints"
                                             });
                                         } else
-                                        if (data.Url === "") {
-                                            oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
-                                            aCtrlMessage.push({
-                                                message: "MSG_PLS_ENTER_ERR_URL",
-                                                target: "/TrainingDetails/Url"
-                                            });
-                                        } else
-                                            if (data.Url !== "" && !url.match(regex)) {
+                                            if (data.Url === "") {
                                                 oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                                 aCtrlMessage.push({
-                                                    message: "MSG_VALDTN_ERR_URL",
+                                                    message: "MSG_PLS_ENTER_ERR_URL",
                                                     target: "/TrainingDetails/Url"
                                                 });
-                                            }
+                                            } else
+                                                if (data.Url !== "" && !url.match(regex)) {
+                                                    oReturn.IsNotValid = true;
+                                                    oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                    aCtrlMessage.push({
+                                                        message: "MSG_VALDTN_ERR_URL",
+                                                        target: "/TrainingDetails/Url"
+                                                    });
+                                                }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;

@@ -99,6 +99,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
@@ -163,6 +164,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
@@ -223,6 +225,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
 										<HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>

@@ -54,9 +54,6 @@ sap.ui.define(
 
                     oViewModel.setProperty("/onlineTrType", "1");
                     oViewModel.setProperty("/offlineTrType", "2");
-                    // debugger;
-                    // var currDate = new Date();
-                    // var currTime = currDate.getTime();
 
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
@@ -232,7 +229,6 @@ sap.ui.define(
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
 
-                    console.log(oModelView);
                     if (!this.byId("QuestionnaireOptionsDialog")) {
                         // load asynchronous XML fragment
                         Fragment.load({
@@ -616,12 +612,9 @@ sap.ui.define(
                 },
 
                 CUOperation: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                    // oPayload.DivisionTypeId = parseInt(oPayload.DivisionTypeId);
-                    // oPayload.DepotTypeId = parseInt(oPayload.DepotTypeId);
                     oPayload.PainterArcheId = parseInt(oPayload.PainterArcheId);
                     oPayload.PainterType = parseInt(oPayload.PainterType);
                     oPayload.CityId = parseInt(oPayload.CityId);
@@ -646,6 +639,7 @@ sap.ui.define(
                             // success: that._onLoadSuccess.bind(that),
                             // error: that._onLoadError.bind(that)
                             success: function (createddata) {
+                                debugger;
                                 var newSpath = sPath + "(" + createddata.Id + ")";
                                 that._UploadImage(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                     .bind(
@@ -716,6 +710,9 @@ sap.ui.define(
 
                 _UploadImage: function (sPath, oImage, oEvent) {
                     var that = this;
+                    // if (!oImage) {
+                    //     return;
+                    // }
                     $.ajax({
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
                         //	data : fd,
@@ -735,7 +732,6 @@ sap.ui.define(
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-                    var dublicateValue = [];
 
                     return new Promise(function (res, rej) {
                         if (!file) {
