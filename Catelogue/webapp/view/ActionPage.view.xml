@@ -31,7 +31,7 @@
                 <VBox >
                 <Title  text="Catalogue Details"  />
                 <VBox class="sapUiMediumMargin" width="50%" >
-                <Label text="Title:" />
+                <Label text="Title:" required="true" />
 		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/>
                 </VBox>
                 
@@ -39,7 +39,7 @@
          
           <VBox class="sapUiMediumMargin" width="50%">
                  <VBox class="sapUiTinyMargin">
-                                            <Label text="Upload Image" class="sapUiTinyMargin"/>
+                                            <Label text="Upload Image" class="sapUiTinyMargin" required="true"/>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
                                                 name="formToolImgUploader"
@@ -54,7 +54,7 @@
                                             <Image id="idPreviewImage" width="400px" height="200px" />
                                             </VBox>
                                             <VBox class="sapUiTinyMargin">
-                                             <Label text="Upload Catalogue" class="sapUiTinyMargin"/>
+                                             <Label text="Upload Catalogue" class="sapUiTinyMargin" required="true"/>
                                         
                                        
                                             <u:FileUploader
