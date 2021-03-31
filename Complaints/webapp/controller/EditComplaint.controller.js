@@ -161,6 +161,7 @@ sap.ui.define(
           if(oModelView.getProperty("/ComplaintStatus")==="RESOLVED"){
               console.log("Status is resolved");
               oModelControl.setProperty("/ComplainResolved",true);
+              oModelControl.setProperty("/TokenCode", false);
           }
 
           var sReqFields = ["TokenCode", "RewardPoints"];
@@ -182,6 +183,7 @@ sap.ui.define(
               oModelView.setProperty("/" + k, "");
             }
           }
+          //setting token code scenario
           if (oModelView.getProperty("/TokenCode") !== "") {
             oModelControl.setProperty(
               "/tokenCodeValue",
@@ -189,6 +191,7 @@ sap.ui.define(
             );
             oModelControl.setProperty("/TokenCode", false);
           }
+          
         },
         _CheckImage: function (oProp) {
             var oView = this.getView();
