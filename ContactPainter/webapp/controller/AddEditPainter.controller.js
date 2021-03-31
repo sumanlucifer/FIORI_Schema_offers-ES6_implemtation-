@@ -1574,9 +1574,9 @@ sap.ui.define(
           this.oColModel = new JSONModel({
             cols: [
               {
-                label: "SAP ID",
+                label: "SAP Code",
                 template: "Id",
-                width: "5rem",
+                width: "10rem",
               },
               {
                 label: "Dealer Name",
@@ -1712,16 +1712,18 @@ sap.ui.define(
 
         onValueHelpOkPress: function (oEvent) {
           var oData = [];
-
+        var xUnique = new Set();
           var aTokens = oEvent.getParameter("tokens");
 
           aTokens.forEach(function (ele) {
-            oData.push({
-              DealerName: ele.getText(),
-              Id: ele.getKey(),
-            });
+            if (xUnique.has(ele.getKey()) == false) {
+              oData.push({
+                DealerName: ele.getText(),
+                Id: ele.getKey(),
+              });
+              xUnique.add(ele.getKey());
+            }
           });
-
           //  this._oMultiInput.setTokens(aTokens);
           this.getView()
             .getModel("oModelView")

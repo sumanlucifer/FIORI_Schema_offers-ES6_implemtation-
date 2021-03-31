@@ -243,13 +243,16 @@ sap.ui.define(
               .filter(new Filter("Division", FilterOperator.EQ, sDivisionId));
           }
           var sDepotId = oDataValue["DepotId"];
+          if (oDataValue["DealerId"]) {
+            oView.byId("idMinpPDealers").addToken(
+              new Token({
+                text:
+                  "{PrimaryDealerDetails/DealerName} - " +
+                  oDataValue["DealerId"],
+              })
+            );
+          }
 
-          oView.byId("idMinpPDealers").addToken(
-            new Token({
-              text:
-                "{PrimaryDealerDetails/DealerName} - " + oDataValue["DealerId"],
-            })
-          );
           var oSecTokens = oDataValue["Dealers"];
 
           oControlModel.setProperty(
@@ -1625,9 +1628,9 @@ sap.ui.define(
           this.oColModel = new JSONModel({
             cols: [
               {
-                label: "SAP ID",
+                label: "SAP Code",
                 template: "Id",
-                width: "5rem",
+                width: "10rem",
               },
               {
                 label: "Dealer Name",
