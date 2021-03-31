@@ -100,6 +100,7 @@ sap.ui.define([
                     Id: sObjectId
                 });
                 this._bindView("/" + sObjectPath);
+               
             }.bind(this));
         },
 
@@ -115,6 +116,9 @@ sap.ui.define([
 
             this.getView().bindElement({
                 path: sObjectPath,
+                 parameters:{
+                        expand:"CreatedByDetails"
+                    },
                 events: {
                     change: this._onBindingChange.bind(this),
                     dataRequested: function () {
@@ -128,8 +132,10 @@ sap.ui.define([
                     },
                     dataReceived: function () {
                         oViewModel.setProperty("/busy", false);
+
                     }
                 }
+
             });
         },
 
@@ -157,7 +163,7 @@ sap.ui.define([
                 oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         },
         handleAllCatelogueLinkPress: function () {
-            
+
             this._navToHome();
         },
         createObjectMarker: function (sId, oContext) {
@@ -183,23 +189,6 @@ sap.ui.define([
                 return sValue;
             }
         },
-
-        // onChange: function (oEvent) {
-
-
-        //     var oUploadCollection = oEvent.getSource();
-        //     // Header Token
-        //     var oCustomerHeaderToken = new UploadCollectionParameter({
-        //         name: "x-csrf-token",
-        //         value: this.getModel().getSecurityToken()
-        //     });
-        //     oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
-        // },
-        // onSave : function () {
-        //     var collection=this.getView().byId('UploadCollection');
-
-        //     collection.upload();
-        // },
         onSelectionChangeImage: function () {
             var oUploadCollection = this.byId("UploadCollectionImage");
             // If there's any item selected, sets download button enabled

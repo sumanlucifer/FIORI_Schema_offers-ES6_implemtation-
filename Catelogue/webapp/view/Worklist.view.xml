@@ -135,7 +135,7 @@
                                     formatter: '.formatter.status'
                                 }"/> -->
                             
-                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
+                            <Button icon="sap-icon://edit" type="Transparent" visible="{= ${Status} === true}" press="onPressEdit" tooltip="Edit"/>
                             
                             
                         </cells>

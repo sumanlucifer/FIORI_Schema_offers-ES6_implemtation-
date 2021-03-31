@@ -39,7 +39,7 @@
          
           <VBox class="sapUiMediumMargin" width="50%">
                  <VBox class="sapUiTinyMargin">
-                                            <Label text="Upload Image" class="sapUiTinyMargin" required="true"/>
+                                            <Label text="Upload Thumbnail Image" class="sapUiTinyMargin" required="true"/>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
                                                 name="formToolImgUploader"
@@ -68,7 +68,8 @@
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadCompletePdf" />
-                                            <Image id="idPreviewPdf" width="100px" height="100px" />
+                
+                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" visible="false" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
                                             </VBox>
                                             
                                         
