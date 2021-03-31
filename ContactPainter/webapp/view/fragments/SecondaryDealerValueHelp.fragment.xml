@@ -11,8 +11,8 @@
         afterOpen=".onValueHelpAfterOpen"
 		supportRanges="false"
 		key="Id"
-        
-		descriptionKey="DealerName"
+        descriptionKey="DealerName"
+       
 	>
 		<filterBar>
 			<fb:FilterBar advancedMode="false" search="onFilterBarSearch">
