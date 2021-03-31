@@ -432,6 +432,7 @@ sap.ui.define(
           });
           return promise;
         },
+
         _getCreatedPainterData: function (mParam) {
           var promise = jQuery.Deferred();
           var oData = this.getView().getModel();
@@ -568,7 +569,19 @@ sap.ui.define(
             objSection.addItem(oVBox);
             othat._setDataValue.call(othat);
             othat._setUploadCollectionMethod.call(othat);
+            othat._setPrimaryDealerilter();
           });
+        },
+        _setPrimaryDealerilter: function () {
+          this.getView()
+            .byId("cmbxPDlr")
+            .setFilterFunction(function (sTerm, oItem) {
+              // A case-insensitive 'string contains' filter
+              return (
+                oItem.getText().match(new RegExp("^" + sTerm, "i")) ||
+                oItem.getKey().match(new RegExp("^" + sTerm, "i"))
+              );
+            });
         },
         _setUploadCollectionMethod: function () {
           var oUploadCollection = this.getView().byId("idUploadCollection");
@@ -737,6 +750,13 @@ sap.ui.define(
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
           oDepot.setValue("");
+
+          // clearning data for dealers
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
         },
         onDivisionChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -746,6 +766,36 @@ sap.ui.define(
           oDepot.clearSelection();
           oDepot.setValue("");
           oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+
+          //clearning the dealers data
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
+        },
+        handleLoadItems: function (oControlEvent) {
+          console.log("true");
+          oControlEvent.getSource().getBinding("items").resume();
+        },
+        onDepotChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
+          oPrimaryDealer
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sKey)
+            );
+          oSecDealer
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sKey)
+            );
         },
 
         onConfAccChng: function (oEvent) {
