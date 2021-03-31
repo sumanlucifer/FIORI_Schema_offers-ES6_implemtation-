@@ -89,6 +89,7 @@ sap.ui.define(
             TokenCode: true,
             tokenCodeValue: "",
             ImageLoaded: false,
+            ComplainResolved:false,
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -139,7 +140,7 @@ sap.ui.define(
           var oView = this.getView();
           var oDataValue = "";
           var othat = this;
-
+         
           oView.getModel().read("/" + oProp, {
             success: function (data) {
               var oViewModel = new JSONModel(data);
@@ -156,10 +157,16 @@ sap.ui.define(
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
+          // setting the resolved flag if we have the value from backend;
+          if(oModelView.getProperty("/ComplaintStatus")==="RESOLVED"){
+              console.log("Status is resolved");
+              oModelControl.setProperty("/ComplainResolved",true);
+          }
 
           var sReqFields = ["TokenCode", "RewardPoints"];
           var sValue = "",
             sPlit;
+          
           for (var k of sReqFields) {
             sValue = oModelView.getProperty("/" + k);
             sPlit = k.split("/");
