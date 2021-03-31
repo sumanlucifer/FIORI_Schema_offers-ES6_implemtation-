@@ -2,7 +2,7 @@
     <Popover  id="myPopover" title="{i18n>SecondryDealers} ({=${Dealers}.length})"  placement="Top">
         <content>
             <List width="100%" items="{Dealers/}">
-                <StandardListItem title="{DealerName}" />
+                <StandardListItem title="{DealerName} - {Id}" />
             </List>
             </content>
         </Popover>

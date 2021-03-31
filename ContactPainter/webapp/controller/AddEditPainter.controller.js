@@ -20,6 +20,7 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "sap/m/UploadCollectionParameter",
     "sap/m/Title",
+    "sap/m/Token",
     "com/knpl/pragati/ContactPainter/model/customInt",
     "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
@@ -47,6 +48,7 @@ sap.ui.define(
     History,
     UploadCollectionParameter,
     Title,
+    Token,
     custDatatype1,
     custDatatype2
   ) {
@@ -222,6 +224,7 @@ sap.ui.define(
             name: "slug",
             value: oEvent.getParameter("fileName"),
           });
+          f;
           oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
           setTimeout(function () {
             MessageToast.show("Event beforeUploadStarts triggered");
@@ -334,7 +337,7 @@ sap.ui.define(
           var oDealers = [];
           for (var i of oSecMainDealers) {
             oDealers.push({
-              Id: i.toString(),
+              Id: i["Id"].toString(),
             });
           }
 
@@ -432,6 +435,7 @@ sap.ui.define(
           });
           return promise;
         },
+
         _getCreatedPainterData: function (mParam) {
           var promise = jQuery.Deferred();
           var oData = this.getView().getModel();
@@ -569,6 +573,17 @@ sap.ui.define(
             othat._setDataValue.call(othat);
             othat._setUploadCollectionMethod.call(othat);
           });
+        },
+        _setPrimaryDealerilter: function () {
+          this.getView()
+            .byId("cmbxPDlr")
+            .setFilterFunction(function (sTerm, oItem) {
+              // A case-insensitive 'string contains' filter
+              return (
+                oItem.getText().match(new RegExp("^" + sTerm, "i")) ||
+                oItem.getKey().match(new RegExp("^" + sTerm, "i"))
+              );
+            });
         },
         _setUploadCollectionMethod: function () {
           var oUploadCollection = this.getView().byId("idUploadCollection");
@@ -737,6 +752,9 @@ sap.ui.define(
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
           oDepot.setValue("");
+
+          // clearning data for dealer
+          this._dealerReset();
         },
         onDivisionChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -746,6 +764,20 @@ sap.ui.define(
           oDepot.clearSelection();
           oDepot.setValue("");
           oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+
+          //clearning the dealers data
+          this._dealerReset();
+        },
+        handleLoadItems: function (oControlEvent) {
+          console.log("true");
+          oControlEvent.getSource().getBinding("items").resume();
+        },
+        onDepotChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          this._dealerReset();
         },
 
         onConfAccChng: function (oEvent) {
@@ -1351,7 +1383,124 @@ sap.ui.define(
           //this._clearPress;
           sap.ui.getCore().getMessageManager().removeAllMessages();
         },
+        _dealerReset: function () {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var aDiv = ["DivisionId", "DepotId", "ZoneId"];
+          for (var a of aDiv) {
+            if (oModel.getProperty("/PainterDetails/" + a) === "") {
+              oView.byId("idMinpPDealers").removeAllTokens();
+              //oView.byId("multiInput").removeAllTokens();
+              oModel.setProperty("/PainterDetails/DealerId", "");
+              oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
+              //multiInput
+            }
+          }
+          oModel.refresh();
+        },
+        handlePDealerValue: function (oEvent) {
+          var sInputValue = oEvent.getSource().getValue();
+          var oView = this.getView();
+          // create value help dialog
+          if (!this._PvalueHelpDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._PvalueHelpDialog = oValueHelpDialog;
+                this.getView().addDependent(this._PvalueHelpDialog);
+                this._openPValueHelpDialog(sInputValue);
+              }.bind(this)
+            );
+          } else {
+            this._openPValueHelpDialog(sInputValue);
+          }
+        },
+        _openPValueHelpDialog: function (sInputValue) {
+          var sDepotiId = this.getView()
+            .getModel("oModelView")
+            .getProperty("/PainterDetails/DepotId");
+          var oFilter = new Filter(
+            [
+              new Filter("DealerName", FilterOperator.Contains, sInputValue),
+              new Filter(
+                "DealerSalesDetails/Depot",
+                FilterOperator.EQ,
+                sDepotiId
+              ),
+            ],
+            true
+          );
+          this._PvalueHelpDialog.getBinding("items").filter(oFilter);
 
+          // open value help dialog filtered by the input value
+          this._PvalueHelpDialog.open(sInputValue);
+        },
+        _handlePValueHelpSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var aCurrentFilter = [];
+          var oFilter = new Filter(
+            [
+              new Filter(
+                "tolower(DealerName)",
+                FilterOperator.Contains,
+                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+              ),
+              new Filter("Id", FilterOperator.Contains, sValue.trim()),
+            ],
+            false
+          );
+          aCurrentFilter.push(oFilter);
+          var sDepotId = this.getView()
+            .getModel("oModelView")
+            .getProperty("/PainterDetails/DepotId");
+          var DepotFilter = new Filter(
+            "DealerSalesDetails/Depot",
+            FilterOperator.EQ,
+            sDepotId
+          );
+          aCurrentFilter.push(DepotFilter);
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+          evt.getSource().getBinding("items").filter(endFilter);
+        },
+
+        _handlePValueHelpClose: function (evt) {
+          var aSelectedItems = evt.getParameter("selectedItems"),
+            oMultiInput = this.byId("idMinpPDealers");
+          oMultiInput.removeAllTokens();
+          var oModelView = this.getView().getModel("oModelView");
+          var oSecDealer = this.getView().getModel(
+            "/PainterAddDet/SecondryDealer"
+          );
+
+          if (aSelectedItems && aSelectedItems.length > 0) {
+            aSelectedItems.forEach(function (oItem) {
+              oMultiInput.addToken(
+                new Token({
+                  text: oItem.getTitle(),
+                })
+              );
+              oModelView.setProperty(
+                "/PainterDetails/DealerId",
+                oItem.getBindingContext().getProperty("Id")
+              );
+              //console.log(oItem.getBindingContext().getProperty("Id"))
+            });
+          }
+        },
+        onPTokenUpdate: function (oEvent) {
+          if (oEvent.getParameter("type") == "removed") {
+            this.getView()
+              .getModel("oModelView")
+              .setProperty("/PainterDetails/DealerId", "");
+          }
+        },
         onPressSave1: function () {
           this._onClearMgsClass();
           var requiredInputs = sap.ui.getCore().byFieldGroupId("InpGoup");
@@ -1419,6 +1568,169 @@ sap.ui.define(
             },
           });
         },
+        //Himank
+        onValueHelpRequested: function () {
+          this._oMultiInput = this.getView().byId("multiInput");
+          this.oColModel = new JSONModel({
+            cols: [
+              {
+                label: "SAP Code",
+                template: "Id",
+                width: "10rem",
+              },
+              {
+                label: "Dealer Name",
+                template: "DealerName",
+              },
+              {
+                label: "Plant Code",
+                template: "PlantCode",
+              },
+            ],
+          });
+
+          var aCols = this.oColModel.getData().cols;
+
+          this._oValueHelpDialog = sap.ui.xmlfragment(
+            "com.knpl.pragati.ContactPainter.view.fragments.SecondaryDealerValueHelp",
+            this
+          );
+          this.getView().addDependent(this._oValueHelpDialog);
+
+          this._oValueHelpDialog.getTableAsync().then(
+            function (oTable) {
+              //		oTable.setModel(this.oProductsModel);
+              oTable.setModel(this.oColModel, "columns");
+
+              if (oTable.bindRows) {
+                oTable.bindAggregation("rows", "/DealerSet");
+              }
+
+              if (oTable.bindItems) {
+                oTable.bindAggregation("items", "/DealerSet", function () {
+                  return new sap.m.ColumnListItem({
+                    cells: aCols.map(function (column) {
+                      return new sap.m.Label({
+                        text: "{" + column.template + "}",
+                      });
+                    }),
+                  });
+                });
+              }
+
+              this._oValueHelpDialog.update();
+            }.bind(this)
+          );
+
+          this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+          this._oValueHelpDialog.open();
+        },
+
+        _getfilterforControl: function () {
+          var sDepot = this.getView()
+            .getModel("oModelView")
+            .getProperty("/PainterDetails/DepotId");
+
+          var sPrimaryPainter = this.getView()
+            .getModel("oModelView")
+            .getProperty("/PainterDetails/DealerId");
+          var aFilters = [];
+
+          if (sPrimaryPainter) {
+            aFilters.push(new Filter("Id", FilterOperator.NE, sPrimaryPainter));
+          }
+          if (sDepot) {
+            aFilters.push(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
+            );
+          }
+          if ((aFilters.length == 0)) {
+            return [];
+          }
+          return new Filter({
+            filters: aFilters,
+            and: true,
+          });
+        },
+
+        onFilterBarSearch: function (oEvent) {
+          var afilterBar = oEvent.getParameter("selectionSet"),
+            aFilters = [];
+
+          aFilters.push(
+            new Filter({
+              path: "Id",
+              operator: FilterOperator.Contains,
+              value1: afilterBar[0].getValue(),
+              caseSensitive: false,
+            })
+          );
+          aFilters.push(
+            new Filter({
+              path: "DealerName",
+              operator: FilterOperator.Contains,
+              value1: afilterBar[1].getValue(),
+              caseSensitive: false,
+            })
+          );
+
+          this._filterTable(
+            new Filter({
+              filters: aFilters,
+              and: true,
+            })
+          );
+        },
+
+        onValueHelpAfterOpen: function () {
+          var aFilter = this._getfilterforControl();
+
+          this._filterTable(aFilter, "Control");
+        },
+
+        _filterTable: function (oFilter, sType) {
+          var oValueHelpDialog = this._oValueHelpDialog;
+
+          oValueHelpDialog.getTableAsync().then(function (oTable) {
+            if (oTable.bindRows) {
+              oTable.getBinding("rows").filter(oFilter, sType || "Application");
+            }
+
+            if (oTable.bindItems) {
+              oTable
+                .getBinding("items")
+                .filter(oFilter, sType || "Application");
+            }
+
+            oValueHelpDialog.update();
+          });
+        },
+
+        onValueHelpCancelPress: function () {
+          this._oValueHelpDialog.close();
+        },
+
+        onValueHelpOkPress: function (oEvent) {
+          var oData = [];
+        var xUnique = new Set();
+          var aTokens = oEvent.getParameter("tokens");
+
+          aTokens.forEach(function (ele) {
+            if (xUnique.has(ele.getKey()) == false) {
+              oData.push({
+                DealerName: ele.getText(),
+                Id: ele.getKey(),
+              });
+              xUnique.add(ele.getKey());
+            }
+          });
+          //  this._oMultiInput.setTokens(aTokens);
+          this.getView()
+            .getModel("oModelView")
+            .setProperty("/PainterAddDet/SecondryDealer", oData);
+          this._oValueHelpDialog.close();
+        },
+
         onExit: function () {},
       }
     );

@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+		<SelectDialog
+		title="Primary Dealers"
+		class="sapUiPopupWithPadding"
+		items="{/DealerSet}"
+	search="_handlePValueHelpSearch"
+		confirm="_handlePValueHelpClose"
+		
+		multiSelect="false">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+            title="{DealerName} - {Id}"
+            description="{Id}"
+			 />
+	</SelectDialog>
+</core:FragmentDefinition>
