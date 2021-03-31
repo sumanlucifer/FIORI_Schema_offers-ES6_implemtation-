@@ -41,7 +41,7 @@
                 <Label text="{i18n>LinkSecondryDealer}" />
                <MultiInput id="multiInput"	tokens="{oModelView>/PainterAddDet/SecondryDealer}"	valueHelpRequest="onValueHelpRequested">
 	                		<tokens>
-                             <Token editable="false" text="{oModelView>DealerName} - {oModelView>Id}" key="{oModelView>Id}" />
+                             <Token editable="false" text="{oModelView>DealerName}" key="{oModelView>Id}" />
                             </tokens>
 	            	</MultiInput>
                 <core:Title text="{i18n>PersonalDetails}" />
