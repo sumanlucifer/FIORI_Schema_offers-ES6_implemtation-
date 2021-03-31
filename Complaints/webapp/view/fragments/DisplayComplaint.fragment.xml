@@ -1,66 +1,58 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:smartForm="sap.ui.comp.smartform"
-    xmlns:smartField="sap.ui.comp.smartfield"
-    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
     <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
-            <core:Title text="{i18n>ComplaintDetails}"/>
-            <Label text="{i18n>ComplaintId}"/>
-            <Text text="{ComplaintCode}"/>
-            <Label text="{i18n>ComplaintType}"/>
-            <Text text="{ComplaintType/ComplaintType}"/>
-            <Label text="{i18n>ComplaintDetails}"/>
-            <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
+            <core:Title text="{i18n>ComplaintDetails}" />
+            <Label text="{i18n>ComplaintId}" />
+            <Text text="{ComplaintCode}" />
+            <Label text="{i18n>ComplaintType}" />
+            <Text text="{ComplaintType/ComplaintType}" />
+            <Label text="{i18n>ComplaintDetails}" />
+            <Text text="{ComplaintSubtype/ComplaintSubtype}" />
 
-            <Label text="{i18n>GiftDetails}" visible="{= ${ComplaintTypeId} === 13}"/>
-            <Text text="{RewardGiftId}" visible="{= ${ComplaintTypeId} === 13}"/>
+            <Label text="{i18n>GiftDetails}" visible="{= ${ComplaintTypeId} === 13}" />
+            <Text text="{RewardGiftId}" visible="{= ${ComplaintTypeId} === 13}" />
 
 
-            <Label text="{i18n>DateAndTime}"/>
-            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+            <Label text="{i18n>DateAndTime}" />
+            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
             <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>TokenCode}" />
             <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
                 <layoutData>
                     <l:GridData span="XL10 L10 M10 S12" />
                 </layoutData>
             </Input>
-            <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Apply}" enabled="{oModelControl>/TokenCode}" press="onPressTokenCode"/>
+            <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Apply}" enabled="{oModelControl>/TokenCode}" press="onPressTokenCode" />
             <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Points}" />
             <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" editable="false" value="{path:'oModelView>/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
-            <Label text="{i18n>ComplaintStatus}" required="true"/>
-            <Select selectedKey="{oModelView>/ComplaintStatus}">
-                <core:Item text="Registered" key="REGISTERED"/>
-                <core:Item text="In Review" key="INREVIEW"/>
-                <core:Item text="Resolved" key="RESOLVED"/>
-                <core:Item text="Withdrawn" key="WITHDRAWN"/>
+            <Label text="{i18n>ComplaintStatus}" required="true" />
+            <Select editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
+                <core:Item text="Registered" key="REGISTERED" />
+                <core:Item text="In Review" key="INREVIEW" />
+                <core:Item text="Resolved" key="RESOLVED" />
+                <core:Item text="Withdrawn" key="WITHDRAWN" />
             </Select>
-            <core:Title text="{i18n>PainterDetails}"/>
-            <Label text="{i18n>PainterName}"/>
-            <Text text="{Painter/Name}"/>
-            <Label text="{i18n>MembershipId}"/>
-            <Text text="{Painter/MembershipCard}"/>
-            <Label text="{i18n>PrimaryMobileNo}"/>
-            <Text text="{Painter/Mobile}"/>
-            <Label text="{i18n>AddResolution}"/>
-              <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
-                    <items>
-                        <core:Item text="{Resolution}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-             <Label />
-                <TextArea visible="{= ${oModelView>/ResolutionId} === 22  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}" ></TextArea>
+            <core:Title text="{i18n>PainterDetails}" />
+            <Label text="{i18n>PainterName}" />
+            <Text text="{Painter/Name}" />
+            <Label text="{i18n>MembershipId}" />
+            <Text text="{Painter/MembershipCard}" />
+            <Label text="{i18n>PrimaryMobileNo}" />
+            <Text text="{Painter/Mobile}" />
+            <Label text="{i18n>AddResolution}" />
+            <ComboBox editable="{= !${oModelControl>/ComplainResolved} }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+                <items>
+                    <core:Item text="{Resolution}" key="{Id}" />
+                </items>
+            </ComboBox>
+            <Label />
+            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 22  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
             <Label text="{i18n>Attachment}" />
             <VBox>
                 <Link text="{i18n>ViewAttachment}" press="onViewAttachment" visible="{oModelControl>/ImageLoaded}" />
-                 <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }" ></Text>
+                <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }"></Text>
             </VBox>
-                
-            
+
 
         </f:content>
     </f:SimpleForm>
