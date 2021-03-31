@@ -705,6 +705,15 @@ sap.ui.define(
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
           oDepot.setValue("");
+
+
+          //clear data for painters linked
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
+
         },
         onDivisionChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -714,6 +723,33 @@ sap.ui.define(
           oDepot.clearSelection();
           oDepot.setValue("");
           oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+
+
+          //clearning the data for painters
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
+        },
+        onDepotChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oPrimaryDealer = oView.byId("cmbxPDlr");
+          var oSecDealer = oView.byId("mcmbxDlr");
+          oPrimaryDealer.clearSelection();
+          oPrimaryDealer.setValue("");
+          oSecDealer.clearSelection();
+          oPrimaryDealer
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sKey)
+            );
+          oSecDealer
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sKey)
+            );
         },
 
         onPressAddFamliy: function () {
@@ -775,7 +811,7 @@ sap.ui.define(
           var oTable = oView.byId("idFamilyDetils");
           var oCells = oEvent.getSource().getParent().getParent().getCells();
           var oValidator = new Validator();
-          var cFlag = oValidator.validate(oCells);
+          var cFlag = oValidator.valonidate(oCells);
 
           var bFlag = true;
           // var cFlag = oValidator.validate();
@@ -1354,7 +1390,7 @@ sap.ui.define(
         },
         onPressOpenTokenDialog: function (oEvent) {
           var othat = this;
-          var oModelControl = this.getView().getModel("oModelControl2")
+          var oModelControl = this.getView().getModel("oModelControl2");
           if (!this.oDefaultDialog) {
             this.oDefaultDialog = new Dialog({
               title: "{i18n>ApplyToken}",
@@ -1362,7 +1398,7 @@ sap.ui.define(
                 othat.oDefaultDialog.destroy();
                 console.log("onCloseTrigerred");
                 delete othat.oDefaultDialog;
-                oModelControl.setProperty("/ApplyLoyaltyPoints","");
+                oModelControl.setProperty("/ApplyLoyaltyPoints", "");
               },
               content: [
                 new VBox({
@@ -1381,7 +1417,6 @@ sap.ui.define(
                 type: "Default",
                 press: function () {
                   othat.oDefaultDialog.close();
-                
                 },
               }),
               endButton: new Button({
@@ -1415,19 +1450,17 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: oModelControl.getProperty("/PainterId"),
-              channel:"'Painter Profile'"
+              channel: "'Painter Profile'",
             },
             success: function (oData) {
               if (oData !== null) {
                 if (oData.hasOwnProperty("Status")) {
                   if (oData["Status"] == true) {
                     MessageToast.show(oData["Message"]);
-                    
+
                     othat.oDefaultDialog.close();
-                   
                   } else if (oData["Status"] == false) {
                     MessageToast.show(oData["Message"]);
-                    
                   }
                   othat.getView().getModel().refresh(true);
                 }
@@ -1435,7 +1468,6 @@ sap.ui.define(
             },
             error: function () {},
           });
-          
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();

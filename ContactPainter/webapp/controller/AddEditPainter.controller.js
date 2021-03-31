@@ -768,7 +768,7 @@ sap.ui.define(
           oDepot.setValue("");
           oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
 
-          //clearning the depot data
+          //clearning the dealers data
           var oPrimaryDealer = oView.byId("cmbxPDlr");
           var oSecDealer = oView.byId("mcmbxDlr");
           oPrimaryDealer.clearSelection();
