@@ -1,6 +1,8 @@
 /node_modules/
 /dist/
 
+<<<<<<< HEAD
+=======
 # auto generated wildcard
 knpl-influencer-web/MDM/.env1
 # auto generated wildcard
@@ -40,8 +42,9 @@ knpl-cp/ContactPainter/.env1
 # auto generated wildcard
 complaints/Complaints/.env1
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env1
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env2
-# auto generated wildcard
 knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env2
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env3
+>>>>>>> complaints1

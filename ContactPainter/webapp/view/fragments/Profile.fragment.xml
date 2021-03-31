@@ -43,6 +43,8 @@
                 </VBox>
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <core:Title text="{i18n>LocationDetails}" />
+                <Label text="{i18n>PinCode}" />
+                <Text text="{PainterAddress/PinCode}" />
                 <Label text="{i18n>State}" />
                 <Text text="{PainterAddress/StateDetails/State}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>City}" />
@@ -53,8 +55,7 @@
                 <Text text="{PainterAddress/Town}" />
                 <!-- <Label text="{i18n>AddressLine2}" />
                 <Text text="{PainterAddress/AddressLine2}"/>-->
-                <Label text="{i18n>PinCode}" />
-                <Text text="{PainterAddress/PinCode}" />
+
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
                 <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }" />

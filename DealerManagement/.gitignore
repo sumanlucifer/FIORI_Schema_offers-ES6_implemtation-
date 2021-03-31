@@ -4,6 +4,8 @@ package-lock.json
 /.vscode/
 /*-content.zip/ 
 
+<<<<<<< HEAD
+=======
 # auto generated wildcard
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
@@ -83,6 +85,7 @@ knpl-cp/ContactPainter/.env1
 # auto generated wildcard
 complaints/Complaints/.env1
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env1
+knpl-influencer-web/Complaints/.env2
 # auto generated wildcard
-knpl-influencer-web/ContactPainter/.env2
+knpl-influencer-web/Complaints/.env3
+>>>>>>> complaints1

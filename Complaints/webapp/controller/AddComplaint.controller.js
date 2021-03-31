@@ -154,7 +154,7 @@ sap.ui.define(
           var oPayLoad = this._ReturnObjects(oAddCompData);
           var othat = this;
           var oData = this.getView().getModel();
-        
+
           var c1, c2;
           c1 = this._postCreateData(oPayLoad);
 
@@ -193,7 +193,6 @@ sap.ui.define(
           return promise;
         },
         _checkFileUpload: function (oData) {
-          
           var promise = jQuery.Deferred();
           var UploadCollection = this.getView().byId("idUploadCollection");
           var oItems = UploadCollection.getItems();
@@ -222,7 +221,7 @@ sap.ui.define(
           for (var x = 0; x < oItems.length; x++) {
             var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader())
               .oFileUpload.files[0];
-           
+
             async_request.push(
               jQuery.ajax({
                 method: "PUT",
@@ -279,7 +278,14 @@ sap.ui.define(
           oCmbxSubType.clearSelection();
           oCmbxSubType.setValue("");
           oCmbxSubType.getBinding("items").filter(oFilter);
-          if (sKey == "1" || sKey == "2") {
+        },
+        onComplainSubTypeChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oViewModel = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
+         
+          if (sKey == "2" || sKey == "3") {
             oViewModel.setProperty("/addComplaint/RewardPoints", "");
             oViewModel.setProperty("/addComplaint/TokenCode", "");
             oModelControl.setProperty("/tokenCodeValue", "");
@@ -306,6 +312,7 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: sPainterId,
+              channel: "'Complains'",
             },
             success: function (oData) {
               if (oData !== null) {
