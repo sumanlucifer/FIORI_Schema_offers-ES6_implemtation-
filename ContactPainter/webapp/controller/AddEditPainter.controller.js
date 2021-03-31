@@ -1630,15 +1630,23 @@ sap.ui.define(
             .getModel("oModelView")
             .getProperty("/PainterDetails/DepotId");
 
-          return sDepot.length === 0
-            ? []
-            : [
-                new Filter(
-                  "DealerSalesDetails/Depot",
-                  FilterOperator.EQ,
-                  sDepot
-                ),
-              ];
+          var sPrimaryPainter = this.getView()
+            .getModel("oModelView")
+            .getProperty("/PainterDetails/DealerId");
+          var aFilters = [];
+          if (sPrimaryPainter) {
+            aFilters.push(new Filter("Id", FilterOperator.NE, sPrimaryPainter));
+          }
+          if (sDepot) {
+            aFilters.push(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
+            );
+          }
+
+          return new Filter({
+            filters: aFilters,
+            and: true,
+          });
         },
 
         onFilterBarSearch: function (oEvent) {

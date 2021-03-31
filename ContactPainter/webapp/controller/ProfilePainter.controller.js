@@ -215,7 +215,7 @@ sap.ui.define(
           }
 
           // setting up Dealers data
-         
+
           // setting up the state/city filtering data
           var oCity = oView.byId("cmbCity"),
             sStateKey = oDataValue["PainterAddress"]["StateId"] || "",
@@ -251,7 +251,7 @@ sap.ui.define(
             })
           );
           var oSecTokens = oDataValue["Dealers"];
-         
+
           oControlModel.setProperty(
             "/PainterAddDet/SecondryDealer",
             oSecTokens
@@ -1522,7 +1522,7 @@ sap.ui.define(
             if (oModel.getProperty("/" + a) === "") {
               oView.byId("idMinpPDealers").removeAllTokens();
               oModel.setProperty("/DealerId", "");
-              oModel.getProperty("/PainterAddDet/SecondryDealer").length=0;
+              oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
             }
           }
         },
@@ -1682,15 +1682,23 @@ sap.ui.define(
             .getModel("oModelView")
             .getProperty("/DepotId");
 
-          return sDepot.length === 0
-            ? []
-            : [
-                new Filter(
-                  "DealerSalesDetails/Depot",
-                  FilterOperator.EQ,
-                  sDepot
-                ),
-              ];
+          var sPrimaryPainter = this.getView()
+            .getModel("oModelView")
+            .getProperty("/DealerId");
+          var aFilters = [];
+          if (sPrimaryPainter) {
+            aFilters.push(new Filter("Id", FilterOperator.NE, sPrimaryPainter));
+          }
+          if (sDepot) {
+            aFilters.push(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
+            );
+          }
+
+          return new Filter({
+            filters: aFilters,
+            and: true,
+          });
         },
 
         onFilterBarSearch: function (oEvent) {
@@ -1753,14 +1761,17 @@ sap.ui.define(
 
         onValueHelpOkPress: function (oEvent) {
           var oData = [];
-
+          var xUnique = new Set();
           var aTokens = oEvent.getParameter("tokens");
 
           aTokens.forEach(function (ele) {
-            oData.push({
-              DealerName: ele.getText(),
-              Id: ele.getKey()
-            });
+            if (xUnique.has(ele.getKey()) == false) {
+              oData.push({
+                DealerName: ele.getText(),
+                Id: ele.getKey(),
+              });
+              xUnique.add(ele.getKey());
+            }
           });
 
           //  this._oMultiInput.setTokens(aTokens);
