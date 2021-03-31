@@ -1390,12 +1390,11 @@ sap.ui.define(
           for (var a of aDiv) {
             if (oModel.getProperty("/PainterDetails/" + a) === "") {
               oView.byId("idMinpPDealers").removeAllTokens();
-               //oView.byId("multiInput").removeAllTokens();
+              //oView.byId("multiInput").removeAllTokens();
               oModel.setProperty("/PainterDetails/DealerId", "");
-              oModel.getProperty("/PainterAddDet/SecondryDealer").length=0;
+              oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
               //multiInput
             }
-
           }
           oModel.refresh();
         },
@@ -1476,6 +1475,10 @@ sap.ui.define(
             oMultiInput = this.byId("idMinpPDealers");
           oMultiInput.removeAllTokens();
           var oModelView = this.getView().getModel("oModelView");
+          var oSecDealer = this.getView().getModel(
+            "/PainterAddDet/SecondryDealer"
+          );
+
           if (aSelectedItems && aSelectedItems.length > 0) {
             aSelectedItems.forEach(function (oItem) {
               oMultiInput.addToken(
@@ -1490,7 +1493,6 @@ sap.ui.define(
               //console.log(oItem.getBindingContext().getProperty("Id"))
             });
           }
-          
         },
         onPTokenUpdate: function (oEvent) {
           if (oEvent.getParameter("type") == "removed") {
@@ -1633,6 +1635,7 @@ sap.ui.define(
             .getModel("oModelView")
             .getProperty("/PainterDetails/DealerId");
           var aFilters = [];
+
           if (sPrimaryPainter) {
             aFilters.push(new Filter("Id", FilterOperator.NE, sPrimaryPainter));
           }
@@ -1641,7 +1644,9 @@ sap.ui.define(
               new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
             );
           }
-
+          if ((aFilters.length == 0)) {
+            return [];
+          }
           return new Filter({
             filters: aFilters,
             and: true,
@@ -1713,7 +1718,7 @@ sap.ui.define(
           aTokens.forEach(function (ele) {
             oData.push({
               DealerName: ele.getText(),
-              Id: ele.getKey()
+              Id: ele.getKey(),
             });
           });
 
@@ -1724,7 +1729,7 @@ sap.ui.define(
           this._oValueHelpDialog.close();
         },
 
-        onExit: function () {}
+        onExit: function () {},
       }
     );
   }

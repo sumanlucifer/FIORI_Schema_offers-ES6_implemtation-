@@ -20,7 +20,7 @@
 					<fb:FilterGroupItem
 						groupName="__$INTERNAL$"
 						name="Id"
-						label="SAP ID"
+						label="SAP Code"
 						visibleInFilterBar="true"
 					><fb:control>
 							<m:Input name="Id" />
