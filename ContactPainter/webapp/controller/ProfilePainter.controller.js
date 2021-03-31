@@ -1625,9 +1625,9 @@ sap.ui.define(
           this.oColModel = new JSONModel({
             cols: [
               {
-                label: "SAP ID",
+                label: "SAP Code",
                 template: "Id",
-                width: "5rem",
+                width: "10rem",
               },
               {
                 label: "Dealer Name",
