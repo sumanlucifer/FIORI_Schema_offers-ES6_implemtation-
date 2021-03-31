@@ -1694,6 +1694,9 @@ sap.ui.define(
               new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
             );
           }
+          if (aFilters.length == 0) {
+            return [];
+          }
 
           return new Filter({
             filters: aFilters,
