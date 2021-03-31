@@ -249,6 +249,19 @@ sap.ui.define(
               .getBinding("items")
               .filter(new Filter("Division", FilterOperator.EQ, sDivisionId));
           }
+          var sDepotId = oDataValue["DepotId"];
+          if(sDepotId!==null){
+               oView.byId("cmbxPDlr")
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepotId)
+            );
+          oView.byId("mcmbxDlr")
+            .getBinding("items")
+            .filter(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepotId)
+            );
+          }
           // setting up kyc data
           //var oKycData = oDataValue["PainterBankDetails"];
           if (oDataValue.hasOwnProperty("PainterKycDetails")) {
