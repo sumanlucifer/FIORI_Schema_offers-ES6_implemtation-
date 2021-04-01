@@ -27,12 +27,12 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelControl2>/ProfilePic}" class="sapUiTinyMarginBegin"/>
+                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelView>/ProfilePic}" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
                     <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                    <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                    <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
@@ -85,7 +85,7 @@
             </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
-            <Bar>
+            <Bar visible="{= ${appView>/flgEditOn} === true}">
                 <contentRight>
                     <Button id="edit" text="{i18n>btnEdit}" type="Emphasized" enabled="true" press="handleEditPress"/>
                     <Button id="save" text="{i18n>btnSave}" type="Emphasized" visible="false" press="handleSavePress"/>
