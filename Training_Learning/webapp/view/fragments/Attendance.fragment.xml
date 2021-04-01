@@ -3,13 +3,14 @@
         <Table id="idTblAttendance" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
             <headerToolbar>
                 <Toolbar>
-                    <!-- <Label text="File Name"></Label> -->
+                    <ToolbarSpacer/> 
                     <HBox>
-                        <u:FileUploader id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
+                        <u:FileUploader visible="{= ${appView>/EditAttendance} === true}" id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
                         </u:FileUploader>
-                        <Button text="Upload" press="onUploadAttendance"></Button>
-                    </HBox>    
-                    <SearchField width="20%" id="searchAttendance"></SearchField>
+                        <Button visible="{= ${appView>/EditAttendance} === true}" text="Upload" press="onUploadAttendance"></Button>
+                    </HBox> 
+                    <!-- <SearchField width="20%" id="searchAttendance"></SearchField> -->
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Attendance}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 

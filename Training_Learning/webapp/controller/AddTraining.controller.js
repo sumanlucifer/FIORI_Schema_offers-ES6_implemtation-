@@ -46,6 +46,7 @@ sap.ui.define(
                         edit: false,
                         mode: "",
                         sIctbTitle: "",
+                        currDate: new Date(),
                         TrainingDetails: {
                         }
                     });
@@ -104,6 +105,7 @@ sap.ui.define(
                         oViewModel.setProperty("/TrainingDetails/StartDate", null);
                         oViewModel.setProperty("/TrainingDetails/Url", "");
                         oViewModel.setProperty("/TrainingDetails/EndDate", null);
+                        oViewModel.setProperty("/TrainingDetails/ZoneId", "");
                         oViewModel.setProperty("/TrainingDetails/DepotId", "");
                         oViewModel.setProperty("/TrainingDetails/DivisionId", "");
                         oViewModel.setProperty("/TrainingDetails/PainterType", null);
@@ -113,6 +115,12 @@ sap.ui.define(
                         oViewModel.setProperty("/TrainingDetails/Address", "");
                         oViewModel.setProperty("/TrainingDetails/Description", "");
                         oViewModel.setProperty("/TrainingDetails/TrainingQuestionnaire", []);
+
+                        oViewModel.setProperty("/__metadata", "");
+                        oViewModel.setProperty("/oImage", "");
+
+                        var fU = this.getView().byId("idAttendanceFileUploader");
+                        fU.setValue("");
 
                         var AddEditTraining = this.getView().getModel("i18n").getResourceBundle().getText("AddNewTraining");
                         oViewModel.setProperty("/AddEditTraining", AddEditTraining);
@@ -171,7 +179,6 @@ sap.ui.define(
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("StateId", FilterOperator.EQ, StateId)],
                         templateShareable: true
                     });
-
                 },
 
                 _fnbusyItems: function (oEvent) {
@@ -222,7 +229,6 @@ sap.ui.define(
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
 
-                    console.log(oModelView);
                     if (!this.byId("QuestionnaireOptionsDialog")) {
                         // load asynchronous XML fragment
                         Fragment.load({
@@ -246,23 +252,35 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
+                    var selectCorrectFlag;
+                    selectCorrectFlag = false;
                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                     if (addTr.Question === "") {
                         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
                     } else {
                         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
                         if (addQsFlag === true) {
-                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                            debugger;
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                Question: addTr.Question,
-                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                IsArchived: false
-                            });
+                            if (addTr.TrainingQuestionnaireOptions.length) {
+                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                            Question: addTr.Question,
+                                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                            IsArchived: false
+                                        });
+                                        this.byId("QuestionnaireOptionsDialog").close();
+                                        this.getModel("oModelView").refresh();
+                                        selectCorrectFlag = true;
+                                    }
+                                }
+                                if (selectCorrectFlag === false) {
+                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                }
+                            } else {
+                                this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
+                            }
                         }
-
-                        this.byId("QuestionnaireOptionsDialog").close();
-                        this.getModel("oModelView").refresh();
                     }
                 },
 
@@ -448,6 +466,50 @@ sap.ui.define(
                     }
                 },
 
+                onStateChanged: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oCity = oView.byId("cmbCity"),
+                        oBindingCity,
+                        aFilter = [],
+                        oView = this.getView();
+                    if (sKey !== null) {
+                        oCity.clearSelection();
+                        oCity.setValue("");
+                        oBindingCity = oCity.getBinding("items");
+                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                        oBindingCity.filter(aFilter);
+                    }
+                },
+
+                onZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oPainterDetail = oModelView.getProperty("/TrainingDetails");
+                    var oDivision = oView.byId("idDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem();
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+
+                    //setting the data for depot;
+                    var oDepot = oView.byId("idDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                },
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = oView.byId("idDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+                },
+
+
                 /*
                  * To validate values of payload
                  * @constructor  
@@ -506,14 +568,22 @@ sap.ui.define(
                                             target: "/TrainingDetails/RewardPoints"
                                         });
                                     } else
-                                        if (data.Url !== "" && !url.match(regex)) {
+                                        if (data.Url === "") {
                                             oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                             aCtrlMessage.push({
-                                                message: "MSG_VALDTN_ERR_URL",
+                                                message: "MSG_PLS_ENTER_ERR_URL",
                                                 target: "/TrainingDetails/Url"
                                             });
-                                        }
+                                        } else
+                                            if (data.Url !== "" && !url.match(regex)) {
+                                                oReturn.IsNotValid = true;
+                                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                aCtrlMessage.push({
+                                                    message: "MSG_VALDTN_ERR_URL",
+                                                    target: "/TrainingDetails/Url"
+                                                });
+                                            }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -542,12 +612,9 @@ sap.ui.define(
                 },
 
                 CUOperation: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                    // oPayload.DivisionTypeId = parseInt(oPayload.DivisionTypeId);
-                    // oPayload.DepotTypeId = parseInt(oPayload.DepotTypeId);
                     oPayload.PainterArcheId = parseInt(oPayload.PainterArcheId);
                     oPayload.PainterType = parseInt(oPayload.PainterType);
                     oPayload.CityId = parseInt(oPayload.CityId);
@@ -572,6 +639,7 @@ sap.ui.define(
                             // success: that._onLoadSuccess.bind(that),
                             // error: that._onLoadError.bind(that)
                             success: function (createddata) {
+                                debugger;
                                 var newSpath = sPath + "(" + createddata.Id + ")";
                                 that._UploadImage(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                     .bind(
@@ -596,10 +664,11 @@ sap.ui.define(
                 _SuccessAdd: function () {
                     this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
+                    var oModel = this.getModel();
+                    oModel.refresh(true);
                 },
 
                 onUpload: function (oEvent) {
-                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
@@ -639,25 +708,48 @@ sap.ui.define(
                     this.getModel("oModelView").refresh();
                 },
 
-                _UploadImage: function (sPath, oImage) {
+                _UploadImage: function (sPath, oImage, oEvent) {
                     var that = this;
+                    // if (!oImage) {
+                    //     return;
+                    // }
+                    $.ajax({
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                        //	data : fd,
+                        data: oImage.Image,
+                        method: "PUT",
+                        headers: that.getModel().getHeaders(),
+                        contentType: "multipart/form-data",
+                        processData: false,
+                        success: that.onUploadAttendance(sPath, oEvent).then(that._SuccessAdd.bind(that, oEvent), that._Error.bind(
+                            that)),
+                        error: that._Error.bind(that)
+                    });
+                },
+
+                onUploadAttendance: function (sPath, oEvent) {
+                    var that = this;
+                    var fU = this.getView().byId("idAttendanceFileUploader");
+                    var domRef = fU.getFocusDomRef();
+                    var file = domRef.files[0];
 
                     return new Promise(function (res, rej) {
-                        if (!oImage) {
+                        if (!file) {
                             res();
                             return;
                         }
 
                         var settings = {
                             url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
-                            //	data : fd,
-                            data: oImage.Image,
+                            data: file,
                             method: "PUT",
-                            headers: that.getModel().getHeaders(),
-                            contentType: "multipart/form-data",
+                            cache: false,
+                            // headers: that.getModel().getHeaders(),
+                            contentType: "text/csv",
                             processData: false,
                             success: function () {
                                 res.apply(that);
+
                             },
                             error: function () {
                                 rej.apply(that);

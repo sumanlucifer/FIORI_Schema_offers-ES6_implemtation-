@@ -146,9 +146,13 @@ sap.ui.define([
                 oViewModel.setProperty("/oDetails", data);
                 return;
             }
+            oViewModel.setProperty("/__metadata", "");
+            oViewModel.setProperty("/oImage", "");
             oViewModel.setProperty("/oDetails", {
                 TrainingTypeId: 3,
                 Title: "",
+                Description: "",
+                RewardPoints: null,
                 Url: "",
                 Duration: null
             });
@@ -348,30 +352,54 @@ sap.ui.define([
                     target: "/oDetails/Title"
                 });
             } else
-                if (data.Url === "") {
+                if (data.RewardPoints === "" || data.RewardPoints === null) {
                     oReturn.IsNotValid = true;
-                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
                     aCtrlMessage.push({
-                        message: "MSG_PLS_ENTER_ERR_URL",
-                        target: "/oDetails/Url"
+                        message: "MSG_PLS_ENTER_ERR_REWARD",
+                        target: "/oDetails/RewardPoints"
                     });
                 } else
-                    if (data.Url !== "" && !url.match(regex)) {
+                    if (data.RewardPoints == 0) {
                         oReturn.IsNotValid = true;
-                        oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                        oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
                         aCtrlMessage.push({
-                            message: "MSG_VALDTN_ERR_URL",
-                            target: "/oDetails/Url"
+                            message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
+                            target: "/oDetails/RewardPoints"
                         });
                     } else
-                    if (data.Duration === null || data.Duration === "") {
-                        oReturn.IsNotValid = true;
-                        oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
-                        aCtrlMessage.push({
-                            message: "MSG_VALDTN_ERR_DURATION",
-                            target: "/oDetails/Duration"
-                        });
-                    }
+                        if (data.Url === "") {
+                            oReturn.IsNotValid = true;
+                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                            aCtrlMessage.push({
+                                message: "MSG_PLS_ENTER_ERR_URL",
+                                target: "/oDetails/Url"
+                            });
+                        } else
+                            if (data.Url !== "" && !url.match(regex)) {
+                                oReturn.IsNotValid = true;
+                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                aCtrlMessage.push({
+                                    message: "MSG_VALDTN_ERR_URL",
+                                    target: "/oDetails/Url"
+                                });
+                            } else
+                                if (data.Duration === null || data.Duration === "") {
+                                    oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
+                                    aCtrlMessage.push({
+                                        message: "MSG_VALDTN_ERR_DURATION",
+                                        target: "/oDetails/Duration"
+                                    });
+                                } else
+                                    if (data.Duration == 0) {
+                                        oReturn.IsNotValid = true;
+                                        oReturn.sMsg.push("MSG_ENTER_DURATION_MORETHAN_ZERO");
+                                        aCtrlMessage.push({
+                                            message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
+                                            target: "/oDetails/Duration"
+                                        });
+                                    }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
             return oReturn;
@@ -400,9 +428,9 @@ sap.ui.define([
         },
 
         CUOperation: function (oPayload, oEvent) {
-            debugger;
             var oViewModel = this.getModel("objectView");
             oPayload.Duration = parseInt(oPayload.Duration);
+            oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this,
                 sPath = "/LearningSet";
@@ -420,7 +448,6 @@ sap.ui.define([
                     error: that._Error.bind(that)
                 });
             } else {
-                debugger;
                 that.getModel().create("/LearningSet", oClonePayload, {
                     // success: that._onLoadSuccess.bind(that),
                     // error: that._onLoadError.bind(that)
@@ -436,8 +463,8 @@ sap.ui.define([
         },
 
         _Error: function (error) {
-			MessageToast.show(error.toString());
-		},
+            MessageToast.show(error.toString());
+        },
 
         _Success: function () {
             this.getRouter().navTo("worklist", true);
@@ -449,6 +476,8 @@ sap.ui.define([
         _SuccessAdd: function () {
             this.getRouter().navTo("worklist", true);
             MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_CREATE"));
+            var oModel = this.getModel();
+            oModel.refresh(true);
         }
     });
 
