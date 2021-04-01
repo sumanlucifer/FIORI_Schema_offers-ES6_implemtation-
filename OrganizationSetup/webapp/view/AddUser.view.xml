@@ -48,7 +48,7 @@ xmlns:f="sap.ui.layout.form">
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Text"
+        	                type="Number"
                             
                             value="{ 
                                   path : '/mobile', 

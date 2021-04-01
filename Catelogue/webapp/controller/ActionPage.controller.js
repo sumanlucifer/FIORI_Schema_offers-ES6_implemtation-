@@ -22,6 +22,7 @@ sap.ui.define([
             this.oPreviewPdf = this.getView().byId("idPreviewPdf");
             this.oFileUploader = this.getView().byId("idFormToolImgUploader");
             this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+             this.pdfBtn = this.getView().byId("pdfBtn");
             //Router Object
             this.oRouter = this.getRouter();
             this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
@@ -39,6 +40,7 @@ sap.ui.define([
             };
             if (this._action === "edit") {
                 var oComponentModel = this.getComponentModel();
+                var html = new sap.ui.core.HTML();
                 var oItem = oComponentModel.getProperty("/" + this._property);
                 if (!oItem) {
                     return this._navToHome();
@@ -48,9 +50,19 @@ sap.ui.define([
                 this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
                 this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
                 this.oPreviewImage.setVisible(true);
+
+                var pdfURL = this.sServiceURI + this._property + "/$value?doc_type=pdf";
+
+                
+                
+                    this.pdfBtn.setVisible(true);
+
+
+
             } else {
 
                 this.oPreviewImage.setVisible(false);
+                 this.pdfBtn.setVisible(false);
             }
             this.oFileUploader.clear();
             var oViewModel = new JSONModel(oData);
@@ -82,6 +94,10 @@ sap.ui.define([
                     this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value");
                 }
             }
+        },
+        openPdf: function (){
+             sap.m.URLHelper.redirect(this.sServiceURI + this._property + "/$value?doc_type=pdf", true)
+
         },
         onChangePdf: function (oEvent) {
             if (oEvent.getSource().oFileUpload.files.length > 0) {
@@ -201,9 +217,16 @@ sap.ui.define([
                 cFiles.push(this.oFileUploaderPdf.getValue());
                 //  console.log(cFiles);
                 if (cFiles) {
+                    
+
+            
 
                     //oViewModel.setProperty("/busy", true);
                     if (this._action === "add") {
+                        if (!this.oFileUploader.getValue()||!this.oFileUploaderPdf.getValue()) {
+                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+                
+            }else{
                         var that = this
                         oDataModel.create("/MasterProductCatalogueSet", oPayload, {
                             success: function (oData, response) {
@@ -216,6 +239,7 @@ sap.ui.define([
                                 console.log("Error!");
                             }
                         });
+                    }
                     } else {
                         var that = this;
                         var _property = this._property;
@@ -232,8 +256,8 @@ sap.ui.define([
                             }
                         });
                     }
+            
                 }
-
             }
         },
 

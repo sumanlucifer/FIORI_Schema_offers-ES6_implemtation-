@@ -81,11 +81,10 @@ sap.ui.define([
                     var sObjectPath = this.KNPLModel.createKey("DealerSet", {
                         Id: sObjectId
                     });
-                    // console.log(sObjectPath);
+                    
 
                      this._bindView("/" + sObjectPath);
-                    //this._bindPainterTable("/" + sObjectPath + "/Painter");
-                    // this._bindPainterTable("/PainterSet");
+                    
 
                 }.bind(this));
                 this.dismissBusyDialog();
