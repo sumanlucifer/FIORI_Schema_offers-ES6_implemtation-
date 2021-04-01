@@ -71,9 +71,13 @@
                             <PropertyValue Property="Label" String="Depot"/>
                             <PropertyValue Property="Value" Path="PainterDetails/DepotId"/>
                         </Record>
-                           <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Language"/>
                             <PropertyValue Property="Value" Path="PainterDetails/Preference/Language/Language"/>
+                        </Record>
+                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Updated By"/>
+                            <PropertyValue Property="Value" Path="AdminDetails/Name"/>
                         </Record>
                     </Collection>
                 </Annotation>
