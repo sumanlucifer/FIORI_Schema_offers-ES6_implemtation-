@@ -7,7 +7,7 @@
 					<ViewSettingsItem text="No" key="false"/>
 				</items>
 			</ViewSettingsFilterItem> -->
-            <ViewSettingsFilterItem text="Active" key="Status" multiSelect="false">
+            <ViewSettingsFilterItem text="Status" key="Status" multiSelect="false">
 				<items>
 					<ViewSettingsItem text="Active" key="true"/>
 					<ViewSettingsItem text="Inactive" key="false"/>

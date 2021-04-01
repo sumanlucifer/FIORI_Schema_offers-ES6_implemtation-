@@ -59,7 +59,6 @@ sap.ui.define([
             );
 
 
-
         },
 
         /* =========================================================== */
@@ -100,8 +99,9 @@ sap.ui.define([
                     Id: sObjectId
                 });
                 this._bindView("/" + sObjectPath);
-               
+
             }.bind(this));
+
         },
 
 		/**
@@ -116,9 +116,9 @@ sap.ui.define([
 
             this.getView().bindElement({
                 path: sObjectPath,
-                 parameters:{
-                        expand:"CreatedByDetails"
-                    },
+                parameters: {
+                    expand: "CreatedByDetails"
+                },
                 events: {
                     change: this._onBindingChange.bind(this),
                     dataRequested: function () {

@@ -48,7 +48,7 @@ floatingFooter="true"
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Tel"
+        	                type="Number"
                             
                             value="{ 
                                   path : 'data>Mobile', 
@@ -83,7 +83,6 @@ floatingFooter="true"
             id="role"
             selectedKey="{data>RoleId}"
             
-        				placeholder="Select Role ..."
         				valueStateText="Role must not be empty."
 				 items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">

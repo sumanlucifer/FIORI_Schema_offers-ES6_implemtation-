@@ -124,7 +124,7 @@
 			</toolbar>
 			<items>
 				<UploadCollectionItem
-					documentId="{documentId}"
+					documentId="1"
 					fileName="{Title}"
 					mimeType="{mimeType}"
 					thumbnailUrl="{= ${__metadata/media_src}.concat('?doc_type=image')}"
@@ -194,7 +194,7 @@
 			
 			<items>
 				<UploadCollectionItem
-					documentId="{documentId}"
+					documentId="2"
 					fileName="{Title}"
 					mimeType="{mimeType}"
 					thumbnailUrl="sap-icon://pdf-attachment"
