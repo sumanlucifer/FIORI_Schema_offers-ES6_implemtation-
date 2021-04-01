@@ -49,15 +49,15 @@
                                         </customData>
                                         <Text text="{i18n>tblColRequestId}"/>
                                     </Column>
-                                    <Column hAlign="End">
+                                    <!-- <Column hAlign="End">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 5}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 4}'/>
                                         </customData>
                                         <Text text="{i18n>tblColCreationDate}"/>
-                                    </Column>
+                                    </Column> -->
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 6}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 9}'/>
                                         </customData>
                                         <Text text="{i18n>tblColAction}"/>
                                     </Column>
@@ -66,7 +66,7 @@
                                     <ColumnListItem>
                                         <cells>
                                             <Text text="{Id}"/>
-                                            <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
+                                            <!-- <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/> -->
                                             <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
                                         </cells>
                                     </ColumnListItem>
@@ -92,24 +92,25 @@
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
                             persistencyKey="CompletedSmartTableKey"
+                            ignoredFields=""
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
                             <Table>
                                 <columns>
-                                    <Column>
+                                    <!-- <Column>
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 0}'/>
                                         </customData>
                                         <Text text="{i18n>tblColRequestId}"/>
-                                    </Column>
-                                    <Column hAlign="End">
+                                    </Column> -->
+                                    <!-- <Column hAlign="End">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 4}'/>
                                         </customData>
                                         <Text text="{i18n>tblColCreationDate}"/>
-                                    </Column>
+                                    </Column> -->
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 5}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 10}'/>
                                         </customData>
                                         <Text text="{i18n>tblColRemarks}"/>
                                     </Column>
@@ -117,8 +118,8 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{Id}"/>
-                                            <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
+                                            <!-- <Text text="{Id}"/> -->
+                                            <!-- <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/> -->
                                             <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/>
                                         </cells>
                                     </ColumnListItem>

@@ -63,6 +63,18 @@
                             <PropertyValue Property="Label" String="Last Updated By"/>
                             <PropertyValue Property="Value" Path="UpdatedRequestBy"/>
                         </Record>
+                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Division"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/DivisionId"/>
+                        </Record>
+                           <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Depot"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/DepotId"/>
+                        </Record>
+                           <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Language"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/Preference/Language/Language"/>
+                        </Record>
                     </Collection>
                 </Annotation>
             </Annotations>
