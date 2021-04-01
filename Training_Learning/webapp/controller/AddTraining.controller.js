@@ -260,25 +260,30 @@ sap.ui.define(
                     } else {
                         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
                         if (addQsFlag === true) {
-                            if (addTr.TrainingQuestionnaireOptions.length) {
-                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                            Question: addTr.Question,
-                                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                            IsArchived: false
-                                        });
-                                        this.byId("QuestionnaireOptionsDialog").close();
-                                        this.getModel("oModelView").refresh();
-                                        selectCorrectFlag = true;
+                            if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                                if (addTr.TrainingQuestionnaireOptions.length > 4) {
+                                    for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                        if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                                Question: addTr.Question,
+                                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                                IsArchived: false
+                                            });
+                                            this.byId("QuestionnaireOptionsDialog").close();
+                                            this.getModel("oModelView").refresh();
+                                            selectCorrectFlag = true;
+                                        }
+                                    }
+                                    if (selectCorrectFlag === false) {
+                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
                                     }
                                 }
-                                if (selectCorrectFlag === false) {
-                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                else {
+                                    this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                                 }
                             } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
+                                this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                             }
                         }
                     }
@@ -713,18 +718,22 @@ sap.ui.define(
                     // if (!oImage) {
                     //     return;
                     // }
-                    $.ajax({
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
-                        //	data : fd,
-                        data: oImage.Image,
-                        method: "PUT",
-                        headers: that.getModel().getHeaders(),
-                        contentType: "multipart/form-data",
-                        processData: false,
-                        success: that.onUploadAttendance(sPath, oEvent).then(that._SuccessAdd.bind(that, oEvent), that._Error.bind(
-                            that)),
-                        error: that._Error.bind(that)
-                    });
+                    if (oImage) {
+                        $.ajax({
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            //	data : fd,
+                            data: oImage.Image,
+                            method: "PUT",
+                            headers: that.getModel().getHeaders(),
+                            contentType: false,
+                            processData: false,
+                            success: that.onUploadAttendance(sPath, oEvent).then(that._SuccessAdd.bind(that, oEvent), that._Error.bind(
+                                that)),
+                            error: that._Error.bind(that)
+                        });
+                    } else {
+                        that.onUploadAttendance(sPath, oEvent).then(that._SuccessAdd.bind(that, oEvent), that._Error.bind(that))
+                    }
                 },
 
                 onUploadAttendance: function (sPath, oEvent) {

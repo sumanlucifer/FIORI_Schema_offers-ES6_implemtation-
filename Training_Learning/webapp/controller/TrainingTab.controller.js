@@ -95,6 +95,8 @@ sap.ui.define(
                     var oModelControl2 = new JSONModel(oData);
                     this.getView().setModel(oModelControl2, "oModelControl2");
 
+                    oViewModel.setProperty("/ProfilePic", oData.ProfilePic);
+
                     this.getModel("appView").setProperty("/EditAttendance", false);
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var sPath = "/" + oProp;
@@ -224,7 +226,7 @@ sap.ui.define(
                                         FilterOperator.Contains,
                                         "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
                                     ),
-                                    
+
                                 ],
                                 false
                             )
@@ -273,7 +275,7 @@ sap.ui.define(
                                         FilterOperator.Contains,
                                         "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
                                     ),
-                                    
+
                                 ],
                                 false
                             )
@@ -473,25 +475,29 @@ sap.ui.define(
                     } else {
                         var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
                         if (addQsFlag === true) {
-                            if (addTr.TrainingQuestionnaireOptions.length) {
-                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                            Question: addTr.Question,
-                                            TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                            IsArchived: false
-                                        });
-                                        this.byId("QuestionnaireOptionsDialog").close();
-                                        this.getModel("oModelView").refresh();
-                                        selectCorrectFlag = true;
+                            if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                                if (addTr.TrainingQuestionnaireOptions.length > 4) {
+                                    for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                        if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                                Question: addTr.Question,
+                                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                                IsArchived: false
+                                            });
+                                            this.byId("QuestionnaireOptionsDialog").close();
+                                            this.getModel("oModelView").refresh();
+                                            selectCorrectFlag = true;
+                                        }
                                     }
-                                }
-                                if (selectCorrectFlag === false) {
-                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                    if (selectCorrectFlag === false) {
+                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                    }
+                                } else {
+                                    this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                                 }
                             } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_ATLEAST_ONE_OPTION");
+                                this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                             }
                         }
                     }
@@ -827,7 +833,7 @@ sap.ui.define(
                     that.getModel().update(sKey, oClonePayload, {
                         // success: that._onLoadSuccess.bind(that),
                         // error: that._onLoadError.bind(that)
-                        success: that._UploadImage(sKey, oViewModel.getProperty("/oImage"), oEvent).then(that._Success.bind(that, oEvent), that._Error.bind(
+                        success: that._UploadImageforTraining(sKey, oViewModel.getProperty("/oImage"), oEvent).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
                         error: that._Error.bind(that)
                     });
@@ -859,7 +865,7 @@ sap.ui.define(
                     that.getModel().update(sKey, oClonePayload, {
                         // success: that._onLoadSuccess.bind(that),
                         // error: that._onLoadError.bind(that)
-                        success: that._UploadImage(sKey, oViewModel.getProperty("/oImage")).then(that._Success.bind(that, oEvent), that._Error.bind(
+                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/oImage")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
                         error: that._Error.bind(that)
                     });
@@ -920,9 +926,28 @@ sap.ui.define(
                     this.getModel("oModelView").refresh();
                 },
 
-                _UploadImage: function (sPath, oImage) {
+                _UploadImageforTraining: function (sPath, oImage, oEvent) {
                     var that = this;
+                    debugger;
+                    if (oImage) {
+                        $.ajax({
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            //	data : fd,
+                            data: oImage.Image,
+                            method: "PUT",
+                            headers: that.getModel().getHeaders(),
+                            contentType: false,
+                            processData: false,
+                            success: that.onUploadAttendance(sPath, oEvent).then(that._Success.bind(that, oEvent), that._Error.bind(that)),
+                            error: that._Error.bind(that)
+                        });
+                    } else {
+                        that.onUploadAttendance(sPath, oEvent).then(that._Success.bind(that, oEvent), that._Error.bind(that))
+                    }
+                },
 
+                _UploadImageforVideo: function (sPath, oImage, oEvent) {
+                    var that = this;
                     return new Promise(function (res, rej) {
                         if (!oImage) {
                             res();
@@ -935,7 +960,7 @@ sap.ui.define(
                             data: oImage.Image,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
-                            contentType: "multipart/form-data",
+                            contentType: false,
                             processData: false,
                             success: function () {
                                 debugger;
@@ -951,41 +976,73 @@ sap.ui.define(
                     });
                 },
 
-                onUploadAttendance: function (e) {
-                    var t = this;
+                onUploadAttendance: function (sPath, oEvent) {
+                    var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-                    var dublicateValue = [];
-                    var sPath = this.getModel("oModelView").getProperty("/sPath");
-                    // try {
-                    if (file) {
-                        var that = this;
-                        // that._oBusyDialog.open();
 
-                        /*******************To Upload File************************/
-                        var oView = that.getView();
-                        var oURL = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
-                        $.ajax({
-                            type: 'PUT',
-                            url: oURL,
+                    return new Promise(function (res, rej) {
+                        if (!file) {
+                            res();
+                            return;
+                        }
+
+                        var settings = {
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            data: file,
+                            method: "PUT",
                             cache: false,
+                            // headers: that.getModel().getHeaders(),
                             contentType: "text/csv",
                             processData: false,
-                            data: file,
-                            success: function (data) {
-                                /******* Error  *********/
-                                oView.getModel().refresh(true);
-                                MessageToast.show(that.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPATE"));
-                                // that._oBusyDialog.close();
+                            success: function () {
+                                res.apply(that);
                             },
-                            error: function (error) {
-                                MessageToast.show(error.toString());
-                                // that._oBusyDialog.close();
+                            error: function () {
+                                rej.apply(that);
                             }
-                        });
-                    }
+                        };
+
+                        $.ajax(settings);
+                    });
                 },
+
+                // onUploadAttendance: function (e) {
+                //     var t = this;
+                //     var fU = this.getView().byId("idAttendanceFileUploader");
+                //     var domRef = fU.getFocusDomRef();
+                //     var file = domRef.files[0];
+                //     var dublicateValue = [];
+                //     var sPath = this.getModel("oModelView").getProperty("/sPath");
+                //     // try {
+                //     if (file) {
+                //         var that = this;
+                //         // that._oBusyDialog.open();
+
+                //         /*******************To Upload File************************/
+                //         var oView = that.getView();
+                //         var oURL = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
+                //         $.ajax({
+                //             type: 'PUT',
+                //             url: oURL,
+                //             cache: false,
+                //             contentType: "text/csv",
+                //             processData: false,
+                //             data: file,
+                //             success: function (data) {
+                //                 /******* Error  *********/
+                //                 oView.getModel().refresh(true);
+                //                 MessageToast.show(that.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPATE"));
+                //                 // that._oBusyDialog.close();
+                //             },
+                //             error: function (error) {
+                //                 MessageToast.show(error.toString());
+                //                 // that._oBusyDialog.close();
+                //             }
+                //         });
+                //     }
+                // },
 
                 _initFilerForTables: function (trainingId) {
                     var oView = this.getView();
@@ -1032,7 +1089,13 @@ sap.ui.define(
                                         oViewModel.setProperty("/TrainingDetails/Depot", oDataValue.Depot);
                                         oViewModel.setProperty("/TrainingDetails/PainterTypeDetails", oDataValue.PainterTypeDetails);
                                         oViewModel.setProperty("/TrainingDetails/PainterArcheType", oDataValue.PainterArcheType);
+
+                                        // var oModelControl2 = oView.getModel("oModelControl2");
+                                        var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
+                                        oViewModel.setProperty("/ProfilePic", profilePic);
+
                                         othat.getView().getModel("oModelView").refresh(true);
+                                        othat.getView().getModel("oModelControl2").refresh(true);
                                         othat._setCopyForFragment();
                                         othat._toggleButtonsAndView(false);
                                     }
@@ -1049,7 +1112,13 @@ sap.ui.define(
                                 success: function (oDataValue) {
                                     oViewModel.setProperty("/TrainingDetails/City", oDataValue.City);
                                     oViewModel.setProperty("/TrainingDetails/State", oDataValue.State);
+
+                                    // var oModelControl2 = oView.getModel("oModelControl2");
+                                    var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
+                                    oViewModel.setProperty("/ProfilePic", profilePic);
+
                                     othat.getView().getModel("oModelView").refresh(true);
+                                    othat.getView().getModel("oModelControl2").refresh(true);
                                     othat._setCopyForFragment();
                                     othat._toggleButtonsAndView(false);
                                 }
@@ -1058,7 +1127,13 @@ sap.ui.define(
                     } else {
                         c1 = othat._loadEditTrainingDetail("Display");
                         c1.then(function () {
+                            debugger;
+                            var oModelControl2 = oView.getModel("oModelControl2");
+                            var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
+                            othat.getModel("oModelView").setProperty("/ProfilePic", profilePic);
+
                             othat.getView().getModel("oModelView").refresh(true);
+                            // othat.getView().getModel("oModelControl2").refresh(true);
                             othat._setCopyForFragment();
                             othat._toggleButtonsAndView(false);
                         });
@@ -1066,53 +1141,73 @@ sap.ui.define(
                 },
 
                 handleEditPress: function () {
-                    this.getModel("appView").setProperty("/EditAttendance", true);
-                    var oViewModel = this.getModel("oModelView");
-                    this._toggleButtonsAndView(true);
-                    var oView = this.getView();
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
+                    debugger;
                     var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
+                    var oView = this.getView();
                     var oModelControl2 = oView.getModel("oModelControl2");
-                    oModelControl2.setProperty("/modeEdit", true);
-                    oModelControl2.setProperty("/iCtbar", false);
-                    var othat = this;
-                    var c1, c2, c3;
-                    if (trainingType === 'ONLINE') {
-                        c1 = othat._loadEditTrainingDetail("Edit");
-                        c1.then(function () {
-                            c2 = othat._loadEditQuestion("Edit");
-                            c2.then(function () {
-                                c3 = othat._initEditData();
-                                c3.then(function () {
+                    var oViewModel = this.getModel("oModelView");
+                    oViewModel.setProperty("/flgCantEditUrlDates", false);
+                    if (TrainingDetails.Status === false) {
+                        // To get whether anyone Enrolled for this Training
+                        // If at least one person Enrolled(StartAt, EndAt, URL should not be editable)
+
+                        this.getModel().read("/PainterTrainingSet(" + TrainingDetails.Id + ")", {
+                            success: function (oDataValue) {
+                                oViewModel.setProperty("/flgCantEditUrlDates", true);
+                            }
+                        })
+
+                        this.getModel("appView").setProperty("/EditAttendance", true);
+                        this._toggleButtonsAndView(true);
+                        var trainingType = this.getModel("appView").getProperty("/trainingType");
+                        oModelControl2.setProperty("/modeEdit", true);
+                        oModelControl2.setProperty("/iCtbar", false);
+                        var othat = this;
+                        var c1, c2, c3;
+                        if (trainingType === 'ONLINE') {
+                            c1 = othat._loadEditTrainingDetail("Edit");
+                            c1.then(function () {
+                                c2 = othat._loadEditQuestion("Edit");
+                                c2.then(function () {
+                                    c3 = othat._initEditData();
+                                    c3.then(function () {
+                                        othat.getView().getModel("oModelView").refresh(true);
+                                        othat._setCopyForFragment();
+                                    });
+                                });
+                            });
+                        } else if (trainingType === 'OFFLINE') {
+                            c1 = othat._loadEditTrainingDetail("Edit");
+                            c1.then(function () {
+                                c2 = othat._initEditData();
+                                c2.then(function () {
                                     othat.getView().getModel("oModelView").refresh(true);
                                     othat._setCopyForFragment();
                                 });
                             });
-                        });
-                    } else if (trainingType === 'OFFLINE') {
-                        c1 = othat._loadEditTrainingDetail("Edit");
-                        c1.then(function () {
-                            c2 = othat._initEditData();
-                            c2.then(function () {
-                                othat.getView().getModel("oModelView").refresh(true);
-                                othat._setCopyForFragment();
+                        } else {
+                            c1 = othat._loadEditTrainingDetail("Edit");
+                            c1.then(function () {
+                                c2 = othat._initEditData();
+                                c2.then(function () {
+                                    othat.getView().getModel("oModelView").refresh(true);
+                                    othat._setCopyForFragment();
+                                });
                             });
-                        });
+                        }
                     } else {
-                        c1 = othat._loadEditTrainingDetail("Edit");
-                        c1.then(function () {
-                            c2 = othat._initEditData();
-                            c2.then(function () {
-                                othat.getView().getModel("oModelView").refresh(true);
-                                othat._setCopyForFragment();
-                            });
-                        });
+                        this.showToast.call(this, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
                     }
                 },
 
                 _setCopyForFragment: function () { },
 
                 _initEditData: function () {
+                    var oViewModel = this.getModel("oModelView");
+                    var ProfilePic = this.getModel("oModelView").getProperty("/ProfilePic");
+                    // oViewModel.setProperty("/__metadata", "");
+                    oViewModel.setProperty("/oImage", ProfilePic);
+
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     fU.setValue("");
                     var promise = jQuery.Deferred();

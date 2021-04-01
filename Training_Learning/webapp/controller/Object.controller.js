@@ -240,7 +240,7 @@ sap.ui.define([
                     data: oImage.Image,
                     method: "PUT",
                     headers: that.getModel().getHeaders(),
-                    contentType: "multipart/form-data",
+                    contentType: false,
                     processData: false,
                     success: function () {
                         res.apply(that);
