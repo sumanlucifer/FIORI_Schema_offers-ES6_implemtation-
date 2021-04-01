@@ -310,6 +310,9 @@ sap.ui.define(
           var oPainterSeg = this._ReturnObjects(
             oViewModel.getProperty("/PainterSegmentation")
           );
+          if(Object.keys(oPainterSeg).length===0){
+              oPainterSeg=null
+          }
 
           // Getting the Family Details
           var oPtrFamily = JSON.parse(

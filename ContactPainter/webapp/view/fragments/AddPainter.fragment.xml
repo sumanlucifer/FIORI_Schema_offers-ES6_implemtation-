@@ -5,6 +5,18 @@
                 <core:Title text="{i18n>PainterDetails}" />
                 <Label text="{i18n>DateOfJoining}" />
                 <DatePicker required="false" editable="false" value="{path:'oModelView>/PainterDetails/JoiningDate', type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy' } }" />
+                
+                <Label text="{i18n>PrimaryMobileNo}" />
+                <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }" />
+                <Label text="{i18n>SecondryMobileNo}" />
+                <VBox>
+                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" />
+
+                    <!-- <HBox justifyContent="End">
+                        <Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
+                    </HBox>
+                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/> -->
+                </VBox>
                 <Label text="{i18n>PainterType}" />
                 <ComboBox items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterDetails/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{PainterType}" key="{Id}" />
@@ -22,28 +34,6 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>Zone}" />
-                <ComboBox selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/PainterDetails/ZoneId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Id}" key="{Id}" />
-                </ComboBox>
-                <Label text="{i18n>Division}" />
-                <ComboBox id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Id}" key="{Id}" />
-                </ComboBox>
-                <Label text="{i18n>Depot}" />
-                <ComboBox selectionChange="onDepotChange" id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Depot} ( {Id} )" key="{Id}" />
-                </ComboBox>
-                <Label text="{i18n>LinkPrimaryDealer}" />
-                <MultiInput tokenUpdate="onPTokenUpdate" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" 	valueHelpRequest="handlePDealerValue">
-                    	<core:Item key="{Id}" text="{DealerName} - {Id}" />
-                </MultiInput>
-                <Label text="{i18n>LinkSecondryDealer}" />
-               <MultiInput id="multiInput"	tokens="{oModelView>/PainterAddDet/SecondryDealer}"	valueHelpRequest="onValueHelpRequested">
-	                		<tokens>
-                             <Token editable="false" text="{oModelView>DealerName}" key="{oModelView>Id}" />
-                            </tokens>
-	            	</MultiInput>
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
                 <Input valueStateText="Kindly enter a valid name without any additonal space in the end.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }" />
@@ -64,17 +54,7 @@
                 </ComboBox>
 
 
-                <Label text="{i18n>PrimaryMobileNo}" />
-                <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelView>/PainterDetails/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }" />
-                <Label text="{i18n>SecondryMobileNo}" />
-                <VBox>
-                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." type="Number" value="{path:'oModelView>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10} }" />
-
-                    <!-- <HBox justifyContent="End">
-                        <Link press="onSecMobLinkPress" text="Add another mobile number" visible="{= ${oModelView>/AnotherMobField} === false }"/>
-                    </HBox>
-                    <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/> -->
-                </VBox>
+                
                 <core:Title text="{i18n>LocationDetails}" />
                 <Label text="{i18n>PinCode}" />
                 <Input value="{path:'oModelView>/PainterAddress/PinCode',  type : 'sap.ui.model.type.String'  }" autocomplete="false" showSuggestion="true" suggestionItemSelected="onPinCodeSelect" suggest="onPinSuggest" suggestionItems="{path:'/MasterAreaPincodeSet', parameters:{expand:'State',select:'Pincode,StateId,CityId,State/State'} }">
@@ -98,7 +78,29 @@
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
                 <Label text="{i18n>HomeTown}" />
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/Town', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
-
+                 <Label text="{i18n>Zone}" />
+                <ComboBox selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/PainterDetails/ZoneId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Id}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>Division}" />
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Id}" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>Depot}" />
+                <ComboBox selectionChange="onDepotChange" id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
+                    <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                </ComboBox>
+                <Label text="{i18n>LinkPrimaryDealer}" />
+                <MultiInput tokenUpdate="onPTokenUpdate" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" 	valueHelpRequest="handlePDealerValue">
+                    	<core:Item key="{Id}" text="{DealerName} - {Id}" />
+                </MultiInput>
+                <Label text="{i18n>LinkSecondryDealer}" />
+               <MultiInput id="multiInput"	tokens="{oModelView>/PainterAddDet/SecondryDealer}"	valueHelpRequest="onValueHelpRequested">
+	                		<tokens>
+                             <Token editable="false" text="{oModelView>DealerName}" key="{oModelView>Id}" />
+                            </tokens>
+	            	</MultiInput>
+               
 
                 <!-- <Label text="{i18n>AddressLine2}"/>
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine2', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}"/>
@@ -106,22 +108,22 @@
                 <Input required="false" type="Number" value="{path : 'oModelView>/PainterAddress/PinCode', type : 'sap.ui.model.type.String', constraints : { minLength:1 , maxLength:10 } }"/> -->
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
-                <ComboBox required="true" items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <items>
                         <core:Item text="{Question}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>Answer}" />
-                <Input required="true" maxLength="50" value="{path : 'oModelView>/Preference/SecurityAnswer', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }" />
+                <Input maxLength="50" value="{path : 'oModelView>/Preference/SecurityAnswer', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }" />
                 <core:Title text="{i18n>SegmentationDetails}" />
                 <Label text="{i18n>TeamSize}" />
-                <ComboBox items="{path:'/MasterTeamSizeSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" required="true" selectedKey="{path:'oModelView>/PainterSegmentation/TeamSizeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox items="{path:'/MasterTeamSizeSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }"  selectedKey="{path:'oModelView>/PainterSegmentation/TeamSizeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{TeamSize}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>Experiences}" />
-                <ComboBox required="true" valueStateText="Kindlty input a valid value." items="{path:'/MasterExperienceSet',sorter:{path:'Id'}, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterSegmentation/PainterExperience',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox valueStateText="Kindlty input a valid value." items="{path:'/MasterExperienceSet',sorter:{path:'Id'}, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterSegmentation/PainterExperience',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{Experience}" key="{Id}" />
                     </items>
