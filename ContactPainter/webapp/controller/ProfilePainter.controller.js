@@ -110,6 +110,11 @@ sap.ui.define(
               LoyaltyPoints: "",
             },
             ApplyLoyaltyPoints: "",
+            AddReferral: {
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            },
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -1450,6 +1455,63 @@ sap.ui.define(
             },
             error: function () {},
           });
+        },
+        onPressAddReferral: function (oEvent) {
+          var oView = this.getView();
+          // create value help dialog
+          if (!this._DialogAddREferal) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.AddReferralDialog",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._DialogAddREferal = oValueHelpDialog;
+                this.getView().addDependent(this._DialogAddREferal);
+                this._DialogAddREferal.open();
+              }.bind(this)
+            );
+          } else {
+            this._DialogAddREferal.open();
+          }
+        },
+        onPressSubmitReferral: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oPayload = oView
+            .getModel("oModelControl2")
+            .getProperty("/AddReferral");
+            var oModelControl = oView
+            .getModel("oModelControl2");
+            var sPainterId = oModelControl.getProperty("/PainterId");
+          if(oPayload["ReferralName"].trim()=="" || oPayload["ReferralMobile"].trim()=="" ){
+            MessageToast.show("Kindly Enter the Referral Painter Name and Mobile to continue");
+            return
+          }
+          var oSentPayoad = {
+            ReferralName: oPayload["ReferralName"].trim(),
+            ReferralMobile:oPayload["ReferralMobile"].trim() ,
+            ReferralEmail: oPayload["ReferralEmail"].trim()
+          };
+          var oData = oView.getModel();
+          oData.create("/PainterReferralHistorySet",oSentPayoad,{
+              success:function(){
+                  MessageToast.show("Referral Sucessfuly Added")
+              },
+              error:function(a){
+                var sMessage =
+                "Unable to update a painter due to the server issues";
+              
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+              });
+              }
+          })
+        },
+        onAddReferralClose: function () {
+          this._DialogAddREferal.destroy();
+          delete this._DialogAddREferal;
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
