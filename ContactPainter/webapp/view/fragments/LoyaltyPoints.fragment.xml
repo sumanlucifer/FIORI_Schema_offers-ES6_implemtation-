@@ -7,15 +7,15 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Table width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'TotalPoints',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table growing="true" growingThreshold="15"  width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'TotalPoints',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar>
-                <SegmentedButton selectedKey="0" selectionChange="onLoyaltySelChange">
+                <!-- <SegmentedButton selectedKey="0" selectionChange="onLoyaltySelChange">
                     <items>
                         <SegmentedButtonItem text="{i18n>Accural}" key="0"/>
                         <SegmentedButtonItem text="{i18n>Redemption}" key="1"/>
                     </items>
-                </SegmentedButton>
+                </SegmentedButton> -->
                 <ToolbarSpacer ></ToolbarSpacer>
                 <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/LoyaltyPoints}"></SearchField>
                
@@ -34,6 +34,10 @@
             <Column>
                 <Text text="{i18n>DateAndTime}"/>
             </Column>
+            <Column>
+                <Text text="{i18n>TransactionType}"/>
+            </Column>
+            
         </columns>
 
         <items>
@@ -43,6 +47,8 @@
                     <Text text="{RewardPoints}" />
                     <Text text="{TotalPoints}" />
                     <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                    <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                    
                 </cells>
             </ColumnListItem>
         </items>
