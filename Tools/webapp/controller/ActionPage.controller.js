@@ -115,10 +115,17 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 };
                 oViewModel.setProperty("/busy", true);
                 if (this._action === "add") {
+                    if (!this.oFileUploader.getValue()) {
+                        oViewModel.setProperty("/busy", false);
+				MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+			}else{
+
+           
                     oDataModel.create("/MasterExternalLinksSet", oPayload, {
                         success: this._onLoadSuccess.bind(this),
                         error: this._onLoadError.bind(this)
                     });
+                     }
                 } else {
                     oDataModel.update("/" + this._property, oPayload, {
                         success: this._onLoadSuccess.bind(this),
