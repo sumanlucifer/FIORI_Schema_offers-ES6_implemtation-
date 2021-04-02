@@ -10,6 +10,7 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/Device",
     "sap/ui/core/format/DateFormat",
+    "com/knpl/pragati/ContactPainter/model/customInt"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,7 +25,8 @@ sap.ui.define(
     FilterOperator,
     Sorter,
     Device,
-    DateFormat
+    DateFormat,
+    customInt
   ) {
     "use strict";
 
@@ -47,6 +49,7 @@ sap.ui.define(
               MembershipId: "",
               DepotId: "",
               DivisionId: "",
+              PreferredLanguage:""
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
@@ -129,6 +132,12 @@ sap.ui.define(
                   new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
+              }else if (prop === "PreferredLanguage") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Preference/LanguageId", FilterOperator.EQ,oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
               } else if (prop === "DivisionId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
@@ -148,7 +157,7 @@ sap.ui.define(
               } else if (prop === "EndDate") {
                 aFlaEmpty = false;
                 var oDate = new Date(oViewFilter[prop]);
-                oDate.setDate(oDate.getDate() + 1);
+               // oDate.setDate(oDate.getDate() + 1);
                 aCurrentFilterValues.push(
                   new Filter("CreatedAt", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
@@ -226,6 +235,7 @@ sap.ui.define(
             MembershipId: "",
             DepotId: "",
             DivisionId: "",
+            PreferredLanguage:""
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);

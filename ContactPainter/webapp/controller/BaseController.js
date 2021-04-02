@@ -58,7 +58,35 @@ sap.ui.define([
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },
+        fnCheckProfileCompleted: function(oData){
+            console.log("Function Called");
+          //check if aleady completed
+          if(oData.ProfileCompleted) return;
 
+          if( !oData.PainterFamily  ||  oData.PainterFamily.length == 0)
+          {return;}
+
+          if( !oData.Vehicles  ||  oData.Vehicles.length == 0 )
+          {return;}
+           
+          if( !oData.PainterSegmentation )
+          {return;}
+
+          if( !oData.PainterKycDetails || oData.PainterKycDetails.Status !== "APPROVED" )
+          {return;}
+        
+          if( !oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED" )
+          {return;}
+
+          if( !oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED" )
+          {return;}
+
+           if( !oData.PainterAddress )
+          {return;}
+
+          this.getViewModel().callFunction("/MarkProfileCompleted");
+
+        },
 
         /**
         * Adds a history entry in the FLP page history
