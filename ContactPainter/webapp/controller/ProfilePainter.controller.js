@@ -471,10 +471,11 @@ sap.ui.define(
           }
           console.log(oPayload, sPath);
           oData.update(sPath, oPayload, {
-            success: function () {
+            success: function (oData) {
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
+               othat.fnCheckProfileCompleted.call(othat,oPayload);
               othat.handleCancelPress();
               //oData.refresh(true);
             },

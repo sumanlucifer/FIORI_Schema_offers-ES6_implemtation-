@@ -159,7 +159,7 @@ sap.ui.define(
                 var oDate = new Date(oViewFilter[prop]);
                // oDate.setDate(oDate.getDate() + 1);
                 aCurrentFilterValues.push(
-                  new Filter("CreatedAt", FilterOperator.LT, oDate)
+                  new Filter("CreatedAt", FilterOperator.LE, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "Name") {
