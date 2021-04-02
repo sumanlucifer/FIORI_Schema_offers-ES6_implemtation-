@@ -116,7 +116,7 @@ sap.ui.define(
               DepotId: "",
               ZoneId: "",
               HouseType: "",
-              ReferralCode:""
+              RegistrationReferralCode:""
             },
             Preference: {
               LanguageId: "",
