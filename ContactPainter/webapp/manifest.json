@@ -21,13 +21,20 @@
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
-          "localUri": "localService/metadata.xml"
+          "localUri": "localService/metadata.xml",
+           "annotations": [ 
+                        "annotation0"   ] 
         }
       },
       "uploadData": {
         "uri": "model/uploaditems.json",
         "type": "JSON"
-      }
+      },
+      "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotation/annotation.xml"
+        }
+
     },
     "crossNavigation": {
       "inbounds": {

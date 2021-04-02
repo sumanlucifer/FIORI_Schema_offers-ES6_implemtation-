@@ -28,12 +28,11 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>PreferredLanguage}" />
-                <ComboBox required="true" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/Preference/LanguageId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox required="true" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/Preference/LanguageId' ,type :'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{Language}" key="{Id}" />
                     </items>
                 </ComboBox>
-
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
                 <Input valueStateText="Kindly enter a valid name without any additonal space in the end.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }" />
