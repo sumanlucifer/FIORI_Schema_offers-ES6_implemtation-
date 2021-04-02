@@ -121,9 +121,9 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter([
-                                new Filter("Title", FilterOperator.Contains, sValue),
-                                new Filter("Description", FilterOperator.Contains, sValue),
-                                new Filter("Url", FilterOperator.Contains, sValue)
+                                new Filter({ path: "Title", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                                new Filter({ path: "Description", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                                new Filter({ path: "Url", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                             ], false));
                         }
                         break;
@@ -141,7 +141,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                     case "Title":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("Title", FilterOperator.Contains, sValue));
+                            aFilters.push(new Filter({ path: "Title", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                     case "Created By":
