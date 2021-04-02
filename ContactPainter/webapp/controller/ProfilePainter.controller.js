@@ -1487,6 +1487,11 @@ sap.ui.define(
           var oModelControl = oView.getModel("oModelControl2");
           var sPainterId = oModelControl.getProperty("/PainterId");
           var oValidator = new Validator();
+          if(oPayload["ReferralName"].trim() =="" ||  oPayload["ReferralMobile"].trim()=="" ){
+            MessageToast.show("Kindly Enter the referral name and mobile Number");
+            return;
+          }
+         
           var oDataValue = oData.getObject("/PainterSet(" + sPainterId + ")");
          
           var oSentPayoad = {
@@ -1496,10 +1501,13 @@ sap.ui.define(
             ReferralCode: oDataValue["RegistrationReferralCode"],
             ReferredBy:sPainterId
           };
+          console.log(oSentPayoad)
 
           oData.create("/PainterReferralHistorySet", oSentPayoad, {
             success: function () {
               MessageToast.show("Referral Sucessfuly Added");
+              othat._DialogAddREferal.close();
+              othat.getView().getModel().refresh(true);
             },
             error: function (a) {
               var sMessage =
