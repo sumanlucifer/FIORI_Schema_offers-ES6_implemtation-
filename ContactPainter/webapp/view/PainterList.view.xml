@@ -21,14 +21,6 @@
                 <f:content>
                     <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>MembershipId}" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>MambershipId}"  selectedKey="{oModelControl>/filterBar/MembershipId}">
-                                        <core:Item text="Generated" key="Generated"/>
-                                        <core:Item text="Not Generated" key="NotGenerated"/>
-                                    </ComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                       <ComboBox placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
@@ -52,6 +44,23 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>MembershipId}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>MembershipId}"  selectedKey="{oModelControl>/filterBar/MembershipId}">
+                                        <core:Item text="Generated" key="Generated"/>
+                                        <core:Item text="Not Generated" key="NotGenerated"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Preferredlanguage" label="{i18n>PreferredLanguage}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                      <ComboBox placeholder="{i18n>PreferredLanguage}" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/filterBar/PreferredLanguage', type :'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Language}" key="{Id}" />
+                    </items>
+                </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -102,10 +111,6 @@
                     <Column>
                         <Text text="{i18n>PreferredLanguage}"/>
                     </Column>
-
-                    <!-- <Column>
-                        <Text text="{i18n>LinkSecondryDealer}"/>
-                    </Column> -->
                     <Column>
                         <Text text="{i18n>KycStatus}"/>
                     </Column>
@@ -138,8 +143,10 @@
                             <!-- <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/> -->
                             <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
                             <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
+                            
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
+                               <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
