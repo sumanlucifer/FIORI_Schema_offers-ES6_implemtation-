@@ -61,6 +61,7 @@ sap.ui.define([
         fnCheckProfileCompleted: function(oData){
             console.log("Function Called");
           //check if aleady completed
+            
           if(oData.ProfileCompleted) return;
 
           if( !oData.PainterFamily  ||  oData.PainterFamily.length == 0)
