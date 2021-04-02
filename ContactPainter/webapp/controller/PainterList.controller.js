@@ -157,7 +157,7 @@ sap.ui.define(
               } else if (prop === "EndDate") {
                 aFlaEmpty = false;
                 var oDate = new Date(oViewFilter[prop]);
-               // oDate.setDate(oDate.getDate() + 1);
+                oDate.setDate(oDate.getDate() + 1);
                 aCurrentFilterValues.push(
                   new Filter("CreatedAt", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
@@ -224,6 +224,7 @@ sap.ui.define(
         onResetFilterBar: function () {
           this._ResetFilterBar();
         },
+      
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
@@ -387,9 +388,12 @@ sap.ui.define(
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
         fmtDate: function (mDate) {
+            
           var date = new Date(mDate);
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
+            UTC:true,
+            strictParsing:true
           });
           return oDateFormat.format(date);
         },

@@ -471,10 +471,11 @@ sap.ui.define(
           }
           console.log(oPayload, sPath);
           oData.update(sPath, oPayload, {
-            success: function () {
+            success: function (oData) {
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
+               othat.fnCheckProfileCompleted.call(othat,oPayload);
               othat.handleCancelPress();
               //oData.refresh(true);
             },
@@ -1486,18 +1487,27 @@ sap.ui.define(
           var oModelControl = oView.getModel("oModelControl2");
           var sPainterId = oModelControl.getProperty("/PainterId");
           var oValidator = new Validator();
+          if(oPayload["ReferralName"].trim() =="" ||  oPayload["ReferralMobile"].trim()=="" ){
+            MessageToast.show("Kindly Enter the referral name and mobile Number");
+            return;
+          }
+         
           var oDataValue = oData.getObject("/PainterSet(" + sPainterId + ")");
-          console.log(oDataValue);
+         
           var oSentPayoad = {
             ReferralName: oPayload["ReferralName"].trim(),
             ReferralMobile: oPayload["ReferralMobile"].trim(),
             ReferralEmail: oPayload["ReferralEmail"].trim(),
             ReferralCode: oDataValue["RegistrationReferralCode"],
+            ReferredBy:parseInt(sPainterId)
           };
+          console.log(oSentPayoad)
 
           oData.create("/PainterReferralHistorySet", oSentPayoad, {
             success: function () {
               MessageToast.show("Referral Sucessfuly Added");
+              othat._DialogAddREferal.close();
+              othat.getView().getModel().refresh(true);
             },
             error: function (a) {
               var sMessage =
@@ -1512,6 +1522,11 @@ sap.ui.define(
         onAddReferralClose: function () {
           this._DialogAddREferal.destroy();
           delete this._DialogAddREferal;
+          this.getView().getModel("oModelControl2").setProperty("/AddReferral",{
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            })
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -1924,7 +1939,7 @@ sap.ui.define(
           }
 
           startYear = new Date(startYear, 3, 1);
-          endYear = new Date(endYear, 2, 31);
+          endYear = new Date(endYear, 2, 31, 23, 59, 59);
 
           return { endYear: endYear, startYear: startYear };
         },
