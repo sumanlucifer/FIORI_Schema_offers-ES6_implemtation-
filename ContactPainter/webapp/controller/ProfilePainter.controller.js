@@ -1499,7 +1499,7 @@ sap.ui.define(
             ReferralMobile: oPayload["ReferralMobile"].trim(),
             ReferralEmail: oPayload["ReferralEmail"].trim(),
             ReferralCode: oDataValue["RegistrationReferralCode"],
-            ReferredBy:sPainterId
+            ReferredBy:parseInt(sPainterId)
           };
           console.log(oSentPayoad)
 
@@ -1522,6 +1522,11 @@ sap.ui.define(
         onAddReferralClose: function () {
           this._DialogAddREferal.destroy();
           delete this._DialogAddREferal;
+          this.getView().getModel("oModelControl2").setProperty("/AddReferral",{
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            })
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
