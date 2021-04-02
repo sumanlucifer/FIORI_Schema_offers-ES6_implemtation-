@@ -1926,7 +1926,7 @@ sap.ui.define(
           }
 
           startYear = new Date(startYear, 3, 1);
-          endYear = new Date(endYear, 2, 31);
+          endYear = new Date(endYear, 2, 31, 23, 59, 59);
 
           return { endYear: endYear, startYear: startYear };
         },
