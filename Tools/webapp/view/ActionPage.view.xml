@@ -69,7 +69,7 @@
                                 </form:FormElement>
                                 <form:FormElement>
                                     <form:label>
-                                        <Label text="{i18n>formToolImageLabel}" />
+                                        <Label text="{i18n>formToolImageLabel}" required="true" />
                                     </form:label>
                                     <form:fields>
                                         <HBox class="fileUploaderContainer">
