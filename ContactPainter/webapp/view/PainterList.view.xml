@@ -134,7 +134,8 @@
                                 <Button tooltip="Generate Membership Id" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
                             </VBox>
                             
-                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <!-- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'},strictParsing:true,UTC:true }"/> -->
+                            <Text text="{path:'CreatedAt',formatter:'.fmtDate' }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{PainterType/PainterType}" />
                             <!-- <Text text="{AgeGroup/AgeGroup}"/> -->
