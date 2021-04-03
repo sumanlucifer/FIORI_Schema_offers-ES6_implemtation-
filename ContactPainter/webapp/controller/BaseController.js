@@ -85,7 +85,13 @@ sap.ui.define([
            if( !oData.PainterAddress )
           {return;}
 
-          this.getViewModel().callFunction("/MarkProfileCompleted");
+         this.getViewModel().callFunction("/MarkProfileCompletedByAdmin", {
+              urlParameters : {
+                  PainterId : oData.Id
+              }
+          });
+
+
 
         },
 
