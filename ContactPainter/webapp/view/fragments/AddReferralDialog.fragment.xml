@@ -2,7 +2,7 @@
 	xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form">
 	<Dialog showHeader="false" afterClose="onAddReferralClose">
 		<content>
-			<f:SimpleForm id="idRefeeralCode" editable="true" layout="ResponsiveGridLayout"
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout"
 				labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0"
 				emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false">
 				<f:content>

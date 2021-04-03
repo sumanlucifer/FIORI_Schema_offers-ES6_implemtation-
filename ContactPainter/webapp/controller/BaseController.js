@@ -61,6 +61,7 @@ sap.ui.define([
         fnCheckProfileCompleted: function(oData){
             console.log("Function Called");
           //check if aleady completed
+            
           if(oData.ProfileCompleted) return;
 
           if( !oData.PainterFamily  ||  oData.PainterFamily.length == 0)
@@ -84,7 +85,13 @@ sap.ui.define([
            if( !oData.PainterAddress )
           {return;}
 
-          this.getViewModel().callFunction("/MarkProfileCompleted");
+         this.getViewModel().callFunction("/MarkProfileCompletedByAdmin", {
+              urlParameters : {
+                  PainterId : oData.Id
+              }
+          });
+
+
 
         },
 
