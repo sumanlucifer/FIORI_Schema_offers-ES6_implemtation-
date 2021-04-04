@@ -20,10 +20,14 @@
                         </ComboBox>
 				        <Label required="true" text="{i18n>colTitle}"/>
 				        <Input width="100%" value="{objectView>Title}" maxLength="100"/>
+                        <Label text="{i18n>colTrainingDescription}"/>
+                        <TextArea value="{objectView>Description}" rows="5" maxLength="1000"/>
+                        <Label text="{i18n>colRewardPoints}" required="true"/>
+                        <Input width="100%" value="{objectView>RewardPoints}" maxLength="10" type="Number"/>
 				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
                         <Label required="true" text="{i18n>colDuration}"/>
-				        <Input width="100%" value="{objectView>Duration}" maxLength="10"/>
+				        <Input width="100%" value="{objectView>Duration}" maxLength="10" type="Number"/>
                         
                         <!-- <u:FileUploader
                             id="idFormVideoImgUploader"
@@ -41,7 +45,7 @@
                         <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 					    src="{ parts : [{path : 'objectView>__metadata'}, { path : 'objectView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
 				        <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-					    buttonText="{i18n>fileUploaderTrainingtip}"/>
+					    buttonText="{i18n>fileUploaderVideotip}"/>
                 </f:content>
             </f:SimpleForm>
         </VBox>

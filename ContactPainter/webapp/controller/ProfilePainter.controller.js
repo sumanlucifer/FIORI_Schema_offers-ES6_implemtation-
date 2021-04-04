@@ -106,16 +106,24 @@ sap.ui.define(
             Search: {
               Referral: "",
               Tokens: "",
-              Complains: "",
-              LoyaltyPoints: "",
+              Complains: ""
+              //LoyaltyPoints: "",
             },
             ApplyLoyaltyPoints: "",
+            AddReferral: {
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            },
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
+
+          //rebind Loyalty table
+          this.getView().byId("smrtLoyalty").rebindTable();
 
           this._initFilerForTables();
         },
@@ -466,10 +474,11 @@ sap.ui.define(
           }
           console.log(oPayload, sPath);
           oData.update(sPath, oPayload, {
-            success: function () {
+            success: function (oData) {
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
+               othat.fnCheckProfileCompleted.call(othat,oPayload);
               othat.handleCancelPress();
               //oData.refresh(true);
             },
@@ -522,7 +531,7 @@ sap.ui.define(
             oPainterId
           );
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
-          oView.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
+          //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
         },
@@ -793,7 +802,7 @@ sap.ui.define(
           var oTable = oView.byId("idFamilyDetils");
           var oCells = oEvent.getSource().getParent().getParent().getCells();
           var oValidator = new Validator();
-          var cFlag = oValidator.valonidate(oCells);
+          var cFlag = oValidator.validate(oCells);
 
           var bFlag = true;
           // var cFlag = oValidator.validate();
@@ -1150,7 +1159,7 @@ sap.ui.define(
             .getProperty("/PainterId");
           console.log(sPainterId);
           if (sPath.match("LoyaltyPoints")) {
-            this._SearchLoyaltyPoints(sValue, sPainterId);
+            //this._SearchLoyaltyPoints(sValue, sPainterId);
           } else if (sPath.match("Tokens")) {
             this._SearchTokens(sValue, sPainterId);
           } else if (sPath.match("Complains")) {
@@ -1450,6 +1459,77 @@ sap.ui.define(
             },
             error: function () {},
           });
+        },
+        onPressAddReferral: function (oEvent) {
+          var oView = this.getView();
+          // create value help dialog
+          if (!this._DialogAddREferal) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.AddReferralDialog",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._DialogAddREferal = oValueHelpDialog;
+                this.getView().addDependent(this._DialogAddREferal);
+                this._DialogAddREferal.open();
+              }.bind(this)
+            );
+          } else {
+            this._DialogAddREferal.open();
+          }
+        },
+        onPressSubmitReferral: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oData = oView.getModel();
+          var oPayload = oView
+            .getModel("oModelControl2")
+            .getProperty("/AddReferral");
+          var oModelControl = oView.getModel("oModelControl2");
+          var sPainterId = oModelControl.getProperty("/PainterId");
+          var oValidator = new Validator();
+          if(oPayload["ReferralName"].trim() =="" ||  oPayload["ReferralMobile"].trim()=="" ){
+            MessageToast.show("Kindly Enter the referral name and mobile Number");
+            return;
+          }
+         
+          var oDataValue = oData.getObject("/PainterSet(" + sPainterId + ")");
+         
+          var oSentPayoad = {
+            ReferralName: oPayload["ReferralName"].trim(),
+            ReferralMobile: oPayload["ReferralMobile"].trim(),
+            ReferralEmail: oPayload["ReferralEmail"].trim(),
+            ReferralCode: oDataValue["RegistrationReferralCode"],
+            ReferredBy:parseInt(sPainterId)
+          };
+          console.log(oSentPayoad)
+
+          oData.create("/PainterReferralHistorySet", oSentPayoad, {
+            success: function () {
+              MessageToast.show("Referral Sucessfuly Added");
+              othat._DialogAddREferal.close();
+              othat.getView().getModel().refresh(true);
+            },
+            error: function (a) {
+              var sMessage =
+                "Unable to update a painter due to the server issues";
+
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+              });
+            },
+          });
+        },
+        onAddReferralClose: function () {
+          this._DialogAddREferal.destroy();
+          delete this._DialogAddREferal;
+          this.getView().getModel("oModelControl2").setProperty("/AddReferral",{
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            })
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -1813,6 +1893,60 @@ sap.ui.define(
             oRouter.navTo("RoutePList", {}, true);
           }
         },
+        //himank loyalty table changes
+        onBeforeRebind: function (oEvent) {
+          var oPainterId = this.getViewModel("oModelControl2").getProperty(
+            "/PainterId"
+          );
+
+          var oBindingParams = oEvent.getParameter("bindingParams"),
+            oFinancialYear = this._getfinanceYear(),
+            aFilters = [],
+            //check if CreatedAt is Passed in filter or Not
+            bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
+              ele
+            ) {
+              return ele.sPath !== "CreatedAt";
+            });
+
+          aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+
+          if (bApplyCurrentFinancialYear)
+            aFilters.push(
+              new Filter({
+                path: "CreatedAt",
+                operator: FilterOperator.BT,
+                value1: oFinancialYear.startYear,
+                value2: oFinancialYear.endYear,
+              })
+            );
+
+          oBindingParams.filters.push(
+            new Filter({
+              filters: aFilters,
+              and: true,
+            })
+          );
+        },
+        _getfinanceYear: function () {
+          var oNow = new Date(),
+            iMonth = oNow.getMonth(),
+            startYear,
+            endYear;
+          if (iMonth < 3) {
+            endYear = oNow.getFullYear();
+            startYear = endYear - 1;
+          } else {
+            startYear = oNow.getFullYear();
+            endYear = startYear + 1;
+          }
+
+          startYear = new Date(startYear, 3, 1);
+          endYear = new Date(endYear, 2, 31, 23, 59, 59);
+
+          return { endYear: endYear, startYear: startYear };
+        },
+        // himank loyalty hanges end
       }
     );
   }

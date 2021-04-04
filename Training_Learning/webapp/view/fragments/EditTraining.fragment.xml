@@ -12,23 +12,23 @@
                 <Label text="{i18n>colTitle}" required="true"/>
                 <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}"/>
 
-                <Label text="{i18n>colTrainingDescription}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Label text="{i18n>colTrainingDescription}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000"/>
 
                 <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
 
                 <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
 
-                <Label text="{i18n>colRewardPoints}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <Input value="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                <Label text="{i18n>colRewardPoints}" required="true"/>
+                <Input value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>
 
-                <Label text="{i18n>colLink}"/>
-                <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
+                <Label text="{i18n>colLink}" required="true"/>
+                <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
 
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
-				<Input width="100%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+				<Input width="100%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}" type="Number"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
@@ -40,7 +40,7 @@
                 </ComboBox>
                 
                 <Label text="{i18n>colCity}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <ComboBox id="cmbCity" busy="{oModelView>/bCityItemsBusy}" visible="{= ${appView>/trainingType} === 'OFFLINE'}" busyIndicatorDelay="0" change="onChangeCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== '' }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
+                <ComboBox id="cmbCity" busy="{oModelView>/bCityItemsBusy}" visible="{= ${appView>/trainingType} === 'OFFLINE'}" busyIndicatorDelay="0" change="onChangeCity" editable="{= ${oModelView>/TrainingDetails/StateId} !== null }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
                     <items>
                         <core:Item text="{City}" key="{Id}"/>
                     </items>
@@ -49,18 +49,25 @@
                 <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
                 <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
-                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
-                    <items>
-                        <core:Item text="{DepotId}" key="{Id}"/>
-                    </items>
+                <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox selectionChange="onZoneChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
+                    <core:Item text="{Id}" key="{Id}"/>
                 </ComboBox>
+
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
-                        <core:Item text="{Division}" key="{Id}"/>
+                        <core:Item text="{Id}" key="{Id}"/>
                     </items>
                 </ComboBox>
+
+                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                <ComboBox id="idDepot" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                    <items>
+                        <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
+                    </items>
+                </ComboBox>
+
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
@@ -76,7 +83,7 @@
 
                 <Label text="{i18n>colImage}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem"
-				src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				src="{ parts : [ { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
 				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
 			    buttonText="{i18n>fileUploaderTrainingtip}"/>
 

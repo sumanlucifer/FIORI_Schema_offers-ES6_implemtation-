@@ -208,8 +208,8 @@ sap.ui.define([
 
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
-                            new Filter(prop, FilterOperator.GE, oNow)
-                            //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                            // new Filter(prop, FilterOperator.GE, oNow)
+                            new Filter(prop, FilterOperator.GE, new Date(oViewFilter[prop]))
                         );
                     } else if (prop === "Status") {
                         aFlaEmpty = false;
@@ -305,6 +305,7 @@ sap.ui.define([
 
         onListItemPressOnlineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
+            this.getModel("appView").setProperty("/flgEditOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
@@ -316,6 +317,7 @@ sap.ui.define([
 
         onListItemPressOfflineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
+            this.getModel("appView").setProperty("/flgEditOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
@@ -326,46 +328,65 @@ sap.ui.define([
         },
 
         onEditOnlineTraining: function (oEvent) {
-            // this.getModel("appView").setProperty("/trainingType", "ONLINE");
-            // var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-            // console.log(sPath);
-
-            // var oRouter = this.getOwnerComponent().getRouter();
-            // oRouter.navTo("RouteTrainingTab", {
-            //     mode: "view",
-            //     id: window.encodeURIComponent(sPath),
-            // });
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
+            this.getModel("appView").setProperty("/flgEditOn", true);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteTrainingTab", {
-                mode: "view",
-                prop: window.encodeURIComponent(sPath),
-            });
+            var that = this;
+            that.getModel().read("/" + sPath, {
+                success: function (sData) {
+                    if (sData.Status === false) {
+                        oRouter.navTo("RouteTrainingTab", {
+                            mode: "view",
+                            prop: window.encodeURIComponent(sPath),
+                        });
+                    } else {
+                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    }
+                }
+            })
         },
 
         onEditOfflineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
+            this.getModel("appView").setProperty("/flgEditOn", true);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteTrainingTab", {
-                mode: "view",
-                prop: window.encodeURIComponent(sPath),
-            });
+            var that = this;
+            that.getModel().read("/" + sPath, {
+                success: function (sData) {
+                    if (sData.Status === false) {
+                        oRouter.navTo("RouteTrainingTab", {
+                            mode: "view",
+                            prop: window.encodeURIComponent(sPath),
+                        });
+                    } else {
+                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    }
+                }
+            })
         },
 
         onDeleteTraining: function (oEvent) {
             var sPath = oEvent.getSource().getBindingContext().getPath();
-
-            function onYes() {
-                var data = sPath + "/IsArchived";
-                this.getModel().update(data, {
-                    IsArchived: true
-                }, {
-                    success: this.showToast.bind(this, "MSG_SUCCESS_TRAINING_REMOVE")
-                });
-            }
-            this.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+            var that = this;
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    if (sData.Status === false) {
+                        function onYes() {
+                            var data = sPath + "/IsArchived";
+                            that.getModel().update(data, {
+                                IsArchived: true
+                            }, {
+                                success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                            });
+                        }
+                        that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                    } else {
+                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_DELETED");
+                    }
+                }
+            })
         },
 
         onRefreshView: function () {
@@ -379,20 +400,28 @@ sap.ui.define([
         },
 
         onEditVideo: function (oEvent) {
-            // this.getModel("appView").setProperty("/trainingType", "VIDEO");
-            // this._showObject(oEvent.getSource());
             this.getModel("appView").setProperty("/trainingType", "VIDEO");
+            this.getModel("appView").setProperty("/flgEditOn", true);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-            console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteTrainingTab", {
-                mode: "view",
-                prop: window.encodeURIComponent(sPath),
-            });
+            var that = this;
+            that.getModel().read("/" + sPath, {
+                success: function (sData) {
+                    if (sData.Status === false) {
+                        oRouter.navTo("RouteTrainingTab", {
+                            mode: "view",
+                            prop: window.encodeURIComponent(sPath),
+                        });
+                    } else {
+                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    }
+                }
+            })
         },
 
         onListItemPressVideo: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "VIDEO");
+            this.getModel("appView").setProperty("/flgEditOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
@@ -404,28 +433,47 @@ sap.ui.define([
 
         onDeleteVideo: function (oEvent) {
             var sPath = oEvent.getSource().getBindingContext().getPath();
+            var that = this;
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    if (sData.Status === false) {
+                        function onYes() {
+                            var data = sPath + "/IsArchived";
+                            that.getModel().update(data, {
+                                IsArchived: true
+                            }, {
+                                success: that.showToast.bind(that, "MSG_SUCCESS_VIDEO_REMOVE")
+                            });
+                        }
+                        that.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
+                    } else {
+                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_DELETED");
+                    }
+                }
+            })
+        },
 
-            function onYes() {
-                var data = sPath + "/IsArchived";
-                this.getModel().update(data, {
-                    IsArchived: true
-                }, {
-                    success: this.showToast.bind(this, "MSG_SUCCESS_VIDEO_REMOVE")
-                });
-            }
-            this.showWarning("MSG_CONFIRM_VIDEO_DELETE", onYes);
+        onActivateTraining: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var data = sPath + "/Status";
+            var that = this;
+            that.getModel().update(data, {
+                Status: true
+            }, {
+                success: that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
+            });
         },
 
         /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
 
-		/**
-		 * Shows the selected item on the object page
-		 * On phones a additional history entry is created
-		 * @param {sap.m.ObjectListItem} oItem selected Item
-		 * @private
-		 */
+        /**
+         * Shows the selected item on the object page
+         * On phones a additional history entry is created
+         * @param {sap.m.ObjectListItem} oItem selected Item
+         * @private
+         */
         _showObject: function (oItem) {
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")

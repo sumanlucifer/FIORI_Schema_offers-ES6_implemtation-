@@ -11,7 +11,7 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar showRestoreButton="false" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
+					<fb:FilterBar showRestoreButton="true" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
 						<fb:filterGroupItems>
 							<!-- <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
@@ -51,11 +51,11 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
+									</Button> -->
                                     <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
@@ -99,6 +99,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
@@ -115,11 +116,11 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
+									</Button> -->
                                     <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOfflineTraining">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
@@ -163,6 +164,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
                                         <HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
@@ -179,11 +181,11 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
+									</Button> -->
                                     <Button text="{i18n>btnAddLearning}" icon="sap-icon://add" press="onAddVideo">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
@@ -223,6 +225,7 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
                                         </HBox>
 										<HBox>
+                                            <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>

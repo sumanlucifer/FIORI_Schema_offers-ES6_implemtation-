@@ -10,6 +10,7 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/Device",
     "sap/ui/core/format/DateFormat",
+    "com/knpl/pragati/ContactPainter/model/customInt"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -24,7 +25,8 @@ sap.ui.define(
     FilterOperator,
     Sorter,
     Device,
-    DateFormat
+    DateFormat,
+    customInt
   ) {
     "use strict";
 
@@ -43,12 +45,15 @@ sap.ui.define(
               StartDate: null,
               EndDate: null,
               RegistrationStatus: "",
-              Name: ""
+              Name: "",
+              MembershipId: "",
+              DepotId: "",
+              DivisionId: "",
+              PreferredLanguage:""
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
           this.getView().setModel(oMdlCtrl, "oModelControl");
-          
         },
         _onRouteMatched: function (oEvent) {
           this.getView().getModel().resetChanges();
@@ -109,6 +114,35 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
+                );
+              } else if (prop === "MembershipId") {
+                aFlaEmpty = false;
+                if (oViewFilter[prop] == "Generated") {
+                  aCurrentFilterValues.push(
+                    new Filter("MembershipCard", FilterOperator.NE, null)
+                  );
+                } else {
+                  aCurrentFilterValues.push(
+                    new Filter("MembershipCard", FilterOperator.EQ, null)
+                  );
+                }
+              } else if (prop === "DepotId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              }else if (prop === "PreferredLanguage") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Preference/LanguageId", FilterOperator.EQ,oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                );
+              } else if (prop === "DivisionId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "StartDate") {
                 aFlaEmpty = false;
@@ -190,6 +224,7 @@ sap.ui.define(
         onResetFilterBar: function () {
           this._ResetFilterBar();
         },
+      
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
@@ -198,19 +233,33 @@ sap.ui.define(
             EndDate: null,
             RegistrationStatus: "",
             searchBar: "",
+            MembershipId: "",
+            DepotId: "",
+            DivisionId: "",
+            PreferredLanguage:""
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
           var oTable = this.byId("idPainterTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
-          oBinding.sort( new Sorter({ path: "CreatedAt", descending: true }));
+          oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
           this._fiterBarSort();
         },
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteAddEditP", {});
         },
+        onDivisionChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oDepot = oView.byId("idDepot");
+          var oDepBindItems = oDepot.getBinding("items");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+        },
+
         onSuggest: function (event) {
           var oSearchField = this.getView().byId("searchField");
           var sValue = event.getParameter("suggestValue"),
@@ -339,9 +388,12 @@ sap.ui.define(
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
         fmtDate: function (mDate) {
+            
           var date = new Date(mDate);
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
+            UTC:true,
+            strictParsing:true
           });
           return oDateFormat.format(date);
         },

@@ -7,22 +7,19 @@
                 <Text text="{MembershipCard}" />
                 <Label required="false" text="{i18n>DateOfJoining}" />
                 <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }" />
-                <Label text="{i18n>PainterType}" />
+                <Label required="false" text="{i18n>PrimaryMobileNo}" />
+                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>SecondryMobileNo}" />
+                <VBox items="{path:'PainterContact/',templateShareable: false}">
+                    <Text text="{Mobile}" />
+                </VBox>
+                    <Label text="{i18n>PainterType}" />
                 <Text text="{PainterType/PainterType}" />
                 <Label text="{i18n>AgeGroup}" />
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                <Label text="{i18n>Zone}" />
-                <Text text="{ZoneId}" />
-                <Label text="{i18n>Division}" />
-                <Text text="{DivisionId}" />
-                <Label text="{i18n>Depot}" />
-                <Text text="{Depot/Depot}" />
-                <Label text="{i18n>LinkPrimaryDealer}" />
-                <Text id="profPDlr" text="{PrimaryDealerDetails/DealerName}" />
-                <Label text="{i18n>LinkSecondryDealer}" />
-                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
+                
 
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
@@ -35,12 +32,7 @@
                 <Text text="{Religion/Religion}" />
                 <Label text="{i18n>HouseType}" />
                 <Text text="{path:'HouseType',formatter:'.fmtLowerCase'}" />
-                <Label required="false" text="{i18n>PrimaryMobileNo}" />
-                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                <Label text="{i18n>SecondryMobileNo}" />
-                <VBox items="{path:'PainterContact/',templateShareable: false}">
-                    <Text text="{Mobile}" />
-                </VBox>
+                
                 <Text text="" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <core:Title text="{i18n>LocationDetails}" />
                 <Label text="{i18n>PinCode}" />
@@ -53,6 +45,16 @@
                 <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>HomeTown}" />
                 <Text text="{PainterAddress/Town}" />
+                <Label text="{i18n>Zone}" />
+                <Text text="{ZoneId}" />
+                <Label text="{i18n>Division}" />
+                <Text text="{DivisionId}" />
+                <Label text="{i18n>Depot}" />
+                <Text text="{Depot/Depot}" />
+                <Label text="{i18n>LinkPrimaryDealer}" />
+                <Text id="profPDlr" text="{PrimaryDealerDetails/DealerName}" />
+                <Label text="{i18n>LinkSecondryDealer}" />
+                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
                 <!-- <Label text="{i18n>AddressLine2}" />
                 <Text text="{PainterAddress/AddressLine2}"/>-->
 

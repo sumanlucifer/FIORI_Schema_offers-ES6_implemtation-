@@ -116,6 +116,7 @@ sap.ui.define(
               DepotId: "",
               ZoneId: "",
               HouseType: "",
+              RegistrationReferralCode:""
             },
             Preference: {
               LanguageId: "",
@@ -310,6 +311,9 @@ sap.ui.define(
           var oPainterSeg = this._ReturnObjects(
             oViewModel.getProperty("/PainterSegmentation")
           );
+          if(Object.keys(oPainterSeg).length===0){
+              oPainterSeg=null
+          }
 
           // Getting the Family Details
           var oPtrFamily = JSON.parse(
@@ -421,11 +425,13 @@ sap.ui.define(
         _postCreateData: function (oPayload) {
           var promise = jQuery.Deferred();
           var oData = this.getView().getModel();
+          var othat=this;
           oData.create("/PainterSet", oPayload, {
             success: function (Data) {
               MessageToast.show("Painter Sucessfully Created", {
                 duration: 5000,
               });
+               
               promise.resolve(Data);
               //othat.navPressBack();
             },
@@ -439,12 +445,14 @@ sap.ui.define(
         _getCreatedPainterData: function (mParam) {
           var promise = jQuery.Deferred();
           var oData = this.getView().getModel();
+          var othat = this;
           var sPath = "/PainterSet(" + mParam["Id"] + ")";
           oData.read(sPath, {
             urlParameters: {
-              $expand: "PainterKycDetails",
+              $expand: "PainterKycDetails,Vehicles,PainterFamily,PainterSegmentation,PainterBankDetails,PainterAddress"
             },
             success: function (oData) {
+                othat.fnCheckProfileCompleted.call(othat,oData);
               promise.resolve(oData);
             },
             error: function () {

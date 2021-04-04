@@ -44,6 +44,21 @@ sap.ui.define(
             busy: false,
           });
           this.getView().setModel(oModel, "ViewModel");
+
+          this.getComponentModel().metadataLoaded().
+					then(this._fnLoginAdminData.bind(this));
+
+        },
+
+        _fnLoginAdminData: function(){
+            var oViewModel = this.getViewModel("ViewModel");
+            oViewModel.setProperty("/busy", true);
+            this.getComponentModel().callFunction("/GetLoggedInAdmin", {
+                    method: "GET",
+                    success: function (data) {
+                        oViewModel.setProperty("/loggedUserId", data.results[0].Id);
+                        oViewModel.setProperty("/busy", false);
+                    } } );
         },
 
         onBeforeRebind: function (oEvent) {
@@ -84,7 +99,8 @@ sap.ui.define(
             .getResourceBundle();
           var oPayload = {
             Status: "RESOLVED",
-            Remarks: ""
+            Remarks: "",
+            UpdatedBy : oViewModel.getProperty("/loggedUserId")
           };
           if (!this.oDialog) {
 				this.oDialog = new Dialog({
