@@ -1,47 +1,4 @@
 <core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
-<!-- 
-    <Table growing="true" growingThreshold="15"  width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'TotalPoints',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-        <headerToolbar>
-            <Toolbar>
-                <ToolbarSpacer ></ToolbarSpacer>
-                <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/LoyaltyPoints}"></SearchField>
-            </Toolbar>
-        </headerToolbar>
-        <columns>
-            <Column>
-                <Text text="{i18n>Type}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>EarnedPoints}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>TotalPoints}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>DateAndTime}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>TransactionType}"/>
-            </Column>
-            
-        </columns>
-
-        <items>
-            <ColumnListItem press="onListItemPress">
-                <cells>
-                    <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
-                    <Text text="{RewardPoints}" />
-                    <Text text="{TotalPoints}" />
-                    <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                    <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
-                    
-                </cells>
-            </ColumnListItem>
-        </items>
-    </Table>
-      beforeRebindTable="onBeforeRebind"
-     -->
-
     <smartTable:SmartTable
                             id="smrtLoyalty"
                             editable="false"
@@ -53,9 +10,8 @@
                             useVariantManagement="false"
                             useTablePersonalisation="true"
                             demandPopin="true"
-                            enableAutoBinding="true"
+                            enableAutoBinding="false"
                             placeToolbarInTable="true"
-                            enableCustomFilter="false"
                             persistencyKey="LoyaltySmartTableKey"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
                         <Table>

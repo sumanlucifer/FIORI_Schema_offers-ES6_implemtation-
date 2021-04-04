@@ -122,6 +122,9 @@ sap.ui.define(
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
 
+          //rebind Loyalty table
+          this.getView().byId("smrtLoyalty").rebindTable();
+
           this._initFilerForTables();
         },
         handleEditPress: function () {
