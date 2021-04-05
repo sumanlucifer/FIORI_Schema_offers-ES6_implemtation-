@@ -16,10 +16,10 @@
                 <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000"/>
 
                 <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
 
                 <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${appView>/trainingType} !== 'VIDEO'}" editable="{= ${oModelView>/flgCantEditUrlDates} === false}"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>

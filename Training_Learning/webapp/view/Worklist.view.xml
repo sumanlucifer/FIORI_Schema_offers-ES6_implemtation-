@@ -97,8 +97,11 @@
                                         <HBox>
                                             <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
+                                            <!-- <Text text="{i18n>Expired}" visible="{= ${worklistView>/currDate} > {EndDate}}"/> -->
                                         </HBox>
                                         <HBox>
+                                            <!-- <Switch state="{Status}" customTextOn="true" customTextOff="false"> -->
+								            <!-- </Switch> -->
                                             <Button icon="sap-icon://activate" press="onActivateTraining" enabled="{= ${Status} === false}" type="Transparent" tooltip="{i18n>Activate}"/>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
