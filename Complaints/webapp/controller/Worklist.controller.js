@@ -9,7 +9,9 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
     "sap/ui/model/Sorter",
+     "sap/ui/core/format/DateFormat",
     "sap/ui/Device",
+    
   ],
   function (
     BaseController,
@@ -21,6 +23,7 @@ sap.ui.define(
     MessageToast,
     Fragment,
     Sorter,
+    DateFormat,
     Device
   ) {
     "use strict";
@@ -294,6 +297,16 @@ sap.ui.define(
           }
 
           return newStatus;
+        },
+        fmtDate: function (mDate) {
+            
+          var date = new Date(mDate);
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/YYYY h:mm a" ,
+            UTC:true,
+            strictParsing:true
+          });
+          return oDateFormat.format(date);
         },
 
         handleSortButtonPressed: function () {
