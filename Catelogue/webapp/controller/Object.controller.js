@@ -194,14 +194,14 @@ sap.ui.define([
             // If there's any item selected, sets download button enabled
             if (oUploadCollection.getSelectedItems().length > 0) {
                 this.byId("downloadButton").setEnabled(true);
-                if (oUploadCollection.getSelectedItems().length === 1) {
-                    this.byId("versionButton").setEnabled(true);
-                } else {
-                    this.byId("versionButton").setEnabled(false);
-                }
+                // if (oUploadCollection.getSelectedItems().length === 1) {
+                //     this.byId("versionButton").setEnabled(true);
+                // } else {
+                //     this.byId("versionButton").setEnabled(false);
+                // }
             } else {
                 this.byId("downloadButton").setEnabled(false);
-                this.byId("versionButton").setEnabled(false);
+                //this.byId("versionButton").setEnabled(false);
             }
         },
         onDownloadImage: function () {
@@ -227,14 +227,14 @@ sap.ui.define([
             // If there's any item selected, sets download button enabled
             if (oUploadCollection.getSelectedItems().length > 0) {
                 this.byId("downloadButton1").setEnabled(true);
-                if (oUploadCollection.getSelectedItems().length === 1) {
-                    this.byId("versionButton1").setEnabled(true);
-                } else {
-                    this.byId("versionButton1").setEnabled(false);
-                }
+                // if (oUploadCollection.getSelectedItems().length === 1) {
+                //     this.byId("versionButton1").setEnabled(true);
+                // } else {
+                //     this.byId("versionButton1").setEnabled(false);
+                // }
             } else {
                 this.byId("downloadButton1").setEnabled(false);
-                this.byId("versionButton1").setEnabled(false);
+                //this.byId("versionButton1").setEnabled(false);
             }
         },
         onDownloadPdf: function () {
