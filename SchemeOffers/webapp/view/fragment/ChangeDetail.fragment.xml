@@ -17,33 +17,32 @@
 			<f:formContainers>
 				<f:FormContainer title="Basic Information">
 					<f:formElements>
-						<f:FormElement label="Scheme Type">
+						<f:FormElement label="{i18n>formBasicInfoLbl1}">
 							<f:fields>
-                                <ComboBox selectedKey="1" placeholder="Select">
-                                    <items>
-                                        <core:Item key="1" text="Bonus Offer"/>
-                                    </items>
-                                </ComboBox>
+                               <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'/MasterSchemeTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterTypeId',type:'.customInt' }">
+                                     <core:Item text="{SchemeType}" key="{Id}" />
+                             </ComboBox>
+
 							</f:fields>
 						</f:FormElement>
-                        <f:FormElement label="Title">
+                        <f:FormElement label="{i18n>formBasicInfoLbl2}">
 							<f:fields>
-								<Input placeholder="Enter Title"/>
+								<Input  placeholder="{i18n>placeHolder3}"  maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="Start Date">
+						<f:FormElement label="{i18n>formBasicInfoLbl3}">
 							<f:fields>
-								<DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
+								<DatePicker dateValue="{oModelView>/StartDate}" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="End Date">
+						<f:FormElement label="{i18n>formBasicInfoLbl4}">
 							<f:fields>
-								<DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
+								<DatePicker dateValue="{oModelView>/EndDate}" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="Offer Description">
+						<f:FormElement label="{i18n>formBasicInfoLbl5}">
 							<f:fields>
-								<TextArea placeholder="Enter Offer Description"/>
+								<TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
 							</f:fields>
 						</f:FormElement>
                         <f:FormElement label="Scheme Image">

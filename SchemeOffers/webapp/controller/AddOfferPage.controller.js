@@ -1,77 +1,116 @@
 // @ts-ignore
-sap.ui.define([
+sap.ui.define(
+  [
     "com/knpl/pragati/SchemeOffers/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
-    'sap/ui/model/Sorter',
-    'sap/ui/core/Fragment',
-    'sap/ui/Device',
+    "sap/ui/model/Sorter",
+    "sap/ui/core/Fragment",
+    "sap/ui/Device",
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
-],
-function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageToast, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/core/ValueState",
+    "com/knpl/pragati/SchemeOffers/controller/Validator",
+    "com/knpl/pragati/SchemeOffers/model/customInt",
+    "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
+
+  ],
+
+  function (
+    BaseController,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    Sorter,
+    Fragment,
+    Device,
+    MessageToast,
+    MessageBox,
+    ValueState,
+    Validator,
+    customInt,
+    cmbxDtype2
+
+  ) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.AddOfferPage", {
+    return BaseController.extend(
+      "com.knpl.pragati.SchemeOffers.controller.AddOfferPage",
+      {
+          customInt:customInt,
+          cmbxDtype2:cmbxDtype2,
         onInit: function () {
-            var oViewModel = new JSONModel({});
-            this.getView().setModel(oViewModel, "AddOfferViewModel");
-            this.oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
-            //Router Object
-            this.oRouter = this.getRouter();
-            this.oRouter.getRoute("AddOfferPage").attachPatternMatched(this._onObjectMatched, this);
+         
+          //Router Object
+          this.oRouter = this.getRouter();
+          sap.ui.getCore().attachValidationError(function (oEvent) {
+            if (oEvent.getParameter("element").getRequired()) {
+              oEvent.getParameter("element").setValueState(ValueState.Error);
+            } else {
+              oEvent.getParameter("element").setValueState(ValueState.None);
+            }
+          });
+          sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+            oEvent.getParameter("element").setValueState(ValueState.None);
+          });
+
+          this.oRouter
+            .getRoute("AddOfferPage")
+            .attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) {
-            
+         
+          this._initData();
+        },
+        _initData:function(){
+            var oView = this.getView();
+            var oDataControl = {
+
+            }
+            var oConrtrolModel = new JSONModel(oDataControl)
+
+            var oDataView = {
+                SchemeTypeIdd:"",
+                Title:"",
+                Description:"",
+                StartDate:null,
+                EndDate:null
+            }
+            var oViewMOdel = new JSONModel(oDataView);
+            oView.setModel(oViewMOdel,"oModelView");
+            oView.setModel(oDataControl,"oModelControl");
         },
 
         onPressBreadcrumbLink: function () {
-            this._navToHome();
+          this._navToHome();
         },
 
         onPressCancel: function () {
-            this._navToHome();
+          this._navToHome();
         },
 
-        onPressSaveOrUpdate: function () {
-            if (this._validateRequiredFields()) {
-                var oDataModel = this.getComponentModel();
-                var oViewModel = this.getView().getModel("ActionViewModel");
-                var oPayload = {
-                    Title: oViewModel.getProperty("/Title"),
-                    Description: oViewModel.getProperty("/Description"),
-                    Url: oViewModel.getProperty("/Url")
-                };
-                oViewModel.setProperty("/busy", true);
-                if (this._action === "add") {
-                    oDataModel.create("/MasterExternalLinksSet", oPayload, {
-                        success: this._onLoadSuccess.bind(this),
-                        error: this._onLoadError.bind(this)
-                    });
-                } else {
-                    oDataModel.update("/" + this._property, oPayload, {
-                        success: this._onLoadSuccess.bind(this),
-                        error: this._onLoadError.bind(this)
-                    });
-                }
-            }
-        },
+        onPressSave: function () {
+            var oView = this.getView();
+            var oValidate = new Validator();
+            var oForm = oView.byId("FormChange");
 
-        _onLoadSuccess: function (data) {
-            var oViewModel = this.getView().getModel("ActionViewModel");
-            oViewModel.setProperty("/busy", false);
-            var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
-            MessageToast.show(sMessage);
-            this._navToHome();
-        },
+            var bFlagValidate = oValidate.validate(oForm);
+            console.log(bFlagValidate);
+            //validate the data 
 
-        _onLoadError: function (error) {
-            var oViewModel = this.getView().getModel("ActionViewModel");
-            oViewModel.setProperty("/busy", false);
-            var oRespText = JSON.parse(error.responseText);
-            MessageBox.error(oRespText["error"]["message"]["value"]);
+            this._postDataToSave();
+
+        },
+        _postDataToSave(){
+            //creating the payload
+            var oView = this.getView();
+            var oModelView = oView.getModel("oModelView");
+            console.log(oModelView.getData());
+
         }
-    });
-});
+      }
+    );
+  }
+);

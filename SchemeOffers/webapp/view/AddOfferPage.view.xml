@@ -19,7 +19,7 @@
         <f:content>
             <VBox class="sapUiSmallMargin">
                 <OverflowToolbar>
-                    <Title level="H1" text="Add Offer Details" />
+                    <Title level="H1" text="{i18n>AddTitle}" />
                 </OverflowToolbar>
                 <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" />
             </VBox>
@@ -28,7 +28,7 @@
             <OverflowToolbar>
 				<ToolbarSpacer/>
                 <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel"/>
-                <Button text="Save" type="Emphasized" press="onPressSave"/>
+                <Button text="{i18n>saveBtnText}" type="Emphasized" press="onPressSave"/>
 			</OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

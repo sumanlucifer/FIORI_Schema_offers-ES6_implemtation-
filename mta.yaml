@@ -70,6 +70,10 @@ modules:
       - CompanySettings-content.zip
       name: CompanySettings
       target-path: resources/
+    - artifacts:
+      - SchemeOffers-content.zip
+      name: SchemeOffers
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -161,6 +165,14 @@ modules:
 - name: CompanySettings
   type: html5
   path: CompanySettings
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: SchemeOffers
+  type: html5
+  path: SchemeOffers
   build-parameters:
     builder: custom
     commands:

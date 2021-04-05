@@ -67,6 +67,9 @@ sap.ui.define([
         _navToHome: function () {
             this.oRouter.navTo("RouteLandingPage");
         },
+        onPostSchemeData:function(oPayload,fileFlag){
+
+        },
 
 
         /**
