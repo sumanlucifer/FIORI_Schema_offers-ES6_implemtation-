@@ -145,42 +145,6 @@ sap.ui.define(
                     }
                 },
 
-                setInitCity: function (sStateId) {
-                    this._fnbusyItems({
-                        getId: function () {
-                            return "dataRequested";
-                        }
-                    });
-                    var sKey = this.getModel().createKey("/MasterStateSet", {
-                        Id: sStateId
-                    });
-                    var that = this;
-                    this.getModel().read(sKey, {
-                        success: function (data) {
-                            that.bindCityCtrl(data.Id);
-                        }
-                    })
-                },
-
-                bindCityCtrl: function (StateId) {
-
-                    var oCtrl = this.getView().byId("cmbCity");
-
-                    oCtrl.bindItems({
-                        template: new sap.ui.core.Item({
-                            key: "{Id}",
-                            text: "{City}"
-                        }),
-                        path: "/MasterCitySet",
-                        events: {
-                            dataRequested: this._fnbusyItems.bind(this),
-                            dataReceived: this._fnbusyItems.bind(this)
-                        },
-                        filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("StateId", FilterOperator.EQ, StateId)],
-                        templateShareable: true
-                    });
-                },
-
                 _fnbusyItems: function (oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     if (oEvent.getId() === "dataRequested") {
@@ -246,24 +210,65 @@ sap.ui.define(
                             oDialog.open();
                         });
                     } else {
+                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
+                            path: sPath,
+                            model: "oModelView"
+                        });
                         oThat.byId("QuestionnaireOptionsDialog").open();
                     }
 
                 },
 
+                // onDeleteQuestionnaireOptions: function (oEvent) {
+                //     debugger;
+                //     var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                //     debugger;
+                //     function onYes() {
+                //         if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.TrainingQuestionnaireOptions[iIndex].Id) {
+                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.TrainingQuestionnaireOptions.splice(iIndex, 1);
+                //         } else {
+                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.TrainingQuestionnaireOptions[iIndex].IsArchived = true;
+                //         }
+                //         this.getModel("oModelView").refresh();
+                //     }
+                //     this.showWarning("MSG_CONFIRM_QUESTION_OPTIONS_DELETE", onYes);
+                // },
+
                 updateOptions: function () {
-                    var selectCorrectFlag;
+                   var selectCorrectFlag,
+                        blankOption,
+                        addTr;
                     selectCorrectFlag = false;
-                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    blankOption = true;
+                    debugger;
+                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                    if (addQsFlag === true) {
+                        addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    } else {
+                        var iIndex = this.getModel("oModelView").getProperty("/iIndex");
+                        addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
+                    }
                     if (addTr.Question === "") {
                         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
                     } else {
-                        var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                        if (addQsFlag === true) {
-                            if (addTr.TrainingQuestionnaireOptions.length >= 2) {
-                                if (addTr.TrainingQuestionnaireOptions.length > 4) {
+                        if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                            if (addTr.TrainingQuestionnaireOptions.length <= 4) {
+                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                        selectCorrectFlag = true;
+                                    }
+                                }
+                                if (selectCorrectFlag === false) {
+                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                } else {
                                     for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                        if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                        if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
+                                            blankOption = false;
+                                            this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                                        }
+                                    }
+                                    if (blankOption === true) {
+                                        if (addQsFlag === true) {
                                             this.getModel("oModelView").setProperty("/addQsFlag", false);
                                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
                                                 Question: addTr.Question,
@@ -272,19 +277,17 @@ sap.ui.define(
                                             });
                                             this.byId("QuestionnaireOptionsDialog").close();
                                             this.getModel("oModelView").refresh();
-                                            selectCorrectFlag = true;
+                                        } else {
+                                            this.byId("QuestionnaireOptionsDialog").close();
+                                            this.getModel("oModelView").refresh();
                                         }
                                     }
-                                    if (selectCorrectFlag === false) {
-                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                                    }
-                                }
-                                else {
-                                    this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                                 }
                             } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
+                                this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                             }
+                        } else {
+                            this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                         }
                     }
                 },
@@ -294,12 +297,15 @@ sap.ui.define(
                 },
 
                 onEditQuestionnaire: function (oEvent) {
+                    var addQsFlag = false;
+                    this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
                     var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
                         oButton = oEvent.getSource();
                     var oView = this.getView();
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
-
+                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                    this.getModel("oModelView").setProperty("/iIndex", iIndex);
                     if (!this.byId("QuestionnaireOptionsDialog")) {
                         // load asynchronous XML fragment
                         Fragment.load({
@@ -456,13 +462,6 @@ sap.ui.define(
                     }
                     oViewModel.setProperty("/busy", true);
                     this.CUOperation(oPayload, oEvent);
-                },
-
-                onStateChange: function (oEvent) {
-                    var oSelectedItem = oEvent.getSource().getSelectedItem();
-                    var oObject = oSelectedItem.getBindingContext().getObject();
-                    this.bindCityCtrl(oObject.Id);
-                    this.getModel("oModelView").setProperty("/TrainingDetails/CityId", null);
                 },
 
                 onChangeCity: function (oEvent) {

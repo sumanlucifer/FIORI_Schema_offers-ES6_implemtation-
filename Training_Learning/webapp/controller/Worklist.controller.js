@@ -41,6 +41,7 @@ sap.ui.define([
                 tableNoDataTextTraining: this.getResourceBundle().getText("tableNoDataTextTraining"),
                 tableNoDataTextVideo: this.getResourceBundle().getText("tableNoDataTextVideo"),
                 tableBusyDelay: 0,
+                currDate: new Date(),
                 filterBar: {
                     StartDate: null,
                     Status: "",
