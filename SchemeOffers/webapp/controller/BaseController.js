@@ -1,22 +1,25 @@
 // @ts-nocheck
-sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    'sap/ui/core/BusyIndicator'
-], function (Controller, BusyIndicator) {
+sap.ui.define(
+  ["sap/ui/core/mvc/Controller", "sap/ui/core/BusyIndicator"],
+  function (Controller, BusyIndicator) {
     "use strict";
 
-    return Controller.extend("com.knpl.pragati.SchemeOffers.controller.BaseController", {
+    return Controller.extend(
+      "com.knpl.pragati.SchemeOffers.controller.BaseController",
+      {
         /**
          * Convenience method for accessing the router.
          * @public
          * @returns {sap.ui.core.routing.Router} the router for this component
          */
         getRouter: function () {
-            return sap.ui.core.UIComponent.getRouterFor(this);
+          return sap.ui.core.UIComponent.getRouterFor(this);
         },
 
         addContentDensityClass: function () {
-            return this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+          return this.getView().addStyleClass(
+            this.getOwnerComponent().getContentDensityClass()
+          );
         },
         /**
          * Convenience method for getting the view model by name.
@@ -25,11 +28,11 @@ sap.ui.define([
          * @returns {sap.ui.model.Model} the model instance
          */
         getViewModel: function (sName) {
-            return this.getView().getModel(sName);
+          return this.getView().getModel(sName);
         },
 
         getComponentModel: function () {
-            return this.getOwnerComponent().getModel();
+          return this.getOwnerComponent().getModel();
         },
 
         /**
@@ -39,7 +42,7 @@ sap.ui.define([
          * @param {string} sName the model name
          */
         setModel: function (oModel, sName) {
-            return this.getView().setModel(oModel, sName);
+          return this.getView().setModel(oModel, sName);
         },
 
         /**
@@ -48,57 +51,221 @@ sap.ui.define([
          * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
          */
         getResourceBundle: function () {
-            return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+          return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
-        
-        //for controlling global busy indicator        
+
+        //for controlling global busy indicator
         presentBusyDialog: function () {
-            BusyIndicator.show();
+          BusyIndicator.show();
         },
 
         dismissBusyDialog: function () {
-            BusyIndicator.hide();
+          BusyIndicator.hide();
         },
 
         onPressBreadcrumbLink: function () {
-            this._navToHome();
+          this._navToHome();
         },
 
         _navToHome: function () {
-            this.oRouter.navTo("RouteLandingPage");
+          this.oRouter.navTo("RouteLandingPage");
         },
-        onPostSchemeData:function(oPayload,fileFlag){
+        onPostSchemeData: function (oPayload, fileFlag) {},
 
+        onZoneChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              ZoneId: x,
+            });
+          }
+          oView.getModel("oModelView").setProperty("/SchemeZones", aArray);
+          var oDivision = oView.byId("idDivision");
+
+          oDivision.clearSelection();
+          oDivision.fireSelectionChange();
+
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.fireSelectionChange();
         },
+        onDivisionChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              DivisionId: x,
+            });
+          }
+          oView.getModel("oModelView").setProperty("/SchemeDivisions", aArray);
+          //depot clear
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.fireSelectionChange();
+        },
+        onDepotChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              DepotId: x,
+            });
+          }
+          oView.getModel("oModelView").setProperty("/SchemeDepots", aArray);
+        },
+        onArchiTypeChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              ArchiTypeId: parseInt(x),
+            });
+          }
+          oView
+            .getModel("oModelView")
+            .setProperty("/SchemePainterArchiTypes", aArray);
+        },
+        onChangeProducts: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              SkuCode: x,
+              HasPurchased: true,
+            });
+          }
+          oView
+            .getModel("oModelView")
+            .setProperty("/SchemePainterProducts", aArray);
+        },
+        onChangeAppProducts: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              SkuCode: x,
+            });
+          }
+          oView
+            .getModel("oModelView")
+            .setProperty("/SchemeApplicableProducts", aArray);
+        },
+        onBonusProdChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oView = this.getView();
+          var aArray = [];
+          for (var x of sKeys) {
+            aArray.push({
+              SkuCode: x,
+            });
+          }
+          oView
+            .getModel("oModelView")
+            .setProperty("/SchemeBonusApplicableProducts", aArray);
+        },
+        onRbAppPainter: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
 
+          if (iIndex == 0) {
+            oModelView.setProperty("/IsSpecificPainter", false);
+             this._propertyToBlank(["SchemePainterArchiTypes","PotentialId","SchemePainterProducts","SlabId"])
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/IsSpecificPainter", true);
+           
+          } //
+          // making the fields blank
+        },
+        onRbAppRewards: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
 
+          if (iIndex == 0) {
+            oModelView.setProperty("/HasBonusPercentage", false);
+            this._propertyToBlank(["BonusRewardPoints"])
+          } else if (iIndex == 1) {
+            oModelView.setProperty("/HasBonusPercentage", true);
+            this._propertyToBlank(["BonusRewardPoints"])
+          } //
+          // making the fields blank
+        },
+        onRbBonusValidity: function (oEvent) {
+          var iIndex = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl")
+        
+          if (iIndex == 0) {
+            oModelControl.setProperty("/HasTillDate", false);
+            this._propertyToBlank(["BonusValidityDate"]);
+          } else if (iIndex == 1) {
+            oModelControl.setProperty("/HasTillDate", true);
+            this._propertyToBlank(["BonusValidityDurationYear","BonusValidityDurationMonth","BonusValidityDurationDays"]);
+          } //
+
+          
+        },
+        _propertyToBlank:function(aArray){
+            var aProp = aArray;
+            var oView = this.getView();
+            var oModelView = oView.getModel("oModelView");
+            
+            console.log("method trigerred")
+            for(var x of aProp){
+                var oGetProp = oModelView.getProperty("/"+x)
+                if(Array.isArray(oGetProp)){
+                    oModelView.setProperty("/"+x,[]);
+                    oView.byId(x).clearSelection();
+                }else if (oGetProp===null){
+                    oModelView.setProperty("/"+x,null)
+                    console.log("date made as null")
+                }else if (oGetProp instanceof  Date ){
+                    oModelView.setProperty("/"+x,null)
+                    console.log("Non Empthy Date made as null")
+                }else {
+                    oModelView.setProperty("/"+x,"")
+                }
+            }
+            oModelView.refresh(true);
+        },
         /**
-        * Adds a history entry in the FLP page history
-        * @public
-        * @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
-        * @param {boolean} bReset If true resets the history before the new entry is added
-        */
+         * Adds a history entry in the FLP page history
+         * @public
+         * @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
+         * @param {boolean} bReset If true resets the history before the new entry is added
+         */
         addHistoryEntry: (function () {
-            var aHistoryEntries = [];
+          var aHistoryEntries = [];
 
-            return function (oEntry, bReset) {
-                if (bReset) {
-                    aHistoryEntries = [];
-                }
+          return function (oEntry, bReset) {
+            if (bReset) {
+              aHistoryEntries = [];
+            }
 
-                var bInHistory = aHistoryEntries.some(function (entry) {
-                    return entry.intent === oEntry.intent;
+            var bInHistory = aHistoryEntries.some(function (entry) {
+              return entry.intent === oEntry.intent;
+            });
+
+            if (!bInHistory) {
+              aHistoryEntries.push(oEntry);
+              this.getOwnerComponent()
+                .getService("ShellUIService")
+                .then(function (oService) {
+                  oService.setHierarchy(aHistoryEntries);
                 });
-
-                if (!bInHistory) {
-                    aHistoryEntries.push(oEntry);
-                    this.getOwnerComponent().getService("ShellUIService").then(function (oService) {
-                        oService.setHierarchy(aHistoryEntries);
-                    });
-                }
-            };
-        })()
-    });
-
-}
+            }
+          };
+        })(),
+      }
+    );
+  }
 );

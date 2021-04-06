@@ -66,21 +66,52 @@ sap.ui.define(
         },
         _initData:function(){
             var oView = this.getView();
-            var oDataControl = {
+            
+            var oBonusValidity = []
 
+            for(var i=0;  i<= 12 ; i++){
+                oBonusValidity.push(
+                    {key:i}
+                )
+            }
+            var oDataControl = {
+                HasTillDate:false,
+                BonusValidity:oBonusValidity
             }
             var oConrtrolModel = new JSONModel(oDataControl)
 
             var oDataView = {
-                SchemeTypeIdd:"",
+                SchemeTypeId:"",
                 Title:"",
                 Description:"",
                 StartDate:null,
-                EndDate:null
+                EndDate:null,
+                SchemeZones:[],
+                SchemeDivisions:[],
+                SchemeDepots:[],
+                IsSpecificPainter:false,
+                SchemePainterArchiTypes:[],
+                SchemePainterProducts:[],
+                PotentialId:"",
+                SlabId:"",
+                SchemeApplicableProducts:[],
+                PurchaseVolumeRequired:"",
+                AccuredPointsRequired:"",
+                RewardPoints:"",
+                RewardCash:"",
+                RewardGiftId:"",
+                HasBonusPercentage:false,
+                BonusRewardPoints:"",
+                SchemeBonusApplicableProducts:[],
+                BonusValidityDurationYear:"",
+                BonusValidityDurationMonth:"",
+                BonusValidityDurationDays:"",
+                BonusValidityDate:null
+
             }
             var oViewMOdel = new JSONModel(oDataView);
             oView.setModel(oViewMOdel,"oModelView");
-            oView.setModel(oDataControl,"oModelControl");
+            oView.setModel(oConrtrolModel,"oModelControl");
         },
 
         onPressBreadcrumbLink: function () {
@@ -102,6 +133,9 @@ sap.ui.define(
 
             this._postDataToSave();
 
+        },
+        onAfterRendering:function(){
+            this.getView().byId("startDate").setMinDate(new Date());
         },
         _postDataToSave(){
             //creating the payload
