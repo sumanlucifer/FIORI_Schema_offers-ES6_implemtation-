@@ -1,14 +1,15 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<ViewSettingsDialog
+	<ViewSettingsDialog id="viewSetting"
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Title" key="Title" selected="true" />
-			<ViewSettingsItem text="Description" key="Description" />
-			<ViewSettingsItem text="URL" key="Url" />
-            <ViewSettingsItem text="Creation Date" key="CreatedAt" />
-			<ViewSettingsItem text="Created By" key="CreatedBy" />
+			<ViewSettingsItem text="{i18n>tblColOfferName}" key="Title" selected="true" />
+            <ViewSettingsItem text="{i18n>tblColCreationDate}" key="CreatedAt" />
+                 <ViewSettingsItem text="{i18n>tblColStartDate}" key="StartDate" />
+                 <ViewSettingsItem text="{i18n>tblColEndDate}" key="EndDate" />
+                      
+			
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

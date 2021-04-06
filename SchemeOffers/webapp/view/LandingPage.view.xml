@@ -20,34 +20,37 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" showRestoreOnFB="true"  reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
+                                    <SearchField id="idSearchInput" value="{oModelControl>/filterBar/Name}" search="onSearch" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Offer Type" label="{i18n>offerTypeFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <ComboBox id="idOfferTypeInput" data:filterName="Offer Type" selectedKey="{ViewModel>/filterBar/offerType}">
-                                        <items>
-                                            <core:Item key="all" text="All" />
-                                        </items>
-                                    </ComboBox>
+                                   <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'/MasterSchemeTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelControl>/filterBar/OfferType' }">
+                                     <core:Item text="{SchemeType}" key="{Id}" />
+                             </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>tblColStartDate}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DatePicker id="idDateInput" data:filterName="Date" value="{ViewModel>/filterBar/date}" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+                                   <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>tblColStartDate}" visibleInFilterBar="true">
+                                <fb:control>
+                                   <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <ComboBox id="idStatusInput" data:filterName="Status" selectedKey="{ViewModel>/filterBar/status}">
-                                        <items>
-                                            <core:Item key="all" text="All" />
-                                        </items>
+                                   <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Registered" key="REGISTERED"/>
                                     </ComboBox>
+
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -61,10 +64,11 @@
             <Table
                 id="idOffersTable"
                 width="auto"
-                items="{MockData>/OfferSet}"
+               items="{path: '/SchemeSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{ }}"
                 noDataText="{i18n>tblNoDataText}"
                 growing="true"
-                growingScrollToLoad="true"
+                growingScrollToLoad="false"
+                growingThreshold="15"
                 busy="{ViewModel>/busy}"
                 updateFinished="onUpdateFinished">
                 <headerToolbar>
@@ -107,14 +111,14 @@
                 <items>
                     <ColumnListItem type="Navigation" press="onPressListItem">
                         <cells>
-                            <Text text="{MockData>offerName}"/>
-                            <Text text="{MockData>createdAt}"/>
-                            <Text text="{MockData>reward}"/>
-                            <Text text="{MockData>startDate}"/>
-                            <Text text="{MockData>endDate}"/>
-                            <Text text="{MockData>createdBy}"/>
-                            <ObjectStatus text="{MockData>status}"/>
-                            <ObjectStatus text="{MockData>action}" />
+                            <Text text="{Title}"/>
+                            <Text text="{path:'CreatedAt',formatter:'.fmtDate'}"/>
+                            <Text text="{RewardGiftId}"/>
+                             <Text text="{path:'StartDate',formatter:'.fmtDate'}"/>
+                             <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
+                            <Text text="{CreatedBy}"/>
+                            <ObjectStatus text="{path:'SchemeStatus',formatter:'.fmtLowerCase'}" state="{= ${SchemeStatus} === 'RESOLVED' || ${SchemeStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" />
+                            <ObjectStatus text="{IsActive}" />
                         </cells>
                     </ColumnListItem>
                 </items>

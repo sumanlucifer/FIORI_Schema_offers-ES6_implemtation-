@@ -68,7 +68,17 @@ sap.ui.define(
         },
 
         _navToHome: function () {
-          this.oRouter.navTo("RouteLandingPage");
+          
+          var oHistory = History.getInstance();
+          var sPreviousHash = oHistory.getPreviousHash();
+
+          if (sPreviousHash !== undefined) {
+            window.history.go(-1);
+          } else {
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteLandingPage", {}, true);
+          }
+
         },
         onPostSchemeData: function (oPayload, fileFlag) {},
 
@@ -219,24 +229,26 @@ sap.ui.define(
             var oView = this.getView();
             var oModelView = oView.getModel("oModelView");
             
-            console.log("method trigerred")
+            console.log("method trigerred");
             for(var x of aProp){
                 var oGetProp = oModelView.getProperty("/"+x)
                 if(Array.isArray(oGetProp)){
-                    oModelView.setProperty("/"+x,[]);
+                    //oModelView.setProperty("/"+x,[]);
                     oView.byId(x).clearSelection();
+                    oView.byId(x).fireSelectionChange();
                 }else if (oGetProp===null){
                     oModelView.setProperty("/"+x,null)
                     console.log("date made as null")
                 }else if (oGetProp instanceof  Date ){
                     oModelView.setProperty("/"+x,null)
-                    console.log("Non Empthy Date made as null")
+                    console.log("Non Empty Date made as null")
                 }else {
                     oModelView.setProperty("/"+x,"")
                 }
             }
             oModelView.refresh(true);
         },
+        
         /**
          * Adds a history entry in the FLP page history
          * @public
