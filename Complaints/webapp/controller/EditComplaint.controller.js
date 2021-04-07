@@ -312,7 +312,7 @@ sap.ui.define(
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
           var sKey = oEvent.getSource().getSelectedKey();
-          if (sKey !== 22) {
+          if (sKey !== 90) {
             oModel.setProperty("/ResolutionOthers", "");
           }
           //console.log(oModel);
