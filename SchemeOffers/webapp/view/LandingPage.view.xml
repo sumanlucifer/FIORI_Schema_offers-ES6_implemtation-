@@ -77,7 +77,7 @@
                         <ToolbarSpacer />
                         <Button text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                        <Button tooltip="{i18n>tblSettingsBtnTooltip}" icon="sap-icon://action-settings" press="handlePersonalizationPressed" />
+                     
                     </OverflowToolbar>
                 </headerToolbar>
 

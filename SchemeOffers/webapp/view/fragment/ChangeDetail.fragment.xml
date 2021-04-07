@@ -47,7 +47,7 @@
 						</f:FormElement>
                         <f:FormElement label="Scheme Image">
 							<f:fields>
-								<u:FileUploader name="schemeImgFileUpload"/>
+								<u:FileUploader typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png"  id="idFileUpload" name="schemeImgFileUpload"/>
 							</f:fields>
 						</f:FormElement>
                         
