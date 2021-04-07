@@ -30,9 +30,33 @@
 				
                 <VBox >
                 <Title  text="Catalogue Details"  />
-                <VBox class="sapUiMediumMargin" width="50%" >
-                <Label text="Title:" required="true" />
-		<Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/>
+                <VBox class="sapUiMediumMargin" >
+                            <!-- <VBox class="sapUiMediumMarginBottom" >
+                            <Label text="Category:" required="true" />
+                                <Select
+                                id="idCategory"
+                                forceSelection="false"
+                                items="{
+                                    path: '/MasterFAQCategorySet',
+                                    sorter: { path: 'FAQCategory' }
+                                }">
+                                <core:Item key="{Id}" text="{FAQCategory}" />
+                            </Select>
+                                </VBox> -->
+                                <VBox>
+                            <Label text="Title:" required="true" />
+                    <!-- <Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/> -->
+                                <Select
+                                id="idTitle"
+                                forceSelection="false"
+                                selectedKey="{ActionViewModel>/Title}"
+                                items="{
+                                    path: '/MasterRepProductSkuSet',
+                                    sorter: { path: 'Description' }
+                                }">
+                                <core:Item key="{Description}" text="{Description}" />
+                            </Select>
+                            </VBox>
                 </VBox>
                 
          

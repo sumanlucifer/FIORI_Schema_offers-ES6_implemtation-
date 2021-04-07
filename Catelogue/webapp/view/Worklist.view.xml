@@ -64,7 +64,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails'},sorter:{
+            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails,MediaList',select:'Id,Title,CreatedAt,Status,CreatedByDetails/Name'},sorter:{
                     path: 'Id', 
                     descending: true
                 } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
@@ -95,11 +95,17 @@
                         <Text text="{i18n>createdBy}"/>
                     </Column>
                     <Column>
+                        <Text text="{i18n>view}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>download}"/>
+                    </Column>
+                    <Column>
                         <Text text="{i18n>action}"/>
                     </Column>
-                    <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericEdit}"/>
-                                </Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                        <Text text="{i18n>GenericEdit}"/>
+                    </Column>
                             
                    
                    
@@ -115,6 +121,8 @@
                             <ObjectIdentifier title="{Title}" />
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
+                            <Text text="demo value"/>
+                            <Text text="demo value"/>
                             <!-- <ObjectStatus xmlns="sap.m"
                             state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
                 

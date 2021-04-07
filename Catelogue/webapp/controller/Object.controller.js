@@ -13,11 +13,12 @@ sap.ui.define([
     "sap/m/library",
     "sap/ui/core/format/FileSizeFormat",
     "sap/ui/Device",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/m/PDFViewer"
 
 ], function (BaseController, JSONModel, History, formatter, jQuery, deepExtend, syncStyleClass, Controller,
     ObjectMarker, MessageToast, UploadCollectionParameter, MobileLibrary,
-    FileSizeFormat, Device, Fragment
+    FileSizeFormat, Device, Fragment, PDFViewer
 ) {
     "use strict";
 
@@ -27,6 +28,7 @@ sap.ui.define([
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.Object", {
 
         formatter: formatter,
+        _oDialog: null,
 
         /* =========================================================== */
         /* lifecycle methods                                           */
@@ -44,7 +46,7 @@ sap.ui.define([
             var iOriginalBusyDelay,
                 oViewModel = new JSONModel({
                     busy: true,
-                    delay: 0
+                    delay: 0,
                 });
 
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -57,6 +59,11 @@ sap.ui.define([
                 oViewModel.setProperty("/delay", iOriginalBusyDelay);
             }
             );
+
+            this._pdfViewer = new PDFViewer();
+            this.getView().addDependent(this._pdfViewer);
+
+
 
 
         },
@@ -94,15 +101,31 @@ sap.ui.define([
 		 */
         _onObjectMatched: function (oEvent) {
             var sObjectId = oEvent.getParameter("arguments").objectId;
+            this._property = oEvent.getParameter("arguments").property;
+
             this.getModel().metadataLoaded().then(function () {
                 var sObjectPath = this.getModel().createKey("MasterProductCatalogueSet", {
                     Id: sObjectId
                 });
                 this._bindView("/" + sObjectPath);
 
+                this.property = sObjectPath;
+                this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_DS.uri;
+                this.pdfURI = this.sServiceURI + sObjectPath + "/$value?doc_type=pdf";
+                this.imgURI = this.sServiceURI + sObjectPath + "/$value?doc_type=image";
+
+                // var aData = [{ Image: this.imgURI,Title:"Demo" }];
+
+                // var oModel = new JSONModel();
+                // oModel.setData(aData);
+                // this.getView().setModel(oModel,"ImageModel");
+
             }.bind(this));
 
+
+
         },
+
 
 		/**
 		 * Binds the view to the object path.
@@ -117,7 +140,8 @@ sap.ui.define([
             this.getView().bindElement({
                 path: sObjectPath,
                 parameters: {
-                    expand: "CreatedByDetails"
+                    expand: "CreatedByDetails,MediaList",
+                    // select: "Title,CreatedAt,Status,CreatedByDetails/Name"
                 },
                 events: {
                     change: this._onBindingChange.bind(this),
@@ -130,13 +154,29 @@ sap.ui.define([
                             oViewModel.setProperty("/busy", true);
                         });
                     },
-                    dataReceived: function () {
+                    dataReceived: function (oEvent) {
                         oViewModel.setProperty("/busy", false);
+
+                        var data = oEvent.getParameter('data');
+
+                        var imgSize = data.MediaList[0].MediaSize;
+                        var pdfSize = data.MediaList[1].MediaSize;
+                        var imgName = data.MediaList[0].MediaName;
+                        var pdfName = data.MediaList[1].MediaName;
+
+
+                        oViewModel.setProperty("/ImageSize", imgSize + " KB");
+                        oViewModel.setProperty("/PdfSize", pdfSize + " KB");
+                        oViewModel.setProperty("/ImageName", imgName);
+                        oViewModel.setProperty("/PdfName", pdfName);
+
+
 
                     }
                 }
 
             });
+
         },
 
         _onBindingChange: function () {
@@ -154,7 +194,6 @@ sap.ui.define([
                 oObject = oView.getBindingContext().getObject(),
                 sObjectId = oObject.Id,
                 sObjectName = oObject.Title;
-
             oViewModel.setProperty("/busy", false);
 
             oViewModel.setProperty("/shareSendEmailSubject",
@@ -254,6 +293,28 @@ sap.ui.define([
             this.oItemToUpdate = oUploadCollection.getSelectedItem();
             oUploadCollection.openFileDialog(this.oItemToUpdate);
         },
+        onPressPdf: function (oEvent) {
+            var sSource = this.pdfURI;
+            this._pdfViewer.setSource(sSource);
+            this._pdfViewer.setTitle("Catalogue");
+            this._pdfViewer.open();
+        },
+        // onPressImage: function (oEvent) {
+        //     var oItem = oEvent.getSource().getParent();
+        //     var oContext = oItem.getBindingContext();
+        //     //console.log(oContext);
+        //     if (!this._oDialog) {
+        //         this._oDialog = sap.ui.xmlfragment("com.knpl.pragati.Catelogue.view.fragments.ImagePopup", this);
+        //          this._oDialog.setModel(this.getView().getModel("ImageModel"));
+
+
+        //     }
+        //     this._oDialog.setBindingContext(oContext);
+        //     this._oDialog.open();
+        // },
+        // onDialogOK: function () {
+        //     this._oDialog.close();
+        // }
 
 
 

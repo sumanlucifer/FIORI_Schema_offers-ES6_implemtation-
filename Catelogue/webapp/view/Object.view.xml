@@ -106,18 +106,17 @@
 			typeMissmatch="onTypeMissmatch"
 			uploadComplete=""
 			beforeUploadStarts=""
-            uploadEnabled="false"
-            mode="MultiSelect">
+            uploadEnabled="false">
 			<toolbar>
 				<OverflowToolbar id="myId">
 					<Title id="attachmentTitle" />
 					<ToolbarSpacer />
-					<Button
+					<!-- <Button
 						id="downloadButton"
 						text="Download"
 						press="onDownloadImage"
 						enabled="false"
-						type="Transparent" />
+						type="Transparent" /> -->
 					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
@@ -125,7 +124,7 @@
 			<items>
 				<UploadCollectionItem
 					documentId="1"
-					fileName="{Title}"
+					fileName="{objectView>/ImageName}"
 					mimeType="{mimeType}"
 					thumbnailUrl="{= ${__metadata/media_src}.concat('?doc_type=image')}"
 					url="{= ${__metadata/media_src}.concat('?doc_type=image')}"
@@ -133,6 +132,7 @@
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
+                    press="onPressImage"
 					>
 					<attributes>
 						<ObjectAttribute
@@ -145,8 +145,7 @@
 							active="false" />
                             <ObjectAttribute
 							title="File size"
-							text="
-							222222"
+							text="{objectView>/ImageSize}"
 							active="false" />
 					</attributes>
                     
@@ -175,18 +174,17 @@
 			uploadComplete=""
 			beforeUploadStarts=""
             uploadEnabled="false"
-            mode="MultiSelect"
 			>
             <toolbar>
 				<OverflowToolbar id="myId1">
 					<Title id="attachmentTitle1" />
 					<ToolbarSpacer />
-					<Button
+					<!-- <Button
 						id="downloadButton1"
 						text="Download"
 						press="onDownloadPdf"
 						enabled="false"
-						type="Transparent" />
+						type="Transparent" /> -->
 					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
@@ -195,7 +193,7 @@
 			<items>
 				<UploadCollectionItem
 					documentId="2"
-					fileName="{Title}"
+					fileName="{objectView>/PdfName}"
 					mimeType="{mimeType}"
 					thumbnailUrl="sap-icon://pdf-attachment"
 					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
@@ -203,6 +201,7 @@
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
+                    press="onPressPdf"
 					>
 					<attributes>
 						<ObjectAttribute
@@ -215,8 +214,7 @@
 							active="false" />
                             <ObjectAttribute
 							title="File size"
-							text="
-							222222"
+							text="{objectView>/PdfSize}"
 							active="false" />
 					</attributes>
 					
