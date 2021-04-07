@@ -48,7 +48,9 @@
                                 <fb:control>
                                    <ComboBox placeholder="{i18n>Enter} {i18n>tblColStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
                                         <core:Item text="Pending" key="PENDING"/>
-                                     
+                                         <core:Item text="Approved" key="APPROVED"/>
+                                          <core:Item text="Rejected" key="REJECTED"/>
+                                        
                                     </ComboBox>
 
                                 </fb:control>
@@ -118,7 +120,7 @@
                              <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
                             <Text text="{CreatedBy}"/>
                             <ObjectStatus text="{path:'SchemeStatus',formatter:'.fmtLowerCase'}" state="{= ${SchemeStatus} === 'RESOLVED' || ${SchemeStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" />
-                            <ObjectStatus text="{IsActive}" />
+                            <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                         </cells>
                     </ColumnListItem>
                 </items>

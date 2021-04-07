@@ -216,8 +216,7 @@ sap.ui.define(
           });
         },
         _UploadFile:function(data){
-            var oPayload = data
-            var iId = data["Id"];
+            
             var oView = this.getView()
             var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
             var sServiceUrl = this.getOwnerComponent(this)

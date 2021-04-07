@@ -1,6 +1,15 @@
 /node_modules/
 /dist/
 
+*.env*
+*.env1
+*.zip
+.vscode/
+*.env*
+*/dist/
+/.gitignore
+
+
 # auto generated wildcard
 knpl-influencer-web/SchemeOffers/.env
 # auto generated wildcard
@@ -13,3 +22,7 @@ knpl-influencer-web/Tools/.env
 SchemeOffers/SchemeOffers/.env1
 # auto generated wildcard
 cp/ContactPainter/.env12
+# auto generated wildcard
+knpl-influencer-web/SchemeOffers/.env1
+# auto generated wildcard
+complains/Complaints/.env1
