@@ -84,7 +84,7 @@ modules:
       name: LoyaltyManagement
       target-path: resources/
     - artifacts:
-      - SchemeOffers-content.zip
+      - Scheme-offers-content.zip
       name: SchemeOffers
       target-path: resources/
 - name: MDM
