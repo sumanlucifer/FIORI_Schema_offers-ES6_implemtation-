@@ -1,7 +1,9 @@
 // @ts-nocheck
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/core/BusyIndicator"],
-  function (Controller, BusyIndicator) {
+  ["sap/ui/core/mvc/Controller", "sap/ui/core/BusyIndicator",  "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator","sap/ui/core/routing/History"
+],
+  function (Controller, BusyIndicator,Filter,FilterOperator,History) {
     "use strict";
 
     return Controller.extend(
@@ -93,9 +95,17 @@ sap.ui.define(
           }
           oView.getModel("oModelView").setProperty("/SchemeZones", aArray);
           var oDivision = oView.byId("idDivision");
+          
 
           oDivision.clearSelection();
           oDivision.fireSelectionChange();
+          var aDivFilter = [];
+          for (var y of aArray){
+              aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]))
+          }
+         
+          oDivision.getBinding("items").filter(aDivFilter);
+
 
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
@@ -115,6 +125,14 @@ sap.ui.define(
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
           oDepot.fireSelectionChange();
+
+          //depot filter
+          var aDepot = [];
+          for (var y of aArray){
+              aDepot.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]))
+          }
+         
+          oDepot.getBinding("items").filter(aDepot);
         },
         onDepotChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();

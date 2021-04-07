@@ -59,13 +59,48 @@ sap.ui.define(
           var oMdlCtrl = new JSONModel(oDataControl);
           this.getView().setModel(oMdlCtrl, "oModelControl");
         },
-        _onObjectMatched: function (oEvent) {},
+        _onObjectMatched: function (oEvent) {
+          var oViewModel,iOriginalBusyDelay,
+            oTable = this.byId("idOffersTable");
+            
+             iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
+          oViewModel = new JSONModel({
+            TableTitle: this.getResourceBundle().getText(
+              "TableTitle"
+            ),
+            tableNoDataText: this.getResourceBundle().getText(
+              "tableNoDataText"
+            ),
+            tableBusyDelay: 0,
+          });
+          
+          this.setModel(oViewModel, "worklistView");
+
+          oTable.attachEventOnce("updateFinished", function () {
+            // Restore original busy indicator delay for worklist's table
+            oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+          });
+          this.getView().getModel().refresh();
+
+          
+        },
 
         onUpdateFinished: function (oEvent) {
-          var oModel = this.getViewModel("ViewModel");
-          var tableCount = oEvent.getParameters().actual;
-          oModel.setProperty("/TotalCount", tableCount);
-          oModel.setProperty("/busy", false);
+          var sTitle,
+            oTable = oEvent.getSource(),
+            iTotalItems = oEvent.getParameter("total");
+         if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+            sTitle = this.getResourceBundle().getText(
+              "TableDataCount",
+              [iTotalItems]
+            );
+          } else {
+            sTitle = this.getResourceBundle().getText("TableTitle");
+          }
+           this.getView().getModel("worklistView").setProperty(
+            "/TableTitle",
+            sTitle
+          );
         },
 
         onPressListItem: function (oEvent) {
@@ -172,14 +207,18 @@ sap.ui.define(
                   new Filter("EndDate", FilterOperator.LT, oDate)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
-              }else if (prop === "Status") {
+              } else if (prop === "Status") {
                 aFlaEmpty = false;
-               
+
                 aCurrentFilterValues.push(
-                  new Filter("SchemeStatus", FilterOperator.EQ, oViewFilter[prop])
+                  new Filter(
+                    "SchemeStatus",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
-              }  else if (prop === "Name") {
+              } else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
@@ -369,11 +408,11 @@ sap.ui.define(
             EndDate: null,
             Name: "",
             OfferType: "",
-            Status: ""
+            Status: "",
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
-          var oTable = this.byId("idPainterTable");
+          var oTable = this.byId("idOffersTable");
           var oBinding = oTable.getBinding("items");
           oBinding.filter([]);
           oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));

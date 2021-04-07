@@ -46,9 +46,9 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
+                                   <ComboBox placeholder="{i18n>Enter} {i18n>tblColStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
                                         <core:Item text="Pending" key="PENDING"/>
-                                        <core:Item text="Registered" key="REGISTERED"/>
+                                     
                                     </ComboBox>
 
                                 </fb:control>
@@ -65,15 +65,15 @@
                 id="idOffersTable"
                 width="auto"
                items="{path: '/SchemeSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{ }}"
-                noDataText="{i18n>tblNoDataText}"
+                noDataText="{i18n>TableTitle}"
                 growing="true"
                 growingScrollToLoad="false"
                 growingThreshold="15"
-                busy="{ViewModel>/busy}"
                 updateFinished="onUpdateFinished">
+
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title text="{i18n>tblTitle} ({ViewModel>/TotalCount})" />
+                        <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
                         <Button text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />

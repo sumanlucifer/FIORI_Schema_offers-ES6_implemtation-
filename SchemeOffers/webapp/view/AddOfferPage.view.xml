@@ -17,11 +17,11 @@
         </f:title>
 
         <f:content>
-            <VBox class="sapUiSmallMargin">
+            <VBox id="oVbxSmtTbl" class="sapUiSmallMargin">
                 <OverflowToolbar>
                     <Title level="H1" text="{i18n>AddTitle}" />
                 </OverflowToolbar>
-                <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" />
+                <!-- <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" /> -->
             </VBox>
         </f:content>
         <f:footer>

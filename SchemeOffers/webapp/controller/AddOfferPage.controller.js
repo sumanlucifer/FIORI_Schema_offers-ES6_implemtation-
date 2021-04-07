@@ -71,6 +71,8 @@ sap.ui.define(
           var oDataControl = {
             HasTillDate: false,
             BonusValidity: oBonusValidity,
+            StartDate:"",
+            EndDate:""
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 
@@ -105,6 +107,38 @@ sap.ui.define(
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
           oView.setModel(oConrtrolModel, "oModelControl");
+
+          // adding the fragment
+          this._showFormFragment("ChangeDetail");
+        },
+
+        _showFormFragment: function (sFragmentName) {
+          var objSection = this.getView().byId("oVbxSmtTbl");
+          var oView = this.getView();
+          objSection.destroyItems();
+          var othat = this;
+          this._getFormFragment(sFragmentName).then(function (oVBox) {
+            oView.addDependent(oVBox);
+            objSection.addItem(oVBox);
+            //othat._setDataValue.call(othat);
+            //othat._setUploadCollectionMethod.call(othat);
+          });
+        },
+        _getFormFragment: function (sFragmentName) {
+          var oView = this.getView();
+          var othat = this;
+          // if (!this._formFragments) {
+          this._formFragments = Fragment.load({
+            id: oView.getId(),
+            name:
+              "com.knpl.pragati.SchemeOffers.view.fragment." + sFragmentName,
+            controller: othat,
+          }).then(function (oFragament) {
+            return oFragament;
+          });
+          // }
+
+          return this._formFragments;
         },
 
         onPressBreadcrumbLink: function () {
@@ -122,12 +156,18 @@ sap.ui.define(
 
           var bFlagValidate = oValidate.validate(oForm);
           console.log(bFlagValidate);
+          if(bFlagValidate==false){
+              MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+              return
+          }
+          //check if it has file
+          
           //validate the data
 
           this._postDataToSave();
         },
         onAfterRendering: function () {
-          this.getView().byId("startDate").setMinDate(new Date());
+         // this.getView().byId("startDate").setMinDate(new Date());
         },
         _postDataToSave() {
           //creating the payload

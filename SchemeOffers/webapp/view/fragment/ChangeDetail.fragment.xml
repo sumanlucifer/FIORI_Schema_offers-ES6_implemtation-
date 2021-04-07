@@ -19,7 +19,7 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>formBasicInfoLbl1}">
 							<f:fields>
-                               <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'/MasterSchemeTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/SchemeTypeId',type:'.customInt' }">
+                               <ComboBox required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterSchemeTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/SchemeTypeId',type:'.customInt' }">
                                      <core:Item text="{SchemeType}" key="{Id}" />
                              </ComboBox>
 
@@ -32,12 +32,12 @@
 						</f:FormElement>
 						<f:FormElement label="{i18n>formBasicInfoLbl3}">
 							<f:fields>
-								<DatePicker id="startDate" dateValue="{oModelView>/StartDate}" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
+                               <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="startDate" placeholder="DD/MM/YYYY" required="true"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>formBasicInfoLbl4}">
 							<f:fields>
-								<DatePicker dateValue="{oModelView>/EndDate}" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"/>
+								<DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="endDate" placeholder="DD/MM/YYYY" required="true"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>formBasicInfoLbl5}">
@@ -50,11 +50,7 @@
 								<u:FileUploader name="schemeImgFileUpload"/>
 							</f:fields>
 						</f:FormElement>
-                        <f:FormElement>
-							<f:fields>
-								<Button width="5rem" text="Upload" tooltip="Upload"/>
-							</f:fields>
-						</f:FormElement>
+                        
 					</f:formElements>
 				</f:FormContainer>
 				<f:FormContainer title="{i18n>formRegion}">
@@ -210,7 +206,7 @@
 						</f:FormElement>
                         <f:FormElement visible="{= ${oModelControl>/HasTillDate} }">
 							<f:fields>
-                               <DatePicker dateValue="{oModelView>/BonusValidityDate}"></DatePicker>
+                               <DatePicker dateValue="{oModelView>/BonusValidityDate}" displayFormat="dd/MM/YYYY" />
 							</f:fields>
                         </f:FormElement>
                         <f:FormElement visible="{= !${oModelControl>/HasTillDate} }" >
