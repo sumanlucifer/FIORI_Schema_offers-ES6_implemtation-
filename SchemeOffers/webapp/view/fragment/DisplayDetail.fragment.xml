@@ -1,0 +1,244 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:Form id="FormDisplay"
+			editable="false">
+			<f:layout>
+				<f:ColumnLayout 
+					columnsM="2"
+					columnsL="3"
+					columnsXL="3"
+				/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Basic Information">
+					<f:formElements>
+						<f:FormElement label="Scheme Type">
+							<f:fields>
+								<Text text="Bonus Offer"  />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Start Date">
+							<f:fields>
+								<Text text="12/03/2020" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="End Date">
+							<f:fields>
+								<Text text="12/03/2020" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Title">
+							<f:fields>
+								<Text text="Buy 1000ltr of scheme products" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Offer Description">
+							<f:fields>
+								<Text text="Buy 1000ltr of scheme products and get automatic washing machine /10000 bank transfer." />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Region">
+					<f:formElements>
+						<f:FormElement label="Zone">
+							<f:fields>
+								<Text text="North" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Division">
+							<f:fields>
+								<Text text="UP" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Depot">
+							<f:fields>
+								<Text text="Luchnow" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Applicable Painters">
+					<f:formElements>
+						<f:FormElement label="">
+							<f:fields>
+								<RadioButtonGroup id="rbg" enabled="false" selectedIndex="0" columns="2">
+                                    <RadioButton id="all" text="All Painters" />
+                                    <RadioButton id="specific" text="Specific Painter" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="By Arche type">
+							<f:fields>
+								<MultiComboBox id="archeTypeInput" enabled="false">
+                                    <core:Item key="1" text="Loyalty" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="By Annual Purchase  Potential">
+							<f:fields>
+								<Text text="Bonus Offer" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="By Product">
+							<f:fields>
+								<MultiComboBox id="byProductInput" enabled="false">
+                                    <core:Item key="1" text="Emulsion" />
+                                    <core:Item key="2" text="Mica Marbel" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="By Point Slab">
+							<f:fields>
+								<Text text="Above 2000" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+                <f:FormContainer title="Applicable Products">
+					<f:formElements>
+						<f:FormElement label="Applicable Products">
+							<f:fields>
+								<MultiComboBox id="applicableProductsInput" enabled="false">
+                                    <core:Item key="1" text="Emulsion" />
+                                    <core:Item key="2" text="Mica Marbel" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Applicable Packs">
+							<f:fields>
+								<MultiComboBox id="applicablePacksInput" enabled="false">
+                                    <core:Item key="1" text="Emulsion" />
+                                    <core:Item key="2" text="Mica Marbel" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Purchase Volume Required">
+							<f:fields>
+								<Text text="1000" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Accured Points Required">
+							<f:fields>
+								<Text text="2000" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Rewards">
+					<f:formElements>
+						<f:FormElement label="Reward Points">
+							<f:fields>
+								<Text text="1000" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Reward Cash (Rs)">
+							<f:fields>
+								<Text text="1000" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Reward Gift">
+							<f:fields>
+								<Text text="32'' color TV" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Additional Points">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<RadioButtonGroup id="rbg2" enabled="false" selectedIndex="0" columns="2">
+                                    <RadioButton id="allPainter" text="All Painters" />
+                                    <RadioButton id="specificSpecific" text="Specific Painter" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement>
+							<f:fields>
+                                <Text text="50"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Bonus Applicable Products">
+							<f:fields>
+								<MultiComboBox id="bonusApplicableInput" enabled="false">
+                                    <core:Item key="1" text="Loyalty" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="By Point Slab">
+							<f:fields>
+								<Text text="Above 2000" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+                <f:FormContainer title="Bonus Validity">
+					<f:formElements>
+                        <f:FormElement>
+							<f:fields>
+								<RadioButtonGroup id="rbg3" enabled="false" selectedIndex="0" columns="2">
+                                    <RadioButton id="tillDuration" text="Till Duration" />
+                                    <RadioButton id="tillDate" text="Till Date" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement>
+							<f:fields>
+                                <Text text="1 years  3 months  12 days"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+        <UploadCollection
+            id="UploadCollection"
+            maximumFilenameLength="{settings>/maximumFilenameLength}"
+            maximumFileSize="{settings>/maximumFileSize}"
+            multiple="true"
+            change="onChange"
+            fileDeleted="onFileDeleted"
+            filenameLengthExceed="onFilenameLengthExceed"
+            fileRenamed="onFileRenamed"
+            fileSizeExceed="onFileSizeExceed"
+            fileType="{fileTypes>/selected}"
+            selectionChange="onSelectionChange"
+            typeMissmatch="onTypeMissmatch"
+            uploadComplete="onUploadComplete"
+            beforeUploadStarts="onBeforeUploadStarts"
+            uploadTerminated="onUploadTerminated"
+            numberOfAttachmentsText="Uploaded (8)"
+            showSeparators="{settings>/showSeparators}"
+            uploadEnabled="{settings>/uploadEnabled}"
+            uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}"
+            mode="{settings>/mode}">
+            <toolbar>
+                <OverflowToolbar id="myId">
+                    <Title id="attachmentTitle" text="Uploded (0)" />
+                    <ToolbarSpacer />
+                    <UploadCollectionToolbarPlaceholder />
+                    <SearchField width="10rem" search="onSearch" />
+                    <Button
+                        id="deleteSelectedButton"
+                        text="Delete"
+                        press="onDeleteSelectedItems"
+                        enabled="false"
+                        visible="false"
+                        type="Transparent" />
+                    <ToggleButton
+                        id="selectAllButton"
+                        text="Select all"
+                        press="onSelectAllPress"
+                        enabled="false"
+                        visible="false"
+                        type="Transparent" />
+                </OverflowToolbar>
+            </toolbar>
+        </UploadCollection>
+	</VBox>
+</core:FragmentDefinition>

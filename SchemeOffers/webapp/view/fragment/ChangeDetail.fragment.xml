@@ -1,0 +1,250 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:Form id="FormChange"
+			editable="false">
+			<f:layout>
+				<f:ColumnLayout 
+					columnsM="2"
+					columnsL="3"
+					columnsXL="3"
+				/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Basic Information">
+					<f:formElements>
+						<f:FormElement label="{i18n>formBasicInfoLbl1}">
+							<f:fields>
+                               <ComboBox required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterSchemeTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/SchemeTypeId',type:'.customInt' }">
+                                     <core:Item text="{SchemeType}" key="{Id}" />
+                             </ComboBox>
+
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="{i18n>formBasicInfoLbl2}">
+							<f:fields>
+								<Input  placeholder="{i18n>placeHolder3}"  maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formBasicInfoLbl3}">
+							<f:fields>
+                               <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="startDate" placeholder="DD/MM/YYYY" required="true"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formBasicInfoLbl4}">
+							<f:fields>
+								<DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"  id="endDate" placeholder="DD/MM/YYYY" required="true"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formBasicInfoLbl5}">
+							<f:fields>
+								<TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="Scheme Image">
+							<f:fields>
+								<u:FileUploader typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png"  id="idFileUpload" name="schemeImgFileUpload"/>
+							</f:fields>
+						</f:FormElement>
+                        
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>formRegion}">
+					<f:formElements>
+						<f:FormElement label="{i18n>formRegionLbl1}">
+							<f:fields>
+                              <MultiComboBox placeholder="{i18n>placeHolder1}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
+                                     <core:Item text="{Id}" key="{Id}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formRegionLbl2}">
+							<f:fields>
+								 <MultiComboBox id="idDivision" placeholder="{i18n>placeHolder1}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
+                                     <core:Item text="{Id}" key="{Id}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formRegionLbl3}">
+							<f:fields>
+								 <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
+                                     <core:ListItem text="{Depot}" key="{Id}" additionalText="{Id}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>formApplicablepainter}">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
+                                    <RadioButton text="{i18n>formApplicableLbl1}" />
+                                    <RadioButton text="{i18n>formApplicableLbl2}" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formApplicableLbl3}">
+							<f:fields>
+								 <MultiComboBox id="SchemePainterArchiTypes" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onArchiTypeChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}" >
+                                     <core:Item text="{ArcheType}" key="{Id}" />
+                             </MultiComboBox>
+
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formApplicableLbl4}">
+							<f:fields>
+							 <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet' }" selectedKey="{path:'oModelView>/PotentialId',type:'.cmbxDtype2' }">
+                                     <core:Item text="{Potential}" key="{Id}" />
+                             </ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formApplicableLbl5}">
+							<f:fields>
+							<MultiComboBox id="SchemePainterProducts" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                     <core:Item text="{Description}" key="{SkuCode}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="{i18n>formApplicableLbl6}">
+							<f:fields>
+								 <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterSlabSet' }" selectedKey="{path:'oModelView>/SlabId',type:'.customInt' }">
+                                     <core:Item text="{Slab}" key="{Id}" />
+                             </ComboBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+                <f:FormContainer title="{i18n>formApplicableProducts}">
+					<f:formElements>
+						<f:FormElement label="{i18n>formApplicableProducts}">
+							<f:fields>
+								<MultiComboBox selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                     <core:Item text="{Description}" key="{SkuCode}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+						<!-- <f:FormElement label="Applicable Packs">
+							<f:fields>
+								<MultiComboBox placeholder="{i18n>placeHolder1}">
+                                    <core:Item key="1" text="Emulsion" />
+                                    <core:Item key="2" text="Mica Marbel" />
+                                </MultiComboBox>
+							</f:fields>
+						</f:FormElement> -->
+						<f:FormElement  label="{i18n>formAppProdPurchaseVolume}">
+							<f:fields>
+								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formAppProdAccuredPoints}">
+							<f:fields>
+									<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>formRewards}">
+					<f:formElements>
+						<f:FormElement label="{i18n>formRewardsPoints}">
+							<f:fields>
+								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardPoints'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formRewardsCash}">
+							<f:fields>
+								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardCash'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>formRewardsGift}">
+							<f:fields>
+								<ComboBox placeholder="{i18n>placeHolder1}"  >
+                                    <core:Item key="1" text="TV" />
+                                    <core:Item key="2" text="Washing Machine" />
+                                </ComboBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>AdditionalRewards}">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<RadioButtonGroup select="onRbAppRewards" selectedIndex="{= ${oModelView>/HasBonusPercentage} === false? 0:1 }" columns="2">
+                                    <RadioButton text="{i18n>BonusPoints}" />
+                                    <RadioButton text="{i18n>BonusPointsPercentage}" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement>
+							<f:fields>
+                                <Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Bonus Applicable Products">
+							<f:fields>
+									<MultiComboBox selectionChange="onBonusProdChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                     <core:Item text="{Description}" key="{SkuCode}" />
+                             </MultiComboBox>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+                <f:FormContainer title="{i18n>BonusValidity}">
+					<f:formElements>
+                        <f:FormElement>
+							<f:fields>
+								<RadioButtonGroup selectedIndex="{= ${oModelControl>/HasTillDate} === false ? 0 : 1}" columns="2" select="onRbBonusValidity">
+                                    <RadioButton text="{i18n>TillDuration}" />
+                                    <RadioButton text="{i18n>TillDate}" />
+                                </RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement visible="{= ${oModelControl>/HasTillDate} }">
+							<f:fields>
+                               <DatePicker dateValue="{oModelView>/BonusValidityDate}" displayFormat="dd/MM/YYYY" />
+							</f:fields>
+                        </f:FormElement>
+                        <f:FormElement visible="{= !${oModelControl>/HasTillDate} }" >
+							<f:fields>
+                                <ComboBox placeholder="{i18n>Years}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationYear}"  >
+                                   <core:Item text="{oModelControl>key}" key="{oModelControl>key}" />
+                                </ComboBox>
+                                 <ComboBox placeholder="{i18n>Month}" items="{oModelControl>/BonusValidity}"  selectedKey="{oModelView>/BonusValidityDurationMonth}"  >
+                                   <core:Item text="{oModelControl>key}" key="{oModelControl>key}" />
+                                </ComboBox>
+                                 <ComboBox placeholder="{i18n>Days}"  items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationDays}"  >
+                                   <core:Item text="{oModelControl>key}" key="{oModelControl>key}" />
+                                </ComboBox>
+                                   
+                                
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+                </f:FormContainer>
+                
+                <!-- <f:FormContainer title="Status">
+					<f:formElements>
+                        <f:FormElement label="Status">
+							<f:fields>
+								<ComboBox placeholder="Select">
+                                    <core:Item key="1" text="Accepted" />
+                                    <core:Item key="2" text="Rejected" />
+                                </ComboBox>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="Reason">
+							<f:fields>
+                                <TextArea placeholder="Enter Reason"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer> -->
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>

@@ -65,7 +65,6 @@ modules:
       name: CompanySettings
       target-path: resources/
     - artifacts:
-      - Training_Learning-content.zip
       name: Training_Learning
       target-path: resources/
     - artifacts:
@@ -83,6 +82,10 @@ modules:
     - artifacts:
       - LoyaltyManagement-content.zip
       name: LoyaltyManagement
+      target-path: resources/
+    - artifacts:
+      - SchemeOffers-content.zip
+      name: SchemeOffers
       target-path: resources/
 - name: MDM
   type: html5
@@ -201,6 +204,14 @@ modules:
 - name: LoyaltyManagement
   type: html5
   path: LoyaltyManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: SchemeOffers
+  type: html5
+  path: SchemeOffers
   build-parameters:
     builder: custom
     commands:

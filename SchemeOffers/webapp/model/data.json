@@ -1,0 +1,43 @@
+{
+    "OfferSet": [{
+        "offerId": 1,
+        "offerName": "Buy 1000ltr of scheme products",
+        "createdAt": "12/15/2020",
+        "reward": "Bank Transfer",
+        "startDate": "12/15/2020",
+        "endDate": "12/15/2020",
+        "createdBy": "Mj Kulkarni",
+        "status": "Approved",
+        "action": "Active"
+        }, {
+        "offerId": 2,
+        "offerName": "Buy min 4 ltr of impressions",
+        "createdAt": "12/15/2020",
+        "reward": "Git",
+        "startDate": "12/15/2020",
+        "endDate": "12/15/2020",
+        "createdBy": "Satish Singh",
+        "status": "Rejected",
+        "action": "Reject"
+        }, {
+        "offerId": 3,
+        "offerName": "Buy 100ltrs of impressions",
+        "createdAt": "12/15/2020",
+        "reward": "Bank Transfer",
+        "startDate": "12/15/2020",
+        "endDate": "12/15/2020",
+        "createdBy": "Mj Kulkarni",
+        "status": "Pending",
+        "action": "Inactive"
+        }, {
+        "offerId": 4,
+        "offerName": "All purchase done for",
+        "createdAt": "12/15/2020",
+        "reward": "Git",
+        "startDate": "12/15/2020",
+        "endDate": "12/15/2020",
+        "createdBy": "Mj Kulkarni",
+        "status": "Approved",
+        "action": "Accept"
+    }]
+}

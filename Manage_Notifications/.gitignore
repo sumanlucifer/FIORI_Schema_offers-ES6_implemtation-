@@ -1,2 +1,14 @@
 /node_modules/
 /dist/
+<<<<<<< HEAD
+=======
+
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env1
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env2
+# auto generated wildcard
+SchemeOffers/SchemeOffers/.env1
+# auto generated wildcard
+cp/ContactPainter/.env12
+>>>>>>> SchemeOffers
