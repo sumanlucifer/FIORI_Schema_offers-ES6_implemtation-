@@ -9,7 +9,7 @@ sap.ui.define([
     'sap/ui/model/Sorter',
     'sap/m/MessageToast',
     'sap/m/MessageBox'
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter,MessageToast,MessageBox) {
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.Worklist", {
@@ -66,7 +66,8 @@ sap.ui.define([
                     search: "",
                     createdAt: "",
                     title: "",
-                    createdBy: ""
+                    createdBy: "",
+                    category:""
                 }
             });
             this.getView().setModel(oModel, "ViewModel");
@@ -206,7 +207,7 @@ sap.ui.define([
             var aFilters = [];
 
             var aKeys = [
-                "search", "CreatedAt", "Title", "CreatedByDetails"
+                "search", "CreatedAt", "Title", "CreatedByDetails","ProductCategory"
             ];
 
             for (let i = 0; i < aKeys.length; i++) {
@@ -280,6 +281,12 @@ sap.ui.define([
                             aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
+                        case "Category":
+                        sValue = oControl.getValue();
+                        if (sValue && sValue !== "") {
+                            aFilters.push(new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                        }
+                        break;
                 }
             }
 
@@ -302,7 +309,8 @@ sap.ui.define([
                 search: "",
                 createdAt: "",
                 title: "",
-                createdBy: ""
+                createdBy: "",
+                category:""
             });
             this.getView().byId("idCreatedByInput").setValue("");
             var oTable = this.byId("idCatlogueTable");
@@ -393,7 +401,7 @@ sap.ui.define([
                 Status: changedStatus,
 
             };
-           console.log(oParam);
+            console.log(oParam);
             function onYes() {
                 var oModel = this.getView().getModel();
                 var that = this;
@@ -408,25 +416,25 @@ sap.ui.define([
             }
             this.showWarning("MSG_CONFIRM_CHANGE_STATUS", onYes);
         },
-        onRemoveSuccess: function (){
-                var msg = 'Status Changed Successfully!';
-                MessageToast.show(msg);
+        onRemoveSuccess: function () {
+            var msg = 'Status Changed Successfully!';
+            MessageToast.show(msg);
 
 
-                var oModel = this.getView().getModel();
-                oModel.refresh();
+            var oModel = this.getView().getModel();
+            oModel.refresh();
         },
         showWarning: function (sMsgTxt, _fnYes) {
-                var that = this;
-                MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
-                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                    onClose: function (sAction) {
-                        if (sAction === "YES") {
-                            _fnYes && _fnYes.apply(that);
-                        }
+            var that = this;
+            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        _fnYes && _fnYes.apply(that);
                     }
-                });
-            },
+                }
+            });
+        },
 
     });
 });

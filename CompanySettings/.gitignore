@@ -3,3 +3,59 @@ package-lock.json
 /dist/
 /.vscode/
 /*-content.zip/ 
+<<<<<<< HEAD
+=======
+
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env2
+# auto generated wildcard
+Demo/debasisa_web/Training_Learning/.env1
+# auto generated wildcard
+knpl-influencer-web/MasterDataManagement/.env15
+# auto generated wildcard
+MDM/.env2
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env1
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env2
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env3
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env5
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env1
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env6
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env4
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env2
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env7
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env8
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env1
+# auto generated wildcard
+knpl-complaints1/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1
+# auto generated wildcard
+complaints/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env3
+# auto generated wildcard
+complaint/Complaints/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env4
+# auto generated wildcard
+knpl/ContactPainter/.env2
+>>>>>>> aditya

@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+xmlns:core="sap.ui.core"
+xmlns="sap.m">
+  <Dialog title="Image">
+    <content>
+      <HBox justifyContent="Center">
+      <!-- <Image id="idPopup" width="500px" height="500px" src="{ImageModel>/Image}"/> -->
+      <Text text="{/Title}"/>
+      </HBox>
+    </content>
+    <buttons>
+      <Button text="OK" press="onDialogOK" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

@@ -9,3 +9,33 @@
 */dist/
 /.gitignore
 
+<<<<<<< HEAD
+=======
+
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env1
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env2
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env3
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env5
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env1
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env6
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env4
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env2
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env7
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env8
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env1
+# auto generated wildcard
+complaint/Complaints/.env2
+>>>>>>> aditya

@@ -40,6 +40,11 @@
                                     <Input id="idTitleInput" data:filterName="Title" value="{ViewModel>/filterBar/title}" placeholder="{i18n>titleFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Category" label="Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                 <fb:control>
+                                    <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <Input
@@ -64,7 +69,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails'},sorter:{
+            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails,ProductCategory'},sorter:{
                     path: 'Id', 
                     descending: true
                 } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
@@ -95,11 +100,17 @@
                         <Text text="{i18n>createdBy}"/>
                     </Column>
                     <Column>
+                        <Text text="{i18n>view}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>download}"/>
+                    </Column>
+                    <Column>
                         <Text text="{i18n>action}"/>
                     </Column>
-                    <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericEdit}"/>
-                                </Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                        <Text text="{i18n>GenericEdit}"/>
+                    </Column>
                             
                    
                    
@@ -115,6 +126,8 @@
                             <ObjectIdentifier title="{Title}" />
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
+                            <Text text="0"/>
+                            <Text text="0"/>
                             <!-- <ObjectStatus xmlns="sap.m"
                             state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
                 

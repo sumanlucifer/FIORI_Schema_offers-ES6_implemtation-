@@ -1,2 +1,42 @@
 /node_modules/
 /dist/
+<<<<<<< HEAD
+=======
+
+# auto generated wildcard
+knpl-influencer-web/CallbackRequests/.env
+# auto generated wildcard
+LoyaltyManagement/.env
+# auto generated wildcard
+MasterDataManagement/.env18
+# auto generated wildcard
+knpl-influencer-web/Tools/.env
+# auto generated wildcard
+CallbackRequests/.env1
+# auto generated wildcard
+knpl-complaints1/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1
+# auto generated wildcard
+complaints/Complaints/.env1
+# auto generated wildcard
+<<<<<<< HEAD
+knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+=======
+knpl-influencer-web/ContactPainter/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env3
+# auto generated wildcard
+complaint/Complaints/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env4
+# auto generated wildcard
+knpl/ContactPainter/.env2
+>>>>>>> 8361af284e7f3caa603e3bae11caeec846689136
+>>>>>>> aditya
