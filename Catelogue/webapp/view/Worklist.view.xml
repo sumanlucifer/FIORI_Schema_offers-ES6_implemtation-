@@ -42,7 +42,17 @@
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Category" label="Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                  <fb:control>
-                                    <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" />
+                                    <ComboBox
+                                    id="idCategory" 
+                                    data:filterName="Category"
+                                    value="{ViewModel>/filterBar/category}"
+                                        items="{
+                                            path: '/MasterProductCategorySet',
+                                            sorter: { path: 'Category' }
+                                        }">
+                                        <core:Item key="{Id}" text="{Category}" />
+                                    </ComboBox>
+                                    <!-- <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" /> -->
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -94,6 +104,9 @@
                         <Text text="{i18n>title}"/>
                     </Column>
                     <Column>
+                        <Text text="{i18n>category}"/>
+                    </Column>
+                    <Column>
                         <Text text="{i18n>creationDate}"/>
                     </Column>
                     <Column>
@@ -124,6 +137,7 @@
                         </dependents> -->
                         <cells>
                             <ObjectIdentifier title="{Title}" />
+                            <Text text="{ProductCategory/Category}"/>
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <Text text="0"/>
