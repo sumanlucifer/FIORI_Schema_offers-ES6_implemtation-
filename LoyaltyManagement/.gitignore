@@ -2,5 +2,23 @@
 package-lock.json
 /dist/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /.vscode/
 /*-content.zip/
+=======
+
+# auto generated wildcard
+knpl-influencer-web/LoyaltyManagement/.env
+# auto generated wildcard
+LoyaltyManagement/.env
+# auto generated wildcard
+MasterDataManagement/.env18
+# auto generated wildcard
+SchemeOffers/SchemeOffers/.env1
+# auto generated wildcard
+cp/ContactPainter/.env12
+# auto generated wildcard
+knpl-influencer-web/SchemeOffers/.env1
+# auto generated wildcard
+complains/Complaints/.env1
+>>>>>>> SchemeOffers

@@ -23,9 +23,10 @@
             "additionalParameters": "allowed"
           },
           "semanticObject": "Manage",
-          "action": "TLS",
+          "action": "SM",
           "title": "{{appTileTitle}}",
-          "subTitle": "{{appTileSubTitle}}"
+          "subTitle": "{{appTileSubTitle}}",
+          "icon": "sap-icon://retail-store-manager"
         }
       }
     },
