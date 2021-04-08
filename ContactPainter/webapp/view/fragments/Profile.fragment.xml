@@ -1,72 +1,78 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:smartForm="sap.ui.comp.smartform"
-    xmlns:smartField="sap.ui.comp.smartfield"
-    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <core:Title text="{i18n>Membership}"/>
-                <Label text="{i18n>MembershipId}"/>
-                <Text text="{MembershipCard}"/>
-                <Label required="false" text="{i18n>DateOfJoining}"/>
-                <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>PainterType}" />
-                <Text text="{PainterType/PainterType}"/>
-                <Label text="{i18n>AgeGroup}"/>
-                <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>PreferredLanguage}"/>
-                <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>LinkPrimaryDealer}"/>
-                <Text text="{PrimaryDealerDetails/DealerName}"/>
-                <Label text="{i18n>LinkSecondryDealer}"/>
-                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink"/>
+                <core:Title text="{i18n>Membership}" />
+                <Label text="{i18n>MembershipId}" />
+                <Text text="{MembershipCard}" />
+                <Label required="false" text="{i18n>DateOfJoining}" />
+                <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label required="false" text="{i18n>PrimaryMobileNo}" />
+                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>SecondryMobileNo}" />
+                <VBox items="{path:'PainterContact/',templateShareable: false}">
+                    <Text text="{Mobile}" />
+                </VBox>
+                    <Label text="{i18n>PainterType}" />
+                <Text text="{PainterType/PainterType}" />
+                <Label text="{i18n>AgeGroup}" />
+                <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>PreferredLanguage}" />
+                <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                
 
-                <core:Title text="{i18n>PersonalDetails}"/>
-                <Label text="{i18n>FullName}"/>
-                <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label required="false" text="{i18n>EmailId}"/>
-                <Text text="{Email}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <core:Title text="{i18n>PersonalDetails}" />
+                <Label text="{i18n>FullName}" />
+                <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label required="false" text="{i18n>EmailId}" />
+                <Text text="{Email}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>MaritalStatus}" />
                 <Text text="{MaritalStatus/MaritalStatus}" />
                 <Label text="{i18n>Religion}" />
-                <Text text="{Religion/Religion}"/>
-                <Label required="false" text="{i18n>PrimaryMobileNo}"/>
-                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>SecondryMobileNo}"/>
-                <VBox items="{path:'PainterContact/',templateShareable: false}">
-                    <Text text="{Mobile}"/>
-                </VBox>
-                <Text text="" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <core:Title text="{i18n>LocationDetails}"/>
-                <Label text="{i18n>State}"/>
-                <Text text="{PainterAddress/StateDetails/State}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>City}"/>
-                <Text text="{PainterAddress/CityDetails/City}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>Area}"/>
-                <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <!-- <Label text="{i18n>AddressLine2}" />
-                <Text text="{PainterAddress/AddressLine2}"/>
+                <Text text="{Religion/Religion}" />
+                <Label text="{i18n>HouseType}" />
+                <Text text="{path:'HouseType',formatter:'.fmtLowerCase'}" />
+                
+                <Text text="" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <core:Title text="{i18n>LocationDetails}" />
                 <Label text="{i18n>PinCode}" />
-                <Text text="{PainterAddress/PinCode}"/> -->
-                <core:Title text="{i18n>SecurityQuestions}"/>
-                <Label text="{i18n>Question}"/>
-                <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>Answer}"/>
-                <Text text="{Preference/SecurityAnswer}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <core:Title text="{i18n>Segmentation}"/>
-                <Label text="{i18n>TeamSize}"/>
-                <Text text="{PainterSegmentation/TeamSizeDetails/TeamSize}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>Experiences}"/>
-                <Text text="{PainterSegmentation/PainterExperienceDetails/Experience}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>SitePerMonth}"/>
-                <Text text="{PainterSegmentation/SitePerMonthDetails/SitePerMonth}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <Label text="{i18n>AnnualPaidPotential}"/>
-                <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }"/>
-                <core:Title text="{i18n>BusinessDetails}"/>
+                <Text text="{PainterAddress/PinCode}" />
+                <Label text="{i18n>State}" />
+                <Text text="{PainterAddress/StateDetails/State}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>City}" />
+                <Text text="{PainterAddress/CityDetails/City}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>Area}" />
+                <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>HomeTown}" />
+                <Text text="{PainterAddress/Town}" />
+                <Label text="{i18n>Zone}" />
+                <Text text="{ZoneId}" />
+                <Label text="{i18n>Division}" />
+                <Text text="{DivisionId}" />
+                <Label text="{i18n>Depot}" />
+                <Text text="{Depot/Depot}" />
+                <Label text="{i18n>LinkPrimaryDealer}" />
+                <Text id="profPDlr" text="{PrimaryDealerDetails/DealerName}" />
+                <Label text="{i18n>LinkSecondryDealer}" />
+                <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
+                <!-- <Label text="{i18n>AddressLine2}" />
+                <Text text="{PainterAddress/AddressLine2}"/>-->
+
+                <core:Title text="{i18n>SecurityQuestions}" />
+                <Label text="{i18n>Question}" />
+                <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>Answer}" />
+                <Text text="{Preference/SecurityAnswer}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <core:Title text="{i18n>Segmentation}" />
+                <Label text="{i18n>TeamSize}" />
+                <Text text="{PainterSegmentation/TeamSizeDetails/TeamSize}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>Experiences}" />
+                <Text text="{PainterSegmentation/PainterExperienceDetails/Experience}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>SitePerMonth}" />
+                <Text text="{PainterSegmentation/SitePerMonthDetails/SitePerMonth}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{i18n>AnnualPaidPotential}" />
+                <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
                 <Text text="{BusinessCategory/BusinessCategory}" />
                 <Label text="{i18n>BusinessGroup}" />
@@ -79,21 +85,21 @@
         <Table id="idFamilyDetils" width="auto" items="{path: 'PainterFamily/'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                    <Title text="{i18n>FamilyDetails}"/>
-                    <ToolbarSpacer/>
+                    <Title text="{i18n>FamilyDetails}" />
+                    <ToolbarSpacer />
                     <Button visible="false" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Text text="{i18n>SelectRelation}"/>
+                    <Text text="{i18n>SelectRelation}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>Name}"/>
+                    <Text text="{i18n>Name}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>ContactNumber}"/>
+                    <Text text="{i18n>ContactNumber}" />
                 </Column>
                 <Column width="5%"></Column>
                 <Column width="5%"></Column>
@@ -103,9 +109,10 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{RelationshipDetails/Relationship}" titleActive="true"/>
-                        <Text text="{Mobile}"/>
-                        <Text text="{Name}"/>
+                        <ObjectIdentifier title="{RelationshipDetails/Relationship}" titleActive="true" />
+
+                        <Text text="{Name}" />
+                        <Text text="{Mobile}" />
                     </cells>
                 </ColumnListItem>
             </items>
@@ -113,21 +120,21 @@
         <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'Vehicles/' }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                    <Title text="{i18n>AssetDetails}"/>
-                    <ToolbarSpacer/>
+                    <Title text="{i18n>AssetDetails}" />
+                    <ToolbarSpacer />
 
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Text text="{i18n>TypeOfAssets}"/>
+                    <Text text="{i18n>TypeOfAssets}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>AssetName}"/>
+                    <Text text="{i18n>AssetName}" />
                 </Column>
                 <Column>
-                    <Text text=""/>
+                    <Text text="" />
                 </Column>
                 <Column width="5%"></Column>
                 <Column width="5%"></Column>
@@ -136,8 +143,8 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <ObjectIdentifier title="{VehicleTypeDetails/VehicleType}" titleActive="true"/>
-                        <Text text="{VehicleName}"/>
+                        <ObjectIdentifier title="{VehicleTypeDetails/VehicleType}" titleActive="true" />
+                        <Text text="{VehicleName}" />
                     </cells>
                 </ColumnListItem>
             </items>

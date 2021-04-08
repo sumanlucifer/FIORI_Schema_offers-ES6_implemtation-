@@ -1,48 +1,49 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:smartForm="sap.ui.comp.smartform"
-    xmlns:smartField="sap.ui.comp.smartfield"
-    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
-
-    <Table width="auto" id="idLoyaltyPoints" items="{path: '/PainterPointsHistorySet', sorter:{path:'TotalPoints',descending:true} }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-        <headerToolbar>
-            <Toolbar>
-                <SegmentedButton selectedKey="0" selectionChange="onLoyaltySelChange">
-                    <items>
-                        <SegmentedButtonItem text="{i18n>Accural}" key="0"/>
-                        <SegmentedButtonItem text="{i18n>Redemption}" key="1"/>
-                    </items>
-                </SegmentedButton>
-            </Toolbar>
-        </headerToolbar>
-        <columns>
-            <Column>
-                <Text text="{i18n>Type}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>EarnedPoints}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>TotalPoints}"/>
-            </Column>
-            <Column>
-                <Text text="{i18n>DateAndTime}"/>
-            </Column>
-        </columns>
-
-        <items>
-            <ColumnListItem press="onListItemPress">
-                <cells>
-                    <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
-                    <Text text="{RewardPoints}" />
-                    <Text text="{TotalPoints}" />
-                    <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:MM a'}}"/>
-                </cells>
-            </ColumnListItem>
-        </items>
-    </Table>
-
+<core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smrtLoyalty"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebind"                    
+                            entitySet="PainterPointsHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="LoyaltySmartTableKey"
+                            ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                        <Table>
+                                <columns>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType", "leadingProperty": "PointType", "columnIndex": 0 ,"sortProperty": "PointType","filterProperty": "PointType"}'/>
+                                        </customData>
+                                          <Text text="{i18n>Type}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>DateAndTime}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointTransactionType", "leadingProperty": "PointTransactionType", "columnIndex": 4 ,"sortProperty": "PointTransactionType","filterProperty": "PointTransactionType"}'/>
+                                        </customData>
+                                         <Text text="{i18n>TransactionType}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                         </cells>      
+                                    </ColumnListItem>
+                                </items> 
+                            </Table> 
+                        </smartTable:SmartTable>
 </core:FragmentDefinition>

@@ -30,39 +30,71 @@
 				
                 <VBox >
                 <Title  text="Catalogue Details"  />
-                <VBox class="sapUiMediumMargin" >
-                            <!-- <VBox class="sapUiMediumMarginBottom" >
-                            <Label text="Category:" required="true" />
-                                <Select
-                                id="idCategory"
-                                forceSelection="false"
-                                items="{
-                                    path: '/MasterFAQCategorySet',
-                                    sorter: { path: 'FAQCategory' }
-                                }">
-                                <core:Item key="{Id}" text="{FAQCategory}" />
-                            </Select>
-                                </VBox> -->
-                                <VBox>
-                            <Label text="Title:" required="true" />
-                    <!-- <Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue"/> -->
-                                <Select
-                                id="idTitle"
-                                forceSelection="false"
-                                selectedKey="{ActionViewModel>/Title}"
-                                items="{
-                                    path: '/MasterRepProductSkuSet',
-                                    sorter: { path: 'Description' }
-                                }">
-                                <core:Item key="{Description}" text="{Description}" />
-                            </Select>
+                <HBox>
+                <VBox class="sapUiMediumMargin" width="50%">
+                            <HBox >
+                                    <VBox class="sapUiMediumMarginBottom" width="80%">
+                                            <Label text="Category:" required="true" />
+                                                <Select
+                                                id="idCategory"
+                                                 width="100%"
+                                                forceSelection="true"
+                                                selectedKey="{ActionViewModel>/Category}"
+                                                items="{
+                                                    path: '/MasterProductCategorySet',
+                                                    sorter: { path: 'Category' }
+                                                }">
+                                                <core:Item key="{Id}" text="{Category}" />
+                                                 </Select>
+                                        </VBox>
+                                 </HBox>
+                                <HBox >
+                                    <VBox class="sapUiMediumMarginBottom" width="80%">
+                                        <Label text="Classification:" required="true" />
+                                            <Select
+                                            id="idClassification"
+                                            forceSelection="true"
+                                            width="100%"
+                                            selectedKey="{ActionViewModel>/Classification/}"
+                                            items="{
+                                                path: '/MasterProductClassificationSet',
+                                                sorter: { path: 'Classification' }
+                                            }">
+                                            <core:Item key="{Id}" text="{Classification}" />
+                                            </Select>
+                                    </VBox>
+                                </HBox>
+                                 
+                <VBox>
+                                <Label text="Title:" required="true" />
+                                <Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue" width="80%"/>
+                             
+                             <VBox >  
+                                    <HBox width="100%" class="sapUiMediumMarginTop">
+                                            <VBox class="sapUiMediumMarginBottom" width="80%">
+                                                <Label text="Range:" required="true" />
+                                                    <Select
+                                                    id="idRange"
+                                                    forceSelection="true"
+                                                    width="100%"
+                                                    selectedKey="{ActionViewModel>/Range}"
+                                                    items="{
+                                                        path: '/MasterProductRangeSet',
+                                                        sorter: { path: 'Range' }
+                                                    }">
+                                                    <core:Item key="{Id}" text="{Range}" />
+                                                    </Select>
+                                            </VBox>
+                                        </HBox> 
+                                </VBox>
                             </VBox>
                 </VBox>
                 
          
          
-          <VBox class="sapUiMediumMargin" width="50%">
-                 <VBox class="sapUiTinyMargin">
+          <HBox class="sapUiMediumMarginBegin">
+          <VBox>
+                 <VBox class="sapUiTinyMarginBottom">
                                             <Label text="Upload Thumbnail Image" class="sapUiTinyMargin" required="true"/>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
@@ -77,7 +109,7 @@
                                                 uploadComplete="handleUploadCompleteImage" />
                                             <Image id="idPreviewImage" width="400px" height="200px" />
                                             </VBox>
-                                            <VBox class="sapUiTinyMargin">
+                                            <VBox class="sapUiTinyMarginBottom">
                                              <Label text="Upload Catalogue" class="sapUiTinyMargin" required="true"/>
                                         
                                        
@@ -96,10 +128,10 @@
                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment" visible="false" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
                                             </VBox>
                                             
-                                        
-          </VBox>
+                </VBox>                  
+          </HBox>
          
-                                           
+                 </HBox>                          
                                        
 
                                         
@@ -108,7 +140,7 @@
         
      
                 </VBox>
-              
+               
 			</form:SimpleForm>
 			
 		</f:content>

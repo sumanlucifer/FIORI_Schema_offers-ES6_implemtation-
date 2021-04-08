@@ -159,10 +159,10 @@ sap.ui.define([
 
                         var data = oEvent.getParameter('data');
 
-                        var imgSize = data.MediaList[0].MediaSize;
-                        var pdfSize = data.MediaList[1].MediaSize;
-                        var imgName = data.MediaList[0].MediaName;
-                        var pdfName = data.MediaList[1].MediaName;
+                        var imgSize = data.MediaList[1].MediaSize;
+                        var pdfSize = data.MediaList[0].MediaSize;
+                        var imgName = data.MediaList[1].MediaName;
+                        var pdfName = data.MediaList[0].MediaName;
 
 
                         oViewModel.setProperty("/ImageSize", imgSize + " KB");

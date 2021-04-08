@@ -18,6 +18,10 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/routing/History",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/VBox",
+    "sap/m/Token",
     "com/knpl/pragati/ContactPainter/model/customInt",
     "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
@@ -43,6 +47,10 @@ sap.ui.define(
     FilterOperator,
     DateFormat,
     History,
+    Dialog,
+    Button,
+    VBox,
+    Token,
     customInt1,
     customInt2
   ) {
@@ -74,7 +82,7 @@ sap.ui.define(
           );
           var oView = this.getView();
           var sExpandParam =
-            "AgeGroup,PainterType,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+            "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -97,8 +105,15 @@ sap.ui.define(
               "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
             Search: {
               Referral: "",
-              Offers: "",
-              Complaints: "",
+              Tokens: "",
+              Complains: ""
+              //LoyaltyPoints: "",
+            },
+            ApplyLoyaltyPoints: "",
+            AddReferral: {
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
             },
           };
           var oModel = new JSONModel(oData);
@@ -106,6 +121,9 @@ sap.ui.define(
           this._loadEditProfile("Display");
           this._loadEditBanking("Display");
           this._toggleButtonsAndView(false);
+
+          //rebind Loyalty table
+          this.getView().byId("smrtLoyalty").rebindTable();
 
           this._initFilerForTables();
         },
@@ -129,7 +147,6 @@ sap.ui.define(
             });
           });
 
-          // this._initEditData();
           // this._initSaveModel();
         },
         _initEditData: function () {
@@ -206,15 +223,6 @@ sap.ui.define(
           }
 
           // setting up Dealers data
-          var oDealer = oDataValue["Dealers"];
-          var oDealerArray = [];
-          for (var i of oDealer) {
-            oDealerArray.push(i["Id"]);
-          }
-          oControlModel.setProperty(
-            "/PainterAddDet/SecondryDealer",
-            oDealerArray
-          );
 
           // setting up the state/city filtering data
           var oCity = oView.byId("cmbCity"),
@@ -227,6 +235,40 @@ sap.ui.define(
             );
             oBindingCity.filter(aFilterCity);
           }
+          //setting up the filtering data for the Depot, Divisio
+          var sZoneId = oDataValue["ZoneId"];
+          if (sZoneId !== null) {
+            oView
+              .byId("idDivision")
+              .getBinding("items")
+              .filter(new Filter("Zone", FilterOperator.EQ, sZoneId));
+          }
+          var sDivisionId = oDataValue["DivisionId"];
+          if (sDivisionId !== null) {
+            oView
+              .byId("idDepot")
+              .getBinding("items")
+              .filter(new Filter("Division", FilterOperator.EQ, sDivisionId));
+          }
+          var sDepotId = oDataValue["DepotId"];
+          if (oDataValue["DealerId"]) {
+            oView.byId("idMinpPDealers").addToken(
+              new Token({
+                text:
+                  "{PrimaryDealerDetails/DealerName} - " +
+                  oDataValue["DealerId"],
+              })
+            );
+          }
+
+          var oSecTokens = oDataValue["Dealers"];
+
+          oControlModel.setProperty(
+            "/PainterAddDet/SecondryDealer",
+            oSecTokens
+          );
+
+          console.log(oSecTokens);
           // setting up kyc data
           //var oKycData = oDataValue["PainterBankDetails"];
           if (oDataValue.hasOwnProperty("PainterKycDetails")) {
@@ -258,12 +300,18 @@ sap.ui.define(
             "PainterTypeId",
             "MaritalStatusId",
             "ReligionId",
+            "HouseType",
             "BusinessCategoryId",
             "BusinessGroupId",
             "ArcheTypeId",
+            "DivisionId",
+            "DepotId",
+            "ZoneId",
             "PainterAddress/AddressLine1",
+            "PainterAddress/Town",
             "PainterAddress/CityId",
             "PainterAddress/StateId",
+            "PainterAddress/PinCode",
             "Preference/SecurityQuestionId",
             "Preference/SecurityAnswer",
             "PainterSegmentation/TeamSizeId",
@@ -396,7 +444,7 @@ sap.ui.define(
 
           var oDealers = [];
           for (var i of oSecondryDealer) {
-            oDealers.push({ Id: i.toString() });
+            oDealers.push({ Id: i["Id"].toString() });
           }
 
           oPayload["Dealers"] = oDealers;
@@ -426,20 +474,24 @@ sap.ui.define(
           }
           console.log(oPayload, sPath);
           oData.update(sPath, oPayload, {
-            success: function () {
+            success: function (oData) {
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
+               othat.fnCheckProfileCompleted.call(othat,oPayload);
               othat.handleCancelPress();
               //oData.refresh(true);
             },
             error: function (a) {
-              MessageBox.error(
-                "Unable to update a painter due to the server issues",
-                {
-                  title: "Error Code: " + a.statusCode,
-                }
-              );
+              var sMessage =
+                "Unable to update a painter due to the server issues";
+              if (a.statusCode == 409) {
+                sMessage =
+                  "Mobile Number already exist, kindly enter a different mobile number.";
+              }
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+              });
             },
           });
         },
@@ -479,7 +531,7 @@ sap.ui.define(
             oPainterId
           );
           oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
-          oView.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
+          //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
           //IdTblComplaints
         },
@@ -562,6 +614,34 @@ sap.ui.define(
             );
           }
         },
+        onPinSuggest: function (oEvent) {
+          var sTerm = oEvent.getParameter("suggestValue");
+          var aFilters = [];
+          if (sTerm) {
+            aFilters.push(
+              new Filter("Pincode", FilterOperator.StartsWith, sTerm)
+            );
+          }
+
+          oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+        },
+        onPinCodeSelect: function (oEvent) {
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oObject = oEvent
+            .getParameter("selectedItem")
+            .getBindingContext()
+            .getObject();
+          var iStateId = oObject["StateId"];
+          var iCity = oObject["CityId"];
+          var oCity = oView.byId("cmbCity");
+          var oState = oView.byId("cmBxState");
+          oCity
+            .getBinding("items")
+            .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
+          oState.setSelectedKey(iStateId);
+          oCity.setSelectedKey(iCity);
+        },
         onLinkPrimryChange: function (oEvent) {
           var oSource = oEvent.getSource();
           var sSkey = oSource.getSelectedKey();
@@ -622,6 +702,47 @@ sap.ui.define(
             oBindingCity.filter(aFilter);
           }
         },
+        onZoneChange: function (oEvent) {
+          var sId = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oPainterDetail = oModelView.getProperty("/PainterDetails");
+          var oDivision = oView.byId("idDivision");
+          var oDivItems = oDivision.getBinding("items");
+          var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+          // remove the division filtering if the division is not of the same zone else clear it
+          //   if (oDivSelItm !== null) {
+          //     var oDivObj = oDivSelItm.getBindingContext().getObject();
+          //     if (oDivObj["Id"] !== sId) {
+          //       oDivision.clearSelection();
+          //       oDivision.setValue("");
+          //     }
+          //   }
+          oDivision.clearSelection();
+          oDivision.setValue("");
+          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+
+          //setting the data for depot;
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+        },
+        onDivisionChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oDepot = oView.byId("idDepot");
+          var oDepBindItems = oDepot.getBinding("items");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+
+          //clearning the data for painters
+        },
+        onDepotChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+        },
+
         onPressAddFamliy: function () {
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
@@ -685,7 +806,7 @@ sap.ui.define(
 
           var bFlag = true;
           // var cFlag = oValidator.validate();
-          var oCheckProp = ["RelationshipId", "Mobile", "Name"];
+          var oCheckProp = ["RelationshipId", "Name"];
           for (var abc in oCheckProp) {
             if (oObject[abc] == "") {
               bFlag = false;
@@ -1029,6 +1150,387 @@ sap.ui.define(
         dealerName: function (mParam) {
           return mParam.length;
         },
+        onTablesSearch: function (oEvent) {
+          var oView = this.getView();
+          var sPath = oEvent.getSource().getBinding("value").getPath();
+          var sValue = oEvent.getSource().getValue();
+          var sPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+          console.log(sPainterId);
+          if (sPath.match("LoyaltyPoints")) {
+            //this._SearchLoyaltyPoints(sValue, sPainterId);
+          } else if (sPath.match("Tokens")) {
+            this._SearchTokens(sValue, sPainterId);
+          } else if (sPath.match("Complains")) {
+            this._SearchComplains(sValue, sPainterId);
+          } else if (sPath.match("Referral")) {
+            this._SearchReferral(sValue, sPainterId);
+          }
+        },
+        _SearchLoyaltyPoints: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("idLoyaltyPoints");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "TotalPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                "tolower(PointType)",
+                FilterOperator.Contains,
+                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchTokens: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("idTblOffers");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "Painter/Mobile",
+                    FilterOperator.Contains,
+                    sValue.trim()
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "tolower(TokenCode)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                  new Filter(
+                    "tolower(Channel)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                ],
+                false
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchComplains: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+          var oTable = oView.byId("IdTblComplaints");
+
+          // this is the same case
+
+          aCurrentFilter.push(
+            new Filter(
+              [
+                new Filter(
+                  "tolower(Painter/Name)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(Painter/MembershipCard)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintCode)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "Painter/Mobile",
+                  FilterOperator.EQ,
+                  sValue.trim().substring(0, 10)
+                ),
+                new Filter(
+                  "tolower(ComplaintType/ComplaintType)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintSubtype/ComplaintSubtype)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+                new Filter(
+                  "tolower(ComplaintStatus)",
+                  FilterOperator.Contains,
+                  "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                ),
+              ],
+              false
+            )
+          );
+
+          aCurrentFilter.push(
+            new Filter("PainterId", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        _SearchReferral: function (sValue, sPainterId) {
+          var oView = this.getView();
+          var aCurrentFilter = [];
+
+          var oTable = oView.byId("Referral");
+          if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "RewardPoints",
+                    FilterOperator.EQ,
+                    sValue.trim().substring(0, 8)
+                  ),
+                  new Filter(
+                    "ReferralMobile",
+                    FilterOperator.Contains,
+                    sValue.trim()
+                  ),
+                ],
+                false
+              )
+            );
+          } else {
+            aCurrentFilter.push(
+              new Filter(
+                [
+                  new Filter(
+                    "tolower(ReferralName)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                  new Filter(
+                    "tolower(ReferralEmail)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                  new Filter(
+                    "tolower(ReferralStatus)",
+                    FilterOperator.Contains,
+                    "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                  ),
+                ],
+                false
+              )
+            );
+          }
+          aCurrentFilter.push(
+            new Filter("ReferredBy", FilterOperator.EQ, parseInt(sPainterId))
+          );
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+
+          oTable.getBinding("items").filter(endFilter);
+        },
+        onPressOpenTokenDialog: function (oEvent) {
+          var othat = this;
+          var oModelControl = this.getView().getModel("oModelControl2");
+          if (!this.oDefaultDialog) {
+            this.oDefaultDialog = new Dialog({
+              title: "{i18n>ApplyToken}",
+              afterClose: function () {
+                othat.oDefaultDialog.destroy();
+                console.log("onCloseTrigerred");
+                delete othat.oDefaultDialog;
+                oModelControl.setProperty("/ApplyLoyaltyPoints", "");
+              },
+              content: [
+                new VBox({
+                  alignItems: "Center",
+                  items: [
+                    new Input({
+                      width: "120%",
+                      placeholder: "Enter Token Code",
+                      value: "{oModelControl2>/ApplyLoyaltyPoints}",
+                    }),
+                  ],
+                }),
+              ],
+              beginButton: new Button({
+                text: "{i18n>Cancel}",
+                type: "Default",
+                press: function () {
+                  othat.oDefaultDialog.close();
+                },
+              }),
+              endButton: new Button({
+                text: "{i18n>Ok}",
+                type: "Emphasized",
+                press: othat._onApplyLoyalyPoints.bind(othat),
+              }),
+            });
+
+            // to get access to the controller's model
+            this.getView().addDependent(this.oDefaultDialog);
+          }
+
+          this.oDefaultDialog.open();
+        },
+        _onApplyLoyalyPoints: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oModelControl = oView.getModel("oModelControl2");
+          var sTokenCode = oModelControl
+            .getProperty("/ApplyLoyaltyPoints")
+            .trim();
+          if (sTokenCode == "") {
+            MessageToast.show("Kindly enter the token code to continue");
+            return;
+          }
+
+          var oData = oView.getModel();
+
+          oData.read("/QRCodeValidationAdmin", {
+            urlParameters: {
+              qrcode: "'" + sTokenCode + "'",
+              painterid: oModelControl.getProperty("/PainterId"),
+              channel: "'Painter Profile'",
+            },
+            success: function (oData) {
+              if (oData !== null) {
+                if (oData.hasOwnProperty("Status")) {
+                  if (oData["Status"] == true) {
+                    MessageToast.show(oData["Message"]);
+
+                    othat.oDefaultDialog.close();
+                  } else if (oData["Status"] == false) {
+                    MessageToast.show(oData["Message"]);
+                  }
+                  othat.getView().getModel().refresh(true);
+                }
+              }
+            },
+            error: function () {},
+          });
+        },
+        onPressAddReferral: function (oEvent) {
+          var oView = this.getView();
+          // create value help dialog
+          if (!this._DialogAddREferal) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.AddReferralDialog",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._DialogAddREferal = oValueHelpDialog;
+                this.getView().addDependent(this._DialogAddREferal);
+                this._DialogAddREferal.open();
+              }.bind(this)
+            );
+          } else {
+            this._DialogAddREferal.open();
+          }
+        },
+        onPressSubmitReferral: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oData = oView.getModel();
+          var oPayload = oView
+            .getModel("oModelControl2")
+            .getProperty("/AddReferral");
+          var oModelControl = oView.getModel("oModelControl2");
+          var sPainterId = oModelControl.getProperty("/PainterId");
+          var oValidator = new Validator();
+          if(oPayload["ReferralName"].trim() =="" ||  oPayload["ReferralMobile"].trim()=="" ){
+            MessageToast.show("Kindly Enter the referral name and mobile Number");
+            return;
+          }
+         
+          var oDataValue = oData.getObject("/PainterSet(" + sPainterId + ")");
+         
+          var oSentPayoad = {
+            ReferralName: oPayload["ReferralName"].trim(),
+            ReferralMobile: oPayload["ReferralMobile"].trim(),
+            ReferralEmail: oPayload["ReferralEmail"].trim(),
+            ReferralCode: oDataValue["RegistrationReferralCode"],
+            ReferredBy:parseInt(sPainterId)
+          };
+          console.log(oSentPayoad)
+
+          oData.create("/PainterReferralHistorySet", oSentPayoad, {
+            success: function () {
+              MessageToast.show("Referral Sucessfuly Added");
+              othat._DialogAddREferal.close();
+              othat.getView().getModel().refresh(true);
+            },
+            error: function (a) {
+              var sMessage =
+                "Unable to update a painter due to the server issues";
+
+              MessageBox.error(sMessage, {
+                title: "Error Code: " + a.statusCode,
+              });
+            },
+          });
+        },
+        onAddReferralClose: function () {
+          this._DialogAddREferal.destroy();
+          delete this._DialogAddREferal;
+          this.getView().getModel("oModelControl2").setProperty("/AddReferral",{
+              ReferralName: "",
+              ReferralMobile: "",
+              ReferralEmail: "",
+            })
+        },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
           var oView = this.getView();
@@ -1095,6 +1597,276 @@ sap.ui.define(
           //     oPage.insertContent(oVBox);
           // });
         },
+        _dealerReset: function () {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelView");
+          var aDiv = ["DivisionId", "DepotId", "ZoneId"];
+          for (var a of aDiv) {
+            if (oModel.getProperty("/" + a) === "") {
+              oView.byId("idMinpPDealers").removeAllTokens();
+              oModel.setProperty("/DealerId", "");
+              oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
+            }
+          }
+        },
+        handlePDealerValue: function (oEvent) {
+          var sInputValue = oEvent.getSource().getValue();
+          var oView = this.getView();
+          // create value help dialog
+          if (!this._PvalueHelpDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._PvalueHelpDialog = oValueHelpDialog;
+                this.getView().addDependent(this._PvalueHelpDialog);
+                this._openPValueHelpDialog(sInputValue);
+              }.bind(this)
+            );
+          } else {
+            this._openPValueHelpDialog(sInputValue);
+          }
+        },
+        _openPValueHelpDialog: function (sInputValue) {
+          var sDepotiId = this.getView()
+            .getModel("oModelView")
+            .getProperty("/DepotId");
+          var oFilter = new Filter(
+            [
+              new Filter("DealerName", FilterOperator.Contains, sInputValue),
+              new Filter(
+                "DealerSalesDetails/Depot",
+                FilterOperator.EQ,
+                sDepotiId
+              ),
+            ],
+            true
+          );
+          this._PvalueHelpDialog.getBinding("items").filter(oFilter);
+
+          // open value help dialog filtered by the input value
+          this._PvalueHelpDialog.open(sInputValue);
+        },
+        _handlePValueHelpSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var aCurrentFilter = [];
+          var oFilter = new Filter(
+            [
+              new Filter(
+                "tolower(DealerName)",
+                FilterOperator.Contains,
+                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+              ),
+              new Filter("Id", FilterOperator.Contains, sValue.trim()),
+            ],
+            false
+          );
+          aCurrentFilter.push(oFilter);
+          var sDepotId = this.getView()
+            .getModel("oModelView")
+            .getProperty("/DepotId");
+          var DepotFilter = new Filter(
+            "DealerSalesDetails/Depot",
+            FilterOperator.EQ,
+            sDepotId
+          );
+          aCurrentFilter.push(DepotFilter);
+          var endFilter = new Filter({
+            filters: aCurrentFilter,
+            and: true,
+          });
+          evt.getSource().getBinding("items").filter(endFilter);
+        },
+
+        _handlePValueHelpClose: function (evt) {
+          var aSelectedItems = evt.getParameter("selectedItems"),
+            oMultiInput = this.byId("idMinpPDealers");
+          oMultiInput.removeAllTokens();
+          var oModelView = this.getView().getModel("oModelView");
+          if (aSelectedItems && aSelectedItems.length > 0) {
+            aSelectedItems.forEach(function (oItem) {
+              oMultiInput.addToken(
+                new Token({
+                  text: oItem.getTitle(),
+                })
+              );
+              oModelView.setProperty("/DealerId", oItem.getDescription());
+            });
+          }
+        },
+        onPTokenUpdate: function (oEvent) {
+          if (oEvent.getParameter("type") == "removed") {
+            this.getView().getModel("oModelView").setProperty("/DealerId", "");
+          }
+        },
+        //himank sec dealer changes
+        onValueHelpRequested: function () {
+          this._oMultiInput = this.getView().byId("multiInput");
+          this.oColModel = new JSONModel({
+            cols: [
+              {
+                label: "SAP Code",
+                template: "Id",
+                width: "10rem",
+              },
+              {
+                label: "Dealer Name",
+                template: "DealerName",
+              },
+              {
+                label: "Plant Code",
+                template: "PlantCode",
+              },
+            ],
+          });
+
+          var aCols = this.oColModel.getData().cols;
+
+          this._oValueHelpDialog = sap.ui.xmlfragment(
+            "com.knpl.pragati.ContactPainter.view.fragments.SecondaryDealerValueHelp",
+            this
+          );
+          this.getView().addDependent(this._oValueHelpDialog);
+
+          this._oValueHelpDialog.getTableAsync().then(
+            function (oTable) {
+              //		oTable.setModel(this.oProductsModel);
+              oTable.setModel(this.oColModel, "columns");
+
+              if (oTable.bindRows) {
+                oTable.bindAggregation("rows", "/DealerSet");
+              }
+
+              if (oTable.bindItems) {
+                oTable.bindAggregation("items", "/DealerSet", function () {
+                  return new sap.m.ColumnListItem({
+                    cells: aCols.map(function (column) {
+                      return new sap.m.Label({
+                        text: "{" + column.template + "}",
+                      });
+                    }),
+                  });
+                });
+              }
+
+              this._oValueHelpDialog.update();
+            }.bind(this)
+          );
+
+          this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+          this._oValueHelpDialog.open();
+        },
+
+        _getfilterforControl: function () {
+          var sDepot = this.getView()
+            .getModel("oModelView")
+            .getProperty("/DepotId");
+
+          var sPrimaryPainter = this.getView()
+            .getModel("oModelView")
+            .getProperty("/DealerId");
+          var aFilters = [];
+          if (sPrimaryPainter) {
+            aFilters.push(new Filter("Id", FilterOperator.NE, sPrimaryPainter));
+          }
+          if (sDepot) {
+            aFilters.push(
+              new Filter("DealerSalesDetails/Depot", FilterOperator.EQ, sDepot)
+            );
+          }
+          if (aFilters.length == 0) {
+            return [];
+          }
+
+          return new Filter({
+            filters: aFilters,
+            and: true,
+          });
+        },
+
+        onFilterBarSearch: function (oEvent) {
+          var afilterBar = oEvent.getParameter("selectionSet"),
+            aFilters = [];
+
+          aFilters.push(
+            new Filter({
+              path: "Id",
+              operator: FilterOperator.Contains,
+              value1: afilterBar[0].getValue(),
+              caseSensitive: false,
+            })
+          );
+          aFilters.push(
+            new Filter({
+              path: "DealerName",
+              operator: FilterOperator.Contains,
+              value1: afilterBar[1].getValue(),
+              caseSensitive: false,
+            })
+          );
+
+          this._filterTable(
+            new Filter({
+              filters: aFilters,
+              and: true,
+            })
+          );
+        },
+
+        onValueHelpAfterOpen: function () {
+          var aFilter = this._getfilterforControl();
+
+          this._filterTable(aFilter, "Control");
+          this._oValueHelpDialog.update();
+        },
+
+        _filterTable: function (oFilter, sType) {
+          var oValueHelpDialog = this._oValueHelpDialog;
+
+          oValueHelpDialog.getTableAsync().then(function (oTable) {
+            if (oTable.bindRows) {
+              oTable.getBinding("rows").filter(oFilter, sType || "Application");
+            }
+
+            if (oTable.bindItems) {
+              oTable
+                .getBinding("items")
+                .filter(oFilter, sType || "Application");
+            }
+
+            oValueHelpDialog.update();
+          });
+        },
+
+        onValueHelpCancelPress: function () {
+          this._oValueHelpDialog.close();
+        },
+
+        onValueHelpOkPress: function (oEvent) {
+          var oData = [];
+          var xUnique = new Set();
+          var aTokens = oEvent.getParameter("tokens");
+
+          aTokens.forEach(function (ele) {
+            if (xUnique.has(ele.getKey()) == false) {
+              oData.push({
+                DealerName: ele.getText(),
+                Id: ele.getKey(),
+              });
+              xUnique.add(ele.getKey());
+            }
+          });
+
+          //  this._oMultiInput.setTokens(aTokens);
+          this.getView()
+            .getModel("oModelControl")
+            .setProperty("/PainterAddDet/SecondryDealer", oData);
+          this._oValueHelpDialog.close();
+        },
+        //end himank
         _getFormFragment: function (sFragmentName) {
           var pFormFragment = this._formFragments[sFragmentName],
             oView = this.getView();
@@ -1121,6 +1893,60 @@ sap.ui.define(
             oRouter.navTo("RoutePList", {}, true);
           }
         },
+        //himank loyalty table changes
+        onBeforeRebind: function (oEvent) {
+          var oPainterId = this.getViewModel("oModelControl2").getProperty(
+            "/PainterId"
+          );
+
+          var oBindingParams = oEvent.getParameter("bindingParams"),
+            oFinancialYear = this._getfinanceYear(),
+            aFilters = [],
+            //check if CreatedAt is Passed in filter or Not
+            bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
+              ele
+            ) {
+              return ele.sPath !== "CreatedAt";
+            });
+
+          aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+
+          if (bApplyCurrentFinancialYear)
+            aFilters.push(
+              new Filter({
+                path: "CreatedAt",
+                operator: FilterOperator.BT,
+                value1: oFinancialYear.startYear,
+                value2: oFinancialYear.endYear,
+              })
+            );
+
+          oBindingParams.filters.push(
+            new Filter({
+              filters: aFilters,
+              and: true,
+            })
+          );
+        },
+        _getfinanceYear: function () {
+          var oNow = new Date(),
+            iMonth = oNow.getMonth(),
+            startYear,
+            endYear;
+          if (iMonth < 3) {
+            endYear = oNow.getFullYear();
+            startYear = endYear - 1;
+          } else {
+            startYear = oNow.getFullYear();
+            endYear = startYear + 1;
+          }
+
+          startYear = new Date(startYear, 3, 1);
+          endYear = new Date(endYear, 2, 31, 23, 59, 59);
+
+          return { endYear: endYear, startYear: startYear };
+        },
+        // himank loyalty hanges end
       }
     );
   }

@@ -21,26 +21,51 @@
                 <f:content>
                     <fb:FilterBar showRestoreButton="true" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>AgeGroup}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>AgeGroup}" id="cmbxAgeGrp" items="{path:'/MasterAgeGroupSet'}" selectedKey="{oModelView>/filterBar/AgeGroupId}">
-                                        <core:Item text="{AgeGroup}" key="{Id}"/>
+                                      <ComboBox placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
+                    <core:Item text="{Id}" key="{Id}" />
+                </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
+                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelView>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
+
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelView>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="AgeGroup" label="{i18n>MembershipId}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>MembershipId}"  selectedKey="{oModelControl>/filterBar/MembershipId}">
+                                        <core:Item text="Generated" key="Generated"/>
+                                        <core:Item text="Not Generated" key="NotGenerated"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Preferredlanguage" label="{i18n>PreferredLanguage}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                      <ComboBox placeholder="{i18n>PreferredLanguage}" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/filterBar/PreferredLanguage', type :'com.knpl.pragati.ContactPainter.model.customInt' }">
+                    <items>
+                        <core:Item text="{Language}" key="{Id}" />
+                    </items>
+                </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelView>/filterBar/RegistrationStatus}">
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelControl>/filterBar/RegistrationStatus}">
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Registered" key="REGISTERED"/>
                                     </ComboBox>
@@ -52,7 +77,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Dealers,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
@@ -84,7 +109,7 @@
                         <Text text="{i18n>LinkPrimaryDealer}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>LinkSecondryDealer}"/>
+                        <Text text="{i18n>PreferredLanguage}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>KycStatus}"/>
@@ -109,16 +134,20 @@
                                 <Button tooltip="Generate Membership Id" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
                             </VBox>
                             
-                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <!-- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'},strictParsing:true,UTC:true }"/> -->
+                            <Text text="{path:'CreatedAt',formatter:'.fmtDate' }"/>
                             <Text text="{Mobile}"/>
                             <Text text="{PainterType/PainterType}" />
                             <!-- <Text text="{AgeGroup/AgeGroup}"/> -->
                             <Text text="{PrimaryDealerDetails/DealerName}"/>
-                            <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/>
+                            <Text text="{path:'Preference/Language/Language', formatter:'.fmtStatus'}"/>
+                            <!-- <Link text="{=${Dealers}.length} {i18n>Dealers}" press="onDealersPress"/> -->
                             <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
                             <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
+                            
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
+                               <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                                 <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
