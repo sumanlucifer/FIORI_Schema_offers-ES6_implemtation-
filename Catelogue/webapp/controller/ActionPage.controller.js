@@ -207,6 +207,7 @@ sap.ui.define([
             this._showSuccessMsg();
         },
         handleUploadCompleteImage: function () {
+            this.idPreviewImage
             this._showSuccessMsg();
         },
         handleUploadCompletePdf: function () {
@@ -263,7 +264,7 @@ sap.ui.define([
                         // console.log(oPayload);
                         oDataModel.update("/" + _property, oPayload, {
                             success: function () {
-                                console.log("sicc");
+                                
                                 that._showSuccessMsg();
                                 that._updateImage(_property);
                                 that._updatePdf(_property);
@@ -295,6 +296,7 @@ sap.ui.define([
 
         _showSuccessMsg: function () {
             var oViewModel = this.getView().getModel("ActionViewModel");
+            // oViewModel.refresh(true);
             // oViewModel.setProperty("/busy", false);
 
             var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
