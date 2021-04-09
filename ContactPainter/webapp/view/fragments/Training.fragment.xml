@@ -12,8 +12,27 @@
                             initiallyVisibleFields="Title"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
-                            persistencyKey="TrainingSmartTableKey">
-                        
+                            persistencyKey="TrainingSmartTableKey"
+                            ignoreFromPersonalisation="Id,Address,CityId,CreatedBy,DepotId,Description,DivisionId,Location,StateId,Status,TrainingCode,Url,ZoneId,PainterType,PainterArcheId,TrainingTypeId,IsSelected,UpdatedAt,UpdatedBy,IsArchived">
+                                               <Table>
+                                <columns>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 6 ,"sortProperty": "Id","filterProperty": "Id"}'/>
+                                        </customData>
+                                          <Text text="{i18n>trainingQuestionaaire}"/>
+                                    </Column>
+                                    
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                              <Button text="{i18n>ViewQuestion}" press="onViewQuestionaire" />
+                                               
+                                         </cells>      
+                                    </ColumnListItem>
+                                </items> 
+                            </Table>
                         </smartTable:SmartTable>
 </core:FragmentDefinition>
 

@@ -480,6 +480,7 @@ sap.ui.define(
             }
           );
         },
+        
         _Deactivate: function (oData, sPath, oBject) {
           var oPayload = {
             IsArchived: true,

@@ -106,7 +106,7 @@ sap.ui.define(
             Search: {
               Referral: "",
               Tokens: "",
-              Complains: ""
+              Complains: "",
               //LoyaltyPoints: "",
             },
             ApplyLoyaltyPoints: "",
@@ -478,7 +478,7 @@ sap.ui.define(
               MessageToast.show(
                 "Painter " + oPayload["Name"] + " Sucessfully Updated"
               );
-               othat.fnCheckProfileCompleted.call(othat,oPayload);
+              othat.fnCheckProfileCompleted.call(othat, oPayload);
               othat.handleCancelPress();
               //oData.refresh(true);
             },
@@ -1490,21 +1490,26 @@ sap.ui.define(
           var oModelControl = oView.getModel("oModelControl2");
           var sPainterId = oModelControl.getProperty("/PainterId");
           var oValidator = new Validator();
-          if(oPayload["ReferralName"].trim() =="" ||  oPayload["ReferralMobile"].trim()=="" ){
-            MessageToast.show("Kindly Enter the referral name and mobile Number");
+          if (
+            oPayload["ReferralName"].trim() == "" ||
+            oPayload["ReferralMobile"].trim() == ""
+          ) {
+            MessageToast.show(
+              "Kindly Enter the referral name and mobile Number"
+            );
             return;
           }
-         
+
           var oDataValue = oData.getObject("/PainterSet(" + sPainterId + ")");
-         
+
           var oSentPayoad = {
             ReferralName: oPayload["ReferralName"].trim(),
             ReferralMobile: oPayload["ReferralMobile"].trim(),
             ReferralEmail: oPayload["ReferralEmail"].trim(),
             ReferralCode: oDataValue["RegistrationReferralCode"],
-            ReferredBy:parseInt(sPainterId)
+            ReferredBy: parseInt(sPainterId),
           };
-          console.log(oSentPayoad)
+          console.log(oSentPayoad);
 
           oData.create("/PainterReferralHistorySet", oSentPayoad, {
             success: function () {
@@ -1525,11 +1530,13 @@ sap.ui.define(
         onAddReferralClose: function () {
           this._DialogAddREferal.destroy();
           delete this._DialogAddREferal;
-          this.getView().getModel("oModelControl2").setProperty("/AddReferral",{
+          this.getView()
+            .getModel("oModelControl2")
+            .setProperty("/AddReferral", {
               ReferralName: "",
               ReferralMobile: "",
               ReferralEmail: "",
-            })
+            });
         },
         _loadEditProfile: function (mParam) {
           var promise = jQuery.Deferred();
@@ -1947,6 +1954,68 @@ sap.ui.define(
           return { endYear: endYear, startYear: startYear };
         },
         // himank loyalty hanges end
+
+        // knowledge table changes
+        onViewQuestionaire: function (oEvent) {
+          console.log(oEvent.getSource().getBindingContext());
+          this._TariningQuestionnaireDialog(
+            oEvent.getSource().getBindingContext().getPath()
+          );
+        },
+        _TariningQuestionnaireDialog: function (mParam) {
+          var oView = this.getView();
+          var othat = this;
+          if (!this._pQuestionaireDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.TrainingQuestionnaireDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pQuestionaireDialog = oDialog;
+                othat._setQuestioanireData(mParam);
+              }.bind(this)
+            );
+          } else {
+            othat._setQuestioanireData(mParam);
+          }
+        },
+        _setQuestioanireData: function (sPath) {
+          var oView = this.getView();
+          var oTable = oView.byId("Questionnaire");
+          console.log(sPath);
+          this._pQuestionaireDialog.bindElement({
+            path: sPath,
+            parameters: {
+              expand: "TrainingQuestionnaire/TrainingQuestionnaireOptions",
+            },
+          });
+          oView.addDependent(this._pQuestionaireDialog);
+          this._pQuestionaireDialog.open();
+        },
+        QuestionaaireFactory: function (sId, oContext) {
+          var oBject = oContext.getObject();
+          console.log(oBject);
+          var oColumnListItem = new sap.m.ColumnListItem();
+          oColumnListItem.addCell(
+            new sap.m.Text({
+              text: "{Question}",
+            })
+          );
+        oBject["TrainingQuestionnaireOptions"]["__list"].forEach(function(z){
+            oColumnListItem.addCell(
+            new sap.m.Text({
+              text: "{/"+oBject["TrainingQuestionnaireOptions"]["__list"][0]+"/Option}",
+            })
+          );
+        })
+
+         
+
+          return oColumnListItem;
+        },
+        onQuestinaireDialogClose: function () {},
       }
     );
   }
