@@ -89,7 +89,7 @@ sap.ui.define(
             TokenCode: true,
             tokenCodeValue: "",
             ImageLoaded: false,
-            ComplainResolved:false,
+            ComplainResolved: false,
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -140,7 +140,7 @@ sap.ui.define(
           var oView = this.getView();
           var oDataValue = "";
           var othat = this;
-         
+
           oView.getModel().read("/" + oProp, {
             success: function (data) {
               var oViewModel = new JSONModel(data);
@@ -158,16 +158,29 @@ sap.ui.define(
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
           // setting the resolved flag if we have the value from backend;
-          if(oModelView.getProperty("/ComplaintStatus")==="RESOLVED"){
-              console.log("Status is resolved");
-              oModelControl.setProperty("/ComplainResolved",true);
-              oModelControl.setProperty("/TokenCode", false);
+          if (oModelView.getProperty("/ComplaintStatus") === "RESOLVED") {
+            console.log("Status is resolved");
+            oModelControl.setProperty("/ComplainResolved", true);
+            oModelControl.setProperty("/TokenCode", false);
           }
+          //setting the filtering for the scenario
+          var sComplainSubType = oModelView.getProperty("/ComplaintSubtypeId");
+          var sComplaintStatus = oModelView.getProperty("/ComplaintStatus");
+          var aResolutionFilter = [];
+          if(sComplaintStatus!==""){
+             aResolutionFilter.push(new Filter("Scenario",FilterOperator.EQ,sComplaintStatus))
+          }else{
+              aResolutionFilter.push(new Filter("Scenario",FilterOperator.EQ,"REGISTERED"))
+          }
+          if(sComplainSubType!==""){
+              aResolutionFilter.push(new Filter("TypeId",FilterOperator.EQ,sComplainSubType))
+          }
+          oView.byId("resolution").getBinding("items").filter(aResolutionFilter);
 
           var sReqFields = ["TokenCode", "RewardPoints"];
           var sValue = "",
             sPlit;
-          
+
           for (var k of sReqFields) {
             sValue = oModelView.getProperty("/" + k);
             sPlit = k.split("/");
@@ -191,20 +204,21 @@ sap.ui.define(
             );
             oModelControl.setProperty("/TokenCode", false);
           }
-          
         },
         _CheckImage: function (oProp) {
-            var oView = this.getView();
-            var oModelControl = this.getView().getModel("oModelControl");
-            var sImageUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/"+oProp+"/$value"
-          jQuery.get(sImageUrl)
+          var oView = this.getView();
+          var oModelControl = this.getView().getModel("oModelControl");
+          var sImageUrl =
+            "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
+          jQuery
+            .get(sImageUrl)
             .done(function () {
-                oModelControl.setProperty("/ImageLoaded",true);
+              oModelControl.setProperty("/ImageLoaded", true);
               console.log("Image Exist");
             })
             .fail(function () {
-                oModelControl.setProperty("/ImageLoaded",false);
-              console.log("Image Doesnt Exist")
+              oModelControl.setProperty("/ImageLoaded", false);
+              console.log("Image Doesnt Exist");
             });
         },
         _loadEditProfile: function (mParam) {
@@ -241,7 +255,7 @@ sap.ui.define(
             urlParameters: {
               qrcode: "'" + sTokenCode + "'",
               painterid: oModelView.getProperty("/PainterId"),
-              channel:"'Complains'"
+              channel: "'Complains'",
             },
             success: function (oData) {
               if (oData !== null) {
@@ -316,6 +330,26 @@ sap.ui.define(
             oModel.setProperty("/ResolutionOthers", "");
           }
           //console.log(oModel);
+        },
+        onScenarioChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var sSuTypeId = oView
+            .getModel("oModelView")
+            .getProperty("/ComplaintSubtypeId");
+
+          var oResolution = oView.byId("resolution");
+          //clearning the serction for the resolution
+          var aFilter = [];
+          if (sKey) {
+            aFilter.push(new Filter("Scenario", FilterOperator.EQ, sKey));
+          }
+          if (sSuTypeId !== "") {
+            aFilter.push(new Filter("TypeId", FilterOperator.EQ, sSuTypeId));
+          }
+          oResolution.setSelectedKey("");
+
+          oResolution.getBinding("items").filter(aFilter);
         },
         _postDataToSave: function () {
           var oView = this.getView();
