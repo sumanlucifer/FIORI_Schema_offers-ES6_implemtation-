@@ -104,7 +104,7 @@ sap.ui.define([
             this._property = oEvent.getParameter("arguments").property;
 
             this.getModel().metadataLoaded().then(function () {
-                var sObjectPath = this.getModel().createKey("MasterProductCatalogueSet", {
+                var sObjectPath = this.getModel().createKey("ProductCatalogueSet", {
                     Id: sObjectId
                 });
                 this._bindView("/" + sObjectPath);
@@ -114,17 +114,18 @@ sap.ui.define([
                 this.pdfURI = this.sServiceURI + sObjectPath + "/$value?doc_type=pdf";
                 this.imgURI = this.sServiceURI + sObjectPath + "/$value?doc_type=image";
 
-                // var aData = [{ Image: this.imgURI,Title:"Demo" }];
+               
 
-                // var oModel = new JSONModel();
-                // oModel.setData(aData);
-                // this.getView().setModel(oModel,"ImageModel");
+                var oModel = new JSONModel();
+                oModel.setData({Image: this.imgURI});
+                this.getView().setModel(oModel,"ImageModel");
 
             }.bind(this));
 
 
 
         },
+
 
 
 		/**
@@ -140,7 +141,7 @@ sap.ui.define([
             this.getView().bindElement({
                 path: sObjectPath,
                 parameters: {
-                    expand: "CreatedByDetails,MediaList",
+                    expand: "CreatedByDetails,ProductCategory,ProductClassification,ProductRange,ProductCompetitors,MediaList",
                     // select: "Title,CreatedAt,Status,CreatedByDetails/Name"
                 },
                 events: {
@@ -159,16 +160,19 @@ sap.ui.define([
 
                         var data = oEvent.getParameter('data');
 
-                        var imgSize = data.MediaList[1].MediaSize;
-                        var pdfSize = data.MediaList[0].MediaSize;
-                        var imgName = data.MediaList[1].MediaName;
-                        var pdfName = data.MediaList[0].MediaName;
+                        var imgSize = data.MediaList[0].MediaSize;
+                        var pdfSize = data.MediaList[1].MediaSize;
+                        var imgName = data.MediaList[0].MediaName;
+                        var pdfName = data.MediaList[1].MediaName;
+                        var productCompetitors= data.ProductCompetitors;
 
 
                         oViewModel.setProperty("/ImageSize", imgSize + " KB");
                         oViewModel.setProperty("/PdfSize", pdfSize + " KB");
                         oViewModel.setProperty("/ImageName", imgName);
                         oViewModel.setProperty("/PdfName", pdfName);
+
+                        oViewModel.setProperty("/Competitor", productCompetitors);
 
 
 

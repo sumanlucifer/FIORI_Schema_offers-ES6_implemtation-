@@ -27,7 +27,7 @@
                 
 				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
                 
-				
+				<form:content>
                 <VBox >
                 <Title  text="Catalogue Details"  />
                 <HBox>
@@ -80,13 +80,14 @@
                                                     selectedKey="{ActionViewModel>/Range}"
                                                     items="{
                                                         path: '/MasterProductRangeSet',
-                                                        sorter: { path: 'Range' }
+                                                        sorter: { path: 'Id' }
                                                     }">
                                                     <core:Item key="{Id}" text="{Range}" />
                                                     </Select>
                                             </VBox>
                                         </HBox> 
                                 </VBox>
+                                <!-- <Button text="Add Compititor" press="onAddCompititor" /> -->
                             </VBox>
                 </VBox>
                 
@@ -133,16 +134,65 @@
          
                  </HBox>                          
                                        
+                <HBox width="100%" >
+                    <Table id="idCompetitorDetils" width="auto" items="{path: 'ActionViewModel>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>competitors}" />
+                    <ToolbarSpacer />
+                    <Button text="{i18n>Add}" type="Emphasized" press="onAddCompetitor" tooltip="{i18n>AddPainter}"></Button>
+                </Toolbar>
+            </headerToolbar>
 
+            <columns>
+                <Column>
+                    <Text text="{i18n>selectCompititor}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>competitorProduct}" />
+                </Column>
+
+                <Column width="10%">
+                    <Text text="{i18n>Action}" />
+                </Column>
+
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <VBox>
+                            <Select items="{path:'/MasterCompetitorCompanySet', templateShareable: true}" selectedKey="{path:'ActionViewModel>CompetitorCompanyId' }">
+                                <items>
+                                    <core:Item text="{CompanyName}" key="{Id}" />
+                                </items>
+                            </Select>
+                           
+                        </VBox>
+                        <VBox>
+                            <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed" maxLength="50" width="70%" required="true" value="{path:'ActionViewModel>CompetitorProductName',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLngth:50, search:'^[a-zA-Z]{1}[wW]*'} }" />
+                           
+                        </VBox>
+                        <HBox>
+                            <!-- <Button  icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button> -->
+                    
+                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveCompetitor"></Button>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+                </HBox>
                                         
         
         
         
      
                 </VBox>
-               
+                
+               </form:content>
 			</form:SimpleForm>
-			
 		</f:content>
         <f:footer>
             <OverflowToolbar>

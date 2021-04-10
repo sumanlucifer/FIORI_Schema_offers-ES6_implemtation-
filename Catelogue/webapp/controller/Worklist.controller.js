@@ -252,9 +252,9 @@ sap.ui.define([
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter([
-                                new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
-                                // new Filter("Description", FilterOperator.Contains, sValue),
-                                // new Filter("Url", FilterOperator.Contains, sValue)
+                                new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                                new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                               new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                             ], false));
                         }
                         break;
