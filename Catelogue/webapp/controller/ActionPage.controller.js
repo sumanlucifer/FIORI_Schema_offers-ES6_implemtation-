@@ -33,6 +33,7 @@ sap.ui.define([
 
             this._pdfViewer = new PDFViewer();
             this.getView().addDependent(this._pdfViewer);
+
         },
 
         _onObjectMatched: function (oEvent) {
@@ -45,20 +46,43 @@ sap.ui.define([
                 Title: "",
                 Category: "",
                 Classification: "",
-                Range: ""
+                Range: "",
+                Competitor: []
+
 
             };
             if (this._action === "edit") {
                 var oComponentModel = this.getComponentModel();
                 var html = new sap.ui.core.HTML();
-                var oItem = oComponentModel.getProperty("/" + this._property);
-                if (!oItem) {
-                    return this._navToHome();
-                }
-                oData.Title = oItem.Title;
-                oData.Category = oItem.ProductCategoryId
-                oData.Classification = oItem.ProductClassificationId
-                oData.Range = oItem.ProductRangeId
+                //var oItem = oComponentModel.getProperty("/" + this._property);
+                // this.oItem;
+                var that = this;
+                this.getView().getModel().read("/" + this._property, {
+                    urlParameters: {
+                        "$expand": "ProductCompetitors"
+                    },
+                    success: function (data, response) {
+
+                        oData.Title = data.Title;
+                        oData.Category = data.ProductCategoryId
+                        oData.Classification = data.ProductClassificationId
+                        oData.Range = data.ProductRangeId
+                        oData.Competitor = data.ProductCompetitors.results
+                        var oViewModel = new JSONModel(oData);
+                        that.getView().setModel(oViewModel, "ActionViewModel");
+
+                    },
+                    error: function (oError) {
+                    }
+                });
+                // console.log(this.oItem);
+                // oData.Title = oItem.Title;
+                // oData.Category = oItem.ProductCategoryId
+                // oData.Classification = oItem.ProductClassificationId
+                // oData.Range = oItem.ProductRangeId
+                // oData.Competitors = oItem.ProductCompetitors.results
+                //oData.CompetitorCompany=oItem.CompetitorCompanyId
+                //oData.CompetitorProductName=oItem.CompetitorProductName
 
                 this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
                 this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
@@ -81,7 +105,11 @@ sap.ui.define([
             var oViewModel = new JSONModel(oData);
             this.getView().setModel(oViewModel, "ActionViewModel");
             this._setDefaultValueState();
+
+
         },
+
+
 
         onPressBreadcrumbLink: function () {
             //this._navToHome();
@@ -120,14 +148,14 @@ sap.ui.define([
         onChangePdf: function (oEvent) {
             if (oEvent.getSource().oFileUpload.files.length > 0) {
                 this.pdfName = this.oFileUploaderPdf.getValue();
-                
-            } 
+
+            }
         },
 
         _uploadToolImage: function (oData) {
             var oModel = this.getComponentModel();
             if (this._action === "add") {
-                this.oFileUploader.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=image&file_name=" + this.imageName);
+                this.oFileUploader.setUploadUrl(this.sServiceURI + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=image&file_name=" + this.imageName);
             }
             if (!this.oFileUploader.getValue()) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
@@ -149,7 +177,7 @@ sap.ui.define([
 
             var oModel = this.getComponentModel();
             if (this._action === "add") {
-                this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + this.pdfName);
+                this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + this.pdfName+"&language_code=EN");
             }
             if (!this.oFileUploaderPdf.getValue()) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
@@ -188,7 +216,7 @@ sap.ui.define([
         },
         _updatePdf: function (propertySet) {
             var oModel = this.getComponentModel();
-            this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=pdf&file_name=" + this.pdfName);
+            this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=pdf&file_name=" + this.pdfName+"&language_code=EN");
             this.oFileUploaderPdf.checkFileReadable().then(function () {
                 // @ts-ignore
                 //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
@@ -215,11 +243,22 @@ sap.ui.define([
         },
 
         onPressSaveOrUpdate: function () {
+            //var oModel = this.getView().getModel("ActionViewModel");
+
+
 
             if (this._validateRequiredFields()) {
                 var oDataModel = this.getComponentModel();
                 var oViewModel = this.getView().getModel("ActionViewModel");
+                var Competitors = JSON.parse(
+                    JSON.stringify(oViewModel.getProperty("/Competitor"))
+                ).map((item) => {
+                    var id = parseInt(item.CompetitorCompanyId);
+                    var name = item.CompetitorProductName;
 
+                    var list = { CompetitorCompanyId: id, CompetitorProductName: name }
+                    return list;
+                });
 
 
                 var oPayload = {
@@ -228,6 +267,7 @@ sap.ui.define([
                     ProductCategoryId: parseInt(oViewModel.getProperty("/Category")),
                     ProductClassificationId: parseInt(oViewModel.getProperty("/Classification")),
                     ProductRangeId: parseInt(oViewModel.getProperty("/Range")),
+                    ProductCompetitors: Competitors
                 };
 
                 var cFiles = [];
@@ -246,7 +286,7 @@ sap.ui.define([
 
                         } else {
                             var that = this
-                            oDataModel.create("/MasterProductCatalogueSet", oPayload, {
+                            oDataModel.create("/ProductCatalogueSet", oPayload, {
                                 success: function (oData, response) {
                                     var id = oData.Id;
                                     that._uploadToolImage(oData);
@@ -261,10 +301,10 @@ sap.ui.define([
                         var that = this;
                         var _property = this._property;
 
-                        // console.log(oPayload);
+                        console.log(oPayload);
                         oDataModel.update("/" + _property, oPayload, {
                             success: function () {
-                                
+
                                 that._showSuccessMsg();
                                 that._updateImage(_property);
                                 that._updatePdf(_property);
@@ -323,7 +363,7 @@ sap.ui.define([
 
         _setDefaultValueState: function () {
             var oTitleControl = this.getView().byId("idTitle");
-           // var oCategoryControl = this.getView().byId("idCategory");
+            // var oCategoryControl = this.getView().byId("idCategory");
             oTitleControl.setValueState("None");
             oTitleControl.setValueStateText("");
             // oCategoryControl.setValueState("None");
@@ -343,6 +383,35 @@ sap.ui.define([
                 }
             }
         },
+
+        onAddCompetitor: function () {
+            var oModel = this.getView().getModel("ActionViewModel");
+            var oCompetitorMdl = oModel.getProperty("/Competitor");
+            var bFlag = true;
+
+            oCompetitorMdl.push({
+                CompetitorCompanyId: "",
+                CompetitorProductName: ""
+            });
+            oModel.refresh(true);
+        },
+        onPressRemoveCompetitor: function (oEvent) {
+            var oView = this.getView();
+            var oModel = oView.getModel("ActionViewModel");
+            var sPath = oEvent
+                .getSource()
+                .getBindingContext("ActionViewModel")
+                .getPath()
+                .split("/");
+            var aCompetitor = oModel.getProperty("/Competitor");
+            aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
+            //this._setFDLTbleFlag();
+            oModel.refresh();
+        },
+
+
+
+
 
 
 

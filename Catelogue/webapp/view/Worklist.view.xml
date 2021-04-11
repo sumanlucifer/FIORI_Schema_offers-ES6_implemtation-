@@ -79,7 +79,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails,ProductCategory'},sorter:{
+            <Table id="idCatlogueTable" width="auto" items="{path: '/ProductCatalogueSet', parameters : {expand:'CreatedByDetails,ProductCategory'},sorter:{
                     path: 'Id', 
                     descending: true
                 } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
@@ -140,8 +140,8 @@
                             <Text text="{ProductCategory/Category}"/>
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <Text text="0"/>
-                            <Text text="0"/>
+                            <Text text="{PdfViewerCount}"/>
+                            <Text text="{PdfDownloadCount}"/>
                             <!-- <ObjectStatus xmlns="sap.m"
                             state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
                 
