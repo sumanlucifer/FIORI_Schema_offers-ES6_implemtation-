@@ -56,7 +56,11 @@ sap.ui.define([
             oTable.attachEventOnce("updateFinished", function () {
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+                // oTable.rebindTable();
             });
+            // this.getComponentModel().metadataLoaded().then(function () {
+            //     oTable.rebindTable();
+            // });
             this.oRouter = this.getRouter();
 
             var oModel = new JSONModel({
@@ -67,10 +71,18 @@ sap.ui.define([
                     createdAt: "",
                     title: "",
                     createdBy: "",
-                    category:""
+                    category: "",
+                    classification: ""
                 }
             });
             this.getView().setModel(oModel, "ViewModel");
+
+            //this.oCustom=null;
+            //this.oFilter=null;
+        },
+        onAfterRendering: function () {
+            var oTable = this.byId("idCatlogueTable");
+            oTable.rebindTable();
         },
         _initData: function () {
             var oViewModel = new JSONModel({
@@ -207,7 +219,7 @@ sap.ui.define([
             var aFilters = [];
 
             var aKeys = [
-                "search", "CreatedAt", "Title", "CreatedByDetails","ProductCategory"
+                "search", "CreatedAt", "Title", "CreatedByDetails", "ProductCategory"
             ];
 
             for (let i = 0; i < aKeys.length; i++) {
@@ -251,11 +263,16 @@ sap.ui.define([
                     case "Search":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
+
+                            this.oCustom = { search: sValue };
                             aFilters.push(new Filter([
                                 new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
                                 new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
-                               new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
+                                new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                             ], false));
+                        }
+                        else {
+                            this.oCustom = null;
                         }
                         break;
                     case "Creation Date":
@@ -281,41 +298,75 @@ sap.ui.define([
                             aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
-                        case "Category":
+                    case "Category":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
+                    case "Classification":
+                        sValue = oControl.getValue();
+                        if (sValue && sValue !== "") {
+                            aFilters.push(new Filter({ path: "ProductClassification/Classification", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                        }
+                        break;
                 }
             }
 
-            var oTable = this.getView().byId("idCatlogueTable");
-            var oBinding = oTable.getBinding("items");
+            // var oTable = this.getView().byId("idCatlogueTable");
+            // var oBinding = oTable.getBinding("items");
             if (aFilters.length > 0) {
-                var oFilter = new Filter({
+                this.oFilter = new Filter({
                     filters: aFilters,
                     and: true,
                 });
-                oBinding.filter(oFilter);
+                //oBinding.filter(oFilter);
             } else {
-                oBinding.filter([]);
+                // oBinding.filter([]);
+                this.oFilter = null;
             }
-        },
-        onResetFilters: function () {
 
-            var oModel = this.getViewModel("ViewModel");
-            oModel.setProperty("/filterBar", {
-                search: "",
-                createdAt: "",
-                title: "",
-                createdBy: "",
-                category:""
-            });
-            this.getView().byId("idCreatedByInput").setValue("");
+            this.getView().byId("idCatlogueTable").rebindTable();
+        },
+
+        fnrebindTable: function (oEvent) {
+
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
+            }
+            if (this.oCustom) {
+                oBindingParams.parameters.search = this.oCustom.search;
+            }
+
+        },
+        onResetFilters: function (oEvent) {
+
+            this.oCustom=null;
+            this.oFilter=null;
+            var oBindingParams = oEvent.getParameter("bindingParams");
+             if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
+            }
+            if (this.oCustom) {
+                oBindingParams.parameters.search = this.oCustom.search;
+            }
             var oTable = this.byId("idCatlogueTable");
-            var oBinding = oTable.getBinding("items");
-            oBinding.filter([]);
+            oTable.rebindTable();
+            // var oModel = this.getViewModel("ViewModel");
+            // oModel.setProperty("/filterBar", {
+            //     search: "",
+            //     createdAt: "",
+            //     title: "",
+            //     createdBy: "",
+            //     category: "",
+            //     classification: ""
+            // });
+            //this.getView().byId("idCreatedByInput").setValue("");
+            //var oTable = this.byId("idCatlogueTable");
+            //var oBinding = oTable.getBinding("items");
+            //oBinding.filter([]);
         },
         handleSortButtonPressed: function () {
             this.getViewSettingsDialog("com.knpl.pragati.Catelogue.view.fragments.SortDialog")
