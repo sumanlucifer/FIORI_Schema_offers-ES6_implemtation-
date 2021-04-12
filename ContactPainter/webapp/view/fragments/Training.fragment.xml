@@ -3,6 +3,7 @@
                             id="smrtTraining"
                             editable="false"                   
                             entitySet="PainterTrainingSet"
+                            beforeRebindTable="onBeforeRebindTrainingTable"
                             tableType="ResponsiveTable"
                             showRowCount="true"
                             useExportToExcel="false"
@@ -10,10 +11,10 @@
                             useTablePersonalisation="true"
                             demandPopin="true"
                             initiallyVisibleFields="Title"
-                            enableAutoBinding="true"
+                            enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="TrainingSmartTableKey"
-                            ignoreFromPersonalisation="Id,Address,CityId,CreatedBy,DepotId,Description,DivisionId,Location,StateId,Status,TrainingCode,Url,ZoneId,PainterType,PainterArcheId,TrainingTypeId,IsSelected,UpdatedAt,UpdatedBy,IsArchived">
+                            ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
                                                <Table>
                                 <columns>
                                     <Column hAlign="Begin">

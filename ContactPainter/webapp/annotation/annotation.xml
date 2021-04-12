@@ -49,14 +49,6 @@
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Painter Id"/>
-                            <PropertyValue Property="Value" Path="PainterId"/>
-                        </Record>
-                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Training Id"/>
-                            <PropertyValue Property="Value" Path="TrainingId"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Training Type"/>
                             <PropertyValue Property="Value" Path="TrainingDetails/TrainingType/TrainingType"/>
                         </Record>

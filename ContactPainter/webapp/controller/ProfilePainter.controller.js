@@ -117,6 +117,7 @@ sap.ui.define(
               ReferralMobile: "",
               ReferralEmail: "",
             },
+            tableDealay: 0,
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl2");
@@ -126,6 +127,8 @@ sap.ui.define(
 
           //rebind Loyalty table
           this.getView().byId("smrtLoyalty").rebindTable();
+           this.getView().byId("smrtTraining").rebindTable();
+          
 
           this._initFilerForTables();
         },
@@ -1958,9 +1961,22 @@ sap.ui.define(
         // himank loyalty hanges end
 
         // knowledge table changes
+        onBeforeRebindTrainingTable: function (oEvent) {
+          var oView = this.getView();
+
+          var oPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+
+          var oBindingParams = oEvent.getParameter("bindingParams");
+          var oFilter = new Filter("PainterId",FilterOperator.EQ, oPainterId);
+          oBindingParams.filters.push(oFilter);
+          console.log(oPainterId)
+          //console.log(new Filter("PainterId", FilterOperator.EQ, oPainterId))
+        },
         onViewQuestionaire: function (oEvent) {
           var object = oEvent.getSource().getBindingContext().getObject();
-          console.log(object);
+
           this._TariningQuestionnaireDialog(object);
         },
         _TariningQuestionnaireDialog: function (mParam) {
@@ -1985,7 +2001,7 @@ sap.ui.define(
         _setQuestioanireData: function (sPath) {
           var oView = this.getView();
           var oTable = oView.byId("Questionnaire");
-          //console.log(sPath);
+
           this._pQuestionaireDialog.bindElement({
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
@@ -1998,7 +2014,7 @@ sap.ui.define(
         },
         QuestionaaireFactory: function (sId, oContext) {
           var oBject = oContext.getObject();
-         // console.log(oBject, "factory funtion trigerred");
+
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
             new sap.m.Text({
@@ -2008,20 +2024,19 @@ sap.ui.define(
           oBject["TrainingQuestionnaireOptions"]["__list"].forEach(function (
             z
           ) {
-           
             oColumnListItem.addCell(
               new ObjectStatus({
-                text: "{/"+z+ "/Option}",
-                state:{
-                    path:"/"+z+ "/IsCorrect",
-                    formatter:function(abc){
-                       if(abc){
-                           return "Success"
-                       }else{
-                           return "None"
-                       }
+                text: "{/" + z + "/Option}",
+                state: {
+                  path: "/" + z + "/IsCorrect",
+                  formatter: function (abc) {
+                    if (abc) {
+                      return "Success";
+                    } else {
+                      return "None";
                     }
-                }
+                  },
+                },
               })
             );
           });
