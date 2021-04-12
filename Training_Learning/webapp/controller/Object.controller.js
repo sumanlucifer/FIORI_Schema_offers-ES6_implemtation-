@@ -30,10 +30,6 @@ sap.ui.define([
                     delay: 0
                 });
 
-            debugger;
-            this.oPreviewImage = this.getView().byId("idPreviewImage");
-            this.oFileUploader = this.getView().byId("idFormVideoImgUploader");
-
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
             this.getRouter().getRoute("createObject").attachPatternMatched(this._onCreateObjectMatched, this);
 
@@ -84,17 +80,7 @@ sap.ui.define([
 		 * @private
 		 */
         _onObjectMatched: function (oEvent) {
-            debugger;
             var sObjectId = oEvent.getParameter("arguments").objectId;
-            // this._property = "LearningSet" + "(" + sObjectId + ")";
-            // // property;
-            // this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-
-            // this.oPreviewImage.setSrc("/" + this.sServiceURI + this._property + "/$value");
-            // this.oFileUploader.setUploadUrl("/" + this.sServiceURI + this._property + "/$value");
-            // var ProfilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + this._property + "/$value";
-            // this.getModel("objectView").setProperty("/ProfilePic", ProfilePic);
-            // this.oFileUploader.clear();
 
             var EditVideo = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditVideo");
             this.getModel("objectView").setProperty("/AddEditVideo", EditVideo);
@@ -352,54 +338,53 @@ sap.ui.define([
                     target: "/oDetails/Title"
                 });
             } else
-                if (data.RewardPoints === "" || data.RewardPoints === null) {
+                if (data.Url === "") {
                     oReturn.IsNotValid = true;
-                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                     aCtrlMessage.push({
-                        message: "MSG_PLS_ENTER_ERR_REWARD",
-                        target: "/oDetails/RewardPoints"
+                        message: "MSG_PLS_ENTER_ERR_URL",
+                        target: "/oDetails/Url"
                     });
                 } else
-                    if (data.RewardPoints == 0) {
+                    if (data.Url !== "" && !url.match(regex)) {
                         oReturn.IsNotValid = true;
-                        oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
+                        oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
                         aCtrlMessage.push({
-                            message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
-                            target: "/oDetails/RewardPoints"
+                            message: "MSG_VALDTN_ERR_URL",
+                            target: "/oDetails/Url"
                         });
                     } else
-                        if (data.Url === "") {
+                        if (data.Duration === null || data.Duration === "") {
                             oReturn.IsNotValid = true;
-                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                            oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
                             aCtrlMessage.push({
-                                message: "MSG_PLS_ENTER_ERR_URL",
-                                target: "/oDetails/Url"
+                                message: "MSG_VALDTN_ERR_DURATION",
+                                target: "/oDetails/Duration"
                             });
                         } else
-                            if (data.Url !== "" && !url.match(regex)) {
+                            if (data.Duration == 0) {
                                 oReturn.IsNotValid = true;
-                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                oReturn.sMsg.push("MSG_ENTER_DURATION_MORETHAN_ZERO");
                                 aCtrlMessage.push({
-                                    message: "MSG_VALDTN_ERR_URL",
-                                    target: "/oDetails/Url"
+                                    message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
+                                    target: "/oDetails/Duration"
+                                });
+                            } else if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                oReturn.IsNotValid = true;
+                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                aCtrlMessage.push({
+                                    message: "MSG_PLS_ENTER_ERR_REWARD",
+                                    target: "/oDetails/RewardPoints"
                                 });
                             } else
-                                if (data.Duration === null || data.Duration === "") {
+                                if (data.RewardPoints == 0) {
                                     oReturn.IsNotValid = true;
-                                    oReturn.sMsg.push("MSG_VALDTN_ERR_DURATION");
+                                    oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
                                     aCtrlMessage.push({
-                                        message: "MSG_VALDTN_ERR_DURATION",
-                                        target: "/oDetails/Duration"
+                                        message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
+                                        target: "/oDetails/RewardPoints"
                                     });
-                                } else
-                                    if (data.Duration == 0) {
-                                        oReturn.IsNotValid = true;
-                                        oReturn.sMsg.push("MSG_ENTER_DURATION_MORETHAN_ZERO");
-                                        aCtrlMessage.push({
-                                            message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
-                                            target: "/oDetails/Duration"
-                                        });
-                                    }
+                                }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
             return oReturn;

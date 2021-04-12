@@ -3,10 +3,16 @@
         <f:SimpleForm id="EditTrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{oModelView>/AddEditTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>TrainingDetails}"/>
-                <Label text="{i18n>colTrainingType}" required="true"/>
+                <Label text="{i18n>colTrainingMode}" required="true"/>
                 <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingTypeId}" editable="false">
                     <items>
                         <core:Item text="{TrainingType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>colTrainingType}" required="true"/>
+                <ComboBox id="idTrSubType" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
+                    <items>
+                        <core:Item text="{TrainingSubType}" key="{Id}"/>
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colTitle}" required="true"/>
@@ -32,7 +38,7 @@
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
-                <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <!-- <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
                 <ComboBox items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" change="onStateChange" selectedKey="{oModelView>/TrainingDetails/StateId}"  visible="{= ${appView>/trainingType} === 'OFFLINE'}">
                     <items>
                         <core:Item text="{State}" key="{Id}"/>
@@ -47,7 +53,7 @@
                 </ComboBox>
 
                 <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/> -->
 
                 <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <ComboBox selectionChange="onZoneChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
@@ -82,8 +88,7 @@
                 </ComboBox>
 
                 <Label text="{i18n>colImage}"/>
-                <Image width="5rem" class="sapUiTinyMargin" height="5rem"
-				src="{ parts : [ { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{oModelView>/ProfilePic}"/>
 				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
 			    buttonText="{i18n>fileUploaderTrainingtip}"/>
 

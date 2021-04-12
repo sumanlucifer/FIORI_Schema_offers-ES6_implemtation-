@@ -13,113 +13,91 @@
         <f:SimpleForm id="AddTrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{oModelView>/AddEditTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
             <core:Title text="{i18n>TrainingDetails}"/>
-                <Label text="{i18n>colTrainingType}" required="true"/>
+                <Label text="{i18n>colTrainingMode}" required="true"/>
                 <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingTypeId}" editable="false">
                     <items>
                         <core:Item text="{TrainingType}" key="{Id}"/>
                     </items>
                 </ComboBox>
-                <Label text="{i18n>colTitle}" required="true"/>
-                <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}"/>
+                <Label text="{i18n>colTrainingType}" required="true"/>
+                <ComboBox id="idTrSubType" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
+                    <items>
+                        <core:Item text="{TrainingSubType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>colTitle}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
-                <Label text="{i18n>colTrainingDescription}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000"/>
+                <Label text="{i18n>colTrainingDescription}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
-                <Label text="{i18n>colStartDateTime}" required="true"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true"/>
+                <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
 
-                <Label text="{i18n>colEndDateTime}" required="true"/>
-                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true"/>
+                <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <DateTimePicker valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+
+                <Label text="{i18n>colLink}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+
+                <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
+				<Input width="25%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input value="{oModelView>/TrainingDetails/RewardPoints}" type="Number"/>
+                <Input width="25%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number"/>
 
-                <Label text="{i18n>colLink}" required="true"/>
-                <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url"/>
+                <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
 
-                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
-
-                <Label text="{i18n>colState}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'OFFLINE'}" items="{path:'/MasterStateSet', sorter:{path:'State'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectionChange="onStateChanged" selectedKey="{oModelView>/TrainingDetails/StateId}">
-                    <items>
-                        <core:Item text="{State}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-                
-                <Label text="{i18n>colCity}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'OFFLINE'}" id="cmbCity" busy="{oModelView>/bCityItemsBusy}" busyIndicatorDelay="0" editable="{= ${oModelView>/TrainingDetails/StateId} !== null }" items="{path:'/MasterCitySet', sorter:{path:'City'}, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/CityId}">
-                    <items>
-                        <core:Item text="{City}" key="{Id}"/>
-                    </items>
-                </ComboBox>
-
-                <Label text="{i18n>colAddress}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-                <TextArea value="{oModelView>/TrainingDetails/Address}" rows="5" maxLength="500" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
-
-                <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox selectionChange="onZoneChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
+                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <ComboBox selectionChange="onZoneChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
                     <core:Item text="{Id}" key="{Id}"/>
                 </ComboBox>
 
-                <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
                         <core:Item text="{Id}" key="{Id}"/>
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox id="idDepot" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <ComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
                         <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
+                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
                         <core:Item text="{PainterType}" key="{Id}"/>
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} === 'ONLINE'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
+                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
                     <items>
                         <core:Item text="{ArcheType}" key="{Id}"/>
                     </items>
                 </ComboBox>
-            
-                    <!-- <u:FileUploader
-                        id="idFormTrainingImgUploader"
-                        name="formTrainingImgUploader"
-                        width="100%"
-                        tooltip="{i18n>fileUploaderTrainingtip}"
-                        change="onChangeFile"
-                        typeMissmatch="handleTypeMissmatch"
-                        fileType="png,jpg,jpeg"
-                        useMultipart="false"
-                        sendXHR="true"
-                        uploadComplete="handleUploadComplete" />
-                    <Image id="idPreviewImage" width="100px" height="100px" /> -->
 
-                <Label text="{i18n>colImage}"/>
+                <Label text="{i18n>colImage}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem"
-				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
+				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-				    buttonText="{i18n>fileUploaderTrainingtip}"/>
+				    buttonText="{i18n>fileUploaderTrainingtip}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
-                <Label text="{i18n>colAttendanceFile}"/>
-                <u:FileUploader id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
+                <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
+                <u:FileUploader id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
                 </u:FileUploader>
-                <!-- <Button text="Upload" press="onUploadAttendance"></Button> -->
         </f:content>
         </f:SimpleForm>
         </VBox>
         <VBox id="idVbxAddQuestionnaire" width="100%">
         <f:SimpleForm id="AddQuestionnaireDetails" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
         <f:content>
-                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Questionnaire' : '' }"/>
-                <List visible="{= ${appView>/trainingType} === 'ONLINE'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
+                <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Questionnaire' : '' }"/>
+                <List visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
 					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>
