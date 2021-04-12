@@ -31,23 +31,18 @@
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
-                    <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
+                    <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                     <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
-                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewEndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
-                </layout:VerticalLayout>
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
-                    <m:ObjectStatus title="{i18n>colAddress}"/>
-                    <m:ObjectStatus text="{oModelView>/TrainingDetails/Address}"/>
-                    <m:ObjectStatus text="{oModelView>/TrainingDetails/City/City} {oModelView>/TrainingDetails/State/State}"/>
+                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewEndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 </layout:VerticalLayout>
             </m:FlexBox>
         </uxap:headerContent>
 
         <uxap:sections>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TrainingDetails}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TrainingDetails}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbTrDetails" renderType="Bare">
@@ -56,7 +51,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}" visible="{= ${appView>/trainingType} === 'ONLINE'}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbQuestionnaire" renderType="Bare">

@@ -44,8 +44,10 @@ sap.ui.define([
                 currDate: new Date(),
                 filterBar: {
                     StartDate: null,
-                    Status: "",
-                    Title: ""
+                    // Status: "",
+                    TrainingSubTypeId: null,
+                    Search: "",
+                    RewardPoints: null
                 }
             });
             this.setModel(oViewModel, "worklistView");
@@ -73,7 +75,7 @@ sap.ui.define([
             if (!oSearchField) {
                 // @ts-ignore
                 oBasicSearch = new sap.m.SearchField({
-                    value: "{worklistView>/filterBar/Title}",
+                    value: "{worklistView>/filterBar/Search}",
                     showSearchButton: true,
                     search: othat.onSearch.bind(othat),
                 });
@@ -158,8 +160,10 @@ sap.ui.define([
         _ResetFilterBar: function () {
             var aCurrentFilterValues = [];
             var aResetProp = {
-                Status: "",
+                // Status: "",
+                TrainingSubTypeId: null,
                 StartDate: null,
+                RewardPoints: null,
                 searchBar: ""
             };
             var oViewModel = this.getView().getModel("worklistView");
@@ -186,7 +190,6 @@ sap.ui.define([
         },
 
         onSearch: function (oEvent) {
-            console.log("On FIlter");
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
@@ -197,7 +200,6 @@ sap.ui.define([
 
                     if (prop === "StartDate") {
 
-                        // var dateValue = oViewFilter[prop].toDateString();
                         var dateValue = oViewFilter[prop];
                         var pattern = "dd/MM/yyyy";
                         var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
@@ -209,33 +211,53 @@ sap.ui.define([
 
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
-                            // new Filter(prop, FilterOperator.GE, oNow)
                             new Filter(prop, FilterOperator.GE, new Date(oViewFilter[prop]))
                         );
-                    } else if (prop === "Status") {
+                        // } else if (prop === "Status") {
+                        //     aFlaEmpty = false;
+                        //     aCurrentFilterValues.push(
+                        //         new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                        //     );
+                    } else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
                         );
-                    } else if (prop === "Title") {
+                    } else if (prop === "RewardPoints") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
-                            new Filter(
-                                [
-                                    new Filter(
-                                        "tolower(Title)",
-                                        FilterOperator.Contains,
-                                        "'" +
-                                        oViewFilter[prop]
-                                            .trim()
-                                            .toLowerCase()
-                                            .replace("'", "''") +
-                                        "'"
-                                    )
-                                ],
-                                false
-                            )
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
                         );
+                    } else if (prop === "Search") {
+                        aFlaEmpty = false;
+                        if (/^\+?(0|[1-9]\d*)$/.test(oViewFilter[prop])) {
+                            aCurrentFilterValues.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "RewardPoints",
+                                            FilterOperator.EQ,
+                                            oViewFilter[prop]
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilterValues.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(Title)",
+                                            FilterOperator.Contains,
+                                            "'" + oViewFilter[prop].trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+
+                                    ],
+                                    false
+                                )
+                            );
+                        }
                     } else {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
@@ -265,8 +287,6 @@ sap.ui.define([
 
             if (!aFlaEmpty) {
                 oBinding.filter(endFilter);
-                oBinding2.filter(endFilter);
-                debugger;
                 if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
                     for (var i = 0; i < endFilter.aFilters.length; i++) {
                         if (endFilter.aFilters[i].sPath === "StartDate") {
@@ -275,6 +295,7 @@ sap.ui.define([
                     }
                 }
 
+                oBinding2.filter(endFilter);
                 oBinding1.filter(endFilter);
             } else {
                 oBinding.filter([]);
@@ -297,6 +318,17 @@ sap.ui.define([
 
         onAddOfflineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteAddT", {
+                mode: "add",
+                id: "null",
+            });
+        },
+
+        onAddVideo: function (oEvent) {
+            // this.getModel("appView").setProperty("/trainingType", "VIDEO");
+            // this.getRouter().navTo("createObject");
+            this.getModel("appView").setProperty("/trainingType", "VIDEO");
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteAddT", {
                 mode: "add",
@@ -328,19 +360,36 @@ sap.ui.define([
             });
         },
 
+        onListItemPressVideo: function (oEvent) {
+            this.getModel("appView").setProperty("/trainingType", "VIDEO");
+            this.getModel("appView").setProperty("/flgEditOn", false);
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            console.log(sPath);
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteTrainingTab", {
+                mode: "view",
+                prop: window.encodeURIComponent(sPath),
+            });
+        },
+
         onEditOnlineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
             this.getModel("appView").setProperty("/flgEditOn", true);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
+            var todayDate = new Date();
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === false) {
-                        oRouter.navTo("RouteTrainingTab", {
-                            mode: "view",
-                            prop: window.encodeURIComponent(sPath),
-                        });
+                    if (sData.Status === 0) {
+                        if (todayDate < sData.EndDate) {
+                            oRouter.navTo("RouteTrainingTab", {
+                                mode: "edit",
+                                prop: window.encodeURIComponent(sPath),
+                            });
+                        } else {
+                            that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
+                        }
                     } else {
                         that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
                     }
@@ -356,9 +405,9 @@ sap.ui.define([
             var that = this;
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === false) {
+                    if (sData.Status === 0) {
                         oRouter.navTo("RouteTrainingTab", {
-                            mode: "view",
+                            mode: "edit",
                             prop: window.encodeURIComponent(sPath),
                         });
                     } else {
@@ -366,38 +415,6 @@ sap.ui.define([
                     }
                 }
             })
-        },
-
-        onDeleteTraining: function (oEvent) {
-            var sPath = oEvent.getSource().getBindingContext().getPath();
-            var that = this;
-            that.getModel().read(sPath, {
-                success: function (sData) {
-                    if (sData.Status === false) {
-                        function onYes() {
-                            var data = sPath + "/IsArchived";
-                            that.getModel().update(data, {
-                                IsArchived: true
-                            }, {
-                                success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
-                            });
-                        }
-                        that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
-                    } else {
-                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_DELETED");
-                    }
-                }
-            })
-        },
-
-        onRefreshView: function () {
-            var oModel = this.getModel();
-            oModel.refresh(true);
-        },
-
-        onAddVideo: function (oEvent) {
-            this.getModel("appView").setProperty("/trainingType", "VIDEO");
-            this.getRouter().navTo("createObject");
         },
 
         onEditVideo: function (oEvent) {
@@ -408,9 +425,9 @@ sap.ui.define([
             var that = this;
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === false) {
+                    if (sData.Status === 0) {
                         oRouter.navTo("RouteTrainingTab", {
-                            mode: "view",
+                            mode: "edit",
                             prop: window.encodeURIComponent(sPath),
                         });
                     } else {
@@ -420,16 +437,57 @@ sap.ui.define([
             })
         },
 
-        onListItemPressVideo: function (oEvent) {
-            this.getModel("appView").setProperty("/trainingType", "VIDEO");
-            this.getModel("appView").setProperty("/flgEditOn", false);
-            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-            console.log(sPath);
-            var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("RouteTrainingTab", {
-                mode: "view",
-                prop: window.encodeURIComponent(sPath),
-            });
+        onDeleteOnlineTraining: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var that = this;
+            var todayDate = new Date();
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    if (todayDate < sData.EndDate) {
+                        if (sData.Status === 0) {
+                            function onYes() {
+                                var data = sPath + "/IsArchived";
+                                that.getModel().update(data, {
+                                    IsArchived: true
+                                }, {
+                                    success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                                });
+                            }
+                            that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                        } else {
+                            that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_DELETED");
+                        }
+                    } else {
+                        function onYes() {
+                            var data = sPath + "/IsArchived";
+                            that.getModel().update(data, {
+                                IsArchived: true
+                            }, {
+                                success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                            });
+                        }
+                        that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                    }
+                }
+            })
+        },
+
+        onDeleteOfflineTraining: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var that = this;
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    function onYes() {
+                        var data = sPath + "/IsArchived";
+                        that.getModel().update(data, {
+                            IsArchived: true
+                        }, {
+                            success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                        });
+                    }
+                    that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                }
+            })
         },
 
         onDeleteVideo: function (oEvent) {
@@ -437,7 +495,7 @@ sap.ui.define([
             var that = this;
             that.getModel().read(sPath, {
                 success: function (sData) {
-                    if (sData.Status === false) {
+                    if (sData.Status === 0) {
                         function onYes() {
                             var data = sPath + "/IsArchived";
                             that.getModel().update(data, {
@@ -454,15 +512,34 @@ sap.ui.define([
             })
         },
 
-        onActivateTraining: function (oEvent) {
+        onActiveInActive: function (oEvent) {
+            debugger;
             var sPath = oEvent.getSource().getBindingContext().getPath();
             var data = sPath + "/Status";
             var that = this;
-            that.getModel().update(data, {
-                Status: true
-            }, {
-                success: that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
-            });
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    if (sData.Status === 0) {
+                        that.getModel().update(data, {
+                            Status: 1
+                        }, {
+                            success: that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
+                        });
+                    }
+                    if (sData.Status === 1) {
+                        that.getModel().update(data, {
+                            Status: 0
+                        }, {
+                            success: that.showToast.bind(that, "MSG_SUCCESS_DEACTIVATED_SUCCESSFULLY")
+                        });
+                    }
+                }
+            })
+        },
+
+        onRefreshView: function () {
+            var oModel = this.getModel();
+            oModel.refresh(true);
         },
 
         /* =========================================================== */

@@ -10,7 +10,6 @@
                             <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
                             <Text text=""/>
                             <HBox items="{oModelView>TrainingQuestionnaireOptions}">
-                                <!-- <CheckBox selected="true" /> -->
                                 <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiSmallMarginBeginEnd" visible="{= ${oModelView>IsArchived} === false}"/>
                             </HBox>
                             <Text text=""/>

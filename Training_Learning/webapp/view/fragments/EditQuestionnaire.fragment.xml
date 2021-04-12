@@ -13,10 +13,6 @@
                     <CustomListItem type="Active">
                         <VBox renderType="Bare">
                             <Text text=""/>
-                            <!-- <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
-                                <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}"/>
-                            </HBox> -->
                             <HBox alignItems="Start" justifyContent="SpaceBetween">
                                 <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
                                 <FlexBox alignItems="Start" justifyContent="End">

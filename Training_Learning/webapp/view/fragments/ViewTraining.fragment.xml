@@ -4,8 +4,11 @@
             <f:content>
                 <core:Title text="{i18n>TrainingDetails}"/>
 
-                <Label text="{i18n>colTrainingType}"/>
+                <Label text="{i18n>colTrainingMode}"/>
                 <Text text="{oModelView>/TrainingDetails/TrainingType/TrainingType}"/>
+
+                <Label text="{i18n>colTrainingType}"/>
+                <Text text="{oModelView>/TrainingDetails/TrainingSubTypeDetails/TrainingSubType}"/>
 
                 <Label text="{i18n>colTitle}"/>
                 <Text text="{oModelView>/TrainingDetails/Title}"/>

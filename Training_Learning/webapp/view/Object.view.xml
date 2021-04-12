@@ -12,7 +12,7 @@
         <VBox id="idVbxVideo" width="100%">
             <f:SimpleForm id="VideoDetails" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddVideoDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
                 <f:content>
-                        <Label text="{i18n>colTrainingType}" required="true"/>
+                        <Label text="{i18n>colTrainingMode}" required="true"/>
                         <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{objectView>TrainingTypeId}" editable="false">
                             <items>
                                 <core:Item text="{TrainingType}" key="{Id}"/>
@@ -22,25 +22,13 @@
 				        <Input width="100%" value="{objectView>Title}" maxLength="100"/>
                         <Label text="{i18n>colTrainingDescription}"/>
                         <TextArea value="{objectView>Description}" rows="5" maxLength="1000"/>
-                        <Label text="{i18n>colRewardPoints}" required="true"/>
-                        <Input width="100%" value="{objectView>RewardPoints}" maxLength="10" type="Number"/>
 				        <Label required="true" text="{i18n>colLink}"/>
 				        <Input width="100%" value="{objectView>Url}" maxLength="300"/>
                         <Label required="true" text="{i18n>colDuration}"/>
-				        <Input width="100%" value="{objectView>Duration}" maxLength="10" type="Number"/>
+				        <Input width="25%" value="{objectView>Duration}" maxLength="10" type="Number"/>
+                        <Label text="{i18n>colRewardPoints}" required="true"/>
+                        <Input width="25%" value="{objectView>RewardPoints}" maxLength="10" type="Number"/>
                         
-                        <!-- <u:FileUploader
-                            id="idFormVideoImgUploader"
-                            name="formVideoImgUploader"
-                            width="100%"
-                            tooltip="{i18n>fileUploaderTrainingtip}"
-                            change="onChangeFile"
-                            typeMissmatch="handleTypeMissmatch"
-                            fileType="png,jpg,jpeg"
-                            useMultipart="false"
-                            sendXHR="true"
-                            uploadComplete="handleUploadComplete" />
-                        <Image id="idPreviewImage" width="100px" height="100px" /> -->
                         <Label text="{i18n>colImage}"/>
                         <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 					    src="{ parts : [{path : 'objectView>__metadata'}, { path : 'objectView>/oImage' } ] , formatter : '.formatter.giveImage' }"/>
