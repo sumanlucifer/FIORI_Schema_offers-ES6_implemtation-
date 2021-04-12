@@ -82,17 +82,11 @@ sap.ui.define(
 
                 _onRouteMatched: function (oEvent) {
 
-                    // var oPreviewImage = sap.ui.core.Fragment.byId(sFragmentId, "idPreviewImageAdd");
                     var sArgMode = oEvent.getParameter("arguments").mode;
-                    // this._property = oEvent.getParameter("arguments").property;
-                    // this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                     var sArgId = window.decodeURIComponent(
                         oEvent.getParameter("arguments").id
                     );
-                    // this._initData(sArgMode, sArgId);
-                    // },
 
-                    // _initData: function (mParMode, mKey) {
                     var oViewModel = this.getModel("oModelView");
                     if (sArgMode === "add") {
                         oViewModel.setProperty("/mTrainingKey", sArgId);
@@ -395,8 +389,10 @@ sap.ui.define(
                 },
 
                 onTrainingTypeChange: function (oEvent) {
+                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
+                    oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
 
                 onZoneChange: function (oEvent) {
@@ -705,13 +701,9 @@ sap.ui.define(
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                    if (oPayload.TrainingSubTypeId == 1) {
-                        oPayload.Title = "Mass Meet-" + new Date();
-                    } else if (oPayload.TrainingSubTypeId == 2) {
-                        oPayload.Title = "Shop Meet-" + new Date();
-                    } else if (oPayload.TrainingSubTypeId == 3) {
-                        oPayload.Title = "Skill Training-" + new Date();
-                    }
+                    var TrTypeText = oViewModel.getProperty("/TrTypeText");
+                    var today = new Date();
+                    oPayload.Title = TrTypeText + "-" + today.toDateString();
                     delete oPayload.Duration;
                     delete oPayload.PainterArcheId;
                     delete oPayload.PainterType;
