@@ -1961,6 +1961,10 @@ sap.ui.define(
         // himank loyalty hanges end
 
         // knowledge table changes
+        fmtVisible:function(mParam){
+            console.log(mParam)
+            return true
+        },
         onBeforeRebindTrainingTable: function (oEvent) {
           var oView = this.getView();
 
@@ -1971,8 +1975,6 @@ sap.ui.define(
           var oBindingParams = oEvent.getParameter("bindingParams");
           var oFilter = new Filter("PainterId",FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
-          console.log(oPainterId)
-          //console.log(new Filter("PainterId", FilterOperator.EQ, oPainterId))
         },
         onViewQuestionaire: function (oEvent) {
           var object = oEvent.getSource().getBindingContext().getObject();
@@ -2001,12 +2003,12 @@ sap.ui.define(
         _setQuestioanireData: function (sPath) {
           var oView = this.getView();
           var oTable = oView.byId("Questionnaire");
-
+          
           this._pQuestionaireDialog.bindElement({
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
               expand:
-                "TrainingDetails/TrainingQuestionnaire/TrainingQuestionnaireOptions",
+                "TrainingDetails/TrainingQuestionnaire/TrainingQuestionnaireOptions,SubmittedQuestionnaire"
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
@@ -2014,7 +2016,7 @@ sap.ui.define(
         },
         QuestionaaireFactory: function (sId, oContext) {
           var oBject = oContext.getObject();
-
+       
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
             new sap.m.Text({

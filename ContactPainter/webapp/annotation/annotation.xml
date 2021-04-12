@@ -68,7 +68,7 @@
                             <PropertyValue Property="Label" String="Attendance"/>
                             <PropertyValue Property="Value" Path="AttendedAt"/>
                         </Record>
-                        
+                    
                         
                      
                     </Collection>

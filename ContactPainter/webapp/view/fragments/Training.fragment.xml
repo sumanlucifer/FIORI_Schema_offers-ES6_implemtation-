@@ -1,6 +1,7 @@
 <core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
     <smartTable:SmartTable
                             id="smrtTraining"
+                            width="100%"
                             editable="false"                   
                             entitySet="PainterTrainingSet"
                             beforeRebindTable="onBeforeRebindTrainingTable"
@@ -10,11 +11,11 @@
                             useVariantManagement="false"
                             useTablePersonalisation="true"
                             demandPopin="true"
-                            initiallyVisibleFields="Title"
+                            requestAtLeastFields="IsQuestionnaireSubmitted,Status"
                             enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="TrainingSmartTableKey"
-                            ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
+                            ignoreFromPersonalisation="CreatedBy,IsQuestionnaireSubmitted,IsArchived,IsSelected,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
                                                <Table>
                                 <columns>
                                     <Column hAlign="Begin">
@@ -43,7 +44,11 @@
                                         <cells>
                                               <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                                              <Button text="{i18n>ViewQuestion}" press="onViewQuestionaire" />
+                                               <VBox>
+                                                    <Text visible="{IsQuestionnaireSubmitted}" text= "{path:'Status',formatter:'.fmtLowerCase'}"/>
+                                                    <Button visible="{path:'IsQuestionnaireSubmitted',formatter:'.fmtVisible'}"  text="{i18n>ViewQuestion}" press="onViewQuestionaire" />
+                                               </VBox>
+                                               
                                                
                                          </cells>      
                                     </ColumnListItem>

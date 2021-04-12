@@ -1,0 +1,23 @@
+<core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smrtOlineTraining"
+                            width="100%"
+                            editable="false"                   
+                            entitySet="PainterLearningPointHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            initiallyVisibleFields="Id,PainterId,LearningId"
+                            demandPopin="true"
+                            enableAutoBinding="true"
+                            placeToolbarInTable="true"
+                            persistencyKey="OfflineTrainingSmartTableKey"
+                           >
+                                  
+                        </smartTable:SmartTable>
+</core:FragmentDefinition>
+
+
+
