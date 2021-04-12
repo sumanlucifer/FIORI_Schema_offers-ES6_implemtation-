@@ -533,6 +533,9 @@ sap.ui.define(
                         sMsg: []
                     },
                         aCtrlMessage = [];
+                    var fU = this.getView().byId("idAttendanceFileUploader");
+                    var domRef = fU.getFocusDomRef();
+                    var file = domRef.files[0];
 
                     if (data.TrainingSubTypeId === "" || data.TrainingSubTypeId === null) {
                         oReturn.IsNotValid = true;
@@ -557,7 +560,14 @@ sap.ui.define(
                                     message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
                                     target: "/TrainingDetails/RewardPoints"
                                 });
-                            }
+                            } else
+                                if (!file) {
+                                    oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_SELECT_ATTENDANCE_FILE");
+                                    aCtrlMessage.push({
+                                        message: "MSG_SELECT_ATTENDANCE_FILE"
+                                    });
+                                }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -702,8 +712,15 @@ sap.ui.define(
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     var TrTypeText = oViewModel.getProperty("/TrTypeText");
+
                     var today = new Date();
-                    oPayload.Title = TrTypeText + "-" + today.toDateString();
+                    var pattern = "dd/MM/yyyy";
+                    var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                        pattern: pattern
+                    });
+                    var newDate = oDateFormat.format(today);
+
+                    oPayload.Title = TrTypeText + "-" + newDate;
                     delete oPayload.Duration;
                     delete oPayload.PainterArcheId;
                     delete oPayload.PainterType;

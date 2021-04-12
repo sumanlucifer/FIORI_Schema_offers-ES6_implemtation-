@@ -15,8 +15,8 @@
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingSubTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingSubTypeId}">
-										<core:Item key="{Id}" text="{TrainingSubType}"/>
+									<ComboBox items="{ path: '/MasterTrainingSubTypeSet', parameters : { expand : 'MasterTrainingTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingSubTypeId}">
+										<core:Item key="{Id}" text="{TrainingSubType}-{MasterTrainingTypeDetails/TrainingType}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
