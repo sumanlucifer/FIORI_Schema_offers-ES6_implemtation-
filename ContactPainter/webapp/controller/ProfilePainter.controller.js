@@ -22,6 +22,7 @@ sap.ui.define(
     "sap/m/Button",
     "sap/m/VBox",
     "sap/m/Token",
+    "sap/m/ObjectStatus",
     "com/knpl/pragati/ContactPainter/model/customInt",
     "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
   ],
@@ -51,6 +52,7 @@ sap.ui.define(
     Button,
     VBox,
     Token,
+    ObjectStatus,
     customInt1,
     customInt2
   ) {
@@ -1957,10 +1959,9 @@ sap.ui.define(
 
         // knowledge table changes
         onViewQuestionaire: function (oEvent) {
-          console.log(oEvent.getSource().getBindingContext());
-          this._TariningQuestionnaireDialog(
-            oEvent.getSource().getBindingContext().getPath()
-          );
+          var object = oEvent.getSource().getBindingContext().getObject();
+          console.log(object);
+          this._TariningQuestionnaireDialog(object);
         },
         _TariningQuestionnaireDialog: function (mParam) {
           var oView = this.getView();
@@ -1984,11 +1985,12 @@ sap.ui.define(
         _setQuestioanireData: function (sPath) {
           var oView = this.getView();
           var oTable = oView.byId("Questionnaire");
-          console.log(sPath);
+          //console.log(sPath);
           this._pQuestionaireDialog.bindElement({
-            path: sPath,
+            path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
-              expand: "TrainingQuestionnaire/TrainingQuestionnaireOptions",
+              expand:
+                "TrainingDetails/TrainingQuestionnaire/TrainingQuestionnaireOptions",
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
@@ -1996,22 +1998,33 @@ sap.ui.define(
         },
         QuestionaaireFactory: function (sId, oContext) {
           var oBject = oContext.getObject();
-          console.log(oBject);
+         // console.log(oBject, "factory funtion trigerred");
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
             new sap.m.Text({
               text: "{Question}",
             })
           );
-        oBject["TrainingQuestionnaireOptions"]["__list"].forEach(function(z){
+          oBject["TrainingQuestionnaireOptions"]["__list"].forEach(function (
+            z
+          ) {
+           
             oColumnListItem.addCell(
-            new sap.m.Text({
-              text: "{/"+oBject["TrainingQuestionnaireOptions"]["__list"][0]+"/Option}",
-            })
-          );
-        })
-
-         
+              new ObjectStatus({
+                text: "{/"+z+ "/Option}",
+                state:{
+                    path:"/"+z+ "/IsCorrect",
+                    formatter:function(abc){
+                       if(abc){
+                           return "Success"
+                       }else{
+                           return "None"
+                       }
+                    }
+                }
+              })
+            );
+          });
 
           return oColumnListItem;
         },

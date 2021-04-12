@@ -2,7 +2,7 @@
     <smartTable:SmartTable
                             id="smrtTraining"
                             editable="false"                   
-                            entitySet="TrainingSet"
+                            entitySet="PainterTrainingSet"
                             tableType="ResponsiveTable"
                             showRowCount="true"
                             useExportToExcel="false"
@@ -18,7 +18,20 @@
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 6 ,"sortProperty": "Id","filterProperty": "Id"}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>DateAndTime}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 6 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>trainingAttendance}"/>
+                                    </Column>
+                                    
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 7 ,"sortProperty": "Id","filterProperty": "Id"}'/>
                                         </customData>
                                           <Text text="{i18n>trainingQuestionaaire}"/>
                                     </Column>
@@ -27,6 +40,8 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
+                                              <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                               <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                               <Button text="{i18n>ViewQuestion}" press="onViewQuestionaire" />
                                                
                                          </cells>      
