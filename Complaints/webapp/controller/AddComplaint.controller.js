@@ -280,8 +280,8 @@ sap.ui.define(
           oCmbxSubType.getBinding("items").filter(oFilter);
 
           // clearning the inreview and the resolution
-          oView.byId("scenario").setSelectedKey("");
-          oView.byId("resolution").setSelectedKey("");
+        //   oView.byId("scenario").setSelectedKey("");
+        //   oView.byId("resolution").setSelectedKey("");
         },
         onComplainSubTypeChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
@@ -296,8 +296,8 @@ sap.ui.define(
             oModelControl.setProperty("/TokenCode", true);
           }
           // clearning the inreview and the resolution
-          oView.byId("scenario").setSelectedKey("");
-          oView.byId("resolution").setSelectedKey("");
+        //   oView.byId("scenario").setSelectedKey("");
+        //   oView.byId("resolution").setSelectedKey("");
         },
         onSenarioChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
