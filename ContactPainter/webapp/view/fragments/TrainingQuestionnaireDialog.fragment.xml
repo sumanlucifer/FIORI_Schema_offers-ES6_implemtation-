@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>trainingQuestionaaire}" titleAlignment="Center" afterClose="onQuestinaireDialogClose">
+        <content>
+            <Table id="Questionnaire" busyIndicatorDelay="{oModelControl2>/tableDealay}" items="{path:'TrainingDetails/TrainingQuestionnaire/' , factory:'.QuestionaaireFactory'}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="15" >
+
+                <columns>
+                    <Column>
+                        <Text text="{i18n>Question}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>Option1}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>Option2}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>Option3}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>Option4}"/>
+                    </Column>
+                    
+
+                </columns>
+
+               
+            </Table>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
