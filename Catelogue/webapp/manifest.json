@@ -30,13 +30,19 @@
                 "uri": "/KNPL_PAINTER_API/api/v2/odata.svc/",
                 "type": "OData",
                 "settings": {
-                    "localUri": "localService/metadata.xml"
+                    "localUri": "localService/metadata.xml",
+                     "annotations": [ 
+                        "annotation0"   ] 
                 }
             },
             "tableData_alias": {
                 "uri": "model/demoData.json",
                 "type": "JSON"
-            }
+            },
+            "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotation/annotation.xml"
+        }
         }
     },
     "sap.fiori": {

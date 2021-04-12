@@ -56,14 +56,14 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectAttribute title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                            <ObjectIdentifier title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                              
                         </items>
                     </FlexBox>
 
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                           <ObjectAttribute title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
+                           <ObjectIdentifier title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
                             
                         </items>
                     </FlexBox>
@@ -88,17 +88,17 @@
                 <VBox class="sapUiMediumMarginBeginEnd">
                 <!-- <Title text="Title:"/>
                 <Text text="{Title}"/> -->
-                <ObjectAttribute title="Title" text="{Title}"/>
+                <ObjectIdentifier title="Title" text="{Title}"/>
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
-               <ObjectAttribute title="Category" text="{ProductCategory/Category}"/>
+               <ObjectIdentifier title="Category" text="{ProductCategory/Category}"/>
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
-                <ObjectAttribute title="Classification" text="{ProductClassification/Classification}"/>
+                <ObjectIdentifier title="Classification" text="{ProductClassification/Classification}"/>
                
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
-               <ObjectAttribute title="Range" text="{ProductRange/Range}"/>
+               <ObjectIdentifier title="Range" text="{ProductRange/Range}"/>
                 </VBox>
 
                 

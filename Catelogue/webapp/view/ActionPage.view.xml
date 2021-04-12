@@ -38,7 +38,7 @@
                                                 <Select
                                                 id="idCategory"
                                                  width="100%"
-                                                forceSelection="true"
+                                                forceSelection="false"
                                                 selectedKey="{ActionViewModel>/Category}"
                                                 items="{
                                                     path: '/MasterProductCategorySet',
@@ -53,7 +53,7 @@
                                         <Label text="Classification:" required="true" />
                                             <Select
                                             id="idClassification"
-                                            forceSelection="true"
+                                            forceSelection="false"
                                             width="100%"
                                             selectedKey="{ActionViewModel>/Classification/}"
                                             items="{
@@ -67,15 +67,15 @@
                                  
                 <VBox>
                                 <Label text="Title:" required="true" />
-                                <Input id="idTitle" value="{ActionViewModel>/Title}" placeholder="Enter Title" change="onChangeValue" width="80%"/>
+                                <Input id="idTitle" value="{ActionViewModel>/Title}"  placeholder="Enter Title" change="onChangeValue" width="80%" maxLength="100"/>
                              
                              <VBox >  
                                     <HBox width="100%" class="sapUiMediumMarginTop">
                                             <VBox class="sapUiMediumMarginBottom" width="80%">
-                                                <Label text="Range:" required="true" />
+                                                <Label text="Price Range:" required="true" />
                                                     <Select
                                                     id="idRange"
-                                                    forceSelection="true"
+                                                    forceSelection="false"
                                                     width="100%"
                                                     selectedKey="{ActionViewModel>/Range}"
                                                     items="{
@@ -93,10 +93,11 @@
                 
          
          
-          <HBox class="sapUiMediumMarginBegin">
+          <HBox class="sapUiMediumMarginBegin" >
           <VBox>
                  <VBox class="sapUiTinyMarginBottom">
                                             <Label text="Upload Thumbnail Image" class="sapUiTinyMargin" required="true"/>
+                                            <HBox>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
                                                 name="formToolImgUploader"
@@ -105,36 +106,92 @@
                                                 change="onChangeFile"
                                                 typeMissmatch="handleTypeMissmatch"
                                                 fileType="png,jpg,jpeg"
+                                                maximumFileSize="2"
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadCompleteImage" />
+                                                
+                                                </HBox>
+                                                <HBox>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PNG,JPG,JPEG"/>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                </HBox>
                                             <Image id="idPreviewImage" width="400px" height="200px" />
                                             </VBox>
-                                            <VBox class="sapUiTinyMarginBottom">
-                                             <Label text="Upload Catalogue" class="sapUiTinyMargin" required="true"/>
+                                            <!-- <VBox class="sapUiTinyMarginBottom">
+                                              <Label text="Upload Catalogue" class="sapUiTinyMargin" required="true"/>
                                         
                                        
-                                            <u:FileUploader
-                                                id="idFormToolPdfUploader"
-                                                name="formToolPdfUploader"
-                                                width="100%"
-                                                tooltip="{i18n>fileUploaderTooltip}"
-                                                change="onChangePdf"
-                                                typeMissmatch="handleTypeMissmatch"
-                                                fileType="pdf"
-                                                useMultipart="false"
-                                                sendXHR="true"
-                                                uploadComplete="handleUploadCompletePdf" />
-                
-                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" visible="false" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
-                                            </VBox>
+                                           
+                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" 
+                                            visible="false" press="openPdf" text="View" 
+                                            class="sapUiTinyMargin increaseFont"/>
+                                            
+
+
+                                            </VBox> -->
                                             
                 </VBox>                  
           </HBox>
          
-                 </HBox>                          
+                 </HBox> 
+                 
+                        <List id="idPdf" growing="true"
+                                            items="{path: 'ActionViewModel>/Catalogue'}">
+                                            <headerToolbar>
+                                                <Toolbar>
+                                                <Title text="{i18n>catalogues}" />
+                                                    <ToolbarSpacer/>
+                                                    <Button press="onAddCatalogue" text="Add"/>
+                                                </Toolbar>
+                                            </headerToolbar>
+                                            <CustomListItem type="Active">
+                                                
+                                                    <HBox alignItems="Start" justifyContent="SpaceBetween">
+                                                      <Select
+                                                    forceSelection="false"
+                                    
+                                                    selectedKey="{ActionViewModel>LanguageCode}"
+                                                    items="{
+                                                        path: '/MasterLanguageSet',
+                                                        sorter: { path: 'Id' },
+                                                        templateShareable: true
+                                                    }">
+                                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                                    </Select>
+                                                    <FlexBox>
+                                                    <VBox>
+                                                    <u:FileUploader
+                                                        id="idFormToolPdfUploader"
+                                                        name="formToolPdfUploader"
+                                                        
+                                                        tooltip="{i18n>fileUploaderTooltip}"
+                                                        change="onChangePdf"
+                                                        typeMissmatch="handleTypeMissmatch"
+                                                        fileType="pdf"
+                                                        useMultipart="false"
+                                                        sendXHR="true"
+                                                        maximumFileSize="2"
+                                                        uploadComplete="handleUploadCompletePdf" />
+                                                        <HBox>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                </HBox>
+                                                </VBox>
+                                                        </FlexBox>
+                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" visible="false" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
+                                                            
+                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" />
+                                                       
+                                                    </HBox>
+                                            
+                                               
+                                            </CustomListItem>
+                                        </List>
+
+                                        
                                        
-                <HBox width="100%" >
+                
                     <Table id="idCompetitorDetils" width="auto" items="{path: 'ActionViewModel>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
             <headerToolbar>
                 <Toolbar>
@@ -183,7 +240,7 @@
             </items>
         </Table>
 
-                </HBox>
+               
                                         
         
         

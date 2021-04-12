@@ -1,0 +1,64 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0"> 
+
+    <edmx:Reference Uri="/KNPL_PAINTER_API/api/v2/odata.svc/$metadata"> 
+
+        <edmx:Include Alias="Metadata" Namespace="com.knpl.pragati.entity"/> 
+
+    </edmx:Reference> 
+
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2"> 
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/> 
+    </edmx:Reference> 
+
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+
+    <edmx:DataServices> 
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity"> 
+            <Annotations Target="Metadata.ProductCatalogueModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Title"/>
+                            <PropertyValue Property="Value" Path="Title"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Category"/>
+                            <PropertyValue Property="Value" Path="ProductCategory/Category"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Classification"/>
+                            <PropertyValue Property="Value" Path="ProductClassification/Classification"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="View"/>
+                            <PropertyValue Property="Value" Path="PdfViewerCount"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Download"/>
+                            <PropertyValue Property="Value" Path="PdfDownloadCount"/>
+                        </Record>
+                        
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Created By"/>
+                            <PropertyValue Property="Value" Path="CreatedByDetails/Name"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Status"/>
+                            <PropertyValue Property="Value" Path="Status"/>
+                        </Record>
+                       
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema> 
+        
+        
+    </edmx:DataServices> 
+
+</edmx:Edmx> 
