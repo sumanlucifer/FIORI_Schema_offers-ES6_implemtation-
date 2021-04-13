@@ -389,7 +389,6 @@ sap.ui.define(
                 },
 
                 onTrainingTypeChange: function (oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
@@ -458,44 +457,44 @@ sap.ui.define(
                                 target: "/TrainingDetails/Title"
                             });
                         } else
-                            if (data.StartDate === null) {
+                            if (data.Url === "") {
                                 oReturn.IsNotValid = true;
-                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TSDATE");
+                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                 aCtrlMessage.push({
-                                    message: "MSG_PLS_ENTER_ERR_TSDATE",
-                                    target: "/TrainingDetails/StartDate"
+                                    message: "MSG_PLS_ENTER_ERR_URL",
+                                    target: "/TrainingDetails/Url"
                                 });
                             } else
-                                if (data.EndDate === null) {
+                                if (data.Url !== "" && !url.match(regex)) {
                                     oReturn.IsNotValid = true;
-                                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TEDATE");
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
                                     aCtrlMessage.push({
-                                        message: "MSG_PLS_ENTER_ERR_TEDATE",
-                                        target: "/TrainingDetails/EndDate"
+                                        message: "MSG_VALDTN_ERR_URL",
+                                        target: "/TrainingDetails/Url"
                                     });
                                 } else
-                                    if (data.EndDate <= data.StartDate) {
+                                    if (data.StartDate === null) {
                                         oReturn.IsNotValid = true;
-                                        oReturn.sMsg.push("MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE");
+                                        oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TSDATE");
                                         aCtrlMessage.push({
-                                            message: "MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE",
-                                            target: "/TrainingDetails/EndDate"
+                                            message: "MSG_PLS_ENTER_ERR_TSDATE",
+                                            target: "/TrainingDetails/StartDate"
                                         });
                                     } else
-                                        if (data.Url === "") {
+                                        if (data.EndDate === null) {
                                             oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TEDATE");
                                             aCtrlMessage.push({
-                                                message: "MSG_PLS_ENTER_ERR_URL",
-                                                target: "/TrainingDetails/Url"
+                                                message: "MSG_PLS_ENTER_ERR_TEDATE",
+                                                target: "/TrainingDetails/EndDate"
                                             });
                                         } else
-                                            if (data.Url !== "" && !url.match(regex)) {
+                                            if (data.EndDate <= data.StartDate) {
                                                 oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                oReturn.sMsg.push("MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE");
                                                 aCtrlMessage.push({
-                                                    message: "MSG_VALDTN_ERR_URL",
-                                                    target: "/TrainingDetails/Url"
+                                                    message: "MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE",
+                                                    target: "/TrainingDetails/EndDate"
                                                 });
                                             } else
                                                 if (data.RewardPoints === "" || data.RewardPoints === null) {
@@ -528,7 +527,6 @@ sap.ui.define(
                 },
 
                 _fnValidationOffline: function (data) {
-                    debugger;
                     var oReturn = {
                         IsNotValid: false,
                         sMsg: []
@@ -783,7 +781,6 @@ sap.ui.define(
 
                 _UploadImageTr: function (sPath, oImage) {
                     var that = this;
-                    debugger;
                     return new Promise(function (res, rej) {
                         if (!oImage) {
                             res();
@@ -795,7 +792,7 @@ sap.ui.define(
                             data: oImage.Image,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
-                            contentType: false,
+                            contentType: "image/png",
                             processData: false,
                             success: function () {
                                 res.apply(that);
@@ -810,12 +807,11 @@ sap.ui.define(
                 },
 
                 _UploadAttendanceOfflineTr: function (sPath) {
-                    debugger;
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-
+                    debugger;
                     return new Promise(function (res, rej) {
                         if (!file) {
                             res();
@@ -823,7 +819,7 @@ sap.ui.define(
                         }
 
                         var settings = {
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value?FILE_NAME=csv",
                             data: file,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
@@ -860,13 +856,11 @@ sap.ui.define(
                 },
 
                 onUpload: function (oEvent) {
-                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
                 getImageBinary: function (oFile) {
-                    debugger;
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;
                     return new Promise(function (res, rej) {
@@ -890,7 +884,6 @@ sap.ui.define(
                 },
 
                 _fnAddFile: function (oItem) {
-                    debugger;
                     this.getModel("oModelView").setProperty("/oImage", {
                         Image: oItem.Image, //.slice(iIndex),
                         FileName: oItem.name,

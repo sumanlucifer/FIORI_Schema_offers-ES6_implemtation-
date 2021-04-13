@@ -25,12 +25,12 @@
                                     <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'worklistView>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <!-- <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="RewardPoints" label="{i18n>colRewardPoints}">
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="RewardPoints" label="{i18n>colRewardPoints}">
                                 <fb:control>
-                                    <Input value="{path:'worklistView>/filterBar/RewardPoints}" type="Number"/>
+                                    <Input id="idPointInput" value="{worklistView>/filterBar/RewardPoints}" type="Number" placeholder="{i18n>PointFilterPlaceholder}" />
                                 </fb:control>
-                            </fb:FilterGroupItem> -->
-                            <!-- <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
 								<fb:control>
 									<ComboBox selectedKey="{worklistView>/filterBar/Status}">
                                         <items>
@@ -40,7 +40,7 @@
                                         </items>
                                     </ComboBox>
 								</fb:control>
-							</fb:FilterGroupItem> -->
+							</fb:FilterGroupItem>
 						</fb:filterGroupItems>
 					</fb:FilterBar>
 				</f:content>
@@ -101,7 +101,7 @@
                                         <HBox>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}"/>
                                             <Text text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}"/>
-                                            <Text text="{i18n>Expired}" visible="{= ${worklistView>/currDate} > ${EndDate}}"/>
+                                            <Text text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}"/>
                                         </HBox>
                                         <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" />
@@ -179,10 +179,10 @@
 								<Column width="21%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="20%">
+                                <Column width="17%">
 									<Text text="{i18n>colTrainingType}"/>
 								</Column>
-                                <Column width="33%">
+                                <Column width="30%">
 									<Text text="{i18n>colLink}"/>
 								</Column>
                                 <Column width="10%">

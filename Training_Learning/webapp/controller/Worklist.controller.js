@@ -44,7 +44,7 @@ sap.ui.define([
                 currDate: new Date(),
                 filterBar: {
                     StartDate: null,
-                    // Status: "",
+                    Status: null,
                     TrainingSubTypeId: null,
                     Search: "",
                     RewardPoints: null
@@ -160,7 +160,7 @@ sap.ui.define([
         _ResetFilterBar: function () {
             var aCurrentFilterValues = [];
             var aResetProp = {
-                // Status: "",
+                Status: null,
                 TrainingSubTypeId: null,
                 StartDate: null,
                 RewardPoints: null,
@@ -213,11 +213,11 @@ sap.ui.define([
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.GE, new Date(oViewFilter[prop]))
                         );
-                        // } else if (prop === "Status") {
-                        //     aFlaEmpty = false;
-                        //     aCurrentFilterValues.push(
-                        //         new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
-                        //     );
+                    } else if (prop === "Status") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                        );
                     } else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
