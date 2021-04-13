@@ -71,7 +71,7 @@ sap.ui.define([
         },
 
         _navToHome: function () {
-            this.oRouter.navTo("worklist");
+            this.getRouter().navTo("worklist");
            
         },	
     });

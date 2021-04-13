@@ -467,7 +467,8 @@ sap.ui.define([
                 var oModel = this.getView().getModel();
                 var that = this;
                 oModel.update(removeSet, oParam, {
-                    success: function () { that.onRemoveSuccess("idCatlogueTable") }, error: function (oError) {
+                    success: function () { 
+                        that.onRemoveSuccess("idCatlogueTable") }, error: function (oError) {
                         //oError - contains additional error information.
                         var msg = 'Error!';
                         MessageToast.show(msg);

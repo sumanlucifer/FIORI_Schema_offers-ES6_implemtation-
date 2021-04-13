@@ -111,6 +111,7 @@
                               
                
             <VBox width="100%">
+             <ObjectIdentifier title="Catalogue Thumbnail"/>
             	<UploadCollection
 			id="UploadCollectionImage"
 			multiple="false"
@@ -221,8 +222,8 @@
 				</UploadCollectionItem>
 			</items>
 		</UploadCollection>  -->
-       
-        <List id="idPdf" growing="true" 
+       <ObjectIdentifier title="Catalogue PDF" class="sapUiSmallMarginTop"/>
+        <List id="idPdf" growing="true"
                                             items="{path: 'objectView>/Catalogue'}" class="sapUiSmallMarginTopBottom">
                                             
                                             <CustomListItem type="Active">
@@ -239,26 +240,10 @@
                                                     }">
                                                     <core:Item key="{LanguageCode}" text="{Language}" />
                                                     </Select>
-                                                    <FlexBox>
-                                                    <!-- <VBox>
-                                                    <u:FileUploader
-                                                        id="idFormToolPdfUploader"
-                                                        name="formToolPdfUploader"
-                                                        
-                                                        tooltip="{i18n>fileUploaderTooltip}"
-                                                        change="onChangePdf"
-                                                        typeMissmatch="handleTypeMissmatch"
-                                                        fileType="pdf"
-                                                        useMultipart="false"
-                                                        sendXHR="true"
-                                                        maximumFileSize="2"
-                                                        uploadComplete="handleUploadCompletePdf" />
-                                                        <HBox>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
-                                                </HBox>
-                                                </VBox> -->
-                                                        </FlexBox>
+                                                    <FlexBox class="sapUiTinyMarginBeginEnd">
+                                                    <Text text="{objectView>MediaName}" />
+                                                    </FlexBox>
+
                                                 <Button id="pdfBtn" icon="sap-icon://pdf-attachment" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
                                                             
                                                           
@@ -268,8 +253,9 @@
                                                
                                             </CustomListItem>
                                         </List>
-            
+            <ObjectIdentifier title="Competitors"/>
         <HBox width="100%" class="sapUiSmallMarginTopBottom">
+        
                     <Table id="idCompetitorDetils" width="auto" items="{path: 'objectView>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
 
 
@@ -295,6 +281,7 @@
                             </Select>
                            
                         </VBox>
+                        
                         <VBox>
                             <Input editable="false" width="70%" required="true" value="{path:'objectView>CompetitorProductName',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLngth:50, search:'^[a-zA-Z]{1}[wW]*'} }" />
                            
