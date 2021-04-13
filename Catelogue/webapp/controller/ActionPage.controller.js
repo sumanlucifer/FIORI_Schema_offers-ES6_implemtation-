@@ -25,8 +25,8 @@ sap.ui.define([
             this.oFileUploader = this.getView().byId("idFormToolImgUploader");
             this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
             this.pdfBtn = this.getView().byId("pdfBtn");
-            this.oCategory=this.getView().byId("idCategory");
-            this.oTitle=this.getView().byId("idTitle");
+            this.oCategory = this.getView().byId("idCategory");
+            this.oTitle = this.getView().byId("idTitle");
             this.imageName = "";
             this.pdfName = "";
             //Router Object
@@ -71,7 +71,10 @@ sap.ui.define([
                         oData.Classification = data.ProductClassificationId
                         oData.Range = data.ProductRangeId
                         oData.Competitor = data.ProductCompetitors.results
-                        oData.Catalogue = data.MediaList.results
+                        oData.Catalogue = data.MediaList.results.filter(function (ele) {
+                            return !ele.ContentType.includes("image");
+
+                        });
                         var oViewModel = new JSONModel(oData);
                         that.getView().setModel(oViewModel, "ActionViewModel");
 
@@ -89,7 +92,7 @@ sap.ui.define([
 
 
 
-                 this.pdfBtn.setVisible(true);
+                this.pdfBtn.setVisible(true);
 
 
 
@@ -121,12 +124,14 @@ sap.ui.define([
 
         onChangeFile: function (oEvent) {
             if (oEvent.getSource().oFileUpload.files.length > 0) {
+                this.getModel("ActionViewModel").setProperty("/bNewImage", true);
                 this.imageName = this.oFileUploader.getValue();
                 var file = oEvent.getSource().oFileUpload.files[0];
                 var path = URL.createObjectURL(file);
                 this.oPreviewImage.setSrc(path);
                 this.oPreviewImage.setVisible(true);
             } else {
+                this.getModel("ActionViewModel").setProperty("/bNewImage", false);
                 if (this._action === "add") {
                     this.oPreviewImage.setSrc(path);
                     this.oPreviewImage.setVisible(false);
@@ -136,20 +141,11 @@ sap.ui.define([
             }
         },
         openPdf: function (oEvent) {
-            // sap.m.URLHelper.redirect(this.sServiceURI + this._property + "/$value?doc_type=pdf", true)
-            var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf";
+            var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
+            var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
             this._pdfViewer.setSource(sSource);
-                    this._pdfViewer.setTitle("Catalogue");
-                    this._pdfViewer.open();
-
-            // $.ajax(sSource, {
-            //     success: function (data) {
-            //         this._pdfViewer.setSource(sSource);
-            //         this._pdfViewer.setTitle("Catalogue");
-            //         this._pdfViewer.open();
-            //     }
-            // })
-
+            this._pdfViewer.setTitle("Catalogue");
+            this._pdfViewer.open();
         },
         onChangePdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
@@ -157,6 +153,7 @@ sap.ui.define([
                 //this.pdfName = this.oFileUploaderPdf.getValue();
                 this.getModel("ActionViewModel").setProperty("file", oEvent.getParameter("files")[0], oContext);
                 this.getModel("ActionViewModel").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                this.getModel("ActionViewModel").setProperty("bNew", true, oContext);
             }
         },
 
@@ -249,6 +246,9 @@ sap.ui.define([
 
         //Update methods for pdf and Image
         _updateImage: function (propertySet) {
+            if (this.getModel("ActionViewModel").getProperty("/bNewImage") == false) {
+                return;
+            }
             var oModel = this.getComponentModel();
 
             this.oFileUploader.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=image&file_name=" + this.imageName);
@@ -272,18 +272,20 @@ sap.ui.define([
             var sServiceUri = this.sServiceURI;
 
             catalogue.forEach(function (ele) {
-                jQuery.ajax({
-                    method: "PUT",
-                    url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: ele.file,
-                    success: function (data) {
+                if (ele.bNew) {
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
 
-                    },
-                    error: function () { },
-                })
+                        },
+                        error: function () { },
+                    })
+                }
             })
             // this.getView().byId("idPdf").getItems().forEach(function (ele, i) {
             //     fileUploader = ele.getContent()[0].getItems()[1];
