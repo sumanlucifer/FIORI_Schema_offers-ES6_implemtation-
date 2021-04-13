@@ -14,7 +14,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Buy 1000ltr of scheme (offer)"/>
+                    <Title text="{Title}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>currentDetailPageBreadcrumbText}">
@@ -35,31 +35,31 @@
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreationDate}"/>
-                            <Text text="12/01/2021" />
+                            <Text text="{path:'CreatedAt',formatter:'.formatter.fmtDate'}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
-                            <Text text="Satish Kumar" />
+                            <Text text="{CreatedByDetails/Name}" />
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerOfferPoint}"/>
-                            <Text text="100 Points" />
+                            <Text text="" />
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStartDate}"/>
-                            <Text text="12/01/2021" />
+                           <Text text="{path:'StartDate',formatter:'.formatter.fmtDate'}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerEndDate}"/>
-                            <Text text="12/01/2021" />
+                           <Text text="{path:'EndDate',formatter:'.formatter.fmtDate'}"/>
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <layout:VerticalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
-                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="Pending" state="Warning" />
+                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'SchemeStatus',formatter:'.formatter.fmtLowerCase'}" state="Warning" />
                         </layout:VerticalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -73,48 +73,13 @@
                 expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="offerDetails">
-                        <VBox visible="{=!${DetailViewModel>/editable}}">
-                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.DisplayDetail" type="XML" />
+                        <VBox id="idVbProfile">
+                           
                         </VBox>
-                        <VBox visible="{=${DetailViewModel>/editable}}">
-                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" />
-                        </VBox>
+                     
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>historyTabFilter}" key="history">
-                        <Table id="idHistoryTable">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                    <ToolbarSpacer/>
-                                    <SearchField width="15rem" placeholder="Search"/>
-                                    <Button
-                                        tooltip="Sort"
-                                        icon="sap-icon://sort"
-                                        press="handleSortButtonPressed"/>
-                                    <Button
-                                        tooltip="Settings"
-                                        icon="sap-icon://action-settings"
-                                        press="handleSettingsButtonPressed"/>
-                                </OverflowToolbar>
-                            </headerToolbar>
-                            <columns>
-                                <Column><Text text="Painter ID" /></Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Painter Name" /></Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Mobile Number" /></Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Color Bought" /></Column>
-                                <Column><Text text="Status" /></Column>
-                            </columns>
-                            <items>
-                                <ColumnListItem type="Navigation">
-                                    <cells>
-                                        <Text text="{SupplierName}" />
-                                        <Text text="{SupplierName}" />
-                                        <Text text="{SupplierName}" />
-                                        <Text text="{SupplierName}" />
-                                        <Text text="{SupplierName}" />
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
+                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML" />
                     </IconTabFilter>
                 </items>
             </IconTabBar>
