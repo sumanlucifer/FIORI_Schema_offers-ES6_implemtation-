@@ -263,34 +263,6 @@ sap.ui.define([
             }.bind(this));
         },
 
-        handleUploadComplete: function () {
-            this._showSuccessMsg();
-        },
-
-        _onLoadSuccess: function (oData) {
-            if (this.oFileUploader.getValue()) {
-                this._uploadVideoImage(oData);
-            } else {
-                this._showSuccessMsg();
-            }
-        },
-
-        _onLoadError: function (error) {
-            var oViewModel = this.getView().getModel("objectView");
-            oViewModel.setProperty("/busy", false);
-            var oRespText = JSON.parse(error.responseText);
-            MessageBox.error(oRespText["error"]["message"]["value"]);
-        },
-
-        _showSuccessMsg: function () {
-            var oViewModel = this.getView().getModel("objectView");
-            oViewModel.setProperty("/busy", false);
-            var sMessage = (oViewModel.getProperty("/sMode") === "C") ? this.getView().getModel("i18n").getResourceBundle().getText("MSG_SUCCESS_CREATE") : this.getView().getModel("i18n").getResourceBundle().getText("MSG_SUCCESS_UPDATE");
-            MessageToast.show(sMessage);
-            // this._navToHome();
-            this.getRouter().navTo("worklist", true);
-        },
-
 		/* 
 		 * @function
 		 * Save edit or create FAQ details 

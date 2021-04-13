@@ -27,7 +27,7 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelView>/ProfilePic}" class="sapUiTinyMarginBegin"/>
+                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
