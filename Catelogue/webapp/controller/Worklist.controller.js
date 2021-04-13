@@ -54,9 +54,11 @@ sap.ui.define([
             // break after the busy indication for loading the view's meta data is
             // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
             oTable.attachEventOnce("updateFinished", function () {
+            
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                 // oTable.rebindTable();
+               
             });
             // this.getComponentModel().metadataLoaded().then(function () {
             //     oTable.rebindTable();
@@ -79,6 +81,8 @@ sap.ui.define([
 
             //this.oCustom=null;
             //this.oFilter=null;
+             
+
         },
         onAfterRendering: function () {
             var oTable = this.byId("idCatlogueTable");

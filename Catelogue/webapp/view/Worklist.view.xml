@@ -99,7 +99,7 @@
                         <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
                         
-                        <Button text="Add Catalogue" press="onPressAdd" />
+                        <Button text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                         
@@ -143,10 +143,10 @@
                                 type="Transparent"
                                 text="{path: 'Status',
                                     formatter: '.formatter.status'}"
-                                data:remarks="{Status}" press="onPressStatus"/>
+                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
                             
                             <!-- <Button  icon="sap-icon://edit" type="Transparent"  press="onPress" tooltip="Edit"/> -->
-                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
+                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 

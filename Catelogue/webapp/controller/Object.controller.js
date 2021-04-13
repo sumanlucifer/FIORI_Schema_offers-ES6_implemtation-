@@ -61,11 +61,15 @@ sap.ui.define([
             );
 
             this._pdfViewer = new PDFViewer();
+            // this._pdfViewer.setShowDownloadButton(this.getOwnerComponent().getModel("appView").getProperty("/loggedUserRoleId")!=2)
             this.getView().addDependent(this._pdfViewer);
 
 
 
 
+        },
+        onAfterRendering: function () {
+                this._pdfViewer.setShowDownloadButton(this.getModel("appView").getProperty("/loggedUserRoleId")!=2);
         },
 
         /* =========================================================== */
