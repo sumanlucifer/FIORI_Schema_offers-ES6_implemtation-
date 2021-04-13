@@ -57,7 +57,6 @@ sap.ui.define([], function () {
         },
 
         giveImage: function (oMetadata, ImageData) {
-            debugger;
             if (oMetadata && oMetadata.media_src && !ImageData) {
                 var sPathname = new URL(oMetadata.media_src).pathname;
                 return ("/KNPL_PAINTER_API").concat(sPathname);

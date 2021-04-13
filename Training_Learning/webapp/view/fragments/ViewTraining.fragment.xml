@@ -16,20 +16,20 @@
                 <Label text="{i18n>colTrainingDescription}"/>
                 <Text text="{oModelView>/TrainingDetails/Description}"/>
 
+                <Label text="{i18n>colLink}"/>
+                <Text text="{oModelView>/TrainingDetails/Url}"/>
+
                 <Label text="{i18n>colStartDateTime}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
                 <Text text="{oModelView>/TrainingDetails/ViewStartDate}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
                 <Label text="{i18n>colEndDateTime}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
                 <Text text="{oModelView>/TrainingDetails/ViewEndDate}" visible="{= ${appView>/trainingType} !== 'VIDEO'}"/>
 
-                <Label text="{i18n>colRewardPoints}"/>
-                <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
-
-                <Label text="{i18n>colLink}"/>
-                <Text text="{oModelView>/TrainingDetails/Url}"/>
-
                 <Label text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
 				<Text text="{oModelView>/TrainingDetails/Duration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
+
+                <Label text="{i18n>colRewardPoints}"/>
+                <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 

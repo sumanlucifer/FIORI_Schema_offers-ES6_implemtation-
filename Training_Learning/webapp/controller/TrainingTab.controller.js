@@ -128,7 +128,6 @@ sap.ui.define(
                                     }
                                 }
 
-                                debugger;
                                 oViewModel.setProperty("/TrainingDetails", data);
                                 oViewModel.setProperty("/__metadata", data.__metadata);
 
@@ -619,44 +618,44 @@ sap.ui.define(
                                 target: "/TrainingDetails/Title"
                             });
                         } else
-                            if (data.StartDate === null) {
+                            if (data.Url === "") {
                                 oReturn.IsNotValid = true;
-                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TSDATE");
+                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
                                 aCtrlMessage.push({
-                                    message: "MSG_PLS_ENTER_ERR_TSDATE",
-                                    target: "/TrainingDetails/StartDate"
+                                    message: "MSG_PLS_ENTER_ERR_URL",
+                                    target: "/TrainingDetails/Url"
                                 });
                             } else
-                                if (data.EndDate === null) {
+                                if (data.Url !== "" && !url.match(regex)) {
                                     oReturn.IsNotValid = true;
-                                    oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TEDATE");
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
                                     aCtrlMessage.push({
-                                        message: "MSG_PLS_ENTER_ERR_TEDATE",
-                                        target: "/TrainingDetails/EndDate"
+                                        message: "MSG_VALDTN_ERR_URL",
+                                        target: "/TrainingDetails/Url"
                                     });
                                 } else
-                                    if (data.EndDate <= data.StartDate) {
+                                    if (data.StartDate === null) {
                                         oReturn.IsNotValid = true;
-                                        oReturn.sMsg.push("MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE");
+                                        oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TSDATE");
                                         aCtrlMessage.push({
-                                            message: "MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE",
-                                            target: "/TrainingDetails/EndDate"
+                                            message: "MSG_PLS_ENTER_ERR_TSDATE",
+                                            target: "/TrainingDetails/StartDate"
                                         });
                                     } else
-                                        if (data.Url === "") {
+                                        if (data.EndDate === null) {
                                             oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
+                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_TEDATE");
                                             aCtrlMessage.push({
-                                                message: "MSG_PLS_ENTER_ERR_URL",
-                                                target: "/TrainingDetails/Url"
+                                                message: "MSG_PLS_ENTER_ERR_TEDATE",
+                                                target: "/TrainingDetails/EndDate"
                                             });
                                         } else
-                                            if (data.Url !== "" && !url.match(regex)) {
+                                            if (data.EndDate <= data.StartDate) {
                                                 oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
+                                                oReturn.sMsg.push("MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE");
                                                 aCtrlMessage.push({
-                                                    message: "MSG_VALDTN_ERR_URL",
-                                                    target: "/TrainingDetails/Url"
+                                                    message: "MSG_ENDDATE_SHOULD_MORE_THAN_STARTDATE",
+                                                    target: "/TrainingDetails/EndDate"
                                                 });
                                             } else
                                                 if (data.RewardPoints === "" || data.RewardPoints === null) {
@@ -878,7 +877,6 @@ sap.ui.define(
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    debugger;
                     delete oPayload.PainterArcheId;
                     delete oPayload.PainterType;
                     delete oPayload.ZoneId;
@@ -918,7 +916,6 @@ sap.ui.define(
                 },
 
                 _Success: function () {
-                    debugger;
                     this.handleCancelPress();
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
@@ -927,18 +924,15 @@ sap.ui.define(
                         MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_UPDATE"));
                     }
                     var oModel = this.getModel();
-                    debugger;
                     oModel.refresh(true);
                 },
 
                 onUpload: function (oEvent) {
-                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
                 getImageBinary: function (oFile) {
-                    debugger;
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;
                     return new Promise(function (res, rej) {
@@ -962,7 +956,6 @@ sap.ui.define(
                 },
 
                 _fnAddFile: function (oItem) {
-                    debugger;
                     this.getModel("oModelView").setProperty("/ProfilePic", {
                         Image: oItem.Image,
                         FileName: oItem.name,
@@ -973,28 +966,31 @@ sap.ui.define(
                 },
 
                 _UploadImageforOnlineTraining: function (sPath, oImage, oEvent) {
-                    debugger;
                     var that = this;
                     if (oImage.Image) {
+                        var url = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
+                    }
+                    if (oImage.Image) {
                         $.ajax({
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            url: url,
                             data: oImage.Image,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
-                            contentType: false,
+                            contentType: "image/png",
                             processData: false,
                             success: that.onUploadAttendanceOnlineTr(sPath),
-                            // .then(that._Success.bind(that, oEvent), that._Error.bind(that)),
                             error: that._Error.bind(that)
                         });
                     } else {
                         that.onUploadAttendanceOnlineTr(sPath);
-                        // .then(that._Success.bind(that, oEvent), that._Error.bind(that))
                     }
                 },
 
                 _UploadImageforVideo: function (sPath, oImage, oEvent) {
                     var that = this;
+                    if (oImage.Image) {
+                        var url = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
+                    }
                     return new Promise(function (res, rej) {
                         if (!oImage.Image) {
                             res();
@@ -1002,11 +998,11 @@ sap.ui.define(
                         }
 
                         var settings = {
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value",
+                            url: url,
                             data: oImage.Image,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
-                            contentType: false,
+                            contentType: "image/png",
                             processData: false,
                             success: function () {
                                 res.apply(that);
@@ -1052,7 +1048,6 @@ sap.ui.define(
                 },
 
                 onUploadAttendanceOnlineTr: function (sPath) {
-                    debugger;
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
@@ -1072,7 +1067,6 @@ sap.ui.define(
                             contentType: "application/csv",
                             processData: false,
                             success: function () {
-                                debugger;
                                 that._Success.bind(that)
                             },
                             error: function () {
@@ -1107,7 +1101,6 @@ sap.ui.define(
                 },
 
                 handleCancelPress: function () {
-                    debugger;
                     var oView = this.getView();
                     this.getModel("appView").setProperty("/EditAttendance", false);
                     var oCtrlModel2 = oView.getModel("oModelControl2");
@@ -1118,6 +1111,7 @@ sap.ui.define(
                     var oControlModel2 = oView.getModel("oModelControl2");
                     var oViewModel = this.getModel("oModelView");
                     var sPath = oControlModel2.getProperty("/bindProp");
+                    var vPath = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath;
                     if (trainingType === 'ONLINE') {
                         c1 = othat._loadEditTrainingDetail("Display");
                         c1.then(function () {
@@ -1136,6 +1130,8 @@ sap.ui.define(
                                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
                                         oViewModel.setProperty("/ProfilePic", profilePic);
                                         oViewModel.setProperty("/ProfilePicHeader", profilePic);
+                                        var model = othat.getOwnerComponent().getModel("oModelView");
+                                        // model.invalidateEntry(vPath);
 
                                         othat.getView().getModel("oModelView").refresh(true);
                                         othat.getView().getModel("oModelControl2").refresh(true);
@@ -1155,7 +1151,6 @@ sap.ui.define(
                         c1.then(function () {
                             c2 = othat._loadEditQuestion("Display");
                             c2.then(function () {
-                                debugger;
                                 othat.getModel().read("/" + sPath, {
                                     urlParameters: {
                                         "$expand": "Creator, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
@@ -1179,6 +1174,12 @@ sap.ui.define(
                                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
                                         oViewModel.setProperty("/ProfilePic", profilePic);
                                         oViewModel.setProperty("/ProfilePicHeader", profilePic);
+                                        // var model = othat.getOwnerComponent().getModel("oModelView");
+                                        // othat.getModel().invalidateEntry(vPath);
+                                        // this.getModel.invalidate(vPath);
+                                        // location.reload();
+                                        // othat.getModel
+                                        // sap.ui.getCore().byId("TrainingDisplayId").getModel().refresh(true);
 
                                         othat.getView().getModel("oModelView").refresh(true);
                                         othat._setCopyForFragment();
