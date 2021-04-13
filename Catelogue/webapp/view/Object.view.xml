@@ -98,7 +98,7 @@
                
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
-               <ObjectIdentifier title="Range" text="{ProductRange/Range}"/>
+               <ObjectIdentifier title="Price Range" text="{ProductRange/Range}"/>
                 </VBox>
 
                 
