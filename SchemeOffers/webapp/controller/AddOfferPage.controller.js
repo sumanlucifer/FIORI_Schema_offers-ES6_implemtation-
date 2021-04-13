@@ -72,7 +72,14 @@ sap.ui.define(
             HasTillDate: false,
             BonusValidity: oBonusValidity,
             StartDate:"",
-            EndDate:""
+            EndDate:"",
+            RewardGift:[{
+                Id:1,
+                Name:"TV"
+            },{
+                Id:2,
+                Name:"Washing Machine"
+            }]
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 

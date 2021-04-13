@@ -138,12 +138,12 @@
 						</f:FormElement> -->
 						<f:FormElement  label="{i18n>formAppProdPurchaseVolume}">
 							<f:fields>
-								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
+								<Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>formAppProdAccuredPoints}">
 							<f:fields>
-									<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
+									<Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
@@ -152,19 +152,18 @@
 					<f:formElements>
 						<f:FormElement label="{i18n>formRewardsPoints}">
 							<f:fields>
-								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardPoints'}"/>
+								<Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardPoints'}"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>formRewardsCash}">
 							<f:fields>
-								<Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardCash'}"/>
+								<Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardCash'}"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>formRewardsGift}">
 							<f:fields>
-								<ComboBox placeholder="{i18n>placeHolder1}"  >
-                                    <core:Item key="1" text="TV" />
-                                    <core:Item key="2" text="Washing Machine" />
+								<ComboBox placeholder="{i18n>placeHolder1}"  items="{path:'oModelControl>/RewardGift', type:'.customInt'}" >
+                                    <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}" />
                                 </ComboBox>
 							</f:fields>
 						</f:FormElement>
@@ -182,7 +181,7 @@
 						</f:FormElement>
                         <f:FormElement>
 							<f:fields>
-                                <Input placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
+                                <Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="Bonus Applicable Products">
