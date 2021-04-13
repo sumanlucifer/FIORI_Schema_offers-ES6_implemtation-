@@ -91,6 +91,7 @@
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
+                            requestAtLeastFields="Id,Status"
                             persistencyKey="CatalogueSmartTableKey"
                             >
                             	<smartTable:customToolbar>
@@ -111,7 +112,13 @@
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                                         </customData>
-                                          <Text text="{i18n>DateAndTime}"/>
+                                          <Text text="{i18n>date}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8 }'/>
+                                        </customData>
+                                         <Text text="{i18n>status}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
@@ -119,24 +126,27 @@
                                         </customData>
                                          <Text text="{i18n>GenericEdit}"/>
                                     </Column>
+                                     
 
 
                                 </columns>
                                 <items>
-                                    <ColumnListItem>
+                                    <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
                                  
                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                            
-                            
-                                <!-- <Button 
+                            <!-- <Text text="{path: 'Status',
+                                    formatter: '.formatter.status'}"
+                                data:remarks="{Status}"/> -->
+                                <Button 
                                 type="Transparent"
                                 text="{path: 'Status',
                                     formatter: '.formatter.status'}"
-                                data:remarks="{Status}" press="onPressStatus"/> -->
+                                data:remarks="{Status}" press="onPressStatus"/>
                             
-                            
-                            <Button  icon="sap-icon://edit" type="Transparent" enabled="{= ${Status} === true}" press="onPressEdit" tooltip="Edit"/>
+                            <!-- <Button  icon="sap-icon://edit" type="Transparent"  press="onPress" tooltip="Edit"/> -->
+                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 
