@@ -2008,7 +2008,7 @@ sap.ui.define(
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
               expand:
-                "TrainingDetails/TrainingQuestionnaire/TrainingQuestionnaireOptions,SubmittedQuestionnaire"
+                "SubmittedQuestionnaire/Question/TrainingQuestionnaireOptions"
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
@@ -2016,27 +2016,35 @@ sap.ui.define(
         },
         QuestionaaireFactory: function (sId, oContext) {
           var oBject = oContext.getObject();
-       
+            console.log(oBject)
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
             new sap.m.Text({
-              text: "{Question}",
+              text: "{Question/Question}",
             })
+            
           );
-          oBject["TrainingQuestionnaireOptions"]["__list"].forEach(function (
+
+          var oOptionsObjet = this.getView().getModel().getProperty("/"+oBject["Question"]["__ref"]);
+            
+         
+          oOptionsObjet["TrainingQuestionnaireOptions"]["__list"].forEach(function (
             z
           ) {
             oColumnListItem.addCell(
               new ObjectStatus({
                 text: "{/" + z + "/Option}",
                 state: {
-                  path: "/" + z + "/IsCorrect",
-                  formatter: function (abc) {
-                    if (abc) {
+                  parts: ["/" + z + "/IsCorrect","/"+z+"/Id","SelectedOptionId"],
+                  formatter: function (mPram1,mPram2,mPram3) {
+                    
+                    if (mPram1) {
                       return "Success";
-                    } else {
-                      return "None";
                     }
+                    if(mPram2 == mPram3){
+                        return "Error";
+                    }
+                  
                   },
                 },
               })

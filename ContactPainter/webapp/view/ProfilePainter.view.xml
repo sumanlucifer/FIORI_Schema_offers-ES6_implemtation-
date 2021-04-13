@@ -35,7 +35,7 @@
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
                     <m:ObjectStatus title="{i18n>AgeGroup}" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}"/>
-                    <m:ObjectStatus title="{i18n>Category}" text="{path:'Slab/Slab'}" />
+                    <m:ObjectStatus title="{i18n>Category}" text="{path:'Slab/Slab'}"/>
                     <m:ObjectStatus title="{i18n>TotalPoints}" text="{path:'RewardPoints' }"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
@@ -66,7 +66,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-           <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -75,11 +75,17 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
+                    <uxap:ObjectPageSubSection title="{i18n>Training}">
                         <VBox renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.IconTabBarMyLearning" type="XML"/>
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+
+                    <uxap:ObjectPageSubSection title="{i18n>OnlineTraining}">
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.OnlineTraining" type="XML"/>
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
@@ -117,7 +123,7 @@
                 <contentRight>
                     <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
                     <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
-                     <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
                 </contentRight>
             </Bar>
         </uxap:footer>
