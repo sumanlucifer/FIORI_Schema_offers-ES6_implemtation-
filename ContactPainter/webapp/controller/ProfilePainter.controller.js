@@ -1963,7 +1963,10 @@ sap.ui.define(
         // knowledge table changes
         fmtVisible:function(mParam){
             console.log(mParam)
-            return true
+           if(mParam===""){
+               return true
+           }
+            return false
         },
         onBeforeRebindTrainingTable: function (oEvent) {
           var oView = this.getView();
