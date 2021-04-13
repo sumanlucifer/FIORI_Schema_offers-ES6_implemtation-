@@ -169,7 +169,7 @@
 		</UploadCollection>
         <!-- </HBox>
         <HBox width="100%"> -->
-        <UploadCollection
+        <!-- <UploadCollection
 			id="UploadCollectionPdf"
 			multiple="false"
 			change="onChange"
@@ -184,12 +184,7 @@
 				<OverflowToolbar id="myId1">
 					<Title id="attachmentTitle1" />
 					<ToolbarSpacer />
-					<!-- <Button
-						id="downloadButton1"
-						text="Download"
-						press="onDownloadPdf"
-						enabled="false"
-						type="Transparent" /> -->
+				
 					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
@@ -225,7 +220,55 @@
 					
 				</UploadCollectionItem>
 			</items>
-		</UploadCollection> 
+		</UploadCollection>  -->
+       
+        <List id="idPdf" growing="true" 
+                                            items="{path: 'objectView>/Catalogue'}" class="sapUiSmallMarginTopBottom">
+                                            
+                                            <CustomListItem type="Active">
+                                                
+                                                    <HBox alignItems="Start" justifyContent="SpaceBetween">
+                                                      <Select
+                                                    forceSelection="false"
+                                    
+                                                    selectedKey="{objectView>LanguageCode}"
+                                                    items="{
+                                                        path: '/MasterLanguageSet',
+                                                        sorter: { path: 'Id' },
+                                                        templateShareable: true
+                                                    }">
+                                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                                    </Select>
+                                                    <FlexBox>
+                                                    <!-- <VBox>
+                                                    <u:FileUploader
+                                                        id="idFormToolPdfUploader"
+                                                        name="formToolPdfUploader"
+                                                        
+                                                        tooltip="{i18n>fileUploaderTooltip}"
+                                                        change="onChangePdf"
+                                                        typeMissmatch="handleTypeMissmatch"
+                                                        fileType="pdf"
+                                                        useMultipart="false"
+                                                        sendXHR="true"
+                                                        maximumFileSize="2"
+                                                        uploadComplete="handleUploadCompletePdf" />
+                                                        <HBox>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                </HBox>
+                                                </VBox> -->
+                                                        </FlexBox>
+                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
+                                                            
+                                                          
+                                                       
+                                                    </HBox>
+                                            
+                                               
+                                            </CustomListItem>
+                                        </List>
+            
         <HBox width="100%" class="sapUiSmallMarginTopBottom">
                     <Table id="idCompetitorDetils" width="auto" items="{path: 'objectView>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
 

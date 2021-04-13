@@ -104,6 +104,14 @@ sap.ui.define([
 		 * @private
 		 */
         _onObjectMatched: function (oEvent) {
+
+            var oData = {
+
+                Catalogue: []
+
+            };
+            
+
             var sObjectId = oEvent.getParameter("arguments").objectId;
             this._property = oEvent.getParameter("arguments").property;
 
@@ -169,7 +177,10 @@ sap.ui.define([
                         var imgName = data.MediaList[0].MediaName;
                         var pdfName = data.MediaList[1].MediaName;
                         var productCompetitors= data.ProductCompetitors;
-
+                        var media=data.MediaList.filter(function(ele){
+                            return !ele.ContentType.includes("image");
+                            
+                        });
 
                         oViewModel.setProperty("/ImageSize", imgSize + " KB");
                         oViewModel.setProperty("/PdfSize", pdfSize + " KB");
@@ -177,6 +188,7 @@ sap.ui.define([
                         oViewModel.setProperty("/PdfName", pdfName);
 
                         oViewModel.setProperty("/Competitor", productCompetitors);
+                        oViewModel.setProperty("/Catalogue", media);
 
 
 
@@ -301,11 +313,29 @@ sap.ui.define([
             this.oItemToUpdate = oUploadCollection.getSelectedItem();
             oUploadCollection.openFileDialog(this.oItemToUpdate);
         },
-        onPressPdf: function (oEvent) {
-            var sSource = this.pdfURI;
+        // onPressPdf: function (oEvent) {
+        //     var sSource = sServiceUri + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode;
+        //     this._pdfViewer.setSource(sSource);
+        //     this._pdfViewer.setTitle("Catalogue");
+        //     this._pdfViewer.open();
+        // },
+        openPdf: function (oEvent) {
+            var oContext=oEvent.getSource().getBindingContext("objectView"); 
+             // this.pdfURI = this.sServiceURI + sObjectPath + "/$value?doc_type=pdf";         
+              // sap.m.URLHelper.redirect(this.sServiceURI + this._property + "/$value?doc_type=pdf", true)
+            var sSource =  this.sServiceURI + this.property+"/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
             this._pdfViewer.setSource(sSource);
-            this._pdfViewer.setTitle("Catalogue");
-            this._pdfViewer.open();
+                    this._pdfViewer.setTitle("Catalogue");
+                    this._pdfViewer.open();
+
+            // $.ajax(sSource, {
+            //     success: function (data) {
+            //         this._pdfViewer.setSource(sSource);
+            //         this._pdfViewer.setTitle("Catalogue");
+            //         this._pdfViewer.open();
+            //     }
+            // })
+
         },
         // onPressImage: function (oEvent) {
         //     var oItem = oEvent.getSource().getParent();
