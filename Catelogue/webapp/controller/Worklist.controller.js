@@ -83,30 +83,34 @@ sap.ui.define([
         onAfterRendering: function () {
             var oTable = this.byId("idCatlogueTable");
             oTable.rebindTable();
-        },
-        _initData: function () {
-            var oViewModel = new JSONModel({
-                pageTitle: this.getResourceBundle().getText("PainterList"),
-                tableNoDataText: this.getResourceBundle().getText(
-                    "tableNoDataText"
-                ),
-                tableBusyDelay: 0,
-                prop1: "",
-                busy: false,
-                filterBar: {
-                    AgeGroupId: "",
-                    CreatedAt: null,
-                    RegistrationStatus: "",
-                    Name: "",
-                },
 
-                SortSettings: true,
-            });
-            this.setModel(oViewModel, "oModelView");
-            this.getView().getModel().refresh();
-            //   this._fiterBarSort();
-            //   this._FilterInit();
+
         },
+
+
+        // _initData: function () {
+        //     var oViewModel = new JSONModel({
+        //         pageTitle: this.getResourceBundle().getText("PainterList"),
+        //         tableNoDataText: this.getResourceBundle().getText(
+        //             "tableNoDataText"
+        //         ),
+        //         tableBusyDelay: 0,
+        //         prop1: "",
+        //         busy: false,
+        //         filterBar: {
+        //             AgeGroupId: "",
+        //             CreatedAt: null,
+        //             RegistrationStatus: "",
+        //             Name: "",
+        //         },
+
+        //         SortSettings: true,
+        //     });
+        //     this.setModel(oViewModel, "oModelView");
+        //     this.getView().getModel().refresh();
+        //     //   this._fiterBarSort();
+        //     //   this._FilterInit();
+        // },
 
 
         /* =========================================================== */
@@ -144,6 +148,7 @@ sap.ui.define([
 		 */
         onPress: function (oEvent) {
             // The source is the list item that got pressed
+
             this._showObject(oEvent.getSource());
         },
 
@@ -181,6 +186,7 @@ sap.ui.define([
 		 * @private
 		 */
         _showObject: function (oItem) {
+
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext().getProperty("Id")
             });
@@ -265,11 +271,11 @@ sap.ui.define([
                         if (sValue && sValue !== "") {
 
                             this.oCustom = { search: sValue };
-                            aFilters.push(new Filter([
-                                new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
-                                new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
-                                new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
-                            ], false));
+                            // aFilters.push(new Filter([
+                            //     new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                            //     new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                            //     new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
+                            // ], false));
                         }
                         else {
                             this.oCustom = null;
@@ -301,13 +307,13 @@ sap.ui.define([
                     case "Category":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter({ path: "ProductCategory/Category", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                            aFilters.push(new Filter({ path: "ProductCategory/Category", operator: FilterOperator.EQ, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                     case "Classification":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter({ path: "ProductClassification/Classification", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                            aFilters.push(new Filter({ path: "ProductClassification/Classification", operator: FilterOperator.EQ, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                 }
@@ -337,16 +343,16 @@ sap.ui.define([
                 oBindingParams.filters.push(this.oFilter);
             }
             if (this.oCustom) {
-                oBindingParams.parameters.search = this.oCustom.search;
+                oBindingParams.parameters.custom = this.oCustom;
             }
 
         },
         onResetFilters: function (oEvent) {
 
-            this.oCustom=null;
-            this.oFilter=null;
+            this.oCustom = null;
+            this.oFilter = null;
             var oBindingParams = oEvent.getParameter("bindingParams");
-             if (this.oFilter) {
+            if (this.oFilter) {
                 oBindingParams.filters.push(this.oFilter);
             }
             if (this.oCustom) {
@@ -354,15 +360,15 @@ sap.ui.define([
             }
             var oTable = this.byId("idCatlogueTable");
             oTable.rebindTable();
-            // var oModel = this.getViewModel("ViewModel");
-            // oModel.setProperty("/filterBar", {
-            //     search: "",
-            //     createdAt: "",
-            //     title: "",
-            //     createdBy: "",
-            //     category: "",
-            //     classification: ""
-            // });
+            var oModel = this.getViewModel("ViewModel");
+            oModel.setProperty("/filterBar", {
+                search: "",
+                createdAt: "",
+                title: "",
+                createdBy: "",
+                category: "",
+                classification: ""
+            });
             //this.getView().byId("idCreatedByInput").setValue("");
             //var oTable = this.byId("idCatlogueTable");
             //var oBinding = oTable.getBinding("items");

@@ -41,17 +41,17 @@
                         </Record>
                         
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Label" String="Date"/>
                             <PropertyValue Property="Value" Path="CreatedAt"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Created By"/>
                             <PropertyValue Property="Value" Path="CreatedByDetails/Name"/>
                         </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Status"/>
-                            <PropertyValue Property="Value" Path="Status"/>
-                        </Record>
+                            <PropertyValue Property="Value" Bool="true" Path="Status"/>
+                        </Record> -->
                        
                     </Collection>
                 </Annotation>
