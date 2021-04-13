@@ -54,11 +54,11 @@ sap.ui.define([
             // break after the busy indication for loading the view's meta data is
             // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
             oTable.attachEventOnce("updateFinished", function () {
-            
+
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                 // oTable.rebindTable();
-               
+
             });
             // this.getComponentModel().metadataLoaded().then(function () {
             //     oTable.rebindTable();
@@ -81,7 +81,7 @@ sap.ui.define([
 
             //this.oCustom=null;
             //this.oFilter=null;
-             
+
 
         },
         onAfterRendering: function () {
@@ -444,12 +444,27 @@ sap.ui.define([
         },
 
         onPressStatus: function (oEvent) {
+
+            var oData = {
+                busy: false,
+                action: this._action,
+                Title: "",
+                Category: "",
+                Classification: "",
+                Range: "",
+                Competitor: [],
+                Catalogue: []
+
+
+            };
+
             var oItem = oEvent.getSource();
             var removeSet = oItem.getBindingContext().getPath();
             var oTable = this.getView().byId("idCatlogueTable");
 
-            var oSelectedItem = oEvent.getSource().getBindingContext().getObject()
-
+            var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
+            // var oModel = this.getView().getModel();
+            // oModel.setProperty("/types/1", "abc");
             var currentStatus = oSelectedItem.Status;
             var changedStatus;
             if (currentStatus == true) {
@@ -458,17 +473,18 @@ sap.ui.define([
             else {
                 changedStatus = true
             }
-            var oParam = {
-                Status: changedStatus,
+            var oParam = Object.assign({}, oSelectedItem);
+            
+            oParam.Status=changedStatus;
 
-            };
             console.log(oParam);
             function onYes() {
                 var oModel = this.getView().getModel();
                 var that = this;
                 oModel.update(removeSet, oParam, {
-                    success: function () { 
-                        that.onRemoveSuccess("idCatlogueTable") }, error: function (oError) {
+                    success: function () {
+                        that.onRemoveSuccess("idCatlogueTable")
+                    }, error: function (oError) {
                         //oError - contains additional error information.
                         var msg = 'Error!';
                         MessageToast.show(msg);

@@ -231,7 +231,7 @@
                                                     <HBox alignItems="Start" justifyContent="SpaceBetween">
                                                       <Select
                                                     forceSelection="false"
-                                    
+                                                    editable="false"
                                                     selectedKey="{objectView>LanguageCode}"
                                                     items="{
                                                         path: '/MasterLanguageSet',

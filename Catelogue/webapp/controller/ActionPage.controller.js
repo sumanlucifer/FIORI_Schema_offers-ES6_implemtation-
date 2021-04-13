@@ -365,7 +365,7 @@ sap.ui.define([
 
                 var cFiles = [];
                 cFiles.push(this.oFileUploader.getValue());
-                //cFiles.push(this.oFileUploaderPdf.getValue());
+                cFiles.push(this.oFileUploaderPdf.getValue());
 
                 if (cFiles) {
 
@@ -410,6 +410,7 @@ sap.ui.define([
 
                 }
             }
+            
         },
 
         _onLoadSuccess: function (oData) {
@@ -447,11 +448,23 @@ sap.ui.define([
             var oCategoryControl = this.getView().byId("idCategory");
             var oClassificationControl = this.getView().byId("idClassification");
             var oRangeControl = this.getView().byId("idRange");
+            var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+            // var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
+            // if(oEvent.getParameter("files").length > 0){
 
+            // }
             this._setControlValueState([oTitleControl]);
             this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
-            if (oTitleControl.getValue()) {
-                return true;
+            if (oTitleControl.getValue()&& oCategoryControl.getSelectedKey()&&
+             oClassificationControl.getSelectedKey()&& oRangeControl.getSelectedKey()) {
+                 if(oObject.length>0){
+                        return true;
+                 }
+                 else{
+                     var sMessage="Upload English Catalogue";
+                      MessageToast.show(sMessage);
+                 }
+                
             } else {
                 return false;
             }
