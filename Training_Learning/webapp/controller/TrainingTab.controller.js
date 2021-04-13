@@ -99,6 +99,7 @@ sap.ui.define(
                     this.getView().setModel(oModelControl2, "oModelControl2");
 
                     oViewModel.setProperty("/ProfilePic", oData.ProfilePic);
+                    oViewModel.setProperty("/ProfilePicHeader", oData.ProfilePic);
 
                     this.getModel("appView").setProperty("/EditAttendance", false);
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -127,7 +128,9 @@ sap.ui.define(
                                     }
                                 }
 
+                                debugger;
                                 oViewModel.setProperty("/TrainingDetails", data);
+                                oViewModel.setProperty("/__metadata", data.__metadata);
 
                                 var dateValue = data.StartDate.toDateString();
                                 var timeValue = data.StartDate.toLocaleTimeString();
@@ -171,6 +174,7 @@ sap.ui.define(
                                     data.TrainingQuestionnaire = [];
                                 }
                                 oViewModel.setProperty("/TrainingDetails", data);
+                                oViewModel.setProperty("/__metadata", data.__metadata);
                                 oViewModel.setProperty("/TrainingDetails/LearningQuestionnaire", []);
                             }
                         })
@@ -670,16 +674,15 @@ sap.ui.define(
                                                             message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
                                                             target: "/TrainingDetails/RewardPoints"
                                                         });
-                                                    }
-                    // else
-                    //     if (data.TrainingQuestionnaire.length < 3) {
-                    //         oReturn.IsNotValid = true;
-                    //         oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
-                    //         aCtrlMessage.push({
-                    //             message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
-                    //             target: "/TrainingDetails/TrainingQuestionnaire"
-                    //         });
-                    //     }
+                                                    } else
+                                                        if (data.TrainingQuestionnaire.length < 3) {
+                                                            oReturn.IsNotValid = true;
+                                                            oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
+                                                            aCtrlMessage.push({
+                                                                message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
+                                                                target: "/TrainingDetails/TrainingQuestionnaire"
+                                                            });
+                                                        }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -755,16 +758,15 @@ sap.ui.define(
                                                     message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
                                                     target: "/TrainingDetails/RewardPoints"
                                                 });
-                                            }
-                    // else
-                    //     if (data.TrainingQuestionnaire.length < 3) {
-                    //         oReturn.IsNotValid = true;
-                    //         oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
-                    //         aCtrlMessage.push({
-                    //             message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
-                    //             target: "/TrainingDetails/TrainingQuestionnaire"
-                    //         });
-                    //     }
+                                            } else
+                                                if (data.TrainingQuestionnaire.length < 3) {
+                                                    oReturn.IsNotValid = true;
+                                                    oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
+                                                    aCtrlMessage.push({
+                                                        message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
+                                                        target: "/TrainingDetails/TrainingQuestionnaire"
+                                                    });
+                                                }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -833,10 +835,9 @@ sap.ui.define(
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
                     });
-                    debugger;
                     that.getModel().update(sKey, oClonePayload, {
                         success: function () {
-                            that._UploadImageforOnlineTraining(sKey, oViewModel.getProperty("/oImage"), oEvent);
+                            that._UploadImageforOnlineTraining(sKey, oViewModel.getProperty("/ProfilePic"), oEvent);
                         },
                         error: function () {
                             that._Error.bind(that);
@@ -906,7 +907,7 @@ sap.ui.define(
                         Id: oClonePayload.Id
                     });
                     that.getModel().update(sKey, oClonePayload, {
-                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/oImage")).then(that._Success.bind(that, oEvent), that._Error.bind(
+                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
                         error: that._Error.bind(that)
                     });
@@ -931,11 +932,13 @@ sap.ui.define(
                 },
 
                 onUpload: function (oEvent) {
+                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
                 getImageBinary: function (oFile) {
+                    debugger;
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;
                     return new Promise(function (res, rej) {
@@ -959,13 +962,14 @@ sap.ui.define(
                 },
 
                 _fnAddFile: function (oItem) {
-                    this.getModel("oModelView").setProperty("/oImage", {
+                    debugger;
+                    this.getModel("oModelView").setProperty("/ProfilePic", {
                         Image: oItem.Image,
                         FileName: oItem.name,
                         IsArchived: false
                     });
 
-                    this.getModOnlineel("oModelView").refresh();
+                    this.getModel("oModelView").refresh();
                 },
 
                 _UploadImageforOnlineTraining: function (sPath, oImage, oEvent) {
@@ -1129,9 +1133,9 @@ sap.ui.define(
                                         oViewModel.setProperty("/TrainingDetails/PainterArcheType", oDataValue.PainterArcheType);
                                         oViewModel.setProperty("/TrainingDetails/TrainingSubTypeDetails", oDataValue.TrainingSubTypeDetails);
 
-                                        // var oModelControl2 = oView.getModel("oModelControl2");
                                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
                                         oViewModel.setProperty("/ProfilePic", profilePic);
+                                        oViewModel.setProperty("/ProfilePicHeader", profilePic);
 
                                         othat.getView().getModel("oModelView").refresh(true);
                                         othat.getView().getModel("oModelControl2").refresh(true);
@@ -1151,6 +1155,7 @@ sap.ui.define(
                         c1.then(function () {
                             c2 = othat._loadEditQuestion("Display");
                             c2.then(function () {
+                                debugger;
                                 othat.getModel().read("/" + sPath, {
                                     urlParameters: {
                                         "$expand": "Creator, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
@@ -1172,7 +1177,8 @@ sap.ui.define(
 
                                         oViewModel.setProperty("/TrainingDetails", oDataValue);
                                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
-                                        othat.getModel("oModelView").setProperty("/ProfilePic", profilePic);
+                                        oViewModel.setProperty("/ProfilePic", profilePic);
+                                        oViewModel.setProperty("/ProfilePicHeader", profilePic);
 
                                         othat.getView().getModel("oModelView").refresh(true);
                                         othat._setCopyForFragment();
@@ -1254,10 +1260,6 @@ sap.ui.define(
 
                 _initEditData: function () {
                     var oViewModel = this.getModel("oModelView");
-                    var ProfilePic = this.getModel("oModelView").getProperty("/ProfilePic");
-                    // oViewModel.setProperty("/__metadata", "");
-                    oViewModel.setProperty("/oImage", ProfilePic);
-
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     fU.setValue("");
                     var promise = jQuery.Deferred();

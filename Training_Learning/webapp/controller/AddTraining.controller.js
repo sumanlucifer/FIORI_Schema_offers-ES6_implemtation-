@@ -361,7 +361,7 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                    oViewModel.setProperty("/busy", true);
+                    // oViewModel.setProperty("/busy", true);
 
                     if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
@@ -528,6 +528,7 @@ sap.ui.define(
                 },
 
                 _fnValidationOffline: function (data) {
+                    debugger;
                     var oReturn = {
                         IsNotValid: false,
                         sMsg: []
@@ -568,6 +569,7 @@ sap.ui.define(
                                         message: "MSG_SELECT_ATTENDANCE_FILE"
                                     });
                                 }
+
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -781,7 +783,7 @@ sap.ui.define(
 
                 _UploadImageTr: function (sPath, oImage) {
                     var that = this;
-
+                    debugger;
                     return new Promise(function (res, rej) {
                         if (!oImage) {
                             res();
@@ -858,11 +860,13 @@ sap.ui.define(
                 },
 
                 onUpload: function (oEvent) {
+                    debugger;
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
                 getImageBinary: function (oFile) {
+                    debugger;
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;
                     return new Promise(function (res, rej) {
@@ -886,6 +890,7 @@ sap.ui.define(
                 },
 
                 _fnAddFile: function (oItem) {
+                    debugger;
                     this.getModel("oModelView").setProperty("/oImage", {
                         Image: oItem.Image, //.slice(iIndex),
                         FileName: oItem.name,

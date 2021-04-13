@@ -5,9 +5,8 @@
                 <Toolbar>
                     <ToolbarSpacer/> 
                     <HBox>
-                        <u:FileUploader visible="{= ${appView>/EditAttendance} === true}" id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
+                        <u:FileUploader visible="{= ${appView>/EditAttendance} === true}" id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" fileType="csv" style="Emphasized">
                         </u:FileUploader>
-                        <!-- <Button visible="{= ${appView>/EditAttendance} === true}" text="Upload" press="onUploadAttendance"></Button> -->
                     </HBox> 
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Attendance}"></SearchField>
                 </Toolbar>

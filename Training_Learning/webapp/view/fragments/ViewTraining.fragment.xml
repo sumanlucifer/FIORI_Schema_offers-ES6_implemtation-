@@ -58,7 +58,7 @@
                 <Text text="{oModelView>/TrainingDetails/Address}" visible="{= ${appView>/trainingType} === 'OFFLINE'}"/>
 
                 <Label text="{i18n>colImage}"/>
-                <Image width="5rem" src="{oModelView>/ProfilePic}" class="sapUiTinyMarginBegin"/>
+                <Image width="5rem" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/>
 
             </f:content>
         </f:SimpleForm>

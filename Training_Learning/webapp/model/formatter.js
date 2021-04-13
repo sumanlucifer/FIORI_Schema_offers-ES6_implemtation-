@@ -56,27 +56,29 @@ sap.ui.define([], function () {
 
         },
 
-        giveImage : function(oMetadata, ImageData){
-            if(oMetadata && oMetadata.media_src && !ImageData  )
-            {  
+        giveImage: function (oMetadata, ImageData) {
+            debugger;
+            if (oMetadata && oMetadata.media_src && !ImageData) {
                 var sPathname = new URL(oMetadata.media_src).pathname;
-                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+                return ("/KNPL_PAINTER_API").concat(sPathname);
             }
-            
-            if (ImageData)
-		 	return URL.createObjectURL(ImageData.Image);	
+
+            if (ImageData) {
+                if (ImageData.Image) {
+                    return URL.createObjectURL(ImageData.Image);
+                }
+            }
         },
-        
-        giveAttendance : function(oMetadata, AttendanceData){
-            if(oMetadata && oMetadata.media_src && !AttendanceData  )
-            {  
+
+        giveAttendance: function (oMetadata, AttendanceData) {
+            if (oMetadata && oMetadata.media_src && !AttendanceData) {
                 var sPathname = new URL(oMetadata.media_src).pathname;
-                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+                return ("/KNPL_PAINTER_API").concat(sPathname);
             }
-            
+
             if (AttendanceData)
-		 	return URL.createObjectURL(AttendanceData.Image);	
-		}
+                return URL.createObjectURL(AttendanceData.Image);
+        }
 
     };
 

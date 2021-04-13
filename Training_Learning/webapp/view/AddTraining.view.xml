@@ -88,7 +88,7 @@
 				    buttonText="{i18n>fileUploaderTrainingtip}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
                 <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
-                <u:FileUploader id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
+                <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
                 </u:FileUploader>
         </f:content>
         </f:SimpleForm>
