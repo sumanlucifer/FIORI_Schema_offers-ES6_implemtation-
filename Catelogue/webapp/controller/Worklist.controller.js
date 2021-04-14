@@ -473,15 +473,17 @@ sap.ui.define([
             else {
                 changedStatus = true
             }
-            var oParam = Object.assign({}, oSelectedItem);
+            //var oParam = Object.assign({}, oSelectedItem);
             
-            oParam.Status=changedStatus;
+            var oParam={
+                Status:changedStatus
+            }
 
             console.log(oParam);
             function onYes() {
                 var oModel = this.getView().getModel();
                 var that = this;
-                oModel.update(removeSet, oParam, {
+                oModel.update(removeSet+"/Status",oParam, {
                     success: function () {
                         that.onRemoveSuccess("idCatlogueTable")
                     }, error: function (oError) {

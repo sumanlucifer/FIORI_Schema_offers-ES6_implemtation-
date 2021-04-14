@@ -131,7 +131,7 @@ sap.ui.define([
                 var oModel = new JSONModel();
                 oModel.setData({Image: this.imgURI});
                 this.getView().setModel(oModel,"ImageModel");
-
+                this.getView().getModel("ImageModel").refresh(true);
             }.bind(this));
 
 

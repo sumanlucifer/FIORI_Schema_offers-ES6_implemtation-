@@ -32,7 +32,7 @@ sap.ui.define([
             //Router Object
             this.oRouter = this.getRouter();
             this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
-
+            this.entityObject;
             this._pdfViewer = new PDFViewer();
             this.getView().addDependent(this._pdfViewer);
 
@@ -65,7 +65,7 @@ sap.ui.define([
                         "$expand": "ProductCompetitors,MediaList"
                     },
                     success: function (data, response) {
-
+                        that.entityObject = data;
                         oData.Title = data.Title;
                         oData.Category = data.ProductCategoryId
                         oData.Classification = data.ProductClassificationId
@@ -113,9 +113,8 @@ sap.ui.define([
 
 
         onPressBreadcrumbLink: function () {
-            //this._navToHome();
-            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //   oRouter.navTo("");
+            this._navToHome();
+
         },
 
         onPressCancel: function () {
@@ -261,7 +260,6 @@ sap.ui.define([
             }.bind(this), function (error) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
             }.bind(this)).then(function () {
-
                 this.oFileUploader.clear();
             }.bind(this));
         },
@@ -328,7 +326,7 @@ sap.ui.define([
             this._showSuccessMsg();
         },
         handleUploadCompleteImage: function () {
-            this.idPreviewImage
+            this.idPreviewImage;
             this._showSuccessMsg();
         },
         handleUploadCompletePdf: function () {
@@ -353,8 +351,22 @@ sap.ui.define([
                     return list;
                 });
 
+                //var oParam = Object.assign({}, this.entityObject);
+                //var oParam1 = this.entityObject;
+                var oParam = {};
+                $.extend(true, oParam, this.entityObject);
+                //delete oParam.__metadata;
+                delete oParam.MediaList;
+
+                oParam.Title = oViewModel.getProperty("/Title"),
+                    oParam.Description = oViewModel.getProperty("/Title"),
+                    oParam.ProductCategoryId = parseInt(oViewModel.getProperty("/Category")),
+                    oParam.ProductClassificationId = parseInt(oViewModel.getProperty("/Classification")),
+                    oParam.ProductRangeId = parseInt(oViewModel.getProperty("/Range")),
+                    oParam.ProductCompetitors = Competitors
 
                 var oPayload = {
+
                     Title: oViewModel.getProperty("/Title"),
                     Description: oViewModel.getProperty("/Title"),
                     ProductCategoryId: parseInt(oViewModel.getProperty("/Category")),
@@ -394,8 +406,8 @@ sap.ui.define([
                         var that = this;
                         var _property = this._property;
 
-                        console.log(oPayload);
-                        oDataModel.update("/" + _property, oPayload, {
+                        // console.log(oPayload);
+                        oDataModel.update("/" + _property, oParam, {
                             success: function () {
 
                                 that._showSuccessMsg();
@@ -410,7 +422,7 @@ sap.ui.define([
 
                 }
             }
-            
+
         },
 
         _onLoadSuccess: function (oData) {
@@ -430,7 +442,7 @@ sap.ui.define([
 
         _showSuccessMsg: function () {
             var oViewModel = this.getView().getModel("ActionViewModel");
-            // oViewModel.refresh(true);
+            oViewModel.refresh(true);
             // oViewModel.setProperty("/busy", false);
 
             var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
@@ -449,22 +461,30 @@ sap.ui.define([
             var oClassificationControl = this.getView().byId("idClassification");
             var oRangeControl = this.getView().byId("idRange");
             var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+
+            // var oSet = new Set()
+            // forEach(oObject)
+            // {
+            //  if (Set.has(oObject.LanguageCode !== true) oSet.add(oObject.LanguageCode);
+            // }
+            
+
             // var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
             // if(oEvent.getParameter("files").length > 0){
 
             // }
             this._setControlValueState([oTitleControl]);
             this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
-            if (oTitleControl.getValue()&& oCategoryControl.getSelectedKey()&&
-             oClassificationControl.getSelectedKey()&& oRangeControl.getSelectedKey()) {
-                 if(oObject.length>0){
-                        return true;
-                 }
-                 else{
-                     var sMessage="Upload English Catalogue";
-                      MessageToast.show(sMessage);
-                 }
-                
+            if (oTitleControl.getValue() && oCategoryControl.getSelectedKey() &&
+                oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
+                if (oObject.length > 0) {
+                    return true;
+                }
+                else {
+                    var sMessage = "Upload English Catalogue";
+                    MessageToast.show(sMessage);
+                }
+
             } else {
                 return false;
             }
@@ -541,12 +561,13 @@ sap.ui.define([
         onAddCatalogue: function () {
 
             var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+
             oObject.push({
                 LanguageCode: "",
                 file: null,
                 fileName: ""
             });
-            this.getModel("ActionViewModel").refresh();
+            this.getModel("ActionViewModel").refresh(true);
 
 
             // var oView = this.getView();

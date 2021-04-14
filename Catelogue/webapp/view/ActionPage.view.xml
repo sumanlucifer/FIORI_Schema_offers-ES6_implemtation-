@@ -106,7 +106,7 @@
                                                 change="onChangeFile"
                                                 typeMissmatch="handleTypeMissmatch"
                                                 fileType="png,jpg,jpeg"
-                                                maximumFileSize="2"
+                                                maximumFileSize="2.1"
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadCompleteImage" />
@@ -135,7 +135,7 @@
           </HBox>
          
                  </HBox> 
-                 
+                 <VBox width="100%">
                         <List id="idPdf" growing="true"
                                             items="{path: 'ActionViewModel>/Catalogue'}">
                                             <headerToolbar>
@@ -171,7 +171,7 @@
                                                         fileType="pdf"
                                                         useMultipart="false"
                                                         sendXHR="true"
-                                                        maximumFileSize="2"
+                                                        maximumFileSize="2.1"
                                                         uploadComplete="handleUploadCompletePdf" />
                                                         <HBox>
                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
@@ -188,7 +188,7 @@
                                                
                                             </CustomListItem>
                                         </List>
-
+                                </VBox>
                                         
                                        
                 
