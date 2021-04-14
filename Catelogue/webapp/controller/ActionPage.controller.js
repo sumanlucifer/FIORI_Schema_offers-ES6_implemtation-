@@ -454,31 +454,42 @@ sap.ui.define([
             var oControl = oEvent.getSource();
             this._setControlValueState([oControl]);
         },
+        onFileSizeExceed: function () {
+            var sMessage = "Maximum file size exceeded!";
+            MessageToast.show(sMessage);
+        },
 
         _validateRequiredFields: function () {
             var oTitleControl = this.getView().byId("idTitle");
             var oCategoryControl = this.getView().byId("idCategory");
             var oClassificationControl = this.getView().byId("idClassification");
             var oRangeControl = this.getView().byId("idRange");
-            var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+            var oObjectCatalogue = this.getModel("ActionViewModel").getProperty("/Catalogue");
+            var oObjectCompetitors = this.getModel("ActionViewModel").getProperty("/Competitor");
 
-            // var oSet = new Set()
-            // forEach(oObject)
-            // {
-            //  if (Set.has(oObject.LanguageCode !== true) oSet.add(oObject.LanguageCode);
-            // }
-            
 
-            // var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
-            // if(oEvent.getParameter("files").length > 0){
 
-            // }
+            var oSet = new Set();
+            var bCataloguePDF = oObjectCatalogue.every(function (ele) {
+                if (oSet.has(ele.LanguageCode) !== true) {
+                    oSet.add(ele.LanguageCode);
+                    return true
+                }
+                return false;
+            });
+
             this._setControlValueState([oTitleControl]);
             this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
             if (oTitleControl.getValue() && oCategoryControl.getSelectedKey() &&
                 oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
-                if (oObject.length > 0) {
+                if (!bCataloguePDF) {
+                    var sMessage = "Multiple PDF of same Language";
+                    MessageToast.show(sMessage);
+                    return false;
+                }
+                if (oObjectCatalogue.length > 0) {
                     return true;
+
                 }
                 else {
                     var sMessage = "Upload English Catalogue";
@@ -556,29 +567,22 @@ sap.ui.define([
             var aCompetitor = oModel.getProperty("/Competitor");
             aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
             //this._setFDLTbleFlag();
-            oModel.refresh();
+            oModel.refresh(true);
         },
         onAddCatalogue: function () {
-
+            var oModel = this.getView().getModel("ActionViewModel");
             var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+
 
             oObject.push({
                 LanguageCode: "",
                 file: null,
                 fileName: ""
             });
-            this.getModel("ActionViewModel").refresh(true);
+            oModel.refresh(true);
 
 
-            // var oView = this.getView();
-            // var oModel = oView.getModel("ActionViewModel");
-            // var oCatalogueMdl = oModel.getProperty("/Catalogue");
-            // var bFlag = true;
 
-            // oCatalogueMdl.push({
-            //     LanguageCode: ""
-            // });
-            // oModel.refresh(true);
         },
         onPressRemoveCatalogue: function (oEvent) {
             var oView = this.getView();
@@ -591,7 +595,7 @@ sap.ui.define([
             var aCompetitor = oModel.getProperty("/Catalogue");
             aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
             //this._setFDLTbleFlag();
-            oModel.refresh();
+            oModel.refresh(true);
         },
 
 
