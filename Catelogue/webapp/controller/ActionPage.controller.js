@@ -478,7 +478,7 @@ sap.ui.define([
                 return false;
             });
             var bCompetitors = oObjectCompetitors.every(function (ele) {
-                if (ele.CompetitorProductName == ""||ele.CompetitorProductName ==null) {
+                if (ele.CompetitorProductName == "" || ele.CompetitorProductName == null) {
                     return false;
                 }
                 return true;
@@ -494,13 +494,24 @@ sap.ui.define([
                     return false;
                 }
                 if (oObjectCatalogue.length > 0) {
-                    return true;
+                    if (oObjectCompetitors.length > 0) {
+                        if (!bCompetitors) {
+                            var sMessage = "Add Competitor Product Name!";
+                            MessageToast.show(sMessage);
+                            return false;
+                        }
+                        return true;
 
+                    }else{
+                       return true; 
+                    }
+                    
                 }
                 else {
                     var sMessage = "Upload English Catalogue";
                     MessageToast.show(sMessage);
                 }
+
 
             } else {
                 return false;
