@@ -337,9 +337,16 @@ sap.ui.define([
         },
 
         onListItemPressOnlineTraining: function (oEvent) {
+            var that = this;
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
             this.getModel("appView").setProperty("/flgEditOn", false);
-            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
@@ -349,10 +356,16 @@ sap.ui.define([
         },
 
         onListItemPressOfflineTraining: function (oEvent) {
+            var that = this;
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
             this.getModel("appView").setProperty("/flgEditOn", false);
-            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-            console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
@@ -361,10 +374,16 @@ sap.ui.define([
         },
 
         onListItemPressVideo: function (oEvent) {
+            var that = this;
+            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+            
             this.getModel("appView").setProperty("/trainingType", "VIDEO");
             this.getModel("appView").setProperty("/flgEditOn", false);
-            var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
-            console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
@@ -379,9 +398,16 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
             var todayDate = new Date();
+
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === 0) {
+                    // if (sData.Status === 0) {
                         if (todayDate < sData.EndDate) {
                             oRouter.navTo("RouteTrainingTab", {
                                 mode: "edit",
@@ -390,9 +416,9 @@ sap.ui.define([
                         } else {
                             that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
                         }
-                    } else {
-                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    }
+                    // } else {
+                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    // }
                 }
             })
         },
@@ -403,16 +429,23 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
+
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === 0) {
+                    // if (sData.Status === 0) {
                         oRouter.navTo("RouteTrainingTab", {
                             mode: "edit",
                             prop: window.encodeURIComponent(sPath),
                         });
-                    } else {
-                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    }
+                    // } else {
+                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    // }
                 }
             })
         },
@@ -423,16 +456,23 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
+
+            that.getModel().read("/" + sPath, {
+                success: function (data) {
+                    that.getModel("appView").setProperty("/__metadata", data.__metadata);
+                }
+            })
+
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    if (sData.Status === 0) {
+                    // if (sData.Status === 0) {
                         oRouter.navTo("RouteTrainingTab", {
                             mode: "edit",
                             prop: window.encodeURIComponent(sPath),
                         });
-                    } else {
-                        that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    }
+                    // } else {
+                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
+                    // }
                 }
             })
         },
