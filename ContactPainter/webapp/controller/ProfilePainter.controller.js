@@ -128,7 +128,7 @@ sap.ui.define(
           //rebind Loyalty table
           this.getView().byId("smrtLoyalty").rebindTable();
           this.getView().byId("smrtTraining").rebindTable();
-
+          this.getView().byId("smrtOlineTraining").rebindTable();
           this._initFilerForTables();
         },
         handleEditPress: function () {
@@ -2060,6 +2060,18 @@ sap.ui.define(
         onQuestinaireDialogClose: function () {
           this._pQuestionaireDialog.destroy();
           delete this._pQuestionaireDialog;
+        },
+        // Learning/Online Training Dialog Box
+        onRebindOnlineTable:function(oEvent){
+            var oView = this.getView();
+
+          var oPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+
+          var oBindingParams = oEvent.getParameter("bindingParams");
+          var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
+          oBindingParams.filters.push(oFilter);
         },
         onViewQuestionaireLearning: function (oEvent) {
           var object = oEvent.getSource().getBindingContext().getObject();

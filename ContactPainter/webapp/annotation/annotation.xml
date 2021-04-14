@@ -77,18 +77,6 @@
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Id"/>
-                            <PropertyValue Property="Value" Path="Id"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Painter Id"/>
-                            <PropertyValue Property="Value" Path="PainterId"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="LearningId"/>
-                            <PropertyValue Property="Value" Path="LearningId"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Title"/>
                             <PropertyValue Property="Value" Path="LearningDetails/Title"/>
                         </Record>
