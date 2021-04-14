@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="smrtTraining" width="100%" editable="false" entitySet="PainterTrainingSet" beforeRebindTable="onBeforeRebindTrainingTable" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="IsQuestionnaireSubmitted,Status" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="TrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsQuestionnaireSubmitted,IsArchived,IsSelected,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
+    <smartTable:SmartTable id="smrtTraining" width="100%" editable="false" entitySet="PainterTrainingSet" beforeRebindTable="onBeforeRebindTrainingTable" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="IsQuestionnaireSubmitted,Status" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="TrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsQuestionnaireSubmitted,IsArchived,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
         <Table>
             <columns>
                 <Column hAlign="Begin">
@@ -29,7 +29,7 @@
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <VBox>
-                            <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'Status',formatter:'.fmtLowerCase'}"/>
+                            <Text visible="{= !${IsQuestionnaireSubmitted} }" text="Not Submitted"/>
                             <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewQuestionaire"/>
                         </VBox>
 
