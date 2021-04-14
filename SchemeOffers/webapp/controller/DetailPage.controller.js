@@ -55,7 +55,7 @@ sap.ui.define(
           );
 
           var oView = this.getView();
-          var sExpandParam = "CreatedByDetails,SchemeType";
+          var sExpandParam = "CreatedByDetails,SchemeType,Potential,Slab";
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -71,6 +71,15 @@ sap.ui.define(
           var oData = {
             modeEdit: true,
             bindProp: oProp,
+            Display: {
+              Zones: [],
+              Divisions: [],
+              Depots: [],
+              ArchiTypes: [],
+              PainterProducts: [],
+              ApplicableProducts: [],
+              BonusApplicableProducts:[]
+            },
 
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
@@ -104,9 +113,11 @@ sap.ui.define(
           var oModelControl2 = oView.getModel("oModelControl2");
           var sPath = oModelControl2.getProperty("/bindProp");
           var othat = this;
+          var exPand =
+            "SchemeZones,SchemeDivisions,SchemeDepots,SchemePainterArchiTypes,SchemePainterProducts,SchemeApplicableProducts,SchemeBonusApplicableProducts";
           oView.getModel().read("/" + sPath, {
             urlParameters: {
-              $expand: "SchemeZones,SchemeDepots",
+              $expand: exPand,
             },
             success: function (data) {
               promise.resolve(data);
@@ -121,6 +132,79 @@ sap.ui.define(
           console.log(oData);
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
+          var aZones = [],
+            aDivisions = [],
+            aDepots = [],
+            aArchiTypes = [],
+            aPainterProducts = [],
+            aApplicableProducts = [],
+            aBonusApplicableProducts=[];
+
+          if (oData["SchemeZones"]["results"].length > 0) {
+            for (var x of oData["SchemeZones"]["results"]) {
+              aZones.push(x["ZoneId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Zones", aZones);
+          if (oData["SchemeDivisions"]["results"].length > 0) {
+            for (var y of oData["SchemeDivisions"]["results"]) {
+              aDivisions.push(y["DivisionId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Divisions", aDivisions);
+          if (oData["SchemeDepots"]["results"].length > 0) {
+            for (var z of oData["SchemeDepots"]["results"]) {
+              aDepots.push(z["DepotId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Depots", aDepots);
+
+          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
+            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
+              aArchiTypes.push(p["ArchiTypeId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
+
+          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
+            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
+              aArchiTypes.push(p["ArchiTypeId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
+
+          if (oData["SchemePainterProducts"]["results"].length > 0) {
+            for (var q of oData["SchemePainterProducts"]["results"]) {
+              aPainterProducts.push(q["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/PainterProducts",
+            aPainterProducts
+          );
+
+          //Applicable Products
+          if (oData["SchemeApplicableProducts"]["results"].length > 0) {
+            for (var r of oData["SchemeApplicableProducts"]["results"]) {
+              aApplicableProducts.push(r["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/ApplicableProducts",
+            aApplicableProducts
+          );
+
+          //Bonus Applicable Products
+          if (oData["SchemeBonusApplicableProducts"]["results"].length > 0) {
+            for (var s of oData["SchemeBonusApplicableProducts"]["results"]) {
+              aBonusApplicableProducts.push(s["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/BonusApplicableProducts",
+            aBonusApplicableProducts
+          );
+          console.log(oModelControl2);
         },
         _initViewData: function () {},
         _loadEditProfile: function (mParam) {

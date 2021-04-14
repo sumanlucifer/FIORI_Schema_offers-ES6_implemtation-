@@ -152,7 +152,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRewardsGift}">
                             <f:fields>
-                                <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'oModelControl>/RewardGift', type:'.customInt'}">
+                                <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{path:'oModelView>/RewardGiftId',type:'.customInt'}" items="{path:'oModelControl>/RewardGift', type:'.customInt'}">
                                     <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </ComboBox>
                             </f:fields>
@@ -174,7 +174,7 @@
                                 <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Bonus Applicable Products">
+                        <f:FormElement label="{i18n>BonusApplicableProducs}">
                             <f:fields>
                                 <MultiComboBox selectionChange="onBonusProdChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>

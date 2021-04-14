@@ -191,6 +191,7 @@ sap.ui.define(
          
           var oDataModel = oView.getModel();
           var oPayLoad = this._RemoveEmptyValue(oModelView.getData());
+          console.log(oPayLoad)
 
           var inTegerProperty = [
             "PurchaseVolumeRequired",

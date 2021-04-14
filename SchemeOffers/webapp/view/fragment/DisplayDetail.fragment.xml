@@ -7,7 +7,7 @@
             <f:formContainers>
                 <f:FormContainer title="{i18n>BasicInformation}">
                     <f:formElements>
-                        <f:FormElement label="{i18n>formBasicInfoLLbl1}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl1}">
                             <f:fields>
                                 <Text text="{SchemeType/SchemeType}"/>
                             </f:fields>
@@ -38,155 +38,137 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
-                                <MultiComboBox editable="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox selectedKeys="{oModelControl2>/Display/Zones}" editable="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl2}">
                             <f:fields>
-                                 <MultiComboBox editable="false" placeholder="{i18n>placeHolder1}" items="{/MasterDivisionSet}">
+                                <MultiComboBox selectedKeys="{oModelControl2>/Display/Divisions}" editable="false" placeholder="{i18n>placeHolder1}" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
-                                <MultiComboBox editable="false" placeholder="{i18n>placeHolder1}" items="{/MasterDepotSet}">
+                                <MultiComboBox selectedKeys="{oModelControl2>/Display/Depots}" editable="false" placeholder="{i18n>placeHolder1}" items="{/MasterDepotSet}">
                                     <core:ListItem text="{Depot}" key="{Id}" additionalText="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="Applicable Painters">
+                <f:FormContainer title="{i18n>formApplicablepainter}">
                     <f:formElements>
                         <f:FormElement label="">
                             <f:fields>
-                                <RadioButtonGroup id="rbg" enabled="false" selectedIndex="0" columns="2">
-                                    <RadioButton id="all" text="All Painters"/>
-                                    <RadioButton id="specific" text="Specific Painter"/>
+                                <RadioButtonGroup id="rbg" enabled="false" selectedIndex="{= ${IsSpecificPainter} === false ? 0 : 1}" columns="2">
+                                    <RadioButton text="{i18n>formApplicableLbl1}"/>
+                                    <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="By Arche type">
+                        <f:FormElement label="{i18n>formApplicableLbl3}">
                             <f:fields>
-                                <MultiComboBox id="archeTypeInput" enabled="false">
-                                    <core:Item key="1" text="Loyalty"/>
+                                <MultiComboBox selectedKeys="{oModelControl2>/Display/ArchiTypes}" editable="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
+                                    <core:Item text="{ArcheType}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="By Annual Purchase  Potential">
+                        <f:FormElement label="{i18n>formApplicableLbl4}">
                             <f:fields>
-                                <Text text="Bonus Offer"/>
+                                <Text text="{Potential/Potential}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="By Product">
+                        <f:FormElement label="{i18n>formApplicableLbl5}">
                             <f:fields>
-                                <MultiComboBox id="byProductInput" enabled="false">
-                                    <core:Item key="1" text="Emulsion"/>
-                                    <core:Item key="2" text="Mica Marbel"/>
+                                <MultiComboBox selectedKeys="{oModelControl2>/Display/PainterProducts}" editable="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="By Point Slab">
+                        <f:FormElement label="{i18n>formApplicableLbl6}">
                             <f:fields>
-                                <Text text="Above 2000"/>
+                                <Text text="{Slab/Slab}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="Applicable Products">
+                <f:FormContainer title="{i18n>formApplicableProducts}">
                     <f:formElements>
-                        <f:FormElement label="Applicable Products">
+                        <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
-                                <MultiComboBox id="applicableProductsInput" enabled="false">
-                                    <core:Item key="1" text="Emulsion"/>
-                                    <core:Item key="2" text="Mica Marbel"/>
+                                <MultiComboBox editable="false" selectedKeys="{oModelControl2>/Display/ApplicableProducts}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Applicable Packs">
+                        <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
                             <f:fields>
-                                <MultiComboBox id="applicablePacksInput" enabled="false">
-                                    <core:Item key="1" text="Emulsion"/>
-                                    <core:Item key="2" text="Mica Marbel"/>
-                                </MultiComboBox>
+                                <Text text="{PurchaseVolumeRequired}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Purchase Volume Required">
+                        <f:FormElement label="{i18n>formAppProdAccuredPoints}">
                             <f:fields>
-                                <Text text="1000"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="Accured Points Required">
-                            <f:fields>
-                                <Text text="2000"/>
+                                <Text text="{AccuredPointsRequired}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="Rewards">
+                <f:FormContainer title="{i18n>formRewards}">
                     <f:formElements>
-                        <f:FormElement label="Reward Points">
+                        <f:FormElement label="{i18n>formRewardsPoints}">
                             <f:fields>
-                                <Text text="1000"/>
+                                <Text text="{RewardPoints}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Reward Cash (Rs)">
+                        <f:FormElement label="{i18n>formRewardsCash}">
                             <f:fields>
-                                <Text text="1000"/>
+                                <Text text="{RewardCash}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Reward Gift">
+                        <f:FormElement label="{i18n>formRewardsGift}">
                             <f:fields>
-                                <Text text="32'' color TV"/>
+                                <Text text="{RewardGiftId}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="Additional Points">
+                <f:FormContainer title="{i18n>AdditionalRewards}">
                     <f:formElements>
                         <f:FormElement>
                             <f:fields>
-                                <RadioButtonGroup id="rbg2" enabled="false" selectedIndex="0" columns="2">
-                                    <RadioButton id="allPainter" text="All Painters"/>
-                                    <RadioButton id="specificSpecific" text="Specific Painter"/>
+                                <RadioButtonGroup enabled="false" selectedIndex="{= ${HasBonusPercentage} === false? 0:1 }" columns="2">
+                                    <RadioButton text="{i18n>BonusPoints}"/>
+                                    <RadioButton text="{i18n>BonusPointsPercentage}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Text text="50"/>
+                                <Text text="{BonusRewardPoints}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Bonus Applicable Products">
+                        <f:FormElement label="{i18n>BonusApplicableProducs}">
                             <f:fields>
-                                <MultiComboBox id="bonusApplicableInput" enabled="false">
-                                    <core:Item key="1" text="Loyalty"/>
+                                <MultiComboBox enabled="false" selectedKeys="{oModelControl2>/Display/BonusApplicableProducts}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="By Point Slab">
-                            <f:fields>
-                                <Text text="Above 2000"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="Bonus Validity">
+                <f:FormContainer title="{i18n>BonusValidity}">
                     <f:formElements>
                         <f:FormElement>
                             <f:fields>
-                                <RadioButtonGroup id="rbg3" enabled="false" selectedIndex="0" columns="2">
-                                    <RadioButton id="tillDuration" text="Till Duration"/>
-                                    <RadioButton id="tillDate" text="Till Date"/>
-                                </RadioButtonGroup>
+                              
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Text text="1 years  3 months  12 days"/>
+                                <Text text="{parts:['BonusValidityDurationDays','BonusValidityDurationMonth','BonusValidityDurationYear'],formatter:'.fmt'}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
