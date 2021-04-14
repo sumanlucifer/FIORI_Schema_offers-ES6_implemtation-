@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-<Dialog id="QuestionnaireOptionsDialog" title="{i18n>TitleAddQuestionnaireOptions}" contentHeight="300px" contentWidth="550px">
+<Dialog id="QuestionnaireOptionsDialog" title="{i18n>TitleAddQuestionnaireOptions}" contentHeight="500px" contentWidth="600px">
     <VBox id="idVbxQ" width="100%">
         <f:SimpleForm id="QuestionOptions" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
                 <Label text="{i18n>colQuestion}" required="true"/>

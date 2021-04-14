@@ -27,7 +27,8 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/>
+                <!-- <m:Image src="{ parts : [{path : 'appView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" class="sapUiTinyMarginBegin" backgroundSize="cover" height="5rem" width="5rem"/> -->
+                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{ parts : [{path : 'appView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
@@ -69,7 +70,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}" visible="{= ${appView>/trainingType} !== 'VIDEO'}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbAttendance" renderType="Bare">

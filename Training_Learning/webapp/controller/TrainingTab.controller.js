@@ -128,6 +128,7 @@ sap.ui.define(
                                     }
                                 }
 
+                                debugger;
                                 oViewModel.setProperty("/TrainingDetails", data);
                                 oViewModel.setProperty("/__metadata", data.__metadata);
 
@@ -835,12 +836,15 @@ sap.ui.define(
                         Id: oClonePayload.Id
                     });
                     that.getModel().update(sKey, oClonePayload, {
-                        success: function () {
-                            that._UploadImageforOnlineTraining(sKey, oViewModel.getProperty("/ProfilePic"), oEvent);
-                        },
-                        error: function () {
-                            that._Error.bind(that);
-                        }
+                        // success: function () {
+                        //     that._UploadImageforOnlineTraining(sKey, oViewModel.getProperty("/ProfilePic"), oEvent);
+                        // },
+                        // error: function () {
+                        //     that._Error.bind(that);
+                        // }
+                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
+                            that)),
+                        error: that._Error.bind(that)
                     });
                 },
 
@@ -877,6 +881,7 @@ sap.ui.define(
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     delete oPayload.PainterArcheId;
                     delete oPayload.PainterType;
                     delete oPayload.ZoneId;
@@ -1180,6 +1185,7 @@ sap.ui.define(
                                         // location.reload();
                                         // othat.getModel
                                         // sap.ui.getCore().byId("TrainingDisplayId").getModel().refresh(true);
+                                        // image.setSrc( profilePic + "?" + new Date().getTime() );
 
                                         othat.getView().getModel("oModelView").refresh(true);
                                         othat._setCopyForFragment();

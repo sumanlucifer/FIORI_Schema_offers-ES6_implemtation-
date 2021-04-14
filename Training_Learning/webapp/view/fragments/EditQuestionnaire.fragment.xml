@@ -10,19 +10,19 @@
 				    		<Button press="onAddQuestionnaire" text="{i18n>btnAddQuestionnaire}"/>
 						</Toolbar>
 					</headerToolbar>
-                    <CustomListItem type="Active">
+                    <CustomListItem>
                         <VBox renderType="Bare">
                             <Text text=""/>
                             <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
+                                <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
                                 <FlexBox alignItems="Start" justifyContent="End">
 				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
 				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Remove}" />
 			                    </FlexBox>
                             </HBox>
-                            <HBox items="{oModelView>TrainingQuestionnaireOptions}">
-                                <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiSmallMarginBeginEnd"/>
-                            </HBox>
+                            <VBox items="{oModelView>TrainingQuestionnaireOptions}">
+                                <ObjectStatus  text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin"/>
+                            </VBox>
                             <Text text=""/>
                         </VBox>
                     </CustomListItem>
