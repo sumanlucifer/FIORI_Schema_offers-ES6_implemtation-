@@ -107,6 +107,7 @@
                                                 typeMissmatch="handleTypeMissmatch"
                                                 fileType="png,jpg,jpeg"
                                                 maximumFileSize="2.1"
+                                                fileSizeExceed="onFileSizeExceed"
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadCompleteImage" />
@@ -172,6 +173,7 @@
                                                         useMultipart="false"
                                                         sendXHR="true"
                                                         maximumFileSize="2.1"
+                                                        fileSizeExceed="onFileSizeExceed"
                                                         uploadComplete="handleUploadCompletePdf" />
                                                         <HBox>
                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>

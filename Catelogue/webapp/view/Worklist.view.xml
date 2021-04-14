@@ -100,8 +100,7 @@
                         <ToolbarSpacer />
                         
                         <Button text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
-                        <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                        <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+
                         
                     </OverflowToolbar>
 		</smartTable:customToolbar>
@@ -116,13 +115,13 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8 }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8,"columnKey":"actionStatus" }'/>
                                         </customData>
                                          <Text text="{i18n>status}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8 }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
                                         </customData>
                                          <Text text="{i18n>GenericEdit}"/>
                                     </Column>
