@@ -477,6 +477,12 @@ sap.ui.define([
                 }
                 return false;
             });
+            var bCompetitors = oObjectCompetitors.every(function (ele) {
+                if (ele.CompetitorProductName == ""||ele.CompetitorProductName ==null) {
+                    return false;
+                }
+                return true;
+            });
 
             this._setControlValueState([oTitleControl]);
             this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
