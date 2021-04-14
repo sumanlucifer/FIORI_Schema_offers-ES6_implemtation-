@@ -1,23 +1,39 @@
-<core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
-    <smartTable:SmartTable
-                            id="smrtOlineTraining"
-                            width="100%"
-                            editable="false"                   
-                            entitySet="PainterLearningPointHistorySet"
-                            tableType="ResponsiveTable"
-                            showRowCount="true"
-                            useExportToExcel="false"
-                            useVariantManagement="false"
-                            useTablePersonalisation="true"
-                            initiallyVisibleFields="Id,PainterId,LearningId"
-                            demandPopin="true"
-                            enableAutoBinding="true"
-                            placeToolbarInTable="true"
-                            persistencyKey="OfflineTrainingSmartTableKey"
-                           >
-                                  
-                        </smartTable:SmartTable>
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable id="smrtOlineTraining" width="100%" editable="false" entitySet="PainterLearningPointHistorySet" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" placeToolbarInTable="true" persistencyKey="OfflineTrainingSmartTableKey">
+        <Table>
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>DateAndTime}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "SubmissionDate", "type":"date", "leadingProperty": "SubmissionDate", "columnIndex": 6 ,"sortProperty": "SubmissionDate","filterProperty": "SubmissionDate"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingAttendance}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 7 ,"sortProperty": "Id","filterProperty": "Id"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingQuestionaaire}"/>
+                </Column>
+
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{path:'SubmissionDate',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <VBox>
+                            <Button text="{i18n>ViewQuestion}" press="onViewQuestionaireLearning"/>
+                        </VBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
 </core:FragmentDefinition>
-
-
-

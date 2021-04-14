@@ -127,8 +127,7 @@ sap.ui.define(
 
           //rebind Loyalty table
           this.getView().byId("smrtLoyalty").rebindTable();
-           this.getView().byId("smrtTraining").rebindTable();
-          
+          this.getView().byId("smrtTraining").rebindTable();
 
           this._initFilerForTables();
         },
@@ -1095,7 +1094,7 @@ sap.ui.define(
           oEvent.getSource().getParent().close();
         },
         onDialogClose: function (oEvent) {
-          this._pKycDialog.open().destroy();
+          this._pKycDialog.destroy();
           delete this._pKycDialog;
         },
         onAddNewBank: function (oEvent) {
@@ -1961,12 +1960,12 @@ sap.ui.define(
         // himank loyalty hanges end
 
         // knowledge table changes
-        fmtVisible:function(mParam){
-            console.log(mParam)
-           if(mParam===""){
-               return true
-           }
-            return false
+        fmtVisible: function (mParam) {
+          console.log(mParam);
+          if (mParam === "") {
+            return true;
+          }
+          return false;
         },
         onBeforeRebindTrainingTable: function (oEvent) {
           var oView = this.getView();
@@ -1976,7 +1975,7 @@ sap.ui.define(
             .getProperty("/PainterId");
 
           var oBindingParams = oEvent.getParameter("bindingParams");
-          var oFilter = new Filter("PainterId",FilterOperator.EQ, oPainterId);
+          var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
         },
         onViewQuestionaire: function (oEvent) {
@@ -2006,12 +2005,12 @@ sap.ui.define(
         _setQuestioanireData: function (sPath) {
           var oView = this.getView();
           var oTable = oView.byId("Questionnaire");
-          
+
           this._pQuestionaireDialog.bindElement({
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
               expand:
-                "SubmittedQuestionnaire/Question/TrainingQuestionnaireOptions"
+                "SubmittedQuestionnaire"
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
@@ -2019,44 +2018,129 @@ sap.ui.define(
         },
         QuestionaaireFactory: function (sId, oContext) {
           var oBject = oContext.getObject();
-            console.log(oBject)
+          console.log(oBject);
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
             new sap.m.Text({
               text: "{Question/Question}",
             })
-            
           );
 
-          var oOptionsObjet = this.getView().getModel().getProperty("/"+oBject["Question"]["__ref"]);
-            
-         
-          oOptionsObjet["TrainingQuestionnaireOptions"]["__list"].forEach(function (
-            z
-          ) {
-            oColumnListItem.addCell(
-              new ObjectStatus({
-                text: "{/" + z + "/Option}",
-                state: {
-                  parts: ["/" + z + "/IsCorrect","/"+z+"/Id","SelectedOptionId"],
-                  formatter: function (mPram1,mPram2,mPram3) {
-                    
-                    if (mPram1) {
-                      return "Success";
-                    }
-                    if(mPram2 == mPram3){
+          var oOptionsObjet = this.getView()
+            .getModel()
+            .getProperty("/" + oBject["Question"]["__ref"]);
+
+          oOptionsObjet["TrainingQuestionnaireOptions"]["__list"].forEach(
+            function (z) {
+              oColumnListItem.addCell(
+                new ObjectStatus({
+                  text: "{/" + z + "/Option}",
+                  state: {
+                    parts: [
+                      "/" + z + "/IsCorrect",
+                      "/" + z + "/Id",
+                      "SelectedOptionId",
+                    ],
+                    formatter: function (mPram1, mPram2, mPram3) {
+                      if (mPram1) {
+                        return "Success";
+                      }
+                      if (mPram2 == mPram3) {
                         return "Error";
-                    }
-                  
+                      }
+                    },
                   },
-                },
-              })
-            );
-          });
+                })
+              );
+            }
+          );
 
           return oColumnListItem;
         },
-        onQuestinaireDialogClose: function () {},
+        onQuestinaireDialogClose: function () {
+          this._pQuestionaireDialog.destroy();
+          delete this._pQuestionaireDialog;
+        },
+        onViewQuestionaireLearning: function (oEvent) {
+          var object = oEvent.getSource().getBindingContext().getObject();
+
+          this._LearningQuestionaire(object);
+        },
+        _LearningQuestionaire: function (mParam) {
+          var oView = this.getView();
+          var othat = this;
+          if (!this._pQuestionaireDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.ContactPainter.view.fragments.LearningQuestionDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pQuestionaireDialog = oDialog;
+                othat._setLearningQuestData(mParam);
+              }.bind(this)
+            );
+          } else {
+            othat._setLearningQuestData(mParam);
+          }
+        },
+        _setLearningQuestData: function (sPath) {
+          var oView = this.getView();
+          var oTable = oView.byId("Questionnaire");
+
+          this._pQuestionaireDialog.bindElement({
+            path: "/PainterLearningPointHistorySet(" + sPath["Id"] + ")",
+            parameters: {
+              expand:
+                "SubmittedQuestionnaire"
+            },
+          });
+          oView.addDependent(this._pQuestionaireDialog);
+          this._pQuestionaireDialog.open();
+        },
+        LearningQuestionaaireFactory:function(sId,oContext){
+            var oBject = oContext.getObject();
+          console.log(oBject);
+          var oColumnListItem = new sap.m.ColumnListItem();
+          oColumnListItem.addCell(
+            new sap.m.Text({
+              text: "{Question/Question}",
+            })
+          );
+
+          var oOptionsObjet = this.getView()
+            .getModel()
+            .getProperty("/" + oBject["Question"]["__ref"]);
+
+          oOptionsObjet["LearningQuestionnaireOptions"]["__list"].forEach(
+            function (z) {
+              oColumnListItem.addCell(
+                new ObjectStatus({
+                  text: "{/" + z + "/Option}",
+                  state: {
+                    parts: [
+                      "/" + z + "/IsCorrect",
+                      "/" + z + "/Id",
+                      "SelectedOptionId",
+                    ],
+                    formatter: function (mPram1, mPram2, mPram3) {
+                        console.log(mPram1,mPram2,mPram3)
+                      if (mPram1) {
+                        return "Success";
+                      }
+                      if (mPram2 == mPram3) {
+                        return "Error";
+                      }
+                    },
+                  },
+                })
+              );
+            }
+          );
+
+          return oColumnListItem;
+        }
       }
     );
   }
