@@ -105,7 +105,7 @@
                                         </HBox>
                                         <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" />
-					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" />
+					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Reject"/>
                                         </HBox>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${EndDate} > ${worklistView>/currDate}}"/>
@@ -176,14 +176,17 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="21%">
+								<Column width="18%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="17%">
+                                <Column width="15%">
 									<Text text="{i18n>colTrainingType}"/>
 								</Column>
-                                <Column width="30%">
+                                <Column width="25%">
 									<Text text="{i18n>colLink}"/>
+								</Column>
+                                <Column width="10%">
+									<Text text="{i18n>colCreationDate}"/>
 								</Column>
                                 <Column width="10%">
 									<Text text="{i18n>colRewardPoints}"/>
@@ -204,8 +207,8 @@
                                         <Text text="{Title}"/>
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Link text="{Url}" target="_blank" href="{Url}"/>
-                                        <!-- <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/> -->
+                                        <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
+                                        <!-- <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/> -->
                                         <Text text="{RewardPoints}"/>
                                         <HBox>
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === 0 }"/>
@@ -213,7 +216,7 @@
                                         </HBox>
 										<HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 }" enabled="{= ${Status} === 0 }" pressed="true" press="onActiveInActive" />
-					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 }" enabled="{= ${Status} === 1 }" pressed="true" press="onActiveInActive" />
+					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 }" enabled="{= ${Status} === 1 }" pressed="true" press="onActiveInActive" type="Reject"/>
                                         </HBox>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>

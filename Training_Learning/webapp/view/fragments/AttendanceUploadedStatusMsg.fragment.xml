@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<Dialog id="idAttendanceStatusMsgDialog" title="{i18n>TitleAttendanceUploadedMsg}" contentHeight="500px" contentWidth="600px">
+    <VBox id="idVbxAttendanceStatusMsg" width="100%">
+        <f:SimpleForm id="idFormAttendanceStatusMsg" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
+        <Table id="idTblAttendanceStatusMsg" width="auto" items="{ path: 'oModelView>/oResult'}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
+            <columns>
+                <Column width="10%">
+                    <Text text="{i18n>colRow}"/>
+                </Column>
+                <Column width="20%">
+                    <Text text="{i18n>colMobileNumber}"/>
+                </Column>
+                <Column width="20%">
+                    <Text text="{i18n>colAttendanceDate}"/>
+                </Column>
+                <Column width="37%">
+                    <Text text="{i18n>colMessage}"/>
+                </Column>
+                <Column width="13%">
+                    <Text text="{i18n>colStatus}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{oModelView>Row}"/>
+                        <Text text="{oModelView>PainterMobile}"/>
+                        <Text text="{oModelView>AttendedDate}"/>
+                        <Text text="{oModelView>UploadMessage}"/>
+                        <HBox>
+                        <ObjectStatus text="{i18n>Success}" visible="{= ${oModelView>UploadStatus} === true}" state="{= ${oModelView>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                        <ObjectStatus text="{i18n>Failure}" visible="{= ${oModelView>UploadStatus} === false}" state="{= ${oModelView>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+            </Table>
+        </f:SimpleForm>
+    </VBox>
+    <buttons>
+		<Button text="{i18n>btnClose}" press="closeAttendanceStatusDialog"/>
+	</buttons>
+</Dialog>
+</core:FragmentDefinition>

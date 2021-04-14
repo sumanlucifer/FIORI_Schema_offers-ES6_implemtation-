@@ -61,8 +61,10 @@ sap.ui.define([], function () {
                 if (ImageData.Image) {
                     return URL.createObjectURL(ImageData.Image);
                 } else {
-                    var sPathname = new URL(oMetadata.media_src).pathname;
-                    return ("/KNPL_PAINTER_API").concat(sPathname);
+                    if (oMetadata.media_src) {
+                        var sPathname = new URL(oMetadata.media_src).pathname;
+                        return ("/KNPL_PAINTER_API").concat(sPathname);
+                    }
                 }
             }
         },
@@ -75,7 +77,17 @@ sap.ui.define([], function () {
 
             if (AttendanceData)
                 return URL.createObjectURL(AttendanceData.Image);
-        }
+        },
+
+        // fmtAttendanceStatus: function (UploadStatus) {
+        //     debugger;
+        //     if (UploadStatus === true) {
+        //         var newStatus = "Success";
+        //     } else {
+        //         var newStatus = "Failure";
+        //     }
+        //     return newStatus;
+        // }
 
     };
 
