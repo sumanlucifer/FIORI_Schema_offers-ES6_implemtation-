@@ -39,7 +39,7 @@
                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>tblColStartDate}" visibleInFilterBar="true">
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>formBasicInfoLbl4}" visibleInFilterBar="true">
                                 <fb:control>
                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
@@ -66,7 +66,7 @@
             <Table
                 id="idOffersTable"
                 width="auto"
-               items="{path: '/SchemeSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{ }}"
+               items="{path: '/SchemeSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'CreatedByDetails' }}"
                 noDataText="{i18n>TableTitle}"
                 growing="true"
                 growingScrollToLoad="false"
@@ -118,7 +118,7 @@
                             <Text text="{RewardGiftId}"/>
                              <Text text="{path:'StartDate',formatter:'.fmtDate'}"/>
                              <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
-                            <Text text="{CreatedBy}"/>
+                            <Text text="{CreatedByDetails/Name}"/>
                             <ObjectStatus text="{path:'SchemeStatus',formatter:'.fmtLowerCase'}" state="{= ${SchemeStatus} === 'RESOLVED' || ${SchemeStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" />
                             <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                         </cells>

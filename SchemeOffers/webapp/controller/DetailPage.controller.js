@@ -1,47 +1,238 @@
 // @ts-ignore
-sap.ui.define([
+sap.ui.define(
+  [
     "com/knpl/pragati/SchemeOffers/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
-    'sap/ui/model/Sorter',
-    'sap/ui/core/Fragment',
-    'sap/ui/Device',
+    "sap/ui/model/Sorter",
+    "sap/ui/core/Fragment",
+    "sap/ui/Device",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "sap/m/Avatar"
-],
-function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageBox, MessageToast, Avatar) {
+    "sap/m/Avatar",
+    "../model/formatter",
+  ],
+  function (
+    BaseController,
+    Filter,
+    FilterOperator,
+    JSONModel,
+    Sorter,
+    Fragment,
+    Device,
+    MessageBox,
+    MessageToast,
+    Avatar,
+    formatter
+  ) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.DetailPage", {
+    return BaseController.extend(
+      "com.knpl.pragati.SchemeOffers.controller.DetailPage",
+      {
+        formatter: formatter,
         onInit: function () {
-            //Router Object
-            var oViewModel = new JSONModel({
-                busy: false,
-                editable: false
-            });
-            this.getView().setModel(oViewModel, "DetailViewModel");
-            this.oViewModel = this.getView().getModel("DetailViewModel");
-            this.oResourceBundle = this.getOwnerComponent().getModel('i18n').getResourceBundle();
-            this.oRouter = this.getRouter();
-            this.oRouter.getRoute("DetailPage").attachPatternMatched(this._onObjectMatched, this);
+          //Router Object
+          var oViewModel = new JSONModel({
+            busy: false,
+            editable: false,
+          });
+          this.getView().setModel(oViewModel, "DetailViewModel");
+          this.oViewModel = this.getView().getModel("DetailViewModel");
+          this.oResourceBundle = this.getOwnerComponent()
+            .getModel("i18n")
+            .getResourceBundle();
+          this.oRouter = this.getRouter();
+          this.oRouter
+            .getRoute("DetailPage")
+            .attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) {
-            this._property = oEvent.getParameter("arguments").property;
+          var oProp = window.decodeURIComponent(
+            oEvent.getParameter("arguments").prop
+          );
+
+          var oView = this.getView();
+          var sExpandParam = "CreatedByDetails,SchemeType,Potential,Slab";
+          console.log(oProp);
+          if (oProp.trim() !== "") {
+            oView.bindElement({
+              path: "/" + oProp,
+              parameters: {
+                expand: sExpandParam,
+              },
+            });
+          }
+          this._initData(oProp);
+        },
+        _initData: function (oProp) {
+          var oData = {
+            modeEdit: true,
+            bindProp: oProp,
+            Display: {
+              Zones: [],
+              Divisions: [],
+              Depots: [],
+              ArchiTypes: [],
+              PainterProducts: [],
+              ApplicableProducts: [],
+              BonusApplicableProducts:[]
+            },
+            HasTillDate:true,
+
+            PainterId: oProp.replace(/[^0-9]/g, ""),
+            //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
+            tableDealay: 0,
+          };
+          var oModel = new JSONModel(oData);
+          this.getView().setModel(oModel, "oModelControl2");
+
+          var othat = this;
+          var c1, c2, c3, c4;
+          c1 = this._loadEditProfile("Display");
+          c1.then(function () {
+            c2 = othat._getInitData(oProp);
+            c2.then(function (data) {
+              c3 = othat._setViewData(data);
+            });
+          });
         },
 
         onPressEdit: function () {
-            this.oViewModel.setProperty("/editable", true);
+          this.oViewModel.setProperty("/editable", true);
         },
 
         onPressSave: function () {
-            this.oViewModel.setProperty("/editable", false);
+          this.oViewModel.setProperty("/editable", false);
         },
+        _getInitData: function () {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oData = oView.getModel();
+          var oModelControl2 = oView.getModel("oModelControl2");
+          var sPath = oModelControl2.getProperty("/bindProp");
+          var othat = this;
+          var exPand =
+            "SchemeZones,SchemeDivisions,SchemeDepots,SchemePainterArchiTypes,SchemePainterProducts,SchemeApplicableProducts,SchemeBonusApplicableProducts";
+          oView.getModel().read("/" + sPath, {
+            urlParameters: {
+              $expand: exPand,
+            },
+            success: function (data) {
+              promise.resolve(data);
+            },
+            error: function () {
+              promise.reject();
+            },
+          });
+          return promise;
+        },
+        _setViewData: function (oData) {
+          console.log(oData);
+          var oView = this.getView();
+          var oModelControl2 = oView.getModel("oModelControl2");
+          var aZones = [],
+            aDivisions = [],
+            aDepots = [],
+            aArchiTypes = [],
+            aPainterProducts = [],
+            aApplicableProducts = [],
+            aBonusApplicableProducts=[];
 
-        onPressCancel: function () {
-            this.oViewModel.setProperty("/editable", false);
-        }
-    });
-});
+          if (oData["SchemeZones"]["results"].length > 0) {
+            for (var x of oData["SchemeZones"]["results"]) {
+              aZones.push(x["ZoneId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Zones", aZones);
+          if (oData["SchemeDivisions"]["results"].length > 0) {
+            for (var y of oData["SchemeDivisions"]["results"]) {
+              aDivisions.push(y["DivisionId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Divisions", aDivisions);
+          if (oData["SchemeDepots"]["results"].length > 0) {
+            for (var z of oData["SchemeDepots"]["results"]) {
+              aDepots.push(z["DepotId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/Depots", aDepots);
+
+          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
+            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
+              aArchiTypes.push(p["ArchiTypeId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
+
+          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
+            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
+              aArchiTypes.push(p["ArchiTypeId"]);
+            }
+          }
+          oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
+
+          if (oData["SchemePainterProducts"]["results"].length > 0) {
+            for (var q of oData["SchemePainterProducts"]["results"]) {
+              aPainterProducts.push(q["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/PainterProducts",
+            aPainterProducts
+          );
+
+          //Applicable Products
+          if (oData["SchemeApplicableProducts"]["results"].length > 0) {
+            for (var r of oData["SchemeApplicableProducts"]["results"]) {
+              aApplicableProducts.push(r["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/ApplicableProducts",
+            aApplicableProducts
+          );
+
+          //Bonus Applicable Products
+          if (oData["SchemeBonusApplicableProducts"]["results"].length > 0) {
+            for (var s of oData["SchemeBonusApplicableProducts"]["results"]) {
+              aBonusApplicableProducts.push(s["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty(
+            "/Display/BonusApplicableProducts",
+            aBonusApplicableProducts
+          );
+
+          //Bonus Validity Flag
+          if(oData["BonusValidityDate"]===null){
+              oModelControl2.setProperty("/HasTillDate",false)
+          }
+          //oModelControl2.refresh(true)
+          console.log(oModelControl2);
+        },
+        _initViewData: function () {},
+        _loadEditProfile: function (mParam) {
+          var oView = this.getView();
+          var promise = jQuery.Deferred();
+          var othat = this;
+          var oVboxProfile = oView.byId("idVbProfile");
+          var sFragName = mParam == "Edit" ? "EditOffer" : "DisplayDetail";
+          oVboxProfile.destroyItems();
+          return Fragment.load({
+            id: oView.getId(),
+            controller: othat,
+            name: "com.knpl.pragati.SchemeOffers.view.fragment." + sFragName,
+          }).then(function (oControlProfile) {
+            oView.addDependent(oControlProfile);
+            oVboxProfile.addItem(oControlProfile);
+            promise.resolve();
+            return promise;
+          });
+        },
+      }
+    );
+  }
+);

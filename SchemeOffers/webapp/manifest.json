@@ -128,7 +128,7 @@
         },
         {
           "name": "DetailPage",
-          "pattern": "DetailPage/{property}",
+          "pattern": "DetailPage/{prop}",
           "target": ["TargetDetailPage"]
         },
         {

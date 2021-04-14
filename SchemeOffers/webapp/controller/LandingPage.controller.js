@@ -106,11 +106,12 @@ sap.ui.define(
         onPressListItem: function (oEvent) {
           var sPath = oEvent
             .getSource()
-            .getBindingContext("MockData")
-            .getPath();
+            .getBindingContext()
+            .getPath().substr(1);
           this.oRouter.navTo("DetailPage", {
-            property: sPath.split("/")[2],
+            prop: window.encodeURIComponent(sPath),
           });
+          console.log(sPath);
         },
 
         onPressAdd: function (oEvent) {
@@ -272,6 +273,7 @@ sap.ui.define(
           });
           return oDateFormat.format(date);
         },
+        
         fmtLowerCase: function (mParam) {
           var sLetter = "";
           if (mParam) {
