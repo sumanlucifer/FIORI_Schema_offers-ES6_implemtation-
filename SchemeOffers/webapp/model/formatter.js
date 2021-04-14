@@ -42,5 +42,18 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
       return sStatus;
     },
+    fmtVldtyDuration: function (mParam1, mParam2, mParam3) {
+      var aArray = [];
+      if (mParam1) {
+        aArray.push(mParam1 + " years");
+      }
+      if (mParam2) {
+        aArray.push(mParam1 + " months");
+      }
+      if (mParam3) {
+        aArray.push(mParam1 + " days");
+      }
+      return aArray.join(" ");
+    },
   };
 });

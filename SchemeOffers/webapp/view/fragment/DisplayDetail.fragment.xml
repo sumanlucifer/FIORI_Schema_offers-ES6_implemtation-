@@ -63,7 +63,7 @@
                     <f:formElements>
                         <f:FormElement label="">
                             <f:fields>
-                                <RadioButtonGroup id="rbg" enabled="false" selectedIndex="{= ${IsSpecificPainter} === false ? 0 : 1}" columns="2">
+                                <RadioButtonGroup id="rbg" editable="false" selectedIndex="{= ${IsSpecificPainter} === false ? 0 : 1}" columns="2">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
@@ -139,7 +139,7 @@
                     <f:formElements>
                         <f:FormElement>
                             <f:fields>
-                                <RadioButtonGroup enabled="false" selectedIndex="{= ${HasBonusPercentage} === false? 0:1 }" columns="2">
+                                <RadioButtonGroup editable="false" selectedIndex="{= ${HasBonusPercentage} === false? 0:1 }" columns="2">
                                     <RadioButton text="{i18n>BonusPoints}"/>
                                     <RadioButton text="{i18n>BonusPointsPercentage}"/>
                                 </RadioButtonGroup>
@@ -163,19 +163,27 @@
                     <f:formElements>
                         <f:FormElement>
                             <f:fields>
-                              
+                                <RadioButtonGroup editable="false" selectedIndex="{= ${oModelControl2>/HasTillDate} === false ? 0 : 1}" columns="2" select="onRbBonusValidity">
+                                    <RadioButton text="{i18n>TillDuration}"/>
+                                    <RadioButton text="{i18n>TillDate}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement visible="{= ${oModelControl2>/HasTillDate} }">
+                            <f:fields>
+                                <Text class="sapUiSmallMarginBegin" text="{path:'BonusValidityDate',formatter:'.formatter.fmtDate'}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Text text="{parts:['BonusValidityDurationDays','BonusValidityDurationMonth','BonusValidityDurationYear'],formatter:'.fmt'}"/>
+                                <Text class="sapUiSmallMarginBegin" text="{parts:['BonusValidityDurationYear','BonusValidityDurationMonth','BonusValidityDurationDays'],formatter:'.formatter.fmtVldtyDuration'}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
-        <UploadCollection id="UploadCollection" maximumFilenameLength="{settings>/maximumFilenameLength}" maximumFileSize="{settings>/maximumFileSize}" multiple="true" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType="{fileTypes>/selected}" selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" numberOfAttachmentsText="Uploaded (8)" showSeparators="{settings>/showSeparators}" uploadEnabled="{settings>/uploadEnabled}" uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}" mode="{settings>/mode}">
+        <!-- <UploadCollection id="UploadCollection" maximumFilenameLength="{settings>/maximumFilenameLength}" maximumFileSize="{settings>/maximumFileSize}" multiple="true" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType="{fileTypes>/selected}" selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" numberOfAttachmentsText="Uploaded (8)" showSeparators="{settings>/showSeparators}" uploadEnabled="{settings>/uploadEnabled}" uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}" mode="{settings>/mode}">
             <toolbar>
                 <OverflowToolbar id="myId">
                     <Title id="attachmentTitle" text="Uploded (0)"/>
@@ -186,6 +194,6 @@
                     <ToggleButton id="selectAllButton" text="Select all" press="onSelectAllPress" enabled="false" visible="false" type="Transparent"/>
                 </OverflowToolbar>
             </toolbar>
-        </UploadCollection>
+        </UploadCollection> -->
     </VBox>
 </core:FragmentDefinition>

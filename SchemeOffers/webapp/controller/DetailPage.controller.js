@@ -80,6 +80,7 @@ sap.ui.define(
               ApplicableProducts: [],
               BonusApplicableProducts:[]
             },
+            HasTillDate:true,
 
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
@@ -204,6 +205,12 @@ sap.ui.define(
             "/Display/BonusApplicableProducts",
             aBonusApplicableProducts
           );
+
+          //Bonus Validity Flag
+          if(oData["BonusValidityDate"]===null){
+              oModelControl2.setProperty("/HasTillDate",false)
+          }
+          //oModelControl2.refresh(true)
           console.log(oModelControl2);
         },
         _initViewData: function () {},

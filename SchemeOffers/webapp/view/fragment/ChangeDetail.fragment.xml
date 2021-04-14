@@ -195,7 +195,7 @@
                         </f:FormElement>
                         <f:FormElement visible="{= ${oModelControl>/HasTillDate} }">
                             <f:fields>
-                                <DatePicker dateValue="{oModelView>/BonusValidityDate}" displayFormat="dd/MM/YYYY"/>
+                                <DatePicker dateValue="{oModelView>/BonusValidityDate}" displayFormat="DD/MM/YYYY"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement visible="{= !${oModelControl>/HasTillDate} }">
@@ -209,8 +209,6 @@
                                 <ComboBox placeholder="{i18n>Days}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationDays}">
                                     <core:Item text="{oModelControl>key}" key="{oModelControl>key}"/>
                                 </ComboBox>
-
-
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
