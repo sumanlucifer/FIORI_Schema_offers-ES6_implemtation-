@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="smrtOlineTraining" width="100%" editable="false" entitySet="PainterLearningPointHistorySet" tableType="ResponsiveTable" beforeRebindTable="onRebindOnlineTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfflineTrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,UpdatedAt,UpdatedBy,LearningId,PainterId,Percentage" >
+    <smartTable:SmartTable requestAtLeastFields="Id" id="smrtOlineTraining" width="100%" editable="false" entitySet="PainterLearningPointHistorySet" tableType="ResponsiveTable" beforeRebindTable="onRebindOnlineTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfflineTrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,UpdatedAt,UpdatedBy,LearningId,PainterId,Percentage" >
         <Table>
             <columns>
                 <Column hAlign="Begin">
