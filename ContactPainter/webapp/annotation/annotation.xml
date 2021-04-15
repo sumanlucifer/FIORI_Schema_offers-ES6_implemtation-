@@ -43,8 +43,26 @@
                     </Collection>
                 </Annotation>
             </Annotations>
-        </Schema>
-        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity">
+            <Annotations Target="Metadata.PainterLearningPointHistoryModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Title"/>
+                            <PropertyValue Property="Value" Path="LearningDetails/Title"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                        </Record>
+                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Points Earned"/>
+                            <PropertyValue Property="Value" Path="RewardPoints"/>
+                        </Record>
+                      
+
+                    </Collection>
+                </Annotation>
+            </Annotations>
             <Annotations Target="Metadata.PainterTrainingModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
@@ -72,29 +90,7 @@
                 </Annotation>
             </Annotations>
         </Schema>
-        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity">
-            <Annotations Target="Metadata.PainterLearningPointHistoryModel">
-                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
-                    <Collection>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Title"/>
-                            <PropertyValue Property="Value" Path="LearningDetails/Title"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Date and Time"/>
-                            <PropertyValue Property="Value" Path="CreatedAt"/>
-                        </Record>
-                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Points Earned"/>
-                            <PropertyValue Property="Value" Path="RewardPoints"/>
-                        </Record>
-                      
-
-                    </Collection>
-                </Annotation>
-            </Annotations>
-        </Schema>
-
+      
     </edmx:DataServices>
 
 </edmx:Edmx>

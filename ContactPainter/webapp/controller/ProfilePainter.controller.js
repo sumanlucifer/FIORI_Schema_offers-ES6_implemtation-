@@ -2005,7 +2005,7 @@ sap.ui.define(
         _setQuestioanireData: function (sPath) {
           var oView = this.getView();
           var oTable = oView.byId("Questionnaire");
-
+          console.log(sPath);
           this._pQuestionaireDialog.bindElement({
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
