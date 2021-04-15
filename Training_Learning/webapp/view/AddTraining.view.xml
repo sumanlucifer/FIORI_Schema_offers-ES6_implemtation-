@@ -44,7 +44,7 @@
 				<Input width="30%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input width="30%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number"/>
+                <Input width="30%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
 
                 <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
 
@@ -85,7 +85,7 @@
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-				    buttonText="{i18n>fileUploaderTrainingtip}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+				    buttonText="{i18n>fileUploaderTrainingtip}" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
                 <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
                 <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">

@@ -10,7 +10,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colTrainingType}" required="true"/>
-                <ComboBox id="idTrSubType" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
+                <ComboBox id="idTrSubType1" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
                     <items>
                         <core:Item text="{TrainingSubType}" key="{Id}"/>
                     </items>
@@ -34,7 +34,7 @@
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}" type="Number"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number" editable="false"/>
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
@@ -89,7 +89,7 @@
 
                 <Label text="{i18n>colImage}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>
-				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" style="Emphasized" buttonOnly="true"
 			    buttonText="{i18n>fileUploaderTrainingtip}"/>
 
             </f:content>

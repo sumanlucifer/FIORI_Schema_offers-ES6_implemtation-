@@ -346,7 +346,8 @@ sap.ui.define(
                 onSaveTraining: function (oEvent) {
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
-                    var oPayload = oViewModel.getProperty("/TrainingDetails");
+                    var oPayload = {};
+                    $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var oValid;
                     if (trainingType === 'VIDEO') {
@@ -726,14 +727,13 @@ sap.ui.define(
                     delete oPayload.PainterType;
                     delete oPayload.LearningQuestionnaire;
                     delete oPayload.TrainingQuestionnaire;
-                    var oClonePayload = $.extend(true, {}, oPayload),
+                    var oClonePayload = {},
                         that = this,
                         sPath = "/TrainingSet";
-
+                    $.extend(true, oClonePayload, oPayload);
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
-                            var newSpath = sPath + "(" + createddata.Id + ")";
-                            that._UploadAttendanceOfflineTr(newSpath).then(that._SuccessAdd.bind(that, oEvent), that._Error
+                            that._UploadAttendanceOfflineTr(createddata.Id).then(that._SuccessOffline.bind(that), that._Error
                                 .bind(
                                     that))
                         },
@@ -806,7 +806,7 @@ sap.ui.define(
                     });
                 },
 
-                _UploadAttendanceOfflineTr: function (sPath) {
+                _UploadAttendanceOfflineTr: function (trId) {
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
@@ -819,15 +819,35 @@ sap.ui.define(
                         }
 
                         var settings = {
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value?FILE_NAME=csv",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trId + ")/$value",
                             data: file,
                             method: "PUT",
                             headers: that.getModel().getHeaders(),
-                            contentType: "application/csv",
+                            contentType: "text/csv",
                             processData: false,
-                            success: function () {
-                                res.apply(that);
+                            statusCode: {
+                                206: function (result) {
+                                    that.getModel("oModelView").setProperty("/oResult", result);
+                                    that.getModel("oModelView").setProperty("/oStatus", "206");
+                                    res.apply(that);
+                                },
+                                200: function (result) {
+                                    that.getModel("oModelView").setProperty("/oResult", result);
+                                    that.getModel("oModelView").setProperty("/oStatus", "206");
+                                    res.apply(that);
+                                },
+                                202: function (result) {
+                                    that.getModel("oModelView").setProperty("/oResult", result);
+                                    that.getModel("oModelView").setProperty("/oStatus", "206");
+                                    res.apply(that);
+                                }
                             },
+                            // success: function (result) {
+                            //     // res.apply(that);
+
+                            //     that.getModel("oModelView").setProperty("/oResult", result);
+                            //     res.apply(that);
+                            // },
                             error: function () {
                                 rej.apply(that);
                             }
@@ -837,15 +857,45 @@ sap.ui.define(
                     });
                 },
 
+                closeAttendanceStatusDialog: function () {
+                    this.byId("idAttendanceStatusMsgDialog").close();
+                    MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
+                    this.getRouter().navTo("worklist", true);
+                    var oModel = this.getModel();
+                    oModel.refresh(true);
+                },
+
                 _Error: function (error) {
                     MessageToast.show(error.toString());
                 },
 
-                _Success: function () {
-                    this.getRouter().navTo("worklist", true);
-                    MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_UPATE"));
-                    var oModel = this.getModel();
-                    oModel.refresh(true);
+                _SuccessOffline: function () {
+                    var that = this;
+                    var oStatus = that.getModel("oModelView").getProperty("/oStatus");
+                    if (oStatus === "200" || oStatus === "202") {
+                        MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
+                        this.getRouter().navTo("worklist", true);
+                        var oModel = this.getModel();
+                        oModel.refresh(true);
+                    } else if (oStatus === "206") {
+                        var oView = that.getView();
+                        var oModelView = that.getModel("oModelView");
+                        if (!that.byId("idAttendanceStatusMsgDialog")) {
+                            // load asynchronous XML fragment
+                            Fragment.load({
+                                id: oView.getId(),
+                                name: "com.knpl.pragati.Training_Learning.view.fragments.AttendanceUploadedStatusMsg",
+                                controller: that
+                            }).then(function (oDialog) {
+                                // connect dialog to the root view 
+                                //of this component (models, lifecycle)
+                                oView.addDependent(oDialog);
+                                oDialog.open();
+                            });
+                        } else {
+                            that.byId("idAttendanceStatusMsgDialog").open();
+                        }
+                    }
                 },
 
                 _SuccessAdd: function () {

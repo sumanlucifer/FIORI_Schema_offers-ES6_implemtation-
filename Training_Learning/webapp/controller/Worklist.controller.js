@@ -193,10 +193,9 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
-            debugger;
+
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
-                    console.log(oViewFilter[prop]);
 
                     if (prop === "StartDate") {
 
@@ -258,16 +257,17 @@ sap.ui.define([
                                 )
                             );
                         }
-                    } else {
-                        aFlaEmpty = false;
-                        aCurrentFilterValues.push(
-                            new Filter(
-                                prop,
-                                FilterOperator.Contains,
-                                oViewFilter[prop].trim()
-                            )
-                        );
-                    }
+                    } 
+                    // else {
+                    //     aFlaEmpty = false;
+                    //     aCurrentFilterValues.push(
+                    //         new Filter(
+                    //             prop,
+                    //             FilterOperator.Contains,
+                    //             oViewFilter[prop].trim()
+                    //         )
+                    //     );
+                    // }
                 }
             }
 
@@ -278,28 +278,193 @@ sap.ui.define([
 
             var oTable = this.getView().byId("table");
             var oBinding = oTable.getBinding("items");
+            debugger;
+            if (!aFlaEmpty) {
+                oBinding.filter(endFilter);
+                // if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
+                //     for (var i = 0; i < endFilter.aFilters.length; i++) {
+                //         if (endFilter.aFilters[i].sPath === "StartDate") {
+                //             delete endFilter.aFilters[i];
+                //         }
+                //     }
+                // }
+                // if (endFilter.aFilters) {
+                //     oBinding2.filter(endFilter);
+                // }
+            } else {
+                oBinding.filter([]);
+            }
 
-            var oTable1 = this.getView().byId("table1");
-            var oBinding1 = oTable1.getBinding("items");
+            // Search code for Offline Training
+            var aCurrentFilterValues2 = [];
+            var oViewFilter2 = this.getView().getModel("worklistView").getProperty("/filterBar");
+            var aFlaEmpty2 = true;
+            debugger;
+            for (let prop in oViewFilter2) {
+                if (oViewFilter2[prop]) {
+
+                    if (prop === "TrainingSubTypeId") {
+                        aFlaEmpty2 = false;
+                        aCurrentFilterValues2.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
+                        );
+                    } else if (prop === "RewardPoints") {
+                        aFlaEmpty2 = false;
+                        aCurrentFilterValues2.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
+                        );
+                    } else if (prop === "Search") {
+                        aFlaEmpty2 = false;
+                        if (/^\+?(0|[1-9]\d*)$/.test(oViewFilter2[prop])) {
+                            aCurrentFilterValues2.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "RewardPoints",
+                                            FilterOperator.EQ,
+                                            oViewFilter2[prop]
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilterValues2.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(Title)",
+                                            FilterOperator.Contains,
+                                            "'" + oViewFilter2[prop].trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+
+                                    ],
+                                    false
+                                )
+                            );
+                        }
+                    } 
+                    // else {
+                    //     aFlaEmpty2 = false;
+                    //     aCurrentFilterValues2.push(
+                    //         new Filter(
+                    //             prop,
+                    //             FilterOperator.Contains,
+                    //             oViewFilter2[prop].trim()
+                    //         )
+                    //     );
+                    // }
+                }
+            }
+
+            var endFilter2 = new Filter({
+                filters: aCurrentFilterValues2,
+                and: true,
+            });
 
             var oTable2 = this.getView().byId("table2");
             var oBinding2 = oTable2.getBinding("items");
 
-            if (!aFlaEmpty) {
-                oBinding.filter(endFilter);
-                if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
-                    for (var i = 0; i < endFilter.aFilters.length; i++) {
-                        if (endFilter.aFilters[i].sPath === "StartDate") {
-                            delete endFilter.aFilters[i];
-                        }
-                    }
-                }
-
-                oBinding2.filter(endFilter);
-                oBinding1.filter(endFilter);
+            if (!aFlaEmpty2) {
+                oBinding2.filter(endFilter2);
             } else {
-                oBinding.filter([]);
                 oBinding2.filter([]);
+            }
+
+            // Search code for Video Training
+            debugger;
+            var aCurrentFilterValues1 = [];
+            var oViewFilter1 = this.getView().getModel("worklistView").getProperty("/filterBar");
+            var aFlaEmpty1 = true;
+            debugger;
+            for (let prop in oViewFilter1) {
+                if (oViewFilter1[prop]) {
+
+                    if (prop === "StartDate") {
+
+                        var dateValue = oViewFilter1[prop];
+                        var pattern = "dd/MM/yyyy";
+                        var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                            pattern: pattern
+                        });
+
+                        var oNow = new Date(dateValue);
+                        var newDate = oDateFormat.format(oNow);
+
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter("CreatedAt", FilterOperator.GE, new Date(oViewFilter1[prop]))
+                        );
+                    } else if (prop === "Status") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
+                        );
+                    } else if (prop === "TrainingSubTypeId") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
+                        );
+                    } else if (prop === "RewardPoints") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
+                        );
+                    } else if (prop === "Search") {
+                        aFlaEmpty1 = false;
+                        if (/^\+?(0|[1-9]\d*)$/.test(oViewFilter1[prop])) {
+                            aCurrentFilterValues1.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "RewardPoints",
+                                            FilterOperator.EQ,
+                                            oViewFilter1[prop]
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilterValues1.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(Title)",
+                                            FilterOperator.Contains,
+                                            "'" + oViewFilter1[prop].trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+
+                                    ],
+                                    false
+                                )
+                            );
+                        }
+                    } 
+                    // else {
+                    //     aFlaEmpty1 = false;
+                    //     aCurrentFilterValues1.push(
+                    //         new Filter(
+                    //             prop,
+                    //             FilterOperator.Contains,
+                    //             oViewFilter1[prop].trim()
+                    //         )
+                    //     );
+                    // }
+                }
+            }
+
+            var endFilter1 = new Filter({
+                filters: aCurrentFilterValues1,
+                and: true,
+            });
+
+            var oTable1 = this.getView().byId("table1");
+            var oBinding1 = oTable1.getBinding("items");
+
+            if (!aFlaEmpty1) {
+                oBinding1.filter(endFilter1);
+            } else {
                 oBinding1.filter([]);
             }
         },
@@ -381,7 +546,7 @@ sap.ui.define([
                     that.getModel("appView").setProperty("/__metadata", data.__metadata);
                 }
             })
-            
+
             this.getModel("appView").setProperty("/trainingType", "VIDEO");
             this.getModel("appView").setProperty("/flgEditOn", false);
             var oRouter = this.getOwnerComponent().getRouter();
@@ -408,14 +573,14 @@ sap.ui.define([
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
                     // if (sData.Status === 0) {
-                        if (todayDate < sData.EndDate) {
-                            oRouter.navTo("RouteTrainingTab", {
-                                mode: "edit",
-                                prop: window.encodeURIComponent(sPath),
-                            });
-                        } else {
-                            that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
-                        }
+                    if (todayDate < sData.EndDate) {
+                        oRouter.navTo("RouteTrainingTab", {
+                            mode: "edit",
+                            prop: window.encodeURIComponent(sPath),
+                        });
+                    } else {
+                        that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
+                    }
                     // } else {
                     //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
                     // }
@@ -439,10 +604,10 @@ sap.ui.define([
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
                     // if (sData.Status === 0) {
-                        oRouter.navTo("RouteTrainingTab", {
-                            mode: "edit",
-                            prop: window.encodeURIComponent(sPath),
-                        });
+                    oRouter.navTo("RouteTrainingTab", {
+                        mode: "edit",
+                        prop: window.encodeURIComponent(sPath),
+                    });
                     // } else {
                     //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
                     // }
@@ -466,10 +631,10 @@ sap.ui.define([
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
                     // if (sData.Status === 0) {
-                        oRouter.navTo("RouteTrainingTab", {
-                            mode: "edit",
-                            prop: window.encodeURIComponent(sPath),
-                        });
+                    oRouter.navTo("RouteTrainingTab", {
+                        mode: "edit",
+                        prop: window.encodeURIComponent(sPath),
+                    });
                     // } else {
                     //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
                     // }
@@ -490,10 +655,10 @@ sap.ui.define([
                                 that.getModel().update(data, {
                                     IsArchived: true
                                 }, {
-                                    success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                                    success: that.showToast.bind(that, "MSG_SUCCESS_LIVE_TRAINING_REMOVE")
                                 });
                             }
-                            that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                            that.showWarning("MSG_CONFIRM_LIVE_TRAINING_DELETE", onYes);
                         } else {
                             that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_DELETED");
                         }
@@ -522,10 +687,10 @@ sap.ui.define([
                         that.getModel().update(data, {
                             IsArchived: true
                         }, {
-                            success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                            success: that.showToast.bind(that, "MSG_SUCCESS_OFFLINE_TRAINING_REMOVE")
                         });
                     }
-                    that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                    that.showWarning("MSG_CONFIRM_OFFLINE_TRAINING_DELETE", onYes);
                 }
             })
         },
@@ -572,6 +737,9 @@ sap.ui.define([
                         }, {
                             success: that.showToast.bind(that, "MSG_SUCCESS_DEACTIVATED_SUCCESSFULLY")
                         });
+                    }
+                    if (sData.Status === 2) {
+                        that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_CHANGED");
                     }
                 }
             })
