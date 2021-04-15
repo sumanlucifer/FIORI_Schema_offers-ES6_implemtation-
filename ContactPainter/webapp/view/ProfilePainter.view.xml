@@ -78,12 +78,10 @@
             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>MyKnowledge}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection title="{i18n>Training}">
-                        <VBox renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
-                        </VBox>
+                        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
                     </uxap:ObjectPageSubSection>
 
-                    <uxap:ObjectPageSubSection title="{i18n>OnlineTraining}">
+                    <uxap:ObjectPageSubSection title="{i18n>Video}">
                         <VBox renderType="Bare">
                             <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.OnlineTraining" type="XML"/>
                         </VBox>

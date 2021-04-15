@@ -17,7 +17,7 @@
 
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 5 ,"sortProperty": "Id","filterProperty": "Id"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Button", "columnIndex": 5 }'/>
                     </customData>
                     <Text text="{i18n>trainingQuestionaaire}"/>
                 </Column>
