@@ -4,20 +4,20 @@
             <columns>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>DateAndTime}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 6 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 4 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
                     </customData>
                     <Text text="{i18n>trainingAttendance}"/>
                 </Column>
 
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 7 ,"sortProperty": "Id","filterProperty": "Id"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Id", "leadingProperty": "Id", "columnIndex": 5 ,"sortProperty": "Id","filterProperty": "Id"}'/>
                     </customData>
                     <Text text="{i18n>trainingQuestionaaire}"/>
                 </Column>
