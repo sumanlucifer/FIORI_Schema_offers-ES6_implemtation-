@@ -16,19 +16,19 @@
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>DateAndTime}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "SubmissionDate", "type":"date", "leadingProperty": "SubmissionDate", "columnIndex": 4 ,"sortProperty": "SubmissionDate","filterProperty": "SubmissionDate"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "SubmissionDate", "type":"date", "leadingProperty": "SubmissionDate", "columnIndex": 3 ,"sortProperty": "SubmissionDate","filterProperty": "SubmissionDate"}'/>
                     </customData>
                     <Text text="{i18n>trainingAttendance}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "LButton",  "columnIndex": 7 }'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "LButton",  "columnIndex": 4 }'/>
                     </customData>
                     <Text text="{i18n>trainingQuestionaaire}"/>
                 </Column>
