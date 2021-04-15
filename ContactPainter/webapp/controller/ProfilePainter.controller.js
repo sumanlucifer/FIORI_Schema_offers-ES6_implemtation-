@@ -2071,6 +2071,7 @@ sap.ui.define(
             .getProperty("/PainterId");
 
           var oBindingParams = oEvent.getParameter("bindingParams");
+          oBindingParams.parameters["expand"] = "LearningDetails";
           var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
         },

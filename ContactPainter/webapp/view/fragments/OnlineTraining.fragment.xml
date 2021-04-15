@@ -1,20 +1,32 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
-    <smartTable:SmartTable requestAtLeastFields="Id" id="smrtOlineTraining" width="100%" editable="false" entitySet="PainterLearningPointHistorySet" tableType="ResponsiveTable" beforeRebindTable="onRebindOnlineTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfflineTrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,UpdatedAt,UpdatedBy,LearningId,PainterId,Percentage" >
+    <smartTable:SmartTable requestAtLeastFields="Id" id="smrtOlineTraining" width="100%" editable="false" entitySet="PainterLearningPointHistorySet" tableType="ResponsiveTable" beforeRebindTable="onRebindOnlineTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfflineTrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsArchived,IsSelected,UpdatedAt,UpdatedBy,LearningId,PainterId,Percentage">
         <Table>
             <columns>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "LearningDetails/Title", "leadingProperty": "LearningDetails/Title", "columnIndex": 0 ,"sortProperty": "LearningDetails/Title","filterProperty": "LearningDetails/Title"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingTitle}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints", "leadingProperty": "RewardPoints", "columnIndex": 1 ,"sortProperty": "RewardPoints","filterProperty": "RewardPoints"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingPoints}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>DateAndTime}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "SubmissionDate", "type":"date", "leadingProperty": "SubmissionDate", "columnIndex": 6 ,"sortProperty": "SubmissionDate","filterProperty": "SubmissionDate"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "SubmissionDate", "type":"date", "leadingProperty": "SubmissionDate", "columnIndex": 4 ,"sortProperty": "SubmissionDate","filterProperty": "SubmissionDate"}'/>
                     </customData>
                     <Text text="{i18n>trainingAttendance}"/>
                 </Column>
-                 <Column hAlign="Begin">
+                <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "LButton",  "columnIndex": 7 }'/>
                     </customData>
@@ -26,6 +38,8 @@
             <items>
                 <ColumnListItem>
                     <cells>
+                        <Text text="{LearningDetails/Title}"/>
+                        <Text text="{RewardPoints}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'SubmissionDate',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <VBox>
