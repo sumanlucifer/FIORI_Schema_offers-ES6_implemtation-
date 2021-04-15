@@ -43,7 +43,7 @@
                     </Collection>
                 </Annotation>
             </Annotations>
-            <Annotations Target="Metadata.PainterLearningPointHistoryModel">
+            <!-- <Annotations Target="Metadata.PainterLearningPointHistoryModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
@@ -62,8 +62,8 @@
 
                     </Collection>
                 </Annotation>
-            </Annotations>
-            <Annotations Target="Metadata.PainterTrainingModel">
+            </Annotations> -->
+            <!-- <Annotations Target="Metadata.PainterTrainingModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
@@ -88,7 +88,7 @@
                         </Record>
                     </Collection>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
         </Schema>
       
     </edmx:DataServices>

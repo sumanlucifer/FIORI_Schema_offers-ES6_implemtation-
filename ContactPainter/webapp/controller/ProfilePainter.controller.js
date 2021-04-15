@@ -1973,8 +1973,9 @@ sap.ui.define(
           var oPainterId = oView
             .getModel("oModelControl2")
             .getProperty("/PainterId");
-
+         
           var oBindingParams = oEvent.getParameter("bindingParams");
+           oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
           var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
         },
@@ -2070,6 +2071,7 @@ sap.ui.define(
             .getProperty("/PainterId");
 
           var oBindingParams = oEvent.getParameter("bindingParams");
+          oBindingParams.parameters["expand"] = "LearningDetails";
           var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
         },
