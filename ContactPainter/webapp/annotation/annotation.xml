@@ -84,7 +84,6 @@
                             <PropertyValue Property="Label" String="Points Earned"/>
                             <PropertyValue Property="Value" Path="RewardPoints"/>
                         </Record>
-                      
 
                     </Collection>
                 </Annotation>
