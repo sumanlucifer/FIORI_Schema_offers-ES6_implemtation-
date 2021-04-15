@@ -4,6 +4,24 @@
             <columns>
                 <Column hAlign="Begin">
                     <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TrainingDetails/TrainingType/TrainingType", "leadingProperty": "TrainingDetails/TrainingType/TrainingType", "columnIndex": 0 ,"sortProperty": "TrainingDetails/TrainingType/TrainingType","filterProperty": "TrainingDetails/TrainingType/TrainingType"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingType}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TrainingDetails/Title", "leadingProperty": "TrainingDetails/Title", "columnIndex": 1 ,"sortProperty": "TrainingDetails/Title","filterProperty": "TrainingDetails/Title"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingTitle}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "EarnedPoints", "leadingProperty": "EarnedPoints", "columnIndex": 2 ,"sortProperty": "EarnedPoints","filterProperty": "EarnedPoints"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingPoints}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>DateAndTime}"/>
@@ -26,6 +44,9 @@
             <items>
                 <ColumnListItem>
                     <cells>
+                        <Text text="{TrainingDetails/TrainingType/TrainingType}"/>
+                         <Text text="{TrainingDetails/Title}"/>
+                          <Text text="{EarnedPoints}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <VBox>
