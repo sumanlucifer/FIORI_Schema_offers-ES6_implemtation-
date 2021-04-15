@@ -1973,9 +1973,9 @@ sap.ui.define(
           var oPainterId = oView
             .getModel("oModelControl2")
             .getProperty("/PainterId");
-         
+
           var oBindingParams = oEvent.getParameter("bindingParams");
-           oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
+          oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
           var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
           oBindingParams.filters.push(oFilter);
         },
@@ -2010,8 +2010,7 @@ sap.ui.define(
           this._pQuestionaireDialog.bindElement({
             path: "/PainterTrainingSet(" + sPath["Id"] + ")",
             parameters: {
-              expand:
-                "SubmittedQuestionnaire"
+              expand: "SubmittedQuestionnaire",
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
@@ -2062,9 +2061,15 @@ sap.ui.define(
           this._pQuestionaireDialog.destroy();
           delete this._pQuestionaireDialog;
         },
+        fmtTrainStatus: function (mParam) {
+          if(mParam.replace( /\s/g, '').toLowerCase()==='offlinetraining'){
+            return 'NA'
+          };
+          return 'Not Submitted';
+        },
         // Learning/Online Training Dialog Box
-        onRebindOnlineTable:function(oEvent){
-            var oView = this.getView();
+        onRebindOnlineTable: function (oEvent) {
+          var oView = this.getView();
 
           var oPainterId = oView
             .getModel("oModelControl2")
@@ -2106,15 +2111,14 @@ sap.ui.define(
           this._pQuestionaireDialog.bindElement({
             path: "/PainterLearningPointHistorySet(" + sPath["Id"] + ")",
             parameters: {
-              expand:
-                "SubmittedQuestionnaire"
+              expand: "SubmittedQuestionnaire",
             },
           });
           oView.addDependent(this._pQuestionaireDialog);
           this._pQuestionaireDialog.open();
         },
-        LearningQuestionaaireFactory:function(sId,oContext){
-            var oBject = oContext.getObject();
+        LearningQuestionaaireFactory: function (sId, oContext) {
+          var oBject = oContext.getObject();
           console.log(oBject);
           var oColumnListItem = new sap.m.ColumnListItem();
           oColumnListItem.addCell(
@@ -2139,7 +2143,7 @@ sap.ui.define(
                       "SelectedOptionId",
                     ],
                     formatter: function (mPram1, mPram2, mPram3) {
-                        console.log(mPram1,mPram2,mPram3)
+                      console.log(mPram1, mPram2, mPram3);
                       if (mPram1) {
                         return "Success";
                       }
@@ -2154,7 +2158,7 @@ sap.ui.define(
           );
 
           return oColumnListItem;
-        }
+        },
       }
     );
   }
