@@ -139,7 +139,7 @@
                                     formatter: '.formatter.status'}"
                                 data:remarks="{Status}"/> -->
                                 <Button 
-                                type="Transparent"
+                                type="{= ${Status} === true? 'Accept' : undefined || ${Status} === false? 'Reject' : undefined }"
                                 text="{path: 'Status',
                                     formatter: '.formatter.status'}"
                                 data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>

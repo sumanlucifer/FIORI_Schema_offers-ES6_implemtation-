@@ -34,7 +34,7 @@ sap.ui.define([
             if (status) {
                 return 'Active';
             } else {
-                return 'Inctive';
+                return 'Inactive';
             }
         }
 

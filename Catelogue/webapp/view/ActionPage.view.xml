@@ -136,14 +136,13 @@
           </HBox>
          
                  </HBox> 
-                 <VBox width="100%">
-                        <List id="idPdf" growing="true"
-                                            items="{path: 'ActionViewModel>/Catalogue'}">
+                 
+                        <List id="idPdf" items="{path: 'ActionViewModel>/Catalogue'}"  noDataText="{i18n>tableNoDataText}">
                                             <headerToolbar>
                                                 <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
                                                     <ToolbarSpacer/>
-                                                    <Button press="onAddCatalogue" text="Add"/>
+                                                    <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
                                                 </Toolbar>
                                             </headerToolbar>
                                             <CustomListItem type="Active">
@@ -190,7 +189,7 @@
                                                
                                             </CustomListItem>
                                         </List>
-                                </VBox>
+                                
                                         
                                        
                 
