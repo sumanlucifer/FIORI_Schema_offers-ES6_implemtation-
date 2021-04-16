@@ -321,20 +321,13 @@ sap.ui.define([
         // },
         openPdf: function (oEvent) {
             var oContext=oEvent.getSource().getBindingContext("objectView"); 
-             // this.pdfURI = this.sServiceURI + sObjectPath + "/$value?doc_type=pdf";         
-              // sap.m.URLHelper.redirect(this.sServiceURI + this._property + "/$value?doc_type=pdf", true)
             var sSource =  this.sServiceURI + this.property+"/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-            this._pdfViewer.setSource(sSource);
-                    this._pdfViewer.setTitle("Catalogue");
-                    this._pdfViewer.open();
-
-            // $.ajax(sSource, {
-            //     success: function (data) {
-            //         this._pdfViewer.setSource(sSource);
+            // this._pdfViewer.setSource(sSource);
             //         this._pdfViewer.setTitle("Catalogue");
             //         this._pdfViewer.open();
-            //     }
-            // })
+            sap.m.URLHelper.redirect(sSource, true);
+
+
 
         },
         // onPressImage: function (oEvent) {

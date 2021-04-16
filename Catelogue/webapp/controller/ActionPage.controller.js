@@ -27,6 +27,7 @@ sap.ui.define([
             this.pdfBtn = this.getView().byId("pdfBtn");
             this.oCategory = this.getView().byId("idCategory");
             this.oTitle = this.getView().byId("idTitle");
+            this.oForm = this.getView().byId("idCatalogueDetailsForm");
             this.imageName = "";
             this.pdfName = "";
             //Router Object
@@ -35,6 +36,7 @@ sap.ui.define([
             this.entityObject;
             this._pdfViewer = new PDFViewer();
             this.getView().addDependent(this._pdfViewer);
+
 
         },
 
@@ -59,6 +61,7 @@ sap.ui.define([
                 var html = new sap.ui.core.HTML();
                 //var oItem = oComponentModel.getProperty("/" + this._property);
                 // this.oItem;
+                
                 var that = this;
                 this.getView().getModel().read("/" + this._property, {
                     urlParameters: {
@@ -78,22 +81,25 @@ sap.ui.define([
                         var oViewModel = new JSONModel(oData);
                         that.getView().setModel(oViewModel, "ActionViewModel");
 
+                        that.oPreviewImage.setSrc(that.sServiceURI + that._property + "/$value?doc_type=image");
+                        that.oFileUploader.setUploadUrl(that.sServiceURI + that._property + "/$value?doc_type=image");
+                        that.oPreviewImage.setVisible(true);
+
+
+
                     },
                     error: function (oError) {
                     }
                 });
                 this.oCategory.setEditable(false);
                 this.oTitle.setEditable(false);
-                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
-                this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
-                this.oPreviewImage.setVisible(true);
+                // this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
+                // this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
+                // this.oPreviewImage.setVisible(true);
 
                 var pdfURL = this.sServiceURI + this._property + "/$value?doc_type=pdf";
-
-
-
                 this.pdfBtn.setVisible(true);
-
+                
 
 
             } else {
@@ -109,7 +115,9 @@ sap.ui.define([
 
 
         },
+        onAfterRendering: function () {
 
+        },
 
 
         onPressBreadcrumbLink: function () {
@@ -142,9 +150,10 @@ sap.ui.define([
         openPdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
             var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-            this._pdfViewer.setSource(sSource);
-            this._pdfViewer.setTitle("Catalogue");
-            this._pdfViewer.open();
+            // this._pdfViewer.setSource(sSource);
+            // this._pdfViewer.setTitle("Catalogue");
+            // this._pdfViewer.open();
+             sap.m.URLHelper.redirect(sSource, true)
         },
         onChangePdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
@@ -502,10 +511,10 @@ sap.ui.define([
                         }
                         return true;
 
-                    }else{
-                       return true; 
+                    } else {
+                        return true;
                     }
-                    
+
                 }
                 else {
                     var sMessage = "Upload English Catalogue";
@@ -590,13 +599,14 @@ sap.ui.define([
             var oModel = this.getView().getModel("ActionViewModel");
             var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
 
-
             oObject.push({
                 LanguageCode: "",
                 file: null,
                 fileName: ""
             });
+
             oModel.refresh(true);
+
 
 
 
