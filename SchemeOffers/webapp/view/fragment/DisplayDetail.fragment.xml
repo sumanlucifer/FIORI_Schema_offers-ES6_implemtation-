@@ -34,7 +34,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>Region}">
+                <f:FormContainer title="{i18n>formRegion}">
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
@@ -152,7 +152,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>BonusApplicableProducs}">
                             <f:fields>
-                                <MultiComboBox enabled="false" selectedKeys="{oModelControl2>/Display/BonusApplicableProducts}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox editable="false" selectedKeys="{oModelControl2>/Display/BonusApplicableProducts}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -169,7 +169,7 @@
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement visible="{= ${oModelControl2>/HasTillDate} }">
+                        <f:FormElement visible="{= ${oModelControl2>/HasTillDate} }">
                             <f:fields>
                                 <Text class="sapUiSmallMarginBegin" text="{path:'BonusValidityDate',formatter:'.formatter.fmtDate'}"/>
                             </f:fields>
@@ -181,19 +181,33 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
+                <f:FormContainer title="{i18n>Attachment}">
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Text text="{i18n>NoAttachmentFound}"  visible="{= !${oModelControl2>/ImageLoaded} }" />
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <Link text="{i18n>ViewAttachment}" visible="{oModelControl2>/ImageLoaded}" press="onViewAttachment" />
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
             </f:formContainers>
         </f:Form>
         <!-- <UploadCollection id="UploadCollection" maximumFilenameLength="{settings>/maximumFilenameLength}" maximumFileSize="{settings>/maximumFileSize}" multiple="true" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType="{fileTypes>/selected}" selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" numberOfAttachmentsText="Uploaded (8)" showSeparators="{settings>/showSeparators}" uploadEnabled="{settings>/uploadEnabled}" uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}" mode="{settings>/mode}">
-            <toolbar>
-                <OverflowToolbar id="myId">
-                    <Title id="attachmentTitle" text="Uploded (0)"/>
-                    <ToolbarSpacer/>
-                    <UploadCollectionToolbarPlaceholder/>
-                    <SearchField width="10rem" search="onSearch"/>
-                    <Button id="deleteSelectedButton" text="Delete" press="onDeleteSelectedItems" enabled="false" visible="false" type="Transparent"/>
-                    <ToggleButton id="selectAllButton" text="Select all" press="onSelectAllPress" enabled="false" visible="false" type="Transparent"/>
-                </OverflowToolbar>
-            </toolbar>
-        </UploadCollection> -->
+                                            <toolbar>
+                                                <OverflowToolbar id="myId">
+                                                    <Title id="attachmentTitle" text="Uploded (0)"/>
+                                                    <ToolbarSpacer/>
+                                                    <UploadCollectionToolbarPlaceholder/>
+                                                    <SearchField width="10rem" search="onSearch"/>
+                                                    <Button id="deleteSelectedButton" text="Delete" press="onDeleteSelectedItems" enabled="false" visible="false" type="Transparent"/>
+                                                    <ToggleButton id="selectAllButton" text="Select all" press="onSelectAllPress" enabled="false" visible="false" type="Transparent"/>
+                                                </OverflowToolbar>
+                                            </toolbar>
+                                        </UploadCollection> -->
     </VBox>
 </core:FragmentDefinition>

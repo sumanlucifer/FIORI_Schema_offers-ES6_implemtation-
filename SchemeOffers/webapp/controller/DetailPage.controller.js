@@ -78,10 +78,10 @@ sap.ui.define(
               ArchiTypes: [],
               PainterProducts: [],
               ApplicableProducts: [],
-              BonusApplicableProducts:[]
+              BonusApplicableProducts: [],
             },
-            HasTillDate:true,
-
+            HasTillDate: true,
+            ImageLoaded: true,
             PainterId: oProp.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
@@ -96,6 +96,9 @@ sap.ui.define(
             c2 = othat._getInitData(oProp);
             c2.then(function (data) {
               c3 = othat._setViewData(data);
+              c3.then(function (data) {
+                c4 = othat._CheckAttachment();
+              });
             });
           });
         },
@@ -130,6 +133,7 @@ sap.ui.define(
           return promise;
         },
         _setViewData: function (oData) {
+          var promise = jQuery.Deferred();
           console.log(oData);
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
@@ -139,7 +143,7 @@ sap.ui.define(
             aArchiTypes = [],
             aPainterProducts = [],
             aApplicableProducts = [],
-            aBonusApplicableProducts=[];
+            aBonusApplicableProducts = [];
 
           if (oData["SchemeZones"]["results"].length > 0) {
             for (var x of oData["SchemeZones"]["results"]) {
@@ -207,13 +211,15 @@ sap.ui.define(
           );
 
           //Bonus Validity Flag
-          if(oData["BonusValidityDate"]===null){
-              oModelControl2.setProperty("/HasTillDate",false)
+          if (oData["BonusValidityDate"] === null) {
+            oModelControl2.setProperty("/HasTillDate", false);
           }
           //oModelControl2.refresh(true)
           console.log(oModelControl2);
+          promise.resolve();
+          return promise;
         },
-        _initViewData: function () {},
+
         _loadEditProfile: function (mParam) {
           var oView = this.getView();
           var promise = jQuery.Deferred();
@@ -231,6 +237,51 @@ sap.ui.define(
             promise.resolve();
             return promise;
           });
+        },
+        // Attachment View and other Changes
+        _CheckAttachment: function () {
+          var oView = this.getView();
+          var oModelControl = this.getView().getModel("oModelControl2");
+          var oProp = oModelControl.getProperty("/bindProp");
+          var sImageUrl =
+            "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
+          jQuery
+            .get(sImageUrl)
+            .done(function () {
+              oModelControl.setProperty("/ImageLoaded", true);
+              console.log("Image Exist");
+            })
+            .fail(function () {
+              oModelControl.setProperty("/ImageLoaded", false);
+              console.log("Image Doesnt Exist");
+            });
+        },
+        onViewAttachment: function (oEvent) {
+          var oButton = oEvent.getSource();
+          var oView = this.getView();
+          if (!this._pKycDialog) {
+            Fragment.load({
+              name:
+                "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._pKycDialog = oDialog;
+                oView.addDependent(this._pKycDialog);
+                this._pKycDialog.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._pKycDialog);
+            this._pKycDialog.open();
+          }
+        },
+        onAttachDialogClose: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
+        onAfterAttachClose: function (oEvent) {
+          this._pKycDialog.destroy();
+          delete this._pKycDialog;
         },
       }
     );
