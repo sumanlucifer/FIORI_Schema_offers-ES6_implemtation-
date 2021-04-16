@@ -108,10 +108,11 @@ sap.ui.define(
             .getSource()
             .getBindingContext()
             .getPath().substr(1);
+         var oBject = oEvent.getSource().getBindingContext().getObject();
           this.oRouter.navTo("DetailPage", {
-            prop: window.encodeURIComponent(sPath),
+            prop:oBject["Id"]
           });
-          console.log(sPath);
+         
         },
 
         onPressAdd: function (oEvent) {

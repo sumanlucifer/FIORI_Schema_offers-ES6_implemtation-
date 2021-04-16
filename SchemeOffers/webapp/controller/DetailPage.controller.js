@@ -59,7 +59,7 @@ sap.ui.define(
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
-              path: "/" + oProp,
+              path: "/SchemeSet(" + oProp + ")",
               parameters: {
                 expand: sExpandParam,
               },
@@ -70,7 +70,7 @@ sap.ui.define(
         _initData: function (oProp) {
           var oData = {
             modeEdit: true,
-            bindProp: oProp,
+            bindProp: "SchemeSet(" + oProp + ")",
             Display: {
               Zones: [],
               Divisions: [],
@@ -82,7 +82,7 @@ sap.ui.define(
             },
             HasTillDate: true,
             ImageLoaded: true,
-            PainterId: oProp.replace(/[^0-9]/g, ""),
+            PainterId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
           };
@@ -101,6 +101,7 @@ sap.ui.define(
               });
             });
           });
+          this._toggleButtonsAndView(false);
         },
 
         onPressEdit: function () {
@@ -219,13 +220,65 @@ sap.ui.define(
           promise.resolve();
           return promise;
         },
+        handleEditPress: function () {
+          this._toggleButtonsAndView(true);
+          var oView = this.getView();
+          var oCtrl2Model = oView.getModel("oModelControl2");
+          var c1, c2, c3;
+          var othat = this;
+          c1 = othat._loadEditProfile("Edit");
+          c1.then(function () {
+            c2 = othat._GetInitEditData();
+            c2.then(function (data) {
+              c3 = othat._setEditData(data);
+              //othat.getView().getModel("oModelView").refresh(true);
+            });
+          });
+
+          // this._initSaveModel();
+        },
+        _GetInitEditData: function () {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oData = oView.getModel();
+          var oModelControl2 = oView.getModel("oModelControl2");
+          var sPath = oModelControl2.getProperty("/bindProp");
+          var othat = this;
+          var exPand =
+            "SchemeZones,SchemeDivisions,SchemeDepots,SchemePainterArchiTypes,SchemePainterProducts,SchemeApplicableProducts,SchemeBonusApplicableProducts";
+          oView.getModel().read("/" + sPath, {
+            urlParameters: {
+              $expand: exPand,
+            },
+            success: function (data) {
+              promise.resolve(data);
+            },
+            error: function () {
+              promise.reject();
+            },
+          });
+          return promise;
+        },
+        _setEditData: function (data) {
+          var promise = jQuery.Deferred();
+          var oData = data;
+          var oView = this.getView();
+          var oModelView = new JSONModel(oData);
+
+          promise.resolve();
+          return promise;
+        },
+        handleSavePress: function () {
+          var oView = this.getView();
+          
+        },
 
         _loadEditProfile: function (mParam) {
           var oView = this.getView();
           var promise = jQuery.Deferred();
           var othat = this;
           var oVboxProfile = oView.byId("idVbProfile");
-          var sFragName = mParam == "Edit" ? "EditOffer" : "DisplayDetail";
+          var sFragName = mParam == "Edit" ? "ChangeDetail" : "DisplayDetail";
           oVboxProfile.destroyItems();
           return Fragment.load({
             id: oView.getId(),
@@ -249,11 +302,9 @@ sap.ui.define(
             .get(sImageUrl)
             .done(function () {
               oModelControl.setProperty("/ImageLoaded", true);
-              console.log("Image Exist");
             })
             .fail(function () {
               oModelControl.setProperty("/ImageLoaded", false);
-              console.log("Image Doesnt Exist");
             });
         },
         onViewAttachment: function (oEvent) {
@@ -282,6 +333,18 @@ sap.ui.define(
         onAfterAttachClose: function (oEvent) {
           this._pKycDialog.destroy();
           delete this._pKycDialog;
+        },
+        _toggleButtonsAndView: function (bEdit) {
+          var oView = this.getView();
+          oView.byId("edit").setVisible(!bEdit);
+          oView.byId("save").setVisible(bEdit);
+          oView.byId("cancel").setVisible(bEdit);
+        },
+        handleCancelPress: function () {
+          this._toggleButtonsAndView(false);
+          var oView = this.getView();
+          this._loadEditProfile("Display");
+          oView.getModel().refresh(true);
         },
       }
     );
