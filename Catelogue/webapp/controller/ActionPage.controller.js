@@ -150,9 +150,10 @@ sap.ui.define([
         openPdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
             var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-            this._pdfViewer.setSource(sSource);
-            this._pdfViewer.setTitle("Catalogue");
-            this._pdfViewer.open();
+            // this._pdfViewer.setSource(sSource);
+            // this._pdfViewer.setTitle("Catalogue");
+            // this._pdfViewer.open();
+             sap.m.URLHelper.redirect(sSource, true)
         },
         onChangePdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
