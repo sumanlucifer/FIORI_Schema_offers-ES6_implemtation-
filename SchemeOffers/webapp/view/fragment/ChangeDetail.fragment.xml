@@ -47,22 +47,22 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
-                                <MultiComboBox placeholder="{i18n>placeHolder1}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl2}">
                             <f:fields>
-                                <MultiComboBox id="idDivision" placeholder="{i18n>placeHolder1}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
+                                <MultiComboBox id="idDivision" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
-                                <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
-                                    <core:ListItem text="{Depot}" key="{Id}" additionalText="{Id}"/>
+                                <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Depots}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
+                                    <core:ListItem text="{Depot} - {Id}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>

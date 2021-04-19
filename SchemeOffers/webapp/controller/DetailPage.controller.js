@@ -11,7 +11,11 @@ sap.ui.define(
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "sap/m/Avatar",
+    "sap/ui/core/ValueState",
     "../model/formatter",
+    "com/knpl/pragati/SchemeOffers/controller/Validator",
+    "com/knpl/pragati/SchemeOffers/model/customInt",
+    "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
   ],
   function (
     BaseController,
@@ -24,7 +28,11 @@ sap.ui.define(
     MessageBox,
     MessageToast,
     Avatar,
-    formatter
+    ValueState,
+    formatter,
+    Validator,
+    customInt,
+    cmbxDtype2
   ) {
     "use strict";
 
@@ -32,6 +40,8 @@ sap.ui.define(
       "com.knpl.pragati.SchemeOffers.controller.DetailPage",
       {
         formatter: formatter,
+        customInt: customInt,
+        cmbxDtype2: cmbxDtype2,
         onInit: function () {
           //Router Object
           var oViewModel = new JSONModel({
@@ -47,6 +57,16 @@ sap.ui.define(
           this.oRouter
             .getRoute("DetailPage")
             .attachPatternMatched(this._onObjectMatched, this);
+          sap.ui.getCore().attachValidationError(function (oEvent) {
+            if (oEvent.getParameter("element").getRequired()) {
+              oEvent.getParameter("element").setValueState(ValueState.Error);
+            } else {
+              oEvent.getParameter("element").setValueState(ValueState.None);
+            }
+          });
+          sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+            oEvent.getParameter("element").setValueState(ValueState.None);
+          });
         },
 
         _onObjectMatched: function (oEvent) {
@@ -135,7 +155,7 @@ sap.ui.define(
         },
         _setViewData: function (oData) {
           var promise = jQuery.Deferred();
-          console.log(oData);
+          //console.log(oData);
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
           var aZones = [],
@@ -216,7 +236,7 @@ sap.ui.define(
             oModelControl2.setProperty("/HasTillDate", false);
           }
           //oModelControl2.refresh(true)
-          console.log(oModelControl2);
+
           promise.resolve();
           return promise;
         },
@@ -224,13 +244,16 @@ sap.ui.define(
           this._toggleButtonsAndView(true);
           var oView = this.getView();
           var oCtrl2Model = oView.getModel("oModelControl2");
-          var c1, c2, c3;
+          var c1, c2, c3, c4, c5, c6;
           var othat = this;
           c1 = othat._loadEditProfile("Edit");
           c1.then(function () {
             c2 = othat._GetInitEditData();
             c2.then(function (data) {
               c3 = othat._setEditData(data);
+              c3.then(function (data) {
+                c4 = othat._setMultiComboData(data);
+              });
               //othat.getView().getModel("oModelView").refresh(true);
             });
           });
@@ -263,14 +286,134 @@ sap.ui.define(
           var promise = jQuery.Deferred();
           var oData = data;
           var oView = this.getView();
+          var oBonusValidity = [];
+          for (var i = 0; i <= 12; i++) {
+            oBonusValidity.push({ key: i });
+          }
+          var oDataControl = {
+            HasTillDate: false,
+            BonusValidity: oBonusValidity,
+            StartDate: "",
+            EndDate: "",
+            MultiCombo: {
+              Zones: [],
+              Divisions: [],
+              Depots: [],
+            },
+            HasImage: false,
+          };
+          var oControlModel = new JSONModel(oDataControl);
+          oView.setModel(oControlModel, "oModelControl");
+
           var oModelView = new JSONModel(oData);
           oView.setModel(oModelView, "oModelView");
-          promise.resolve();
+          promise.resolve(data);
+          return promise;
+        },
+        _setMultiComboData: function (data) {
+          console.log(data);
+          var promise = jQuery.Deferred();
+          var oData = data;
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var aZones = [],
+            aDivisions = [],
+            aDepots = [],
+            aArchiTypes = [],
+            aPainterProducts = [],
+            aApplicableProducts = [],
+            aBonusApplicableProducts = [];
+          // zones
+          if (oData["SchemeZones"]["results"].length > 0) {
+            for (var x of oData["SchemeZones"]["results"]) {
+              aZones.push(x["ZoneId"]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/Zones", aZones);
+          //divisions
+          if (oData["SchemeDivisions"]["results"].length > 0) {
+            for (var y of oData["SchemeDivisions"]["results"]) {
+              aDivisions.push(y["DivisionId"]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/Divisions", aDivisions);
+          //depots
+          if (oData["SchemeDepots"]["results"].length > 0) {
+            for (var z of oData["SchemeDepots"]["results"]) {
+              aDepots.push(z["DepotId"]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/Depots", aDepots);
+
+          console.log(aZones);
+          promise.resolve(data);
           return promise;
         },
         handleSavePress: function () {
           var oView = this.getView();
+          this._ValidateSaveData();
         },
+        _ValidateSaveData: function () {
+          var oView = this.getView();
+          var oValidate = new Validator();
+          var oForm = oView.byId("FormChange");
+
+          var bFlagValidate = oValidate.validate(oForm);
+
+          var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
+          var bFileFlag = false;
+
+          if (bFlagValidate == false) {
+            MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+            return;
+          }
+          //check if it has file
+          if (sFile !== undefined) {
+            bFileFlag = true;
+          }
+
+          //validate the data
+
+          this._postData(bFileFlag);
+        },
+
+        _postData: function (bFileFlag) {
+          var oView = this.getView();
+          var oModelView = this.getView().getModel("oModelView");
+          var oViewData = oModelView.getData();
+          var oPayload = Object.assign({}, oViewData);
+          var oData = oView.getModel();
+          var sPath =
+            "/" + oView.getModel("oModelControl2").getProperty("/bindProp");
+
+          var oNewpayload = this._RemoveEmptyValue(oPayload);
+          console.log(oNewpayload);
+          oData.update(sPath, oNewpayload, {
+            success: function () {
+              console.log("Data Sucessfully updated");
+            },
+            error: function () {
+              console.log("Unable to update the data");
+            },
+          });
+        },
+        _RemoveEmptyValue: function (mParam) {
+          var obj = Object.assign({}, mParam);
+          // remove string values
+          var oNew = Object.entries(obj).reduce(
+            (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
+            {}
+          );
+          // remove the null values
+          var oNew2 = Object.entries(oNew).reduce(
+            (a, [k, v]) => (v === null ? a : ((a[k] = v), a)),
+            {}
+          );
+
+          return oNew2;
+        },
+
+        _reLoadInitData: function () {},
 
         _loadEditProfile: function (mParam) {
           var oView = this.getView();
@@ -340,10 +483,13 @@ sap.ui.define(
           oView.byId("cancel").setVisible(bEdit);
         },
         handleCancelPress: function () {
-          this._toggleButtonsAndView(false);
+        
           var oView = this.getView();
-          this._loadEditProfile("Display");
-          oView.getModel().refresh(true);
+          var othat = this;
+          var oProp = oView.getModel("oModelControl").getProperty("bindProp");
+
+          var c1, c2, c3, c4;
+         this._initData();
         },
       }
     );
