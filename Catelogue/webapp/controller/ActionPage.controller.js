@@ -25,6 +25,7 @@ sap.ui.define([
             this.oFileUploader = this.getView().byId("idFormToolImgUploader");
             this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
             this.pdfBtn = this.getView().byId("pdfBtn");
+            this.imgBtn = this.getView().byId("imageBtn");
             this.oCategory = this.getView().byId("idCategory");
             this.oTitle = this.getView().byId("idTitle");
             this.oForm = this.getView().byId("idCatalogueDetailsForm");
@@ -51,6 +52,7 @@ sap.ui.define([
                 Category: "",
                 Classification: "",
                 Range: "",
+                ImageUrl:"",
                 Competitor: [],
                 Catalogue: []
 
@@ -61,7 +63,7 @@ sap.ui.define([
                 var html = new sap.ui.core.HTML();
                 //var oItem = oComponentModel.getProperty("/" + this._property);
                 // this.oItem;
-                
+
                 var that = this;
                 this.getView().getModel().read("/" + this._property, {
                     urlParameters: {
@@ -78,12 +80,14 @@ sap.ui.define([
                             return !ele.ContentType.includes("image");
 
                         });
+                         oData.ImageUrl=that.sServiceURI + that._property + "/$value?doc_type=image&time="+new Date().getTime();
                         var oViewModel = new JSONModel(oData);
                         that.getView().setModel(oViewModel, "ActionViewModel");
 
                         that.oPreviewImage.setSrc(that.sServiceURI + that._property + "/$value?doc_type=image");
                         that.oFileUploader.setUploadUrl(that.sServiceURI + that._property + "/$value?doc_type=image");
-                        that.oPreviewImage.setVisible(true);
+                        that.oPreviewImage.setVisible(false);
+                        //that.getView().getModel("ActionViewModel").setProperty("/Image",that.sServiceURI + that._property + "/$value?doc_type=image");
 
 
 
@@ -99,14 +103,16 @@ sap.ui.define([
 
                 var pdfURL = this.sServiceURI + this._property + "/$value?doc_type=pdf";
                 this.pdfBtn.setVisible(true);
-                
+                this.imgBtn.setVisible(true);
+
 
 
             } else {
                 this.oCategory.setEditable(true);
                 this.oTitle.setEditable(true);
-                this.oPreviewImage.setVisible(false);
+               this.oPreviewImage.setVisible(false);
                 this.pdfBtn.setVisible(false);
+                this.imgBtn.setVisible(false);
             }
             this.oFileUploader.clear();
             var oViewModel = new JSONModel(oData);
@@ -153,7 +159,7 @@ sap.ui.define([
             // this._pdfViewer.setSource(sSource);
             // this._pdfViewer.setTitle("Catalogue");
             // this._pdfViewer.open();
-             sap.m.URLHelper.redirect(sSource, true)
+            sap.m.URLHelper.redirect(sSource, true)
         },
         onChangePdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
@@ -624,6 +630,34 @@ sap.ui.define([
             //this._setFDLTbleFlag();
             oModel.refresh(true);
         },
+        onImageView: function (oEvent) {
+            var oButton = oEvent.getSource();
+            var oView = this.getView();
+            if (!this._imageDialog) {
+                Fragment.load({
+                    name: "com.knpl.pragati.Catelogue.view.fragments.ImagePopup",
+                    controller: this,
+                }).then(
+                    function (oDialog) {
+                        this._imageDialog = oDialog;
+                        oView.addDependent(this._imageDialog);
+                        this._imageDialog.open();
+                    }.bind(this)
+                );
+            } else {
+                oView.addDependent(this._imageDialog);
+                this._imageDialog.open();
+            }
+        },
+        onPressCloseDialog: function (oEvent) {
+            oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+             this._imageDialog.destroy();
+            delete  this._imageDialog;
+        },
+        
+
 
 
 

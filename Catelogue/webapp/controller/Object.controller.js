@@ -124,7 +124,7 @@ sap.ui.define([
                 this.property = sObjectPath;
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_DS.uri;
                 this.pdfURI = this.sServiceURI + sObjectPath + "/$value?doc_type=pdf";
-                this.imgURI = this.sServiceURI + sObjectPath + "/$value?doc_type=image";
+                this.imgURI = this.sServiceURI + sObjectPath + "/$value?doc_type=image&time"+new Date().getTime();
 
                
 

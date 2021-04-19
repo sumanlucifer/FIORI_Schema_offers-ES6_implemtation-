@@ -91,7 +91,7 @@
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
-                            requestAtLeastFields="Id,Status"
+                            requestAtLeastFields="Id,Status,TotalPdfViewerCount,TotalPdfDownloadCount"
                             persistencyKey="CatalogueSmartTableKey"
                             >
                             	<smartTable:customToolbar>
@@ -107,21 +107,33 @@
                         <Table>
                     
                                 <columns>
+                                <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfViewerCount","type":"string", "leadingProperty": "TotalPdfViewerCount", "columnIndex": 5 }'/>
+                                        </customData>
+                                          <Text text="{i18n>totalViews}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfDownloadCount","type":"string", "leadingProperty": "TotalPdfDownloadCount", "columnIndex": 6 }'/>
+                                        </customData>
+                                          <Text text="{i18n>totalDownloads}"/>
+                                    </Column>
                                    <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 5 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 7 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                                         </customData>
                                           <Text text="{i18n>date}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8,"columnKey":"actionStatus" }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"actionStatus" }'/>
                                         </customData>
                                          <Text text="{i18n>status}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 11,"columnKey":"edit" }'/>
                                         </customData>
                                          <Text text="{i18n>GenericEdit}"/>
                                     </Column>
@@ -133,13 +145,15 @@
                                     <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
                                  
-                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                           
+                            
+                            <Text text="{path:'TotalPdfViewerCount'}"/>
+                            <Text text="{path:'TotalPdfDownloadCount'}"/>
+                           <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                             <!-- <Text text="{path: 'Status',
                                     formatter: '.formatter.status'}"
                                 data:remarks="{Status}"/> -->
                                 <Button 
-                                type="{= ${Status} === true? 'Accept' : undefined || ${Status} === false? 'Reject' : undefined }"
+                                type="{= ${Status} === true? 'Emphasized' : undefined || ${Status} === false? 'Reject' : undefined }"
                                 text="{path: 'Status',
                                     formatter: '.formatter.status'}"
                                 data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>

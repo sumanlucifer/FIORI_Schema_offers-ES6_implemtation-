@@ -4,12 +4,11 @@ xmlns="sap.m">
   <Dialog title="Image">
     <content>
       <HBox justifyContent="Center">
-      <!-- <Image id="idPopup" width="500px" height="500px" src="{ImageModel>/Image}"/> -->
-      <Text text="{/Title}"/>
+      <Image src="{path:'ActionViewModel>/ImageUrl'}" alt="No Image Found"/>
       </HBox>
     </content>
     <buttons>
-      <Button text="OK" press="onDialogOK" />
+       <Button text="Close" press="onDialogClose" />
     </buttons>
   </Dialog>
 </core:FragmentDefinition>
