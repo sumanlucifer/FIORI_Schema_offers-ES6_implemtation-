@@ -14,6 +14,7 @@ sap.ui.define(
     "sap/ui/core/ValueState",
     "com/knpl/pragati/Complaints/controller/Validator",
     "sap/ui/model/type/Date",
+     "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
@@ -40,6 +41,7 @@ sap.ui.define(
     ValueState,
     Validator,
     DateType,
+    Sorter,
     Filter,
     FilterOperator,
     DateFormat,
@@ -85,12 +87,14 @@ sap.ui.define(
         _initData: function (oProp) {
           var oData = {
             modeEdit: false,
-            bindProp: oProp,
+            bindProp: "PainterComplainsSet("+oProp+")",
             TokenCode: true,
             tokenCodeValue: "",
             ImageLoaded: false,
             ComplainResolved: false,
-            ProbingSteps:""
+            ProbingSteps: "",
+            ComplainCode:"",
+            ComplainId:oProp
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -100,14 +104,15 @@ sap.ui.define(
             .getModel("i18n")
             .getResourceBundle()
             .getText("errorText");
+          var oBindProp = oData["bindProp"]
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
           c1.then(function () {
-            c2 = othat._setDisplayData(oProp);
+            c2 = othat._setDisplayData(oBindProp);
             c2.then(function () {
-              c3 = othat._initEditData(oProp);
+              c3 = othat._initEditData(oBindProp);
               c3.then(function () {
-                c4 = othat._CheckImage(oProp);
+                c4 = othat._CheckImage(oBindProp);
               });
             });
           });
@@ -115,6 +120,7 @@ sap.ui.define(
         _setDisplayData: function (oProp) {
           var promise = jQuery.Deferred();
           var oView = this.getView();
+          
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
           var othat = this;
           if (oProp.trim() !== "") {
@@ -169,13 +175,20 @@ sap.ui.define(
           var sComplaintStatus = oModelView.getProperty("/ComplaintStatus");
           var aResolutionFilter = [];
 
-          
-         
-          if(sComplainSubType!==""){
-              aResolutionFilter.push(new Filter("TypeId",FilterOperator.EQ,sComplainSubType));
-              oView.byId("FormattedText").bindElement("/MasterComplaintSubtypeSet("+sComplainSubType+")");
+          if (sComplainSubType !== "") {
+            aResolutionFilter.push(
+              new Filter("TypeId", FilterOperator.EQ, sComplainSubType)
+            );
+            oView
+              .byId("FormattedText")
+              .bindElement(
+                "/MasterComplaintSubtypeSet(" + sComplainSubType + ")"
+              );
           }
-          oView.byId("resolution").getBinding("items").filter(aResolutionFilter);
+          oView
+            .byId("resolution")
+            .getBinding("items")
+            .filter(aResolutionFilter);
 
           var sReqFields = ["TokenCode", "RewardPoints"];
           var sValue = "",
@@ -204,6 +217,9 @@ sap.ui.define(
             );
             oModelControl.setProperty("/TokenCode", false);
           }
+          //set data for the smart table
+          oModelControl.setProperty("/ComplainCode",oModelView.getProperty("/ComplaintCode"));
+          oView.byId("smartHistory").rebindTable();
         },
         _CheckImage: function (oProp) {
           var oView = this.getView();
@@ -395,6 +411,19 @@ sap.ui.define(
             oRouter.navTo("worklist", {}, true);
           }
         },
+        onBeforeRebindHistoryTable: function (oEvent) {
+          var oView = this.getView();
+
+          var sComplainCode = oView
+            .getModel("oModelControl")
+            .getProperty("/ComplainCode");
+
+          var oBindingParams = oEvent.getParameter("bindingParams");
+          var oFilter = new Filter("ComplaintCode", FilterOperator.EQ, sComplainCode);
+          oBindingParams.filters.push(oFilter);
+          oBindingParams.sorter.push(new Sorter("UpdatedAt",true))
+        },
+
         fmtStatus: function (sStatus) {
           var newStatus = "";
           if (sStatus === "REGISTERED") {
@@ -408,6 +437,15 @@ sap.ui.define(
           }
 
           return newStatus;
+        },
+        fmtDate: function (mDate) {
+          var date = new Date(mDate);
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/YYYY h:mm a",
+            UTC: true,
+            strictParsing: true,
+          });
+          return oDateFormat.format(date);
         },
       }
     );

@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smartHistory"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebindHistoryTable"                    
+                            entitySet="PainterComplainsHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            ignoreFromPersonalisation="Id,SkuCode,TokenCode,UpdatedBy,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId">
+
+        <Table>
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 0 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintId}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedAt", "leadingProperty": "UpdatedAt", "columnIndex": 1 ,"sortProperty": "UpdatedAt","filterProperty": "UpdatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>UpdatedAt}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintStatus", "leadingProperty": "ComplaintStatus", "columnIndex": 2 ,"sortProperty": "ComplaintStatus","filterProperty": "ComplaintStatus"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintStatus}"/>
+                </Column>
+               
+                
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{ComplaintCode}"/>
+                       <Text text="{path:'UpdatedAt',formatter:'.fmtDate'}"/>
+                         <Text text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"/>
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

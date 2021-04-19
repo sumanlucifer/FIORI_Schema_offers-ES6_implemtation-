@@ -49,6 +49,9 @@
                         <VBox id="idVbx" width="100%">
                           </VBox>
                         </IconTabFilter>
+                         <IconTabFilter  text="{i18n>History}" >
+                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
+                        </IconTabFilter>
                     </items>
                 </IconTabBar>
          
