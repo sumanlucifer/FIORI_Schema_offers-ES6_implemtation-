@@ -9,9 +9,8 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
     "sap/ui/model/Sorter",
-     "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/DateFormat",
     "sap/ui/Device",
-    
   ],
   function (
     BaseController,
@@ -255,7 +254,7 @@ sap.ui.define(
           oBinding.filter([]);
           oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
           //reset the sort order of the dialog box
-          this._fiterBarSort() 
+          this._fiterBarSort();
         },
         _addSearchFieldAssociationToFB: function () {
           let oFilterBar = this.getView().byId("filterbar");
@@ -299,12 +298,11 @@ sap.ui.define(
           return newStatus;
         },
         fmtDate: function (mDate) {
-            
           var date = new Date(mDate);
           var oDateFormat = DateFormat.getDateTimeInstance({
-            pattern: "dd/MM/YYYY h:mm a" ,
-            UTC:true,
-            strictParsing:true
+            pattern: "dd/MM/YYYY h:mm a",
+            UTC: true,
+            strictParsing: true,
           });
           return oDateFormat.format(date);
         },
@@ -424,6 +422,7 @@ sap.ui.define(
         },
         onListItemPress: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
+          var oObject = oEvent.getSource().getBindingContext().getObject();
           var sPath = oEvent
             .getSource()
             .getBindingContext()
@@ -432,7 +431,7 @@ sap.ui.define(
 
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteEditCmp", {
-            prop: window.encodeURIComponent(sPath),
+            prop: oObject["Id"],
           });
         },
 
