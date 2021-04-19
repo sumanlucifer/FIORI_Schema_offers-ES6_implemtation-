@@ -11,9 +11,9 @@
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
-                <f:heading>
+                <!-- <f:heading>
                     <vm:VariantManagement standardItemText="{i18n>appDescription}"></vm:VariantManagement>
-                </f:heading>
+                </f:heading> -->
             </f:DynamicPageTitle>
         </f:title>
         <f:header>

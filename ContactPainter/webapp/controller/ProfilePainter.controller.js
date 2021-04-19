@@ -88,7 +88,7 @@ sap.ui.define(
           console.log(oProp);
           if (oProp.trim() !== "") {
             oView.bindElement({
-              path: "/" + oProp,
+              path: "/PainterSet(" + oProp + ")",
               parameters: {
                 expand: sExpandParam,
               },
@@ -99,12 +99,12 @@ sap.ui.define(
         _initData: function (oProp) {
           var oData = {
             modeEdit: false,
-            bindProp: oProp,
+            bindProp: "PainterSet("+oProp+")",
             iCtbar: true,
-            PainterId: oProp.replace(/[^0-9]/g, ""),
+            PainterId: oProp,//.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             ProfilePic:
-              "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value",
+              "/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(" + oProp + ")/$value",
             Search: {
               Referral: "",
               Tokens: "",
@@ -2062,10 +2062,10 @@ sap.ui.define(
           delete this._pQuestionaireDialog;
         },
         fmtTrainStatus: function (mParam) {
-          if(mParam.replace( /\s/g, '').toLowerCase()==='offlinetraining'){
-            return 'NA'
-          };
-          return 'Not Submitted';
+          if (mParam.replace(/\s/g, "").toLowerCase() === "offlinetraining") {
+            return "NA";
+          }
+          return "Not Submitted";
         },
         // Learning/Online Training Dialog Box
         onRebindOnlineTable: function (oEvent) {
