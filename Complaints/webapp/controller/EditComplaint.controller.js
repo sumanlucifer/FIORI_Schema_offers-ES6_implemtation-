@@ -90,6 +90,7 @@ sap.ui.define(
             tokenCodeValue: "",
             ImageLoaded: false,
             ComplainResolved: false,
+            ProbingSteps:""
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -163,17 +164,16 @@ sap.ui.define(
             oModelControl.setProperty("/ComplainResolved", true);
             oModelControl.setProperty("/TokenCode", false);
           }
-          //setting the filtering for the scenario
+          //setting the filtering for the scenario and Type Id
           var sComplainSubType = oModelView.getProperty("/ComplaintSubtypeId");
           var sComplaintStatus = oModelView.getProperty("/ComplaintStatus");
           var aResolutionFilter = [];
-          if(sComplaintStatus!==""){
-             aResolutionFilter.push(new Filter("Scenario",FilterOperator.EQ,sComplaintStatus))
-          }else{
-              aResolutionFilter.push(new Filter("Scenario",FilterOperator.EQ,"REGISTERED"))
-          }
+
+          
+         
           if(sComplainSubType!==""){
-              aResolutionFilter.push(new Filter("TypeId",FilterOperator.EQ,sComplainSubType))
+              aResolutionFilter.push(new Filter("TypeId",FilterOperator.EQ,sComplainSubType));
+              oView.byId("FormattedText").bindElement("/MasterComplaintSubtypeSet("+sComplainSubType+")");
           }
           oView.byId("resolution").getBinding("items").filter(aResolutionFilter);
 
