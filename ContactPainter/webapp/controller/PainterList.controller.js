@@ -424,6 +424,7 @@ sap.ui.define(
         },
         onListItemPress: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
+          var oBject = oEvent.getSource().getBindingContext().getObject();
           var sPath = oEvent
             .getSource()
             .getBindingContext()
@@ -433,7 +434,7 @@ sap.ui.define(
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteProfile", {
             mode: "edit",
-            prop: window.encodeURIComponent(sPath),
+            prop:oBject["Id"],
           });
         },
 

@@ -9,13 +9,13 @@
     xmlns:vm="sap.ui.comp.variants"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
-        <f:title>
+        <!-- <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
                     <vm:VariantManagement standardItemText="{i18n>appDescription}"></vm:VariantManagement>
                 </f:heading>
             </f:DynamicPageTitle>
-        </f:title>
+        </f:title> -->
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
