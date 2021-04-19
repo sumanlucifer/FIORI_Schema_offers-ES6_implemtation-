@@ -264,13 +264,12 @@ sap.ui.define(
           var oData = data;
           var oView = this.getView();
           var oModelView = new JSONModel(oData);
-
+          oView.setModel(oModelView, "oModelView");
           promise.resolve();
           return promise;
         },
         handleSavePress: function () {
           var oView = this.getView();
-          
         },
 
         _loadEditProfile: function (mParam) {
