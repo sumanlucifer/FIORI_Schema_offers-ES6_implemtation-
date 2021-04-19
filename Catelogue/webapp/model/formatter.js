@@ -32,9 +32,9 @@ sap.ui.define([
 
         status: function (status) {
             if (status) {
-                return 'Active';
+                return 'Deactivate ';
             } else {
-                return 'Inactive';
+                return 'Activate';
             }
         }
 

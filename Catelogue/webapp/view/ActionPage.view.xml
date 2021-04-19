@@ -119,18 +119,17 @@
                                                 </HBox>
                                             <Image id="idPreviewImage" width="400px" height="200px" />
                                             </VBox>
-                                            <!-- <VBox class="sapUiTinyMarginBottom">
-                                              <Label text="Upload Catalogue" class="sapUiTinyMargin" required="true"/>
+                                            
                                         
                                        
                                            
-                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" 
-                                            visible="false" press="openPdf" text="View" 
+                                            <Button id="imageBtn" icon="sap-icon://attachment-photo" 
+                                            visible="false" press="onImageView" text="View Image" 
                                             class="sapUiTinyMargin increaseFont"/>
                                             
 
 
-                                            </VBox> -->
+                                            
                                             
                 </VBox>                  
           </HBox>
