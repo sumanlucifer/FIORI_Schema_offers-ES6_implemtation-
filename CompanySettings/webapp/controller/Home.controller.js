@@ -36,7 +36,7 @@ sap.ui.define([
 
 
 
-
+                this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
 
 
 
@@ -48,29 +48,53 @@ sap.ui.define([
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
 
-                // var oViewModel = new JSONModel({
-                //     AboutUs: "",
-                //     Disclaimer: "",
-                //     Callcenter: "",
-                // });
-                // this.getView().setModel(oViewModel, "oModelView");
 
 
                 var oLocaModel = new JSONModel({
-                    bEdit: false
+                    bEdit: false,
+                    Catalogue: []
                 });
                 this.getView().setModel(oLocaModel, "local");
 
+                this._property = "MasterCompanySettingsSet(1)";
 
+                this.showPdfList()
 
 
             },
             handleEditPress: function () {
                 this.getView().getModel("local").setProperty("/bEdit", true);
 
+
                 //Clone the data
                 this._oSupplier = Object.assign({}, this.getView().bindElement("/MasterCompanySettingsSet(1)"));
                 this._toggleButtonsAndView(true);
+
+
+            },
+            showPdfList() {
+
+
+                var that = this;
+                this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
+                    urlParameters: {
+                        "$expand": "MediaList"
+                    },
+                    success: function (data, response) {
+                        var Catalogue = data.MediaList.results.filter(function (ele) {
+                            return !ele.ContentType.includes("image");
+
+                        });
+
+
+                        that.getView().getModel("local").setProperty("/Catalogue", Catalogue);
+
+
+
+                    },
+                    error: function (oError) {
+                    }
+                });
 
 
             },
@@ -87,6 +111,8 @@ sap.ui.define([
 
 
                 this._toggleButtonsAndView(false);
+                var localModel = this.getView().getModel("local");
+                localModel.refresh(true);
 
             },
             handleEmptyFields: function (oEvent) {
@@ -134,7 +160,8 @@ sap.ui.define([
                 var oModel = this.getView().getModel("data");
                 oModel.update(editSet, oData, {
                     success: function () {
-                        that.onSuccessPress()
+                        that._updatePdf(that._property);
+                        that.onSuccessPress();
                     }
                 });
 
@@ -164,7 +191,7 @@ sap.ui.define([
                 oView.byId("cancel").setVisible(bEdit);
 
                 // Set the right form type
-                this._showFormFragment(bEdit ? "Change" : "Display");
+                //this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
 
@@ -195,7 +222,77 @@ sap.ui.define([
                 }
 
                 this.oEscapePreventDialog.open();
-            }
+            },
+            openPdf: function (oEvent) {
+                var oContext = oEvent.getSource().getBindingContext("local");
+                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true)
+            },
+            onChangePdf: function (oEvent) {
+                var oContext = oEvent.getSource().getBindingContext("local");
+                if (oEvent.getParameter("files").length > 0) {
+                    //this.pdfName = this.oFileUploaderPdf.getValue();
+                    this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                    this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                    this.getView().getModel("local").setProperty("bNew", true, oContext);
+                }
+            },
+            _updatePdf: function (propertySet) {
+                var oModel = this.getView().getModel("local");
+                var catalogue = oModel.getProperty("/Catalogue");
+                var fileUploader;
+                var sServiceUri = this.sServiceURI;
+
+                catalogue.forEach(function (ele) {
+                    if (ele.bNew) {
+                        var that = this;
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+
+                            success: function (data) {
+                                // that.getView().getModel("local").refresh(true);
+                                that.oFileUploaderPdf.clear();
+                            },
+                            error: function () { },
+                        })
+                    }
+                });
+            },
+            onAddCatalogue: function () {
+                var oModel = this.getView().getModel("local");
+                var oObject = this.getView().getModel("local").getProperty("/Catalogue");
+
+                oObject.push({
+                    LanguageCode: "",
+                    file: null,
+                    fileName: ""
+                });
+                oModel.refresh(true);
+            },
+            onPressRemoveCatalogue: function (oEvent) {
+                this.getView().getModel("local").setProperty("bNew", true);
+                var oView = this.getView();
+                var oModel = oView.getModel("local");
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("local")
+                    .getPath()
+                    .split("/");
+                var aCompetitor = oModel.getProperty("/Catalogue");
+                aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
+
+                this.getView().getModel("local").setProperty("/Catalogue", aCompetitor);
+           
+             
+
+                oModel.refresh(true);
+            },
 
 
 

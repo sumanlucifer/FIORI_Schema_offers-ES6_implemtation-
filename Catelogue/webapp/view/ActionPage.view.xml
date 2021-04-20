@@ -170,7 +170,7 @@
                                                         fileType="pdf"
                                                         useMultipart="false"
                                                         sendXHR="true"
-                                                        maximumFileSize="2.1"
+                                                        maximumFileSize="10.1"
                                                         fileSizeExceed="onFileSizeExceed"
                                                         uploadComplete="handleUploadCompletePdf" />
                                                         <HBox>
