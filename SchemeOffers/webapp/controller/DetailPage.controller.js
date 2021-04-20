@@ -456,13 +456,15 @@ sap.ui.define(
           ];
           for (var y of inTegerProperty) {
             if (oNewpayload.hasOwnProperty(y)) {
-              oNewpayload[y] = parseInt(oNewpayload[y]);
+              if (oNewpayload[y] !== null) {
+                oNewpayload[y] = parseInt(oNewpayload[y]);
+              }
             }
           }
           console.log(oNewpayload);
           oData.update(sPath, oNewpayload, {
             success: function (data) {
-              console.log("Data Sucessfully updated",data);
+              console.log("Data Sucessfully updated", data);
               if (bFileFlag) {
                 othat._UploadFile(data);
               }
@@ -479,7 +481,7 @@ sap.ui.define(
           var sServiceUrl = this.getOwnerComponent(this)
             .getManifestObject()
             .getEntry("/sap.app").dataSources.mainService.uri;
-          
+
           var sUrl = sServiceUrl + "SchemeSet(" + data["Id"] + ")/$value";
           jQuery.ajax({
             method: "PUT",
@@ -499,13 +501,8 @@ sap.ui.define(
             (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
             {}
           );
-          // remove the null values
-          var oNew2 = Object.entries(oNew).reduce(
-            (a, [k, v]) => (v === null ? a : ((a[k] = v), a)),
-            {}
-          );
 
-          return oNew2;
+          return oNew;
         },
 
         _reLoadInitData: function () {},

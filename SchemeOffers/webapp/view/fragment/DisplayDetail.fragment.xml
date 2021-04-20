@@ -174,7 +174,7 @@
                                 <Text class="sapUiSmallMarginBegin" text="{path:'BonusValidityDate',formatter:'.formatter.fmtDate'}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement>
+                        <f:FormElement visible="{= !${oModelControl2>/HasTillDate} }">
                             <f:fields>
                                 <Text class="sapUiSmallMarginBegin" text="{parts:['BonusValidityDurationYear','BonusValidityDurationMonth','BonusValidityDurationDays'],formatter:'.formatter.fmtVldtyDuration'}"/>
                             </f:fields>
