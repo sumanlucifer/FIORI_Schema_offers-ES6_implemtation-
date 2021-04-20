@@ -4,7 +4,7 @@
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
-                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Enrollment}"></SearchField>
+                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/Enrollment}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 
@@ -21,9 +21,6 @@
                 <Column>
                     <Text text="{i18n>colEnrollmentDate}"/>
                 </Column>
-                <!-- <Column>
-                    <Text text="{i18n>colStartDate}"/>
-                </Column> -->
                 <Column>
                     <Text text="{i18n>colEarnedPoint}"/>
                 </Column>
