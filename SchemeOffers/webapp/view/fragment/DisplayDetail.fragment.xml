@@ -32,6 +32,16 @@
                                 <Text text="{i18n>Description}"/>
                             </f:fields>
                         </f:FormElement>
+                        <f:FormElement label="{i18n>Attachment}" visible="{= !${oModelControl2>/ImageLoaded} }">
+                            <f:fields>
+                                 <Text text="{i18n>NoAttachmentFound}"   />
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl2>/ImageLoaded} }">
+                            <f:fields>
+                                 <Link text="{i18n>ViewAttachment}" press="onViewAttachment" />
+                            </f:fields>
+                        </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>formRegion}">
@@ -181,7 +191,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>Attachment}">
+                <!-- <f:FormContainer title="{i18n>Attachment}">
                     <f:formElements>
                         <f:FormElement>
                             <f:fields>
@@ -194,7 +204,7 @@
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
-                </f:FormContainer>
+                </f:FormContainer> -->
             </f:formContainers>
         </f:Form>
         <!-- <UploadCollection id="UploadCollection" maximumFilenameLength="{settings>/maximumFilenameLength}" maximumFileSize="{settings>/maximumFileSize}" multiple="true" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType="{fileTypes>/selected}" selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" numberOfAttachmentsText="Uploaded (8)" showSeparators="{settings>/showSeparators}" uploadEnabled="{settings>/uploadEnabled}" uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}" mode="{settings>/mode}">

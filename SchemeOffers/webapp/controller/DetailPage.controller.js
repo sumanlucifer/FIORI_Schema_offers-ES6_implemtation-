@@ -282,13 +282,16 @@ sap.ui.define(
           var promise = jQuery.Deferred();
           var oData = data;
           var oView = this.getView();
+          var oModelControl2 = oView.getModel("oModelControl2");
           var oBonusValidity = [];
           for (var i = 0; i <= 12; i++) {
             oBonusValidity.push({ key: i });
           }
           var oDataControl = {
             HasTillDate: true,
+            ImageLoaded: oModelControl2.getProperty("/ImageLoaded"),
             BonusValidity: oBonusValidity,
+            modeEdit: true,
             StartDate: "",
             EndDate: "",
             RewardGift: [
@@ -497,12 +500,14 @@ sap.ui.define(
         _RemoveEmptyValue: function (mParam) {
           var obj = Object.assign({}, mParam);
           // remove string values
-          var oNew = Object.entries(obj).reduce(
-            (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
-            {}
-          );
+          for (var b in obj) {
+            if (obj[b] === "") {
+              obj[b] = null;
+            }
+          }
+         
 
-          return oNew;
+          return obj;
         },
 
         _reLoadInitData: function () {},

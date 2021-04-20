@@ -70,7 +70,9 @@ sap.ui.define(
           }
           var oDataControl = {
             HasTillDate: false,
+            ImageLoaded:false,
             BonusValidity: oBonusValidity,
+            modeEdit:false,
             StartDate: "",
             EndDate: "",
             RewardGift: [

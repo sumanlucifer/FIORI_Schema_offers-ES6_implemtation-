@@ -40,6 +40,11 @@
                                 <u:FileUploader typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
                             </f:fields>
                         </f:FormElement>
+                         <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
+                            <f:fields>
+                                 <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
+                            </f:fields>
+                        </f:FormElement>
 
                     </f:formElements>
                 </f:FormContainer>
