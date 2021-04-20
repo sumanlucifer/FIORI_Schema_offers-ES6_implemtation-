@@ -53,24 +53,29 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             MessageBox.error(oRespText["error"]["message"]["value"]);
         },
 
-        onChangeStatus: function (oEvent) {
-            var oSource = oEvent.getSource();
-            var sSelectedKey = oSource.getSelectedKey();
-            if (sSelectedKey === "active") {
-                this._updateStatus(true);
-            } else {
-                MessageBox.confirm(this.oResourceBundle.getText("changeStatusConfirmationMsg"), {
-                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                    emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (sAction) {
-                        if (sAction === MessageBox.Action.OK) {
-                            this._updateStatus(false);
-                        } else {
-                            oSource.setSelectedKey("active");
-                        }
-                    }.bind(this)
-                });
-            }
+        onChangeStatus: function () {
+          //  var oSource = oEvent.getSource();
+            // var sSelectedKey = oSource.getSelectedKey();
+            // if (sSelectedKey === "active") {
+            //     this._updateStatus(true);
+            // } else {
+            //     MessageBox.confirm(this.oResourceBundle.getText("changeStatusConfirmationMsg"), {
+            //         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+            //         emphasizedAction: MessageBox.Action.OK,
+            //         onClose: function (sAction) {
+            //             if (sAction === MessageBox.Action.OK) {
+            //                 this._updateStatus(false);
+            //             } else {
+            //                 oSource.setSelectedKey("active");
+            //             }
+            //         }.bind(this)
+            //     });
+            // }
+
+            var bCurrentStatus = this.getViewModel("DetailViewModel").getProperty("/Status");
+
+            this._updateStatus(!bCurrentStatus);
+
         },
 
         _updateStatus: function (bStatus) {
@@ -88,6 +93,8 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
         _onLoadStatusSuccess: function (oData) {
             MessageToast.show(this.oResourceBundle.getText("statusChangeSuccessMsg"));
             this.oViewModel.setProperty("/busy", false);
+            this._navToHome();
+
         },
 
         onPressEditImage: function () {
