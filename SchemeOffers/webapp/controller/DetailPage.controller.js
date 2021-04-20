@@ -394,7 +394,7 @@ sap.ui.define(
             "/MultiCombo/BonusApplicableProducts",
             aBonusApplicableProducts
           );
-          
+
           // HasTillDate
           if (oData["BonusValidityDate"] === null) {
             oModelControl.setProperty("/HasTillDate", false);
@@ -427,13 +427,14 @@ sap.ui.define(
           if (sFile !== undefined) {
             bFileFlag = true;
           }
-
+          console.log(bFileFlag);
           //validate the data
 
           this._postData(bFileFlag);
         },
 
         _postData: function (bFileFlag) {
+          var othat = this;
           var oView = this.getView();
           var oModelView = this.getView().getModel("oModelView");
           var oViewData = oModelView.getData();
@@ -460,12 +461,35 @@ sap.ui.define(
           }
           console.log(oNewpayload);
           oData.update(sPath, oNewpayload, {
-            success: function () {
-              console.log("Data Sucessfully updated");
+            success: function (data) {
+              console.log("Data Sucessfully updated",data);
+              if (bFileFlag) {
+                othat._UploadFile(data);
+              }
             },
             error: function () {
               console.log("Unable to update the data");
             },
+          });
+        },
+        _UploadFile: function (data) {
+          var oView = this.getView();
+          var data = oView.getModel("oModelView").getData();
+          var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
+          var sServiceUrl = this.getOwnerComponent(this)
+            .getManifestObject()
+            .getEntry("/sap.app").dataSources.mainService.uri;
+          
+          var sUrl = sServiceUrl + "SchemeSet(" + data["Id"] + ")/$value";
+          jQuery.ajax({
+            method: "PUT",
+            url: sUrl,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: oFile,
+            success: function (data) {},
+            error: function () {},
           });
         },
         _RemoveEmptyValue: function (mParam) {
