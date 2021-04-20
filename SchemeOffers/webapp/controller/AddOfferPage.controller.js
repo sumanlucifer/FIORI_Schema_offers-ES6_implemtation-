@@ -36,7 +36,6 @@ sap.ui.define(
     return BaseController.extend(
       "com.knpl.pragati.SchemeOffers.controller.AddOfferPage",
       {
-      
         customInt: customInt,
         cmbxDtype2: cmbxDtype2,
         onInit: function () {
@@ -84,11 +83,15 @@ sap.ui.define(
                 Name: "Washing Machine",
               },
             ],
-            MultiCombo:{
-                Zones:[],
-                Divisions:[],
-                Depots:[]
-            }
+            MultiCombo: {
+              Zones: [],
+              Divisions: [],
+              Depots: [],
+              ArcheTypes: [],
+              PainterProducts: [],
+              ApplicableProducts: [],
+              BonusApplicableProducts: []
+            },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 
@@ -118,7 +121,7 @@ sap.ui.define(
             BonusValidityDurationYear: "",
             BonusValidityDurationMonth: "",
             BonusValidityDurationDays: "",
-            BonusValidityDate: null,
+            BonusValidityDate: null
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");

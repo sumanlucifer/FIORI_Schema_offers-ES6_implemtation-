@@ -102,7 +102,7 @@ sap.ui.define(
             },
             HasTillDate: true,
             ImageLoaded: true,
-            PainterId: oProp, //.replace(/[^0-9]/g, ""),
+            SchemeId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
           };
@@ -110,7 +110,8 @@ sap.ui.define(
           this.getView().setModel(oModel, "oModelControl2");
 
           var othat = this;
-          var c1, c2, c3, c4;
+          var c1, c2, c3, c4, c5, c7, c8;
+
           c1 = this._loadEditProfile("Display");
           c1.then(function () {
             c2 = othat._getInitData(oProp);
@@ -185,6 +186,7 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/Display/Depots", aDepots);
 
+          //architype
           if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
             for (var p of oData["SchemePainterArchiTypes"]["results"]) {
               aArchiTypes.push(p["ArchiTypeId"]);
@@ -192,13 +194,7 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
 
-          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
-            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
-              aArchiTypes.push(p["ArchiTypeId"]);
-            }
-          }
-          oModelControl2.setProperty("/Display/ArchiTypes", aArchiTypes);
-
+          //painter produts
           if (oData["SchemePainterProducts"]["results"].length > 0) {
             for (var q of oData["SchemePainterProducts"]["results"]) {
               aPainterProducts.push(q["SkuCode"]);
@@ -291,14 +287,28 @@ sap.ui.define(
             oBonusValidity.push({ key: i });
           }
           var oDataControl = {
-            HasTillDate: false,
+            HasTillDate: true,
             BonusValidity: oBonusValidity,
             StartDate: "",
             EndDate: "",
+            RewardGift: [
+              {
+                Id: 1,
+                Name: "TV",
+              },
+              {
+                Id: 2,
+                Name: "Washing Machine",
+              },
+            ],
             MultiCombo: {
               Zones: [],
               Divisions: [],
               Depots: [],
+              ArcheTypes: [],
+              PainterProducts: [],
+              ApplicableProducts: [],
+              BonusApplicableProducts: [],
             },
             HasImage: false,
           };
@@ -345,7 +355,53 @@ sap.ui.define(
           }
           oModelControl.setProperty("/MultiCombo/Depots", aDepots);
 
-          console.log(aZones);
+          //architype
+          if (oData["SchemePainterArchiTypes"]["results"].length > 0) {
+            for (var p of oData["SchemePainterArchiTypes"]["results"]) {
+              aArchiTypes.push(p["ArchiTypeId"]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/ArcheTypes", aArchiTypes);
+
+          //painter produts
+          if (oData["SchemePainterProducts"]["results"].length > 0) {
+            for (var q of oData["SchemePainterProducts"]["results"]) {
+              aPainterProducts.push(q["SkuCode"]);
+            }
+          }
+          oModelControl.setProperty(
+            "/MultiCombo/PainterProducts",
+            aPainterProducts
+          );
+
+          //Applicable Products
+          if (oData["SchemeApplicableProducts"]["results"].length > 0) {
+            for (var r of oData["SchemeApplicableProducts"]["results"]) {
+              aApplicableProducts.push(r["SkuCode"]);
+            }
+          }
+          oModelControl.setProperty(
+            "/MultiCombo/ApplicableProducts",
+            aApplicableProducts
+          );
+          //Bonus Applicable Products
+          if (oData["SchemeBonusApplicableProducts"]["results"].length > 0) {
+            for (var s of oData["SchemeBonusApplicableProducts"]["results"]) {
+              aBonusApplicableProducts.push(s["SkuCode"]);
+            }
+          }
+          oModelControl.setProperty(
+            "/MultiCombo/BonusApplicableProducts",
+            aBonusApplicableProducts
+          );
+          
+          // HasTillDate
+          if (oData["BonusValidityDate"] === null) {
+            oModelControl.setProperty("/HasTillDate", false);
+          }
+
+          console.log(oModelControl);
+
           promise.resolve(data);
           return promise;
         },
@@ -387,6 +443,21 @@ sap.ui.define(
             "/" + oView.getModel("oModelControl2").getProperty("/bindProp");
 
           var oNewpayload = this._RemoveEmptyValue(oPayload);
+          var inTegerProperty = [
+            "PurchaseVolumeRequired",
+            "AccuredPointsRequired",
+            "RewardPoints",
+            "RewardCash",
+            "BonusRewardPoints",
+            "BonusValidityDurationYear",
+            "BonusValidityDurationMonth",
+            "BonusValidityDurationDays",
+          ];
+          for (var y of inTegerProperty) {
+            if (oNewpayload.hasOwnProperty(y)) {
+              oNewpayload[y] = parseInt(oNewpayload[y]);
+            }
+          }
           console.log(oNewpayload);
           oData.update(sPath, oNewpayload, {
             success: function () {
@@ -483,13 +554,12 @@ sap.ui.define(
           oView.byId("cancel").setVisible(bEdit);
         },
         handleCancelPress: function () {
-        
           var oView = this.getView();
           var othat = this;
-          var oProp = oView.getModel("oModelControl").getProperty("bindProp");
+          var oProp = oView.getModel("oModelControl2").getProperty("/SchemeId");
 
           var c1, c2, c3, c4;
-         this._initData();
+          this._initData(oProp);
         },
       }
     );
