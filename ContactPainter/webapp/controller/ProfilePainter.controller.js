@@ -127,7 +127,8 @@ sap.ui.define(
 
           //rebind Loyalty table
           this.getView().byId("smrtLoyalty").rebindTable();
-          this.getView().byId("smrtTraining").rebindTable();
+          this.getView().byId("smrtLiveTraining").rebindTable();
+           this.getView().byId("smrtOfflineTraining").rebindTable();
           this.getView().byId("smrtOlineTraining").rebindTable();
           this._initFilerForTables();
         },
@@ -1967,7 +1968,8 @@ sap.ui.define(
           }
           return false;
         },
-        onBeforeRebindTrainingTable: function (oEvent) {
+        onBeforeRebindOfflineTrainingTable: function (oEvent) {
+            // Live Training
           var oView = this.getView();
 
           var oPainterId = oView
@@ -1976,8 +1978,25 @@ sap.ui.define(
 
           var oBindingParams = oEvent.getParameter("bindingParams");
           oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
-          var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
-          oBindingParams.filters.push(oFilter);
+          var oFilter1 = new Filter("PainterId", FilterOperator.EQ, oPainterId);
+          var oFilter2 = new Filter("TrainingDetails/TrainingTypeId", FilterOperator.EQ, 2);
+          oBindingParams.filters.push(oFilter1);
+           oBindingParams.filters.push(oFilter2);
+        },
+        onBeforeRebindTrainingTable: function (oEvent) {
+            // Live Training
+          var oView = this.getView();
+
+          var oPainterId = oView
+            .getModel("oModelControl2")
+            .getProperty("/PainterId");
+
+          var oBindingParams = oEvent.getParameter("bindingParams");
+          oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
+          var oFilter1 = new Filter("PainterId", FilterOperator.EQ, oPainterId);
+          var oFilter2 = new Filter("TrainingDetails/TrainingTypeId", FilterOperator.EQ, 1);
+          oBindingParams.filters.push(oFilter1);
+           oBindingParams.filters.push(oFilter2);
         },
         onViewQuestionaire: function (oEvent) {
           var object = oEvent.getSource().getBindingContext().getObject();

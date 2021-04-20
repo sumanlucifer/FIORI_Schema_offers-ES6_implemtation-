@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable id="smrtLiveTraining" width="100%" editable="false" entitySet="PainterTrainingSet" beforeRebindTable="onBeforeRebindTrainingTable" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id,IsQuestionnaireSubmitted,Status,TrainingDetails/TrainingType/TrainingType,EarnedPoints" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="TrainingSmartTableKey" ignoreFromPersonalisation="CreatedBy,IsQuestionnaireSubmitted,IsArchived,Status,UpdatedAt,UpdatedBy,IsSelected,TrainingId,PainterId">
+        <Table>
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TrainingDetails/TrainingType/TrainingType", "leadingProperty": "TrainingDetails/TrainingType/TrainingType", "columnIndex": 0 ,"sortProperty": "TrainingDetails/TrainingType/TrainingType","filterProperty": "TrainingDetails/TrainingType/TrainingType"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingType}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TrainingDetails/Title", "leadingProperty": "TrainingDetails/Title", "columnIndex": 1 ,"sortProperty": "TrainingDetails/Title","filterProperty": "TrainingDetails/Title"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingTitle}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "EarnedPoints", "leadingProperty": "EarnedPoints", "columnIndex": 2 ,"sortProperty": "EarnedPoints","filterProperty": "EarnedPoints"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingPoints}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>DateAndTime}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 4 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingAttendance}"/>
+                </Column>
+
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Button", "columnIndex": 5 }'/>
+                    </customData>
+                    <Text text="{i18n>trainingQuestionaaire}"/>
+                </Column>
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{TrainingDetails/TrainingType/TrainingType}"/>
+                         <Text text="{TrainingDetails/Title}"/>
+                          <Text text="{EarnedPoints}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <VBox>
+                            <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
+                            <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewQuestionaire"/>
+                        </VBox>
+
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>
