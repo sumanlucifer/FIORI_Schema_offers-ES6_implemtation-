@@ -45,6 +45,7 @@ sap.ui.define([
                 filterBar: {
                     StartDate: null,
                     Status: null,
+                    Link: null,
                     TrainingSubTypeId: null,
                     Search: "",
                     RewardPoints: null
@@ -161,6 +162,7 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var aResetProp = {
                 Status: null,
+                Link: null,
                 TrainingSubTypeId: null,
                 StartDate: null,
                 RewardPoints: null,
@@ -193,7 +195,7 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
-
+            debugger;
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
 
@@ -217,6 +219,17 @@ sap.ui.define([
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
                         );
+                    } else if (prop === "Link") {
+                        aFlaEmpty = false;
+                        if (parseInt(oViewFilter[prop]) == 0) {
+                            aCurrentFilterValues.push(
+                                new Filter("Url", FilterOperator.NE, "")
+                            );
+                        } else {
+                            aCurrentFilterValues.push(
+                                new Filter("Url", FilterOperator.EQ, "")
+                            );
+                        }
                     } else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
@@ -257,17 +270,7 @@ sap.ui.define([
                                 )
                             );
                         }
-                    } 
-                    // else {
-                    //     aFlaEmpty = false;
-                    //     aCurrentFilterValues.push(
-                    //         new Filter(
-                    //             prop,
-                    //             FilterOperator.Contains,
-                    //             oViewFilter[prop].trim()
-                    //         )
-                    //     );
-                    // }
+                    }
                 }
             }
 
@@ -278,7 +281,6 @@ sap.ui.define([
 
             var oTable = this.getView().byId("table");
             var oBinding = oTable.getBinding("items");
-            debugger;
             if (!aFlaEmpty) {
                 oBinding.filter(endFilter);
                 // if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
@@ -299,7 +301,6 @@ sap.ui.define([
             var aCurrentFilterValues2 = [];
             var oViewFilter2 = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty2 = true;
-            debugger;
             for (let prop in oViewFilter2) {
                 if (oViewFilter2[prop]) {
 
@@ -343,17 +344,7 @@ sap.ui.define([
                                 )
                             );
                         }
-                    } 
-                    // else {
-                    //     aFlaEmpty2 = false;
-                    //     aCurrentFilterValues2.push(
-                    //         new Filter(
-                    //             prop,
-                    //             FilterOperator.Contains,
-                    //             oViewFilter2[prop].trim()
-                    //         )
-                    //     );
-                    // }
+                    }
                 }
             }
 
@@ -372,11 +363,9 @@ sap.ui.define([
             }
 
             // Search code for Video Training
-            debugger;
             var aCurrentFilterValues1 = [];
             var oViewFilter1 = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty1 = true;
-            debugger;
             for (let prop in oViewFilter1) {
                 if (oViewFilter1[prop]) {
 
@@ -440,17 +429,7 @@ sap.ui.define([
                                 )
                             );
                         }
-                    } 
-                    // else {
-                    //     aFlaEmpty1 = false;
-                    //     aCurrentFilterValues1.push(
-                    //         new Filter(
-                    //             prop,
-                    //             FilterOperator.Contains,
-                    //             oViewFilter1[prop].trim()
-                    //         )
-                    //     );
-                    // }
+                    }
                 }
             }
 
@@ -725,11 +704,15 @@ sap.ui.define([
             that.getModel().read(sPath, {
                 success: function (sData) {
                     if (sData.Status === 0) {
-                        that.getModel().update(data, {
-                            Status: 1
-                        }, {
-                            success: that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
-                        });
+                        if (sData.Url === "") {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_URL_BEFORE_ACTIVATING_TRAINING");
+                        } else {
+                            that.getModel().update(data, {
+                                Status: 1
+                            }, {
+                                success: that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY")
+                            });
+                        }
                     }
                     if (sData.Status === 1) {
                         that.getModel().update(data, {

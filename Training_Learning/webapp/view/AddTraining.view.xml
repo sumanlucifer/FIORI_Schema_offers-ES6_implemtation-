@@ -31,41 +31,50 @@
                 <Label text="{i18n>colTrainingDescription}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
-                <Label text="{i18n>colLink}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Label text="{i18n>colLink}" required="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
                 <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <DateTimePicker width="30%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
 
                 <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <DateTimePicker width="30%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
 
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
-				<Input width="30%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
+				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input width="30%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
 
                 <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <ComboBox selectionChange="onZoneChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
+                <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+                <!-- <ComboBox selectionChange="onZoneChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
                     <core:Item text="{Id}" key="{Id}"/>
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
+                <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet', groupHeaderFactory: '.getGroupHeader' }">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+                <!-- <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
                     <items>
                         <core:Item text="{Id}" key="{Id}"/>
                     </items>
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <ComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
+                <MultiComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet', groupHeaderFactory: '.getGroupHeader' }">
+					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+				</MultiComboBox>
+                <!-- <ComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
                     <items>
                         <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
                     </items>
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
                 <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">

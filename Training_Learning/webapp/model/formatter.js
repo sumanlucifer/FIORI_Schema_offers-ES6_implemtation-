@@ -79,15 +79,13 @@ sap.ui.define([], function () {
                 return URL.createObjectURL(AttendanceData.Image);
         },
 
-        // fmtAttendanceStatus: function (UploadStatus) {
-        //     debugger;
-        //     if (UploadStatus === true) {
-        //         var newStatus = "Success";
-        //     } else {
-        //         var newStatus = "Failure";
-        //     }
-        //     return newStatus;
-        // }
+         UploadStatus: function (fValue) {
+            if (fValue === true) {
+                return "Success";
+            } else {
+                return "Failure";
+            }
+        }
 
     };
 
