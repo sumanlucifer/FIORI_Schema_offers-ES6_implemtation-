@@ -14,7 +14,7 @@ sap.ui.define(
     "sap/ui/core/ValueState",
     "com/knpl/pragati/Complaints/controller/Validator",
     "sap/ui/model/type/Date",
-     "sap/ui/model/Sorter",
+    "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat",
@@ -87,14 +87,14 @@ sap.ui.define(
         _initData: function (oProp) {
           var oData = {
             modeEdit: false,
-            bindProp: "PainterComplainsSet("+oProp+")",
+            bindProp: "PainterComplainsSet(" + oProp + ")",
             TokenCode: true,
             tokenCodeValue: "",
             ImageLoaded: false,
             ComplainResolved: false,
             ProbingSteps: "",
-            ComplainCode:"",
-            ComplainId:oProp
+            ComplainCode: "",
+            ComplainId: oProp,
           };
           var oDataModel;
           var oModel = new JSONModel(oData);
@@ -104,7 +104,7 @@ sap.ui.define(
             .getModel("i18n")
             .getResourceBundle()
             .getText("errorText");
-          var oBindProp = oData["bindProp"]
+          var oBindProp = oData["bindProp"];
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
           c1.then(function () {
@@ -120,7 +120,7 @@ sap.ui.define(
         _setDisplayData: function (oProp) {
           var promise = jQuery.Deferred();
           var oView = this.getView();
-          
+
           var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
           var othat = this;
           if (oProp.trim() !== "") {
@@ -218,7 +218,10 @@ sap.ui.define(
             oModelControl.setProperty("/TokenCode", false);
           }
           //set data for the smart table
-          oModelControl.setProperty("/ComplainCode",oModelView.getProperty("/ComplaintCode"));
+          oModelControl.setProperty(
+            "/ComplainCode",
+            oModelView.getProperty("/ComplaintCode")
+          );
           oView.byId("smartHistory").rebindTable();
         },
         _CheckImage: function (oProp) {
@@ -419,9 +422,13 @@ sap.ui.define(
             .getProperty("/ComplainCode");
 
           var oBindingParams = oEvent.getParameter("bindingParams");
-          var oFilter = new Filter("ComplaintCode", FilterOperator.EQ, sComplainCode);
+          var oFilter = new Filter(
+            "ComplaintCode",
+            FilterOperator.EQ,
+            sComplainCode
+          );
           oBindingParams.filters.push(oFilter);
-          oBindingParams.sorter.push(new Sorter("UpdatedAt",true))
+          oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
         },
 
         fmtStatus: function (sStatus) {
@@ -446,6 +453,12 @@ sap.ui.define(
             strictParsing: true,
           });
           return oDateFormat.format(date);
+        },
+        fmtProbingSteps: function (mParam) {
+          if (mParam === null) {
+            return "NA";
+          }
+          return mParam;
         },
       }
     );

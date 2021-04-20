@@ -33,7 +33,7 @@
                 <core:Item text="Withdrawn" key="WITHDRAWN" />
             </Select>
             <Label text="{i18n>ProbingSteps}"/>
-            	<FormattedText  id="FormattedText" htmlText="{ProbingSteps}"/>
+            	<FormattedText  id="FormattedText" htmlText="{path:'ProbingSteps',formatter:'.fmtProbingSteps'}"/>
            
             <core:Title text="{i18n>PainterDetails}" />
             <Label text="{i18n>PainterName}" />
