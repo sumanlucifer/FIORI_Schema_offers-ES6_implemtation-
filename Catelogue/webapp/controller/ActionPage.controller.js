@@ -52,7 +52,7 @@ sap.ui.define([
                 Category: "",
                 Classification: "",
                 Range: "",
-                ImageUrl:"",
+                ImageUrl: "",
                 Competitor: [],
                 Catalogue: []
 
@@ -80,7 +80,7 @@ sap.ui.define([
                             return !ele.ContentType.includes("image");
 
                         });
-                         oData.ImageUrl=that.sServiceURI + that._property + "/$value?doc_type=image&time="+new Date().getTime();
+                        oData.ImageUrl = that.sServiceURI + that._property + "/$value?doc_type=image&time=" + new Date().getTime();
                         var oViewModel = new JSONModel(oData);
                         that.getView().setModel(oViewModel, "ActionViewModel");
 
@@ -110,7 +110,7 @@ sap.ui.define([
             } else {
                 this.oCategory.setEditable(true);
                 this.oTitle.setEditable(true);
-               this.oPreviewImage.setVisible(false);
+                this.oPreviewImage.setVisible(false);
                 this.pdfBtn.setVisible(false);
                 this.imgBtn.setVisible(false);
             }
@@ -216,46 +216,9 @@ sap.ui.define([
                         error: function () { },
                     })
                 });
-                // this.getView().byId("idPdf").getItems().forEach(function (ele, i) {
-                //     fileUploader = ele.getContent()[0].getItems()[1];
-                //     console.log(catalogue[i].fileName);
-                //     fileUploader.setUploadUrl(sServiceUri +"ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + catalogue[i].fileName + "&language_code="+catalogue[i].LanguageCode);
-                //     fileUploader.checkFileReadable().then(function () {
-                //         // @ts-ignore
-                //         //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-                //         fileUploader.setHttpRequestMethod("PUT");
-                //         // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-                //         fileUploader.upload();
-                //     }.bind(this), function (error) {
-                //         MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-                //     }.bind(this)).then(function () {
 
-                //     }.bind(this));
-                // });
-                // var oModel = this.getModel("ActionViewModel");
-                // var catalogue = oModel.getProperty("/Catalogue");
-                // for (var i = 0; i <= catalogue.length; i++) {
-                //     var LanguageCode = catalogue[i].LanguageCode;
-                //     console.log(LanguageCode);
-
-                //     this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + catalogue[i].fileName + "&language_code="+LanguageCode);
-                // }
             }
-            // if (!this.oFileUploaderPdf.getValue()) {
-            //     MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
-            //     return;
-            // }
-            // this.oFileUploaderPdf.checkFileReadable().then(function () {
-            //     // @ts-ignore
-            //     //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-            //     this.oFileUploaderPdf.setHttpRequestMethod("PUT");
-            //     this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-            //     this.oFileUploaderPdf.upload();
-            // }.bind(this), function (error) {
-            //     MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-            // }.bind(this)).then(function () {
-            //     this.oFileUploader.clear();
-            // }.bind(this));
+
         },
 
         //Update methods for pdf and Image
@@ -610,8 +573,14 @@ sap.ui.define([
                 file: null,
                 fileName: ""
             });
-
             oModel.refresh(true);
+
+            // var pdfContainer = this.byId("idPdf");
+            //  pdfContainer.getBinding("items").refresh(true);
+
+            //oModel.setProperty("/Catalogue", oObject);
+
+
 
 
 
@@ -627,7 +596,7 @@ sap.ui.define([
                 .split("/");
             var aCompetitor = oModel.getProperty("/Catalogue");
             aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
-            //this._setFDLTbleFlag();
+
             oModel.refresh(true);
         },
         onImageView: function (oEvent) {
@@ -653,10 +622,10 @@ sap.ui.define([
             oEvent.getSource().getParent().close();
         },
         onDialogClose: function (oEvent) {
-             this._imageDialog.destroy();
-            delete  this._imageDialog;
+            this._imageDialog.destroy();
+            delete this._imageDialog;
         },
-        
+
 
 
 
