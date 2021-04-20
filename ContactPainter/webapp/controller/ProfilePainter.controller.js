@@ -129,7 +129,7 @@ sap.ui.define(
           this.getView().byId("smrtLoyalty").rebindTable();
           this.getView().byId("smrtLiveTraining").rebindTable();
            this.getView().byId("smrtOfflineTraining").rebindTable();
-          this.getView().byId("smrtOlineTraining").rebindTable();
+          this.getView().byId("smrtVideoTraining").rebindTable();
           this._initFilerForTables();
         },
         handleEditPress: function () {
@@ -2086,8 +2086,8 @@ sap.ui.define(
           }
           return "Not Submitted";
         },
-        // Learning/Online Training Dialog Box
-        onRebindOnlineTable: function (oEvent) {
+        // Learning/Video Training Dialog Box
+        onRebindVideoTable: function (oEvent) {
           var oView = this.getView();
 
           var oPainterId = oView

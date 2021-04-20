@@ -77,7 +77,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idPainterTable" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <Table id="idPainterTable" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType' }}" noDataText="{i18n>tableNoDataText}"  busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
