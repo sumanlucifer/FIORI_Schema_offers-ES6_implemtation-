@@ -228,7 +228,7 @@ sap.ui.define(
               if (bFileFlag) {
                 othat._UploadFile(data);
               }
-              //othat._navToHome();
+              othat._navToHome();
             },
             error: function () {
               MessageToast.show("Error In Creating the Schemes.");

@@ -111,6 +111,7 @@ sap.ui.define(
 
           var othat = this;
           var c1, c2, c3, c4, c5, c7, c8;
+          var oView = this.getView();
 
           c1 = this._loadEditProfile("Display");
           c1.then(function () {
@@ -505,7 +506,6 @@ sap.ui.define(
               obj[b] = null;
             }
           }
-         
 
           return obj;
         },
@@ -532,6 +532,7 @@ sap.ui.define(
         },
         // Attachment View and other Changes
         _CheckAttachment: function () {
+          var promise = jQuery.Deferred();
           var oView = this.getView();
           var oModelControl = this.getView().getModel("oModelControl2");
           var oProp = oModelControl.getProperty("/bindProp");
@@ -545,6 +546,9 @@ sap.ui.define(
             .fail(function () {
               oModelControl.setProperty("/ImageLoaded", false);
             });
+
+          promise.resolve();
+          return promise;
         },
         onViewAttachment: function (oEvent) {
           var oButton = oEvent.getSource();
