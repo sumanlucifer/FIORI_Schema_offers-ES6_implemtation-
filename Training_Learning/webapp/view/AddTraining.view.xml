@@ -93,8 +93,12 @@
                 <Label text="{i18n>colImage}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem"
 				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
+				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" fileType="png,jpg,jpeg" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
 				    buttonText="{i18n>fileUploaderTrainingtip}" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                    <!-- <HBox>
+                        <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PNG,JPG,JPEG"/>
+                        <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                    </HBox> -->
 
                 <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
                 <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">

@@ -390,10 +390,10 @@ sap.ui.define(
                     return sLetter;
                 },
 
-                onTrainingTypeChange: function (oEvent) {
-                    var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
-                },
+                // onTrainingTypeChange: function (oEvent) {
+                //     var oViewModel = this.getModel("oModelView");
+                //     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
+                // },
 
                 onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();
@@ -953,6 +953,7 @@ sap.ui.define(
                     var oViewModel = this.getModel("oModelView");
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     if (oPayload.PainterArcheId) {
@@ -1041,6 +1042,7 @@ sap.ui.define(
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     delete oPayload.PainterArcheId;
                     delete oPayload.PainterType;
@@ -1430,7 +1432,7 @@ sap.ui.define(
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
                     debugger;
-                    oView.byId("idTrSubType1").getBinding("items").filter(new Filter("TrainingTypeId", FilterOperator.EQ, TrainingDetails.TrainingTypeId))
+                    // oView.byId("idTrSubType1").getBinding("items").filter(new Filter("TrainingTypeId", FilterOperator.EQ, TrainingDetails.TrainingTypeId))
                     if (trainingType === 'ONLINE') {
                         var aArray = [];
                         for (var x of TrainingDetails.Zones) {
