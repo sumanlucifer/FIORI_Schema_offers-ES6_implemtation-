@@ -10,7 +10,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>colTrainingType}" required="true"/>
-                <ComboBox id="idTrSubType1" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
+                <ComboBox items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}" editable="false">
                     <items>
                         <core:Item text="{TrainingSubType}" key="{Id}"/>
                     </items>
@@ -70,6 +70,15 @@
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>
 				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" style="Emphasized" buttonOnly="true"
 			    buttonText="{i18n>fileUploaderTrainingtip}"/>
+
+                <Label text="{i18n>colStatusAction}"/>
+                <SegmentedButton
+                    selectedKey="{oModelView>/TrainingDetails/Status}">
+                    <items>
+                        <SegmentedButtonItem text="{i18n>Activate}" key="1"/>
+                        <SegmentedButtonItem text="{i18n>DeActivate}" key="0"/>
+                    </items>
+                </SegmentedButton>
 
             </f:content>
         </f:SimpleForm>

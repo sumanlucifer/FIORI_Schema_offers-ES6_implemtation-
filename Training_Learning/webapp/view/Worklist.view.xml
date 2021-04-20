@@ -75,7 +75,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="26%">
+								<Column width="35%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
                                 <Column width="15%">
@@ -96,9 +96,9 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="9%">
+                                <!-- <Column width="9%">
 									<Text text="{i18n>colStatusAction}"/>
-								</Column>
+								</Column> -->
                                 <Column width="7%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
@@ -117,10 +117,10 @@
                                             <Text text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}"/>
                                             <Text text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}"/>
                                         </HBox>
-                                        <HBox>
+                                        <!-- <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Emphasized"/>
 					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Reject"/>
-                                        </HBox>
+                                        </HBox> -->
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
@@ -167,7 +167,7 @@
 									<cells>
 										<Text text="{Title}"/>
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
-                                        <Text text="{RewardPoints}"/>
+                                        <Text text="{PainterAttendanceCount}"/>
                                         <Text text="{RewardPoints}"/>
                                         <!-- <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
@@ -194,7 +194,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="18%">
+								<Column width="27%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
                                 <Column width="15%">
@@ -212,9 +212,9 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="9%">
+                                <!-- <Column width="9%">
 									<Text text="{i18n>colStatusAction}"/>
-								</Column>
+								</Column> -->
                                 <Column width="7%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
@@ -232,10 +232,10 @@
                                             <Text text="{i18n>inActive}" visible="{= ${Status} === 0 }"/>
                                             <Text text="{i18n>active}" visible="{= ${Status} === 1 }"/>
                                         </HBox>
-										<HBox>
+										<!-- <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 }" enabled="{= ${Status} === 0 }" pressed="true" press="onActiveInActive" type="Emphasized"/>
 					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 }" enabled="{= ${Status} === 1 }" pressed="true" press="onActiveInActive" type="Reject"/>
-                                        </HBox>
+                                        </HBox> -->
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
