@@ -18,7 +18,7 @@ sap.ui.define(
         "sap/ui/core/format/DateFormat",
         "sap/ui/core/routing/History",
         "sap/ui/core/SeparatorItem",
-        "../model/formatter",
+        "../model/formatter"
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -983,6 +983,7 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
+                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
@@ -1026,9 +1027,30 @@ sap.ui.define(
                     delete oClonePayload.ViewEndDate;
                     delete oClonePayload.__metadata;
                     debugger;
+                    //Quick fix Training zone depot
+                    if(oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results)
+                    {
+                        oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
+                    }
+
+                    if(oClonePayload.TrainingDivision && oClonePayload.TrainingDivision.results)
+                    {
+                        oClonePayload.TrainingDivision = oClonePayload.TrainingDivision.results;
+                    }
+
+                    if(oClonePayload.TrainingZone && oClonePayload.TrainingZone.results)
+                    {
+                        oClonePayload.TrainingZone = oClonePayload.TrainingZone.results;
+                    }
+
+
+
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
                     });
+
+
+
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
