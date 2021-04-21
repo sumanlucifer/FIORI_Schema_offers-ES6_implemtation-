@@ -286,16 +286,6 @@ sap.ui.define([
             var oBinding = oTable.getBinding("items");
             if (!aFlaEmpty) {
                 oBinding.filter(endFilter);
-                // if (endFilter.aFilters !== null && endFilter.aFilters.length > 0) {
-                //     for (var i = 0; i < endFilter.aFilters.length; i++) {
-                //         if (endFilter.aFilters[i].sPath === "StartDate") {
-                //             delete endFilter.aFilters[i];
-                //         }
-                //     }
-                // }
-                // if (endFilter.aFilters) {
-                //     oBinding2.filter(endFilter);
-                // }
             } else {
                 oBinding.filter([]);
             }
@@ -459,6 +449,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteAddT", {
                 mode: "add",
+                trtype: "ONLINE",
                 id: "null",
             });
         },
@@ -468,6 +459,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteAddT", {
                 mode: "add",
+                trtype: "OFFLINE",
                 id: "null",
             });
         },
@@ -479,6 +471,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteAddT", {
                 mode: "add",
+                trtype: "VIDEO",
                 id: "null",
             });
         },
@@ -500,6 +493,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
+                trtype: "ONLINE",
                 prop: window.encodeURIComponent(sPath),
             });
         },
@@ -520,6 +514,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
+                trtype: "OFFLINE",
                 prop: window.encodeURIComponent(sPath),
             });
         },
@@ -540,6 +535,7 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
+                trtype: "VIDEO",
                 prop: window.encodeURIComponent(sPath),
             });
         },
@@ -562,18 +558,15 @@ sap.ui.define([
 
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    // if (sData.Status === 0) {
                     if (todayDate < sData.EndDate) {
                         oRouter.navTo("RouteTrainingTab", {
                             mode: "edit",
+                            trtype: "ONLINE",
                             prop: window.encodeURIComponent(sPath),
                         });
                     } else {
                         that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
                     }
-                    // } else {
-                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    // }
                 }
             })
         },
@@ -594,14 +587,11 @@ sap.ui.define([
 
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    // if (sData.Status === 0) {
                     oRouter.navTo("RouteTrainingTab", {
                         mode: "edit",
+                        trtype: "OFFLINE",
                         prop: window.encodeURIComponent(sPath),
                     });
-                    // } else {
-                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    // }
                 }
             })
         },
@@ -622,14 +612,11 @@ sap.ui.define([
 
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
-                    // if (sData.Status === 0) {
                     oRouter.navTo("RouteTrainingTab", {
                         mode: "edit",
+                        trtype: "VIDEO",
                         prop: window.encodeURIComponent(sPath),
                     });
-                    // } else {
-                    //     that.showToast.call(that, "MSG_ACTIVE_TRAININGS_CANT_BE_EDITED");
-                    // }
                 }
             })
         },
