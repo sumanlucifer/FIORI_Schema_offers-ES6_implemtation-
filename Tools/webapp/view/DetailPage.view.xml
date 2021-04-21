@@ -5,7 +5,7 @@
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-    <f:DynamicPage headerExpanded="true" class="sapUiNoContentPadding" busy="{DetailViewModel>/busy}">
+    <f:DynamicPage headerExpanded="true" showFooter="true" class="sapUiNoContentPadding" busy="{DetailViewModel>/busy}">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -40,7 +40,7 @@
                             <Text text="{DetailViewModel>/CreatedByDetails/Name}" />
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <!-- <layout:VerticalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="statusLabel sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
                             <SegmentedButton
@@ -53,7 +53,7 @@
                                 </items>
                             </SegmentedButton>
                         </layout:HorizontalLayout>
-                    </layout:VerticalLayout>
+                    </layout:VerticalLayout> -->
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
@@ -111,5 +111,12 @@
                 </form:Form>
             </VBox>
         </f:content>
+          <f:footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="{=${DetailViewModel>/Status} ? 'Deactivate' : 'Activate'}" type="{= ${DetailViewModel>/Status} ? 'Reject' : 'Emphasized'}" press="onChangeStatus"/>
+            </OverflowToolbar>
+        </f:footer>
+
     </f:DynamicPage>
 </mvc:View>

@@ -20,14 +20,14 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="_ResetFilterBar" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                     <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="{i18n>creationDateFilterLabel}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="CreationDate" label="{i18n>creationDateFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                     <DatePicker id="idCreationDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy" placeholder="{i18n>creationDateFilterPlaceholder}"/>
                                 </fb:control>
@@ -37,7 +37,7 @@
                                     <Input id="idTitleInput" data:filterName="Title" value="{ViewModel>/filterBar/title}" placeholder="{i18n>titleFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="{i18n>createdByFilterLabel}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="CreatedBy" label="{i18n>createdByFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input
                                         id="idCreatedByInput"
@@ -118,7 +118,7 @@
                                     text="{=${Status} ? ${i18n>statusActive} : ${i18n>statusInActive}}"
                                     state="{=${Status} ? 'Success' : 'None'}" />
                             <HBox>
-                                <Button type="Transparent" icon="sap-icon://edit" tooltip="{i18n>editBtnTooltip}" press="onPressEdit"/>
+                                <Button type="Transparent" icon="sap-icon://edit" enabled="{= ${Status} === true}" tooltip="{i18n>editBtnTooltip}" press="onPressEdit"/>
                                 <Button type="Transparent" icon="sap-icon://delete" tooltip="{i18n>deleteBtnTooltip}" press="onPressDelete"/>
                             </HBox>
                         </cells>

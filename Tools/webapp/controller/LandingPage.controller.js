@@ -268,6 +268,37 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 
 			// apply the selected sort and group settings
 			oBinding.sort(aSorters);
-		}
+        },
+        _ResetFilterBar: function () {
+                var aCurrentFilterValues = [];
+
+                var aResetProp = {
+                    CreationDate: "",
+                    Title: "",
+                    CreatedBy: ""
+                };
+                var oViewModel = this.getView().getModel();
+                oViewModel.setProperty("/filterBar", aResetProp);
+
+                var oTable = this.byId("idToolTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter([]);
+                this.clearSearchFields();
+
+            },
+
+            clearSearchFields: function () {
+                var plantCode = this.getView().byId("idSearchInput");
+                plantCode.setValue("");
+                 var plantCode = this.getView().byId("idCreationDateInput");
+                plantCode.setValue("");
+                var depot = this.getView().byId("idTitleInput");
+                depot.setValue("");
+                var salesGroupName = this.getView().byId("idCreatedByInput");
+                salesGroupName.setValue("");
+                
+
+            }
+
     });
 });
