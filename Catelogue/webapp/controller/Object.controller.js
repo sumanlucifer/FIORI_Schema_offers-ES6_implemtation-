@@ -14,11 +14,12 @@ sap.ui.define([
     "sap/ui/core/format/FileSizeFormat",
     "sap/ui/Device",
     "sap/ui/core/Fragment",
-    "sap/m/PDFViewer"
+    "sap/m/PDFViewer",
+    'sap/m/MessageBox'
 
 ], function (BaseController, JSONModel, History, formatter, jQuery, deepExtend, syncStyleClass, Controller,
     ObjectMarker, MessageToast, UploadCollectionParameter, MobileLibrary,
-    FileSizeFormat, Device, Fragment, PDFViewer
+    FileSizeFormat, Device, Fragment, PDFViewer,MessageBox
 ) {
     "use strict";
 
@@ -171,7 +172,7 @@ sap.ui.define([
                         oViewModel.setProperty("/busy", false);
 
                         var data = oEvent.getParameter('data');
-
+                        var status=data.Status;
                         var imgSize = data.MediaList[0].MediaSize;
                         var pdfSize = data.MediaList[1].MediaSize;
                         var imgName = data.MediaList[0].MediaName;
@@ -181,9 +182,9 @@ sap.ui.define([
                             return !ele.ContentType.includes("image");
                             
                         });
-
-                        oViewModel.setProperty("/ImageSize", imgSize + " KB");
-                        oViewModel.setProperty("/PdfSize", pdfSize + " KB");
+                        oViewModel.setProperty("/Status", status );
+                        oViewModel.setProperty("/ImageSize", imgSize + " B");
+                        oViewModel.setProperty("/PdfSize", pdfSize + " B");
                         oViewModel.setProperty("/ImageName", imgName);
                         oViewModel.setProperty("/PdfName", pdfName);
 
@@ -329,6 +330,66 @@ sap.ui.define([
 
 
 
+        },
+        onPressStatus: function (oEvent) {
+
+            
+
+            // var oItem = oEvent.getSource();
+            // var removeSet = oItem.getBindingContext().getPath();
+            // var oTable = this.getView().byId("idCatlogueTable");
+
+            // var oSelectedItem = oEvent.getSource().getBindingContext().getObject();
+            var currentStatus = this.getModel("objectView").getProperty("/Status");
+            var changedStatus;
+            if (currentStatus == true) {
+                changedStatus = false
+            }
+            else {
+                changedStatus = true
+            }
+            //var oParam = Object.assign({}, oSelectedItem);
+            
+            var oParam={
+                Status:changedStatus
+            }
+
+            //console.log(oParam);
+            function onYes() {
+                var oModel = this.getView().getModel();
+                var entity=this.property;
+                var that = this;
+                oModel.update("/"+entity+"/Status",oParam, {
+                    success: function () {
+                        that.onRemoveSuccess();
+                    }, error: function (oError) {
+                        //oError - contains additional error information.
+                        var msg = 'Error!';
+                        MessageToast.show(msg);
+
+                    }
+                });
+            }
+            this.showWarning("MSG_CONFIRM_CHANGE_STATUS", onYes);
+        },
+         onRemoveSuccess: function () {
+            var msg = 'Status Changed Successfully!';
+            MessageToast.show(msg);
+
+
+            var oModel = this.getView().getModel("objectView");
+            oModel.refresh();
+        },
+        showWarning: function (sMsgTxt, _fnYes) {
+            var that = this;
+            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        _fnYes && _fnYes.apply(that);
+                    }
+                }
+            });
         },
         // onPressImage: function (oEvent) {
         //     var oItem = oEvent.getSource().getParent();

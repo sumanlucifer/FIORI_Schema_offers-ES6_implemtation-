@@ -9,9 +9,10 @@
     xmlns:f="sap.f"
     xmlns:card="sap.f.cards"
     xmlns:tnt="sap.tnt"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     class="sapUiSizeCompact"
     >
- <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
+ <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showFooter="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
@@ -309,6 +310,16 @@
                     </uxap:subSections>
                 </uxap:ObjectPageSection>
             </uxap:sections>
+            <uxap:footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+                 <Button 
+                                type="{= ${Status} === true? 'Reject' : undefined || ${Status} === false? 'Emphasized' : undefined }"
+                                text="{path: 'Status',
+                                    formatter: '.formatter.status'}"
+                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+            </OverflowToolbar>
+        </uxap:footer>
         </uxap:ObjectPageLayout>
 
 </mvc:View>
