@@ -88,6 +88,7 @@
                             useExportToExcel="false"
                             useVariantManagement="false"
                             useTablePersonalisation="true"
+                            ignoredFields="Status,UpdatedAt,UpdatedBy,ProductCategoryId,ProductClassificationId,ProductRangeId,Description,CreatedBy,IsArchived,IsSelected,Id"
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
