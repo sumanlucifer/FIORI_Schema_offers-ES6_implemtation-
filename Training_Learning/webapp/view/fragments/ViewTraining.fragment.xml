@@ -33,15 +33,6 @@
 
                 <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
 
-                <!-- <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/TrainingZone/ZoneId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-
-                <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/TrainingDivision/DivisionId}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-
-                <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/TrainingDepot/Depot}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/> -->
-
                 <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/Zones}" visible="{= ${appView>/trainingType} === 'ONLINE'}" editable="false" items="{ path : '/MasterZoneSet'}">
 					<core:Item key="{Id}" text="{Id}"/>

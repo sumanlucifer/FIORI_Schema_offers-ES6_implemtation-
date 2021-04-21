@@ -1057,6 +1057,29 @@ sap.ui.define(
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
 
+                onImageView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    var oThat = this;
+                    if (!oThat.ImageDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.Training_Learning.view.fragments.ImageDialog",
+                            controller: oThat,
+                        }).then(
+                            function (oDialog) {
+                                oView.addDependent(oDialog);
+                                oThat.ImageDialog = oDialog;
+                                oDialog.open();
+                            });
+                    } else {
+                        oThat.ImageDialog.open();
+                    }
+                },
+
+                onPressCloseImageDialog: function () {
+                    this.ImageDialog.close();
+                },
+
                 getImageBinary: function (oFile) {
                     var oFileReader = new FileReader();
                     var sFileName = oFile.name;

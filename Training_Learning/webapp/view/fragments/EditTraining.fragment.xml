@@ -66,11 +66,6 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colImage}"/>
-                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>
-				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" style="Emphasized" buttonOnly="true"
-			    buttonText="{i18n>fileUploaderTrainingtip}"/>
-
                 <Label text="{i18n>colStatusAction}"/>
                 <SegmentedButton
                     selectedKey="{oModelView>/TrainingDetails/Status}">
@@ -79,6 +74,38 @@
                         <SegmentedButtonItem text="{i18n>DeActivate}" key="0"/>
                     </items>
                 </SegmentedButton>
+
+                <!-- <Label text="{i18n>colImage}"/>
+                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>
+				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" style="Emphasized" buttonOnly="true"
+			    buttonText="{i18n>fileUploaderTrainingtip}"/> -->
+
+                <Label text="Upload Thumbnail Image" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
+                <HBox>
+                    <VBox>
+                        <VBox class="sapUiTinyMarginBottom">
+                                <HBox>
+                                    <u:FileUploader
+                                        width="100%"
+                                        tooltip="{i18n>fileUploaderTrainingtip}"
+                                        typeMissmatch="handleTypeMissmatch"
+                                        fileType="png,jpg,jpeg"
+                                        maximumFileSize="2.1"
+                                        fileSizeExceed="onFileSizeExceed"
+                                        useMultipart="false"
+                                        sendXHR="true"
+                                        fileAllowed="onUpload"
+                                        visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
+                                </HBox>
+                                <VBox>
+                                    <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="PNG,JPG,JPEG"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB"/>
+                                </VBox>
+                                <!-- <Image id="idPreviewImage" width="400px" height="200px" /> -->
+                        </VBox>
+                                <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
+                    </VBox>                  
+                </HBox>
 
             </f:content>
         </f:SimpleForm>
