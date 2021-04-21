@@ -150,14 +150,14 @@
                             <Text text="{path:'TotalPdfViewerCount'}"/>
                             <Text text="{path:'TotalPdfDownloadCount'}"/>
                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                            <!-- <Text text="{path: 'Status',
-                                    formatter: '.formatter.status'}"
-                                data:remarks="{Status}"/> -->
-                                <Button 
+                            <Text text="{path: 'Status',
+                                    formatter: '.formatter.statusList'}"
+                                data:remarks="{Status}"/>
+                                <!-- <Button 
                                 type="{= ${Status} === true? 'Emphasized' : undefined || ${Status} === false? 'Reject' : undefined }"
                                 text="{path: 'Status',
                                     formatter: '.formatter.status'}"
-                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/> -->
                             
                             <!-- <Button  icon="sap-icon://edit" type="Transparent"  press="onPress" tooltip="Edit"/> -->
                             <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>

@@ -36,6 +36,14 @@ sap.ui.define([
             } else {
                 return 'Activate';
             }
+        },
+        statusList: function (status){
+             if (status) {
+                return 'Active ';
+            } else {
+                return 'Inactive';
+            }
+
         }
 
     };
