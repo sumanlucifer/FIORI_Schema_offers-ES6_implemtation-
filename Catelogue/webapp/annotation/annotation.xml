@@ -40,10 +40,10 @@
                             <PropertyValue Property="Value" Path="PdfDownloadCount"/>
                         </Record>
                         
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Date"/>
                             <PropertyValue Property="Value" Path="CreatedAt"/>
-                        </Record>
+                        </Record> -->
                         <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Created By"/>
                             <PropertyValue Property="Value" Path="CreatedByDetails/Name"/>

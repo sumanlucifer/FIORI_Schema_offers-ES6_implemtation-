@@ -127,13 +127,13 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"actionStatus" }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8,"columnKey":"actionStatus" }'/>
                                         </customData>
                                          <Text text="{i18n>status}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 11,"columnKey":"edit" }'/>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
                                         </customData>
                                          <Text text="{i18n>GenericEdit}"/>
                                     </Column>

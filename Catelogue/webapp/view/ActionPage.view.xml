@@ -175,7 +175,7 @@
                                                         uploadComplete="handleUploadCompletePdf" />
                                                         <HBox>
                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
                                                 </HBox>
                                                 </VBox>
                                                         </FlexBox>
