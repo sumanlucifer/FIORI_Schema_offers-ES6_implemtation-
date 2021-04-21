@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>colThumbnailImage}" afterClose="onDialogClose">
+        <content>
+            <Carousel class="sapUiContentPadding" loop="true">
+                <Image src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" alt="No Thumbnail Image found"/>
+            </Carousel>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseImageDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

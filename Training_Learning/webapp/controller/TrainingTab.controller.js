@@ -101,8 +101,6 @@ sap.ui.define(
                     var aZones = [],
                         aDivisions = [],
                         aDepots = [];
-                    // var oModelControl2 = new JSONModel(oData);
-                    // this.getView().setModel(oModelControl2, "oModelControl2");
 
                     oViewModel.setProperty("/ProfilePic", oData.ProfilePic);
                     oViewModel.setProperty("/ProfilePicHeader", oData.ProfilePic);
@@ -136,12 +134,10 @@ sap.ui.define(
                                         data.TrainingQuestionnaire = [];
                                     }
 
-                                    debugger;
                                     if (data.TrainingZone.results.length > 0) {
                                         for (var x of data["TrainingZone"]["results"]) {
                                             aZones.push(x["ZoneId"]);
                                         }
-                                        // oView.byId("idZone").setSelectedKeys(aZones);
                                     }
 
                                     if (data.TrainingDivision.results.length > 0) {
@@ -158,7 +154,6 @@ sap.ui.define(
 
                                 }
 
-                                debugger;
                                 oViewModel.setProperty("/TrainingDetails", data);
                                 oViewModel.setProperty("/__metadata", data.__metadata);
 
@@ -236,7 +231,7 @@ sap.ui.define(
                         var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("OfflineTrainingDetails");
                         oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
                     } else {
-                        var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("VideoDetails");
+                        var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("VideoTrainingDetails");
                         oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
                     }
                     if (mode === 'edit') {
@@ -1087,7 +1082,6 @@ sap.ui.define(
 
                 _Success: function () {
                     // this.handleCancelPress();
-                    this.getRouter().navTo("worklist", true);
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_UPATE"));
@@ -1096,6 +1090,7 @@ sap.ui.define(
                     }
                     var oModel = this.getModel();
                     oModel.refresh(true);
+                    this.getRouter().navTo("worklist", true);
                 },
 
                 _SuccessOffline: function () {
@@ -1131,15 +1126,38 @@ sap.ui.define(
                 closeAttendanceStatusDialog: function () {
                     this.byId("idAttendanceStatusMsgDialog").close();
                     // this.handleCancelPress();
-                    this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
+                    this.getRouter().navTo("worklist", true);
                 },
 
                 onUpload: function (oEvent) {
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+                },
+
+                onImageView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    var oThat = this;
+                    if (!oThat.EditImageDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.Training_Learning.view.fragments.EditImageDialog",
+                            controller: oThat,
+                        }).then(
+                            function (oDialog) {
+                                oView.addDependent(oDialog);
+                                oThat.EditImageDialog = oDialog;
+                                oDialog.open();
+                            });
+                    } else {
+                        oThat.EditImageDialog.open();
+                    }
+                },
+
+                onPressCloseImageDialog: function () {
+                    this.EditImageDialog.close();
                 },
 
                 getImageBinary: function (oFile) {

@@ -61,7 +61,7 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							growingThreshold="15" items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
@@ -75,16 +75,16 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
+								<Column width="31%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
                                 <Column width="15%">
 									<Text text="{i18n>colTrainingType}"/>
 								</Column>
-                                <Column width="14%">
+                                <Column width="16%">
 									<Text text="{i18n>colStartDateTime}"/>
 								</Column>
-                                <Column width="14%">
+                                <Column width="16%">
 									<Text text="{i18n>colEndDateTime}"/>
 								</Column>
                                 <Column width="9%">
@@ -113,9 +113,9 @@
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
-                                            <Text text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}"/>
-                                            <Text text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}"/>
-                                            <Text text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}"/>
+                                            <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
+                                            <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Success"/>
+                                            <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
                                         <!-- <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Emphasized"/>
@@ -229,8 +229,8 @@
                                         <!-- <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/> -->
                                         <Text text="{RewardPoints}"/>
                                         <HBox>
-                                            <Text text="{i18n>inActive}" visible="{= ${Status} === 0 }"/>
-                                            <Text text="{i18n>active}" visible="{= ${Status} === 1 }"/>
+                                            <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
+                                            <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
                                         </HBox>
 										<!-- <HBox>
                                             <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 }" enabled="{= ${Status} === 0 }" pressed="true" press="onActiveInActive" type="Emphasized"/>

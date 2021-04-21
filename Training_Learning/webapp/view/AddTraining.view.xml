@@ -46,35 +46,22 @@
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
 
-                <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
+            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
                 <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
-                <!-- <ComboBox selectionChange="onZoneChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterZoneSet' }" selectedKey="{oModelView>/TrainingDetails/ZoneId}">
-                    <core:Item text="{Id}" key="{Id}"/>
-                </ComboBox> -->
 
                 <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
                 <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
-                <!-- <ComboBox id="idDivision" selectionChange="onDivisionChange" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/ZoneId} !== '' }" items="{path:'/MasterDivisionSet' }" selectedKey="{oModelView>/TrainingDetails/DivisionId}">
-                    <items>
-                        <core:Item text="{Id}" key="{Id}"/>
-                    </items>
-                </ComboBox> -->
 
                 <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
                 <MultiComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 				</MultiComboBox>
-                <!-- <ComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" editable="{= ${oModelView>/TrainingDetails/DivisionId} !== '' }" items="{path:'/MasterDepotSet' }" selectedKey="{oModelView>/TrainingDetails/DepotId}">
-                    <items>
-                        <core:Item text="{Depot} ( {Id} )" key="{Id}"/>
-                    </items>
-                </ComboBox> -->
 
                 <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
                 <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
@@ -90,19 +77,45 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colImage}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <Image width="5rem" class="sapUiTinyMargin" height="5rem"
-				    src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-				    <u:FileUploader maximumFileSize="2" fileAllowed="onUpload" fileType="png,jpg,jpeg" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true"
-				    buttonText="{i18n>fileUploaderTrainingtip}" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                    <!-- <HBox>
-                        <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PNG,JPG,JPEG"/>
-                        <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
-                    </HBox> -->
-
                 <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
                 <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
                 </u:FileUploader>
+
+                <!-- <Label text="{i18n>colImage}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+				<u:FileUploader maximumFileSize="2" placeholder="Choose a CSV file" fileAllowed="onUpload" fileType="png,jpg,jpeg" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true" buttonText="{i18n>fileUploaderTrainingtip}" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <HBox>
+                    <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PNG,JPG,JPEG"/>
+                    <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                </HBox>
+                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/> -->
+
+                <Label text="Upload Thumbnail Image" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <HBox>
+                    <VBox>
+                        <VBox class="sapUiTinyMarginBottom">
+                                <HBox>
+                                    <u:FileUploader
+                                        width="100%"
+                                        tooltip="{i18n>fileUploaderTrainingtip}"
+                                        typeMissmatch="handleTypeMissmatch"
+                                        fileType="png,jpg,jpeg"
+                                        maximumFileSize="2.1"
+                                        fileSizeExceed="onFileSizeExceed"
+                                        useMultipart="false"
+                                        sendXHR="true"
+                                        fileAllowed="onUpload"
+                                        visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                                </HBox>
+                                <VBox>
+                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="PNG,JPG,JPEG"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB"/>
+                                </VBox>
+                                <!-- <Image id="idPreviewImage" width="400px" height="200px" /> -->
+                        </VBox>
+                                <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
+                    </VBox>                  
+                </HBox>
+
         </f:content>
         </f:SimpleForm>
         </VBox>

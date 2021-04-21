@@ -543,6 +543,7 @@ sap.ui.define([
             var that = this;
             var todayDate = new Date();
 
+            debugger;
             that.getModel().read("/" + sPath, {
                 success: function (data) {
                     that.getModel("appView").setProperty("/__metadata", data.__metadata);
