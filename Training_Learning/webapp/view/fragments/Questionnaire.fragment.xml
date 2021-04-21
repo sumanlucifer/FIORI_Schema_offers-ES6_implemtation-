@@ -7,7 +7,7 @@
                     <CustomListItem type="Active">
                         <VBox renderType="Bare">
                             <Text text=""/>
-                            <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
+                            <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                             <Text text=""/>
                             <VBox items="{oModelView>TrainingQuestionnaireOptions}">
                                 <ObjectStatus text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin" visible="{= ${oModelView>IsArchived} === false}"/>
