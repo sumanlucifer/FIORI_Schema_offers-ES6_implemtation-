@@ -243,7 +243,7 @@ sap.ui.define(
                         } else if (trainingType === 'OFFLINE') {
                             that.getModel("appView").setProperty("/EditAttendance", false);
                         }
-                        that._toggleButtonsAndView(false);
+                        // that._toggleButtonsAndView(false);
                     }
                     that.getView().unbindElement();
 
@@ -501,6 +501,44 @@ sap.ui.define(
                 onAfterRendering: function () {
                     //Init Validation framework
                     this._initMessage();
+                },
+
+                onActiveInActive: function (oEvent) {
+                    debugger;
+                    var sPath = this.getModel("oModelView").getProperty("/sPath");
+                    var sData = this.getModel("oModelView").getProperty("/TrainingDetails");
+                    var data = sPath + "/Status";
+                    var that = this;
+                    var oModel = that.getModel();
+                    if (sData.Status === 0) {
+                        if (sData.Url === "") {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_URL_BEFORE_ACTIVATING_TRAINING");
+                        } else {
+                            that.getModel().update(data, {
+                                Status: 1
+                            }, {
+                                success: function () {
+                                    that.showToast.bind(that, "MSG_SUCCESS_ACTIVATED_SUCCESSFULLY");
+                                    oModel.refresh(true);
+                                    that.getRouter().navTo("worklist", true);
+                                }
+                            });
+                        }
+                    }
+                    if (sData.Status === 1) {
+                        that.getModel().update(data, {
+                            Status: 0
+                        }, {
+                            success: function () {
+                                that.showToast.bind(that, "MSG_SUCCESS_DEACTIVATED_SUCCESSFULLY");
+                                oModel.refresh(true);
+                                that.getRouter().navTo("worklist", true);
+                            }
+                        });
+                    }
+                    if (sData.Status === 2) {
+                        that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_CHANGED");
+                    }
                 },
 
                 _initMessage: function () {
@@ -1411,7 +1449,7 @@ sap.ui.define(
                     oViewModel.setProperty("/flgCantEditUrlDates", false);
                     // if (TrainingDetails.Status === 0) {
                     this.getModel("appView").setProperty("/EditAttendance", true);
-                    this._toggleButtonsAndView(true);
+                    // this._toggleButtonsAndView(true);
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var othat = this;
                     var c1, c2, c3;

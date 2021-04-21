@@ -66,6 +66,9 @@ sap.ui.define([
             });
             // this._ResetFilterBar();
             this._addSearchFieldAssociationToFB();
+
+            var oRouter = this.getOwnerComponent().getRouter(this);
+            oRouter.getRoute("worklist").attachMatched(this.onRefreshView, this);
         },
 
         _addSearchFieldAssociationToFB: function () {
@@ -482,6 +485,8 @@ sap.ui.define([
 
         onListItemPressOnlineTraining: function (oEvent) {
             var that = this;
+            this.getModel("appView").setProperty("/flgViewOn", true);
+            this.getModel("appView").setProperty("/flgViewOnVd", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             that.getModel().read("/" + sPath, {
                 success: function (data) {
@@ -501,6 +506,8 @@ sap.ui.define([
 
         onListItemPressOfflineTraining: function (oEvent) {
             var that = this;
+            this.getModel("appView").setProperty("/flgViewOn", false);
+            this.getModel("appView").setProperty("/flgViewOnVd", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             that.getModel().read("/" + sPath, {
                 success: function (data) {
@@ -519,6 +526,8 @@ sap.ui.define([
 
         onListItemPressVideo: function (oEvent) {
             var that = this;
+            this.getModel("appView").setProperty("/flgViewOn", true);
+            this.getModel("appView").setProperty("/flgViewOnVd", true);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             that.getModel().read("/" + sPath, {
                 success: function (data) {
@@ -538,6 +547,7 @@ sap.ui.define([
         onEditOnlineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
             this.getModel("appView").setProperty("/flgEditOn", true);
+            this.getModel("appView").setProperty("/flgViewOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
@@ -571,6 +581,7 @@ sap.ui.define([
         onEditOfflineTraining: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "OFFLINE");
             this.getModel("appView").setProperty("/flgEditOn", true);
+            this.getModel("appView").setProperty("/flgViewOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;
@@ -598,6 +609,7 @@ sap.ui.define([
         onEditVideo: function (oEvent) {
             this.getModel("appView").setProperty("/trainingType", "VIDEO");
             this.getModel("appView").setProperty("/flgEditOn", true);
+            this.getModel("appView").setProperty("/flgViewOn", false);
             var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
             var oRouter = this.getOwnerComponent().getRouter();
             var that = this;

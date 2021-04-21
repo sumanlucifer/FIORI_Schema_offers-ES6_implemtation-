@@ -81,11 +81,13 @@
             </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
-            <Bar visible="{= ${appView>/flgEditOn} === true}">
+            <Bar visible="{= ${oModelView>/TrainingDetails/EndDate} > ${oModelView>/currDate} || ${appView>/flgViewOnVd} === true }">
                 <contentRight>
-                    <Button id="edit" text="{i18n>btnEdit}" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button id="save" text="{i18n>btnSave}" type="Emphasized" visible="false" press="handleSavePress"/>
-                    <Button id="cancel" text="{i18n>btnCancel}" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button text="{i18n>Activate}" visible="{= ${oModelView>/TrainingDetails/Status} === 0 &amp;&amp; ${appView>/flgViewOn} === true }" press="onActiveInActive" type="Emphasized"/>
+				    <Button text="{i18n>DeActivate}" visible="{= ${oModelView>/TrainingDetails/Status} === 1 &amp;&amp; ${appView>/flgViewOn} === true }" press="onActiveInActive" type="Reject"/>
+                    <!-- <Button id="edit" text="{i18n>btnEdit}" type="Emphasized" enabled="true" press="handleEditPress"/> -->
+                    <Button id="cancel" text="{i18n>btnCancel}" type="Ghost" visible="{= ${appView>/flgEditOn} === true}" press="handleCancelPress"/>
+                    <Button id="save" text="{i18n>btnSave}" type="Emphasized" visible="{= ${appView>/flgEditOn} === true}" press="handleSavePress"/>
                 </contentRight>
             </Bar>
         </uxap:footer>

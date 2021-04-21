@@ -66,14 +66,14 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colStatusAction}"/>
+                <!-- <Label text="{i18n>colStatusAction}"/>
                 <SegmentedButton
                     selectedKey="{oModelView>/TrainingDetails/Status}">
                     <items>
                         <SegmentedButtonItem text="{i18n>Activate}" key="1"/>
                         <SegmentedButtonItem text="{i18n>DeActivate}" key="0"/>
                     </items>
-                </SegmentedButton>
+                </SegmentedButton> -->
 
                 <!-- <Label text="{i18n>colImage}"/>
                 <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>

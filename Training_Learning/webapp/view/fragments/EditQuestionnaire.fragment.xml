@@ -14,7 +14,7 @@
                         <VBox renderType="Bare">
                             <Text text=""/>
                             <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
+                                <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                                 <FlexBox alignItems="Start" justifyContent="End">
 				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
 				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Remove}" />
