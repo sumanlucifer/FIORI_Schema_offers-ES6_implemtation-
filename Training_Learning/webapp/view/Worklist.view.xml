@@ -78,7 +78,7 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}">
+			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding traininglearning-tab">
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
@@ -88,7 +88,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
+                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
@@ -114,7 +114,7 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="7%">
+                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
@@ -132,7 +132,7 @@
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Success"/>
                                             <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
-                                        <HBox>
+                                        <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
@@ -149,7 +149,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnUploadAttendance}" icon="sap-icon://upload" press="onAddOfflineTraining">
+                                    <Button text="{i18n>btnUploadAttendance}" icon="sap-icon://upload" press="onAddOfflineTraining" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -197,7 +197,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddVideo">
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddVideo" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -226,7 +226,7 @@
                                 <!-- <Column width="9%">
 									<Text text="{i18n>colStatusAction}"/>
 								</Column> -->
-                                <Column width="7%">
+                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
@@ -243,11 +243,7 @@
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
                                         </HBox>
-										<!-- <HBox>
-                                            <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 }" enabled="{= ${Status} === 0 }" pressed="true" press="onActiveInActive" type="Emphasized"/>
-					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 }" enabled="{= ${Status} === 1 }" pressed="true" press="onActiveInActive" type="Reject"/>
-                                        </HBox> -->
-                                        <HBox>
+                                        <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>

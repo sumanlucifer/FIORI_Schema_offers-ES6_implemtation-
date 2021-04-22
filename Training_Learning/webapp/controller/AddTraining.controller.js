@@ -821,6 +821,7 @@ sap.ui.define(
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
                     debugger;
+                    
                     var settings = {
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trSubTypeId + ")/$value",
                         data: file,
