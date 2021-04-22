@@ -54,8 +54,8 @@
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 <Text text="{oModelView>/TrainingDetails/PainterArcheType/ArcheType}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
 
-                <Label text="{i18n>colImage}"/>
-                <Image width="5rem" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/>
+                <!-- <Label text="{i18n>colImage}"/>
+                <Image width="5rem" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/> -->
 
             </f:content>
         </f:SimpleForm>

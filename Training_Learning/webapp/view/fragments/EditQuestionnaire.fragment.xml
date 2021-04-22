@@ -11,10 +11,10 @@
 						</Toolbar>
 					</headerToolbar>
                     <CustomListItem>
-                        <VBox renderType="Bare">
+                        <VBox renderType="Bare" class="sapUiTinyMargin">
                             <Text text=""/>
                             <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                <Title text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
+                                <Title text="{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 } {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                                 <FlexBox alignItems="Start" justifyContent="End">
 				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
 				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Remove}" />

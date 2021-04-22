@@ -65,17 +65,6 @@ sap.ui.define(
                     this.setModel(oViewModel, "oModelView");
 
                     var oRouter = this.getOwnerComponent().getRouter(this);
-                    // sap.ui.getCore().attachValidationError(function (oEvent) {
-                    //     if (oEvent.getParameter("element").getRequired()) {
-                    //         oEvent.getParameter("element").setValueState(ValueState.Error);
-                    //     } else {
-                    //         oEvent.getParameter("element").setValueState(ValueState.None);
-                    //     }
-                    // });
-                    // sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-                    //     oEvent.getParameter("element").setValueState(ValueState.None);
-                    // });
-
                     oRouter
                         .getRoute("RouteTrainingTab")
                         .attachMatched(this._onRouteMatched, this);
@@ -483,6 +472,16 @@ sap.ui.define(
                     if (sData.Status === 0) {
                         if (sData.Url === "") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_URL_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.TrainingZone.results.length == 0) {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_ZONE_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.TrainingDivision.results.length == 0) {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_DIVISION_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.TrainingDepot.results.length == 0) {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_DEPOT_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.PainterType === null) {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_TYPE_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.PainterArcheId === null) {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_ARCHETYPE_BEFORE_ACTIVATING_TRAINING");
                         } else {
                             that.getModel().update(data, {
                                 Status: 1
@@ -1193,7 +1192,7 @@ sap.ui.define(
                                 c3 = othat._initEditData();
                                 c3.then(function () {
                                     othat.getView().getModel("oModelView").refresh(true);
-                                    othat._setCopyForFragment();
+                                    // othat._setCopyForFragment();
                                 });
                             });
                         });
@@ -1203,13 +1202,13 @@ sap.ui.define(
                             c2 = othat._initEditData();
                             c2.then(function () {
                                 othat.getView().getModel("oModelView").refresh(true);
-                                othat._setCopyForFragment();
+                                // othat._setCopyForFragment();
                             });
                         });
                     }
                 },
 
-                _setCopyForFragment: function () { },
+                // _setCopyForFragment: function () { },
 
                 _initEditData: function () {
                     var oViewModel = this.getModel("oModelView");

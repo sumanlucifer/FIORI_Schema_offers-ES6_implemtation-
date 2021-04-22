@@ -51,6 +51,27 @@
                                     </ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>colZone}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterZoneSet' }" selectedKey="{worklistView>/filterBar/TrainingZone}">
+										<core:Item key="{Id}" text="{Id}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>colDivision}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterDivisionSet' }" selectedKey="{worklistView>/filterBar/TrainingDivision}">
+										<core:Item key="{Id}" text="{Id}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>colDepot}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterDepotSet' }" selectedKey="{worklistView>/filterBar/TrainingDepot}">
+										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
 						</fb:filterGroupItems>
 					</fb:FilterBar>
 				</f:content>
@@ -61,16 +82,16 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
                                     <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
-							            <layoutData>
+							            <!-- <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-							            </layoutData>
+							            </layoutData> -->
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
@@ -96,9 +117,6 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <!-- <Column width="9%">
-									<Text text="{i18n>colStatusAction}"/>
-								</Column> -->
                                 <Column width="7%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
@@ -117,10 +135,6 @@
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Success"/>
                                             <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
-                                        <!-- <HBox>
-                                            <ToggleButton text="{i18n>Activate}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Emphasized"/>
-					                        <ToggleButton text="{i18n>DeActivate}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" enabled="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" pressed="true" press="onActiveInActive" type="Reject"/>
-                                        </HBox> -->
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
@@ -132,7 +146,7 @@
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
 						<Table id="table2" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'StartDate', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
@@ -158,9 +172,9 @@
                                 <Column width="10%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
-                                <!-- <Column width="10%">
+                                <Column width="10%">
 									<Text text="{i18n>colAction}"/>
-								</Column> -->
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
@@ -169,10 +183,10 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Text text="{PainterAttendanceCount}"/>
                                         <Text text="{RewardPoints}"/>
-                                        <!-- <HBox>
+                                        <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOfflineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
-                                        </HBox> -->
+                                        </HBox>
 									</cells>
 								</ColumnListItem>
 							</items>
