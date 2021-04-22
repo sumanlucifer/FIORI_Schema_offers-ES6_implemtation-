@@ -14,23 +14,24 @@
                     </customData>
                     <Text text="{i18n>trainingTitle}"/>
                 </Column>
-                 <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "EarnedPoints", "leadingProperty": "EarnedPoints", "columnIndex": 2 ,"sortProperty": "EarnedPoints","filterProperty": "EarnedPoints"}'/>
-                    </customData>
-                    <Text text="{i18n>trainingPoints}"/>
-                </Column>
+               
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>DateAndTime}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 4 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 3 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
                     </customData>
                     <Text text="{i18n>trainingAttendance}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "EarnedPoints", "leadingProperty": "EarnedPoints", "columnIndex": 4 ,"sortProperty": "EarnedPoints","filterProperty": "EarnedPoints"}'/>
+                    </customData>
+                    <Text text="{i18n>trainingPoints}"/>
                 </Column>
 
                 <Column hAlign="Begin">
@@ -39,21 +40,28 @@
                     </customData>
                     <Text text="{i18n>trainingQuestionaaire}"/>
                 </Column>
-
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "columnIndex": 6 }'/>
+                    </customData>
+                    <Text text="{i18n>Status}"/>
+                </Column>
+                 
             </columns>
             <items>
                 <ColumnListItem>
                     <cells>
                         <Text text="{TrainingDetails/TrainingType/TrainingType}"/>
                          <Text text="{TrainingDetails/Title}"/>
-                          <Text text="{EarnedPoints}"/>
+                        
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                          <Text text="{EarnedPoints}"/>
                         <VBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
                             <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewQuestionaire"/>
                         </VBox>
-
+                        	<ObjectStatus text="{parts:['EarnedPoints','IsQuestionnaireSubmitted'],formatter:'.fmtQuestTrainStatus'}"  state="{parts:['EarnedPoints','IsQuestionnaireSubmitted'],formatter:'.fmtQuestTrainStatusClr'}"/>
 
                     </cells>
                 </ColumnListItem>

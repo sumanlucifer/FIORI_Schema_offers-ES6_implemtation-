@@ -99,12 +99,14 @@ sap.ui.define(
         _initData: function (oProp) {
           var oData = {
             modeEdit: false,
-            bindProp: "PainterSet("+oProp+")",
+            bindProp: "PainterSet(" + oProp + ")",
             iCtbar: true,
-            PainterId: oProp,//.replace(/[^0-9]/g, ""),
+            PainterId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             ProfilePic:
-              "/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(" + oProp + ")/$value",
+              "/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(" +
+              oProp +
+              ")/$value",
             Search: {
               Referral: "",
               Tokens: "",
@@ -128,7 +130,7 @@ sap.ui.define(
           //rebind Loyalty table
           this.getView().byId("smrtLoyalty").rebindTable();
           this.getView().byId("smrtLiveTraining").rebindTable();
-           this.getView().byId("smrtOfflineTraining").rebindTable();
+          this.getView().byId("smrtOfflineTraining").rebindTable();
           this.getView().byId("smrtVideoTraining").rebindTable();
           this._initFilerForTables();
         },
@@ -1969,7 +1971,7 @@ sap.ui.define(
           return false;
         },
         onBeforeRebindOfflineTrainingTable: function (oEvent) {
-            // Live Training
+          // Live Training
           var oView = this.getView();
 
           var oPainterId = oView
@@ -1979,12 +1981,16 @@ sap.ui.define(
           var oBindingParams = oEvent.getParameter("bindingParams");
           oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
           var oFilter1 = new Filter("PainterId", FilterOperator.EQ, oPainterId);
-          var oFilter2 = new Filter("TrainingDetails/TrainingTypeId", FilterOperator.EQ, 2);
+          var oFilter2 = new Filter(
+            "TrainingDetails/TrainingTypeId",
+            FilterOperator.EQ,
+            2
+          );
           oBindingParams.filters.push(oFilter1);
-           oBindingParams.filters.push(oFilter2);
+          oBindingParams.filters.push(oFilter2);
         },
         onBeforeRebindTrainingTable: function (oEvent) {
-            // Live Training
+          // Live Training
           var oView = this.getView();
 
           var oPainterId = oView
@@ -1994,9 +2000,13 @@ sap.ui.define(
           var oBindingParams = oEvent.getParameter("bindingParams");
           oBindingParams.parameters["expand"] = "TrainingDetails/TrainingType";
           var oFilter1 = new Filter("PainterId", FilterOperator.EQ, oPainterId);
-          var oFilter2 = new Filter("TrainingDetails/TrainingTypeId", FilterOperator.EQ, 1);
+          var oFilter2 = new Filter(
+            "TrainingDetails/TrainingTypeId",
+            FilterOperator.EQ,
+            1
+          );
           oBindingParams.filters.push(oFilter1);
-           oBindingParams.filters.push(oFilter2);
+          oBindingParams.filters.push(oFilter2);
         },
         onViewQuestionaire: function (oEvent) {
           var object = oEvent.getSource().getBindingContext().getObject();
@@ -2178,6 +2188,28 @@ sap.ui.define(
 
           return oColumnListItem;
         },
+        fmtQuestTrainStatus: function (mParam1, mParam2) {
+          if (!mParam2) {
+            return "NA";
+          }
+
+          if (mParam1 == 0) {
+            return "Failure";
+          } else {
+            return "Success";
+          }
+        },
+        fmtQuestTrainStatusClr:function (mParam1, mParam2) {
+          if (!mParam2) {
+            return "None";//for status NA
+          }
+
+          if (mParam1 == 0) {
+            return "Error";
+          } else {
+            return "Success";
+          }
+        }
       }
     );
   }
