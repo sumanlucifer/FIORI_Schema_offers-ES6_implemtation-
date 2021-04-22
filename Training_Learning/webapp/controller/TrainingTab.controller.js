@@ -107,7 +107,7 @@ sap.ui.define(
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         that.getModel().read(sPath, {
                             urlParameters: {
-                                "$expand": "PainterTypeDetails, Creator, TrainingZone, TrainingDivision, TrainingDepot, PainterArcheType, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
+                                "$expand": "Creator, TrainingZone, TrainingDivision, TrainingDepot, PainterArcheType, PainterTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
                             },
                             success: function (data) {
 
@@ -211,7 +211,7 @@ sap.ui.define(
                     } else {
                         that.getModel().read(sPath, {
                             urlParameters: {
-                                "$expand": "Creator, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
+                                "$expand": "Creator, TrainingZone, TrainingDivision, TrainingDepot, PainterArcheType, PainterTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
                             },
                             success: function (data) {
                                 if (data.LearningQuestionnaire) {
@@ -227,8 +227,44 @@ sap.ui.define(
                                 } else {
                                     data.TrainingQuestionnaire = [];
                                 }
+
                                 oViewModel.setProperty("/TrainingDetails", data);
                                 oViewModel.setProperty("/__metadata", data.__metadata);
+
+                                if (data.TrainingZone.results.length > 0) {
+                                        for (var x of data["TrainingZone"]["results"]) {
+                                            aZones.push(x["ZoneId"]);
+                                        }
+                                    }
+
+                                    if (data.TrainingDivision.results.length > 0) {
+                                        for (var y of data["TrainingDivision"]["results"]) {
+                                            aDivisions.push(y["DivisionId"]);
+                                        }
+                                    }
+
+                                    if (data.TrainingDepot.results.length > 0) {
+                                        for (var z of data["TrainingDepot"]["results"]) {
+                                            aDepots.push(z["DepotId"]);
+                                        }
+                                    }
+
+                                    if (aZones) {
+                                        oViewModel.setProperty("/TrainingDetails/Zones", aZones);
+                                    } else {
+                                        oViewModel.setProperty("/DisTrainingDetailsplay/Zones", []);
+                                    }
+                                    if (aDivisions) {
+                                        oViewModel.setProperty("/TrainingDetails/Divisions", aDivisions);
+                                    } else {
+                                        oViewModel.setProperty("/TrainingDetails/Divisions", []);
+                                    }
+                                    if (aDepots) {
+                                        oViewModel.setProperty("/TrainingDetails/Depots", aDepots);
+                                    } else {
+                                        oViewModel.setProperty("/TrainingDetails/Depots", []);
+                                    }
+
                                 oViewModel.setProperty("/TrainingDetails/LearningQuestionnaire", []);
                             }
                         })
@@ -990,19 +1026,20 @@ sap.ui.define(
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                    delete oPayload.PainterArcheId;
-                    delete oPayload.PainterType;
+                    oPayload.Duration = parseInt(oPayload.Duration);
+                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
+                    if (oPayload.PainterArcheId) {
+                        oPayload.PainterArcheId = parseInt(oPayload.PainterArcheId);
+                    }
+                    if (oPayload.PainterType) {
+                        oPayload.PainterType = parseInt(oPayload.PainterType);
+                    }
                     delete oPayload.StartDate;
                     delete oPayload.EndDate;
-                    delete oPayload.TrainingZone;
-                    delete oPayload.TrainingDivision;
-                    delete oPayload.TrainingDepot;
                     delete oPayload.Zones;
                     delete oPayload.Divisions;
                     delete oPayload.Depots;
 
-                    oPayload.Duration = parseInt(oPayload.Duration);
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
                         oPayload.LearningQuestionnaire.push(
                             {
@@ -1017,6 +1054,19 @@ sap.ui.define(
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this;
 
+                    //Quick fix Training zone depot
+                    if (oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results) {
+                        oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
+                    }
+
+                    if (oClonePayload.TrainingDivision && oClonePayload.TrainingDivision.results) {
+                        oClonePayload.TrainingDivision = oClonePayload.TrainingDivision.results;
+                    }
+
+                    if (oClonePayload.TrainingZone && oClonePayload.TrainingZone.results) {
+                        oClonePayload.TrainingZone = oClonePayload.TrainingZone.results;
+                    }
+                    
                     var sKey = that.getModel().createKey("/LearningSet", {
                         Id: oClonePayload.Id
                     });

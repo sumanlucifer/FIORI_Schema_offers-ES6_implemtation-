@@ -48,30 +48,30 @@
 
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
 
-                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">
+                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
-                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet', groupHeaderFactory: '.getGroupHeader' }">
+                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
-                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <MultiComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet', groupHeaderFactory: '.getGroupHeader' }">
+                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <MultiComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet', groupHeaderFactory: '.getGroupHeader' }">
 					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 				</MultiComboBox>
 
-                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
+                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
                         <core:Item text="{PainterType}" key="{Id}"/>
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
+                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
                     <items>
                         <core:Item text="{ArcheType}" key="{Id}"/>
                     </items>

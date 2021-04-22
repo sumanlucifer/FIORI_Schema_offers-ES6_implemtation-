@@ -405,34 +405,6 @@ sap.ui.define(
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
 
-                onZoneChange: function (oEvent) {
-                    var sId = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-                    var oPainterDetail = oModelView.getProperty("/TrainingDetails");
-                    var oDivision = oView.byId("idDivision");
-                    var oDivItems = oDivision.getBinding("items");
-                    var oDivSelItm = oDivision.getSelectedItem();
-                    oDivision.clearSelection();
-                    oDivision.setValue("");
-                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
-
-                    //setting the data for depot;
-                    var oDepot = oView.byId("idDepot");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                },
-
-                onDivisionChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oDepot = oView.byId("idDepot");
-                    var oDepBindItems = oDepot.getBinding("items");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
-                },
-
                 getGroupHeader: function (oGroup) {
                     return new SeparatorItem({
                         text: oGroup.key
@@ -538,14 +510,6 @@ sap.ui.define(
                                 target: "/TrainingDetails/Title"
                             });
                         } else
-                            // if (data.Url === "") {
-                            //     oReturn.IsNotValid = true;
-                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
-                            //     aCtrlMessage.push({
-                            //         message: "MSG_PLS_ENTER_ERR_URL",
-                            //         target: "/TrainingDetails/Url"
-                            //     });
-                            // } else
                             if (data.Url !== "" && !url.match(regex)) {
                                 oReturn.IsNotValid = true;
                                 oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
@@ -649,8 +613,6 @@ sap.ui.define(
                                         message: "MSG_SELECT_ATTENDANCE_FILE"
                                     });
                                 }
-
-
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
                 },
@@ -764,7 +726,6 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
@@ -792,49 +753,14 @@ sap.ui.define(
                     });
                 },
 
-                // CUOperationOfflineTraining: function (oPayload, oEvent) {
-                //     var oViewModel = this.getModel("oModelView");
-                //     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                //     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                //     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                //     var TrTypeText = oViewModel.getProperty("/TrTypeText");
-
-                //     var today = new Date();
-                //     var pattern = "dd/MM/yyyy";
-                //     var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-                //         pattern: pattern
-                //     });
-                //     var newDate = oDateFormat.format(today);
-
-                //     oPayload.Title = TrTypeText + "-" + newDate;
-                //     delete oPayload.Duration;
-                //     delete oPayload.PainterArcheId;
-                //     delete oPayload.PainterType;
-                //     delete oPayload.TrainingZone;
-                //     delete oPayload.TrainingDivision;
-                //     delete oPayload.TrainingDepot;
-                //     delete oPayload.LearningQuestionnaire;
-                //     delete oPayload.TrainingQuestionnaire;
-                //     var oClonePayload = {},
-                //         that = this,
-                //         sPath = "/TrainingSet";
-                //     $.extend(true, oClonePayload, oPayload);
-                //     that.getModel().create("/TrainingSet", oClonePayload, {
-                //         success: function (createddata) {
-                //             that._UploadAttendanceOfflineTr(createddata.Id).then(that._SuccessOffline.bind(that), that._Error
-                //                 .bind(
-                //                     that))
-                //         },
-                //         error: this._Error.bind(this)
-                //     });
-                // },
-
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.Duration = parseInt(oPayload.Duration);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
+                    oPayload.PainterArcheId = parseInt(oPayload.PainterArcheId);
+                    oPayload.PainterType = parseInt(oPayload.PainterType);
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
                         oPayload.LearningQuestionnaire.push(
                             {
@@ -844,17 +770,9 @@ sap.ui.define(
                             }
                         );
                     }
-                    delete oPayload.PainterArcheId;
-                    delete oPayload.PainterType;
-                    delete oPayload.ZoneId;
-                    delete oPayload.DivisionId;
-                    delete oPayload.DepotId;
                     delete oPayload.StartDate;
                     delete oPayload.EndDate;
                     delete oPayload.TrainingQuestionnaire;
-                    delete oPayload.TrainingZone;
-                    delete oPayload.TrainingDivision;
-                    delete oPayload.TrainingDepot;
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this,
                         sPath = "/LearningSet";
@@ -912,18 +830,12 @@ sap.ui.define(
                         processData: false,
                         statusCode: {
                             206: function (result) {
-                                // that.getModel("oModelView").setProperty("/oResult", result);
-                                // that.getModel("oModelView").setProperty("/oStatus", "206");
                                 that._SuccessOffline(result, 206);
                             },
                             200: function (result) {
-                                // that.getModel("oModelView").setProperty("/oResult", result);
-                                // that.getModel("oModelView").setProperty("/oStatus", "200");
                                 that._SuccessOffline(result, 200);
                             },
                             202: function (result) {
-                                // that.getModel("oModelView").setProperty("/oResult", result);
-                                // that.getModel("oModelView").setProperty("/oStatus", "202");
                                 that._SuccessOffline(result, 202);
                             }
                         },
