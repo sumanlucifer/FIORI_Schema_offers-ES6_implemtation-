@@ -902,7 +902,7 @@ sap.ui.define(
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-
+                    debugger;
                     var settings = {
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trSubTypeId + ")/$value",
                         data: file,
@@ -1008,27 +1008,29 @@ sap.ui.define(
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                    // var oStatus = that.getModel("oModelView").getProperty("/oStatus");
-                    debugger;
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
-                        var oView = that.getView();
-                        var oModelView = that.getModel("oModelView");
-                        oModelView.setProperty("/oResult", result);
-                        if (!that.AttendanceUploadedStatusMsg) {
-                            // load asynchronous XML fragment
-                            Fragment.load({
-                                id: oView.getId(),
-                                name: "com.knpl.pragati.Training_Learning.view.fragments.AttendanceUploadedStatusMsg",
-                                controller: that
-                            }).then(function (oDialog) {
-                                // connect dialog to the root view 
-                                //of this component (models, lifecycle)
-                                oView.addDependent(oDialog);
-                                that.AttendanceUploadedStatusMsg = oDialog;
-                                oDialog.open();
-                            });
+                        if (result.length == 0) {
+                            that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
                         } else {
-                            that.AttendanceUploadedStatusMsg.open();
+                            var oView = that.getView();
+                            var oModelView = that.getModel("oModelView");
+                            oModelView.setProperty("/oResult", result);
+                            if (!that.AttendanceUploadedStatusMsg) {
+                                // load asynchronous XML fragment
+                                Fragment.load({
+                                    id: oView.getId(),
+                                    name: "com.knpl.pragati.Training_Learning.view.fragments.AttendanceUploadedStatusMsg",
+                                    controller: that
+                                }).then(function (oDialog) {
+                                    // connect dialog to the root view 
+                                    //of this component (models, lifecycle)
+                                    oView.addDependent(oDialog);
+                                    that.AttendanceUploadedStatusMsg = oDialog;
+                                    oDialog.open();
+                                });
+                            } else {
+                                that.AttendanceUploadedStatusMsg.open();
+                            }
                         }
                     }
                 },

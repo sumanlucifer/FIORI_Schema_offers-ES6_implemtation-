@@ -47,6 +47,9 @@ sap.ui.define([
                     Status: null,
                     Link: null,
                     TrainingSubTypeId: null,
+                    TrainingZone: "",
+                    TrainingDivision: "",
+                    TrainingDepot: "",
                     Search: "",
                     RewardPoints: null
                 }
@@ -167,6 +170,9 @@ sap.ui.define([
                 Status: null,
                 Link: null,
                 TrainingSubTypeId: null,
+                TrainingZone: "",
+                TrainingDivision: "",
+                TrainingDepot: "",
                 StartDate: null,
                 RewardPoints: null,
                 searchBar: ""
@@ -221,6 +227,21 @@ sap.ui.define([
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "TrainingZone") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter("TrainingZone/ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "TrainingDivision") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "TrainingDepot") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter[prop])
                         );
                     } else if (prop === "Link") {
                         aFlaEmpty = false;
@@ -382,7 +403,24 @@ sap.ui.define([
                         aCurrentFilterValues1.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
                         );
-                    } else if (prop === "TrainingSubTypeId") {
+                    } 
+                    // else if (prop === "TrainingZone") {
+                    //     aFlaEmpty = false;
+                    //     aCurrentFilterValues.push(
+                    //         new Filter("TrainingZone/ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                    //     );
+                    // } else if (prop === "TrainingDivision") {
+                    //     aFlaEmpty = false;
+                    //     aCurrentFilterValues.push(
+                    //         new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                    //     );
+                    // } else if (prop === "TrainingDepot") {
+                    //     aFlaEmpty = false;
+                    //     aCurrentFilterValues.push(
+                    //         new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter[prop])
+                    //     );
+                    // } 
+                    else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty1 = false;
                         aCurrentFilterValues1.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
