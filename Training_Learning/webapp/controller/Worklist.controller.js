@@ -403,23 +403,22 @@ sap.ui.define([
                         aCurrentFilterValues1.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
                         );
+                    } else if (prop === "TrainingZone") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter("TrainingZone/ZoneId", FilterOperator.EQ, oViewFilter1[prop])
+                        );
+                    } else if (prop === "TrainingDivision") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, oViewFilter1[prop])
+                        );
+                    } else if (prop === "TrainingDepot") {
+                        aFlaEmpty1 = false;
+                        aCurrentFilterValues1.push(
+                            new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter1[prop])
+                        );
                     } 
-                    // else if (prop === "TrainingZone") {
-                    //     aFlaEmpty = false;
-                    //     aCurrentFilterValues.push(
-                    //         new Filter("TrainingZone/ZoneId", FilterOperator.EQ, oViewFilter[prop])
-                    //     );
-                    // } else if (prop === "TrainingDivision") {
-                    //     aFlaEmpty = false;
-                    //     aCurrentFilterValues.push(
-                    //         new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, oViewFilter[prop])
-                    //     );
-                    // } else if (prop === "TrainingDepot") {
-                    //     aFlaEmpty = false;
-                    //     aCurrentFilterValues.push(
-                    //         new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter[prop])
-                    //     );
-                    // } 
                     else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty1 = false;
                         aCurrentFilterValues1.push(

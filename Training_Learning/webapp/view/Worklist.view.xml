@@ -88,10 +88,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
-							            <!-- <layoutData>
-								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-							            </layoutData> -->
+                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining">
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
@@ -172,9 +169,9 @@
                                 <Column width="10%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
-                                <Column width="10%">
+                                <!-- <Column width="10%">
 									<Text text="{i18n>colAction}"/>
-								</Column>
+								</Column> -->
 							</columns>
 							<items>
 								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
@@ -183,10 +180,10 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Text text="{PainterAttendanceCount}"/>
                                         <Text text="{RewardPoints}"/>
-                                        <HBox>
+                                        <!-- <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOfflineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
-                                        </HBox>
+                                        </HBox> -->
 									</cells>
 								</ColumnListItem>
 							</items>
