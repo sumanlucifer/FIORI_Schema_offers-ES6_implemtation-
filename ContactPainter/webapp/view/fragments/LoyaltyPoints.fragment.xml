@@ -14,7 +14,7 @@
                             placeToolbarInTable="true"
                             persistencyKey="LoyaltySmartTableKey"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table>
+                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
