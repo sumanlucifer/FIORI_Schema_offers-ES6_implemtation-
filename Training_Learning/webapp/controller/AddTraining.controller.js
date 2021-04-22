@@ -89,6 +89,7 @@ sap.ui.define(
                 _onRouteMatched: function (oEvent) {
 
                     var sArgMode = oEvent.getParameter("arguments").mode;
+                    var sTrType = oEvent.getParameter("arguments").trtype;
                     var sArgId = window.decodeURIComponent(
                         oEvent.getParameter("arguments").id
                     );
@@ -129,7 +130,8 @@ sap.ui.define(
                         var AddEditTrainingDetails = this.getView().getModel("i18n").getResourceBundle().getText("AddTrainingDetails");
                         oViewModel.setProperty("/AddEditTrainingDetails", AddEditTrainingDetails);
 
-                        var trainingType = this.getModel("appView").getProperty("/trainingType");
+                        // var trainingType = this.getModel("appView").getProperty("/trainingType");
+                        var trainingType = sTrType;
                         if (trainingType === 'ONLINE') {
                             oViewModel.setProperty("/TrainingDetails/TrainingTypeId", "1");
                             this.onTrainingModeChange(1);
@@ -375,7 +377,9 @@ sap.ui.define(
                     } else if (trainingType === 'ONLINE') {
                         this.CUOperationOnlineTraining(oPayload, oEvent);
                     } else if (trainingType === 'OFFLINE') {
-                        this.CUOperationOfflineTraining(oPayload, oEvent);
+                        // this.CUOperationOfflineTraining(oPayload, oEvent);
+                        debugger;
+                        this._UploadAttendanceOfflineTr(oPayload.TrainingSubTypeId);
                     }
                 },
 
@@ -788,42 +792,42 @@ sap.ui.define(
                     });
                 },
 
-                CUOperationOfflineTraining: function (oPayload, oEvent) {
-                    var oViewModel = this.getModel("oModelView");
-                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                    var TrTypeText = oViewModel.getProperty("/TrTypeText");
+                // CUOperationOfflineTraining: function (oPayload, oEvent) {
+                //     var oViewModel = this.getModel("oModelView");
+                //     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                //     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
+                //     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
+                //     var TrTypeText = oViewModel.getProperty("/TrTypeText");
 
-                    var today = new Date();
-                    var pattern = "dd/MM/yyyy";
-                    var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-                        pattern: pattern
-                    });
-                    var newDate = oDateFormat.format(today);
+                //     var today = new Date();
+                //     var pattern = "dd/MM/yyyy";
+                //     var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                //         pattern: pattern
+                //     });
+                //     var newDate = oDateFormat.format(today);
 
-                    oPayload.Title = TrTypeText + "-" + newDate;
-                    delete oPayload.Duration;
-                    delete oPayload.PainterArcheId;
-                    delete oPayload.PainterType;
-                    delete oPayload.TrainingZone;
-                    delete oPayload.TrainingDivision;
-                    delete oPayload.TrainingDepot;
-                    delete oPayload.LearningQuestionnaire;
-                    delete oPayload.TrainingQuestionnaire;
-                    var oClonePayload = {},
-                        that = this,
-                        sPath = "/TrainingSet";
-                    $.extend(true, oClonePayload, oPayload);
-                    that.getModel().create("/TrainingSet", oClonePayload, {
-                        success: function (createddata) {
-                            that._UploadAttendanceOfflineTr(createddata.Id).then(that._SuccessOffline.bind(that), that._Error
-                                .bind(
-                                    that))
-                        },
-                        error: this._Error.bind(this)
-                    });
-                },
+                //     oPayload.Title = TrTypeText + "-" + newDate;
+                //     delete oPayload.Duration;
+                //     delete oPayload.PainterArcheId;
+                //     delete oPayload.PainterType;
+                //     delete oPayload.TrainingZone;
+                //     delete oPayload.TrainingDivision;
+                //     delete oPayload.TrainingDepot;
+                //     delete oPayload.LearningQuestionnaire;
+                //     delete oPayload.TrainingQuestionnaire;
+                //     var oClonePayload = {},
+                //         that = this,
+                //         sPath = "/TrainingSet";
+                //     $.extend(true, oClonePayload, oPayload);
+                //     that.getModel().create("/TrainingSet", oClonePayload, {
+                //         success: function (createddata) {
+                //             that._UploadAttendanceOfflineTr(createddata.Id).then(that._SuccessOffline.bind(that), that._Error
+                //                 .bind(
+                //                     that))
+                //         },
+                //         error: this._Error.bind(this)
+                //     });
+                // },
 
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
@@ -893,59 +897,47 @@ sap.ui.define(
                     });
                 },
 
-                _UploadAttendanceOfflineTr: function (trId) {
+                _UploadAttendanceOfflineTr: function (trSubTypeId) {
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-                    debugger;
-                    return new Promise(function (res, rej) {
-                        if (!file) {
-                            res();
-                            return;
-                        }
 
-                        var settings = {
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trId + ")/$value",
-                            data: file,
-                            method: "PUT",
-                            headers: that.getModel().getHeaders(),
-                            contentType: "text/csv",
-                            processData: false,
-                            statusCode: {
-                                206: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "206");
-                                    res.apply(that);
-                                },
-                                200: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "200");
-                                    res.apply(that);
-                                },
-                                202: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "202");
-                                    res.apply(that);
-                                }
+                    var settings = {
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trSubTypeId + ")/$value",
+                        data: file,
+                        method: "PUT",
+                        headers: that.getModel().getHeaders(),
+                        contentType: "text/csv",
+                        processData: false,
+                        statusCode: {
+                            206: function (result) {
+                                // that.getModel("oModelView").setProperty("/oResult", result);
+                                // that.getModel("oModelView").setProperty("/oStatus", "206");
+                                that._SuccessOffline(result, 206);
                             },
-                            // success: function (result) {
-                            //     // res.apply(that);
-
-                            //     that.getModel("oModelView").setProperty("/oResult", result);
-                            //     res.apply(that);
-                            // },
-                            error: function () {
-                                rej.apply(that);
+                            200: function (result) {
+                                // that.getModel("oModelView").setProperty("/oResult", result);
+                                // that.getModel("oModelView").setProperty("/oStatus", "200");
+                                that._SuccessOffline(result, 200);
+                            },
+                            202: function (result) {
+                                // that.getModel("oModelView").setProperty("/oResult", result);
+                                // that.getModel("oModelView").setProperty("/oStatus", "202");
+                                that._SuccessOffline(result, 202);
                             }
-                        };
+                        },
+                        error: function (error) {
+                            that._Error(error);
+                        }
+                    };
 
-                        $.ajax(settings);
-                    });
+                    $.ajax(settings);
+                    // });
                 },
 
                 closeAttendanceStatusDialog: function () {
-                    this.byId("idAttendanceStatusMsgDialog").close();
+                    this.AttendanceUploadedStatusMsg.close();
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
                     this.getRouter().navTo("worklist", true);
                     var oModel = this.getModel();
@@ -1004,10 +996,8 @@ sap.ui.define(
 
                     // download exported file
                     oExport.saveFile().catch(function (oError) {
-                        debugger;
                         MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                     }).then(function () {
-                        debugger;
                         oExport.destroy();
                     });
                 },
@@ -1016,18 +1006,15 @@ sap.ui.define(
                     MessageToast.show(error.toString());
                 },
 
-                _SuccessOffline: function () {
+                _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                    var oStatus = that.getModel("oModelView").getProperty("/oStatus");
-                    if (oStatus === "200" || oStatus === "202" || oStatus === "206") {
-                        // MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
-                        // this.getRouter().navTo("worklist", true);
-                        // var oModel = this.getModel();
-                        // oModel.refresh(true);
-                        // } else if (oStatus === "206") {
+                    // var oStatus = that.getModel("oModelView").getProperty("/oStatus");
+                    debugger;
+                    if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         var oView = that.getView();
                         var oModelView = that.getModel("oModelView");
-                        if (!that.byId("idAttendanceStatusMsgDialog")) {
+                        oModelView.setProperty("/oResult", result);
+                        if (!that.AttendanceUploadedStatusMsg) {
                             // load asynchronous XML fragment
                             Fragment.load({
                                 id: oView.getId(),
@@ -1037,10 +1024,11 @@ sap.ui.define(
                                 // connect dialog to the root view 
                                 //of this component (models, lifecycle)
                                 oView.addDependent(oDialog);
+                                that.AttendanceUploadedStatusMsg = oDialog;
                                 oDialog.open();
                             });
                         } else {
-                            that.byId("idAttendanceStatusMsgDialog").open();
+                            that.AttendanceUploadedStatusMsg.open();
                         }
                     }
                 },

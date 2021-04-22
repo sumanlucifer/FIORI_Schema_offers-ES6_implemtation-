@@ -55,34 +55,37 @@ sap.ui.define(
                     var oViewModel = new JSONModel({
                         busy: false,
                         currDate: new Date(),
+                        Search: {
+                            Attendance: "",
+                            Enrollment: ""
+                        },
                         TrainingDetails: {
                         }
                     });
                     this.setModel(oViewModel, "oModelView");
 
                     var oRouter = this.getOwnerComponent().getRouter(this);
-                    sap.ui.getCore().attachValidationError(function (oEvent) {
-                        if (oEvent.getParameter("element").getRequired()) {
-                            oEvent.getParameter("element").setValueState(ValueState.Error);
-                        } else {
-                            oEvent.getParameter("element").setValueState(ValueState.None);
-                        }
-                    });
-                    sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-                        oEvent.getParameter("element").setValueState(ValueState.None);
-                    });
+                    // sap.ui.getCore().attachValidationError(function (oEvent) {
+                    //     if (oEvent.getParameter("element").getRequired()) {
+                    //         oEvent.getParameter("element").setValueState(ValueState.Error);
+                    //     } else {
+                    //         oEvent.getParameter("element").setValueState(ValueState.None);
+                    //     }
+                    // });
+                    // sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                    //     oEvent.getParameter("element").setValueState(ValueState.None);
+                    // });
 
                     oRouter
                         .getRoute("RouteTrainingTab")
                         .attachMatched(this._onRouteMatched, this);
                 },
                 _onRouteMatched: function (oEvent) {
-                    var oProp = window.decodeURIComponent(
-                        oEvent.getParameter("arguments").prop
-                    );
-                    var mode = window.decodeURIComponent(
-                        oEvent.getParameter("arguments").mode
-                    );
+                    debugger;
+                    var oProp = oEvent.getParameter("arguments").prop;
+                    var mode = oEvent.getParameter("arguments").mode;
+                    var trainingType = oEvent.getParameter("arguments").trtype;
+
                     var that = this;
                     var oViewModel = this.getModel("oModelView");
                     var oView = this.getView();
@@ -109,7 +112,7 @@ sap.ui.define(
                     oViewModel.setProperty("/Search/Attendance", "");
                     oViewModel.setProperty("/Search/Enrollment", "");
 
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
+                    this.getModel("appView").setProperty("/trainingType", trainingType);
                     var sPath = "/" + oProp;
                     oViewModel.setProperty("/sPath", sPath);
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
@@ -151,6 +154,24 @@ sap.ui.define(
                                             aDepots.push(z["DepotId"]);
                                         }
                                     }
+
+                                    // if (data.TrainingDepot && data.TrainingDepot.results) {
+                                    //     data.TrainingDepot = data.TrainingDepot.results;
+                                    // } else {
+                                    //     data.TrainingDepot = [];
+                                    // }
+
+                                    // if (data.TrainingDivision && data.TrainingDivision.results) {
+                                    //     data.TrainingDivision = data.TrainingDivision.results;
+                                    // } else {
+                                    //     data.TrainingDivision = [];
+                                    // }
+
+                                    // if (data.TrainingZone && data.TrainingZone.results) {
+                                    //     data.TrainingZone = data.TrainingZone.results;
+                                    // } else {
+                                    //     data.TrainingZone = [];
+                                    // }
 
                                 }
 
@@ -363,16 +384,6 @@ sap.ui.define(
                     oTable.getBinding("items").filter(endFilter);
                 },
 
-                _fnbusyItems: function (oEvent) {
-                    var oViewModel = this.getModel("oModelView");
-                    if (oEvent.getId() === "dataRequested") {
-                        oViewModel.setProperty("/bCityItemsBusy", true);
-                    } else {
-                        oViewModel.setProperty("/bCityItemsBusy", false);
-                    }
-
-                },
-
                 fmtStatus: function (mParam) {
                     var sLetter = "";
                     if (mParam) {
@@ -383,46 +394,6 @@ sap.ui.define(
                             .join(" ");
                     }
                     return sLetter;
-                },
-
-                // onTrainingTypeChange: function (oEvent) {
-                //     var oViewModel = this.getModel("oModelView");
-                //     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
-                // },
-
-                onZoneChange: function (oEvent) {
-                    var sId = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-                    var oPainterDetail = oModelView.getProperty("/TrainingDetails");
-                    var oDivision = oView.byId("idDivision");
-                    var oDivItems = oDivision.getBinding("items");
-                    var oDivSelItm = oDivision.getSelectedItem();
-
-                    oDivision.clearSelection();
-                    oDivision.setValue("");
-                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
-
-                    //setting the data for depot;
-                    var oDepot = oView.byId("idDepot");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                },
-
-                onDivisionChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oDepot = oView.byId("idDepot");
-                    var oDepBindItems = oDepot.getBinding("items");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
-                },
-
-                getGroupHeader: function (oGroup) {
-                    return new SeparatorItem({
-                        text: oGroup.key
-                    });
                 },
 
                 onMultyZoneChange: function (oEvent) {
@@ -504,7 +475,6 @@ sap.ui.define(
                 },
 
                 onActiveInActive: function (oEvent) {
-                    debugger;
                     var sPath = this.getModel("oModelView").getProperty("/sPath");
                     var sData = this.getModel("oModelView").getProperty("/TrainingDetails");
                     var data = sPath + "/Status";
@@ -743,8 +713,6 @@ sap.ui.define(
                         var oValid = this._fnValidationOnline(oPayload);
                     } else if (trainingType === 'VIDEO') {
                         var oValid = this._fnValidationVideo(oPayload);
-                    } else if (trainingType === 'OFFLINE') {
-                        var oValid = this._fnValidationOffline(oPayload);
                     }
 
                     if (oValid.IsNotValid) {
@@ -754,9 +722,7 @@ sap.ui.define(
                     oViewModel.setProperty("/busy", true);
                     if (trainingType === 'ONLINE') {
                         this.CUOperationOnlineTraining(oPayload, oEvent);
-                    } else if (trainingType === 'OFFLINE') {
-                        this.CUOperationOfflineTraining(oPayload, oEvent);
-                    } else {
+                    } else if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
                     }
                 },
@@ -785,14 +751,6 @@ sap.ui.define(
                                 target: "/TrainingDetails/Title"
                             });
                         } else
-                            // if (data.Url === "") {
-                            //     oReturn.IsNotValid = true;
-                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_URL");
-                            //     aCtrlMessage.push({
-                            //         message: "MSG_PLS_ENTER_ERR_URL",
-                            //         target: "/TrainingDetails/Url"
-                            //     });
-                            // } else
                             if (data.Url !== "" && !url.match(regex)) {
                                 oReturn.IsNotValid = true;
                                 oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
@@ -851,27 +809,6 @@ sap.ui.define(
                                                         });
                                                     }
 
-                    if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
-                    return oReturn;
-                },
-
-                _fnValidationOffline: function (data) {
-                    var oReturn = {
-                        IsNotValid: false,
-                        sMsg: []
-                    },
-                        aCtrlMessage = [];
-                    var fU = this.getView().byId("idAttendanceFileUploader");
-                    var domRef = fU.getFocusDomRef();
-                    var file = domRef.files[0];
-
-                    if (!file) {
-                        oReturn.IsNotValid = true;
-                        oReturn.sMsg.push("MSG_SELECT_ATTENDANCE_FILE");
-                        aCtrlMessage.push({
-                            message: "MSG_SELECT_ATTENDANCE_FILE"
-                        });
-                    }
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
                 },
@@ -997,8 +934,6 @@ sap.ui.define(
                         oPayload.PainterType = parseInt(oPayload.PainterType);
                     }
 
-                    delete oPayload.Depot;
-                    delete oPayload.Division;
                     delete oPayload.Duration;
                     delete oPayload.Zones;
                     delete oPayload.Divisions;
@@ -1028,69 +963,26 @@ sap.ui.define(
                     delete oClonePayload.__metadata;
                     debugger;
                     //Quick fix Training zone depot
-                    if(oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results)
-                    {
+                    if (oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results) {
                         oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
                     }
 
-                    if(oClonePayload.TrainingDivision && oClonePayload.TrainingDivision.results)
-                    {
+                    if (oClonePayload.TrainingDivision && oClonePayload.TrainingDivision.results) {
                         oClonePayload.TrainingDivision = oClonePayload.TrainingDivision.results;
                     }
 
-                    if(oClonePayload.TrainingZone && oClonePayload.TrainingZone.results)
-                    {
+                    if (oClonePayload.TrainingZone && oClonePayload.TrainingZone.results) {
                         oClonePayload.TrainingZone = oClonePayload.TrainingZone.results;
                     }
-
-
 
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
                     });
-
-
 
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
                         error: that._Error.bind(that)
-                    });
-                },
-
-                CUOperationOfflineTraining: function (oPayload, oEvent) {
-                    var oViewModel = this.getModel("oModelView");
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
-                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-
-                    delete oPayload.Duration;
-                    delete oPayload.PainterArcheId;
-                    delete oPayload.PainterType;
-                    delete oPayload.TrainingZone;
-                    delete oPayload.TrainingDivision;
-                    delete oPayload.TrainingDepot;
-                    delete oPayload.Zones;
-                    delete oPayload.Divisions;
-                    delete oPayload.Depots;
-                    delete oPayload.TrainingQuestionnaire;
-
-                    var oClonePayload = $.extend(true, {}, oPayload),
-                        that = this;
-
-                    delete oClonePayload.__metadata;
-                    var sKey = that.getModel().createKey("/TrainingSet", {
-                        Id: oClonePayload.Id
-                    });
-                    that.getModel().update(sKey, oClonePayload, {
-                        success: function () {
-                            that._UploadAttendanceOfflineTr(oClonePayload.Id).then(that._SuccessOffline.bind(that), that._Error
-                                .bind(
-                                    that));
-                        },
-                        error: function () {
-                            that._Error.bind(that);
-                        }
                     });
                 },
 
@@ -1148,45 +1040,6 @@ sap.ui.define(
                     } else {
                         MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_UPDATE"));
                     }
-                    var oModel = this.getModel();
-                    oModel.refresh(true);
-                    this.getRouter().navTo("worklist", true);
-                },
-
-                _SuccessOffline: function () {
-                    var that = this;
-                    var oStatus = that.getModel("oModelView").getProperty("/oStatus");
-                    if (oStatus === "200" || oStatus === "202") {
-                        // this.handleCancelPress();
-                        this.getRouter().navTo("worklist", true);
-                        MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
-                        var oModel = this.getModel();
-                        oModel.refresh(true);
-                    } else if (oStatus === "206") {
-                        var oView = that.getView();
-                        var oModelView = that.getModel("oModelView");
-                        if (!that.byId("idAttendanceStatusMsgDialog")) {
-                            // load asynchronous XML fragment
-                            Fragment.load({
-                                id: oView.getId(),
-                                name: "com.knpl.pragati.Training_Learning.view.fragments.AttendanceUploadedStatusMsg",
-                                controller: that
-                            }).then(function (oDialog) {
-                                // connect dialog to the root view 
-                                //of this component (models, lifecycle)
-                                oView.addDependent(oDialog);
-                                oDialog.open();
-                            });
-                        } else {
-                            that.byId("idAttendanceStatusMsgDialog").open();
-                        }
-                    }
-                },
-
-                closeAttendanceStatusDialog: function () {
-                    this.byId("idAttendanceStatusMsgDialog").close();
-                    // this.handleCancelPress();
-                    MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
                     this.getRouter().navTo("worklist", true);
@@ -1253,27 +1106,6 @@ sap.ui.define(
                     this.getModel("oModelView").refresh();
                 },
 
-                _UploadImageforOnlineTraining: function (sPath, oImage, oEvent) {
-                    var that = this;
-                    if (oImage.Image) {
-                        var url = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";
-                    }
-                    if (oImage.Image) {
-                        $.ajax({
-                            url: url,
-                            data: oImage.Image,
-                            method: "PUT",
-                            headers: that.getModel().getHeaders(),
-                            contentType: "image/png",
-                            processData: false,
-                            success: that.onUploadAttendanceOnlineTr(sPath),
-                            error: that._Error.bind(that)
-                        });
-                    } else {
-                        that.onUploadAttendanceOnlineTr(sPath);
-                    }
-                },
-
                 _UploadImageforVideo: function (sPath, oImage, oEvent) {
                     debugger;
                     var that = this;
@@ -1295,51 +1127,6 @@ sap.ui.define(
                             processData: false,
                             success: function () {
                                 res.apply(that);
-                            },
-                            error: function () {
-                                rej.apply(that);
-                            }
-                        };
-
-                        $.ajax(settings);
-                    });
-                },
-
-                _UploadAttendanceOfflineTr: function (trId) {
-                    var that = this;
-                    var fU = this.getView().byId("idAttendanceFileUploader");
-                    var domRef = fU.getFocusDomRef();
-                    var file = domRef.files[0];
-
-                    return new Promise(function (res, rej) {
-                        if (!file) {
-                            res();
-                            return;
-                        }
-
-                        var settings = {
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trId + ")/$value",
-                            data: file,
-                            method: "PUT",
-                            headers: that.getModel().getHeaders(),
-                            contentType: "text/csv",
-                            processData: false,
-                            statusCode: {
-                                206: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "206");
-                                    res.apply(that);
-                                },
-                                200: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "206");
-                                    res.apply(that);
-                                },
-                                202: function (result) {
-                                    that.getModel("oModelView").setProperty("/oResult", result);
-                                    that.getModel("oModelView").setProperty("/oStatus", "206");
-                                    res.apply(that);
-                                }
                             },
                             error: function () {
                                 rej.apply(that);
@@ -1385,83 +1172,6 @@ sap.ui.define(
                 handleCancelPress: function () {
                     this.getRouter().navTo("worklist", true);
                 },
-
-                // handleCancelPress: function () {
-                //     var oView = this.getView();
-                //     this.getModel("appView").setProperty("/EditAttendance", false);
-                //     var trainingType = this.getModel("appView").getProperty("/trainingType");
-                //     var othat = this;
-                //     var c1, c2, c3;
-                //     var oViewModel = this.getModel("oModelView");
-                //     var sPath = oControlModel2.getProperty("/bindProp");
-                //     if (trainingType === 'ONLINE') {
-                //         c1 = othat._loadEditTrainingDetail("Display");
-                //         c1.then(function () {
-                //             c2 = othat._loadEditQuestion("Display");
-                //             c2.then(function () {
-                //                 othat.getModel().read("/" + sPath, {
-                //                     urlParameters: {
-                //                         "$expand": "PainterTypeDetails, Creator, Depot, PainterArcheType, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
-                //                     },
-                //                     success: function (oDataValue) {
-                //                         oViewModel.setProperty("/TrainingDetails/Depot", oDataValue.Depot);
-                //                         oViewModel.setProperty("/TrainingDetails/PainterTypeDetails", oDataValue.PainterTypeDetails);
-                //                         oViewModel.setProperty("/TrainingDetails/PainterArcheType", oDataValue.PainterArcheType);
-                //                         oViewModel.setProperty("/TrainingDetails/TrainingSubTypeDetails", oDataValue.TrainingSubTypeDetails);
-
-                //                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
-                //                         oViewModel.setProperty("/ProfilePic", profilePic);
-                //                         oViewModel.setProperty("/ProfilePicHeader", profilePic);
-
-                //                         othat.getView().getModel("oModelView").refresh(true);
-                //                         othat._setCopyForFragment();
-                //                         othat._toggleButtonsAndView(false);
-                //                     }
-                //                 })
-                //             });
-                //         });
-                //     } else if (trainingType === 'OFFLINE') {
-                //         othat.getView().getModel("oModelView").refresh(true);
-                //         othat._setCopyForFragment();
-                //         othat._toggleButtonsAndView(false);
-                //     } else {
-                //         c1 = othat._loadEditTrainingDetail("Display");
-                //         c1.then(function () {
-                //             c2 = othat._loadEditQuestion("Display");
-                //             c2.then(function () {
-                //                 othat.getModel().read("/" + sPath, {
-                //                     urlParameters: {
-                //                         "$expand": "Creator, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
-                //                     },
-                //                     success: function (oDataValue) {
-                //                         if (oDataValue.LearningQuestionnaire) {
-                //                             oDataValue.LearningQuestionnaire.results.forEach(function (ele) {
-                //                                 if (ele.LearningQuestionnaireOptions && ele.LearningQuestionnaireOptions.results.length) {
-                //                                     ele.TrainingQuestionnaireOptions = ele.LearningQuestionnaireOptions.results;
-                //                                 } else {
-                //                                     ele.TrainingQuestionnaireOptions = [];
-                //                                 }
-                //                             })
-
-                //                             oDataValue.TrainingQuestionnaire = oDataValue.LearningQuestionnaire.results;
-                //                         } else {
-                //                             oDataValue.TrainingQuestionnaire = [];
-                //                         }
-
-                //                         oViewModel.setProperty("/TrainingDetails", oDataValue);
-                //                         var profilePic = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sPath + "/$value";
-                //                         oViewModel.setProperty("/ProfilePic", profilePic);
-                //                         oViewModel.setProperty("/ProfilePicHeader", profilePic);
-
-                //                         othat.getView().getModel("oModelView").refresh(true);
-                //                         othat._setCopyForFragment();
-                //                         othat._toggleButtonsAndView(false);
-                //                     }
-                //                 })
-                //             });
-                //         });
-                //     }
-                // },
 
                 handleEditPress: function () {
                     debugger;
