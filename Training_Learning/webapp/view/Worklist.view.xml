@@ -88,7 +88,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
@@ -149,7 +149,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnUploadAttendance}" icon="sap-icon://upload" press="onAddOfflineTraining" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                    <Button text="{i18n>btnUploadAttendance}" icon="sap-icon://upload" press="onAddOfflineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -197,7 +197,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddVideo" enabled="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddVideo" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>

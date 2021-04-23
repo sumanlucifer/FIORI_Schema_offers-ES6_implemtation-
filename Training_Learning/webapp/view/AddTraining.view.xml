@@ -46,7 +46,7 @@
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
 
-            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1' ? 'Target Group' : '' }"/>
+            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">

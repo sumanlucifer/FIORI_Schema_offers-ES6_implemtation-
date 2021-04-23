@@ -22,10 +22,6 @@ sap.ui.define([], function () {
             }
             var sValue = dValue;
             var pattern = "dd/MM/yyyy";
-            // var pattern = "dd MMM yyyy";
-            // if (tValue) {
-            // 	sValue = sValue + " " + tValue;
-            // }
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
@@ -42,10 +38,6 @@ sap.ui.define([], function () {
             var dateValue = dValue.toDateString();
             var timeValue = dValue.toLocaleTimeString();
             var pattern = "dd/MM/yyyy hh:mm a";
-            // var pattern = "dd MMM yyyy";  dd/MM/yyyy
-            // if (tValue) {
-            // 	sValue = sValue + " " + tValue;
-            // }
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
@@ -57,7 +49,6 @@ sap.ui.define([], function () {
         },
 
         giveImage: function (oMetadata, ImageData) {
-            debugger;
             if (ImageData && ImageData.Image) {
                 return URL.createObjectURL(ImageData.Image);
             }

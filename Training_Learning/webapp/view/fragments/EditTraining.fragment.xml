@@ -36,7 +36,7 @@
                 <Label text="{i18n>colRewardPoints}" required="true"/>
                 <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number" editable="false"/>
 
-                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
+            <core:Title text="{= ${appView>/trainingType} !== 'OFFLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/Zones}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
@@ -52,6 +52,12 @@
                 <MultiComboBox id="idDepot" selectedKeys="{oModelView>/TrainingDetails/Depots}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet'}">
 					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 				</MultiComboBox>
+
+                <!-- <MultiInput id="multiInputDepot"	tokens="{oModelView>/TrainingDetails/Depots}"	valueHelpRequest="onValueHelpRequestedDepot">
+	                <tokens>
+                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>Id}"/>
+                    </tokens>
+	            </MultiInput> -->
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 <ComboBox visible="{= ${appView>/trainingType} !== 'OFFLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
