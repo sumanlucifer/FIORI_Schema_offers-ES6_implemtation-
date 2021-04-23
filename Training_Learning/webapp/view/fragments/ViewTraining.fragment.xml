@@ -31,7 +31,7 @@
                 <Label text="{i18n>colRewardPoints}"/>
                 <Text text="{oModelView>/TrainingDetails/RewardPoints}"/>
 
-                <core:Title text="{= ${appView>/trainingType} === 'ONLINE' ? 'Target Group' : '' }"/>
+            <core:Title text="{= ${appView>/trainingType} !== 'OFFLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/Zones}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" editable="false" items="{ path : '/MasterZoneSet'}">
