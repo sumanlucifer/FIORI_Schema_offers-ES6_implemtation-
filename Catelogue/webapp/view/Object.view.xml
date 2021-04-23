@@ -17,7 +17,7 @@
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
                         <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
-                            <Link text="Catelogues" press="handleAllCatelogueLinkPress"/>
+                            <Link text="Catalogues" press="handleAllCatelogueLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
 

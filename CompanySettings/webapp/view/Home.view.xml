@@ -44,6 +44,7 @@ xmlns:f="sap.ui.layout.form">
                                                     <core:Item key="{LanguageCode}" text="{Language}" />
                                                     </Select>
                                                     <FlexBox>
+                
                                                     <VBox visible="{=${local>/bEdit}}">
                                                     <u:FileUploader
                                                         id="idFormToolPdfUploader"
@@ -62,8 +63,9 @@ xmlns:f="sap.ui.layout.form">
                                                 <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
                                                 </HBox>
                                                 </VBox>
+                                                <!-- <Text text="{local>MediaName}"></Text> -->
                                                         </FlexBox>
-                                    
+                                                
                                                 <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
                                                             
                                                 <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" visible="{=${local>/bEdit}}" type="Transparent" tooltip="{i18n>Remove}" />

@@ -284,12 +284,40 @@ sap.ui.define([
                     .getBindingContext("local")
                     .getPath()
                     .split("/");
-                var aCompetitor = oModel.getProperty("/Catalogue");
-                aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
+                var aCatalogue = oModel.getProperty("/Catalogue");
 
-                this.getView().getModel("local").setProperty("/Catalogue", aCompetitor);
-           
-             
+                var index = parseInt(sPath[sPath.length - 1]);
+                var delItems = [];
+                var property = this._property;
+                var sServiceUri = this.sServiceURI;
+                var oModel = this.getView().getModel("local");
+                // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                //To DO promises for sync
+                for (var i = 0; i <= aCatalogue.length; i++) {
+
+                    if (i == index) {
+                        delItems = aCatalogue[i];
+                        jQuery.ajax({
+                            method: "DELETE",
+                            url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            // data: delItems,
+                            success: function (data) {
+                                aCatalogue.splice(aCatalogue[i] - 1, 1);
+
+                                oModel.refresh(true);
+                                var sMessage = "PDF Deleted!";
+                                MessageToast.show(sMessage);
+                            },
+                            error: function () { },
+                        })
+                    }
+
+                };
+
+
 
                 oModel.refresh(true);
             },

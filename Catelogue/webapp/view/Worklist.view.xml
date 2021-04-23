@@ -150,9 +150,14 @@
                             <Text text="{path:'TotalPdfViewerCount'}"/>
                             <Text text="{path:'TotalPdfDownloadCount'}"/>
                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                            <Text text="{path: 'Status',
+                            <!-- <Text text="{path: 'Status',
                                     formatter: '.formatter.statusList'}"
-                                data:remarks="{Status}"/>
+                                data:remarks="{Status}"/> -->
+                                <ObjectStatus text="{path: 'Status',
+                                    formatter: '.formatter.statusList'}" 
+                                    data:remarks="{Status}"
+                                
+                                    state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Warning' : undefined }"/>
                                 <!-- <Button 
                                 type="{= ${Status} === true? 'Emphasized' : undefined || ${Status} === false? 'Reject' : undefined }"
                                 text="{path: 'Status',
