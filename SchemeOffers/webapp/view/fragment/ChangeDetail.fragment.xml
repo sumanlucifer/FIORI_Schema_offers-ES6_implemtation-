@@ -37,7 +37,7 @@
                         </f:FormElement>
                         <f:FormElement label="Scheme Image">
                             <f:fields>
-                                <u:FileUploader typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                                <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
@@ -227,8 +227,9 @@
                                         <f:FormElement label="{i18n>ChangeStatus}">
                 							<f:fields>
                 								<ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/SchemeStatus}" >
-                                                    <core:Item key="PENDING" text="Pending" />
-                                                    <core:Item key="REGISTERED" text="Registered" />
+                                                  <core:Item text="Pending" key="PENDING"/>
+                                         <core:Item text="Approved" key="APPROVED"/>
+                                          <core:Item text="Rejected" key="REJECTED"/>
                                                 </ComboBox>
                 							</f:fields>
                 						</f:FormElement>
