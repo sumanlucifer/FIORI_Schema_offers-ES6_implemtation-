@@ -150,7 +150,7 @@ sap.ui.define(
           var exPand = "PainterComplainsHistory";
           oView.getModel().read("/" + oProp, {
               urlParameters: {
-              $expand: exPand,
+              //$expand: exPand,
             },
             success: function (data) {
               var oViewModel = new JSONModel(data);
