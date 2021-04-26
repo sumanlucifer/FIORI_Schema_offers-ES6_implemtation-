@@ -222,23 +222,23 @@
                     </f:formElements>
                 </f:FormContainer>
 
-                <!-- <f:FormContainer title="Status">
+                <f:FormContainer title="{i18n>statusFilterLabel}" visible="{oModelControl>/modeEdit}">
                 					<f:formElements>
-                                        <f:FormElement label="Status">
+                                        <f:FormElement label="{i18n>ChangeStatus}">
                 							<f:fields>
-                								<ComboBox placeholder="Select">
-                                                    <core:Item key="1" text="Accepted" />
-                                                    <core:Item key="2" text="Rejected" />
+                								<ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/SchemeStatus}" >
+                                                    <core:Item key="PENDING" text="Pending" />
+                                                    <core:Item key="REGISTERED" text="Registered" />
                                                 </ComboBox>
                 							</f:fields>
                 						</f:FormElement>
-                                        <f:FormElement label="Reason">
+                                        <f:FormElement label="{i18n>Reason}">
                 							<f:fields>
-                                                <TextArea placeholder="Enter Reason"/>
+                                                <TextArea placeholder="{i18n>Enter}" value="{oModelView>/Reason}"/>
                 							</f:fields>
                 						</f:FormElement>
                 					</f:formElements>
-                				</f:FormContainer> -->
+                				</f:FormContainer>
             </f:formContainers>
         </f:Form>
     </VBox>
