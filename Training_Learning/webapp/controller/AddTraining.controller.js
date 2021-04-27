@@ -424,13 +424,7 @@ sap.ui.define(
                     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
-
-                getGroupHeader: function (oGroup) {
-                    return new SeparatorItem({
-                        text: oGroup.key
-                    });
-                },
-
+                
                 onMultyZoneChange: function (oEvent) {
                     debugger;
                     var sKeys = oEvent.getSource().getSelectedKeys();
@@ -444,19 +438,11 @@ sap.ui.define(
                     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingZone", aArray);
                     var oDivision = oView.byId("idDivision");
 
-                    oDivision.clearSelection();
-                    oDivision.fireSelectionChange();
                     var aDivFilter = [];
                     for (var y of aArray) {
                         aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]))
                     }
-
                     oDivision.getBinding("items").filter(aDivFilter);
-
-
-                    // var oDepot = oView.byId("idDepot");
-                    // oDepot.clearSelection();
-                    // oDepot.fireSelectionChange();
                 },
 
                 onMultyDivisionChange: function (oEvent) {
@@ -471,16 +457,11 @@ sap.ui.define(
                     }
                     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", aArray);
                     var oDepot = oView.byId("idDepot");
-                    // oDepot.clearSelection();
-                    // oDepot.fireSelectionChange();
-
-                    //depot filter
                     var aDepot = [];
                     for (var y of aArray) {
                         aDepot.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]))
                     }
-
-                    // oDepot.getBinding("items").filter(aDepot);
+                    oDepot.getBinding("items").filter(aDepot);
                 },
 
                 // onMultyDepotChange: function (oEvent) {
