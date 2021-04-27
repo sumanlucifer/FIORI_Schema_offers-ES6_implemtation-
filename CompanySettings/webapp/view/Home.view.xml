@@ -34,7 +34,7 @@ xmlns:f="sap.ui.layout.form">
                                                     <HBox alignItems="Start" justifyContent="SpaceBetween">
                                                       <Select
                                                     forceSelection="false"
-                                    
+                                                    editable="{=${local>/bEdit}}"
                                                     selectedKey="{local>LanguageCode}"
                                                     items="{
                                                         path: '/MasterLanguageSet',
