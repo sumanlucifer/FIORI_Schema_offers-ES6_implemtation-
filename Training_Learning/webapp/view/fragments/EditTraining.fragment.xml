@@ -49,42 +49,35 @@
 				</MultiComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <MultiComboBox id="idDepot" selectedKeys="{oModelView>/TrainingDetails/Depots}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet'}">
-					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
-				</MultiComboBox>
-
-                <!-- <MultiInput id="multiInputDepot"	tokens="{oModelView>/TrainingDetails/Depots}"	valueHelpRequest="onValueHelpRequestedDepot">
+                <MultiInput id="multiInputDepotEdit" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
 	                <tokens>
-                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>Id}"/>
+                        <Token editable="false" text="{oModelView>DepotId}" key="{oModelView>DepotId}"/>
                     </tokens>
-	            </MultiInput> -->
+	            </MultiInput>
+
+                <!-- <MultiComboBox id="idDepot" selectedKeys="{oModelView>/TrainingDetails/Depots}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet'}">
+					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+				</MultiComboBox> -->
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} !== 'OFFLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
+                <MultiComboBox id="idPainterType" selectedKeys="{oModelView>/TrainingDetails/PainterTypes}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyPainterTypeChange" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{PainterType}"/>
+				</MultiComboBox>
+                <!-- <ComboBox visible="{= ${appView>/trainingType} !== 'OFFLINE'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
                         <core:Item text="{PainterType}" key="{Id}"/>
                     </items>
-                </ComboBox>
+                </ComboBox> -->
+
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <ComboBox visible="{= ${appView>/trainingType} !== 'OFFLINE'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
+                <MultiComboBox id="idPainterArcheType" selectedKeys="{oModelView>/TrainingDetails/PainterArcheTypes}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyPainterArcheTypeChange" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{ArcheType}"/>
+				</MultiComboBox>
+                <!-- <ComboBox visible="{= ${appView>/trainingType} !== 'OFFLINE'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
                     <items>
                         <core:Item text="{ArcheType}" key="{Id}"/>
                     </items>
-                </ComboBox>
-
-                <!-- <Label text="{i18n>colStatusAction}"/>
-                <SegmentedButton
-                    selectedKey="{oModelView>/TrainingDetails/Status}">
-                    <items>
-                        <SegmentedButtonItem text="{i18n>Activate}" key="1"/>
-                        <SegmentedButtonItem text="{i18n>DeActivate}" key="0"/>
-                    </items>
-                </SegmentedButton> -->
-
-                <!-- <Label text="{i18n>colImage}"/>
-                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }"/>
-				<u:FileUploader maximumFileSize="2" fileAllowed="onUpload" tooltip="{i18n>fileUploaderTrainingtip}" style="Emphasized" buttonOnly="true"
-			    buttonText="{i18n>fileUploaderTrainingtip}"/> -->
+                </ComboBox> -->
 
                 <Label text="Upload Thumbnail Image" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 <HBox>

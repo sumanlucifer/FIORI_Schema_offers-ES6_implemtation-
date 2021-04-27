@@ -82,7 +82,7 @@
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
@@ -143,7 +143,7 @@
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
 						<Table id="table2" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'StartDate', descending: true } }"
+							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'StartDate', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
@@ -191,7 +191,7 @@
 					</IconTabFilter>
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
-							items="{ path: '/LearningSet', parameters : { expand : 'Creator,TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
@@ -223,9 +223,6 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <!-- <Column width="9%">
-									<Text text="{i18n>colStatusAction}"/>
-								</Column> -->
                                 <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
@@ -237,7 +234,6 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <!-- <Text text="{= ${Creator/Name}=== null ? 'SYSTEM' : ${Creator/Name} }"/> -->
                                         <Text text="{RewardPoints}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>

@@ -753,7 +753,7 @@ sap.ui.define([
         onRefreshView: function () {
             var oModel = this.getModel();
             oModel.refresh(true);
-        },
+        }
 
         /* =========================================================== */
         /* internal methods                                            */
@@ -765,11 +765,11 @@ sap.ui.define([
          * @param {sap.m.ObjectListItem} oItem selected Item
          * @private
          */
-        _showObject: function (oItem) {
-            this.getRouter().navTo("object", {
-                objectId: oItem.getBindingContext().getProperty("Id")
-            });
-        }
+        // _showObject: function (oItem) {
+        //     this.getRouter().navTo("object", {
+        //         objectId: oItem.getBindingContext().getProperty("Id")
+        //     });
+        // }
 
     });
 });
