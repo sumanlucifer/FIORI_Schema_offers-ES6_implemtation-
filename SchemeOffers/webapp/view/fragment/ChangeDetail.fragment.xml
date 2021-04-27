@@ -37,7 +37,12 @@
                         </f:FormElement>
                         <f:FormElement label="Scheme Image">
                             <f:fields>
-                                <u:FileUploader typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                                <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
+                            <f:fields>
+                                 <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
                             </f:fields>
                         </f:FormElement>
 
@@ -47,22 +52,22 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
-                                <MultiComboBox placeholder="{i18n>placeHolder1}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl2}">
                             <f:fields>
-                                <MultiComboBox id="idDivision" placeholder="{i18n>placeHolder1}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
+                                <MultiComboBox id="idDivision" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
-                                <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
-                                    <core:ListItem text="{Depot}" key="{Id}" additionalText="{Id}"/>
+                                <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Depots}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
+                                    <core:ListItem text="{Depot} - {Id}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -80,7 +85,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl3}">
                             <f:fields>
-                                <MultiComboBox id="SchemePainterArchiTypes" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onArchiTypeChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}"  id="SchemePainterArchiTypes" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onArchiTypeChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
                                     <core:Item text="{ArcheType}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -95,7 +100,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl5}">
                             <f:fields>
-                                <MultiComboBox id="SchemePainterProducts" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox id="SchemePainterProducts" selectedKeys="{oModelControl>/MultiCombo/PainterProducts}"  enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -113,7 +118,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
-                                <MultiComboBox selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -176,7 +181,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>BonusApplicableProducs}">
                             <f:fields>
-                                <MultiComboBox selectionChange="onBonusProdChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/BonusApplicableProducts}" selectionChange="onBonusProdChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -195,42 +200,46 @@
                         </f:FormElement>
                         <f:FormElement visible="{= ${oModelControl>/HasTillDate} }">
                             <f:fields>
-                                <DatePicker dateValue="{oModelView>/BonusValidityDate}" displayFormat="DD/MM/YYYY"/>
+                                <DatePicker placeholder="DD/MM/YYYY" dateValue="{oModelView>/BonusValidityDate}" displayFormat="dd/MM/YYYY"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement visible="{= !${oModelControl>/HasTillDate} }">
                             <f:fields>
-                                <ComboBox placeholder="{i18n>Years}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationYear}">
-                                    <core:Item text="{oModelControl>key}" key="{oModelControl>key}"/>
-                                </ComboBox>
+                              
+                                  <ComboBox placeholder="{i18n>Years}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationYear}">
+                                    <core:Item text="{oModelControl>key} year(s)" key="{oModelControl>key}"/>
+                                    </ComboBox>
+                             
+                              
                                 <ComboBox placeholder="{i18n>Month}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationMonth}">
-                                    <core:Item text="{oModelControl>key}" key="{oModelControl>key}"/>
+                                    <core:Item text="{oModelControl>key} month(s)" key="{oModelControl>key}"/>
                                 </ComboBox>
                                 <ComboBox placeholder="{i18n>Days}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationDays}">
-                                    <core:Item text="{oModelControl>key}" key="{oModelControl>key}"/>
+                                    <core:Item text="{oModelControl>key} day(s)" key="{oModelControl>key}"/>
                                 </ComboBox>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
 
-                <!-- <f:FormContainer title="Status">
+                <f:FormContainer title="{i18n>statusFilterLabel}" visible="{oModelControl>/modeEdit}">
                 					<f:formElements>
-                                        <f:FormElement label="Status">
+                                        <f:FormElement label="{i18n>ChangeStatus}">
                 							<f:fields>
-                								<ComboBox placeholder="Select">
-                                                    <core:Item key="1" text="Accepted" />
-                                                    <core:Item key="2" text="Rejected" />
+                								<ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/SchemeStatus}" >
+                                                  <core:Item text="Pending" key="PENDING"/>
+                                         <core:Item text="Approved" key="APPROVED"/>
+                                          <core:Item text="Rejected" key="REJECTED"/>
                                                 </ComboBox>
                 							</f:fields>
                 						</f:FormElement>
-                                        <f:FormElement label="Reason">
+                                        <f:FormElement label="{i18n>Reason}">
                 							<f:fields>
-                                                <TextArea placeholder="Enter Reason"/>
+                                                <TextArea placeholder="{i18n>Enter}" value="{oModelView>/Reason}"/>
                 							</f:fields>
                 						</f:FormElement>
                 					</f:formElements>
-                				</f:FormContainer> -->
+                				</f:FormContainer>
             </f:formContainers>
         </f:Form>
     </VBox>

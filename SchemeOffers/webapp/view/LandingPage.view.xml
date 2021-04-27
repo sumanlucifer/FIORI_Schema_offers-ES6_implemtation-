@@ -9,13 +9,7 @@
     xmlns:vm="sap.ui.comp.variants">
     <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiContentPadding">
         <!-- DynamicPage Title -->
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="{i18n>landingPageViewTitle}"/>
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
+      
         <!-- DynamicPage Header -->
         <f:header>
             <f:DynamicPageHeader pinnable="true">

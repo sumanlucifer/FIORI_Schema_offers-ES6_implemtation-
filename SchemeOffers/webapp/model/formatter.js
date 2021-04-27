@@ -55,5 +55,15 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       }
       return aArray.join(" ");
     },
+    formatURL: function (sURL) {
+        console.log("format url trigerred")
+      if (sURL) {
+        return "https://".concat(
+          location.host,
+          "/KNPL_PAINTER_API",
+          new URL(sURL).pathname
+        );
+      }
+    },
   };
 });

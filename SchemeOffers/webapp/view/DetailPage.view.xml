@@ -1,16 +1,5 @@
-<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.DetailPage" height="100%"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:layout="sap.ui.layout"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:form="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
-    <f:DynamicPage
-        headerExpanded="true"
-        stickySubheaderProvider="idIconTabBar"
-        showFooter="true"
-        class="sapUiNoContentPadding"
-        busy="{DetailViewModel>/busy}">
+<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.DetailPage" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" showFooter="true" class="sapUiNoContentPadding" busy="{DetailViewModel>/busy}">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -18,7 +7,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>currentDetailPageBreadcrumbText}">
-                        <Link press="onPressBreadcrumbLink" text="{i18n>homeBreadcrumbText}" />
+                        <Link press="onPressBreadcrumbLink" text="{i18n>homeBreadcrumbText}"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>
@@ -27,10 +16,7 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <Avatar
-                            id="idOfferImg"
-                            displaySize="L"
-                            displayShape="Square" />
+                        <Avatar id="idOfferImg" displaySize="L" displayShape="Square"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
@@ -39,27 +25,27 @@
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
-                            <Text text="{CreatedByDetails/Name}" />
+                            <Text text="{CreatedByDetails/Name}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerOfferPoint}"/>
-                            <Text text="" />
+                            <Text text=""/>
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStartDate}"/>
-                           <Text text="{path:'StartDate',formatter:'.formatter.fmtDate'}"/>
+                            <Text text="{path:'StartDate',formatter:'.formatter.fmtDate'}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerEndDate}"/>
-                           <Text text="{path:'EndDate',formatter:'.formatter.fmtDate'}"/>
+                            <Text text="{path:'EndDate',formatter:'.formatter.fmtDate'}"/>
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <layout:VerticalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
-                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'SchemeStatus',formatter:'.formatter.fmtLowerCase'}" state="Warning" />
+                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'SchemeStatus',formatter:'.formatter.fmtLowerCase'}" state="Warning"/>
                         </layout:VerticalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -67,19 +53,14 @@
         </f:header>
 
         <f:content>
-            <IconTabBar
-                id="idIconTabBar"
-                expandable="false"
-                expanded="{device>/isNoPhone}">
+            <IconTabBar id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="offerDetails">
-                        <VBox id="idVbProfile">
-                           
-                        </VBox>
-                     
+                        <VBox id="idVbProfile"></VBox>
+
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>historyTabFilter}" key="history">
-                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML" />
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML"/>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
@@ -87,9 +68,10 @@
         <f:footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
-                <Button visible="{=!${DetailViewModel>/editable}}" text="Edit" tooltip="Edit" type="Emphasized" press="onPressEdit" />
-                <Button visible="{=${DetailViewModel>/editable}}" text="Cancel" tooltip="Cancel" press="onPressCancel" />
-                <Button visible="{=${DetailViewModel>/editable}}" text="Save" tooltip="Save" type="Emphasized" press="onPressSave" />
+                <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

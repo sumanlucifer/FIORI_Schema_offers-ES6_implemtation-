@@ -70,16 +70,30 @@ sap.ui.define(
           }
           var oDataControl = {
             HasTillDate: false,
+            ImageLoaded:false,
             BonusValidity: oBonusValidity,
-            StartDate:"",
-            EndDate:"",
-            RewardGift:[{
-                Id:1,
-                Name:"TV"
-            },{
-                Id:2,
-                Name:"Washing Machine"
-            }]
+            modeEdit:false,
+            StartDate: "",
+            EndDate: "",
+            RewardGift: [
+              {
+                Id: 1,
+                Name: "TV",
+              },
+              {
+                Id: 2,
+                Name: "Washing Machine",
+              },
+            ],
+            MultiCombo: {
+              Zones: [],
+              Divisions: [],
+              Depots: [],
+              ArcheTypes: [],
+              PainterProducts: [],
+              ApplicableProducts: [],
+              BonusApplicableProducts: []
+            },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 
@@ -109,7 +123,7 @@ sap.ui.define(
             BonusValidityDurationYear: "",
             BonusValidityDurationMonth: "",
             BonusValidityDurationDays: "",
-            BonusValidityDate: null,
+            BonusValidityDate: null
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -165,33 +179,31 @@ sap.ui.define(
           console.log(bFlagValidate);
           var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
           var bFileFlag = false;
-         
-          if(bFlagValidate==false){
-              MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
-              return
+
+          if (bFlagValidate == false) {
+            MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+            return;
           }
           //check if it has file
-           if(sFile!==undefined){
-              bFileFlag=true
+          if (sFile !== undefined) {
+            bFileFlag = true;
           }
           //validate the data
 
           this._postDataToSave(bFileFlag);
-          
-
         },
-        
+
         onAfterRendering: function () {
-         // this.getView().byId("startDate").setMinDate(new Date());
+          // this.getView().byId("startDate").setMinDate(new Date());
         },
         _postDataToSave(bFileFlag) {
           //creating the payload
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
-         
+
           var oDataModel = oView.getModel();
           var oPayLoad = this._RemoveEmptyValue(oModelView.getData());
-          console.log(oPayLoad)
+          console.log(oPayLoad);
 
           var inTegerProperty = [
             "PurchaseVolumeRequired",
@@ -213,45 +225,36 @@ sap.ui.define(
           oDataModel.create("/SchemeSet", oPayLoad, {
             success: function (data) {
               MessageToast.show("Scheme Sucessfully Created.");
-                if(bFileFlag){
-                    othat._UploadFile(data)
-                }
-              //othat._navToHome();
+              if (bFileFlag) {
+                othat._UploadFile(data);
+              }
+              othat._navToHome();
             },
             error: function () {
               MessageToast.show("Error In Creating the Schemes.");
             },
           });
         },
-        _UploadFile:function(data){
-            
-            var oView = this.getView()
-            var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
-            var sServiceUrl = this.getOwnerComponent(this)
+        _UploadFile: function (data) {
+          var oView = this.getView();
+          var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
+          var sServiceUrl = this.getOwnerComponent(this)
             .getManifestObject()
             .getEntry("/sap.app").dataSources.mainService.uri;
-            var sUrl =
-            sServiceUrl +
-            "SchemeSet(" +
-            data["Id"] +
-            ")/$value";
-            jQuery.ajax({
-                method: "PUT",
-                url: sUrl ,
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: oFile,
-                success: function (data) {},
-                error: function () {},
-              })
-        
-
-
-
+          var sUrl = sServiceUrl + "SchemeSet(" + data["Id"] + ")/$value";
+          jQuery.ajax({
+            method: "PUT",
+            url: sUrl,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: oFile,
+            success: function (data) {},
+            error: function () {},
+          });
         },
         _NavBack: function () {},
-        
+
         _RemoveEmptyValue: function (mParam) {
           var obj = Object.assign({}, mParam);
           // remove string values
@@ -270,7 +273,6 @@ sap.ui.define(
         onUploadFileTypeMis: function () {
           MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
         },
-
       }
     );
   }
