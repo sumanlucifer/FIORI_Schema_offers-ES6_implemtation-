@@ -405,7 +405,9 @@ sap.ui.define(
               oView.setBusy(false);
               var sMessage = "";
               if (a.statusCode == 409) {
-                sMessage = "Painter already exist with the same mobile number";
+                sMessage = "Painter already exist with the same mobile number.";
+              }else if (a.statusCode == 417){
+                sMessage = "The referral code doesn't exist, kindly enter a new referral code.";
               } else {
                 sMessage = "Unable to create a painter due to server issues.";
               }
