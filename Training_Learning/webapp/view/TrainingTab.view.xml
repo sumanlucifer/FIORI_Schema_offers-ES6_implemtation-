@@ -66,6 +66,15 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}" visible="{= ${appView>/trainingType} === 'VIDEO'}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbEnrollmentVideo" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.VideoEnrollment" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>

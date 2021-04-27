@@ -49,33 +49,41 @@
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet', groupHeaderFactory: '.getGroupHeader' }">
+                <MultiComboBox id="idZone" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet', groupHeaderFactory: '.getGroupHeader' }">
+                <MultiComboBox id="idDivision" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idDepot" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDepotChange" items="{ path : '/MasterDepotSet', groupHeaderFactory: '.getGroupHeader' }">
-					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
-				</MultiComboBox>
+                <MultiInput id="multiInputDepotAdd" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
+	                <tokens>
+                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>DepotId}"/>
+                    </tokens>
+	            </MultiInput>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
+                <MultiComboBox id="idPainterType" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyPainterTypeChange" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{PainterType}"/>
+				</MultiComboBox>
+                <!-- <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterType}">
                     <items>
                         <core:Item text="{PainterType}" key="{Id}"/>
                     </items>
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
+                <MultiComboBox id="idPainterArcheType" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyPainterArcheTypeChange" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{ArcheType}"/>
+				</MultiComboBox>
+                <!-- <ComboBox visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/PainterArcheId}">
                     <items>
                         <core:Item text="{ArcheType}" key="{Id}"/>
                     </items>
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
                 <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">

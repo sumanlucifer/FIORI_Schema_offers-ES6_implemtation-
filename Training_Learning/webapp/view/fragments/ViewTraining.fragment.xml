@@ -49,10 +49,16 @@
 				</MultiComboBox>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/PainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
+                <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/PainterTypes}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" editable="false" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{PainterType}"/>
+				</MultiComboBox>
+                <!-- <Text text="{oModelView>/TrainingDetails/PainterTypeDetails/PainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/> -->
 
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <Text text="{oModelView>/TrainingDetails/PainterArcheType/ArcheType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
+                <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/PainterArcheTypes}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" editable="false" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{ArcheType}"/>
+				</MultiComboBox>
+                <!-- <Text text="{oModelView>/TrainingDetails/PainterArcheType/ArcheType}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/> -->
 
                 <!-- <Label text="{i18n>colImage}"/>
                 <Image width="5rem" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/> -->
