@@ -37,7 +37,7 @@ sap.ui.define([
 
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-
+                this.oFileUploaderPdf=this.getView().byId("idFormToolPdfUploader");
 
 
                 // Attaches validation handlers
@@ -58,7 +58,7 @@ sap.ui.define([
 
                 this._property = "MasterCompanySettingsSet(1)";
 
-                this.showPdfList()
+                this.showPdfList();
 
 
             },
@@ -257,7 +257,8 @@ sap.ui.define([
 
                             success: function (data) {
                                 // that.getView().getModel("local").refresh(true);
-                                that.oFileUploaderPdf.clear();
+                                var oFileUploaderPdf=this.getView().byId("idFormToolPdfUploader");
+                                oFileUploaderPdf.clear();
                             },
                             error: function () { },
                         })
