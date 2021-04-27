@@ -536,7 +536,6 @@ sap.ui.define([
 
             this.getModel("appView").setProperty("/trainingType", "ONLINE");
             this.getModel("appView").setProperty("/flgEditOn", false);
-            console.log(sPath);
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteTrainingTab", {
                 mode: "view",
@@ -672,7 +671,7 @@ sap.ui.define([
                                 success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
                             });
                         }
-                        that.showWarning("MSG_CONFIRM_TRAINING_DELETE", onYes);
+                        that.showWarning("MSG_CONFIRM_LIVE_TRAINING_DELETE", onYes);
                     }
                 }
             })

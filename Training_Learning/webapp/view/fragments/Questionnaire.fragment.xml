@@ -7,7 +7,7 @@
                         <VBox renderType="Bare" class="sapUiTinyMargin">
                             <HBox renderType="Bare">
                                 <!-- <Text text="{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }" class="sapUiSmallMarginBegin" /> -->
-                                <Title text="{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 } {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
+                                <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                             </HBox>
                             <Text text=""/>
                             <VBox items="{oModelView>TrainingQuestionnaireOptions}">

@@ -36,9 +36,9 @@
                 <Column>
                     <Text text="{i18n>colEarnedPoint}"/>
                 </Column>
-                <Column>
+                <!-- <Column>
                     <Text text="{i18n>colStatus}"/>
-                </Column>
+                </Column> -->
             </columns>
 
             <items>
@@ -53,7 +53,7 @@
                         <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
                         <Text text="{EarnedPoints}"/>
-                        <ObjectStatus text="{path:'Status',formatter:'.fmtStatus'}" state="{= ${Status} === 'ENROLLED' ? 'Success' : 'None' }"/>
+                        <!-- <ObjectStatus text="{path:'Status',formatter:'.fmtStatus'}" state="{= ${Status} === 'ENROLLED' ? 'Success' : 'None' }"/> -->
                     </cells>
                 </ColumnListItem>
             </items>
