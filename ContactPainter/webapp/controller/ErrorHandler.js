@@ -38,6 +38,10 @@ sap.ui.define([
                      {
                         return;
                      }
+                      if(oParams.response.statusCode == "417")   
+                     {
+                        return;
+                     }
                 
                     if (oParams.response.statusCode !== "404" || (oParams.response.statusCode === 404 && oParams.response.responseText.indexOf("Cannot POST") === 0)) {
 						this._showServiceError(oParams.response);
