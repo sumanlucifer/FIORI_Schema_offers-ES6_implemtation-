@@ -428,7 +428,7 @@ sap.ui.define([
                         aCurrentFilterValues1.push(
                             new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter1[prop])
                         );
-                    } 
+                    }
                     else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty1 = false;
                         aCurrentFilterValues1.push(
@@ -604,11 +604,15 @@ sap.ui.define([
             that.getModel().read("/" + sPath, {
                 success: function (sData) {
                     if (todayDate < sData.EndDate) {
-                        oRouter.navTo("RouteTrainingTab", {
-                            mode: "edit",
-                            trtype: "ONLINE",
-                            prop: window.encodeURIComponent(sPath),
-                        });
+                        if (todayDate < sData.StartDate) {
+                            oRouter.navTo("RouteTrainingTab", {
+                                mode: "edit",
+                                trtype: "ONLINE",
+                                prop: window.encodeURIComponent(sPath),
+                            });
+                        } else {
+                            that.showToast.call(that, "MSG_TRAINING_ALREADY_STARTED_CANT_BE_EDITED");
+                        }
                     } else {
                         that.showToast.call(that, "MSG_EXPIRED_TRAININGS_CANT_BE_EDITED");
                     }

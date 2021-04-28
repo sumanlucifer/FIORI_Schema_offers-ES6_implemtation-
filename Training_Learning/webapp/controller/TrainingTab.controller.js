@@ -98,6 +98,7 @@ sap.ui.define(
                         aDepots = [],
                         aPainterTypes = [],
                         aPainterArcheTypes = [];
+                    var zoneFilled = false, divFilled = false;
 
                     oViewModel.setProperty("/ProfilePic", oData.ProfilePic);
                     oViewModel.setProperty("/ProfilePicHeader", oData.ProfilePic);
@@ -135,6 +136,9 @@ sap.ui.define(
                                         for (var x of data["TrainingZone"]["results"]) {
                                             aZones.push(x["ZoneId"]);
                                         }
+                                        zoneFilled = true;
+                                        // To set Non-editable for Div and Depot by default
+                                        oViewModel.setProperty("/zoneFilled", zoneFilled);
                                     }
 
                                     if (data.TrainingDivision && data.TrainingDivision.results) {
@@ -142,6 +146,9 @@ sap.ui.define(
                                             aDivisions.push(y["DivisionId"]);
                                         }
                                         data.TrainingDivision = data.TrainingDivision.results;
+                                        divFilled = true;
+                                        // To set Non-editable for Div and Depot by default
+                                        oViewModel.setProperty("/divFilled", divFilled);
                                     }
 
                                     if (data.TrainingDepot && data.TrainingDepot.results) {
@@ -172,7 +179,7 @@ sap.ui.define(
                                     if (aZones) {
                                         oViewModel.setProperty("/TrainingDetails/Zones", aZones);
                                     } else {
-                                        oViewModel.setProperty("/DisTrainingDetailsplay/Zones", []);
+                                        oViewModel.setProperty("/TrainingDetails/Zones", []);
                                     }
                                     if (aDivisions) {
                                         oViewModel.setProperty("/TrainingDetails/Divisions", aDivisions);
@@ -245,6 +252,9 @@ sap.ui.define(
                                     for (var x of data["TrainingZone"]["results"]) {
                                         aZones.push(x["ZoneId"]);
                                     }
+                                    zoneFilled = true;
+                                    // To set Non-editable for Div and Depot by default
+                                    oViewModel.setProperty("/zoneFilled", zoneFilled);
                                 }
 
                                 if (data.TrainingDivision && data.TrainingDivision.results) {
@@ -252,6 +262,9 @@ sap.ui.define(
                                         aDivisions.push(y["DivisionId"]);
                                     }
                                     data.TrainingDivision = data.TrainingDivision.results;
+                                    divFilled = true;
+                                    // To set Non-editable for Div and Depot by default
+                                    oViewModel.setProperty("/divFilled", divFilled);
                                 }
 
                                 if (data.TrainingDepot && data.TrainingDepot.results) {
@@ -325,6 +338,7 @@ sap.ui.define(
                             that.getModel("appView").setProperty("/EditAttendance", false);
                         }
                     }
+
                     that.getView().unbindElement();
 
                     that.getView().setModel(oViewModel, "oModelView");
@@ -488,13 +502,30 @@ sap.ui.define(
                     var sKeys = oEvent.getSource().getSelectedKeys();
                     var oView = this.getView();
                     var aArray = [];
+                    var zoneFilled = false;
+                    var oZone = oView.byId("idZone");
+                    var oDivision = oView.byId("idDivision");
+                    var oDepot = oView.byId("multiInputDepotEdit");
                     for (var x of sKeys) {
                         aArray.push({
                             ZoneId: x,
                             TrainingId: parseInt(this.getModel("oModelView").getProperty("/trainingId"))
                         });
+                        zoneFilled = true;
                     }
+                    oView.getModel("oModelView").setProperty("/zoneFilled", zoneFilled);
                     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingZone", aArray);
+
+                    if (zoneFilled === false) {
+                        oZone.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", []);
+                        oDivision.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/divFilled", false);
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
 
                     this._fnChangeDivDepot({
                         src: { path: "/TrainingDetails/Zones" },
@@ -505,6 +536,7 @@ sap.ui.define(
                         src: { path: "/TrainingDetails/Divisions" },
                         target: { localPath: "/TrainingDetails/TrainingDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
                     });
+
                     var oDivision = oView.byId("idDivision");
                     var aDivFilter = [];
                     for (var y of aArray) {
@@ -512,29 +544,50 @@ sap.ui.define(
                     }
 
                     oDivision.getBinding("items").filter(aDivFilter);
+
+                    var Divisions = oView.getModel("oModelView").getProperty("/TrainingDetails/Divisions");
+                    if (Divisions.length == 0) {
+                        oView.getModel("oModelView").setProperty("/divFilled", false);
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
                 },
 
                 onMultyDivisionChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
                     var oView = this.getView();
                     var aArray = [];
+                    var divFilled = false;
+                    var oDivision = oView.byId("idDivision");
+                    var oDepot = oView.byId("multiInputDepotEdit");
                     for (var x of sKeys) {
                         aArray.push({
                             DivisionId: x,
                             TrainingId: parseInt(this.getModel("oModelView").getProperty("/trainingId"))
                         });
+                        divFilled = true;
                     }
+
+                    oView.getModel("oModelView").setProperty("/divFilled", divFilled);
                     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", aArray);
+
+                    if (divFilled === false) {
+                        oDivision.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
+
                     this._fnChangeDivDepot({
                         src: { path: "/TrainingDetails/Divisions" },
                         target: { localPath: "/TrainingDetails/TrainingDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
                     });
-                    // depot clear
-                    var oDepot = oView.byId("idDepot");
-                    var aDepot = [];
-                    for (var y of aArray) {
-                        aDepot.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]))
-                    }
+                    // // depot clear
+                    // var oDepot = oView.byId("idDepot");
+                    // var aDepot = [];
+                    // for (var y of aArray) {
+                    //     aDepot.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]))
+                    // }
 
                 },
 
@@ -593,7 +646,14 @@ sap.ui.define(
                             oTable.setModel(this.oColModel, "columns");
 
                             if (oTable.bindRows) {
-                                oTable.bindAggregation("rows", "/MasterDepotSet");
+                                oTable.bindAggregation("rows", {
+                                    path: "/MasterDepotSet", events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
                             }
 
                             if (oTable.bindItems) {
@@ -698,7 +758,6 @@ sap.ui.define(
                     var oData = [];
                     var xUnique = new Set();
                     var aTokens = oEvent.getParameter("tokens");
-                    var kurkure = this.getView().getModel("oModelView").getProperty("/TrainingDetails/TrainingDepot");
 
                     aTokens.forEach(function (ele) {
                         if (xUnique.has(ele.getKey()) == false) {
@@ -710,7 +769,6 @@ sap.ui.define(
                         }
                     });
 
-                    //  this._oMultiInput.setTokens(aTokens);
                     this.getView()
                         .getModel("oModelView")
                         .setProperty("/TrainingDetails/TrainingDepot", oData);
