@@ -39,17 +39,17 @@
             <core:Title text="{= ${appView>/trainingType} !== 'OFFLINE' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/Zones}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
+                <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/Zones}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDivision}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/TrainingDetails/Divisions}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
+                <MultiComboBox id="idDivision" editable="{= ${oModelView>/zoneFilled} === true}" selectedKeys="{oModelView>/TrainingDetails/Divisions}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
-                <MultiInput id="multiInputDepotEdit" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
+                <MultiInput id="multiInputDepotEdit" editable="{= ${oModelView>/divFilled} === true}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
 	                <tokens>
                         <Token editable="false" text="{oModelView>DepotId}" key="{oModelView>DepotId}"/>
                     </tokens>

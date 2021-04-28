@@ -148,6 +148,9 @@ sap.ui.define(
                         this.getView().setModel(oViewModel, "oModelView");
                         this.getView().getModel().resetChanges();
 
+                        // To set Non-editable for Div and Depot by default
+                        oViewModel.setProperty("/zoneFilled", false);
+                        oViewModel.setProperty("/divFilled", false);
                         // To clear filter and field Values of Zone and Division
                         var oDivision = this.getView().byId("idDivision");
                         oDivision.clearSelection();
@@ -230,7 +233,6 @@ sap.ui.define(
                 },
 
                 updateOptions: function () {
-                    debugger;
                     var selectCorrectFlag,
                         blankOption,
                         addTr;
@@ -240,7 +242,6 @@ sap.ui.define(
                     if (addQsFlag === true) {
                         addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                     } else {
-                        debugger;
                         var iIndex = this.getModel("oModelView").getProperty("/iIndex");
                         addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
                     }
@@ -424,58 +425,158 @@ sap.ui.define(
                     oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
-                
+
+                _fnChangeDivDepot: function (oChgdetl) {
+                    var aSource = this.getModel("oModelView").getProperty(oChgdetl.src.path),
+                        oSourceSet = new Set(aSource);
+
+                    var aTarget = this.getModel("oModelView").getProperty(oChgdetl.target.localPath),
+                        aNewTarget = [];
+
+                    var oModel = this.getModel(), tempPath, tempdata;
+
+                    aTarget.forEach(function (ele) {
+                        if (typeof ele === "string") {
+                            tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                                Id: ele
+                            });
+                        }
+                        else {
+                            tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                                Id: ele[oChgdetl.target.targetKey]
+                            });
+                        }
+                        tempdata = oModel.getData(tempPath);
+                        if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+                            aNewTarget.push(ele)
+                        }
+                    });
+
+                    this.getModel("oModelView").setProperty(oChgdetl.target.localPath, aNewTarget);
+                },
+
                 onMultyZoneChange: function (oEvent) {
-                    debugger;
+                    var zoneFilled = false;
                     var sKeys = oEvent.getSource().getSelectedKeys();
                     var oView = this.getView();
+                    var oZone = oView.byId("idZone");
+                    var oDivision = oView.byId("idDivision");
+                    var oDepot = oView.byId("multiInputDepotAdd");
                     var aArray = [];
+                    var bArray = [];
                     for (var x of sKeys) {
                         aArray.push({
                             ZoneId: x,
                         });
+                        bArray.push(x);
+                        zoneFilled = true;
                     }
+
+                    oView.getModel("oModelView").setProperty("/zoneFilled", zoneFilled);
                     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingZone", aArray);
-                    var oDivision = oView.byId("idDivision");
+                    oView.getModel("oModelView").setProperty("/Zones", bArray);
+                    var Divisions = oView.getModel("oModelView").getProperty("/TrainingDetails/TrainingDivision");
+                    bArray = [];
+                    if (Divisions.length > 0) {
+                        for (var x of Divisions) {
+                            bArray.push(x["DivisionId"]);
+                        }
+                        oView.getModel("oModelView").setProperty("/Divisions", bArray);
+                    } else {
+                        oView.getModel("oModelView").setProperty("/Divisions", []);
+                    }
+
+                    // bArray = [];
+                    // var Depots = oView.getModel("oModelView").getProperty("/TrainingDetails/TrainingDepot");
+                    // if (Depots.length > 0) {
+                    //     for (var x of Depots) {
+                    //         bArray.push(x["DepotId"]);
+                    //     }
+                    //     oView.getModel("oModelView").setProperty("/Depots", bArray);
+                    // } else {
+                    //     oView.getModel("oModelView").setProperty("/Depots", []);
+                    // }
+
+                    if (zoneFilled === false) {
+                        oZone.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", []);
+                        oDivision.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/divFilled", false);
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/Zones" },
+                        target: { localPath: "/Divisions", oDataPath: "/MasterDivisionSet", key: "Zone" }
+                    });
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/Divisions" },
+                        target: { localPath: "/TrainingDetails/TrainingDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
+                    });
 
                     var aDivFilter = [];
                     for (var y of aArray) {
                         aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]))
                     }
                     oDivision.getBinding("items").filter(aDivFilter);
+
+                    Divisions = oView.getModel("oModelView").getProperty("/Divisions");
+                    if (Divisions.length == 0) {
+                        oView.getModel("oModelView").setProperty("/divFilled", false);
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
+
                 },
 
                 onMultyDivisionChange: function (oEvent) {
-                    debugger;
                     var sKeys = oEvent.getSource().getSelectedKeys();
                     var oView = this.getView();
+                    var divFilled = false;
+                    var oDivision = oView.byId("idDivision");
+                    var oDepot = oView.byId("multiInputDepotAdd");
                     var aArray = [];
+                    var bArray = [];
                     for (var x of sKeys) {
                         aArray.push({
                             DivisionId: x,
                         });
+                        bArray.push(x);
+                        divFilled = true;
                     }
-                    oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", aArray);
-                    var oDepot = oView.byId("idDepot");
-                    var aDepot = [];
-                    for (var y of aArray) {
-                        aDepot.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]))
-                    }
-                    oDepot.getBinding("items").filter(aDepot);
-                },
 
-                // onMultyDepotChange: function (oEvent) {
-                //     debugger;
-                //     var sKeys = oEvent.getSource().getSelectedKeys();
-                //     var oView = this.getView();
-                //     var aArray = [];
-                //     for (var x of sKeys) {
-                //         aArray.push({
-                //             DepotId: x,
-                //         });
-                //     }
-                //     oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", aArray);
-                // },
+                    oView.getModel("oModelView").setProperty("/divFilled", divFilled);
+                    oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDivision", aArray);
+                    oView.getModel("oModelView").setProperty("/Divisions", bArray);
+
+                    // var Depots = oView.getModel("oModelView").getProperty("/TrainingDetails/TrainingDepot");
+                    // bArray = [];
+                    // if (Depots.length > 0) {
+                    //     for (var x of Depots) {
+                    //         bArray.push(x["DepotId"]);
+                    //     }
+                    //     oView.getModel("oModelView").setProperty("/Depots", bArray);
+                    // } else {
+                    //     oView.getModel("oModelView").setProperty("/Depots", []);
+                    // }
+
+                    if (divFilled === false) {
+                        oDivision.clearSelection();
+
+                        oView.getModel("oModelView").setProperty("/TrainingDetails/TrainingDepot", []);
+                        oDepot.removeAllTokens();
+                    }
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/Divisions" },
+                        target: { localPath: "/TrainingDetails/TrainingDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
+                    });
+
+                },
 
                 onMultyPainterTypeChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
@@ -504,7 +605,6 @@ sap.ui.define(
                 },
 
                 onValueHelpRequestedDepot: function () {
-                    debugger;
                     this._oMultiInput = this.getView().byId("multiInputDepotAdd");
                     this.oColModel = new JSONModel({
                         cols: [
@@ -533,7 +633,14 @@ sap.ui.define(
                             oTable.setModel(this.oColModel, "columns");
 
                             if (oTable.bindRows) {
-                                oTable.bindAggregation("rows", "/MasterDepotSet");
+                                oTable.bindAggregation("rows", {
+                                    path: "/MasterDepotSet", events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
                             }
 
                             if (oTable.bindItems) {
@@ -586,7 +693,6 @@ sap.ui.define(
                 },
 
                 onValueHelpAfterOpen: function () {
-                    debugger;
                     var aFilter = this._getfilterforControl();
 
                     this._filterTable(aFilter, "Control");
@@ -594,17 +700,13 @@ sap.ui.define(
                 },
 
                 _getfilterforControl: function () {
-                    debugger;
-                    var sDivision = this.getView()
-                        .getModel("oModelView")
-                        .getProperty("/TrainingDetails/TrainingDivision");
+                    var sDivision = this.getView().getModel("oModelView").getProperty("/TrainingDetails/TrainingDivision");
                     var aFilters = [];
                     if (sDivision) {
                         for (var y of sDivision) {
                             aFilters.push(new Filter("Division", FilterOperator.EQ, y["DivisionId"]));
                         }
                     }
-                    console.log(aFilters);
                     if (aFilters.length == 0) {
                         return [];
                     }
@@ -640,7 +742,6 @@ sap.ui.define(
                 onValueHelpOkPress: function (oEvent) {
                     var oData = [];
                     var xUnique = new Set();
-                    debugger;
                     var aTokens = oEvent.getParameter("tokens");
 
                     aTokens.forEach(function (ele) {
@@ -653,7 +754,6 @@ sap.ui.define(
                         }
                     });
 
-                    //  this._oMultiInput.setTokens(aTokens);
                     this.getView()
                         .getModel("oModelView")
                         .setProperty("/TrainingDetails/TrainingDepot", oData);
@@ -910,7 +1010,6 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
@@ -1006,7 +1105,6 @@ sap.ui.define(
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-                    debugger;
 
                     var settings = {
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trSubTypeId + ")/$value",
@@ -1047,7 +1145,6 @@ sap.ui.define(
                 },
 
                 onDataExport: function (oEvent) {
-                    debugger;
                     var oExport = new Export({
                         // Type that will be used to generate the content. Own ExportType's can be created to support other formats
                         exportType: new ExportTypeCSV({
@@ -1110,7 +1207,6 @@ sap.ui.define(
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                    debugger;
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
@@ -1150,6 +1246,10 @@ sap.ui.define(
                 onUpload: function (oEvent) {
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+                },
+
+                handleTypeMissmatch: function () {
+
                 },
 
                 onImageView: function (oEvent) {
