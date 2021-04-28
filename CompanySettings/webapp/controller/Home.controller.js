@@ -227,8 +227,8 @@ sap.ui.define([
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
 
-               // sap.m.URLHelper.redirect(sSource, true);
-                 window.open(sSource);
+                // sap.m.URLHelper.redirect(sSource, true);
+                window.open(sSource);
             },
             onChangePdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
@@ -293,28 +293,37 @@ sap.ui.define([
                 var property = this._property;
                 var sServiceUri = this.sServiceURI;
                 var oModel = this.getView().getModel("local");
+                var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+
                 // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                 //To DO promises for sync
                 for (var i = 0; i <= aCatalogue.length; i++) {
 
                     if (i == index) {
                         delItems = aCatalogue[i];
-                        jQuery.ajax({
-                            method: "DELETE",
-                            url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            // data: delItems,
-                            success: function (data) {
-                                aCatalogue.splice(aCatalogue[i] - 1, 1);
+                        if (delItems.file !== null) {
+                            jQuery.ajax({
+                                method: "DELETE",
+                                url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                // data: delItems,
+                                success: function (data) {
+                                    // aCatalogue.splice(aCatalogue[i-1], 1);
 
-                                oModel.refresh(true);
-                                var sMessage = "PDF Deleted!";
-                                MessageToast.show(sMessage);
-                            },
-                            error: function () { },
-                        })
+                                    oModel.refresh(true);
+                                    var sMessage = "PDF Deleted!";
+                                    MessageToast.show(sMessage);
+                                },
+                                error: function () { },
+                            });
+                        }
+                        else {
+                            aCatalogue.splice(i);
+                        }
+                         aCatalogue.splice(i);
+
                     }
 
                 };

@@ -60,11 +60,14 @@ xmlns:f="sap.ui.layout.form">
                                                         uploadComplete="handleUploadCompletePdf" />
                                                         <HBox>
                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
                                                 </HBox>
                                                 </VBox>
-                                                <!-- <Text text="{local>MediaName}"></Text> -->
+                                                
                                                         </FlexBox>
+                                                        <VBox width="30%">
+                                                <Text text="{local>MediaName}"></Text>
+                                                </VBox>
                                                 
                                                 <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
                                                             
