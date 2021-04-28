@@ -37,7 +37,7 @@ sap.ui.define([
 
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-                this.oFileUploaderPdf=this.getView().byId("idFormToolPdfUploader");
+                this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
 
 
                 // Attaches validation handlers
@@ -227,7 +227,8 @@ sap.ui.define([
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
 
-                sap.m.URLHelper.redirect(sSource, true)
+               // sap.m.URLHelper.redirect(sSource, true);
+                 window.open(sSource);
             },
             onChangePdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
@@ -257,7 +258,7 @@ sap.ui.define([
 
                             success: function (data) {
                                 // that.getView().getModel("local").refresh(true);
-                                var oFileUploaderPdf=this.getView().byId("idFormToolPdfUploader");
+                                var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
                                 oFileUploaderPdf.clear();
                             },
                             error: function () { },
