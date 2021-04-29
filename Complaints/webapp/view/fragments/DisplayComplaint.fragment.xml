@@ -59,6 +59,8 @@
             <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Apply}" enabled="{oModelControl>/TokenCode}" press="onPressTokenCode" />
             <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Points}" />
             <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" editable="false" value="{path:'oModelView>/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
+            <Label text="{i18n>Remark}"/>
+            <TextArea value="{oModelView>/Remark}" />
             
           
 
