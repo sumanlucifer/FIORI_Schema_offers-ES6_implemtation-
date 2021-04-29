@@ -49,29 +49,29 @@
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idZone" selectedKeys="{oModelView>/Zones}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
+                <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/TrainingZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/Divisions}" editable="{= ${oModelView>/zoneFilled} === true}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
+                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/TrainingDetails/TrainingDivision}" editable="{= ${oModelView>/TrainingDetails/TrainingZone}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiInput id="multiInputDepotAdd" editable="{= ${oModelView>/divFilled} === true}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
+                <MultiInput id="multiInputDepotAdd" editable="{= ${oModelView>/TrainingDetails/TrainingDivision}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
 	                <tokens>
                         <Token editable="false" text="{oModelView>Depot}" key="{oModelView>DepotId}"/>
                     </tokens>
 	            </MultiInput>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idPainterType" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyPainterTypeChange" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+                <MultiComboBox id="idPainterType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<core:Item key="{Id}" text="{PainterType}"/>
 				</MultiComboBox>
 
                 <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idPainterArcheType" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyPainterArcheTypeChange" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+                <MultiComboBox id="idPainterArcheType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterArcheTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<core:Item key="{Id}" text="{ArcheType}"/>
 				</MultiComboBox>
 
