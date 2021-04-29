@@ -1751,7 +1751,14 @@ sap.ui.define(
               oTable.setModel(this.oColModel, "columns");
 
               if (oTable.bindRows) {
-                oTable.bindAggregation("rows", "/DealerSet");
+                oTable.bindAggregation("rows", {
+                  path: "/DealerSet",
+                  events: {
+                    dataReceived: function () {
+                      this._oValueHelpDialog.update();
+                    }.bind(this),
+                  },
+                });
               }
 
               if (oTable.bindItems) {
@@ -2199,9 +2206,9 @@ sap.ui.define(
             return "Success";
           }
         },
-        fmtQuestTrainStatusClr:function (mParam1, mParam2) {
+        fmtQuestTrainStatusClr: function (mParam1, mParam2) {
           if (!mParam2) {
-            return "None";//for status NA
+            return "None"; //for status NA
           }
 
           if (mParam1 == 0) {
@@ -2209,7 +2216,7 @@ sap.ui.define(
           } else {
             return "Success";
           }
-        }
+        },
       }
     );
   }
