@@ -312,8 +312,7 @@ sap.ui.define([
         },
 
         onPressSaveOrUpdate: function () {
-            // var oModel = this.getView().getModel("ActionViewModel");
-            //     oModel.getProperty("/Catalogue");
+            
 
 
             if (this._validateRequiredFields()) {
@@ -329,8 +328,7 @@ sap.ui.define([
                     return list;
                 });
 
-                //var oParam = Object.assign({}, this.entityObject);
-                //var oParam1 = this.entityObject;
+                
                 var oParam = {};
                 $.extend(true, oParam, this.entityObject);
                 //delete oParam.__metadata;
@@ -338,8 +336,9 @@ sap.ui.define([
 
                 oParam.Title = oViewModel.getProperty("/Title"),
                     oParam.Description = oViewModel.getProperty("/Title"),
-                    oParam.ProductCategoryId = parseInt(oViewModel.getProperty("/Category")),
-                    oParam.ProductClassificationId = parseInt(oViewModel.getProperty("/Classification")),
+                    oParam.ProductId = oViewModel.getProperty("/Title"),
+                    oParam.ProductCategoryId = oViewModel.getProperty("/Category"),
+                    oParam.ProductClassificationId = oViewModel.getProperty("/Classification"),
                     oParam.ProductRangeId = parseInt(oViewModel.getProperty("/Range")),
                     oParam.ProductCompetitors = Competitors
 
@@ -347,8 +346,9 @@ sap.ui.define([
 
                     Title: oViewModel.getProperty("/Title"),
                     Description: oViewModel.getProperty("/Title"),
-                    ProductCategoryId: parseInt(oViewModel.getProperty("/Category")),
-                    ProductClassificationId: parseInt(oViewModel.getProperty("/Classification")),
+                    ProductId : oViewModel.getProperty("/Title"),
+                    ProductCategoryId: oViewModel.getProperty("/Category"),
+                    ProductClassificationId:oViewModel.getProperty("/Classification"),
                     ProductRangeId: parseInt(oViewModel.getProperty("/Range")),
                     ProductCompetitors: Competitors
                 };
@@ -462,9 +462,9 @@ sap.ui.define([
                 return true;
             });
 
-            this._setControlValueState([oTitleControl]);
-            this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
-            if (oTitleControl.getValue() && oCategoryControl.getSelectedKey() &&
+           // this._setControlValueState([oTitleControl]);
+            this._setSelectControlValueState([oTitleControl,oCategoryControl, oClassificationControl, oRangeControl]);
+            if (oTitleControl.getSelectedKey() && oCategoryControl.getSelectedKey() &&
                 oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
                 if (!bCataloguePDF) {
                     var sMessage = "Multiple PDF of same Language";

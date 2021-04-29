@@ -89,7 +89,7 @@
                 <VBox class="sapUiMediumMarginBeginEnd">
                 <!-- <Title text="Title:"/>
                 <Text text="{Title}"/> -->
-                <ObjectIdentifier title="Title" text="{Title}"/>
+                <ObjectIdentifier title="Title" text="{ProductDetails/ProductName}"/>
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
                <ObjectIdentifier title="Category" text="{ProductCategory/Category}"/>

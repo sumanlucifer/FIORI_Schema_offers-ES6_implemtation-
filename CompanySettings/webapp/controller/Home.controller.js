@@ -73,7 +73,7 @@ sap.ui.define([
 
             },
             showPdfList() {
-
+                
 
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
@@ -227,8 +227,8 @@ sap.ui.define([
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
 
-                // sap.m.URLHelper.redirect(sSource, true);
-                window.open(sSource);
+                sap.m.URLHelper.redirect(sSource, true);
+                // window.open(sSource);
             },
             onChangePdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
