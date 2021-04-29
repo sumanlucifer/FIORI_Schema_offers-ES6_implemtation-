@@ -229,7 +229,7 @@ sap.ui.define([
             var aFilters = [];
 
             var aKeys = [
-                "search", "CreatedAt", "Title", "CreatedByDetails", "ProductCategory"
+                "search", "CreatedAt", "ProductDetails/ProductName", "CreatedByDetails", "ProductCategory"
             ];
 
             for (let i = 0; i < aKeys.length; i++) {
@@ -299,7 +299,7 @@ sap.ui.define([
                     case "Title":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter({ path: "Title", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                            aFilters.push(new Filter({ path: "ProductDetails/ProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                     case "Created By":

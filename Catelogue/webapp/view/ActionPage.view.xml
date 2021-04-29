@@ -64,10 +64,26 @@
                                             </Select>
                                     </VBox>
                                 </HBox>
+                                <HBox >
+                                    <VBox class="sapUiMediumMarginBottom" width="80%">
+                                        <Label text="Product:" required="true" />
+                                            <Select
+                                            id="idTitle"
+                                            forceSelection="false"
+                                            width="100%"
+                                            selectedKey="{ActionViewModel>/Title/}"
+                                            items="{
+                                                path: '/MasterProductSet',
+                                                sorter: { path: 'ProductName' }
+                                            }">
+                                            <core:Item key="{Id}" text="{ProductName}" />
+                                            </Select>
+                                    </VBox>
+                                </HBox>
                                  
                 <VBox>
-                                <Label text="Title:" required="true" />
-                                <Input id="idTitle" value="{ActionViewModel>/Title}"  placeholder="Enter Title" change="onChangeValue" width="80%" maxLength="100"/>
+                                <!-- <Label text="Title:" required="true" />
+                                <Input id="idTitle" value="{ActionViewModel>/Title}"  placeholder="Enter Title" change="onChangeValue" width="80%" maxLength="100"/> -->
                              
                              <VBox >  
                                     <HBox width="100%" class="sapUiMediumMarginTop">

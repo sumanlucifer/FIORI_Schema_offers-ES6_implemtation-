@@ -93,6 +93,7 @@
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
                     "refreshAfterChange": false,
+                    "defaultUpdateMethod":"PUT",
                     "useBatch" : false
                 }
             }

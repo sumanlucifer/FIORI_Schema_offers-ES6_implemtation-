@@ -21,7 +21,7 @@
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Title"/>
-                            <PropertyValue Property="Value" Path="Title"/>
+                            <PropertyValue Property="Value" Path="ProductDetails/ProductName"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Category"/>
