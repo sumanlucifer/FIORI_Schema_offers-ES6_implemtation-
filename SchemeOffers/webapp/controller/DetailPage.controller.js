@@ -336,7 +336,9 @@ sap.ui.define(
             "BonusRewardPoints",
             "BonusValidityDurationYear",
             "BonusValidityDurationMonth",
-            "BonusValidityDurationDays"
+            "BonusValidityDurationDays",
+            "SchemeStatus",
+            "Reason"
           ];
           var sValue = "",
             sPlit;

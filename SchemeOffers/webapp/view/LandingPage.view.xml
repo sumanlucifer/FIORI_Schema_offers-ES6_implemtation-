@@ -71,7 +71,8 @@
                     <OverflowToolbar>
                         <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
-                        <Button text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
+                        
+                        <Button icon="sap-icon://add" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Transparent" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />
                      
                     </OverflowToolbar>
