@@ -321,6 +321,41 @@ sap.ui.define(
 
           var oModelView = new JSONModel(oData);
           oView.setModel(oModelView, "oModelView");
+
+          var sReqFields = [
+            "SchemeTypeId",
+            "Title",
+            "Description",
+            "PotentialId",
+            "SlabId",
+            "PurchaseVolumeRequired",
+            "AccuredPointsRequired",
+            "RewardPoints",
+            "RewardCash",
+            "RewardGiftId",
+            "BonusRewardPoints",
+            "BonusValidityDurationYear",
+            "BonusValidityDurationMonth",
+            "BonusValidityDurationDays"
+          ];
+          var sValue = "",
+            sPlit;
+          for (var k of sReqFields) {
+            sValue = oModelView.getProperty("/" + k);
+            sPlit = k.split("/");
+            if (sPlit.length > 1) {
+              if (
+                toString.call(oModelView.getProperty("/" + sPlit[0])) !==
+                "[object Object]"
+              ) {
+                oModelView.setProperty("/" + sPlit[0], {});
+              }
+            }
+            if (sValue == undefined) {
+              oModelView.setProperty("/" + k, "");
+            }
+          }
+          
           promise.resolve(data);
           return promise;
         },
