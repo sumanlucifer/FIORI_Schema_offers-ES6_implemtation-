@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @Base Controller
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
@@ -6,7 +6,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/json/JSONModel"
   ],
   function (
     Controller,
