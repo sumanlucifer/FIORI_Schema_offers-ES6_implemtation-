@@ -112,7 +112,7 @@ sap.ui.define(
                             },
                             success: function (data) {
 
-                                if (trainingType === 'ONLINE') {
+                                // if (trainingType === 'ONLINE') {
                                     if (data.TrainingQuestionnaire) {
                                         data.TrainingQuestionnaire.results.forEach(function (ele) {
                                             if (ele.TrainingQuestionnaireOptions && ele.TrainingQuestionnaireOptions.results.length) {
@@ -186,14 +186,13 @@ sap.ui.define(
                                     oNow = new Date(oDateTime);
                                     data.ViewEndDate = oDateFormat.format(oNow);
 
-                                    oViewModel.setProperty("/TrainingDetails", data);
-                                    oViewModel.setProperty("/__metadata", data.__metadata);
                                     that._initFilerForTablesEnrollment(data.Id);
-                                }
+                                // }
+
+                                oViewModel.setProperty("/TrainingDetails", data);
+                                oViewModel.setProperty("/__metadata", data.__metadata);
 
                                 if (trainingType === 'OFFLINE') {
-                                    oViewModel.setProperty("/TrainingDetails", data);
-                                    oViewModel.setProperty("/__metadata", data.__metadata);
                                     that._initFilerForTablesAttendance(data.Id);
                                 }
 
@@ -1112,8 +1111,8 @@ sap.ui.define(
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
 
                     delete oPayload.Duration;
-                    delete oClonePayload.ViewStartDate;
-                    delete oClonePayload.ViewEndDate;
+                    delete oPayload.ViewStartDate;
+                    delete oPayload.ViewEndDate;
 
                     var Array = [];
                     for (var x of oPayload.TrainingZone) {
@@ -1231,6 +1230,7 @@ sap.ui.define(
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this;
 
+                    debugger;
                     //Quick fix Training zone depot PainterType PainterArchType
                     if (oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results) {
                         oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
