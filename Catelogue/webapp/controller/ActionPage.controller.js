@@ -333,9 +333,10 @@ sap.ui.define([
                 $.extend(true, oParam, this.entityObject);
                 //delete oParam.__metadata;
                 delete oParam.MediaList;
+                var Title=this.getView().byId("idTitle").getSelectedItem().getText();    
 
-                oParam.Title = oViewModel.getProperty("/Title"),
-                    oParam.Description = oViewModel.getProperty("/Title"),
+                oParam.Title = Title,
+                    oParam.Description = Title,
                     oParam.ProductId = oViewModel.getProperty("/Title"),
                     oParam.ProductCategoryId = oViewModel.getProperty("/Category"),
                     oParam.ProductClassificationId = oViewModel.getProperty("/Classification"),
@@ -344,8 +345,8 @@ sap.ui.define([
 
                 var oPayload = {
 
-                    Title: oViewModel.getProperty("/Title"),
-                    Description: oViewModel.getProperty("/Title"),
+                    Title: Title,
+                    Description: Title,
                     ProductId : oViewModel.getProperty("/Title"),
                     ProductCategoryId: oViewModel.getProperty("/Category"),
                     ProductClassificationId:oViewModel.getProperty("/Classification"),
@@ -624,6 +625,7 @@ sap.ui.define([
                         },
                         error: function () { },
                     })
+                    aCatalogue.splice(i);
                 }
                 else{
                         aCatalogue.splice(i);
