@@ -672,7 +672,7 @@ sap.ui.define([
                             that.getModel().update(data, {
                                 IsArchived: true
                             }, {
-                                success: that.showToast.bind(that, "MSG_SUCCESS_TRAINING_REMOVE")
+                                success: that.showToast.bind(that, "MSG_SUCCESS_LIVE_TRAINING_REMOVE")
                             });
                         }
                         that.showWarning("MSG_CONFIRM_LIVE_TRAINING_DELETE", onYes);
