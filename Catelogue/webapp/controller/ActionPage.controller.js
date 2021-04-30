@@ -71,7 +71,7 @@ sap.ui.define([
                     },
                     success: function (data, response) {
                         that.entityObject = data;
-                        oData.Title = data.Title;
+                        oData.Title = data.ProductId;
                         oData.Category = data.ProductCategoryId
                         oData.Classification = data.ProductClassificationId
                         oData.Range = data.ProductRangeId
