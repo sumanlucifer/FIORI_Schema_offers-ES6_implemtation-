@@ -73,8 +73,13 @@
                                 placeholder="{i18n>placeHolder1}"
                         id="idDepot"
 						valueHelpOnly="true"
+                        tokens="{oModelControl>/MultiCombo/Depots}"
 						valueHelpRequest="onDepotValueHelpOpen"
 					>
+                     <tokens>
+                        <Token editable="false" text="{oModelControl>Depot}" key="{oModelControl>DepotId}"/>
+                    </tokens>
+
 					</MultiInput>
                             </f:fields>
                         </f:FormElement>

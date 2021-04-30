@@ -2,8 +2,8 @@
 	xmlns="sap.ui.comp.valuehelpdialog"
 	xmlns:core="sap.ui.core">
 	<ValueHelpDialog
-		title="Product"
-		ok=".onValueHelpOkPress"
+		title="{i18n>formRegionLbl3}"
+		ok="onDepotOkPress"
 		cancel="onDepotCancelPress"
 		afterClose=".onValueHelpAfterClose"
         afterOpen="onDepotAfterOpen"

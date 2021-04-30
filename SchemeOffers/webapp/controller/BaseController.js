@@ -6,7 +6,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
   ],
   function (
     Controller,
@@ -116,9 +116,9 @@ sap.ui.define(
 
           oDivision.getBinding("items").filter(aDivFilter);
 
-        //   var oDepot = oView.byId("idDepot");
-        //   oDepot.clearSelection();
-        //   oDepot.fireSelectionChange();
+          //   var oDepot = oView.byId("idDepot");
+          //   oDepot.clearSelection();
+          //   oDepot.fireSelectionChange();
         },
         onDivisionChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -131,19 +131,18 @@ sap.ui.define(
           }
           oView.getModel("oModelView").setProperty("/SchemeDivisions", aArray);
           //depot clear and Depot Filter
-        //   var oDepot = oView.byId("idDepot");
-        //   oDepot.clearSelection();
-        //   oDepot.fireSelectionChange();
+          //   var oDepot = oView.byId("idDepot");
+          //   oDepot.clearSelection();
+          //   oDepot.fireSelectionChange();
 
-         
-        //   var aDepot = [];
-        //   for (var y of aArray) {
-        //     aDepot.push(
-        //       new Filter("Division", FilterOperator.EQ, y["DivisionId"])
-        //     );
-        //   }
+          //   var aDepot = [];
+          //   for (var y of aArray) {
+          //     aDepot.push(
+          //       new Filter("Division", FilterOperator.EQ, y["DivisionId"])
+          //     );
+          //   }
 
-        //   oDepot.getBinding("items").filter(aDepot);
+          //   oDepot.getBinding("items").filter(aDepot);
         },
         onDepotChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -186,7 +185,14 @@ sap.ui.define(
               oTable.setModel(this.oColModel, "columns");
 
               if (oTable.bindRows) {
-                oTable.bindAggregation("rows", "/MasterDepotSet");
+                oTable.bindAggregation("rows", {
+                  path: "/MasterDepotSet",
+                  events: {
+                    dataReceived: function () {
+                      this._oDepotDialog.update();
+                    }.bind(this),
+                  },
+                });
               }
 
               if (oTable.bindItems) {
@@ -210,10 +216,31 @@ sap.ui.define(
         },
         onDepotCancelPress: function () {
           this._oDepotDialog.close();
-          this._oDepotDialog.destroy();
-          delete this._oDepotDialog;
         },
-      
+        onDepotOkPress: function (oEvent) {
+          var oData = [];
+          var oView = this.getView();
+          var aTokens = oEvent.getParameter("tokens");
+          var aArrayBackEnd = [];
+          aTokens.forEach(function (ele) {
+            oData.push({
+              Depot: ele.getText(),
+              DepotId: ele.getKey(),
+            });
+            aArrayBackEnd.push({
+              DepotId: ele.getKey()
+            });
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty("/MultiCombo/Depots", oData);
+          oView
+            .getModel("oModelView")
+            .setProperty("/SchemeDepots", aArrayBackEnd);
+          console.log(oData);
+          this._oDepotDialog.close();
+        },
         onDepotAfterOpen: function () {
           var aFilter = this._getFilterForDepot();
           this._FilterDepotTable(aFilter, "Control");
@@ -236,8 +263,8 @@ sap.ui.define(
             and: true,
           });
         },
-        _FilterDepotTable:function(oFilter,sType){
-            var oValueHelpDialog = this._oDepotDialog;
+        _FilterDepotTable: function (oFilter, sType) {
+          var oValueHelpDialog = this._oDepotDialog;
 
           oValueHelpDialog.getTableAsync().then(function (oTable) {
             if (oTable.bindRows) {
@@ -252,7 +279,6 @@ sap.ui.define(
 
             oValueHelpDialog.update();
           });
-
         },
         onArchiTypeChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
