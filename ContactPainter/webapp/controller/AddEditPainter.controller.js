@@ -1613,8 +1613,16 @@ sap.ui.define(
               oTable.setModel(this.oColModel, "columns");
 
               if (oTable.bindRows) {
-                oTable.bindAggregation("rows", "/DealerSet");
+                oTable.bindAggregation("rows",{
+                    path:"/DealerSet",
+                    events:{
+                        dataReceived:function(){
+                            this._oValueHelpDialog.update();
+                        }.bind(this)
+                    }
+                })
               }
+
 
               if (oTable.bindItems) {
                 oTable.bindAggregation("items", "/DealerSet", function () {
