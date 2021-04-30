@@ -169,91 +169,63 @@
 				</UploadCollectionItem>
 			</items>
 		</UploadCollection>
-        <!-- </HBox>
-        <HBox width="100%"> -->
-        <!-- <UploadCollection
-			id="UploadCollectionPdf"
-			multiple="false"
-			change="onChange"
-			fileSizeExceed=""
-			selectionChange="onSelectionChangePdf"
-			typeMissmatch=""
-			uploadComplete=""
-			beforeUploadStarts=""
-            uploadEnabled="false"
-			>
-            <toolbar>
-				<OverflowToolbar id="myId1">
-					<Title id="attachmentTitle1" />
-					<ToolbarSpacer />
-				
-					
-					<UploadCollectionToolbarPlaceholder/>
-				</OverflowToolbar>
-			</toolbar>
-			
-			<items>
-				<UploadCollectionItem
-					documentId="2"
-					fileName="{objectView>/PdfName}"
-					mimeType="{mimeType}"
-					thumbnailUrl="sap-icon://pdf-attachment"
-					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
-					enableEdit="false"
-					enableDelete="false"
-					visibleDelete="false"
-					visibleEdit="false"
-                    press="onPressPdf"
-					>
-					<attributes>
-						<ObjectAttribute
-							title="Uploaded By"
-							text="{path:'CreatedByDetails/Name'}"
-							active="true" />
-                            <ObjectAttribute
-							title="Uploladed on"
-							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
-							active="false" />
-                            <ObjectAttribute
-							title="File size"
-							text="{objectView>/PdfSize}"
-							active="false" />
-					</attributes>
-					
-				</UploadCollectionItem>
-			</items>
-		</UploadCollection>  -->
+        
        <ObjectIdentifier title="Catalogue PDF" class="sapUiSmallMarginTop"/>
-        <List id="idPdf" growing="true"
-                                            items="{path: 'objectView>/Catalogue'}" class="sapUiSmallMarginTopBottom">
-                                            
-                                            <CustomListItem type="Active">
-                                                
-                                                    <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                                      <Select
-                                                    forceSelection="false"
-                                                    editable="false"
-                                                    selectedKey="{objectView>LanguageCode}"
-                                                    items="{
-                                                        path: '/MasterLanguageSet',
-                                                        sorter: { path: 'Id' },
-                                                        templateShareable: true
-                                                    }">
-                                                    <core:Item key="{LanguageCode}" text="{Language}" />
-                                                    </Select>
-                                                    <FlexBox class="sapUiTinyMarginBeginEnd">
-                                                    <Text text="{objectView>MediaName}" />
-                                                    </FlexBox>
+       <Table id="idPdf" width="auto" items="{path: 'objectView>/Catalogue', templateShareable: false}" class="sapUiSmallMarginTopBottom" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>catalogues}" />
+                                                <ToolbarSpacer />
+                                                <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <Column>
+                                                    <Text text="{i18n>selectCatalogue}" />
+                                                </Column>
 
-                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
+                                                            editable="false"
+                                                            selectedKey="{objectView>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                        <VBox>
+                                                           <FlexBox class="sapUiTinyMarginBeginEnd">
+                                                                <Text text="{objectView>MediaName}" />
+                                                            </FlexBox>
+                                                        
+                                                        </VBox>
+                                                        <HBox>
+                                                           
+                                                    
+                                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
                                                             
-                                                          
-                                                       
-                                                    </HBox>
-                                            
-                                               
-                                            </CustomListItem>
-                                        </List>
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                            </Table>
+        
             <ObjectIdentifier title="Competitors"/>
         <HBox width="100%" class="sapUiSmallMarginTopBottom">
         

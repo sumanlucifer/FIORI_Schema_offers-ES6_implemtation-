@@ -606,6 +606,8 @@ sap.ui.define([
 
                 if (i == index) {
                     delItems = aCatalogue[i];
+                    if(delItems.MediaName!=null)
+                    {
                     jQuery.ajax({
                         method: "DELETE",
                         url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
@@ -623,8 +625,14 @@ sap.ui.define([
                         error: function () { },
                     })
                 }
+                else{
+                        aCatalogue.splice(i);
+                }
+                }
+                
 
             };
+            
 
             oModel.refresh(true);
         },
