@@ -77,7 +77,7 @@
 						valueHelpRequest="onDepotValueHelpOpen"
 					>
                      <tokens>
-                        <Token editable="false" text="{oModelControl>Depot}" key="{oModelControl>DepotId}"/>
+                        <Token editable="false" text="{oModelControl>DepotId}" key="{oModelControl>DepotId}"/>
                     </tokens>
 
 					</MultiInput>

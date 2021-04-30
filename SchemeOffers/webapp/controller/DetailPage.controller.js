@@ -391,7 +391,7 @@ sap.ui.define(
           //depots
           if (oData["SchemeDepots"]["results"].length > 0) {
             for (var z of oData["SchemeDepots"]["results"]) {
-              aDepots.push(z["DepotId"]);
+              aDepots.push({DepotId:z["DepotId"]});
             }
           }
           oModelControl.setProperty("/MultiCombo/Depots", aDepots);

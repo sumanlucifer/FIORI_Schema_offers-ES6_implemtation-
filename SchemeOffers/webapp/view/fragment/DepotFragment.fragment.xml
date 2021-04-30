@@ -5,7 +5,7 @@
 		title="{i18n>formRegionLbl3}"
 		ok="onDepotOkPress"
 		cancel="onDepotCancelPress"
-		afterClose=".onValueHelpAfterClose"
+		afterClose="onValueHelpAfterClose"
         afterOpen="onDepotAfterOpen"
 		key="Id"
 		descriptionKey="Depot"

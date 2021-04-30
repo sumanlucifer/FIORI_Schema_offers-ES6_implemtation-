@@ -63,7 +63,7 @@
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
                                 <MultiComboBox selectedKeys="{oModelControl2>/Display/Depots}" editable="false" placeholder="{i18n>placeHolder1}" items="{/MasterDepotSet}">
-                                    <core:ListItem text="{Depot} - {Id}" key="{Id}" />
+                                    <core:ListItem text="{Depot} ({Id})" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>

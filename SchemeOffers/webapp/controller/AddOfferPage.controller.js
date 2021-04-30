@@ -220,7 +220,10 @@ sap.ui.define(
               oPayLoad[y] = parseInt(oPayLoad[y]);
             }
           }
-          console.log(oPayLoad);
+          // setting the zone, division, depot data.
+        
+
+          
           var othat = this;
           oDataModel.create("/SchemeSet", oPayLoad, {
             success: function (data) {

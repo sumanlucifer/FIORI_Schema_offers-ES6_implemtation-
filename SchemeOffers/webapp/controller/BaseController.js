@@ -217,6 +217,12 @@ sap.ui.define(
         onDepotCancelPress: function () {
           this._oDepotDialog.close();
         },
+        onValueHelpAfterClose: function () {
+          if (this._DepotDialog) {
+            this._oDepotDialog.destroy();
+            delete this._oDepotDialog;
+          }
+        },
         onDepotOkPress: function (oEvent) {
           var oData = [];
           var oView = this.getView();
@@ -224,11 +230,10 @@ sap.ui.define(
           var aArrayBackEnd = [];
           aTokens.forEach(function (ele) {
             oData.push({
-              Depot: ele.getText(),
               DepotId: ele.getKey(),
             });
             aArrayBackEnd.push({
-              DepotId: ele.getKey()
+              DepotId: ele.getKey(),
             });
           });
 
@@ -237,8 +242,7 @@ sap.ui.define(
             .setProperty("/MultiCombo/Depots", oData);
           oView
             .getModel("oModelView")
-            .setProperty("/SchemeDepots", aArrayBackEnd);
-          console.log(oData);
+            .setProperty("/SchemeDepots", oData);
           this._oDepotDialog.close();
         },
         onDepotAfterOpen: function () {
@@ -254,7 +258,7 @@ sap.ui.define(
           for (var div of sDivisions) {
             aFilters.push(new Filter("Division", FilterOperator.EQ, div));
           }
-          console.log(aFilters);
+
           if (aFilters.length == 0) {
             return [];
           }
@@ -388,7 +392,6 @@ sap.ui.define(
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
 
-          console.log("method trigerred");
           for (var x of aProp) {
             var oGetProp = oModelView.getProperty("/" + x);
             if (Array.isArray(oGetProp)) {
