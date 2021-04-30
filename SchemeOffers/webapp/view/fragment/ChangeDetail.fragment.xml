@@ -66,9 +66,16 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
-                                <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Depots}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
+                                <!-- <MultiComboBox id="idDepot" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Depots}" showSecondaryValues="true" selectionChange="onDepotChange" items="{/MasterDepotSet}">
                                     <core:ListItem text="{Depot} - {Id}" key="{Id}" />
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput
+                                placeholder="{i18n>placeHolder1}"
+                        id="idDepot"
+						valueHelpOnly="true"
+						valueHelpRequest="onDepotValueHelpOpen"
+					>
+					</MultiInput>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
