@@ -16,22 +16,14 @@
 
             <Label text="{i18n>DateAndTime}" />
             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
-            <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>TokenCode}" />
-            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
-                <layoutData>
-                    <l:GridData span="XL10 L10 M10 S12" />
-                </layoutData>
-            </Input>
-            <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Apply}" enabled="{oModelControl>/TokenCode}" press="onPressTokenCode" />
-            <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Points}" />
-            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" editable="false" value="{path:'oModelView>/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
-            <Label text="{i18n>ComplaintStatus}" required="true" />
-            <Select editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
-                <core:Item text="Registered" key="REGISTERED" />
-                <core:Item text="In Review" key="INREVIEW" />
-                <core:Item text="Resolved" key="RESOLVED" />
-                <core:Item text="Withdrawn" key="WITHDRAWN" />
-            </Select>
+            <Label text="{i18n>Attachment}" />
+            <VBox>
+                <Link text="{i18n>ViewAttachment}" press="onViewAttachment" visible="{oModelControl>/ImageLoaded}" />
+                <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }"></Text>
+            </VBox>
+
+           
+           
             <Label text="{i18n>ProbingSteps}"/>
             	<FormattedText  id="FormattedText" htmlText="{path:'ProbingSteps',formatter:'.fmtProbingSteps'}"/>
            
@@ -42,6 +34,13 @@
             <Text text="{Painter/MembershipCard}" />
             <Label text="{i18n>PrimaryMobileNo}" />
             <Text text="{Painter/Mobile}" />
+             <Label text="{i18n>ComplaintStatus}" required="true" />
+            <Select editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
+                <core:Item text="Registered" key="REGISTERED" />
+                <core:Item text="In Review" key="INREVIEW" />
+                <core:Item text="Resolved" key="RESOLVED" />
+                <core:Item text="Withdrawn" key="WITHDRAWN" />
+            </Select>
             <Label text="{i18n>AddResolution}" />
             <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
                 <items>
@@ -50,12 +49,20 @@
             </ComboBox>
             <Label />
             <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
-            <Label text="{i18n>Attachment}" />
-            <VBox>
-                <Link text="{i18n>ViewAttachment}" press="onViewAttachment" visible="{oModelControl>/ImageLoaded}" />
-                <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }"></Text>
-            </VBox>
 
+             <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>TokenCode}" />
+            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
+                <layoutData>
+                    <l:GridData span="XL10 L10 M10 S12" />
+                </layoutData>
+            </Input>
+            <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Apply}" enabled="{oModelControl>/TokenCode}" press="onPressTokenCode" />
+            <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Points}" />
+            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" editable="false" value="{path:'oModelView>/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
+            <Label text="{i18n>Remark}"/>
+            <TextArea value="{oModelView>/Remark}" />
+            
+          
 
         </f:content>
     </f:SimpleForm>

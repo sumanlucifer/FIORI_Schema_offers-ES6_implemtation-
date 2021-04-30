@@ -78,7 +78,7 @@ sap.ui.define(
             oEvent.getParameter("arguments").prop
           );
           var oView = this.getView();
-          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
+          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
 
           //console.log(oProp);
 
@@ -121,7 +121,7 @@ sap.ui.define(
           var promise = jQuery.Deferred();
           var oView = this.getView();
 
-          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype";
+          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
           var othat = this;
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -147,8 +147,11 @@ sap.ui.define(
           var oView = this.getView();
           var oDataValue = "";
           var othat = this;
-
+          var exPand = "PainterComplainsHistory";
           oView.getModel().read("/" + oProp, {
+              urlParameters: {
+              //$expand: exPand,
+            },
             success: function (data) {
               var oViewModel = new JSONModel(data);
               //console.log(data);
