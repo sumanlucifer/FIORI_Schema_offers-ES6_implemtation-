@@ -80,12 +80,28 @@
                                             </Select>
                                     </VBox>
                                 </HBox>
+                                 <HBox width="100%">
+                                            <VBox class="sapUiMediumMarginBottom" width="80%">
+                                                <Label text="Price Range:" required="true" />
+                                                    <Select
+                                                    id="idRange"
+                                                    forceSelection="false"
+                                                    width="100%"
+                                                    selectedKey="{ActionViewModel>/Range}"
+                                                    items="{
+                                                        path: '/MasterProductRangeSet',
+                                                        sorter: { path: 'Id' }
+                                                    }">
+                                                    <core:Item key="{Id}" text="{Range}" />
+                                                    </Select>
+                                            </VBox>
+                                        </HBox> 
                                  
                 <VBox>
                                 <!-- <Label text="Title:" required="true" />
                                 <Input id="idTitle" value="{ActionViewModel>/Title}"  placeholder="Enter Title" change="onChangeValue" width="80%" maxLength="100"/> -->
                              
-                             <VBox >  
+                             <!-- <VBox >  
                                     <HBox width="100%" class="sapUiMediumMarginTop">
                                             <VBox class="sapUiMediumMarginBottom" width="80%">
                                                 <Label text="Price Range:" required="true" />
@@ -102,7 +118,7 @@
                                                     </Select>
                                             </VBox>
                                         </HBox> 
-                                </VBox>
+                                </VBox> -->
                                 <!-- <Button text="Add Compititor" press="onAddCompititor" /> -->
                             </VBox>
                 </VBox>
@@ -152,59 +168,80 @@
          
                  </HBox> 
                  
-                        <List id="idPdf" items="{path: 'ActionViewModel>/Catalogue'}"  noDataText="{i18n>tableNoDataText}">
-                                            <headerToolbar>
-                                                <Toolbar>
+                       
+
+                                <Table id="idPdf" width="auto" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                        <headerToolbar>
+                                            <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
-                                                    <ToolbarSpacer/>
-                                                    <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
-                                                </Toolbar>
-                                            </headerToolbar>
-                                            <CustomListItem type="Active">
-                                                
-                                                    <HBox alignItems="Start" justifyContent="SpaceBetween">
-                                                      <Select
-                                                    forceSelection="false"
-                                    
-                                                    selectedKey="{ActionViewModel>LanguageCode}"
-                                                    items="{
-                                                        path: '/MasterLanguageSet',
-                                                        sorter: { path: 'Id' },
-                                                        templateShareable: true
-                                                    }">
-                                                    <core:Item key="{LanguageCode}" text="{Language}" />
-                                                    </Select>
-                                                    <FlexBox>
-                                                    <VBox>
-                                                    <u:FileUploader
-                                                        id="idFormToolPdfUploader"
-                                                        name="formToolPdfUploader"
-                                                        
-                                                        tooltip="{i18n>fileUploaderTooltip}"
-                                                        change="onChangePdf"
-                                                        typeMissmatch="handleTypeMissmatch"
-                                                        fileType="pdf"
-                                                        useMultipart="false"
-                                                        sendXHR="true"
-                                                        maximumFileSize="10.1"
-                                                        fileSizeExceed="onFileSizeExceed"
-                                                        uploadComplete="handleUploadCompletePdf" />
-                                                        <HBox>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
-                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
-                                                </HBox>
-                                                </VBox>
-                                                        </FlexBox>
-                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" visible="false" press="openPdf" text="View" class="sapUiTinyMargin increaseFont"/>
-                                                            
-                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" />
-                                                       
-                                                    </HBox>
+                                                <ToolbarSpacer />
+                                                <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <Column>
+                                                    <Text text="{i18n>selectCatalogue}" />
+                                                </Column>
+
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
                                             
-                                               
-                                            </CustomListItem>
-                                        </List>
-                                
+                                                            selectedKey="{ActionViewModel>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                        <VBox>
+                                                            <FlexBox>
+                                                                <VBox>
+                                                                <u:FileUploader
+                                                                    id="idFormToolPdfUploader"
+                                                                    name="formToolPdfUploader"
+                                                                    tooltip="{i18n>fileUploaderTooltip}"
+                                                                    change="onChangePdf"
+                                                                    typeMissmatch="handleTypeMissmatch"
+                                                                    fileType="pdf"
+                                                                    useMultipart="false"
+                                                                    sendXHR="true"
+                                                                    maximumFileSize="10.1"
+                                                                    fileSizeExceed="onFileSizeExceed"
+                                                                    uploadComplete="handleUploadCompletePdf" />
+                                                                    <HBox>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
+                                                                </HBox>
+                                                                </VBox>
+                                                            </FlexBox>
+                                                        
+                                                        </VBox>
+                                                        <HBox>
+                                                            <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
+                                                    
+                                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" />
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                            </Table>
+
                                         
                                        
                 
