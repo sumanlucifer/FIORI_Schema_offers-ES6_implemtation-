@@ -43,7 +43,7 @@
                 <ColumnListItem>
                     <cells>
                         <Text text="{ComplaintCode}"/>
-                       <Text text="{path:'UpdatedAt',formatter:'.fmtDate'}"/>
+                       <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                          <Text text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"/>
 
                     </cells>
