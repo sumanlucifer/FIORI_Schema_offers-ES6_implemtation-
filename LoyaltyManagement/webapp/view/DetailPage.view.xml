@@ -34,7 +34,10 @@
 
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Status"/>
-                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" />
+                        <VBox>
+                        <ObjectStatus text="{PainterReferralHistory/ReferralStatus}" state="Warning" visible="{=${PainterReferralHistory} !== null }"/>
+                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" visible="{=${PainterTokenScanHistory} !== null }"/>
+                        </VBox>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>

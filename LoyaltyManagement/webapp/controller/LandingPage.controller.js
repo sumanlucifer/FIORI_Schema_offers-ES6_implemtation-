@@ -36,29 +36,6 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 this.primaryFilter();
 
-
-                // var that = this;
-                // this.getView().getModel().read("/PainterPointsHistorySet", {
-                //     urlParameters: {
-                //         "$expand": "PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory",
-                //         "$select": "PainterTokenScanHistory/ScanStatus,PainterReferralHistory/ReferralStatus"
-                //     },
-                //     success: function (data, response) {
-                //         that.entityObject = data;
-                //         if (data.PainterTokenScanHistory == null) {
-                //             that.getView().getModel("ViewModel").setProperty("/scanHistory", false);
-
-                //         } else if (data.PainterReferralHistory == null) {
-                //             that.getView().getModel("ViewModel").setProperty("/referalHistory", false)
-                //         }
-                        
-
-
-                //     },
-                //     error: function (oError) {
-                //     }
-                // });
-
             },
 
             onPressAddPointBtn: function () {
