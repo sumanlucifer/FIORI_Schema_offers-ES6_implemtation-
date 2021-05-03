@@ -42,6 +42,9 @@ sap.ui.define([
 
                 });
             },
+            onPressBreadcrumbLink: function () {
+                this._navToHome();
+            },
 
 
 

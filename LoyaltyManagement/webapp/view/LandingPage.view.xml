@@ -20,7 +20,7 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
@@ -29,16 +29,16 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Request Type" label="{i18n>requestTypeFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <ComboBox id="idRequestTypeInput" selectedKey="all" placeholder="{i18n>requestTypeFilterPlaceholder}">
-                                        <core:Item key="all" text="All" />
-                                         <core:Item key="accured" text="Accural" />
+                                    <ComboBox id="idRequestTypeInput" data:filterName="Request Type" selectedKey="" placeholder="{i18n>requestTypeFilterPlaceholder}">
+                                        <!-- <core:Item key="all" text="All" /> -->
+                                         <core:Item key="accrued" text="Accural" />
                                           <core:Item key="redemption" text="Redemption" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status"  label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <ComboBox id="idStatusInput" selectedKey="" placeholder="{i18n>statusFilterPlaceholder}">
+                                    <ComboBox id="idStatusInput" selectedKey="" data:filterName="Status" placeholder="{i18n>statusFilterPlaceholder}">
                                         <core:Item key="all" text="All" />
                                     </ComboBox>
                                 </fb:control>
@@ -65,7 +65,11 @@
                     <IconTabFilter
                         text="{i18n>allRequestIconTabarTitle}"
                         key="all">
-                        <Table id="idAllRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter,PainterTokenScanHistory'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        <Table id="idAllRequestTable" width="auto" 
+                        items="{path: '/PainterPointsHistorySet' ,
+                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'}}" 
+                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -115,7 +119,12 @@
                                         <Text text="{PointType}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        <Text text="{PainterTokenScanHistory/ScanStatus}"/>
+                                        
+                                        <HBox>
+                                        <Text text="{PainterReferralHistory/ReferralStatus}" visible="{=${PainterReferralHistory} !== null }"/>
+                                        <Text text="{PainterTokenScanHistory/ScanStatus}" visible="{=${PainterTokenScanHistory} !== null }"/>
+                                        </HBox>
+                                        
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -181,7 +190,10 @@
                         text="{i18n>redemptionRequestIconTabarTitle}"
                         key="redemption"
                         >
-                        <Table id="idRedemptionRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        <Table id="idRedemptionRequestTable" width="auto"
+                         items="{path: '/PainterPointsHistorySet' ,
+                         parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'}}" 
+                         noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -194,22 +206,22 @@
                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                <Column >
                                     <Text text="{i18n>tblColMembershipId}"/>
                                 </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                <Column>
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                <Column>
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
-                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
+                                <Column >
                                     <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                <Column>
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
                                 <Column>
@@ -227,7 +239,7 @@
                                         <Text text="{PointType}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        <Text text="{CustomerClass}"/>
+                                        <Text text="sdsdsds"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>
