@@ -445,8 +445,7 @@ sap.ui.define([
             var oRangeControl = this.getView().byId("idRange");
             var oObjectCatalogue = this.getModel("ActionViewModel").getProperty("/Catalogue");
             var oObjectCompetitors = this.getModel("ActionViewModel").getProperty("/Competitor");
-
-
+           
 
             var oSet = new Set();
             var bCataloguePDF = oObjectCatalogue.every(function (ele) {
@@ -463,10 +462,32 @@ sap.ui.define([
                 return true;
             });
 
+            
+        
+        
+            // var bEnglishPDF = oObjectCatalogue.every(function (ele) {
+            //     if (ele.LanguageCode == "EN") {
+            //         return true
+            //     }
+            //     return false;
+            // });
+            var bEnglishPDF=oObjectCatalogue.find(function(ele){
+                if(ele.LanguageCode==="EN"){
+                    return true;
+                }
+                return false;
+            })
+
            // this._setControlValueState([oTitleControl]);
             this._setSelectControlValueState([oTitleControl,oCategoryControl, oClassificationControl, oRangeControl]);
             if (oTitleControl.getSelectedKey() && oCategoryControl.getSelectedKey() &&
                 oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
+
+                if (!bEnglishPDF) {
+                    var sMessage = "English PDF Required";
+                    MessageToast.show(sMessage);
+                    return false;
+                }
                 if (!bCataloguePDF) {
                     var sMessage = "Multiple PDF of same Language";
                     MessageToast.show(sMessage);
@@ -625,7 +646,7 @@ sap.ui.define([
                         },
                         error: function () { },
                     })
-                    aCatalogue.splice(i);
+                   
                 }
                 else{
                         aCatalogue.splice(i);
