@@ -35,12 +35,15 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sObjectPath,
                      parameters: {
-                                expand: "Painter,PainterTokenScanHistory",
+                            expand: "Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory"
                             },
 
 
 
                 });
+            },
+            onPressBreadcrumbLink: function () {
+                this._navToHome();
             },
 
 

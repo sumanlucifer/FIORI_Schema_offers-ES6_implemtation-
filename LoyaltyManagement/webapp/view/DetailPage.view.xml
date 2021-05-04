@@ -12,9 +12,8 @@
                     <Title text="Accrual Requests"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs>
-                        <Link text="Loyalty Management"/>
-                        <Link text="Accrual Details" />
+                    <Breadcrumbs currentLocationText="Accrual Details">
+                        <Link press="onPressBreadcrumbLink" text="Loyalty Management"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
@@ -35,7 +34,10 @@
 
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Status"/>
-                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" />
+                        <VBox>
+                        <ObjectStatus text="{PainterReferralHistory/ReferralStatus}" state="Warning" visible="{=${PainterReferralHistory} !== null }"/>
+                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" visible="{=${PainterTokenScanHistory} !== null }"/>
+                        </VBox>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -67,22 +69,22 @@
                             <form:formElements>
                                 <form:FormElement label="Type of Request">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="{PointTransactionType}" />
+                                        <Text class="sapUiTinyMarginTop" text="{PointTransactionType}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Type of Accrual">
                                     <form:fields>
-                                        <Text  class="sapUiSmallMarginBottom"  text="{PointType}" />
+                                        <Text  class="sapUiTinyMarginTop"  text="{PointType}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Request ID">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="{Id}" />
+                                        <Text class="sapUiTinyMarginTop" text="{Id}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Requested Through">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="Mobile App" />
+                                        <Text class="sapUiTinyMarginTop" text="Mobile App" />
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
@@ -91,18 +93,18 @@
                             <form:formElements>
                                 <form:FormElement label="Painter Name">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="{Painter/Name}" />
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/Name}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Point">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="{RewardPoints}" />
+                                        <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
                             
-                                <form:FormElement label="Date &amp; Time">
+                                <form:FormElement label="Date">
                                     <form:fields>
-                                        <Text class="sapUiSmallMarginBottom" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
+                                        <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
