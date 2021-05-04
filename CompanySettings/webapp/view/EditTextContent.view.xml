@@ -5,7 +5,7 @@ xmlns:u="sap.ui.unified"
 xmlns:f="sap.ui.layout.form">
 	
             <Page>
-            
+            <content>
             <!-- <VBox visible="{=!${local>/bEdit}}">
             
             <core:Fragment
@@ -19,6 +19,7 @@ xmlns:f="sap.ui.layout.form">
                 fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
             </core:Fragment>
                 </VBox>
+                </content>
                 <footer>
                     <OverflowToolbar>
                     

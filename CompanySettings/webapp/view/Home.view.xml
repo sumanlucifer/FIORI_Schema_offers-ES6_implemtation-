@@ -7,6 +7,7 @@ xmlns:f="sap.ui.layout.form">
 		<App id="app">
 			<pages>
             <Page>
+            <content>
             <VBox visible="{=!${local>/bEdit}}">
             
             <core:Fragment
@@ -118,6 +119,7 @@ xmlns:f="sap.ui.layout.form">
                  
 			</OverflowToolbar>
             </footer> -->
+            </content>
 		</Page>
 				
 			</pages>

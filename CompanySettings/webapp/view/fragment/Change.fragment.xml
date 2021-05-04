@@ -15,8 +15,9 @@
                 <richtexteditor:RichTextEditor 
                 width="100%"
                 sanitizeValue="false"
+                ready="onReady"
                 required="true"
-                        value="{path : 'ActionEditModel>/AboutUs'}">
+                value="{path : 'ActionEditModel>/AboutUs'}">
                 </richtexteditor:RichTextEditor>
             </VBox>
             <VBox class="sapUiTinyMargin" width="100%">

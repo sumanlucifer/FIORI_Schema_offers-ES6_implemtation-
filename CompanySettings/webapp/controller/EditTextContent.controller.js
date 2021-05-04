@@ -29,8 +29,8 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.EditTextContent", {
             onInit: function () {
-                var oModel = this.getOwnerComponent().getModel("data");
-                this.getView().setModel(oModel);
+                // var oModel = this.getOwnerComponent().getModel("data");
+                // this.getView().setModel(oModel);
 
                // this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
@@ -59,13 +59,13 @@ sap.ui.define([
                 this._property = "MasterCompanySettingsSet(1)";
                 this.entitySet;
 
-               //  this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
-                this.initData();
+                 this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
+                //this.initData();
             },
-            // _onObjectMatched: function () {
-            //      this.initData();
+            _onObjectMatched: function () {
+                 this.initData();
 
-            // },
+            },
             initData: function () {
                 var oData = {
                     AboutUs: null,
@@ -73,7 +73,7 @@ sap.ui.define([
                     CallCenterHelpline: ""
                 }
                 var that = this;
-                this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
+                this.getOwnerComponent().getModel("data").read("/MasterCompanySettingsSet(1)", {
                     success: function (data, response) {
                          that.entitySet=data;
                         oData.AboutUs = data.AboutUs
@@ -116,6 +116,9 @@ sap.ui.define([
                 console.log("empty");
                 this.onDialogPress();
             },
+            onReady: function (oEvent){
+
+            },
 
             handleSavePress: function () {
 
@@ -154,11 +157,11 @@ sap.ui.define([
                 var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                // oModel.update(editSet, oData, {
-                //     success: function () {
-                //         that.onSuccessPress();
-                //     }
-                // });
+                oModel.update(editSet, oData, {
+                    success: function () {
+                        that.onSuccessPress();
+                    }
+                });
 
 
             },
@@ -166,10 +169,10 @@ sap.ui.define([
 
                 var msg = 'Saved Successfully!';
                 MessageToast.show(msg);
-
+                this.getOwnerComponent().getModel("data").refresh(true);
                 setTimeout(function () {
-                    this.getView().getModel("local").setProperty("/bEdit", false);
-                    this._toggleButtonsAndView(false);
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteHome");
                 }.bind(this), 1000);
 
 
