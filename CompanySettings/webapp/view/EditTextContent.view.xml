@@ -1,0 +1,39 @@
+<mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.EditTextContent" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+xmlns:u="sap.ui.unified"
+xmlns:f="sap.ui.layout.form">
+	
+            <Page title="{i18n>title}">
+            
+            <VBox visible="{=!${local>/bEdit}}">
+            
+            <core:Fragment
+            
+                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
+            </core:Fragment></VBox>
+
+                <VBox visible="{=${local>/bEdit}}">
+                <core:Fragment
+             
+                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
+            </core:Fragment>
+                </VBox>
+                <footer>
+                    <OverflowToolbar>
+                    
+                        <ToolbarSpacer/>
+                        
+
+                        <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" />
+                            
+                            <Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+                            <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+                        
+                        
+                    </OverflowToolbar>
+            </footer>
+		</Page>
+				
+			
+</mvc:View>

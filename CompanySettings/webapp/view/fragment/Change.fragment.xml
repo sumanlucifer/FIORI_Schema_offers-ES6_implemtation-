@@ -5,9 +5,9 @@
 	xmlns:core="sap.ui.core"
     xmlns:richtexteditor="sap.ui.richtexteditor">
 	<VBox class="sapUiSmallMargin" >
-    <HBox class="sapUiTinyMargin">
+    <!-- <HBox class="sapUiTinyMargin">
     <Title text="Company Settings Details" />
-    </HBox>
+    </HBox> -->
 
     <HBox width="100%">
             <VBox class="sapUiTinyMargin" width="100%">

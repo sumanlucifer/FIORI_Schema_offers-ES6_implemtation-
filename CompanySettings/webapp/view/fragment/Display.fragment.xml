@@ -5,53 +5,35 @@
     xmlns:core="sap.ui.core"
     xmlns:richtexteditor="sap.ui.richtexteditor">
 	<VBox class="sapUiSmallMargin">
-        <HBox class="sapUiTinyMargin">
-    <Title text="Company Settings Details" />
-    </HBox>
+  
+    	<!-- <HeaderContainer>
+		<Title text="Details" />
+		
+	</HeaderContainer> -->
+        <HBox class="sapUiSmallMarginEnd" width="100%" justifyContent="End" >
+        <Button text="Edit" type="Emphasized" press="onEditTextContent" />
+        </HBox>
 
     <HBox width="100%">
             <VBox class="sapUiTinyMargin" width="100%">
                  <Title text="About Us"/>
-                <!-- <richtexteditor:RichTextEditor 
-                width="100%"
-                required="true"
-                editable="false"
-                        value="{ 
-                                  path : 'AboutUs'
-                                 
-                              }">
-                </richtexteditor:RichTextEditor> -->
+                
                 	<FormattedText htmlText="{AboutUs}"/>
             </VBox>
             <VBox class="sapUiTinyMargin" width="100%">
                <Title text="Privacy Policy"/>
-                <!-- <richtexteditor:RichTextEditor
-                 width="100%"
-                 required="true"
-                 editable="false"
-                 value="{ 
-                                  path : 'Disclaimer'
-                                  
-                              }">
-                 </richtexteditor:RichTextEditor> -->
+                
                  <FormattedText htmlText="{Disclaimer}"/>
             </VBox>
+            
         </HBox>
         <HBox class="sapUiTinyMargin" width="100%">
             <VBox class="sapUiTinyMargin"  width="100%">
             <Title text="Call Center Number"/>
-            <!-- <Input   required="true"  type="Text"
-                maxLength="15"
-                width="30%"
-                editable="false"
-        				placeholder="Enter Call Center Number ..."
-        				valueStateText="Call Center Number must not be empty."
-                        value="{ 
-                                  path : 'CallCenterHelpline'
-                                  
-                              }"/> -->
+            
                                <FormattedText htmlText="{CallCenterHelpline}"/>
                               </VBox>
+                              
         </HBox>
 
         

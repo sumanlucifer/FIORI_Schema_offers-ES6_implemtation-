@@ -117,6 +117,14 @@
 				"name": "RouteHome",
 				"pattern": "RouteHome",
 				"target": ["TargetHome"]
+			},{
+				"name": "EditTextContent",
+				"pattern": "EditTextContent",
+				"target": ["TargetEditTextContent"]
+			},{
+				"name": "EditPdf",
+				"pattern": "EditPdf",
+				"target": ["TargetEditPdf"]
 			}],
 			"targets": {
 				"TargetHome": {
@@ -125,6 +133,20 @@
 					"clearControlAggregation": false,
 					"viewId": "Home",
 					"viewName": "Home"
+                },
+                "TargetEditTextContent": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "EditTextContent",
+					"viewName": "EditTextContent"
+                },
+                "TargetEditPdf": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "EditPdf",
+					"viewName": "EditPdf"
 				}
 			}
 		}

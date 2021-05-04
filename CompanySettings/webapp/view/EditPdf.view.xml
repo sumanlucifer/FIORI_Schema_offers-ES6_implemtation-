@@ -1,43 +1,29 @@
-<mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.Home" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
-xmlns:l="sap.ui.layout"
-xmlns:core="sap.ui.core"
-xmlns:u="sap.ui.unified"
-xmlns:f="sap.ui.layout.form">
-	<Shell id="shell" >
-		<App id="app">
-			<pages>
-            <Page  title="{i18n>title}">
-            <VBox visible="{=!${local>/bEdit}}">
-            
-            <core:Fragment
-            
-                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
-            </core:Fragment></VBox>
-
-                <VBox visible="{local>/bEdit}" >
-                <core:Fragment
-             
-                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
-            </core:Fragment>
-                </VBox>
-                    <VBox class="sapUiSmallMargin">
+<mvc:View
+	controllerName="com.knpl.pragati.CompanySettings.controller.EditPdf"
+    class="sapUiSizeCompact"
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc">
+    <Page title="{i18n>title}">
+	<VBox class="sapUiSmallMargin">
+		<VBox class="sapUiMediumMargin">
                     <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
                                                 <ToolbarSpacer />
-                                                <Button press="onEditCatalogue" type="Emphasized" text="Edit" visible="{=${!local>/bEdit}}"/>
-                                                <Button press="onAddCatalogue" type="Emphasized" text="Add" visible="{=${local>/bEdit}}"/>
+                                                <Button press="onAddCatalogue" type="Emphasized" text="Add" />
                                             </Toolbar>
                                         </headerToolbar>
                                             <columns>
                                                 <Column>
                                                     <Text text="{i18n>selectLanguage}" />
                                                 </Column>
-                                                <Column visible="{=${local>/bEdit}}">
+                                                <Column >
                                                     <Text text="{i18n>selectCatalogue}" />
                                                 </Column>
-                                                <Column visible="{!=${local>/bEdit}}">
+                                                <Column >
                                                     <Text text="Media Name" />
                                                 </Column>
 
@@ -51,7 +37,7 @@ xmlns:f="sap.ui.layout.form">
                                                         <VBox>
                                                         <Select
                                                             forceSelection="false"
-                                                            editable="{=${local>/bEdit}}"
+                                    
                                                             selectedKey="{local>LanguageCode}"
                                                             items="{
                                                                 path: '/MasterLanguageSet',
@@ -63,7 +49,7 @@ xmlns:f="sap.ui.layout.form">
                                                         
                                                         </VBox>
                                                 
-                                                        <VBox visible="{=${local>/bEdit}}">
+                                                        <VBox >
                                                             <FlexBox>
                                                                 <VBox>
                                                                 <u:FileUploader
@@ -86,7 +72,7 @@ xmlns:f="sap.ui.layout.form">
                                                             </FlexBox>
                                                         
                                                         </VBox>
-                                                         <VBox visible="{!=${local>/bEdit}}">
+                                                         <VBox >
                                                             <Text text="{local>MediaName}"></Text>
                                                             </VBox>
 
@@ -94,7 +80,7 @@ xmlns:f="sap.ui.layout.form">
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
                                                     
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
-                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" />
+                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" />
                                                         
                                                         </HBox>
                                                     </cells>
@@ -104,23 +90,20 @@ xmlns:f="sap.ui.layout.form">
                                          
              
                      </VBox>
-            <!-- <footer>
-            <OverflowToolbar>
-            
-				<ToolbarSpacer/>
-                
+	</VBox>
+    <footer>
+                    <OverflowToolbar>
+                    
+                        <ToolbarSpacer/>
+                        
 
-                <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" />
-					
-					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
-                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
-                
-                 
-			</OverflowToolbar>
-            </footer> -->
+                       
+                            
+                            <!-- <Button id="cancel" text="Cancel" press="handleCancelPress" /> -->
+                            <Button id="save" text="Save" type="Emphasized"  press="_updatePdf" />
+                        
+                        
+                    </OverflowToolbar>
+            </footer>
 		</Page>
-				
-			</pages>
-		</App>
-	</Shell>
 </mvc:View>
