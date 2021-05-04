@@ -15,7 +15,7 @@
                             persistencyKey="HistoryPersistenceKey"
                             ignoreFromPersonalisation="Id,SkuCode,TokenCode,UpdatedBy,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,Remark,AssigneUserType">
 
-        <Table>
+        <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
             <columns>
                 <Column hAlign="Begin">
                     <customData>
