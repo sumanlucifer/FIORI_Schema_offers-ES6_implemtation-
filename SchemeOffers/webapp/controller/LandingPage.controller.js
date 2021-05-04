@@ -54,26 +54,28 @@ sap.ui.define(
               Name: "",
               OfferType: "",
               Status: "",
+              TrainingZone: "",
+              TrainingDivision: "",
+              TrainingDepot: "",
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
           this.getView().setModel(oMdlCtrl, "oModelControl");
         },
         _onObjectMatched: function (oEvent) {
-          var oViewModel,iOriginalBusyDelay,
+          var oViewModel,
+            iOriginalBusyDelay,
             oTable = this.byId("idOffersTable");
-            
-             iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
+
+          iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
           oViewModel = new JSONModel({
-            TableTitle: this.getResourceBundle().getText(
-              "TableTitle"
-            ),
+            TableTitle: this.getResourceBundle().getText("TableTitle"),
             tableNoDataText: this.getResourceBundle().getText(
               "tableNoDataText"
             ),
             tableBusyDelay: 0,
           });
-          
+
           this.setModel(oViewModel, "worklistView");
 
           oTable.attachEventOnce("updateFinished", function () {
@@ -81,38 +83,34 @@ sap.ui.define(
             oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
           });
           this.getView().getModel().refresh();
-
-          
         },
 
         onUpdateFinished: function (oEvent) {
           var sTitle,
             oTable = oEvent.getSource(),
             iTotalItems = oEvent.getParameter("total");
-         if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-            sTitle = this.getResourceBundle().getText(
-              "TableDataCount",
-              [iTotalItems]
-            );
+          if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+            sTitle = this.getResourceBundle().getText("TableDataCount", [
+              iTotalItems,
+            ]);
           } else {
             sTitle = this.getResourceBundle().getText("TableTitle");
           }
-           this.getView().getModel("worklistView").setProperty(
-            "/TableTitle",
-            sTitle
-          );
+          this.getView()
+            .getModel("worklistView")
+            .setProperty("/TableTitle", sTitle);
         },
 
         onPressListItem: function (oEvent) {
           var sPath = oEvent
             .getSource()
             .getBindingContext()
-            .getPath().substr(1);
-         var oBject = oEvent.getSource().getBindingContext().getObject();
+            .getPath()
+            .substr(1);
+          var oBject = oEvent.getSource().getBindingContext().getObject();
           this.oRouter.navTo("DetailPage", {
-            prop:oBject["Id"]
+            prop: oBject["Id"],
           });
-         
         },
 
         onPressAdd: function (oEvent) {
@@ -220,6 +218,33 @@ sap.ui.define(
                   )
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
+              } else if (prop === "TrainingZone") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "SchemeZones/ZoneId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                );
+              } else if (prop === "TrainingDivision") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "SchemeDivisions/DivisionId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                );
+              } else if (prop === "TrainingDepot") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "SchemeDepots/DepotId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                );
               } else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
@@ -274,7 +299,7 @@ sap.ui.define(
           });
           return oDateFormat.format(date);
         },
-        
+
         fmtLowerCase: function (mParam) {
           var sLetter = "";
           if (mParam) {
@@ -412,6 +437,9 @@ sap.ui.define(
             Name: "",
             OfferType: "",
             Status: "",
+            TrainingZone: "",
+            TrainingDivision: "",
+            TrainingDepot: "",
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);

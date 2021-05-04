@@ -52,8 +52,7 @@ sap.ui.define(
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
 
-          this.oRouter
-            .getRoute("AddOfferPage")
+         this.getOwnerComponent().getRouter().getRoute("AddOfferPage")
             .attachPatternMatched(this._onObjectMatched, this);
         },
 

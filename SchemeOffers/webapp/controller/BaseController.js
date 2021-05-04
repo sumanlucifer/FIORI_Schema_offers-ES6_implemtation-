@@ -120,6 +120,65 @@ sap.ui.define(
           //   oDepot.clearSelection();
           //   oDepot.fireSelectionChange();
         },
+        onMultyZoneChange: function (oEvent) {
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var oDivision = this.getView().byId("idDivision");
+          var aDivFilter = [];
+          for (var y of sKeys) {
+            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
+          }
+
+          oDivision.getBinding("items").filter(aDivFilter);
+        },
+
+        onMultyDivisionChange: function (oEvent) {
+          this._fnChangeDivDepot({
+            src: { path: "/TrainingDetails/TrainingDivision" },
+            target: {
+              localPath: "/TrainingDetails/TrainingDepot",
+              oDataPath: "/MasterDepotSet",
+              key: "Division",
+              targetKey: "DepotId",
+            },
+          });
+        },
+        _fnChangeDivDepot: function (oChgdetl) {
+          var aSource = this.getModel("oModelView").getProperty(
+              oChgdetl.src.path
+            ),
+            oSourceSet = new Set(aSource);
+
+          var aTarget = this.getModel("oModelView").getProperty(
+              oChgdetl.target.localPath
+            ),
+            aNewTarget = [];
+
+          var oModel = this.getModel(),
+            tempPath,
+            tempdata;
+
+          aTarget.forEach(function (ele) {
+            if (typeof ele === "string") {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele,
+              });
+            } else {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele[oChgdetl.target.targetKey],
+              });
+            }
+            tempdata = oModel.getData(tempPath);
+            if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+              aNewTarget.push(ele);
+            }
+          });
+
+          this.getModel("oModelView").setProperty(
+            oChgdetl.target.localPath,
+            aNewTarget
+          );
+        },
+
         onDivisionChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
           var oView = this.getView();
@@ -240,9 +299,7 @@ sap.ui.define(
           oView
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Depots", oData);
-          oView
-            .getModel("oModelView")
-            .setProperty("/SchemeDepots", oData);
+          oView.getModel("oModelView").setProperty("/SchemeDepots", oData);
           this._oDepotDialog.close();
         },
         onDepotAfterOpen: function () {
