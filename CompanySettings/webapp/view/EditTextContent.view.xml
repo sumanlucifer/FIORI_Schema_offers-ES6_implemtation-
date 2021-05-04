@@ -4,16 +4,16 @@ xmlns:core="sap.ui.core"
 xmlns:u="sap.ui.unified"
 xmlns:f="sap.ui.layout.form">
 	
-            <Page title="{i18n>title}">
+            <Page>
             
-            <VBox visible="{=!${local>/bEdit}}">
+            <!-- <VBox visible="{=!${local>/bEdit}}">
             
             <core:Fragment
             
                 fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
-            </core:Fragment></VBox>
+            </core:Fragment></VBox> -->
 
-                <VBox visible="{=${local>/bEdit}}">
+                <VBox >
                 <core:Fragment
              
                 fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
@@ -25,10 +25,10 @@ xmlns:f="sap.ui.layout.form">
                         <ToolbarSpacer/>
                         
 
-                        <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" />
+                        <!-- <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" /> -->
                             
-                            <Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
-                            <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+                            <Button id="cancel" text="Cancel" press="handleCancelPress" />
+                            <Button id="save" text="Save" type="Emphasized"  press="handleSavePress" />
                         
                         
                     </OverflowToolbar>

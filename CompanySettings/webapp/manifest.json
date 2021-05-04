@@ -62,10 +62,10 @@
 	"sap.ui5": {
 		"flexEnabled": false,
 		"rootView": {
-			"viewName": "com.knpl.pragati.CompanySettings.view.Home",
+			"viewName": "com.knpl.pragati.CompanySettings.view.App",
 			"type": "XML",
 			"async": true,
-			"id": "Home"
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.1",
@@ -115,7 +115,7 @@
 			},
 			"routes": [{
 				"name": "RouteHome",
-				"pattern": "RouteHome",
+				"pattern": "",
 				"target": ["TargetHome"]
 			},{
 				"name": "EditTextContent",

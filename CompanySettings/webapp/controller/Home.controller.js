@@ -29,15 +29,13 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.Home", {
             onInit: function () {
-                var oModel = this.getView().getModel("data");
+                var oModel = this.getOwnerComponent().getModel("data");
                 this.getView().setModel(oModel);
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
 
-
-                this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-                this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+                  this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
 
                 // Attaches validation handlers
@@ -61,6 +59,13 @@ sap.ui.define([
                 this.showPdfList();
 
 
+                // this.oRouter.getRoute("RouteHome").attachPatternMatched(this.onRoteMatched, this);
+            },
+            _onObjectMatched: function () {
+                this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
+                this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+
+
             },
             handleEditPress: function () {
                 this.getView().getModel("local").setProperty("/bEdit", true);
@@ -72,19 +77,19 @@ sap.ui.define([
 
 
             },
-            onEditTextContent :function(){
+            onEditTextContent: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                 oRouter.navTo("EditTextContent");
+                oRouter.navTo("EditTextContent");
 
             },
-            onEditCatalogue :function(){
+            onEditCatalogue: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                 oRouter.navTo("EditPdf");
+                oRouter.navTo("EditPdf");
 
             },
 
-            showPdfList :function() {
-                
+            showPdfList: function () {
+
 
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
@@ -333,7 +338,7 @@ sap.ui.define([
                         else {
                             aCatalogue.splice(i);
                         }
-                         aCatalogue.splice(i);
+                        aCatalogue.splice(i);
 
                     }
 

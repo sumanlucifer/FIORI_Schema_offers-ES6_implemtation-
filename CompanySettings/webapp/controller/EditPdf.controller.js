@@ -23,7 +23,7 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.EditPdf", {
             onInit: function () {
-                var oModel =  this.getOwnerComponent().getModel("data");
+                var oModel = this.getOwnerComponent().getModel("data");
                 this.getView().setModel(oModel);
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
@@ -72,7 +72,12 @@ sap.ui.define([
 
 
             },
+            handleCancelPress: function () {
 
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteHome");
+
+            },
 
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
@@ -95,7 +100,7 @@ sap.ui.define([
                 var catalogue = oModel.getProperty("/Catalogue");
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
-                var propertySet=this._property;
+                var propertySet = this._property;
 
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {

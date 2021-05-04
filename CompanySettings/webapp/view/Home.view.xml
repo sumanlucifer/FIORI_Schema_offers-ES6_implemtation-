@@ -6,7 +6,7 @@ xmlns:f="sap.ui.layout.form">
 	<Shell id="shell" >
 		<App id="app">
 			<pages>
-            <Page  title="{i18n>title}">
+            <Page>
             <VBox visible="{=!${local>/bEdit}}">
             
             <core:Fragment
@@ -34,9 +34,9 @@ xmlns:f="sap.ui.layout.form">
                                                 <Column>
                                                     <Text text="{i18n>selectLanguage}" />
                                                 </Column>
-                                                <Column visible="{=${local>/bEdit}}">
+                                                <!-- <Column visible="{=${local>/bEdit}}">
                                                     <Text text="{i18n>selectCatalogue}" />
-                                                </Column>
+                                                </Column> -->
                                                 <Column visible="{!=${local>/bEdit}}">
                                                     <Text text="Media Name" />
                                                 </Column>
@@ -63,7 +63,7 @@ xmlns:f="sap.ui.layout.form">
                                                         
                                                         </VBox>
                                                 
-                                                        <VBox visible="{=${local>/bEdit}}">
+                                                        <!-- <VBox visible="{=${local>/bEdit}}">
                                                             <FlexBox>
                                                                 <VBox>
                                                                 <u:FileUploader
@@ -85,7 +85,7 @@ xmlns:f="sap.ui.layout.form">
                                                                 </VBox>
                                                             </FlexBox>
                                                         
-                                                        </VBox>
+                                                        </VBox> -->
                                                          <VBox visible="{!=${local>/bEdit}}">
                                                             <Text text="{local>MediaName}"></Text>
                                                             </VBox>
@@ -94,7 +94,7 @@ xmlns:f="sap.ui.layout.form">
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
                                                     
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
-                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" />
+                                                            <!-- <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" /> -->
                                                         
                                                         </HBox>
                                                     </cells>

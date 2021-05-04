@@ -32,7 +32,7 @@ sap.ui.define([
                 var oModel = this.getOwnerComponent().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/MasterCompanySettingsSet(1)");
+               // this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
 
 
@@ -58,8 +58,14 @@ sap.ui.define([
 
                 this._property = "MasterCompanySettingsSet(1)";
                 this.entitySet;
-               this.initData();
+
+               //  this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
+                this.initData();
             },
+            // _onObjectMatched: function () {
+            //      this.initData();
+
+            // },
             initData: function () {
                 var oData = {
                     AboutUs: null,
@@ -73,10 +79,11 @@ sap.ui.define([
                         oData.AboutUs = data.AboutUs
                         oData.Disclaimer = data.Disclaimer
                         oData.CallCenterHelpline = data.CallCenterHelpline
+                        oData.DisclaimerVersion = data.DisclaimerVersion
                         
                         
                         var oViewModel = new JSONModel(oData);
-                        that.getView().setModel(oViewModel, "ActionViewModel");
+                        that.getView().setModel(oViewModel, "ActionEditModel");
                     },
                     error: function (oError) {
                     }
@@ -101,18 +108,8 @@ sap.ui.define([
 
             handleCancelPress: function () {
 
-                this.getView().getModel("local").setProperty("/bEdit", false);
-
-                //Restore the data
-                var oModel = this.getView().getModel("data");
-                this.getView().setModel(oModel);
-
-                this.getView().bindElement("/MasterCompanySettingsSet(1)");
-
-
-                this._toggleButtonsAndView(false);
-                var localModel = this.getView().getModel("local");
-                localModel.refresh(true);
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteHome");
 
             },
             handleEmptyFields: function (oEvent) {
@@ -122,20 +119,25 @@ sap.ui.define([
 
             handleSavePress: function () {
 
-                // console.log(DisclaimerVersion);
+                // // console.log(DisclaimerVersion);
 
-                var oDataModel = this.getView().getModel();
-                var oView = this.getView();
-                // var oModelView = oView.getModel("oModelView");
-                // oModelView.setProperty("/busy", true);
-                var sEntityPath = oView.getElementBinding().getPath();
-                var oDataValue = oDataModel.getObject(sEntityPath);
-                //var oPrpReq = oModelView.getProperty("/prop2");
+                // var oDataModel = this.getView().getModel();
+                // var oView = this.getView();
+                // // var oModelView = oView.getModel("oModelView");
+                // // oModelView.setProperty("/busy", true);
+                // var sEntityPath = oView.getElementBinding().getPath();
+                // var oDataValue = oDataModel.getObject(sEntityPath);
+                // //var oPrpReq = oModelView.getProperty("/prop2");
+                var oDataValue={
+                     AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
+                    Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
+                    CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
+                    DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion"),
+                }
 
 
 
-
-                var passedValidation = this.onValidate();
+                var passedValidation = this.onValidate(oDataValue);
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -143,26 +145,20 @@ sap.ui.define([
                     return false;
                 }
 
-
-
-
-                var oData = {
-                    AboutUs: oDataValue["AboutUs"],
-                    Disclaimer: oDataValue["Disclaimer"],
-                    CallCenterHelpline: oDataValue["CallCenterHelpline"],
-                    DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
+                var oData={
+                    AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
+                    Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
+                    CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
+                    DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion") + 1,
                 }
-
-
-                //console.log(oData);
                 var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, {
-                    success: function () {
-                        that.onSuccessPress();
-                    }
-                });
+                // oModel.update(editSet, oData, {
+                //     success: function () {
+                //         that.onSuccessPress();
+                //     }
+                // });
 
 
             },
@@ -195,12 +191,17 @@ sap.ui.define([
 
 
 
-            onValidate: function () {
-                // Create new validator instance
-                var validator = new Validator();
+            onValidate: function (oDataValue) {
+                if(oDataValue.AboutUs==""||oDataValue.Disclaimer==""||oDataValue.CallCenterHelpline==""){
+                    return false;
+                }
+                return true;
+                // // Create new validator instance
+                // var validator = new Validator();
 
-                // Validate input fields against root page with id 'somePage'
-                return validator.validate(this.byId("EditFragment"));
+                // // Validate input fields against root page with id 'somePage'
+                // return validator.validate(this.byId("EditFragment"));
+               
             },
             onDialogPress: function () {
                 if (!this.oEscapePreventDialog) {

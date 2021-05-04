@@ -9,40 +9,28 @@
     <Title text="Company Settings Details" />
     </HBox> -->
 
-    <HBox width="100%">
+   
             <VBox class="sapUiTinyMargin" width="100%">
                  <Title text="About Us"/>
                 <richtexteditor:RichTextEditor 
                 width="100%"
+                sanitizeValue="false"
                 required="true"
-                        value="{ 
-                                  path : 'AboutUs', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                  }
-                              }">
+                        value="{path : 'ActionEditModel>/AboutUs'}">
                 </richtexteditor:RichTextEditor>
             </VBox>
             <VBox class="sapUiTinyMargin" width="100%">
                <Title text="Privacy Policy"/>
                 <richtexteditor:RichTextEditor
                  width="100%"
+                 sanitizeValue="false"
                  required="true"
-                 value="{ 
-                                  path : 'Disclaimer', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                      
-                                  }
-                              }">
+                 value="{path : 'ActionEditModel>/Disclaimer'}">
                  </richtexteditor:RichTextEditor>
+                 <!-- <TextArea visible="true" value="{path:'ActionEditModel>/Disclaimer'}"/> -->
             </VBox>
-        </HBox>
-        <HBox class="sapUiTinyMargin" width="100%">
+        
+        
             <VBox class="sapUiTinyMargin"  width="100%">
             <Title text="Call Center Number"/>
             <Input   required="true"  type="Text"
@@ -50,16 +38,9 @@
                 width="30%"
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty."
-                        value="{ 
-                                  path : 'CallCenterHelpline', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                  }
-                              }"/>
+                        value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
                               </VBox>
-        </HBox>
+       
 	
 	</VBox>
 </core:FragmentDefinition>
