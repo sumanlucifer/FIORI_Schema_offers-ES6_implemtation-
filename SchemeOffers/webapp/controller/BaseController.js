@@ -104,21 +104,16 @@ sap.ui.define(
               ZoneId: x,
             });
           }
-          oView.getModel("oModelView").setProperty("/SchemeZones", aArray);
-          var oDivision = oView.byId("idDivision");
-
-          oDivision.clearSelection();
-          oDivision.fireSelectionChange();
+          var oDivision = oView.byId("idDivisions");
           var aDivFilter = [];
           for (var y of aArray) {
             aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]));
           }
-
           oDivision.getBinding("items").filter(aDivFilter);
-
-          //   var oDepot = oView.byId("idDepot");
-          //   oDepot.clearSelection();
-          //   oDepot.fireSelectionChange();
+          this._CheckAreaChange();
+        },
+        onDivisionChange: function (oEvent) {
+          this._CheckAreaChange();
         },
         onMultyZoneChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -127,95 +122,41 @@ sap.ui.define(
           for (var y of sKeys) {
             aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
           }
-
           oDivision.getBinding("items").filter(aDivFilter);
         },
-
-        onMultyDivisionChange: function (oEvent) {
-          this._fnChangeDivDepot({
-            src: { path: "/TrainingDetails/TrainingDivision" },
-            target: {
-              localPath: "/TrainingDetails/TrainingDepot",
-              oDataPath: "/MasterDepotSet",
-              key: "Division",
-              targetKey: "DepotId",
-            },
-          });
-        },
-        _fnChangeDivDepot: function (oChgdetl) {
-          var aSource = this.getModel("oModelView").getProperty(
-              oChgdetl.src.path
-            ),
-            oSourceSet = new Set(aSource);
-
-          var aTarget = this.getModel("oModelView").getProperty(
-              oChgdetl.target.localPath
-            ),
-            aNewTarget = [];
-
-          var oModel = this.getModel(),
-            tempPath,
-            tempdata;
-
-          aTarget.forEach(function (ele) {
-            if (typeof ele === "string") {
-              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
-                Id: ele,
-              });
-            } else {
-              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
-                Id: ele[oChgdetl.target.targetKey],
-              });
-            }
-            tempdata = oModel.getData(tempPath);
-            if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
-              aNewTarget.push(ele);
-            }
-          });
-
-          this.getModel("oModelView").setProperty(
-            oChgdetl.target.localPath,
-            aNewTarget
-          );
-        },
-
-        onDivisionChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
+        _CheckAreaChange: function () {
           var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              DivisionId: x,
-            });
-          }
-          oView.getModel("oModelView").setProperty("/SchemeDivisions", aArray);
-          //depot clear and Depot Filter
-          //   var oDepot = oView.byId("idDepot");
-          //   oDepot.clearSelection();
-          //   oDepot.fireSelectionChange();
+          var sZone = oView.byId("idZones");
+          var sZoneKey = sZone.getSelectedKeys();
+          var oDivision = oView.byId("idDivisions");
+          var aDivisioKeys = oDivision.getSelectedKeys();
+          var oDivisionItems = oDivision.getSelectedItems();
 
-          //   var aDepot = [];
-          //   for (var y of aArray) {
-          //     aDepot.push(
-          //       new Filter("Division", FilterOperator.EQ, y["DivisionId"])
-          //     );
-          //   }
+          var oDivObj;
 
-          //   oDepot.getBinding("items").filter(aDepot);
-        },
-        onDepotChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              DepotId: x,
-            });
+          // check the division if its there for all the zones selected
+          for (var j of oDivisionItems) {
+            oDivObj = j.getBindingContext().getObject();
+            if (sZoneKey.indexOf(oDivObj["Zone"]) < 0) {
+              oDivision.removeSelectedItem(j);
+            }
           }
-          oView.getModel("oModelView").setProperty("/SchemeDepots", aArray);
+          // check for the depot tokens
+          var oDepot = oView.byId("idDepots");
+          var aTokens = oDepot.getTokens();
+          var oModelControl = oView.getModel("oModelControl");
+          var aTokenKeys = oModelControl.getProperty("/MultiCombo/Depots");
+          var oNewDivisionKeys =  oDivision.getSelectedKeys();
+          var aDepotToken = [];
+          for (var k in aTokenKeys) {
+            if (oNewDivisionKeys.indexOf(aTokenKeys[k]["Division"]) >= 0) {
+              aDepotToken.push(aTokenKeys[k]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/Depots", aDepotToken);
         },
         onDepotValueHelpOpen: function (oEvent) {
-          this._oMultiInput = this.getView().byId("idDepot");
+          this._oMultiInput = this.getView().byId("idDepots");
           this.oColModel = new JSONModel({
             cols: [
               {
@@ -290,16 +231,14 @@ sap.ui.define(
           aTokens.forEach(function (ele) {
             oData.push({
               DepotId: ele.getKey(),
-            });
-            aArrayBackEnd.push({
-              DepotId: ele.getKey(),
+              Division: ele.getCustomData()[0].getValue()["Division"],
             });
           });
 
           oView
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Depots", oData);
-          oView.getModel("oModelView").setProperty("/SchemeDepots", oData);
+          console.log(oData);
           this._oDepotDialog.close();
         },
         onDepotAfterOpen: function () {
@@ -321,7 +260,7 @@ sap.ui.define(
           }
           return new Filter({
             filters: aFilters,
-            and: true,
+            and: false,
           });
         },
         _FilterDepotTable: function (oFilter, sType) {
