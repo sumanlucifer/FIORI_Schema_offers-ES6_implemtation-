@@ -20,14 +20,10 @@
 
         <f:content>
 			
-			<form:SimpleForm
-				minWidth="1024"
-				maxContainerCols="2"
-                title="Add Catalogue" 
+			<!-- <form:SimpleForm
+			class="sapUiForceWidthAuto sapUiResponsiveMargin" >
                 
-				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
-                
-				<form:content>
+				<form:content> -->
             <VBox>
                          <Title  text="Catalogue Details"  />
                 <HBox>
@@ -101,7 +97,7 @@
                 
          
          
-                <!-- <HBox class="sapUiMediumMarginBegin" > -->
+                <HBox class="sapUiMediumMarginBegin" >
                         <VBox>
                                 <VBox class="sapUiTinyMarginBottom">
                                             <Label text="Upload Thumbnail Image" required="true"/>
@@ -140,13 +136,13 @@
                                             
                                             
                         </VBox>                  
-                  <!-- </HBox> -->
+                  </HBox>
          
                 </HBox> 
                  
                        
 
-                        <Table id="idPdf" width="auto" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                        <!-- <Table id="idPdf" width="auto" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
@@ -260,25 +256,28 @@
                                         
                                         </VBox>
                                         <HBox>
-                                            <!-- <Button  icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button> -->
                                     
                                             <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveCompetitor"></Button>
                                         </HBox>
                                     </cells>
                                 </ColumnListItem>
                             </items>
-                      </Table>
+                      </Table> -->
 
                
                                         
         
-        
+         <core:Fragment
+             
+                fragmentName="com.knpl.pragati.Catelogue.view.fragments.Tables" type="XML"> 
+            </core:Fragment>
         
      
             </VBox>
                 
-               </form:content>
-			</form:SimpleForm>
+               <!-- </form:content>
+			</form:SimpleForm> -->
+           
 		</f:content>
         <f:footer>
             <OverflowToolbar>
