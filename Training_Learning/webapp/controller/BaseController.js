@@ -78,7 +78,16 @@ sap.ui.define([
 					}
 				}
 			});
-		},
+        },
+        onModelPropertyChange : function(oEvent, sModel){
+
+                 this.getModel(sModel).setProperty("/bChange", true);
+
+        },
+
+        navToHome: function(){
+            this.getRouter().navTo("worklist", true);
+        },
 
 		showError: function (sMsg) {
 			var that = this;
