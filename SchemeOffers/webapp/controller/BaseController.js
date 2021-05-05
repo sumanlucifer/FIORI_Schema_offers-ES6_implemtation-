@@ -6,7 +6,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
   ],
   function (
     Controller,
@@ -104,60 +104,59 @@ sap.ui.define(
               ZoneId: x,
             });
           }
-          oView.getModel("oModelView").setProperty("/SchemeZones", aArray);
-          var oDivision = oView.byId("idDivision");
-
-          oDivision.clearSelection();
-          oDivision.fireSelectionChange();
+          var oDivision = oView.byId("idDivisions");
           var aDivFilter = [];
           for (var y of aArray) {
             aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]));
           }
-
           oDivision.getBinding("items").filter(aDivFilter);
-
-        //   var oDepot = oView.byId("idDepot");
-        //   oDepot.clearSelection();
-        //   oDepot.fireSelectionChange();
+          this._CheckAreaChange();
         },
         onDivisionChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              DivisionId: x,
-            });
-          }
-          oView.getModel("oModelView").setProperty("/SchemeDivisions", aArray);
-          //depot clear and Depot Filter
-        //   var oDepot = oView.byId("idDepot");
-        //   oDepot.clearSelection();
-        //   oDepot.fireSelectionChange();
-
-         
-        //   var aDepot = [];
-        //   for (var y of aArray) {
-        //     aDepot.push(
-        //       new Filter("Division", FilterOperator.EQ, y["DivisionId"])
-        //     );
-        //   }
-
-        //   oDepot.getBinding("items").filter(aDepot);
+          this._CheckAreaChange();
         },
-        onDepotChange: function (oEvent) {
+        onMultyZoneChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              DepotId: x,
-            });
+          var oDivision = this.getView().byId("idDivision");
+          var aDivFilter = [];
+          for (var y of sKeys) {
+            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
           }
-          oView.getModel("oModelView").setProperty("/SchemeDepots", aArray);
+          oDivision.getBinding("items").filter(aDivFilter);
+        },
+        _CheckAreaChange: function () {
+          var oView = this.getView();
+          var sZone = oView.byId("idZones");
+          var sZoneKey = sZone.getSelectedKeys();
+          var oDivision = oView.byId("idDivisions");
+          var aDivisioKeys = oDivision.getSelectedKeys();
+          var oDivisionItems = oDivision.getSelectedItems();
+
+          var oDivObj;
+
+          // check the division if its there for all the zones selected
+          for (var j of oDivisionItems) {
+            oDivObj = j.getBindingContext().getObject();
+            if (sZoneKey.indexOf(oDivObj["Zone"]) < 0) {
+              oDivision.removeSelectedItem(j);
+            }
+          }
+          // check for the depot tokens
+          var oDepot = oView.byId("idDepots");
+          var aTokens = oDepot.getTokens();
+          var oModelControl = oView.getModel("oModelControl");
+          var aTokenKeys = oModelControl.getProperty("/MultiCombo/Depots");
+          var oNewDivisionKeys =  oDivision.getSelectedKeys();
+          var aDepotToken = [];
+          for (var k in aTokenKeys) {
+            if (oNewDivisionKeys.indexOf(aTokenKeys[k]["Division"]) >= 0) {
+              aDepotToken.push(aTokenKeys[k]);
+            }
+          }
+          oModelControl.setProperty("/MultiCombo/Depots", aDepotToken);
         },
         onDepotValueHelpOpen: function (oEvent) {
-          this._oMultiInput = this.getView().byId("idDepot");
+          this._oMultiInput = this.getView().byId("idDepots");
           this.oColModel = new JSONModel({
             cols: [
               {
@@ -186,7 +185,14 @@ sap.ui.define(
               oTable.setModel(this.oColModel, "columns");
 
               if (oTable.bindRows) {
-                oTable.bindAggregation("rows", "/MasterDepotSet");
+                oTable.bindAggregation("rows", {
+                  path: "/MasterDepotSet",
+                  events: {
+                    dataReceived: function () {
+                      this._oDepotDialog.update();
+                    }.bind(this),
+                  },
+                });
               }
 
               if (oTable.bindItems) {
@@ -210,10 +216,31 @@ sap.ui.define(
         },
         onDepotCancelPress: function () {
           this._oDepotDialog.close();
-          this._oDepotDialog.destroy();
-          delete this._oDepotDialog;
         },
-      
+        onValueHelpAfterClose: function () {
+          if (this._DepotDialog) {
+            this._oDepotDialog.destroy();
+            delete this._oDepotDialog;
+          }
+        },
+        onDepotOkPress: function (oEvent) {
+          var oData = [];
+          var oView = this.getView();
+          var aTokens = oEvent.getParameter("tokens");
+          var aArrayBackEnd = [];
+          aTokens.forEach(function (ele) {
+            oData.push({
+              DepotId: ele.getKey(),
+              Division: ele.getCustomData()[0].getValue()["Division"],
+            });
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty("/MultiCombo/Depots", oData);
+          console.log(oData);
+          this._oDepotDialog.close();
+        },
         onDepotAfterOpen: function () {
           var aFilter = this._getFilterForDepot();
           this._FilterDepotTable(aFilter, "Control");
@@ -227,17 +254,17 @@ sap.ui.define(
           for (var div of sDivisions) {
             aFilters.push(new Filter("Division", FilterOperator.EQ, div));
           }
-          console.log(aFilters);
+
           if (aFilters.length == 0) {
             return [];
           }
           return new Filter({
             filters: aFilters,
-            and: true,
+            and: false,
           });
         },
-        _FilterDepotTable:function(oFilter,sType){
-            var oValueHelpDialog = this._oDepotDialog;
+        _FilterDepotTable: function (oFilter, sType) {
+          var oValueHelpDialog = this._oDepotDialog;
 
           oValueHelpDialog.getTableAsync().then(function (oTable) {
             if (oTable.bindRows) {
@@ -252,7 +279,6 @@ sap.ui.define(
 
             oValueHelpDialog.update();
           });
-
         },
         onArchiTypeChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -362,7 +388,6 @@ sap.ui.define(
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
 
-          console.log("method trigerred");
           for (var x of aProp) {
             var oGetProp = oModelView.getProperty("/" + x);
             if (Array.isArray(oGetProp)) {

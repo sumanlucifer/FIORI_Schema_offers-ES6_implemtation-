@@ -338,7 +338,7 @@ sap.ui.define(
             "BonusValidityDurationMonth",
             "BonusValidityDurationDays",
             "SchemeStatus",
-            "Reason"
+            "Reason",
           ];
           var sValue = "",
             sPlit;
@@ -357,7 +357,7 @@ sap.ui.define(
               oModelView.setProperty("/" + k, "");
             }
           }
-          
+
           promise.resolve(data);
           return promise;
         },
@@ -391,7 +391,7 @@ sap.ui.define(
           //depots
           if (oData["SchemeDepots"]["results"].length > 0) {
             for (var z of oData["SchemeDepots"]["results"]) {
-              aDepots.push(z["DepotId"]);
+              aDepots.push({ DepotId: z["DepotId"] });
             }
           }
           oModelControl.setProperty("/MultiCombo/Depots", aDepots);
@@ -478,6 +478,7 @@ sap.ui.define(
           var othat = this;
           var oView = this.getView();
           var oModelView = this.getView().getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
           var oViewData = oModelView.getData();
           var oPayload = Object.assign({}, oViewData);
           var oData = oView.getModel();
@@ -485,6 +486,23 @@ sap.ui.define(
             "/" + oView.getModel("oModelControl2").getProperty("/bindProp");
 
           var oNewpayload = this._RemoveEmptyValue(oPayload);
+          //setting up zone data in the array.
+          oNewpayload["SchemeZones"] = oModelControl
+            .getProperty("/MultiCombo/Zones")
+            .map(function (k) {
+              return { ZoneId: k };
+            });
+          //setting up division data in the array.
+          oNewpayload["SchemeDivisions"] = oModelControl
+            .getProperty("/MultiCombo/Divisions")
+            .map(function (k) {
+              return { DivisionId: k };
+            });
+          oNewpayload["SchemeDepots"] = oModelControl
+            .getProperty("/MultiCombo/Depots")
+            .map(function (k) {
+              return { DepotId: k["DepotId"] };
+            });
           var inTegerProperty = [
             "PurchaseVolumeRequired",
             "AccuredPointsRequired",

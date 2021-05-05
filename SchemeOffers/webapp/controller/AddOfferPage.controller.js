@@ -52,7 +52,8 @@ sap.ui.define(
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
 
-          this.oRouter
+          this.getOwnerComponent()
+            .getRouter()
             .getRoute("AddOfferPage")
             .attachPatternMatched(this._onObjectMatched, this);
         },
@@ -70,9 +71,9 @@ sap.ui.define(
           }
           var oDataControl = {
             HasTillDate: false,
-            ImageLoaded:false,
+            ImageLoaded: false,
             BonusValidity: oBonusValidity,
-            modeEdit:false,
+            modeEdit: false,
             StartDate: "",
             EndDate: "",
             RewardGift: [
@@ -92,7 +93,7 @@ sap.ui.define(
               ArcheTypes: [],
               PainterProducts: [],
               ApplicableProducts: [],
-              BonusApplicableProducts: []
+              BonusApplicableProducts: [],
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
@@ -123,7 +124,7 @@ sap.ui.define(
             BonusValidityDurationYear: "",
             BonusValidityDurationMonth: "",
             BonusValidityDurationDays: "",
-            BonusValidityDate: null
+            BonusValidityDate: null,
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -200,9 +201,26 @@ sap.ui.define(
           //creating the payload
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
-
+          var oModelControl = oView.getModel("oModelControl");
           var oDataModel = oView.getModel();
-          var oPayLoad = this._RemoveEmptyValue(oModelView.getData());
+          var oViewData = oModelView.getData();
+          var oPayLoad = this._RemoveEmptyValue(oViewData);
+          //setting up zone data in the array.
+          oPayLoad["SchemeZones"] = oModelControl.getProperty("/MultiCombo/Zones").map(function (k) {
+            return {ZoneId:k};
+          });
+          //setting up division data in the array.
+          oPayLoad["SchemeDivisions"] = oModelControl.getProperty("/MultiCombo/Divisions").map(function (k) {
+            return {DivisionId:k};
+          });
+          oPayLoad["SchemeDepots"] = oModelControl.getProperty("/MultiCombo/Depots").map(function (k) {
+            return {DepotId:k["DepotId"]};
+          });
+          //setting up the depot data in the array.
+          console.log(
+            oView.byId("idDepots").getTokens(),
+            oModelControl.getData()
+          );
           console.log(oPayLoad);
 
           var inTegerProperty = [
@@ -220,7 +238,8 @@ sap.ui.define(
               oPayLoad[y] = parseInt(oPayLoad[y]);
             }
           }
-          console.log(oPayLoad);
+          // setting the zone, division, depot data.
+
           var othat = this;
           oDataModel.create("/SchemeSet", oPayLoad, {
             success: function (data) {
@@ -228,7 +247,7 @@ sap.ui.define(
               if (bFileFlag) {
                 othat._UploadFile(data);
               }
-              othat._navToHome();
+              //othat._navToHome();
             },
             error: function () {
               MessageToast.show("Error In Creating the Schemes.");
