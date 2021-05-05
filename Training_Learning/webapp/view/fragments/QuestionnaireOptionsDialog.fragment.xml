@@ -9,7 +9,7 @@
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
-				    		<Button press="onAddQuestionnaireOptions" text="{i18n>AddOptions}"/>
+				    		<Button press="onAddQuestionnaireOptions" enabled="{= ${oModelView>TrainingQuestionnaireOptions/length} &lt; 4 }" text="{i18n>AddOptions}"/>
 						</Toolbar>
 					</headerToolbar>
                     <CustomListItem>

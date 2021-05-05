@@ -44,7 +44,7 @@
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
                 <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" editable="false"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" />
 
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
 

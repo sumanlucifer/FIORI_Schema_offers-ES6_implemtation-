@@ -88,13 +88,20 @@ sap.ui.define(
 
                 _onRouteMatched: function (oEvent) {
 
+                    var oViewModel = this.getModel("oModelView");
+
+                    //FIX: Need pop for changes
+                     oViewModel.setProperty("/bChange", false);
+                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);                        
+                    //Pop Fix
+
                     var sArgMode = oEvent.getParameter("arguments").mode;
                     var sTrType = oEvent.getParameter("arguments").trtype;
                     var sArgId = window.decodeURIComponent(
                         oEvent.getParameter("arguments").id
                     );
 
-                    var oViewModel = this.getModel("oModelView");
+                    
                     if (sArgMode === "add") {
                         oViewModel.setProperty("/mTrainingKey", sArgId);
                         oViewModel.setProperty("/edit", false);
@@ -166,7 +173,8 @@ sap.ui.define(
                         var oPainterArcheType = this.getView().byId("idPainterArcheType");
                         oPainterArcheType.clearSelection();
 
-                    }
+                        //FIX: POP on cancel
+                        oViewModel.attachPropertyChange("oModelView", this.onModelPropertyChange, this);                    }
                 },
 
                 /*
@@ -174,9 +182,15 @@ sap.ui.define(
                  * Cancel current object action
                  */
                 onCancel: function () {
-                    this.getRouter().navTo("worklist", true);
+                    //this.getRouter().navTo("worklist", true);
+                    if(this.getModel("oModelView").getProperty("/bChange"))
+                       {  
+                          this.showWarning(  "MSG_PENDING_CHANGES" ,this.navToHome);
+                        }
+                       else{
+                            this.navToHome();
+                       }     
                 },
-
                 onAfterRendering: function () {
                     //Init Validation framework
                     this._initMessage();
