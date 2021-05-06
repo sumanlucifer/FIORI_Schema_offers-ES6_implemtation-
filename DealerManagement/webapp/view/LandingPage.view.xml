@@ -30,9 +30,12 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idDepot" placeholder="" showSuggestion="false" showValueHelp="false" >
-                                        
-                                    </Input>
+                                    <!-- <Input id="idDepot" placeholder="" showSuggestion="false" showValueHelp="false" >
+                                    </Input> -->
+                                    <ComboBox id="idDepot" items="{ path: '/MasterDepotSet' }" selectedKey="{worklistView>/filterBar/Depot}">
+										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+									</ComboBox>
+
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="SalesGroupName" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
