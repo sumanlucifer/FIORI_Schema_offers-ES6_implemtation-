@@ -13,12 +13,6 @@ sap.ui.define([
         return BaseController.extend("com.knpl.pragati.DealerManagement.controller.LandingPage", {
             onInit: function () {
 
-                // var oModel = new sap.ui.model.odata.ODataModel("/KNPL_PAINTER_API/api/v2/odata.svc/", { useBatch: true });
-                // // console.log(oModel)
-                // var oJsonModel = new JSONModel(oModel);
-                // // console.log(oJsonModel);
-                // this.getView().setModel(oJsonModel, "Json");
-
 
 
                 //Initializations
@@ -47,7 +41,10 @@ sap.ui.define([
                 oViewModel = new JSONModel({
                     worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
                     tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
-                    tableBusyDelay: 0
+                    tableBusyDelay: 0,
+                    filterBar:{
+                        Depot:""
+                    }
                 });
                 this.setModel(oViewModel, "worklistViewModel");
 
@@ -107,7 +104,10 @@ sap.ui.define([
 
                 var genericSearch = oEvent.getSource().getBasicSearchValue();
                 var plantCode = this.getInputText("idPlantCode");
-                var depot = this.getInputText("idDepot");
+               // var depot = this.getInputText("idDepot");
+                var depotComboBox = this.getView().byId("idDepot");
+                var depot=depotComboBox.getSelectedKey();
+                 
                 var salesGroupName = this.getInputText("idSalesGroupName");
                 var fiscalYear = this.getInputText("idFiscalYear");
                 if (genericSearch == "" && plantCode == "" && depot == "" && salesGroupName == "" && fiscalYear == "") {
@@ -137,7 +137,6 @@ sap.ui.define([
             filterTable: function (aCurrentFilterValues) {
                 this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
                 var results = this.getTableItems().filter(this.getFilters(aCurrentFilterValues));
-                console.log(results);
             },
 
             getTableItems: function () {
@@ -168,8 +167,6 @@ sap.ui.define([
                 aFilters.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
                 for (let i = 1; i < aKeys.length; i++) {
 
-
-                    // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + searchValue.trim().toLowerCase().replace("'", "''") + "'"))
                     aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
 
                 }
@@ -293,21 +290,7 @@ sap.ui.define([
 
             }
 
-            // handleSuggest: function (oEvent) {
-            //     var aFilters = [];
-            //     var sTerm = oEvent.getParameter("suggestValue");
-            //     if (sTerm) {
-            //         aFilters.push(new sap.ui.model.Filter("FiscalYear", sap.ui.model.FilterOperator.Contains, sTerm));
-            //     }
-            //     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
-            //     //do not filter the provided suggestions before showing them to the user - important
-            //     oEvent.getSource().setFilterSuggests(false);
-            // }
-
-            /*onDetailPress: function (oEvent) {
-                var oButton = oEvent.getSource();
-                this.byId("actionSheet").openBy(oButton);
-            }*/
+            
 
         });
     });

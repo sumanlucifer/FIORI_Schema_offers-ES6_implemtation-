@@ -96,7 +96,6 @@ sap.ui.define([
             },
             onAfterRendering: function (){
                    this._addRTE(["AboutUs","Disclaimer"]);
-                  // this._addRTE(["AboutUs"]);
             },
             // onBeforeRendering :function (){
             //      this.initData();
@@ -106,10 +105,16 @@ sap.ui.define([
                     sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library","sap/m/Title"],
 				function (RTE,EditorType,Title) {
                     aPaths.forEach(element => {
+                        if(element=="AboutUs"){
+                         var  title="About Us"
+                        }
+                        else if(element=="Disclaimer"){
+                            title="Privacy Policy"
+                        }
 
                     that.getView().byId("idVerticalLayout").addContent( 
                         new Title({
-						 text:element
+						 text:title
 						
                     }));
                     that.getView().byId("idVerticalLayout").addContent( 
