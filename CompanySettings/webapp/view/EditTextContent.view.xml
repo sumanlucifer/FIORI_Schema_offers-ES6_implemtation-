@@ -5,7 +5,7 @@ xmlns:u="sap.ui.unified"
 xmlns:f="sap.ui.layout.form"
 xmlns:richtexteditor="sap.ui.richtexteditor">
 	
-    <Page>
+    <Page busyIndicatorDelay="0" busy="{ActionEditModel>/bBusy}">
         <content>
             <!-- <VBox visible="{=!${local>/bEdit}}">
             
