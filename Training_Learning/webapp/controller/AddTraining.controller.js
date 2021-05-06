@@ -91,8 +91,8 @@ sap.ui.define(
                     var oViewModel = this.getModel("oModelView");
 
                     //FIX: Need pop for changes
-                     oViewModel.setProperty("/bChange", false);
-                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);                        
+                    oViewModel.setProperty("/bChange", false);
+                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);
                     //Pop Fix
 
                     var sArgMode = oEvent.getParameter("arguments").mode;
@@ -101,7 +101,7 @@ sap.ui.define(
                         oEvent.getParameter("arguments").id
                     );
 
-                    
+
                     if (sArgMode === "add") {
                         oViewModel.setProperty("/mTrainingKey", sArgId);
                         oViewModel.setProperty("/edit", false);
@@ -130,6 +130,9 @@ sap.ui.define(
                         oViewModel.setProperty("/oImage", "");
 
                         var fU = this.getView().byId("idAttendanceFileUploader");
+                        fU.setValue("");
+
+                        fU = this.getView().byId("idImageUploader");
                         fU.setValue("");
 
                         var AddEditTraining = this.getView().getModel("i18n").getResourceBundle().getText("AddNewTraining");
@@ -174,7 +177,8 @@ sap.ui.define(
                         oPainterArcheType.clearSelection();
 
                         //FIX: POP on cancel
-                        oViewModel.attachPropertyChange("oModelView", this.onModelPropertyChange, this);                    }
+                        oViewModel.attachPropertyChange("oModelView", this.onModelPropertyChange, this);
+                    }
                 },
 
                 /*
@@ -182,14 +186,21 @@ sap.ui.define(
                  * Cancel current object action
                  */
                 onCancel: function () {
-                    //this.getRouter().navTo("worklist", true);
-                    if(this.getModel("oModelView").getProperty("/bChange"))
-                       {  
-                          this.showWarning(  "MSG_PENDING_CHANGES" ,this.navToHome);
+                    debugger;
+                    if (this.getModel("appView").getProperty("/trainingType") === "OFFLINE") {
+                        var fU = this.getView().byId("idAttendanceFileUploader");
+                        var domRef = fU.getFocusDomRef();
+                        var file = domRef.files[0];
+                        if (file) {
+                            this.getModel("oModelView").setProperty("/bChange", true);
                         }
-                       else{
-                            this.navToHome();
-                       }     
+                    }
+                    if (this.getModel("oModelView").getProperty("/bChange")) {
+                        this.showWarning("MSG_PENDING_CHANGES", this.navToHome);
+                    }
+                    else {
+                        this.navToHome();
+                    }
                 },
                 onAfterRendering: function () {
                     //Init Validation framework
@@ -406,14 +417,13 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                    // oViewModel.setProperty("/busy", true);
 
                     if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
                     } else if (trainingType === 'ONLINE') {
                         this.CUOperationOnlineTraining(oPayload, oEvent);
                     } else if (trainingType === 'OFFLINE') {
-                        this._UploadAttendanceOfflineTr(oPayload.TrainingSubTypeId);
+                        this._UploadAttendanceOfflineTr(oPayload);
                     }
                 },
 
@@ -435,7 +445,7 @@ sap.ui.define(
 
                 onTrainingTypeChange: function (oEvent) {
                     var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
+                    // oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
 
@@ -719,14 +729,14 @@ sap.ui.define(
                                                 target: "/TrainingDetails/EndDate"
                                             });
                                         } else
-                                            if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                                oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                                aCtrlMessage.push({
-                                                    message: "MSG_PLS_ENTER_ERR_REWARD",
-                                                    target: "/TrainingDetails/RewardPoints"
-                                                });
-                                            } else
+                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                            //     oReturn.IsNotValid = true;
+                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                            //     aCtrlMessage.push({
+                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                                            //         target: "/TrainingDetails/RewardPoints"
+                                            //     });
+                                            // } else
                                                 if (data.RewardPoints == 0) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -767,14 +777,14 @@ sap.ui.define(
                             target: "/TrainingDetails/TrainingSubTypeId"
                         });
                     } else
-                        if (data.RewardPoints === "" || data.RewardPoints === null) {
-                            oReturn.IsNotValid = true;
-                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                            aCtrlMessage.push({
-                                message: "MSG_PLS_ENTER_ERR_REWARD",
-                                target: "/TrainingDetails/RewardPoints"
-                            });
-                        } else
+                        // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                        //     oReturn.IsNotValid = true;
+                        //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                        //     aCtrlMessage.push({
+                        //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                        //         target: "/TrainingDetails/RewardPoints"
+                        //     });
+                        // } else
                             if (data.RewardPoints == 0) {
                                 oReturn.IsNotValid = true;
                                 oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -850,14 +860,14 @@ sap.ui.define(
                                                 target: "/TrainingDetails/Duration"
                                             });
                                         } else
-                                            if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                                oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                                aCtrlMessage.push({
-                                                    message: "MSG_PLS_ENTER_ERR_REWARD",
-                                                    target: "/TrainingDetails/RewardPoints"
-                                                });
-                                            } else
+                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                            //     oReturn.IsNotValid = true;
+                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                            //     aCtrlMessage.push({
+                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                                            //         target: "/TrainingDetails/RewardPoints"
+                                            //     });
+                                            // } else
                                                 if (data.RewardPoints == 0) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -905,6 +915,9 @@ sap.ui.define(
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    if (oPayload.RewardPoints === null) {
+                        oPayload.RewardPoints = 0;
+                    }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     if (oPayload.Url === "") {
@@ -965,6 +978,9 @@ sap.ui.define(
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    if (oPayload.RewardPoints === null) {
+                        oPayload.RewardPoints = 0;
+                    }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     oPayload.Duration = parseInt(oPayload.Duration);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
@@ -1058,14 +1074,18 @@ sap.ui.define(
                     });
                 },
 
-                _UploadAttendanceOfflineTr: function (trSubTypeId) {
+                _UploadAttendanceOfflineTr: function (oPayload) {
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
 
+                    if (oPayload.RewardPoints === null) {
+                        oPayload.RewardPoints = 0;
+                    }
+
                     var settings = {
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + trSubTypeId + ")/$value",
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + oPayload.TrainingSubTypeId + ")/$value?Points=" + oPayload.RewardPoints,
                         data: file,
                         method: "PUT",
                         headers: that.getModel().getHeaders(),
@@ -1165,6 +1185,7 @@ sap.ui.define(
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
+                    this.getModel().setProperty("/busy", false);
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
@@ -1199,9 +1220,11 @@ sap.ui.define(
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
+                    oModel.setProperty("/busy", false);
                 },
 
                 onUpload: function (oEvent) {
+                    this.getModel("oModelView").setProperty("/bChange", true);
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
