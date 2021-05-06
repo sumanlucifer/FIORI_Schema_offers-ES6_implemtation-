@@ -47,6 +47,7 @@ sap.ui.define(
               RegistrationStatus: "",
               Name: "",
               MembershipId: "",
+              ZoneId:"",
               DepotId: "",
               DivisionId: "",
               PreferredLanguage:""
@@ -130,19 +131,21 @@ sap.ui.define(
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               }else if (prop === "PreferredLanguage") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("Preference/LanguageId", FilterOperator.EQ,oViewFilter[prop])
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
-              } else if (prop === "DivisionId") {
+              }else if (prop === "ZoneId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                );
+              }  else if (prop === "DivisionId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "StartDate") {
                 aFlaEmpty = false;
@@ -152,7 +155,6 @@ sap.ui.define(
                     FilterOperator.GE,
                     new Date(oViewFilter[prop])
                   )
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "EndDate") {
                 aFlaEmpty = false;
@@ -160,7 +162,6 @@ sap.ui.define(
                 oDate.setDate(oDate.getDate() + 1);
                 aCurrentFilterValues.push(
                   new Filter("CreatedAt", FilterOperator.LT, oDate)
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "Name") {
                 aFlaEmpty = false;
@@ -234,6 +235,7 @@ sap.ui.define(
             RegistrationStatus: "",
             searchBar: "",
             MembershipId: "",
+            ZoneId:"",
             DepotId: "",
             DivisionId: "",
             PreferredLanguage:""
@@ -249,6 +251,24 @@ sap.ui.define(
         onPressAddPainter: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteAddEditP", {});
+        },
+        onZoneChange: function (oEvent) {
+          var sId = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oPainterDetail = oModelView.getProperty("/PainterDetails");
+          var oDivision = oView.byId("idDivision");
+          var oDivItems = oDivision.getBinding("items");
+          var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+          oDivision.clearSelection();
+          oDivision.setValue("");
+          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+          //setting the data for depot;
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+          // clearning data for dealer
+          this._dealerReset();
         },
         onDivisionChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();

@@ -8,7 +8,7 @@
 			<ViewSettingsItem text="{i18n>MembershipId}" key="MembershipCard" />
             <ViewSettingsItem text="{i18n>PrimaryMobile}" key="Mobile" />
             <!-- <ViewSettingsItem text="{i18n>AgeGroup}" key="AgeGroup/AgeGroup" /> -->
-            <ViewSettingsItem text="{i18n>PainterTye}" key="PainterType"/>
+            <ViewSettingsItem text="{i18n>PainterType}" key="PainterType"/>
              <ViewSettingsItem text="{i18n>RegistrationDate}" key="CreatedAt" selected="true" />
             <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
 		</sortItems>
