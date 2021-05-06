@@ -1,0 +1,134 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    <form:SimpleForm
+				minWidth="1024"
+				maxContainerCols="2"
+                title="Add Catalogue" 
+                
+				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
+                
+				<form:content>
+            <VBox>
+                         <Title  text="Catalogue Details"  />
+                <HBox>
+                <VBox class="sapUiMediumMargin" width="50%">
+                           
+                                        <VBox class="sapUiMediumMarginBottom" width="80%">
+                                            <Label text="Category:" required="true" />
+                                                <Select
+                                                id="idCategory"
+                                                 width="100%"
+                                                forceSelection="false"
+                                                selectedKey="{ActionViewModel>/Category}"
+                                                items="{
+                                                    path: '/MasterProductCategorySet',
+                                                    sorter: { path: 'Category' }
+                                                }">
+                                                <core:Item key="{Id}" text="{Category}" />
+                                                 </Select>
+                                        </VBox>
+                                 
+                               
+                                        <VBox class="sapUiMediumMarginBottom" width="80%">
+                                            <Label text="Classification:" required="true" />
+                                            <Select
+                                            id="idClassification"
+                                            forceSelection="false"
+                                            width="100%"
+                                            selectedKey="{ActionViewModel>/Classification/}"
+                                            items="{
+                                                path: '/MasterProductClassificationSet',
+                                                sorter: { path: 'Classification' }
+                                            }">
+                                            <core:Item key="{Id}" text="{Classification}" />
+                                            </Select>
+                                        </VBox>
+                                
+                                
+                                        <VBox class="sapUiMediumMarginBottom" width="80%">
+                                            <Label text="Product:" required="true" />
+                                            <Select
+                                            id="idTitle"
+                                            forceSelection="false"
+                                            width="100%"
+                                            selectedKey="{ActionViewModel>/Title/}"
+                                            items="{
+                                                path: '/MasterProductSet',
+                                                sorter: { path: 'ProductName' }
+                                            }">
+                                            <core:Item key="{Id}" text="{ProductName}" />
+                                            </Select>
+                                         </VBox>
+                                
+                                 
+                                        <VBox class="sapUiMediumMarginBottom" width="80%">
+                                                <Label text="Price Range:" required="true" />
+                                                    <Select
+                                                    id="idRange"
+                                                    forceSelection="false"
+                                                    width="100%"
+                                                    selectedKey="{ActionViewModel>/Range}"
+                                                    items="{
+                                                        path: '/MasterProductRangeSet',
+                                                        sorter: { path: 'Id' }
+                                                    }">
+                                                    <core:Item key="{Id}" text="{Range}" />
+                                                    </Select>
+                                         </VBox>
+                                        
+                                 
+                </VBox>
+                
+         
+         
+                <!-- <HBox class="sapUiMediumMarginBegin" >
+                        <VBox>
+                                <VBox class="sapUiTinyMarginBottom">
+                                            <Label text="Upload Thumbnail Image" required="true"/>
+                                            <HBox>
+                                            <u:FileUploader
+                                                id="idFormToolImgUploader"
+                                                name="formToolImgUploader"
+                                                width="100%"
+                                                tooltip="{i18n>fileUploaderTooltip}"
+                                                change="onChangeFile"
+                                                typeMissmatch="handleTypeMissmatch"
+                                                fileType="png,jpg,jpeg"
+                                                maximumFileSize="2.1"
+                                                fileSizeExceed="onFileSizeExceed"
+                                                useMultipart="false"
+                                                sendXHR="true"
+                                                uploadComplete="handleUploadCompleteImage" />
+                                                
+                                             </HBox>
+                                                <HBox>
+                                                <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiTinyMarginEnd" title="File Type" text="PNG,JPG,JPEG"/>
+                                                <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginBottom" title="Max Size" text="2 MB"/>
+                                                </HBox>
+                                            <Image id="idPreviewImage" width="400px" height="200px" />
+                                </VBox>
+                                            
+                                        
+                                       
+                                           
+                                            <Button id="imageBtn" icon="sap-icon://attachment-photo" 
+                                            visible="false" press="onImageView" text="View Image" 
+                                            class="increaseFont"/>
+                                            
+
+
+                                            
+                                            
+                        </VBox>                  
+                  </HBox> -->
+         
+                </HBox> 
+                      
+            </VBox>
+                
+               </form:content>
+			</form:SimpleForm>
+	
+</core:FragmentDefinition>

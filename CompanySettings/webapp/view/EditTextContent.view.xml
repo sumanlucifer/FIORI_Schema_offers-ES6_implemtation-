@@ -2,10 +2,11 @@
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:u="sap.ui.unified"
-xmlns:f="sap.ui.layout.form">
+xmlns:f="sap.ui.layout.form"
+xmlns:richtexteditor="sap.ui.richtexteditor">
 	
-            <Page>
-            <content>
+    <Page>
+        <content>
             <!-- <VBox visible="{=!${local>/bEdit}}">
             
             <core:Fragment
@@ -13,28 +14,68 @@ xmlns:f="sap.ui.layout.form">
                 fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
             </core:Fragment></VBox> -->
 
-                <VBox >
+                <!-- <VBox >
                 <core:Fragment
              
                 fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
             </core:Fragment>
-                </VBox>
-                </content>
-                <footer>
-                    <OverflowToolbar>
+                </VBox> -->
+                <l:VerticalLayout id="idVerticalLayout" class="sapUiContentPadding" width="100%">
+                
+                </l:VerticalLayout>
+    <!-- <VBox class="sapUiSmallMargin" > -->
+  
+            <!-- <VBox class="sapUiTinyMargin" width="100%">
+                 <Title text="About Us"/>
+                        <richtexteditor:RichTextEditor 
+                        id="rteAbout"
+                        width="100%"
+                        readyRecurring="onReadyAbout"
+                        sanitizeValue="false"
+                        ready="onReadyAbout"
+                        required="true"
+                            >
+                        </richtexteditor:RichTextEditor>
+            </VBox>
+            <VBox class="sapUiTinyMargin" width="100%">
+               <Title text="Privacy Policy"/>
+                <richtexteditor:RichTextEditor
+                id="rteDisclaimer"
+                
+                ready="onReadyDisclaimer"
+                 width="100%"
+                 sanitizeValue="false"
+                 required="true"
+                >
+                 </richtexteditor:RichTextEditor>
+            </VBox> -->
+        
+        
+            <VBox class="sapUiTinyMargin"  width="100%">
+            <Title text="Call Center Number" class="sapUiTinyMargin"/>
+            <Input  required="true"  type="Text" class="sapUiTinyMargin"
+                maxLength="15"
+                width="30%"
+        		placeholder="Enter Call Center Number ..."
+        		valueStateText="Call Center Number must not be empty."
+                value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
+     </VBox>
+       
+	
+	        <!-- </VBox> -->
+        </content>
+        <footer>
+            <OverflowToolbar>
+            
+                <ToolbarSpacer/>
                     
-                        <ToolbarSpacer/>
-                        
-
-                        <!-- <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" /> -->
-                            
-                            <Button id="cancel" text="Cancel" press="handleCancelPress" />
-                            <Button id="save" text="Save" type="Emphasized"  press="handleSavePress" />
-                        
-                        
-                    </OverflowToolbar>
-            </footer>
-		</Page>
+                    <Button id="cancel" text="Cancel" press="handleCancelPress" />
+                    <Button id="save" text="Save" type="Emphasized"  press="handleSavePress" />
+                
+                
+            </OverflowToolbar>
+        </footer>
+    </Page>
 				
 			
 </mvc:View>

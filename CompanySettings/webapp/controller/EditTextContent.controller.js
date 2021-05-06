@@ -29,15 +29,13 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.EditTextContent", {
             onInit: function () {
-                // var oModel = this.getOwnerComponent().getModel("data");
-                // this.getView().setModel(oModel);
-
-               // this.getView().bindElement("/MasterCompanySettingsSet(1)");
+               
 
 
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-                //this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+                this.rteAbout = this.getView().byId("rteAbout");
+                this.rteDisclaimer = this.getView().byId("rteDisclaimer");
 
 
                 // Attaches validation handlers
@@ -59,13 +57,17 @@ sap.ui.define([
                 this._property = "MasterCompanySettingsSet(1)";
                 this.entitySet;
 
-                 this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
-                //this.initData();
+             this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
+               // this.initData();
+               
+
+               
             },
             _onObjectMatched: function () {
                  this.initData();
-
+                //this._addRTE(["AboutUs"]);
             },
+           
             initData: function () {
                 var oData = {
                     AboutUs: null,
@@ -89,6 +91,40 @@ sap.ui.define([
                     }
                 });
                 
+            
+                
+            },
+            onAfterRendering: function (){
+                   this._addRTE(["AboutUs","Disclaimer"]);
+                  // this._addRTE(["AboutUs"]);
+            },
+            // onBeforeRendering :function (){
+            //      this.initData();
+            // },
+             _addRTE : function(aPaths){
+                var that=this;
+                    sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library","sap/m/Title"],
+				function (RTE,EditorType,Title) {
+                    aPaths.forEach(element => {
+
+                    that.getView().byId("idVerticalLayout").addContent( 
+                        new Title({
+						 text:element
+						
+                    }));
+                    that.getView().byId("idVerticalLayout").addContent( 
+                        new RTE({
+						width: "100%",
+						value:"{ActionEditModel>/"+element+"}"
+						
+                    }));
+                    
+                    
+                    });
+					
+
+					
+			});
             },
             handleEditPress: function () {
                 this.getView().getModel("local").setProperty("/bEdit", true);
@@ -116,8 +152,17 @@ sap.ui.define([
                 console.log("empty");
                 this.onDialogPress();
             },
-            onReady: function (oEvent){
-
+            onReadyDisclaimer: function (oEvent){
+              // var oe= oEvent.getSource().getProperty("value");
+              var Disclaimer=this.getView().getModel("ActionEditModel").getProperty("/Disclaimer");
+               this.rteDisclaimer.setValue(Disclaimer);
+               
+            },
+            onReadyAbout: function (oEvent){
+              // var oe= oEvent.getSource().getProperty("value");
+              var About=this.getView().getModel("ActionEditModel").getProperty("/AboutUs");
+               this.rteAbout.setValue(About);
+               
             },
 
             handleSavePress: function () {
