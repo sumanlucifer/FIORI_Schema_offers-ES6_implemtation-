@@ -746,23 +746,13 @@ sap.ui.define(
           var oDivision = oView.byId("idDivision");
           var oDivItems = oDivision.getBinding("items");
           var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
-          // remove the division filtering if the division is not of the same zone else clear it
-          //   if (oDivSelItm !== null) {
-          //     var oDivObj = oDivSelItm.getBindingContext().getObject();
-          //     if (oDivObj["Id"] !== sId) {
-          //       oDivision.clearSelection();
-          //       oDivision.setValue("");
-          //     }
-          //   }
           oDivision.clearSelection();
           oDivision.setValue("");
           oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
-
           //setting the data for depot;
           var oDepot = oView.byId("idDepot");
           oDepot.clearSelection();
           oDepot.setValue("");
-
           // clearning data for dealer
           this._dealerReset();
         },
