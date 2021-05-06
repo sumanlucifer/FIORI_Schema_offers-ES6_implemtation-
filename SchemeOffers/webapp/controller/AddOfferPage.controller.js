@@ -177,7 +177,7 @@ sap.ui.define(
           var oForm = oView.byId("FormChange");
 
           var bFlagValidate = oValidate.validate(oForm);
-          console.log(bFlagValidate);
+          
           var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
           var bFileFlag = false;
 

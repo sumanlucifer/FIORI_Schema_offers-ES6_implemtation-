@@ -146,7 +146,7 @@ sap.ui.define(
           var aTokens = oDepot.getTokens();
           var oModelControl = oView.getModel("oModelControl");
           var aTokenKeys = oModelControl.getProperty("/MultiCombo/Depots");
-          var oNewDivisionKeys =  oDivision.getSelectedKeys();
+          var oNewDivisionKeys = oDivision.getSelectedKeys();
           var aDepotToken = [];
           for (var k in aTokenKeys) {
             if (oNewDivisionKeys.indexOf(aTokenKeys[k]["Division"]) >= 0) {
@@ -307,13 +307,24 @@ sap.ui.define(
             .getModel("oModelView")
             .setProperty("/SchemePainterProducts", aArray);
         },
+        onProdCatChange: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var oView = this.getView();
+          var oBindingPath = oSource.getBinding("selectedKey").getPath();
+          var oJson = {
+
+          }
+          var sKey1 = oSource.getSelectedkey();
+          var sKey2 = ""
+          this._applyFilterOnProducts(sKey1,sKey2,"");
+        },
         onChangeAppProducts: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
           var oView = this.getView();
           var aArray = [];
           for (var x of sKeys) {
             aArray.push({
-              SkuCode: x,
+              SkuCode: x
             });
           }
           oView
