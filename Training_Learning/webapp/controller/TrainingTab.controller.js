@@ -82,6 +82,10 @@ sap.ui.define(
                     var oViewModel = this.getModel("oModelView");
                     var oView = this.getView();
 
+                    //FIX: Need pop for changes
+                    oViewModel.setProperty("/bChange", false);
+                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);       
+
                     var oData = {
                         modeEdit: false,
                         bindProp: oProp,
@@ -195,7 +199,8 @@ sap.ui.define(
                                 if (trainingType === 'OFFLINE') {
                                     that._initFilerForTablesAttendance(data.Id);
                                 }
-
+                                //FIX: POP on cancel
+                                // oViewModel.attachPropertyChange("oModelView", that.onModelPropertyChange, that);
                             }
                         })
                     } else {
@@ -266,6 +271,9 @@ sap.ui.define(
 
                                 oViewModel.setProperty("/TrainingDetails/LearningQuestionnaire", []);
                                 that._initFilerForTablesVideoEnrollment(data.Id);
+
+                                //FIX: POP on cancel
+                                // ewModel.attachPropertyChange("oModelView", that.onModelPropertyChange, that);
                             }
                         })
                     }
@@ -637,7 +645,14 @@ sap.ui.define(
                 },
 
                 onCancel: function () {
-                    this.getRouter().navTo("worklist", true);
+                    debugger;
+                    if(this.getModel("oModelView").getProperty("/bChange"))
+                       {  
+                          this.showWarning(  "MSG_PENDING_CHANGES" ,this.navToHome);
+                        }
+                       else {
+                            this.navToHome();
+                       }     
                 },
 
                 onAfterRendering: function () {
@@ -965,14 +980,14 @@ sap.ui.define(
                                                 target: "/TrainingDetails/EndDate"
                                             });
                                         } else
-                                            if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                                oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                                aCtrlMessage.push({
-                                                    message: "MSG_PLS_ENTER_ERR_REWARD",
-                                                    target: "/TrainingDetails/RewardPoints"
-                                                });
-                                            } else
+                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                            //     oReturn.IsNotValid = true;
+                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                            //     aCtrlMessage.push({
+                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                                            //         target: "/TrainingDetails/RewardPoints"
+                                            //     });
+                                            // } else
                                                 if (data.RewardPoints == 0) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -1050,14 +1065,15 @@ sap.ui.define(
                                                 message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
                                                 target: "/TrainingDetails/Duration"
                                             });
-                                        } else if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                            oReturn.IsNotValid = true;
-                                            oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                            aCtrlMessage.push({
-                                                message: "MSG_PLS_ENTER_ERR_REWARD",
-                                                target: "/TrainingDetails/RewardPoints"
-                                            });
-                                        } else
+                                        } else 
+                                        // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                        //     oReturn.IsNotValid = true;
+                                        //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                        //     aCtrlMessage.push({
+                                        //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                                        //         target: "/TrainingDetails/RewardPoints"
+                                        //     });
+                                        // } else
                                             if (data.RewardPoints == 0) {
                                                 oReturn.IsNotValid = true;
                                                 oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -1108,6 +1124,9 @@ sap.ui.define(
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
+                    if (oPayload.RewardPoints === null) {
+                        oPayload.RewardPoints = 0;
+                    }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
 
                     delete oPayload.Duration;
@@ -1175,6 +1194,9 @@ sap.ui.define(
                     oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     oPayload.Duration = parseInt(oPayload.Duration);
+                    if (oPayload.RewardPoints === null) {
+                        oPayload.RewardPoints = 0;
+                    }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
 
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
@@ -1260,9 +1282,11 @@ sap.ui.define(
                     var oModel = this.getModel();
                     oModel.refresh(true);
                     this.getRouter().navTo("worklist", true);
+                    this.getModel().setProperty("/busy", false);
                 },
 
                 onUpload: function (oEvent) {
+                    this.getModel("oModelView").setProperty("/bChange", true);
                     var oFile = oEvent.getSource().FUEl.files[0];
                     this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
                 },
@@ -1389,18 +1413,6 @@ sap.ui.define(
                     oView.byId("idTblAttendance").getBinding("items").filter(aFilters);
                 },
 
-                _toggleButtonsAndView: function (bEdit) {
-                    var oView = this.getView();
-                    // Show the appropriate action buttons
-                    oView.byId("edit").setVisible(!bEdit);
-                    oView.byId("save").setVisible(bEdit);
-                    oView.byId("cancel").setVisible(bEdit);
-                },
-
-                handleCancelPress: function () {
-                    this.getRouter().navTo("worklist", true);
-                },
-
                 handleEditPress: function () {
                     var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
                     var oView = this.getView();
@@ -1418,7 +1430,6 @@ sap.ui.define(
                                 c3 = othat._initEditData();
                                 c3.then(function () {
                                     othat.getView().getModel("oModelView").refresh(true);
-                                    // othat._setCopyForFragment();
                                 });
                             });
                         });
@@ -1428,13 +1439,10 @@ sap.ui.define(
                             c2 = othat._initEditData();
                             c2.then(function () {
                                 othat.getView().getModel("oModelView").refresh(true);
-                                // othat._setCopyForFragment();
                             });
                         });
                     }
                 },
-
-                // _setCopyForFragment: function () { },
 
                 _initEditData: function () {
                     var oViewModel = this.getModel("oModelView");

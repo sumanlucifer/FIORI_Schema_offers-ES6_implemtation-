@@ -169,9 +169,6 @@
                                 <Column width="10%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
-                                <!-- <Column width="10%">
-									<Text text="{i18n>colAction}"/>
-								</Column> -->
 							</columns>
 							<items>
 								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
@@ -180,10 +177,6 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Text text="{PainterAttendanceCount}"/>
                                         <Text text="{RewardPoints}"/>
-                                        <!-- <HBox>
-                                            <Button icon="sap-icon://edit" press="onEditOfflineTraining" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDeleteOfflineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
-                                        </HBox> -->
 									</cells>
 								</ColumnListItem>
 							</items>
@@ -240,7 +233,7 @@
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
                                         </HBox>
                                         <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
-                                            <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${Status} === 0 }"/>
 							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
                                         </HBox>
 									</cells>

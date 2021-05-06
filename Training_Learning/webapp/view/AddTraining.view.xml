@@ -43,7 +43,7 @@
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
-                <Label text="{i18n>colRewardPoints}" required="true"/>
+                <Label text="{i18n>colRewardPoints}"/>
                 <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" />
 
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
@@ -79,20 +79,13 @@
                 <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
                 </u:FileUploader>
 
-                <!-- <Label text="{i18n>colImage}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-				<u:FileUploader maximumFileSize="2" placeholder="Choose a CSV file" fileAllowed="onUpload" fileType="png,jpg,jpeg" tooltip="{i18n>fileUploaderTrainingtip}" buttonOnly="true" buttonText="{i18n>fileUploaderTrainingtip}" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <HBox>
-                    <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PNG,JPG,JPEG"/>
-                    <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
-                </HBox>
-                <Image width="5rem" class="sapUiTinyMargin" height="5rem" src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelView>/oImage' } ] , formatter : '.formatter.giveImage' }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/> -->
-
                 <Label text="Upload Thumbnail Image" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <HBox>
                     <VBox>
                         <VBox class="sapUiTinyMarginBottom">
                                 <HBox>
                                     <u:FileUploader
+                                        id="idImageUploader"
                                         width="100%"
                                         tooltip="{i18n>fileUploaderTrainingtip}"
                                         typeMissmatch="handleTypeMissmatch"
@@ -108,7 +101,6 @@
                                     <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="PNG,JPG,JPEG"/>
                                     <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB"/>
                                 </VBox>
-                                <!-- <Image id="idPreviewImage" width="400px" height="200px" /> -->
                         </VBox>
                                 <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
                     </VBox>                  

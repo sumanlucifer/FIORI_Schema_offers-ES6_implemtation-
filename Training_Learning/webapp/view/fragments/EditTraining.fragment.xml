@@ -33,8 +33,8 @@
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${appView>/trainingType} === 'VIDEO'}"/>
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" visible="{= ${appView>/trainingType} === 'VIDEO'}" type="Number"/>
 
-                <Label text="{i18n>colRewardPoints}" required="true"/>
-                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number" editable="false"/>
+                <Label text="{i18n>colRewardPoints}"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" maxLength="10" type="Number"/>
 
             <core:Title text="{= ${appView>/trainingType} !== 'OFFLINE' ? 'Target Group' : '' }"/>
 
@@ -71,6 +71,7 @@
                         <VBox class="sapUiTinyMarginBottom">
                                 <HBox>
                                     <u:FileUploader
+                                        id="idImageUploader"
                                         width="100%"
                                         tooltip="{i18n>fileUploaderTrainingtip}"
                                         typeMissmatch="handleTypeMissmatch"
@@ -86,7 +87,6 @@
                                     <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="PNG,JPG,JPEG"/>
                                     <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB"/>
                                 </VBox>
-                                <!-- <Image id="idPreviewImage" width="400px" height="200px" /> -->
                         </VBox>
                                 <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
                     </VBox>                  
