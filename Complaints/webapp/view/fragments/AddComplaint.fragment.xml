@@ -30,6 +30,8 @@
                 <Text text="{i18n>Open}" />
                 <Label text="{i18n>Images}" />
                 <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <Label text=""/>
+                <Text text="{i18n>FileUploadMessage}"/>
                 <core:Title text="{i18n>PainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
                 <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/addCompAddData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
