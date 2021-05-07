@@ -163,7 +163,16 @@ sap.ui.define(
                 aCurrentFilterValues.push(
                   new Filter("CreatedAt", FilterOperator.LT, oDate)
                 );
-              } else if (prop === "Name") {
+              } else if (prop === "PainterType") {
+               aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter(
+                    "PainterTypeId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
+                );
+              }else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
@@ -192,16 +201,6 @@ sap.ui.define(
                         "Mobile",
                         FilterOperator.Contains,
                         oViewFilter[prop].trim()
-                      ),
-                      new Filter(
-                        "tolower(PainterType/PainterType)",
-                        FilterOperator.Contains,
-                        "'" +
-                          oViewFilter[prop]
-                            .trim()
-                            .toLowerCase()
-                            .replace("'", "''") +
-                          "'"
                       )
                     ],
                     false

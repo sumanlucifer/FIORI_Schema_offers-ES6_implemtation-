@@ -61,6 +61,13 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="PainterType" label="{i18n>PainterType}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                       <ComboBox placeholder="{i18n>PainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelControl>/filterBar/PainterType'}">
+                                            <core:Item text="{PainterType}" key="{Id}" />
+                                        </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Preferredlanguage" label="{i18n>PreferredLanguage}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                       <ComboBox placeholder="{i18n>PreferredLanguage}" items="{path:'/MasterLanguageSet',sorter:{path:'Language'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/filterBar/PreferredLanguage', type :'com.knpl.pragati.ContactPainter.model.customInt' }">
@@ -152,10 +159,11 @@
                             <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
                             
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
-                            <HBox>
+                            <HBox justifyContent="End">
+                                 <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                                 <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
-                                 <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
+                                
                             </HBox>
                         </cells>
                     </ColumnListItem>

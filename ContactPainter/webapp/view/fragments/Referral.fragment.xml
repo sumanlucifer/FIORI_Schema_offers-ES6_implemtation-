@@ -5,7 +5,7 @@
                 <Toolbar>
                     <ToolbarSpacer/>
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
-                    <Button text="{i18n>AddReferral}" type="Ghost" press="onPressAddReferral" />
+                    <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Ghost" press="onPressAddReferral" />
                 </Toolbar>
             </headerToolbar>
 
