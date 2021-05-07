@@ -103,6 +103,7 @@ sap.ui.define(
 
 
                     if (sArgMode === "add") {
+                        oViewModel.setProperty("/showPreviewImageButton", false); 
                         oViewModel.setProperty("/mTrainingKey", sArgId);
                         oViewModel.setProperty("/edit", false);
                         oViewModel.setProperty("/mode", sArgMode);
@@ -445,7 +446,7 @@ sap.ui.define(
 
                 onTrainingTypeChange: function (oEvent) {
                     var oViewModel = this.getModel("oModelView");
-                    // oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
+                    oViewModel.setProperty("/TrainingDetails/RewardPoints", oEvent.getSource().getSelectedItem().getBindingContext().getObject().Points);
                     oViewModel.setProperty("/TrTypeText", oEvent.getSource().getSelectedItem().getBindingContext().getObject().TrainingSubType);
                 },
 
@@ -1285,7 +1286,7 @@ sap.ui.define(
                         FileName: oItem.name,
                         IsArchived: false
                     });
-
+                    this.getModel("oModelView").setProperty("/showPreviewImageButton", true); 
                     this.getModel("oModelView").refresh();
                 }
 

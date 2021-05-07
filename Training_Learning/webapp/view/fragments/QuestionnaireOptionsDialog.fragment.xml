@@ -9,13 +9,13 @@
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
-				    		<Button press="onAddQuestionnaireOptions" enabled="{= ${oModelView>TrainingQuestionnaireOptions/length} &lt; 4 }" text="{i18n>AddOptions}"/>
+				    		<Button press="onAddQuestionnaireOptions" type="Emphasized" enabled="{= ${oModelView>TrainingQuestionnaireOptions/length} &lt; 4 }" text="{i18n>AddOptions}"/>
 						</Toolbar>
 					</headerToolbar>
                     <CustomListItem>
                         <RadioButton groupName="GroupA" selected = "{oModelView>IsCorrect}"/>
 						<Input width="80%" maxLength="100" value="{oModelView>Option}"/>
-                        <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Remove}"/>
+                        <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
 					</CustomListItem>
 				</List>
         </f:SimpleForm>

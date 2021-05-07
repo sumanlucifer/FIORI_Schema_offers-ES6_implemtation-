@@ -80,9 +80,8 @@ sap.ui.define([
 			});
         },
         onModelPropertyChange : function(oEvent, sModel){
-
-                 this.getModel(sModel).setProperty("/bChange", true);
-
+            debugger;
+            this.getModel(sModel).setProperty("/bChange", true);
         },
 
         navToHome: function(){

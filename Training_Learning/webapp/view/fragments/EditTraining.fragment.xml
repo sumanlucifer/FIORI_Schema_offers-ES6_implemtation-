@@ -83,12 +83,12 @@
                                         fileAllowed="onUpload"
                                         visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                                 </HBox>
-                                <VBox>
-                                    <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="PNG,JPG,JPEG"/>
-                                    <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB"/>
-                                </VBox>
+                                <HBox>
+                                    <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text=".png, .jpg, .jpeg" class="sapUiSmallMargin"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB" class="sapUiSmallMargin"/>
+                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                                </HBox>
                         </VBox>
-                                <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
                     </VBox>                  
                 </HBox>
 
