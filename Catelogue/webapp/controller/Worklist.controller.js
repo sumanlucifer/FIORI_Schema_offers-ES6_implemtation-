@@ -349,6 +349,7 @@ sap.ui.define([
             if (this.oCustom) {
                 oBindingParams.parameters.custom = this.oCustom;
             }
+           // oBindingParams.parameters["expand"] = "ProductDetails";
 
         },
         onResetFilters: function (oEvent) {

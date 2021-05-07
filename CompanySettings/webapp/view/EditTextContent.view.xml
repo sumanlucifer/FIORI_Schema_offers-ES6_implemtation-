@@ -1,70 +1,30 @@
-<mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.EditTextContent" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+<mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.EditTextContent" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:u="sap.ui.unified"
-xmlns:f="sap.ui.layout.form"
+xmlns:f="sap.f"
 xmlns:richtexteditor="sap.ui.richtexteditor">
 	
-    <Page>
-        <content>
-            <!-- <VBox visible="{=!${local>/bEdit}}">
-            
-            <core:Fragment
-            
-                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Display" type="XML"> 
-            </core:Fragment></VBox> -->
+    <f:DynamicPage busyIndicatorDelay="0" busy="{ActionEditModel>/bBusy}" showFooter="true">
+        <f:content>
+             <VBox>
+            <l:VerticalLayout id="idVerticalLayout" class="sapUiContentPadding" width="100%">
+            </l:VerticalLayout>
 
-                <!-- <VBox >
-                <core:Fragment
-             
-                fragmentName="com.knpl.pragati.CompanySettings.view.fragment.Change" type="XML"> 
-            </core:Fragment>
-                </VBox> -->
-                <l:VerticalLayout id="idVerticalLayout" class="sapUiContentPadding" width="100%">
-                
-                </l:VerticalLayout>
-    <!-- <VBox class="sapUiSmallMargin" > -->
-  
-            <!-- <VBox class="sapUiTinyMargin" width="100%">
-                 <Title text="About Us"/>
-                        <richtexteditor:RichTextEditor 
-                        id="rteAbout"
-                        width="100%"
-                        readyRecurring="onReadyAbout"
-                        sanitizeValue="false"
-                        ready="onReadyAbout"
-                        required="true"
-                            >
-                        </richtexteditor:RichTextEditor>
-            </VBox>
-            <VBox class="sapUiTinyMargin" width="100%">
-               <Title text="Privacy Policy"/>
-                <richtexteditor:RichTextEditor
-                id="rteDisclaimer"
-                
-                ready="onReadyDisclaimer"
-                 width="100%"
-                 sanitizeValue="false"
-                 required="true"
-                >
-                 </richtexteditor:RichTextEditor>
-            </VBox> -->
-        
-        
             <VBox class="sapUiTinyMargin"  width="100%">
-            <Title text="Call Center Number" class="sapUiTinyMargin"/>
-            <Input  required="true"  type="Text" class="sapUiTinyMargin"
-                maxLength="15"
-                width="30%"
-        		placeholder="Enter Call Center Number ..."
-        		valueStateText="Call Center Number must not be empty."
-                value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
-     </VBox>
+                <Title text="Call Center Number" class="sapUiTinyMargin"/>
+                    <Input  required="true"  type="Text" class="sapUiTinyMargin"
+                        maxLength="15"
+                        width="30%"
+                        placeholder="Enter Call Center Number ..."
+                        valueStateText="Call Center Number must not be empty."
+                        value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
+            </VBox>
        
 	
-	        <!-- </VBox> -->
-        </content>
-        <footer>
+	        </VBox>
+        </f:content>
+        <f:footer>
             <OverflowToolbar>
             
                 <ToolbarSpacer/>
@@ -74,8 +34,9 @@ xmlns:richtexteditor="sap.ui.richtexteditor">
                 
                 
             </OverflowToolbar>
-        </footer>
-    </Page>
+        </f:footer>
+       
+    </f:DynamicPage>
 				
 			
 </mvc:View>

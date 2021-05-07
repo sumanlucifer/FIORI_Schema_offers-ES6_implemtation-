@@ -79,12 +79,16 @@ sap.ui.define([
 
             },
 
+            // openPdf: function (oEvent) {
+            //     var oContext = oEvent.getSource().getBindingContext("local");
+            //     var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+            //     sap.m.URLHelper.redirect(sSource, true);
+            // },
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-
+                sSource =  "https://"+location.host + "/" + sSource    
                 sap.m.URLHelper.redirect(sSource, true);
-                // window.open(sSource);
             },
             onChangePdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");

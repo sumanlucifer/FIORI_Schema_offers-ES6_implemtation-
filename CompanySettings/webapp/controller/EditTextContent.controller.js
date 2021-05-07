@@ -29,9 +29,19 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.EditTextContent", {
             onInit: function () {
-               
 
 
+                this.richtexteditor;
+
+                var oData = {
+                    AboutUs: null,
+                    Disclaimer: null,
+                    CallCenterHelpline: "",
+                    DisclaimerVersion:null,
+                    bBusy:true
+                }
+                var oViewModel = new JSONModel(oData);
+                this.getView().setModel(oViewModel, "ActionEditModel");
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.rteAbout = this.getView().byId("rteAbout");
@@ -57,79 +67,86 @@ sap.ui.define([
                 this._property = "MasterCompanySettingsSet(1)";
                 this.entitySet;
 
-             this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
-               // this.initData();
-               
+                this.getOwnerComponent().getRouter().getRoute("EditTextContent").attachPatternMatched(this._onObjectMatched, this);
+                // this.initData();
 
-               
+
+
             },
             _onObjectMatched: function () {
-                 this.initData();
-                //this._addRTE(["AboutUs"]);
+                this.rtePromise.then(this.initData.bind(this));
+                //this.initData();
+
             },
-           
+
             initData: function () {
-                var oData = {
-                    AboutUs: null,
-                    Disclaimer: null,
-                    CallCenterHelpline: ""
-                }
+
                 var that = this;
                 this.getOwnerComponent().getModel("data").read("/MasterCompanySettingsSet(1)", {
                     success: function (data, response) {
-                         that.entitySet=data;
-                        oData.AboutUs = data.AboutUs
-                        oData.Disclaimer = data.Disclaimer
-                        oData.CallCenterHelpline = data.CallCenterHelpline
-                        oData.DisclaimerVersion = data.DisclaimerVersion
-                        
-                        
-                        var oViewModel = new JSONModel(oData);
-                        that.getView().setModel(oViewModel, "ActionEditModel");
+                        // that.entitySet = data;
+                        // oData.AboutUs = data.AboutUs
+                        // oData.Disclaimer = data.Disclaimer
+                        // oData.CallCenterHelpline = data.CallCenterHelpline
+                        // oData.DisclaimerVersion = data.DisclaimerVersion
+                        //  var oViewModel = new JSONModel(oData);
+                        // that.getView().setModel(oViewModel, "ActionEditModel");
+                        //that.getView().getModel("ActionEditModel").setData(data);
+                        setTimeout(() => {
+                            that.getView().getModel("ActionEditModel").setProperty("/AboutUs", data.AboutUs);
+                            that.getView().getModel("ActionEditModel").setProperty("/Disclaimer", data.Disclaimer);
+                            that.getView().getModel("ActionEditModel").setProperty("/CallCenterHelpline", data.CallCenterHelpline);
+                            that.getView().getModel("ActionEditModel").setProperty("/DisclaimerVersion", data.DisclaimerVersion);
+                            that.getView().getModel("ActionEditModel").setProperty("/bBusy", false);
+                        }, 1000);
+
                     },
                     error: function (oError) {
                     }
                 });
-                
-            
-                
-            },
-            onAfterRendering: function (){
-                   this._addRTE(["AboutUs","Disclaimer"]);
-            },
-            // onBeforeRendering :function (){
-            //      this.initData();
-            // },
-             _addRTE : function(aPaths){
-                var that=this;
-                    sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library","sap/m/Title"],
-				function (RTE,EditorType,Title) {
-                    aPaths.forEach(element => {
-                        if(element=="AboutUs"){
-                         var  title="About Us"
-                        }
-                        else if(element=="Disclaimer"){
-                            title="Privacy Policy"
-                        }
 
-                    that.getView().byId("idVerticalLayout").addContent( 
-                        new Title({
-						 text:title
-						
-                    }));
-                    that.getView().byId("idVerticalLayout").addContent( 
-                        new RTE({
-						width: "100%",
-						value:"{ActionEditModel>/"+element+"}"
-						
-                    }));
-                    
-                    
-                    });
-					
 
-					
-			});
+
+            },
+            onAfterRendering: function () {
+                this._addRTE(["AboutUs", "Disclaimer"]);
+            },
+
+            _addRTE: function (aPaths) {
+                var that = this;
+                this.rtePromise = new Promise(function (res, rej) {
+                    sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library", "sap/m/Title"],
+                        function (RTE, EditorType, Title) {
+                            aPaths.forEach((element, index) => {
+                                if (element == "AboutUs") {
+                                    var title = "About Us"
+                                }
+                                else if (element == "Disclaimer") {
+                                    title = "Privacy Policy"
+                                }
+
+                                that.getView().byId("idVerticalLayout").addContent(
+                                    new Title({
+                                        text: title
+
+                                    }));
+                                that.getView().byId("idVerticalLayout").addContent(
+                                    new RTE({
+                                        width: "100%",
+                                        value: "{ActionEditModel>/" + element + "}"
+
+                                    }));
+                                if (index == 1) {
+                                    res();
+                                }
+
+                            });
+
+
+
+                        });
+                })
+
             },
             handleEditPress: function () {
                 this.getView().getModel("local").setProperty("/bEdit", true);
@@ -157,17 +174,17 @@ sap.ui.define([
                 console.log("empty");
                 this.onDialogPress();
             },
-            onReadyDisclaimer: function (oEvent){
-              // var oe= oEvent.getSource().getProperty("value");
-              var Disclaimer=this.getView().getModel("ActionEditModel").getProperty("/Disclaimer");
-               this.rteDisclaimer.setValue(Disclaimer);
-               
+            onReadyDisclaimer: function (oEvent) {
+                // var oe= oEvent.getSource().getProperty("value");
+                var Disclaimer = this.getView().getModel("ActionEditModel").getProperty("/Disclaimer");
+                this.rteDisclaimer.setValue(Disclaimer);
+
             },
-            onReadyAbout: function (oEvent){
-              // var oe= oEvent.getSource().getProperty("value");
-              var About=this.getView().getModel("ActionEditModel").getProperty("/AboutUs");
-               this.rteAbout.setValue(About);
-               
+            onReadyAbout: function (oEvent) {
+                // var oe= oEvent.getSource().getProperty("value");
+                var About = this.getView().getModel("ActionEditModel").getProperty("/AboutUs");
+                this.rteAbout.setValue(About);
+
             },
 
             handleSavePress: function () {
@@ -181,8 +198,8 @@ sap.ui.define([
                 // var sEntityPath = oView.getElementBinding().getPath();
                 // var oDataValue = oDataModel.getObject(sEntityPath);
                 // //var oPrpReq = oModelView.getProperty("/prop2");
-                var oDataValue={
-                     AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
+                var oDataValue = {
+                    AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
                     Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
                     CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
                     DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion"),
@@ -198,7 +215,7 @@ sap.ui.define([
                     return false;
                 }
 
-                var oData={
+                var oData = {
                     AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
                     Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
                     CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
@@ -221,8 +238,8 @@ sap.ui.define([
                 MessageToast.show(msg);
                 this.getOwnerComponent().getModel("data").refresh(true);
                 setTimeout(function () {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("RouteHome");
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    oRouter.navTo("RouteHome");
                 }.bind(this), 1000);
 
 
@@ -245,7 +262,7 @@ sap.ui.define([
 
 
             onValidate: function (oDataValue) {
-                if(oDataValue.AboutUs==""||oDataValue.Disclaimer==""||oDataValue.CallCenterHelpline==""){
+                if (oDataValue.AboutUs == "" || oDataValue.Disclaimer == "" || oDataValue.CallCenterHelpline == "") {
                     return false;
                 }
                 return true;
@@ -254,7 +271,7 @@ sap.ui.define([
 
                 // // Validate input fields against root page with id 'somePage'
                 // return validator.validate(this.byId("EditFragment"));
-               
+
             },
             onDialogPress: function () {
                 if (!this.oEscapePreventDialog) {
