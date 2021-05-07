@@ -84,7 +84,7 @@ sap.ui.define(
 
                     //FIX: Need pop for changes
                     oViewModel.setProperty("/bChange", false);
-                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);       
+                    oViewModel.detachPropertyChange(this.onModelPropertyChange, this);
 
                     var oData = {
                         modeEdit: false,
@@ -108,107 +108,55 @@ sap.ui.define(
 
                     this.getModel("appView").setProperty("/trainingType", trainingType);
                     var sPath = "/" + oProp;
-                    oViewModel.setProperty("/sPath", sPath);
+                    var params;
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                        that.getModel().read(sPath, {
-                            urlParameters: {
-                                "$expand": "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions"
-                            },
-                            success: function (data) {
-
-                                // if (trainingType === 'ONLINE') {
-                                    if (data.TrainingQuestionnaire) {
-                                        data.TrainingQuestionnaire.results.forEach(function (ele) {
-                                            if (ele.TrainingQuestionnaireOptions && ele.TrainingQuestionnaireOptions.results.length) {
-                                                ele.TrainingQuestionnaireOptions = ele.TrainingQuestionnaireOptions.results;
-                                            } else {
-                                                ele.TrainingQuestionnaireOptions = [];
-                                            }
-                                        })
-
-                                        data.TrainingQuestionnaire = data.TrainingQuestionnaire.results;
-                                    } else {
-                                        data.TrainingQuestionnaire = [];
-                                    }
-
-                                    aArray = [];
-                                    if (data.TrainingZone && data.TrainingZone.results) {
-                                        for (var x of data["TrainingZone"]["results"]) {
-                                            aArray.push(x["ZoneId"]);
-                                        }
-                                    }
-                                    data.TrainingZone = aArray;
-
-                                    aArray = [];
-                                    if (data.TrainingDivision && data.TrainingDivision.results) {
-                                        for (var y of data["TrainingDivision"]["results"]) {
-                                            aArray.push(y["DivisionId"]);
-                                        }
-                                    }
-                                    data.TrainingDivision = aArray;
-
-                                    aArray = [];
-                                    if (data.TrainingDepot && data.TrainingDepot.results) {
-                                        for (var z of data["TrainingDepot"]["results"]) {
-                                            aArray.push(z["DepotId"]);
-                                        }
-                                        data.TrainingDepot = data.TrainingDepot.results;
-                                    } else {
-                                        data.TrainingDepot = aArray;  // for edit in Edit Training and will be used in payload
-                                    }
-                                    oViewModel.setProperty("/displayDepots", aArray); // to display in view training
-
-                                    aArray = [];
-                                    if (data.TrainingPainterTypeDetails && data.TrainingPainterTypeDetails.results) {
-                                        for (var p of data["TrainingPainterTypeDetails"]["results"]) {
-                                            aArray.push(p["PainterTypeId"]);
-                                        }
-                                    }
-                                    data.TrainingPainterTypeDetails = aArray;
-
-                                    aArray = [];
-                                    if (data.TrainingPainterArcheTypeDetails && data.TrainingPainterArcheTypeDetails.results) {
-                                        for (var q of data["TrainingPainterArcheTypeDetails"]["results"]) {
-                                            aArray.push(q["PainterArcheTypeId"]);
-                                        }
-                                    }
-                                    data.TrainingPainterArcheTypeDetails = aArray;
-
-                                    var dateValue = data.StartDate.toDateString();
-                                    var timeValue = data.StartDate.toLocaleTimeString();
-                                    var patternDate = "dd/MM/yyyy hh:mm a";
-                                    var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-                                        pattern: patternDate
-                                    });
-                                    var oDateTime = dateValue + " " + timeValue;
-                                    var oNow = new Date(oDateTime);
-                                    data.ViewStartDate = oDateFormat.format(oNow);
-
-                                    dateValue = data.EndDate.toDateString();
-                                    timeValue = data.EndDate.toLocaleTimeString();
-                                    oDateTime = dateValue + " " + timeValue;
-                                    oNow = new Date(oDateTime);
-                                    data.ViewEndDate = oDateFormat.format(oNow);
-
-                                    that._initFilerForTablesEnrollment(data.Id);
-                                // }
-
-                                oViewModel.setProperty("/TrainingDetails", data);
-                                oViewModel.setProperty("/__metadata", data.__metadata);
-
-                                if (trainingType === 'OFFLINE') {
-                                    that._initFilerForTablesAttendance(data.Id);
-                                }
-                                //FIX: POP on cancel
-                                // oViewModel.attachPropertyChange("oModelView", that.onModelPropertyChange, that);
-                            }
-                        })
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
                     } else {
-                        that.getModel().read(sPath, {
-                            urlParameters: {
-                                "$expand": "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions"
-                            },
-                            success: function (data) {
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
+                    }
+                    oViewModel.setProperty("/sPath", sPath);
+                    that.getModel().read(sPath, {
+                        urlParameters: {
+                            "$expand": params
+                        },
+                        success: function (data) {
+
+                            if (trainingType === 'ONLINE') {
+                                if (data.TrainingQuestionnaire) {
+                                    data.TrainingQuestionnaire.results.forEach(function (ele) {
+                                        if (ele.TrainingQuestionnaireOptions && ele.TrainingQuestionnaireOptions.results.length) {
+                                            ele.TrainingQuestionnaireOptions = ele.TrainingQuestionnaireOptions.results;
+                                        } else {
+                                            ele.TrainingQuestionnaireOptions = [];
+                                        }
+                                    })
+
+                                    data.TrainingQuestionnaire = data.TrainingQuestionnaire.results;
+                                } else {
+                                    data.TrainingQuestionnaire = [];
+                                }
+
+                                var dateValue = data.StartDate.toDateString();
+                                var timeValue = data.StartDate.toLocaleTimeString();
+                                var patternDate = "dd/MM/yyyy hh:mm a";
+                                var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                                    pattern: patternDate
+                                });
+                                var oDateTime = dateValue + " " + timeValue;
+                                var oNow = new Date(oDateTime);
+                                data.ViewStartDate = oDateFormat.format(oNow);
+
+                                dateValue = data.EndDate.toDateString();
+                                timeValue = data.EndDate.toLocaleTimeString();
+                                oDateTime = dateValue + " " + timeValue;
+                                oNow = new Date(oDateTime);
+                                data.ViewEndDate = oDateFormat.format(oNow);
+
+                                that._initFilerForTablesEnrollment(data.Id);
+                                var TrainingVideoDetails = that.getView().getModel("i18n").getResourceBundle().getText("OnlineTrainingDetails");
+                            }
+
+                            if (trainingType === 'VIDEO') {
                                 if (data.LearningQuestionnaire) {
                                     data.LearningQuestionnaire.results.forEach(function (ele) {
                                         if (ele.LearningQuestionnaireOptions && ele.LearningQuestionnaireOptions.results.length) {
@@ -222,87 +170,75 @@ sap.ui.define(
                                 } else {
                                     data.TrainingQuestionnaire = [];
                                 }
-
-                                aArray = [];
-                                if (data.TrainingZone && data.TrainingZone.results) {
-                                    for (var x of data["TrainingZone"]["results"]) {
-                                        aArray.push(x["ZoneId"]);
-                                    }
-                                }
-                                data.TrainingZone = aArray;
-
-                                aArray = [];
-                                if (data.TrainingDivision && data.TrainingDivision.results) {
-                                    for (var y of data["TrainingDivision"]["results"]) {
-                                        aArray.push(y["DivisionId"]);
-                                    }
-                                }
-                                data.TrainingDivision = aArray;
-
-                                aArray = [];
-                                if (data.TrainingDepot && data.TrainingDepot.results) {
-                                    for (var z of data["TrainingDepot"]["results"]) {
-                                        aArray.push(z["DepotId"]);
-                                    }
-                                    data.TrainingDepot = data.TrainingDepot.results;
-                                } else {
-                                    data.TrainingDepot = aArray;  // for edit in Edit Training and will be used in payload
-                                }
-                                oViewModel.setProperty("/displayDepots", aArray); // to display in view training
-
-                                aArray = [];
-                                if (data.TrainingPainterTypeDetails && data.TrainingPainterTypeDetails.results) {
-                                    for (var p of data["TrainingPainterTypeDetails"]["results"]) {
-                                        aArray.push(p["PainterTypeId"]);
-                                    }
-                                }
-                                data.TrainingPainterTypeDetails = aArray;
-
-                                aArray = [];
-                                if (data.TrainingPainterArcheTypeDetails && data.TrainingPainterArcheTypeDetails.results) {
-                                    for (var q of data["TrainingPainterArcheTypeDetails"]["results"]) {
-                                        aArray.push(q["PainterArcheTypeId"]);
-                                    }
-                                }
-                                data.TrainingPainterArcheTypeDetails = aArray;
-
-                                oViewModel.setProperty("/TrainingDetails", data);
-                                oViewModel.setProperty("/__metadata", data.__metadata);
+                                data.LearningQuestionnaire = [];
 
                                 oViewModel.setProperty("/TrainingDetails/LearningQuestionnaire", []);
                                 that._initFilerForTablesVideoEnrollment(data.Id);
-
-                                //FIX: POP on cancel
-                                // ewModel.attachPropertyChange("oModelView", that.onModelPropertyChange, that);
+                                var TrainingVideoDetails = that.getView().getModel("i18n").getResourceBundle().getText("VideoTrainingDetails");
                             }
-                        })
-                    }
 
-                    if (trainingType === 'ONLINE') {
-                        var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("OnlineTrainingDetails");
-                        oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
-                    } else if (trainingType === 'OFFLINE') {
-                        var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("OfflineTrainingDetails");
-                        oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
-                    } else {
-                        var TrainingVideoDetails = this.getView().getModel("i18n").getResourceBundle().getText("VideoTrainingDetails");
-                        oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
-                    }
-                    if (mode === 'edit') {
-                        that.handleEditPress();
-                    } else {
-                        if (trainingType === 'ONLINE' || trainingType === 'VIDEO') {
-                            that._loadEditTrainingDetail("Display");
-                            that._loadEditQuestion("Display");
-                        } else if (trainingType === 'OFFLINE') {
-                            that.getModel("appView").setProperty("/EditAttendance", false);
+                            aArray = [];
+                            if (data.TrainingZone && data.TrainingZone.results) {
+                                for (var x of data["TrainingZone"]["results"]) {
+                                    aArray.push(x["ZoneId"]);
+                                }
+                            }
+                            data.TrainingZone = aArray;
+
+                            aArray = [];
+                            if (data.TrainingDivision && data.TrainingDivision.results) {
+                                for (var y of data["TrainingDivision"]["results"]) {
+                                    aArray.push(y["DivisionId"]);
+                                }
+                            }
+                            data.TrainingDivision = aArray;
+
+                            aArray = [];
+                            if (data.TrainingDepot && data.TrainingDepot.results) {
+                                for (var z of data["TrainingDepot"]["results"]) {
+                                    aArray.push(z["DepotId"]);
+                                }
+                                data.TrainingDepot = data.TrainingDepot.results;
+                            } else {
+                                data.TrainingDepot = aArray;  // for edit in Edit Training and will be used in payload
+                            }
+                            oViewModel.setProperty("/displayDepots", aArray); // to display in view training
+
+                            aArray = [];
+                            if (data.TrainingPainterTypeDetails && data.TrainingPainterTypeDetails.results) {
+                                for (var p of data["TrainingPainterTypeDetails"]["results"]) {
+                                    aArray.push(p["PainterTypeId"]);
+                                }
+                            }
+                            data.TrainingPainterTypeDetails = aArray;
+
+                            aArray = [];
+                            if (data.TrainingPainterArcheTypeDetails && data.TrainingPainterArcheTypeDetails.results) {
+                                for (var q of data["TrainingPainterArcheTypeDetails"]["results"]) {
+                                    aArray.push(q["PainterArcheTypeId"]);
+                                }
+                            }
+                            data.TrainingPainterArcheTypeDetails = aArray;
+
+                            if (trainingType === 'OFFLINE') {
+                                that._initFilerForTablesAttendance(data.Id);
+                                var TrainingVideoDetails = that.getView().getModel("i18n").getResourceBundle().getText("OfflineTrainingDetails");
+                            }
+                            oViewModel.setProperty("/TrainingVideoDetails", TrainingVideoDetails);
+
+                            oViewModel.setProperty("/TrainingDetails", data);
+                            oViewModel.setProperty("/__metadata", data.__metadata);
+
+                            if (mode === 'edit') {
+                                that.handleEditPress(mode);
+                            } else {
+                                if (trainingType === 'ONLINE' || trainingType === 'VIDEO') {
+                                    that._loadEditTrainingDetail(mode);
+                                    that._loadEditQuestion(mode);
+                                }
+                            }
                         }
-                    }
-
-                    that.getView().unbindElement();
-
-                    that.getView().setModel(oViewModel, "oModelView");
-                    that.getView().getModel().resetChanges();
+                    })
                 },
 
                 onTablesSearch: function (oEvent) {
@@ -646,13 +582,12 @@ sap.ui.define(
 
                 onCancel: function () {
                     debugger;
-                    if(this.getModel("oModelView").getProperty("/bChange"))
-                       {  
-                          this.showWarning(  "MSG_PENDING_CHANGES" ,this.navToHome);
-                        }
-                       else {
-                            this.navToHome();
-                       }     
+                    if (this.getModel("oModelView").getProperty("/bChange")) {
+                        this.showWarning("MSG_PENDING_CHANGES", this.navToHome);
+                    }
+                    else {
+                        this.navToHome();
+                    }
                 },
 
                 onAfterRendering: function () {
@@ -988,23 +923,23 @@ sap.ui.define(
                                             //         target: "/TrainingDetails/RewardPoints"
                                             //     });
                                             // } else
-                                                if (data.RewardPoints == 0) {
+                                            if (data.RewardPoints == 0) {
+                                                oReturn.IsNotValid = true;
+                                                oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
+                                                aCtrlMessage.push({
+                                                    message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
+                                                    target: "/TrainingDetails/RewardPoints"
+                                                });
+                                            }
+                                            else
+                                                if (data.TrainingQuestionnaire.length < 3) {
                                                     oReturn.IsNotValid = true;
-                                                    oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
+                                                    oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
                                                     aCtrlMessage.push({
-                                                        message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
-                                                        target: "/TrainingDetails/RewardPoints"
+                                                        message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
+                                                        target: "/TrainingDetails/TrainingQuestionnaire"
                                                     });
                                                 }
-                                                else
-                                                    if (data.TrainingQuestionnaire.length < 3) {
-                                                        oReturn.IsNotValid = true;
-                                                        oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
-                                                        aCtrlMessage.push({
-                                                            message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
-                                                            target: "/TrainingDetails/TrainingQuestionnaire"
-                                                        });
-                                                    }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -1065,15 +1000,15 @@ sap.ui.define(
                                                 message: "MSG_ENTER_DURATION_MORETHAN_ZERO",
                                                 target: "/TrainingDetails/Duration"
                                             });
-                                        } else 
-                                        // if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                        //     oReturn.IsNotValid = true;
-                                        //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                        //     aCtrlMessage.push({
-                                        //         message: "MSG_PLS_ENTER_ERR_REWARD",
-                                        //         target: "/TrainingDetails/RewardPoints"
-                                        //     });
-                                        // } else
+                                        } else
+                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
+                                            //     oReturn.IsNotValid = true;
+                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
+                                            //     aCtrlMessage.push({
+                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
+                                            //         target: "/TrainingDetails/RewardPoints"
+                                            //     });
+                                            // } else
                                             if (data.RewardPoints == 0) {
                                                 oReturn.IsNotValid = true;
                                                 oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -1378,6 +1313,7 @@ sap.ui.define(
                 },
 
                 _initFilerForTablesEnrollment: function (trainingId) {
+                    debugger;
                     var oView = this.getView();
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
@@ -1390,6 +1326,7 @@ sap.ui.define(
                 },
 
                 _initFilerForTablesVideoEnrollment: function (trainingId) {
+                    debugger;
                     var oView = this.getView();
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
@@ -1413,92 +1350,72 @@ sap.ui.define(
                     oView.byId("idTblAttendance").getBinding("items").filter(aFilters);
                 },
 
-                handleEditPress: function () {
-                    var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
-                    var oView = this.getView();
-                    var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/flgCantEditUrlDates", false);
-                    this.getModel("appView").setProperty("/EditAttendance", true);
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
+                handleEditPress: function (mode) {
                     var othat = this;
-                    var c1, c2, c3;
-                    if (trainingType === 'ONLINE' || trainingType === 'VIDEO') {
-                        c1 = othat._loadEditTrainingDetail("Edit");
-                        c1.then(function () {
-                            c2 = othat._loadEditQuestion("Edit");
-                            c2.then(function () {
-                                c3 = othat._initEditData();
-                                c3.then(function () {
-                                    othat.getView().getModel("oModelView").refresh(true);
-                                });
-                            });
-                        });
-                    } else if (trainingType === 'OFFLINE') {
-                        c1 = othat._loadEditTrainingDetail("Edit");
-                        c1.then(function () {
-                            c2 = othat._initEditData();
-                            c2.then(function () {
-                                othat.getView().getModel("oModelView").refresh(true);
-                            });
-                        });
-                    }
+                    // othat.getView().getModel("oModelView").refresh(true);
+                    Promise.all([othat._loadEditTrainingDetail(mode), othat._loadEditQuestion(mode)]).then(function () {
+                        //FIX: POP on cancel
+                        // debugger;
+                        // othat.getModel("oModelView").attachPropertyChange("oModelView", othat.onModelPropertyChange, othat);
+                    })
                 },
 
-                _initEditData: function () {
-                    var oViewModel = this.getModel("oModelView");
-                    var promise = jQuery.Deferred();
-                    var oView = this.getView();
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
-                    var TrainingDetails = this.getModel("oModelView").getProperty("/TrainingDetails");
-                    if (trainingType === 'ONLINE' || trainingType === 'VIDEO') {
-                        var oDivision = oView.byId("idDivision");
-                        var aDivFilter = [];
-                        for (var y of TrainingDetails.TrainingZone) {
-                            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y))
-                        }
-                        oDivision.getBinding("items").filter(aDivFilter);
-                    }
-                    promise.resolve();
-                    return promise;
-
-                },
-
-                _loadEditTrainingDetail: function (mParam) {
-                    var promise = jQuery.Deferred();
+                _loadEditTrainingDetail: function (mode) {
+                    // var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var othat = this;
                     var oVboxProfile = oView.byId("idVbTrDetails");
-                    var sFragName = mParam == "Edit" ? "EditTraining" : "ViewTraining";
+                    var sFragName = mode == "edit" ? "EditTraining" : "ViewTraining";
                     oVboxProfile.destroyItems();
-                    return Fragment.load({
-                        id: oView.getId(),
-                        controller: othat,
-                        name: "com.knpl.pragati.Training_Learning.view.fragments." + sFragName,
-                    }).then(function (oControlProfile) {
-                        oView.addDependent(oControlProfile);
-                        oVboxProfile.addItem(oControlProfile);
-                        promise.resolve();
-                        return promise;
-                    });
+                    debugger;
+                    return new Promise(function (res, rej) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            controller: othat,
+                            name: "com.knpl.pragati.Training_Learning.view.fragments." + sFragName,
+                        }).then(function (oControlProfile) {
+                            oView.addDependent(oControlProfile);
+                            oVboxProfile.addItem(oControlProfile);
+                            var trainingType = othat.getModel("appView").getProperty("/trainingType");
+                            var TrainingDetails = othat.getModel("oModelView").getProperty("/TrainingDetails");
+                            if (mode === 'edit') {
+                                if (trainingType === 'ONLINE' || trainingType === 'VIDEO') {
+                                    var oDivision = oView.byId("idDivision");
+                                    var aDivFilter = [];
+                                    for (var y of TrainingDetails.TrainingZone) {
+                                        aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y))
+                                    }
+                                    oDivision.getBinding("items").filter(aDivFilter);
+                                }
+                            }
+
+                            res();
+                            // promise.resolve();
+                            // return promise;
+                        });
+
+                    })
                 },
 
-                _loadEditQuestion: function (mParam) {
+                _loadEditQuestion: function (mode) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var othat = this;
                     var oVboxProfile = oView.byId("idVbQuestionnaire");
-                    var sFragName = mParam == "Edit" ? "EditQuestionnaire" : "Questionnaire";
+                    var sFragName = mode == "edit" ? "EditQuestionnaire" : "Questionnaire";
                     oVboxProfile.destroyItems();
-                    return Fragment.load({
-                        id: oView.getId(),
-                        controller: othat,
-                        name: "com.knpl.pragati.Training_Learning.view.fragments." + sFragName,
-                    }).then(function (oControlProfile) {
-                        oView.addDependent(oControlProfile);
-                        oVboxProfile.addItem(oControlProfile);
-                        promise.resolve();
-                        return promise;
-                    });
+                    return new Promise(function (res, rej) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            controller: othat,
+                            name: "com.knpl.pragati.Training_Learning.view.fragments." + sFragName,
+                        }).then(function (oControlProfile) {
+                            oView.addDependent(oControlProfile);
+                            oVboxProfile.addItem(oControlProfile);
+                            // promise.resolve();
+                            res();
+                        });
+                    })
                 }
 
             }

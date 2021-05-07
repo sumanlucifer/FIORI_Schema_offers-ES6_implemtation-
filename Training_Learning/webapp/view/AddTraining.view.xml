@@ -97,12 +97,12 @@
                                         fileAllowed="onUpload"
                                         visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                                 </HBox>
-                                <VBox>
-                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="PNG,JPG,JPEG"/>
-                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB"/>
-                                </VBox>
+                                <HBox>
+                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text=".png, .jpg, .jpeg" class="sapUiSmallMargin"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB" class="sapUiSmallMargin"/>
+                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" enabled="{= ${oModelView>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                                </HBox>
                         </VBox>
-                                <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>                    
                     </VBox>                  
                 </HBox>
 
@@ -118,17 +118,16 @@
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
-				    		<Button press="onAddQuestionnaire" text="{i18n>btnAddQuestionnaire}"/>
+				    		<Button press="onAddQuestionnaire" type="Emphasized" text="{i18n>btnAddQuestionnaire}"/>
 						</Toolbar>
 					</headerToolbar>
                     <CustomListItem>
                         <VBox renderType="Bare" class="sapUiTinyMargin">
-                        <!-- <Text text=""/> -->
                             <HBox alignItems="Start" justifyContent="SpaceBetween">
                                 <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                                 <FlexBox alignItems="Start" justifyContent="End">
 				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
-				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Remove}" />
+				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Delete}" />
 			                    </FlexBox>
                             </HBox>
                             <VBox items="{oModelView>TrainingQuestionnaireOptions}">

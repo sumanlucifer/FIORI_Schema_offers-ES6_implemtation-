@@ -15,7 +15,7 @@
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingSubTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterTrainingSubTypeSet', parameters : { expand : 'MasterTrainingTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingSubTypeId}">
+									<ComboBox placeholder="{i18n>enterTrType}" items="{ path: '/MasterTrainingSubTypeSet', parameters : { expand : 'MasterTrainingTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingSubTypeId}">
 										<core:Item key="{Id}" text="{TrainingSubType}-{MasterTrainingTypeDetails/TrainingType}"/>
 									</ComboBox>
 								</fb:control>
@@ -32,7 +32,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Url" groupTitle="Filters" label="{i18n>colLink}">
 								<fb:control>
-									<ComboBox selectedKey="{worklistView>/filterBar/Link}">
+									<ComboBox selectedKey="{worklistView>/filterBar/Link}" placeholder="{i18n>enterLink}">
                                         <items>
                                             <core:Item text="{i18n>Yes}" key="0"/>
                                             <core:Item text="{i18n>No}" key="1"/>
@@ -42,7 +42,7 @@
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
 								<fb:control>
-									<ComboBox selectedKey="{worklistView>/filterBar/Status}">
+									<ComboBox selectedKey="{worklistView>/filterBar/Status}" placeholder="{i18n>enterStatus}">
                                         <items>
                                             <core:Item text="{i18n>inActive}" key="0"/>
                                             <core:Item text="{i18n>active}" key="1"/>
@@ -53,21 +53,21 @@
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>colZone}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterZoneSet' }" selectedKey="{worklistView>/filterBar/TrainingZone}">
+									<ComboBox items="{ path: '/MasterZoneSet' }" selectedKey="{worklistView>/filterBar/TrainingZone}" placeholder="{i18n>enterZone}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>colDivision}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterDivisionSet' }" selectedKey="{worklistView>/filterBar/TrainingDivision}">
+									<ComboBox items="{ path: '/MasterDivisionSet' }" selectedKey="{worklistView>/filterBar/TrainingDivision}" placeholder="{i18n>enterDivision}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>colDepot}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterDepotSet' }" selectedKey="{worklistView>/filterBar/TrainingDepot}">
+									<ComboBox items="{ path: '/MasterDepotSet' }" selectedKey="{worklistView>/filterBar/TrainingDepot}" placeholder="{i18n>enterDepot}">
 										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 									</ComboBox>
 								</fb:control>
@@ -88,7 +88,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                        <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddOnlineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                        <Button text="{i18n>btnAddTraining}" type="Emphasized" icon="sap-icon://add" press="onAddOnlineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
@@ -134,7 +134,7 @@
                                         </HBox>
                                         <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
-							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Remove}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>
@@ -149,7 +149,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnUploadAttendance}" icon="sap-icon://upload" press="onAddOfflineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                    <Button text="{i18n>btnUploadAttendance}" type="Emphasized" icon="sap-icon://upload" press="onAddOfflineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -190,7 +190,7 @@
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddVideo" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                    <Button text="{i18n>btnAddTraining}" type="Emphasized" icon="sap-icon://add" press="onAddVideo" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -234,7 +234,7 @@
                                         </HBox>
                                         <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                             <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${Status} === 0 }"/>
-							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>
