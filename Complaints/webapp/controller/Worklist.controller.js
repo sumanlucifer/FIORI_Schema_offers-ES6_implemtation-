@@ -50,6 +50,9 @@ sap.ui.define(
               EndDate: null,
               ComplaintStatus: "",
               Name: "",
+              ZoneId: "",
+              DivisionId: "",
+              DepotId: "",
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
@@ -161,10 +164,20 @@ sap.ui.define(
               } else if (prop === "ComplaintStatus") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
-                );
-              } else if (prop === "Name") {
+                  new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
+              } else if (prop === "ZoneId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "DivisionId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "DepotId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
@@ -245,6 +258,9 @@ sap.ui.define(
             EndDate: null,
             ComplaintStatus: "",
             Name: "",
+            ZoneId: "",
+            DivisionId: "",
+            DepotId: "",
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
@@ -302,7 +318,7 @@ sap.ui.define(
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/YYYY h:mm a",
             UTC: false,
-            strictParsing: false
+            strictParsing: false,
           });
           return oDateFormat.format(date);
         },
