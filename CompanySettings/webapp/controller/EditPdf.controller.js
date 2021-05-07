@@ -101,11 +101,13 @@ sap.ui.define([
             },
             _updatePdf: function () {
                 var oModel = this.getView().getModel("local");
+                var dataModel=this.getOwnerComponent().getModel("data");
                 var catalogue = oModel.getProperty("/Catalogue");
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
                 var propertySet = this._property;
-
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                var success=false;
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {
                         var that = this;
@@ -118,16 +120,22 @@ sap.ui.define([
                             data: ele.file,
 
                             success: function (data) {
-                                // that.getView().getModel("local").refresh(true);
-                                var oFileUploaderPdf = that.getView().byId("idFormToolPdfUploader");
-                                oFileUploaderPdf.clear();
-                                var msg = 'Saved Updated!';
+                               
+                                var msg = 'Updated!';
                                 MessageToast.show(msg);
+                               
+                               setTimeout(() => {
+                                    oRouter.navTo("RouteHome");
+                               }, 1000);
+                            
                             },
                             error: function () { },
                         })
                     }
                 });
+                
+                     
+               
             },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
