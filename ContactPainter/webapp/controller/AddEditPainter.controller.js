@@ -1423,6 +1423,8 @@ sap.ui.define(
           var sDepotiId = this.getView()
             .getModel("oModelView")
             .getProperty("/PainterDetails/DepotId");
+
+            
           var oFilter = new Filter(
             [
               new Filter("DealerName", FilterOperator.Contains, sInputValue),
@@ -1434,7 +1436,16 @@ sap.ui.define(
             ],
             true
           );
-          this._PvalueHelpDialog.getBinding("items").filter(oFilter);
+          
+
+          if(sInputValue.trim()=="" && sDepotiId.trim()=="" ){
+            this._PvalueHelpDialog.getBinding("items").filter([]);
+           
+             
+          }else{
+              this._PvalueHelpDialog.getBinding("items").filter(oFilter);
+             
+          }
 
           // open value help dialog filtered by the input value
           this._PvalueHelpDialog.open(sInputValue);
