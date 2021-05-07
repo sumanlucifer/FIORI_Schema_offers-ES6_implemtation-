@@ -4,8 +4,10 @@
 	xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified"
+    xmlns:f="sap.f"
 	xmlns:mvc="sap.ui.core.mvc">
-    <Page>
+    <f:DynamicPage showFooter="true">
+    <f:content>
 	<VBox class="sapUiSmallMargin">
 		<VBox class="sapUiMediumMargin">
                     <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
@@ -13,7 +15,7 @@
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
                                                 <ToolbarSpacer />
-                                                <Button press="onAddCatalogue" type="Emphasized" text="Add" />
+                                                <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add" />
                                             </Toolbar>
                                         </headerToolbar>
                                             <columns>
@@ -65,7 +67,7 @@
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text=".pdf"/>
                                                                 <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
                                                                 </HBox>
                                                                 </VBox>
@@ -91,7 +93,8 @@
              
                      </VBox>
 	</VBox>
-    <footer>
+    </f:content>
+    <f:footer>
                     <OverflowToolbar>
                     
                         <ToolbarSpacer/>
@@ -104,6 +107,6 @@
                         
                         
                     </OverflowToolbar>
-            </footer>
-		</Page>
+            </f:footer>
+		</f:DynamicPage>
 </mvc:View>
