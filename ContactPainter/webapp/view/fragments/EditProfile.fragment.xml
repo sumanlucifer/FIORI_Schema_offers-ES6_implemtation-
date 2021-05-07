@@ -150,7 +150,7 @@
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}" />
                     <ToolbarSpacer />
-                    <Button  icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
+                    <Button  icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>Add} {i18n>FamilyDetails}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -203,7 +203,7 @@
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}" />
                     <ToolbarSpacer />
-                    <Button  icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    <Button  icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>Add} {i18n>AssetDetails}"></Button>
                 </Toolbar>
             </headerToolbar>
 
