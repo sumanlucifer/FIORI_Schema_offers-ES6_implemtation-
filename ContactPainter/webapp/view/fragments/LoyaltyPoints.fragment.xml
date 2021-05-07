@@ -13,14 +13,27 @@
                             enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="LoyaltySmartTableKey"
+                            initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
+                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false"  >
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "PointType", "leadingProperty": "PointType", "columnIndex": 0 ,"sortProperty": "PointType","filterProperty": "PointType"}'/>
                                         </customData>
                                           <Text text="{i18n>Type}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints", "leadingProperty": "RewardPoints", "columnIndex": 1 ,"sortProperty": "RewardPoints","filterProperty": "RewardPoints"}'/>
+                                        </customData>
+                                          <Text text="{i18n>EarnedPoints}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPoints", "leadingProperty": "TotalPoints", "columnIndex": 2 ,"sortProperty": "TotalPoints","filterProperty": "TotalPoints"}'/>
+                                        </customData>
+                                          <Text text="{i18n>TotalPoints}"/>
                                     </Column>
                                      <Column hAlign="Begin">
                                         <customData>
@@ -39,6 +52,8 @@
                                     <ColumnListItem>
                                         <cells>
                                                <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'RewardPoints'}" />
+                                               <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                  <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
                                          </cells>      

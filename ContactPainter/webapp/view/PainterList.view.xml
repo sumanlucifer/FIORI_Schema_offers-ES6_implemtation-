@@ -89,7 +89,7 @@
                     <Toolbar>
                         <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
-                        <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                        <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Emphasized" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                         <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
@@ -138,9 +138,8 @@
                             <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
                             <VBox width="100%" >
                                 <Text text="{MembershipCard}" visible="{= ${MembershipCard} !== null }"/>
-                                <Button tooltip="Generate Membership Id" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
+                                <Button tooltip="{i18n>GenerateMId}" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
                             </VBox>
-                            
                             <!-- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'},strictParsing:true,UTC:true }"/> -->
                             <Text text="{path:'CreatedAt',formatter:'.fmtDate' }"/>
                             <Text text="{Mobile}"/>
@@ -154,9 +153,9 @@
                             
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox>
-                               <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
-                                <Button icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
+                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
+                                 <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                             </HBox>
                         </cells>
                     </ColumnListItem>

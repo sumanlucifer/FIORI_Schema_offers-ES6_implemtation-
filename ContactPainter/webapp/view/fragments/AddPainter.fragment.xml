@@ -156,12 +156,12 @@
                 </ComboBox>
             </f:content>
         </f:SimpleForm>
-        <Table id="idFamilyDetils" width="auto" items="{path: 'oModelView>/PainterFamily', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table  id="idFamilyDetils" width="auto" items="{path: 'oModelView>/PainterFamily', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}" />
                     <ToolbarSpacer />
-                    <Button text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
+                    <Button  icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press="onPressAddFamliy" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -202,9 +202,9 @@
                             <Text text="{oModelView>Mobile}" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <HBox>
-                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
-                            <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" type="Transparent" press="onPressFDLSave"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
+                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressEditRel"></Button>
+                            <Button visible="{= ${oModelView>editable} === true }" icon="sap-icon://sys-enter" tooltip="{i18n>Save}" type="Transparent" press="onPressFDLSave"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onPressRemoveRel"></Button>
                         </HBox>
                     </cells>
                 </ColumnListItem>
@@ -215,7 +215,7 @@
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}" />
                     <ToolbarSpacer />
-                    <Button text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
+                    <Button  icon="sap-icon://add"  text="{i18n>Add}" type="Emphasized" press=".onPressAdAsset" tooltip="{i18n>AddPainter}"></Button>
                 </Toolbar>
             </headerToolbar>
 
@@ -251,10 +251,10 @@
                             <Text text="{oModelView>VehicleName}" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <Text />
-                        <HBox justifyContent="SpaceBetween">
-                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" type="Transparent" press="onAssetEdit"></Button>
-                            <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" type="Transparent" press="onAsetSave"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveAsset"></Button>
+                        <HBox >
+                            <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit"  tooltip="{i18n>Edit}" type="Transparent" press="onAssetEdit"></Button>
+                            <Button visible="{= ${oModelView>editable} === true }" icon="sap-icon://sys-enter" tooltip="{i18n>Save}" type="Transparent" press="onAsetSave"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onPressRemoveAsset"></Button>
                         </HBox>
 
                     </cells>
@@ -311,6 +311,8 @@
                 </RadioButtonGroup>
                 <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
                 <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" ></Label>
+                <Text visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" text="{i18n>FileUploadMessage}"/>
 
             </f:content>
         </f:SimpleForm>
