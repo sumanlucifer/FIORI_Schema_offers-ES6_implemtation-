@@ -16,7 +16,7 @@
 
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity">
-            <Annotations Target="Metadata.PainterPointsHistoryModel">
+            <!-- <Annotations Target="Metadata.PainterPointsHistoryModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
@@ -42,7 +42,7 @@
 
                     </Collection>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
             <!-- <Annotations Target="Metadata.PainterLearningPointHistoryModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
