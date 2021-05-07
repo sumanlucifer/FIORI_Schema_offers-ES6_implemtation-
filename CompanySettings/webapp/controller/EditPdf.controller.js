@@ -106,6 +106,7 @@ sap.ui.define([
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
                 var propertySet = this._property;
+                var http="https://"+location.host + "/";
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 var success=false;
                 catalogue.forEach(function (ele) {
@@ -113,7 +114,7 @@ sap.ui.define([
                         var that = this;
                         jQuery.ajax({
                             method: "PUT",
-                            url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            url: http+sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                             cache: false,
                             contentType: false,
                             processData: false,
@@ -121,7 +122,7 @@ sap.ui.define([
 
                             success: function (data) {
                                
-                                var msg = 'Updated!';
+                                var msg = 'Saved Successfully!';
                                 MessageToast.show(msg);
                                
                                setTimeout(() => {
