@@ -92,7 +92,7 @@
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
-                            requestAtLeastFields="Id,Status,TotalPdfViewerCount,TotalPdfDownloadCount"
+                            requestAtLeastFields="Id,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
                             persistencyKey="CatalogueSmartTableKey"
                             >
                             	<smartTable:customToolbar>
@@ -100,7 +100,7 @@
                         <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
                         
-                        <Button text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+                        <Button icon="sap-icon://add" text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
 
                         
                     </OverflowToolbar>
@@ -108,13 +108,26 @@
                         <Table>
                     
                                 <columns>
-                                <Column hAlign="Center">
+                                
+                                 <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PdfViewerCount","type":"string", "leadingProperty": "PdfViewerCount", "columnIndex": 3 }'/>
+                                        </customData>
+                                          <Text text="{i18n>views}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PdfDownloadCount","type":"string", "leadingProperty": "PdfDownloadCount", "columnIndex": 4 }'/>
+                                        </customData>
+                                          <Text text="{i18n>downloads}"/>
+                                    </Column>
+                                <Column hAlign="Begin">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfViewerCount","type":"string", "leadingProperty": "TotalPdfViewerCount", "columnIndex": 5 }'/>
                                         </customData>
                                           <Text text="{i18n>totalViews}"/>
                                     </Column>
-                                    <Column hAlign="Center">
+                                    <Column hAlign="Begin">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfDownloadCount","type":"string", "leadingProperty": "TotalPdfDownloadCount", "columnIndex": 6 }'/>
                                         </customData>
@@ -136,7 +149,7 @@
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
                                         </customData>
-                                         <Text text="{i18n>GenericEdit}"/>
+                                         <Text text="{i18n>GenericAction}"/>
                                     </Column>
                                      
 
@@ -145,26 +158,21 @@
                                 <items>
                                     <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
-                                 
+                                 <Text text="{path:'PdfViewerCount'}"/>
+                            <Text text="{path:'PdfDownloadCount'}"/>
                             
                             <Text text="{path:'TotalPdfViewerCount'}"/>
                             <Text text="{path:'TotalPdfDownloadCount'}"/>
                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                            <!-- <Text text="{path: 'Status',
-                                    formatter: '.formatter.statusList'}"
-                                data:remarks="{Status}"/> -->
+            
                                 <ObjectStatus text="{path: 'Status',
                                     formatter: '.formatter.statusList'}" 
                                     data:remarks="{Status}"
                                 
                                     state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Warning' : undefined }"/>
-                                <!-- <Button 
-                                type="{= ${Status} === true? 'Emphasized' : undefined || ${Status} === false? 'Reject' : undefined }"
-                                text="{path: 'Status',
-                                    formatter: '.formatter.status'}"
-                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/> -->
+                               
                             
-                            <!-- <Button  icon="sap-icon://edit" type="Transparent"  press="onPress" tooltip="Edit"/> -->
+                            
                             <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
                                          </cells>      
                                     </ColumnListItem>

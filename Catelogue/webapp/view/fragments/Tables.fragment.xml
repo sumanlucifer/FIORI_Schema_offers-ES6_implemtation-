@@ -16,7 +16,7 @@
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
                                                 <ToolbarSpacer />
-                                                <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
+                                                <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add"/>
                                             </Toolbar>
                                         </headerToolbar>
                                             <columns>
@@ -64,7 +64,7 @@
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
-                                                                <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text="PDF"/>
+                                                                <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf"/>
                                                                 <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="10 MB"/>
                                                                 </HBox>
                                                                 </VBox>
@@ -75,7 +75,7 @@
                         
                                                     
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd"/>
-                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" />
+                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="Delete" />
                                                         
                                                         </HBox>
                                                     </cells>
@@ -91,7 +91,7 @@
                                 <Toolbar>
                                     <Title text="{i18n>competitors}" />
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>Add}" type="Emphasized" press="onAddCompetitor" tooltip="{i18n>AddPainter}"></Button>
+                                    <Button icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press="onAddCompetitor" tooltip="{i18n>AddPainter}"></Button>
                                 </Toolbar>
                             </headerToolbar>
 
