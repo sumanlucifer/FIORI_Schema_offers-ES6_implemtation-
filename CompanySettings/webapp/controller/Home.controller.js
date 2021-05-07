@@ -64,7 +64,8 @@ sap.ui.define([
             _onObjectMatched: function () {
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-
+                var oModel = this.getView().getModel();
+                oModel.refresh(true);
 
             },
             handleEditPress: function () {
