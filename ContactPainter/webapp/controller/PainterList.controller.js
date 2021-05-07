@@ -193,6 +193,16 @@ sap.ui.define(
                         FilterOperator.Contains,
                         oViewFilter[prop].trim()
                       ),
+                      new Filter(
+                        "tolower(PainterType/PainterType)",
+                        FilterOperator.Contains,
+                        "'" +
+                          oViewFilter[prop]
+                            .trim()
+                            .toLowerCase()
+                            .replace("'", "''") +
+                          "'"
+                      )
                     ],
                     false
                   )
@@ -233,8 +243,8 @@ sap.ui.define(
             StartDate: null,
             EndDate: null,
             RegistrationStatus: "",
-            searchBar: "",
             MembershipId: "",
+            Name:"",
             ZoneId:"",
             DepotId: "",
             DivisionId: "",
