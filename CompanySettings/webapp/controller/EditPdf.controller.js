@@ -26,7 +26,7 @@ sap.ui.define([
                 var oModel = this.getOwnerComponent().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/MasterCompanySettingsSet(1)");
+                // this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
@@ -39,11 +39,13 @@ sap.ui.define([
 
                 this._property = "MasterCompanySettingsSet(1)";
 
-                this.showPdfList();
+                this.getOwnerComponent().getRouter().getRoute("EditPdf").attachPatternMatched(this._onObjectMatched, this);
 
 
             },
-
+            _onObjectMatched: function () {
+                this.showPdfList();
+            },
 
 
             showPdfList: function () {
@@ -62,7 +64,7 @@ sap.ui.define([
 
 
                         that.getView().getModel("local").setProperty("/Catalogue", Catalogue);
-
+                        that.getView().getModel("local").refresh(true);
 
 
                     },
@@ -87,7 +89,7 @@ sap.ui.define([
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-                sSource =  "https://"+location.host + "/" + sSource    
+                sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
             onChangePdf: function (oEvent) {
@@ -101,42 +103,42 @@ sap.ui.define([
             },
             _updatePdf: function () {
                 var oModel = this.getView().getModel("local");
-                var dataModel=this.getOwnerComponent().getModel("data");
+                var dataModel = this.getOwnerComponent().getModel("data");
                 var catalogue = oModel.getProperty("/Catalogue");
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
                 var propertySet = this._property;
-                var http="https://"+location.host + "/";
+                var http = "https://" + location.host + "/";
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                var success=false;
+                var success = false;
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {
                         var that = this;
                         jQuery.ajax({
                             method: "PUT",
-                            url: http+sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            url: http + sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                             cache: false,
                             contentType: false,
                             processData: false,
                             data: ele.file,
 
                             success: function (data) {
-                               
+
                                 var msg = 'Saved Successfully!';
                                 MessageToast.show(msg);
-                               
-                               setTimeout(() => {
+
+                                setTimeout(() => {
                                     oRouter.navTo("RouteHome");
-                               }, 1000);
-                            
+                                }, 1000);
+
                             },
                             error: function () { },
                         })
                     }
                 });
-                
-                     
-               
+
+
+
             },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
