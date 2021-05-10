@@ -246,7 +246,7 @@ sap.ui.define(
             "/ComplainCode",
             oModelView.getProperty("/ComplaintCode")
           );
-          oView.byId("smartHistory").rebindTable();
+          //oView.byId("smartHistory").rebindTable();
         },
         _CheckImage: function (oProp) {
           var oView = this.getView();

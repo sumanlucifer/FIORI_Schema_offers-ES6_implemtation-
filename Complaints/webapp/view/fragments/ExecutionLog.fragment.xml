@@ -15,9 +15,7 @@
 			content="{wfmodel>/}">
 		<content>
            <!-- formatter required datetime, title icon -->
-			<TimelineItem
-				`
-					dateTime="{wfmodel>timestamp}"
+			<TimelineItem	dateTime="{wfmodel>timestamp}"
 					title="{wfmodel>subject}"
 					text="{wfmodel>text}"
 					userName="{wfmodel>userid}"
