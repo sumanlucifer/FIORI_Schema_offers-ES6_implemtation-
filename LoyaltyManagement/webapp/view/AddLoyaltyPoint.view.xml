@@ -43,17 +43,18 @@
                             <form:formElements>
                                 <form:FormElement label="Membership ID">
                                     <form:fields>
-                                        <Input placeholder="Enter Membership ID" />
+                                        <Input placeholder="Enter Membership ID" value="{path:'oModelControl>/addLoyaltyData/MembershipCard'}"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Painter Name">
                                     <form:fields>
-                                        <Input placeholder="Enter Painter Name" />
+                                        <Input placeholder="Enter Painter Name" value="{path:'oModelControl>/addLoyaltyData/Name'}"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Primary Mobile Number">
                                     <form:fields>
-                                        <Input type="Number" placeholder="Enter Primary Mobile Number" />
+                                        <!-- <Input type="Number" placeholder="Enter Primary Mobile Number" /> -->
+                                        <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelControl>/addLoyaltyData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Status">

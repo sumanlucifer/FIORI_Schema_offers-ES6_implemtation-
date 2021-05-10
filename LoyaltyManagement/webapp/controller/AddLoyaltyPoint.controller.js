@@ -17,6 +17,17 @@ sap.ui.define([
 
         return BaseController.extend("com.knpl.pragati.LoyaltyManagement.controller.AddLoyaltyPoint", {
             onInit: function () {
+
+                // var oData = {
+                //     modeEdit: false,
+                //     bindProp: oProp,
+                //     TokenCode: true,
+                //     tokenCodeValue: "",
+                // };
+                // var oDataModel;
+                // var oModel = new JSONModel(oData);
+                // this.getView().setModel(oModel, "oModelControl");
+
                 //Router Object
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("AddLoyaltyPoint").attachPatternMatched(this._onObjectMatched, this);
@@ -103,6 +114,12 @@ sap.ui.define([
                     bindProp: oProp,
                     TokenCode: true,
                     tokenCodeValue: "",
+                    addLoyaltyData: {
+                    MembershipCard: "",
+                    Mobile: "",
+                    Name: "",
+                    },
+
                 };
                 var oDataModel;
                 var oModel = new JSONModel(oData);
@@ -183,6 +200,82 @@ sap.ui.define([
                     }
                 }
             },
+
+        onValueHelpRequest: function (oEvent) {
+          var sInputValue = oEvent.getSource().getValue(),
+            oView = this.getView();
+
+          if (!this._pValueHelpDialog) {
+            this._pValueHelpDialog = Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.LoyaltyManagement.view.fragments.ValueHelpDialog",
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          this._pValueHelpDialog.then(function (oDialog) {
+            // Create a filter for the binding
+            oDialog
+              .getBinding("items")
+              .filter([
+                new Filter(
+                  [
+                    new Filter(
+                      "tolower(Name)",
+                      FilterOperator.Contains,
+                      "'" +
+                        sInputValue.trim().toLowerCase().replace("'", "''") +
+                        "'"
+                    ),
+                    new Filter(
+                      "Mobile",
+                      FilterOperator.Contains,
+                      sInputValue.trim()
+                    ),
+                  ],
+                  false
+                ),
+              ]);
+            // Open ValueHelpDialog filtered by the input's value
+            oDialog.open(sInputValue);
+          });
+        },
+        onValueHelpSearch: function (oEvent) {
+          var sValue = oEvent.getParameter("value");
+          var oFilter = new Filter(
+            [
+              new Filter(
+                "tolower(Name)",
+                FilterOperator.Contains,
+                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+              ),
+              new Filter("Mobile", FilterOperator.Contains, sValue.trim()),
+            ],
+            false
+          );
+
+          oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        onValueHelpClose: function (oEvent) {
+          var oSelectedItem = oEvent.getParameter("selectedItem");
+          oEvent.getSource().getBinding("items").filter([]);
+          var oViewModel = this.getView().getModel("oModelControl");
+          if (!oSelectedItem) {
+            return;
+          }
+          var obj = oSelectedItem.getBindingContext().getObject();
+          oViewModel.setProperty(
+            "/addLoyaltyData/MembershipCard",
+            obj["MembershipCard"]
+          );
+          oViewModel.setProperty("/addLoyaltyData/Mobile", obj["Mobile"]);
+          oViewModel.setProperty("/addLoyaltyData/Name", obj["Name"]);
+          oViewModel.setProperty("/addLoyaltyData/PainterId", obj["Id"]);
+        },
+
 
 
 
