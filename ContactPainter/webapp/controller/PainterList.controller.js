@@ -247,7 +247,8 @@ sap.ui.define(
             ZoneId:"",
             DepotId: "",
             DivisionId: "",
-            PreferredLanguage:""
+            PreferredLanguage:"",
+            PainterType:""
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
