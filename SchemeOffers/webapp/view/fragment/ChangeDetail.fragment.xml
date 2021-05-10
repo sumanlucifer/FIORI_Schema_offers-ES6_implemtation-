@@ -83,65 +83,63 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>formApplicablepainter}">
+             
+                <f:FormContainer title="{i18n>formApplicableProducts}">
                     <f:formElements>
-                        <f:FormElement>
+                      <f:FormElement label="Product Category">
                             <f:fields>
-                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
-                                    <RadioButton text="{i18n>formApplicableLbl1}"/>
-                                    <RadioButton text="{i18n>formApplicableLbl2}"/>
+                                <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formApplicableLbl3}">
+                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}"  id="SchemePainterArchiTypes" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onArchiTypeChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
-                                    <core:Item text="{ArcheType}" key="{Id}"/>
-                                </MultiComboBox>
-
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formApplicableLbl4}">
-                            <f:fields>
-                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet' }" selectedKey="{path:'oModelView>/PotentialId',type:'.cmbxDtype2' }">
-                                    <core:Item text="{Potential}" key="{Id}"/>
-                                </ComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                           
-                         <f:FormElement label="{i18n>formApplicableLbl7}">
-                            <f:fields>
-                                <ComboBox change="onProdCatChange" enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKey="{path:'oModelControl>/ProductCategory1'}">
+                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
-                                </ComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                         <f:FormElement label="{i18n>formApplicableLbl8}">
-                            <f:fields>
-                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelControl>/ProductClassification1'}">
-                                    <core:Item text="{Classification}" key="{Id}"/>
-                                </ComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formApplicableLbl5}">
-                            <f:fields>
-                                <MultiComboBox id="SchemePainterProducts" selectedKeys="{oModelControl>/MultiCombo/PainterProducts}"  enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
-                                    <core:Item text="{Description}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formApplicableLbl6}">
+                         <f:FormElement label="Product Cassification">
                             <f:fields>
-                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterSlabSet' }" selectedKey="{path:'oModelView>/SlabId',type:'.customInt' }">
-                                    <core:Item text="{Slab}" key="{Id}"/>
-                                </ComboBox>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer title="{i18n>formApplicableProducts}">
-                    <f:formElements>
-                        <f:FormElement label="{i18n>formApplicableProducts}">
+                         <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="{i18n>formApplicableProducts}">
+                            <f:fields>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                    <core:Item text="{ProductName}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Products Based on SKU">
+                            <f:fields>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
                             <f:fields>
                                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
@@ -156,7 +154,7 @@
                                                         </MultiComboBox>
                         							</f:fields>
                         						</f:FormElement> -->
-                        <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
+                        <!-- <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
                             <f:fields>
                                 <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
@@ -165,12 +163,24 @@
                             <f:fields>
                                 <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
                             </f:fields>
-                        </f:FormElement>
+                        </f:FormElement> -->
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>formRewards}">
                     <f:formElements>
-                        <f:FormElement label="{i18n>formRewardsPoints}">
+
+                      <f:FormElement label="Reward Ration">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                          <f:FormElement label="Reward Ratio">
+                                
+                        </f:FormElement>
+                        <!-- <f:FormElement label="{i18n>formRewardsPoints}">
                             <f:fields>
                                 <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardPoints'}"/>
                             </f:fields>
@@ -186,7 +196,205 @@
                                     <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </ComboBox>
                             </f:fields>
+                        </f:FormElement> -->
+                    </f:formElements>
+                </f:FormContainer>
+                   <f:FormContainer title="{i18n>formApplicablepainter}">
+                    <f:formElements>
+                        <f:FormElement label="Painter Selection">
+                            <f:fields>
+                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
+                                    <RadioButton text="{i18n>formApplicableLbl1}"/>
+                                    <RadioButton text="{i18n>formApplicableLbl2}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
                         </f:FormElement>
+                         <f:FormElement label="Painter Type">
+                            <f:fields>
+                                <MultiComboBox  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
+                                    <core:Item text="{PainterType}" key="{Id}"/>
+                                </MultiComboBox>
+
+                            </f:fields>
+                        </f:FormElement>
+                     
+                        <f:FormElement label="{i18n>formApplicableLbl3}">
+                            <f:fields>
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}"  id="SchemePainterArchiTypes" enabled="{oModelView>/IsSpecificPainter}" selectionChange="onArchiTypeChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
+                                    <core:Item text="{ArcheType}" key="{Id}"/>
+                                </MultiComboBox>
+
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formApplicableLbl4}">
+                            <f:fields>
+                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet' }" selectedKey="{path:'oModelView>/PotentialId',type:'.cmbxDtype2' }">
+                                    <core:Item text="{Potential}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                               <f:FormElement label="Point Slab">
+                            <f:fields>
+                              <Input />
+
+                            </f:fields>
+                        </f:FormElement>
+                       </f:formElements>
+                       </f:FormContainer>
+                       <f:FormContainer title="Applicable Painter Products">
+                    <f:formElements>
+                    <f:FormElement label="Date Range">
+                            <f:fields>
+                                <DatePicker ></DatePicker>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}">
+                            <f:fields>
+                                <ComboBox change="onProdCatChange" enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKey="{path:'oModelControl>/ProductCategory1'}">
+                                    <core:Item text="{Category}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Buyer {i18n>formApplicableLbl8}">
+                            <f:fields>
+                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelControl>/ProductClassification1'}">
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                           <f:FormElement label="Buyer Products ">
+                            <f:fields>
+                                <MultiComboBox  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                    <core:Item text="{ProductName}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Buyer Product SKU">
+                            <f:fields>
+                                <MultiComboBox   enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Non Buyer {i18n>formApplicableLbl7}">
+                            <f:fields>
+                                <ComboBox change="onProdCatChange" enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKey="{path:'oModelControl>/ProductCategory1'}">
+                                    <core:Item text="{Category}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Non Buyer {i18n>formApplicableLbl8}">
+                            <f:fields>
+                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelControl>/ProductClassification1'}">
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                           <f:FormElement label="Non Buyer Products ">
+                            <f:fields>
+                                <MultiComboBox  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                    <core:Item text="{ProductName}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Non Buyer Product SKU">
+                            <f:fields>
+                                <MultiComboBox   enabled="{oModelView>/IsSpecificPainter}" selectionChange="onChangeProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                        
+                        <!-- <f:FormElement label="{i18n>formApplicableLbl6}">
+                            <f:fields>
+                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterSlabSet' }" selectedKey="{path:'oModelView>/SlabId',type:'.customInt' }">
+                                    <core:Item text="{Slab}" key="{Id}"/>
+                                </ComboBox>
+                            </f:fields>
+                        </f:FormElement> -->
+                    </f:formElements>
+                </f:FormContainer>
+                             
+                <f:FormContainer title="Bonus Reward">
+                    <f:formElements>
+                      <f:FormElement label="Product Category">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                    <core:Item text="{Category}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Product Cassification">
+                            <f:fields>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="{i18n>formApplicableProducts}">
+                            <f:fields>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                    <core:Item text="{ProductName}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="Products Based on SKU">
+                            <f:fields>
+                               <RadioButtonGroup columns="2" >
+                                    <RadioButton text="All"/>
+                                    <RadioButton text="Specific"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <!-- <f:FormElement label="Applicable Packs">
+                        							<f:fields>
+                        								<MultiComboBox placeholder="{i18n>placeHolder1}">
+                                                            <core:Item key="1" text="Emulsion" />
+                                                            <core:Item key="2" text="Mica Marbel" />
+                                                        </MultiComboBox>
+                        							</f:fields>
+                        						</f:FormElement> -->
+                        <!-- <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
+                            <f:fields>
+                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formAppProdAccuredPoints}">
+                            <f:fields>
+                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
+                            </f:fields>
+                        </f:FormElement> -->
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>AdditionalRewards}">
