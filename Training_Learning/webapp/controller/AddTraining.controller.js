@@ -869,7 +869,7 @@ sap.ui.define(
                                             //         target: "/TrainingDetails/RewardPoints"
                                             //     });
                                             // } else
-                                                if (data.RewardPoints == 0) {
+                                                if (data.RewardPoints < 0) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
                                                     aCtrlMessage.push({
