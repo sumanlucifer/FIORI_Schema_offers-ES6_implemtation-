@@ -13,13 +13,6 @@
       "target": "$1"
     },
     {
-		"source": "^/bpmworkflowruntime/(.*)$",
-		"target": "/$1",
-		"service": "com.sap.bpm.workflow",
-		"endpoint": "workflow_rest_url",
-		"authenticationType": "xsuaa"
-	},
-    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

@@ -125,7 +125,7 @@ sap.ui.define(
           var oBindProp = oData["bindProp"];
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
-              this._getExecLogData();
+              //this._getExecLogData();
           c1.then(function () {
                //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
          

@@ -50,8 +50,8 @@
                           </VBox>
                         </IconTabFilter>
                          <IconTabFilter  text="{i18n>History}" >
-                            <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/> -->
-                                <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
+                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
+                                <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
