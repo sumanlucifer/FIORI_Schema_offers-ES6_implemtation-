@@ -46,39 +46,6 @@
                 <Label text="{i18n>colRewardPoints}"/>
                 <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" />
 
-            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
-
-                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/TrainingZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
-					<core:Item key="{Id}" text="{Id}"/>
-				</MultiComboBox>
-
-                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/TrainingDetails/TrainingDivision}" editable="{= ${oModelView>/TrainingDetails/TrainingZone}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
-					<core:Item key="{Id}" text="{Id}"/>
-				</MultiComboBox>
-
-                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiInput id="multiInputDepotAdd" editable="{= ${oModelView>/TrainingDetails/TrainingDivision}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
-	                <tokens>
-                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>DepotId}"/>
-                    </tokens>
-	            </MultiInput>
-
-                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idPainterType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-					<core:Item key="{Id}" text="{PainterType}"/>
-				</MultiComboBox>
-
-                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <MultiComboBox id="idPainterArcheType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterArcheTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-					<core:Item key="{Id}" text="{ArcheType}"/>
-				</MultiComboBox>
-
-                <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
-                <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
-                </u:FileUploader>
-
                 <Label text="Upload Thumbnail Image" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <HBox>
                     <VBox>
@@ -100,11 +67,57 @@
                                 <HBox>
                                     <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text=".png, .jpg, .jpeg" class="sapUiSmallMargin"/>
                                     <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB" class="sapUiSmallMargin"/>
-                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" enabled="{= ${oModelView>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/showPreviewImageButton} === true}" enabled="{= ${oModelView>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
                                 </HBox>
                         </VBox>
                     </VBox>                  
                 </HBox>
+
+            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
+
+                <RadioButtonGroup id="rbg1" columns="3" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" select="onRadioBtnChange">
+                    <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
+                    <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                    <RadioButton id="RB3" text="Painter Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
+                </RadioButtonGroup>
+
+                <Label text="{i18n>colPainter}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
+                <MultiInput id="multiInputPainterAdd" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}" tokens="{oModelView>/TrainingDetails/TrainingPainters}" valueHelpRequest="onValueHelpRequestedPainter">
+                    <tokens>
+                        <Token editable="false" text="{oModelView>Name}" key="{oModelView>Id}"/>
+                    </tokens>
+                </MultiInput>
+
+                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/TrainingZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/TrainingDetails/TrainingDivision}" editable="{= ${oModelView>/TrainingDetails/TrainingZone}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiInput id="multiInputDepotAdd" editable="{= ${oModelView>/TrainingDetails/TrainingDivision}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
+	                <tokens>
+                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>DepotId}"/>
+                    </tokens>
+	            </MultiInput>
+
+                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idPainterType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{PainterType}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idPainterArcheType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterArcheTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{ArcheType}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
+                <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
+                </u:FileUploader>
 
         </f:content>
         </f:SimpleForm>

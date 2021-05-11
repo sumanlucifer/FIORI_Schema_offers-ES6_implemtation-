@@ -39,5 +39,11 @@ complaint/Complaints/.env2
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env4
 # auto generated wildcard
+<<<<<<< HEAD
 knpl/ContactPainter/.env2
 >>>>>>> aditya
+=======
+debasisa_web/Manage_FAQ/.env
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2
+>>>>>>> debasisa

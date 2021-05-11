@@ -84,7 +84,7 @@
 						<Table id="table" width="auto"
 							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
-							updateFinished=".onUpdateFinished">
+							updateFinished="onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
@@ -142,10 +142,7 @@
 						</Table>
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
-						<Table id="table2" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 2 } ], sorter: { path: 'StartDate', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-							updateFinished=".onUpdateFinished2">
+						<Table id="table2" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
@@ -186,7 +183,7 @@
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-							updateFinished=".onUpdateFinished1">
+							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>

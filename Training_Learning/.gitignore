@@ -1,4 +1,10 @@
 /node_modules/
+<<<<<<< HEAD
 
 /dist/
 
+=======
+/dist/
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2
+>>>>>>> debasisa
