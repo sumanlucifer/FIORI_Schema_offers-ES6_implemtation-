@@ -178,7 +178,6 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-<<<<<<< HEAD
 - name: Tools
   type: html5
   path: Tools
@@ -218,17 +217,6 @@ modules:
     builder: custom
     commands:
     - npm run build
-=======
-- name: comknplpragatigroupnotifications
-  type: html5
-  path: groupnotifications
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
->>>>>>> debasisa
     supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
@@ -272,27 +260,8 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-<<<<<<< HEAD
 parameters:
   enable-parallel-deployments: true
-=======
-- name: knpl-portal-saas-registry
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      appName: KNPL_Portal
-      appUrls:
-        getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
-        onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
-      category: knplportalapps
-      description: KNPL Portal application
-      displayName: KNPL_Portal
-      xsappname: knpl-influencer-web
-    service: saas-registry
-    service-plan: application
-parameters:
-  deploy_mode: html5-repo
->>>>>>> debasisa
 build-parameters:
   before-all:
   - builder: custom
