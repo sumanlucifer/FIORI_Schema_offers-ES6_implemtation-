@@ -110,9 +110,9 @@ sap.ui.define(
                     var sPath = "/" + oProp;
                     var params;
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
                     } else {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
                     }
                     oViewModel.setProperty("/sPath", sPath);
                     that.getModel().read(sPath, {
@@ -205,6 +205,17 @@ sap.ui.define(
                             oViewModel.setProperty("/displayDepots", aArray); // to display in view training
 
                             aArray = [];
+                            if (data.TrainingPainters && data.TrainingPainters.results) {
+                                for (var r of data["TrainingPainters"]["results"]) {
+                                    aArray.push(r["PainterId"]);
+                                }
+                                data.TrainingPainters = data.TrainingPainters.results;
+                            } else {
+                                data.TrainingPainters = aArray;  // for edit in Edit Training and will be used in payload
+                            }
+                            oViewModel.setProperty("/displayPainters", aArray); // to display in view training
+
+                            aArray = [];
                             if (data.TrainingPainterTypeDetails && data.TrainingPainterTypeDetails.results) {
                                 for (var p of data["TrainingPainterTypeDetails"]["results"]) {
                                     aArray.push(p["PainterTypeId"]);
@@ -239,6 +250,21 @@ sap.ui.define(
                             }
                         }
                     })
+                },
+
+                onRadioBtnChange: function (oEvent) {
+                    var selectedIndex = oEvent.mParameters.selectedIndex;
+                    switch (selectedIndex) {
+                        case 0:
+                            this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "ALL");
+                            break;
+                        case 1:
+                            this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "GROUP");
+                            break;
+                        case 2:
+                            this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "PAINTER");
+                            break;
+                    }
                 },
 
                 onTablesSearch: function (oEvent) {
@@ -580,8 +606,139 @@ sap.ui.define(
                     this._oValueHelpDialog.close();
                 },
 
+                onValueHelpRequestedPainter: function () {
+                    this._oMultiInput = this.getView().byId("multiInputPainterEdit");
+                    this.oColModel = new JSONModel({
+                        cols: [
+                            {
+                                label: "Name",
+                                template: "Name",
+                            },
+                            {
+                                label: "Zone",
+                                template: "ZoneId",
+                            },
+                            {
+                                label: "Division",
+                                template: "DivisionId",
+                            },
+                            {
+                                label: "Depot",
+                                template: "Depot/Depot",
+                            },
+                            {
+                                label: "Painter Type",
+                                template: "PainterType/PainterType",
+                            },
+                            {
+                                label: "Painter ArcheType",
+                                template: "ArcheType/ArcheType",
+                            }
+                        ],
+                    });
+
+                    var aCols = this.oColModel.getData().cols;
+                    var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
+
+                    this._oValueHelpDialog = sap.ui.xmlfragment(
+                        "com.knpl.pragati.Training_Learning.view.fragments.PainterValueHelp",
+                        this
+                    );
+                    this.getView().addDependent(this._oValueHelpDialog);
+
+                    this._oValueHelpDialog.getTableAsync().then(
+                        function (oTable) {
+                            oTable.setModel(this.oColModel, "columns");
+
+                            if (oTable.bindRows) {
+                                oTable.bindAggregation("rows", {
+                                    path: "/PainterSet", filters: [oFilter], parameters: { expand: "Depot,PainterType,ArcheType" }, events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
+                            }
+
+                            if (oTable.bindItems) {
+                                oTable.bindAggregation("items", "/PainterSet", function () {
+                                    return new sap.m.ColumnListItem({
+                                        cells: aCols.map(function (column) {
+                                            return new sap.m.Label({
+                                                text: "{" + column.template + "}",
+                                            });
+                                        }),
+                                    });
+                                });
+                            }
+
+                            this._oValueHelpDialog.update();
+                        }.bind(this)
+                    );
+
+                    this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+                    this._oValueHelpDialog.open();
+                },
+
+                onFilterBarSearchPainter: function (oEvent) {
+                    var afilterBar = oEvent.getParameter("selectionSet"),
+                        aFilters = [];
+
+                    for (var i = 0; i < afilterBar.length; i++) {
+                        if (afilterBar[i].getValue()) {
+                            aFilters.push(
+                                new Filter({
+                                    path: afilterBar[i].mProperties.name,
+                                    operator: FilterOperator.Contains,
+                                    value1: afilterBar[i].getValue(),
+                                    caseSensitive: false,
+                                })
+                            );
+                        }
+                    }
+
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false,
+                        })
+                    );
+
+                    this._filterTable(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+
+                onValueHelpCancelPressPainter: function () {
+                    this._oValueHelpDialog.close();
+                },
+
+                onValueHelpOkPressPainter: function (oEvent) {
+                    var oData = [];
+                    var xUnique = new Set();
+                    var aTokens = oEvent.getParameter("tokens");
+
+                    aTokens.forEach(function (ele) {
+                        if (xUnique.has(ele.getKey()) == false) {
+                            oData.push({
+                                Name: ele.getText(),
+                                PainterId: ele.getKey(),
+                                Id: ele.getKey()
+                            });
+                            xUnique.add(ele.getKey());
+                        }
+                    });
+
+                    this.getView().getModel("oModelView").setProperty("/TrainingDetails/TrainingPainters", oData);
+                    this._oValueHelpDialog.close();
+                },
+
                 onCancel: function () {
-                    debugger;
                     if (this.getModel("oModelView").getProperty("/bChange")) {
                         this.showWarning("MSG_PENDING_CHANGES", this.navToHome);
                     }
@@ -601,18 +758,19 @@ sap.ui.define(
                     var data = sPath + "/Status";
                     var that = this;
                     var oModel = that.getModel();
+                    var filtertype = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingFilterType");
                     if (sData.Status === 0) {
                         if (sData.Url === "") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_URL_BEFORE_ACTIVATING_TRAINING");
-                        } else if (sData.TrainingZone.length == 0) {
+                        } else if (sData.TrainingZone.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_ZONE_BEFORE_ACTIVATING_TRAINING");
-                        } else if (sData.TrainingDivision.length == 0) {
+                        } else if (sData.TrainingDivision.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_DIVISION_BEFORE_ACTIVATING_TRAINING");
-                        } else if (sData.TrainingDepot.length == 0) {
+                        } else if (sData.TrainingDepot.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_DEPOT_BEFORE_ACTIVATING_TRAINING");
-                        } else if (sData.TrainingPainterTypeDetails.length == 0) {
+                        } else if (sData.TrainingPainterTypeDetails.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_TYPE_BEFORE_ACTIVATING_TRAINING");
-                        } else if (sData.TrainingPainterArcheTypeDetails.length == 0) {
+                        } else if (sData.TrainingPainterArcheTypeDetails.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_ARCHETYPE_BEFORE_ACTIVATING_TRAINING");
                         } else {
                             that.getModel().update(data, {
@@ -923,23 +1081,23 @@ sap.ui.define(
                                             //         target: "/TrainingDetails/RewardPoints"
                                             //     });
                                             // } else
-                                            if (data.RewardPoints < 0) {
+                                            // if (data.RewardPoints < 0) {
+                                            //     oReturn.IsNotValid = true;
+                                            //     oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
+                                            //     aCtrlMessage.push({
+                                            //         message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
+                                            //         target: "/TrainingDetails/RewardPoints"
+                                            //     });
+                                            // }
+                                            // else
+                                            if (data.TrainingQuestionnaire.length < 3) {
                                                 oReturn.IsNotValid = true;
-                                                oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
+                                                oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
                                                 aCtrlMessage.push({
-                                                    message: "MSG_ENTER_REWARD_MORETHAN_ZERO",
-                                                    target: "/TrainingDetails/RewardPoints"
+                                                    message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
+                                                    target: "/TrainingDetails/TrainingQuestionnaire"
                                                 });
                                             }
-                                            else
-                                                if (data.TrainingQuestionnaire.length < 3) {
-                                                    oReturn.IsNotValid = true;
-                                                    oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
-                                                    aCtrlMessage.push({
-                                                        message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
-                                                        target: "/TrainingDetails/TrainingQuestionnaire"
-                                                    });
-                                                }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
@@ -1055,11 +1213,12 @@ sap.ui.define(
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
+                    var Array = [];
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                    if (oPayload.RewardPoints === null) {
+                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                         oPayload.RewardPoints = 0;
                     }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
@@ -1068,49 +1227,76 @@ sap.ui.define(
                     delete oPayload.ViewStartDate;
                     delete oPayload.ViewEndDate;
 
-                    var Array = [];
-                    for (var x of oPayload.TrainingZone) {
-                        Array.push({
-                            ZoneId: x,
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingZone = Array;
+                    switch (oPayload.TrainingFilterType) {
+                        case "ALL":
+                            delete oPayload.TrainingZone;
+                            delete oPayload.TrainingDivision;
+                            delete oPayload.TrainingDepot;
+                            delete oPayload.TrainingPainterTypeDetails;
+                            delete oPayload.TrainingPainterArcheTypeDetails;
+                            delete oPayload.TrainingPainters;
+                            break;
+                        case "GROUP":
+                            delete oPayload.TrainingPainters;
+                            for (var x of oPayload.TrainingZone) {
+                                Array.push({
+                                    ZoneId: x,
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingZone = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingDivision) {
-                        Array.push({
-                            DivisionId: x,
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingDivision = Array;
+                            Array = [];
+                            for (var x of oPayload.TrainingDivision) {
+                                Array.push({
+                                    DivisionId: x,
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingDivision = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingPainterTypeDetails) {
-                        Array.push({
-                            PainterTypeId: parseInt(x),
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingPainterTypeDetails = Array;
+                            Array = [];
+                            for (var x of oPayload.TrainingPainterTypeDetails) {
+                                Array.push({
+                                    PainterTypeId: parseInt(x),
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainterTypeDetails = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingPainterArcheTypeDetails) {
-                        Array.push({
-                            PainterArcheTypeId: parseInt(x),
-                            TrainingId: parseInt(oPayload.Id)
-                        });
+                            Array = [];
+                            for (var x of oPayload.TrainingPainterArcheTypeDetails) {
+                                Array.push({
+                                    PainterArcheTypeId: parseInt(x),
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainterArcheTypeDetails = Array;
+
+                            if (oPayload.TrainingDepot && oPayload.TrainingDepot.results) {
+                                oPayload.TrainingDepot = oPayload.TrainingDepot.results;
+                            }
+                            break;
+                        case "PAINTER":
+                            Array = [];
+                            for (var x of oPayload.TrainingPainters) {
+                                Array.push({
+                                    PainterId: parseInt(x.PainterId),
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainters = Array;
+
+                            delete oPayload.TrainingZone;
+                            delete oPayload.TrainingDivision;
+                            delete oPayload.TrainingDepot;
+                            delete oPayload.TrainingPainterTypeDetails;
+                            delete oPayload.TrainingPainterArcheTypeDetails;
+                            break;
                     }
-                    oPayload.TrainingPainterArcheTypeDetails = Array;
 
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this;
-
-                    // Quick fix Training zone depot PainterType PainterArcheType
-                    if (oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results) {
-                        oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
-                    }
 
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
@@ -1125,11 +1311,12 @@ sap.ui.define(
 
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
+                    var Array = [];
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
                     oPayload.Status = parseInt(oPayload.Status);
                     oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     oPayload.Duration = parseInt(oPayload.Duration);
-                    if (oPayload.RewardPoints === null) {
+                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                         oPayload.RewardPoints = 0;
                     }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
@@ -1148,50 +1335,76 @@ sap.ui.define(
                     delete oPayload.EndDate;
                     delete oPayload.TrainingQuestionnaire;
 
-                    var Array = [];
-                    for (var x of oPayload.TrainingZone) {
-                        Array.push({
-                            ZoneId: x,
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingZone = Array;
+                    switch (oPayload.TrainingFilterType) {
+                        case "ALL":
+                            delete oPayload.TrainingZone;
+                            delete oPayload.TrainingDivision;
+                            delete oPayload.TrainingDepot;
+                            delete oPayload.TrainingPainterTypeDetails;
+                            delete oPayload.TrainingPainterArcheTypeDetails;
+                            delete oPayload.TrainingPainters;
+                            break;
+                        case "GROUP":
+                            delete oPayload.TrainingPainters;
+                            for (var x of oPayload.TrainingZone) {
+                                Array.push({
+                                    ZoneId: x,
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingZone = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingDivision) {
-                        Array.push({
-                            DivisionId: x,
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingDivision = Array;
+                            Array = [];
+                            for (var x of oPayload.TrainingDivision) {
+                                Array.push({
+                                    DivisionId: x,
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingDivision = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingPainterTypeDetails) {
-                        Array.push({
-                            PainterTypeId: parseInt(x),
-                            TrainingId: parseInt(oPayload.Id)
-                        });
-                    }
-                    oPayload.TrainingPainterTypeDetails = Array;
+                            Array = [];
+                            for (var x of oPayload.TrainingPainterTypeDetails) {
+                                Array.push({
+                                    PainterTypeId: parseInt(x),
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainterTypeDetails = Array;
 
-                    Array = [];
-                    for (var x of oPayload.TrainingPainterArcheTypeDetails) {
-                        Array.push({
-                            PainterArcheTypeId: parseInt(x),
-                            TrainingId: parseInt(oPayload.Id)
-                        });
+                            Array = [];
+                            for (var x of oPayload.TrainingPainterArcheTypeDetails) {
+                                Array.push({
+                                    PainterArcheTypeId: parseInt(x),
+                                    TrainingId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainterArcheTypeDetails = Array;
+
+                            if (oPayload.TrainingDepot && oPayload.TrainingDepot.results) {
+                                oPayload.TrainingDepot = oPayload.TrainingDepot.results;
+                            }
+                            break;
+                        case "PAINTER":
+                            Array = [];
+                            for (var x of oPayload.TrainingPainters) {
+                                Array.push({
+                                    PainterId: parseInt(x.PainterId),
+                                    LearningId: parseInt(oPayload.Id)
+                                });
+                            }
+                            oPayload.TrainingPainters = Array;
+
+                            delete oPayload.TrainingZone;
+                            delete oPayload.TrainingDivision;
+                            delete oPayload.TrainingDepot;
+                            delete oPayload.TrainingPainterTypeDetails;
+                            delete oPayload.TrainingPainterArcheTypeDetails;
+                            break;
                     }
-                    oPayload.TrainingPainterArcheTypeDetails = Array;
 
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this;
-
-                    debugger;
-                    //Quick fix Training zone depot PainterType PainterArchType
-                    if (oClonePayload.TrainingDepot && oClonePayload.TrainingDepot.results) {
-                        oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.results;
-                    }
 
                     var sKey = that.getModel().createKey("/LearningSet", {
                         Id: oClonePayload.Id
@@ -1313,7 +1526,6 @@ sap.ui.define(
                 },
 
                 _initFilerForTablesEnrollment: function (trainingId) {
-                    debugger;
                     var oView = this.getView();
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
@@ -1326,7 +1538,6 @@ sap.ui.define(
                 },
 
                 _initFilerForTablesVideoEnrollment: function (trainingId) {
-                    debugger;
                     var oView = this.getView();
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
@@ -1367,7 +1578,6 @@ sap.ui.define(
                     var oVboxProfile = oView.byId("idVbTrDetails");
                     var sFragName = mode == "edit" ? "EditTraining" : "ViewTraining";
                     oVboxProfile.destroyItems();
-                    debugger;
                     return new Promise(function (res, rej) {
                         Fragment.load({
                             id: oView.getId(),

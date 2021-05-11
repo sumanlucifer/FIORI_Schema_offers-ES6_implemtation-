@@ -1,0 +1,78 @@
+<core:FragmentDefinition
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <ValueHelpDialog
+        title="Painters"
+        ok=".onValueHelpOkPressPainter"
+        cancel=".onValueHelpCancelPressPainter"
+        afterClose=".onValueHelpAfterClosePainter"
+        afterOpen=".onValueHelpAfterOpenPainter"
+        supportRanges="false"
+        key="Id"
+        descriptionKey="Name">
+        <filterBar>
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
+                <fb:filterGroupItems>
+                    <!-- <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Id"
+                        label="Painter Id"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Id" />
+                        </fb:control>
+                    </fb:FilterGroupItem> -->
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ZoneId"
+                        label="Zone"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="ZoneId" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="DivisionId"
+                        label="Division"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="DivisionId" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Depot/Depot"
+                        label="Depot"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Depot/Depot" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="PainterType/PainterType"
+                        label="Painter Type"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="PainterType/PainterType" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ArcheType/ArcheType"
+                        label="Painter ArcheType"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="ArcheType/ArcheType" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </filterBar>
+    </ValueHelpDialog>
+</core:FragmentDefinition>
+
+

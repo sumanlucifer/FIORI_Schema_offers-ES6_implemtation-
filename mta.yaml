@@ -50,6 +50,10 @@ modules:
       - Training_Learning-content.zip
       name: Training_Learning
       target-path: resources/
+    - artifacts:
+      - comknplpragatigroupnotifications.zip
+      name: comknplpragatigroupnotifications
+      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -108,6 +112,16 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: comknplpragatigroupnotifications
+  type: html5
+  path: groupnotifications
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.managed-service
@@ -124,8 +138,20 @@ resources:
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
     service: destination
-    service-plan: lite    
+    service-plan: lite
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
@@ -150,6 +176,8 @@ resources:
       xsappname: knpl-influencer-web
     service: saas-registry
     service-plan: application
+parameters:
+  deploy_mode: html5-repo
 build-parameters:
   before-all:
   - builder: custom

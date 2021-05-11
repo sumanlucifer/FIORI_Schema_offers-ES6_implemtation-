@@ -23,7 +23,8 @@ sap.ui.define([
             var oViewModel,
                 iOriginalBusyDelay,
                 oTable = this.byId("table"),
-                oTable1 = this.byId("table1");
+                oTable1 = this.byId("table1"),
+                oTable2 = this.byId("table2");
 
             // Put down worklist table's original value for busy indicator delay,
             // so it can be restored later on. Busy handling on the table is
@@ -119,7 +120,7 @@ sap.ui.define([
         onUpdateFinished: function (oEvent) {
             // update the worklist's object counter after the table update
             var sTitle,
-                oTable = oEvent.getSource(),
+                oTable = this.getView().byId("table"),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty
@@ -134,7 +135,8 @@ sap.ui.define([
         onUpdateFinished1: function (oEvent) {
             // update the worklist's object counter after the table update
             var sTitle,
-                oTable = oEvent.getSource(),
+                // oTable = oEvent.getSource(),
+                oTable = this.getView().byId("table1"),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty
@@ -149,7 +151,8 @@ sap.ui.define([
         onUpdateFinished2: function (oEvent) {
             // update the worklist's object counter after the table update
             var sTitle,
-                oTable = oEvent.getSource(),
+                // oTable = oEvent.getSource(),
+                oTable = this.getView().byId("table2"),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty

@@ -9,3 +9,5 @@
 .vscode/
 # auto generated wildcard
 debasisa_web/Manage_FAQ/.env
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2

@@ -1,2 +1,4 @@
 /node_modules/
 /dist/
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2

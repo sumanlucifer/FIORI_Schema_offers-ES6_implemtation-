@@ -47,3 +47,5 @@ debasisa_web/Manage_FAQ/.env1
 debasisa_web/Manage_FAQ/.env2
 # auto generated wildcard
 debasisa_web/Training_Learning/.env8
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2

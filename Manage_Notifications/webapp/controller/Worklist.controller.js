@@ -19,10 +19,12 @@ sap.ui.define([
 		 * Called when the worklist controller is instantiated.
 		 * @public
 		 */
-		onInit : function () {
+		onInit: function () {
 			var oViewModel,
 				iOriginalBusyDelay,
-				oTable = this.byId("table");
+				oTable = this.byId("table"),
+				oTable1 = this.byId("table1"),
+				oTable2 = this.byId("table2");
 
 			// Put down worklist table's original value for busy indicator delay,
 			// so it can be restored later on. Busy handling on the table is
@@ -33,22 +35,38 @@ sap.ui.define([
 
 			// Model used to manipulate control states
 			oViewModel = new JSONModel({
-				worklistTableTitle : this.getResourceBundle().getText("worklistTableTitle"),
+				worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
+				saveAsTileTitle: this.getResourceBundle().getText("saveAsTileTitle", this.getResourceBundle().getText("worklistViewTitle")),
 				shareOnJamTitle: this.getResourceBundle().getText("worklistTitle"),
 				shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
 				shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
-				tableNoDataText : this.getResourceBundle().getText("tableNoDataText"),
-				tableBusyDelay : 0
+				tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
+				tableBusyDelay: 0
 			});
 			this.setModel(oViewModel, "worklistView");
 
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-			oTable.attachEventOnce("updateFinished", function(){
+			oTable.attachEventOnce("updateFinished", function () {
 				// Restore original busy indicator delay for worklist's table
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 			});
+			oTable1.attachEventOnce("updateFinished1", function () {
+				// Restore original busy indicator delay for worklist's table
+				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+			});
+			oTable2.attachEventOnce("updateFinished2", function () {
+				// Restore original busy indicator delay for worklist's table
+				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+			});
+			// Add the worklist page to the flp routing history
+			// this.addHistoryEntry({
+			// 	title: this.getResourceBundle().getText("worklistViewTitle"),
+			// 	icon: "sap-icon://table-view",
+			// 	intent: "#Notifications-display"
+			// }, true);
+
 		},
 
 		/* =========================================================== */
@@ -64,19 +82,113 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the update finished event
 		 * @public
 		 */
-		onUpdateFinished : function (oEvent) {
+		onUpdateFinished: function (oEvent) {
 			// update the worklist's object counter after the table update
-			var sTitle,
-				oTable = oEvent.getSource(),
-				iTotalItems = oEvent.getParameter("total");
-			// only update the counter if the length is final and
-			// the table is not empty
-			if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-				sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [iTotalItems]);
+			var sDraft,
+				that = this,
+				aFilters,
+				sQuery = this.getModel("worklistView").getProperty("/sQuery");
+			if (sQuery && sQuery.length > 0) {
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "DRAFT"),
+						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
+					],
+					and: true
+				});
 			} else {
-				sTitle = this.getResourceBundle().getText("worklistTableTitle");
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "DRAFT")
+					],
+					and: true
+				});
 			}
-			this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
+			this.getModel().read("/NotificationSet/$count", {
+				filters: [aFilters],
+				async: true,
+				success: function (counter) {
+					sDraft = that.getResourceBundle().getText("draftCount", [counter]);
+					that.getModel("worklistView").setProperty("/draft", sDraft);
+				}
+			});
+		},
+
+		onUpdateFinished1: function (oEvent) {
+			// update the worklist's object counter after the table update
+			var sScheduled,
+				that = this,
+				aFilters,
+				sQuery = this.getModel("worklistView").getProperty("/sQuery");
+			if (sQuery && sQuery.length > 0) {
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "SCHEDULED"),
+						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
+					],
+					and: true
+				});
+			} else {
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "SCHEDULED")
+					],
+					and: true
+				});
+			}
+
+			this.getModel().read("/NotificationSet/$count", {
+				filters: [aFilters],
+				async: true,
+				success: function (counter) {
+					sScheduled = that.getResourceBundle().getText("scheduledCount", [counter]);
+					that.getModel("worklistView").setProperty("/scheduled", sScheduled);
+				}
+			});
+		},
+
+		onUpdateFinished2: function (oEvent) {
+			// update the worklist's object counter after the table update
+			var sTriggered,
+				that = this,
+				aFilters,
+				sQuery = this.getModel("worklistView").getProperty("/sQuery");
+			if (sQuery && sQuery.length > 0) {
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "TRIGGERED"),
+						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
+					],
+					and: true
+				});
+			} else {
+				aFilters = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
+						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "TRIGGERED")
+					],
+					and: true
+				});
+			}
+			this.getModel().read("/NotificationSet/$count", {
+				filters: [aFilters],
+				async: true,
+				success: function (counter) {
+					sTriggered = that.getResourceBundle().getText("triggeredCount", [counter]);
+					that.getModel("worklistView").setProperty("/triggered", sTriggered);
+				}
+			});
 		},
 
 		/**
@@ -84,23 +196,30 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
 		 * @public
 		 */
-		onPress : function (oEvent) {
+		onPress: function (oEvent) {
 			// The source is the list item that got pressed
 			this._showObject(oEvent.getSource());
 		},
 
 		/**
-		 * Event handler for navigating back.
-		 * We navigate back in the browser history
+		 * Event handler when the share in JAM button has been clicked
 		 * @public
 		 */
-		onNavBack : function() {
-			// eslint-disable-next-line sap-no-history-manipulation
-			history.go(-1);
+		onShareInJamPress: function () {
+			var oViewModel = this.getModel("worklistView"),
+				oShareDialog = sap.ui.getCore().createComponent({
+					name: "sap.collaboration.components.fiori.sharing.dialog",
+					settings: {
+						object: {
+							id: location.href,
+							share: oViewModel.getProperty("/shareOnJamTitle")
+						}
+					}
+				});
+			oShareDialog.open();
 		},
 
-
-		onSearch : function (oEvent) {
+		onSearch: function (oEvent) {
 			if (oEvent.getParameters().refreshButtonPressed) {
 				// Search field's 'refresh' button has been pressed.
 				// This is visible if you select any master list item.
@@ -109,14 +228,34 @@ sap.ui.define([
 				this.onRefresh();
 			} else {
 				var aTableSearchState = [];
-				var sQuery = oEvent.getParameter("query");
-
+				// var sQuery = oEvent.getParameter("query");
+				var sQuery = oEvent.getParameter("query").toLowerCase();
+				sQuery = "'" + sQuery + "'";
 				if (sQuery && sQuery.length > 0) {
-					aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
+					this.getModel("worklistView").setProperty("/sQuery", sQuery);
+					aTableSearchState = [new Filter('tolower(Subject)', FilterOperator.Contains, sQuery),
+						new Filter("IsArchived", FilterOperator.EQ, false),
+						new Filter('IsSystemGenerated', FilterOperator.EQ, false)
+					];
+				} else {
+					this.getModel("worklistView").setProperty("/sQuery", null);
+					aTableSearchState = [new Filter("IsArchived", FilterOperator.EQ, false),
+						new Filter('IsSystemGenerated', FilterOperator.EQ, false)
+					];
 				}
 				this._applySearch(aTableSearchState);
 			}
 
+		},
+
+		onAdd: function (oEvent) {
+			this.getModel("appView").setProperty("/viewFlag", "Y");
+			this.getRouter().navTo("createObject");
+		},
+
+		onRefreshView: function () {
+			var oModel = this.getModel();
+			oModel.refresh(true);
 		},
 
 		/**
@@ -124,9 +263,49 @@ sap.ui.define([
 		 * and group settings and refreshes the list binding.
 		 * @public
 		 */
-		onRefresh : function () {
+		onRefresh: function () {
 			var oTable = this.byId("table");
+			var oTable1 = this.byId("table1");
+			var oTable2 = this.byId("table2");
 			oTable.getBinding("items").refresh();
+			oTable1.getBinding("items").refresh();
+			oTable2.getBinding("items").refresh();
+		},
+
+		// onLink: function (oEvent) {
+		// 	window.open(url, '_blank');
+		// },
+
+		onEdit: function (oEvent) {
+			this.getModel("appView").setProperty("/viewFlag", "Y");
+			this._showObject(oEvent.getSource());
+		},
+		
+		onView: function (oEvent) {
+			this.getModel("appView").setProperty("/viewFlag", "X");
+			this._showObject(oEvent.getSource());
+		},
+
+		onDelete: function (oEvent) {
+			var sPath = oEvent.getSource().getBindingContext().getPath();
+
+			function onYes() {
+				var data = this.getModel().getData(sPath);
+				this.getModel().update(sPath, {
+					Subject: data.Subject,
+					Body: data.Body,
+					RedirectionType: data.RedirectionType,
+					RedirectionTo: data.RedirectionTo,
+					IsGroupNotification: data.IsGroupNotification,
+					GroupId: data.GroupId,
+					ScheduledDate: data.ScheduledDate,
+					ScheduledTime: data.ScheduledTime,
+					IsArchived: true
+				}, {
+					success: this.showToast.bind(this, "MSG_SUCCESS_REMOVE")
+				});
+			}
+			this.showWarning("MSG_CONFIRM_DELETE", onYes);
 		},
 
 		/* =========================================================== */
@@ -139,9 +318,9 @@ sap.ui.define([
 		 * @param {sap.m.ObjectListItem} oItem selected Item
 		 * @private
 		 */
-		_showObject : function (oItem) {
+		_showObject: function (oItem) {
 			this.getRouter().navTo("object", {
-				objectId: oItem.getBindingContext().getProperty("Id")
+				objectId: oItem.getBindingContext().getProperty("UUID")
 			});
 		},
 
@@ -150,10 +329,15 @@ sap.ui.define([
 		 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
 		 * @private
 		 */
-		_applySearch: function(aTableSearchState) {
+		_applySearch: function (aTableSearchState) {
 			var oTable = this.byId("table"),
+				oTable1 = this.byId("table1"),
+				oTable2 = this.byId("table2"),
 				oViewModel = this.getModel("worklistView");
-			oTable.getBinding("items").filter(aTableSearchState, "Application");
+			// "Application"
+			oTable.getBinding("items").filter(aTableSearchState);
+			oTable1.getBinding("items").filter(aTableSearchState);
+			oTable2.getBinding("items").filter(aTableSearchState);
 			// changes the noDataText of the list in case there are no filter results
 			if (aTableSearchState.length !== 0) {
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));

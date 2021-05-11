@@ -118,7 +118,7 @@
                     ]
                 },
                 {
-                    "pattern": "MasterFAQSet/{objectId}",
+                    "pattern": "NotificationSet/{objectId}",
                     "name": "object",
                     "target": [
                         "object"
@@ -126,7 +126,7 @@
                 },
                 {
 					"name": "createObject",
-					"pattern": "MasterFAQSet",
+					"pattern": "NotificationSet",
 					"titleTarget": "",
 					"greedy": false,
 					"target": [
