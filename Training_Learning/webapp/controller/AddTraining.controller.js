@@ -684,13 +684,22 @@ sap.ui.define(
                     this.oColModel = new JSONModel({
                         cols: [
                             {
-                                label: "Painter Id",
-                                template: "Id",
+                                label: "Membership ID",
+                                template: "MembershipCard",
                             },
                             {
                                 label: "Name",
                                 template: "Name",
                             },
+                            {
+                                label: "Mobile Number",
+                                template: "Mobile",
+                            },
+                            {
+                                label: "Division",
+                                template: "DivisionId",
+                            },
+
                             {
                                 label: "Zone",
                                 template: "ZoneId",
@@ -759,7 +768,7 @@ sap.ui.define(
                 },
 
                 onFilterBarSearchPainter: function (oEvent) {
-                    debugger;
+                 //   debugger;
                     var afilterBar = oEvent.getParameter("selectionSet"),
                         aFilters = [];
 

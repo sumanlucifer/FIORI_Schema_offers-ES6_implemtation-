@@ -74,7 +74,7 @@
                 <Label text="{i18n>colPainter}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
                 <MultiInput id="multiInputPainterEdit" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}" tokens="{oModelView>/TrainingDetails/TrainingPainters}" valueHelpRequest="onValueHelpRequestedPainter">
                     <tokens>
-                        <Token editable="false" text="{oModelView>PainterId}" key="{oModelView>PainterId}"/>
+                        <Token editable="false" text="{oModelView>Name}" key="{oModelView>PainterId}"/>
                     </tokens>
                 </MultiInput>
 

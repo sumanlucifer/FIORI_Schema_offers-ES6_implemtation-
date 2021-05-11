@@ -69,6 +69,33 @@
                             <m:Input name="ArcheType/ArcheType" />
                         </fb:control>
                     </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="MembershipCard"
+                        label="Membership ID"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="MembershipCard" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Name"
+                        label="Name"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Name" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Mobile"
+                        label="Mobile Number"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Mobile" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
                 </fb:filterGroupItems>
             </fb:FilterBar>
         </filterBar>
