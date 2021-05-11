@@ -94,6 +94,23 @@ sap.ui.define(
               PainterProducts: [],
               ApplicableProducts: [],
               BonusApplicableProducts: [],
+              PCat1: [],
+              PClass1: [],
+              AppProd1: [],
+              AppPacks1: [],
+            },
+            Rbtn: {
+              PCat1: 0,
+              PClass1: 0,
+              AppProd1: 0,
+              AppPacks1: 0,
+              Table1:0
+            },
+            MultiEnabled: {
+              PCat1: false,
+              PClass1: false,
+              AppProd1:false,
+              AppPacks1:false
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
@@ -177,7 +194,7 @@ sap.ui.define(
           var oForm = oView.byId("FormChange");
 
           var bFlagValidate = oValidate.validate(oForm);
-          
+
           var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
           var bFileFlag = false;
 
@@ -206,16 +223,22 @@ sap.ui.define(
           var oViewData = oModelView.getData();
           var oPayLoad = this._RemoveEmptyValue(oViewData);
           //setting up zone data in the array.
-          oPayLoad["SchemeZones"] = oModelControl.getProperty("/MultiCombo/Zones").map(function (k) {
-            return {ZoneId:k};
-          });
+          oPayLoad["SchemeZones"] = oModelControl
+            .getProperty("/MultiCombo/Zones")
+            .map(function (k) {
+              return { ZoneId: k };
+            });
           //setting up division data in the array.
-          oPayLoad["SchemeDivisions"] = oModelControl.getProperty("/MultiCombo/Divisions").map(function (k) {
-            return {DivisionId:k};
-          });
-          oPayLoad["SchemeDepots"] = oModelControl.getProperty("/MultiCombo/Depots").map(function (k) {
-            return {DepotId:k["DepotId"]};
-          });
+          oPayLoad["SchemeDivisions"] = oModelControl
+            .getProperty("/MultiCombo/Divisions")
+            .map(function (k) {
+              return { DivisionId: k };
+            });
+          oPayLoad["SchemeDepots"] = oModelControl
+            .getProperty("/MultiCombo/Depots")
+            .map(function (k) {
+              return { DepotId: k["DepotId"] };
+            });
           //setting up the depot data in the array.
           console.log(
             oView.byId("idDepots").getTokens(),

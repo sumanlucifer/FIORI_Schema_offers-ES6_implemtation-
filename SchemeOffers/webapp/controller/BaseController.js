@@ -280,6 +280,32 @@ sap.ui.define(
             oValueHelpDialog.update();
           });
         },
+        onRbChnageMain: function (oEvent) {
+          var oView = this.getView();
+          var oSource = oEvent.getSource();
+          var sKey = oSource.getSelectedIndex();
+          var sPath = oSource.getBinding("selectedIndex").getPath();
+          var sPathArray = sPath.split("/");
+          var oModelControl = oView.getModel("oModelControl");
+          if (sKey == 1) {
+            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], true);
+          } else {
+            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], false);
+            this._propertyToBlank(["MultiCombo/"+sPathArray[2]],true);
+          }
+        },
+        onRbTable1Change:function(oEvent){
+            var oView = this.getView();
+            var sKey = oEvent.getSource().getSeleckedIndex();
+            var spath = oEvent.getSource().getBinding("selectedIndex").getPath();
+        },
+        onProductCatChange: function (oEvent) {
+          var oView = this.getView();
+          var oSource = oEvent.getSource();
+          //var sKey = oSource.getSeleckedKeys();
+        },
+        onProdClassChange: function (oEvent) {},
+        onAppProdChange: function (oEvent) {},
         onArchiTypeChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
           var oView = this.getView();
@@ -311,12 +337,10 @@ sap.ui.define(
           var oSource = oEvent.getSource();
           var oView = this.getView();
           var oBindingPath = oSource.getBinding("selectedKey").getPath();
-          var oJson = {
-
-          }
+          var oJson = {};
           var sKey1 = oSource.getSelectedkey();
-          var sKey2 = ""
-          this._applyFilterOnProducts(sKey1,sKey2,"");
+          var sKey2 = "";
+          this._applyFilterOnProducts(sKey1, sKey2, "");
         },
         onChangeAppProducts: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -324,7 +348,7 @@ sap.ui.define(
           var aArray = [];
           for (var x of sKeys) {
             aArray.push({
-              SkuCode: x
+              SkuCode: x,
             });
           }
           oView
@@ -394,17 +418,19 @@ sap.ui.define(
             ]);
           } //
         },
-        _propertyToBlank: function (aArray) {
+        _propertyToBlank: function (aArray, aModel2) {
           var aProp = aArray;
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          if (aModel2) {
+            oModelView = oView.getModel("oModelControl");
+          }
 
           for (var x of aProp) {
             var oGetProp = oModelView.getProperty("/" + x);
             if (Array.isArray(oGetProp)) {
-              //oModelView.setProperty("/"+x,[]);
-              oView.byId(x).clearSelection();
-              oView.byId(x).fireSelectionChange();
+              oModelView.setProperty("/"+x,[]);
+              oView.byId(x.substring(x.indexOf('/') + 1)).fireChange();
             } else if (oGetProp === null) {
               oModelView.setProperty("/" + x, null);
               console.log("date made as null");
