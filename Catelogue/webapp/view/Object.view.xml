@@ -16,7 +16,7 @@
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
-                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catalogue Details">
                             <Link text="Catalogues" press="handleAllCatelogueLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
@@ -83,7 +83,7 @@
                     
         <!-- <ObjectAttribute title="Title" text="{Title}"/> -->
          <VBox>
-                <Title  text="Catelogue Details"  />
+                <Title  text="Catalogue Details"  />
                 <HBox width="100%"  class="sapUiSmallMarginTop">
                
                 <VBox class="sapUiMediumMarginBeginEnd">
@@ -175,8 +175,7 @@
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
-                                                <ToolbarSpacer />
-                                                <Button press="onAddCatalogue" type="Emphasized" text="Add"/>
+                                                
                                             </Toolbar>
                                         </headerToolbar>
                                             <columns>
@@ -226,11 +225,15 @@
                                             </items>
                             </Table>
         
-            <ObjectIdentifier title="Competitors"/>
         <HBox width="100%" class="sapUiSmallMarginTopBottom">
         
                     <Table id="idCompetitorDetils" width="auto" items="{path: 'objectView>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
-
+                     <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>Competitors}" />
+                            
+                        </Toolbar>
+                    </headerToolbar>
 
             <columns>
                 <Column>
