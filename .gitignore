@@ -8,3 +8,6 @@
 *.env*
 */dist/
 */.gitignore
+
+*.sh
+Deploy.sh
