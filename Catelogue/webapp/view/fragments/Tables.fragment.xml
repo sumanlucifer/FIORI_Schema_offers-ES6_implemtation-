@@ -26,6 +26,9 @@
                                                 <Column>
                                                     <Text text="{i18n>selectCatalogue}" />
                                                 </Column>
+                                                <Column>
+                                                    <Text text="{i18n>media}" />
+                                                </Column>
 
                                                 <Column width="10%">
                                                     <Text text="{i18n>Action}" />
@@ -71,6 +74,9 @@
                                                             </FlexBox>
                                                         
                                                         </VBox>
+                                                        <VBox >
+                                                            <Text text="{ActionViewModel>MediaName}"></Text>
+                                                            </VBox>
                                                         <HBox>
                         
                                                     

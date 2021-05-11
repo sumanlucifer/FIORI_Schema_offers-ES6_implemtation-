@@ -621,7 +621,6 @@ sap.ui.define([
             var delItems = [];
             var property = this._property;
             var sServiceUri = this.sServiceURI;
-            var oModel = this.getModel("ActionViewModel");
             // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
             //To DO promises for sync
             for (var i = 0; i <= aCatalogue.length; i++) {
@@ -638,11 +637,13 @@ sap.ui.define([
                         processData: false,
                         // data: delItems,
                         success: function (data) {
-                            aCatalogue.splice(aCatalogue[i] - 1, 1);
-
-                            oModel.refresh(true);
+                            // aCatalogue.splice(i);
+                            
+                            aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                             var sMessage = "Catalogue Deleted!";
                             MessageToast.show(sMessage);
+                            oModel.refresh(true);
+                            
                         },
                         error: function () { },
                     })
