@@ -609,11 +609,24 @@ sap.ui.define(
                 onValueHelpRequestedPainter: function () {
                     this._oMultiInput = this.getView().byId("multiInputPainterEdit");
                     this.oColModel = new JSONModel({
-                        cols: [
+                         cols: [
+                            {
+                                label: "Membership ID",
+                                template: "MembershipCard",
+                            },
                             {
                                 label: "Name",
                                 template: "Name",
                             },
+                            {
+                                label: "Mobile Number",
+                                template: "Mobile",
+                            },
+                            {
+                                label: "Division",
+                                template: "DivisionId",
+                            },
+
                             {
                                 label: "Zone",
                                 template: "ZoneId",
@@ -634,7 +647,7 @@ sap.ui.define(
                                 label: "Painter ArcheType",
                                 template: "ArcheType/ArcheType",
                             }
-                        ],
+                        ]
                     });
 
                     var aCols = this.oColModel.getData().cols;
