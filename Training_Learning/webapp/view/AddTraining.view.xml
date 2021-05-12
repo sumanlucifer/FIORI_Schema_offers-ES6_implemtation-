@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.AddTraining" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.AddTraining" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
     <Page busy="{oModelView>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
         <headerContent>
             <Bar>
@@ -32,13 +32,19 @@
                 <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
                 <Label text="{i18n>colLink}" required="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
-                <Input maxLength="300" value="{oModelView>/TrainingDetails/Url}" type="Url" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input maxLength="300" width="100%" value="{oModelView>/TrainingDetails/Url}" type="Url" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
-                <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                <!-- <l:HorizontalLayout> -->
+                    <!-- <l:VerticalLayout class="sapUiSmallMarginEnd"> -->
+                        <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                        <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                    <!-- </l:VerticalLayout> -->
 
-                <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
-                <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                    <!-- <l:VerticalLayout> -->
+                        <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                        <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                    <!-- </l:VerticalLayout> -->
+                <!-- </l:HorizontalLayout> -->
 
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
@@ -65,8 +71,8 @@
                                         visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                                 </HBox>
                                 <HBox>
-                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text=".png, .jpg, .jpeg" class="sapUiSmallMargin"/>
-                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB" class="sapUiSmallMargin"/>
+                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text=".png, .jpg, .jpeg" class="sapUiSmallMarginEnd"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB" class="sapUiSmallMarginEnd"/>
                                     <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/showPreviewImageButton} === true}" enabled="{= ${oModelView>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
                                 </HBox>
                         </VBox>
@@ -75,6 +81,7 @@
 
             <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
 
+                <Label text="Select Target Group" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <RadioButtonGroup id="rbg1" columns="3" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" select="onRadioBtnChange">
                     <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
                     <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>

@@ -696,11 +696,6 @@ sap.ui.define(
                                 template: "Mobile",
                             },
                             {
-                                label: "Division",
-                                template: "DivisionId",
-                            },
-
-                            {
                                 label: "Zone",
                                 template: "ZoneId",
                             },
@@ -768,7 +763,7 @@ sap.ui.define(
                 },
 
                 onFilterBarSearchPainter: function (oEvent) {
-                 //   debugger;
+                    //   debugger;
                     var afilterBar = oEvent.getParameter("selectionSet"),
                         aFilters = [];
 
@@ -806,7 +801,6 @@ sap.ui.define(
                 },
 
                 onValueHelpOkPressPainter: function (oEvent) {
-                    debugger;
                     var oData = [];
                     var xUnique = new Set();
                     var aTokens = oEvent.getParameter("tokens");
@@ -892,14 +886,6 @@ sap.ui.define(
                                                 target: "/TrainingDetails/EndDate"
                                             });
                                         } else
-                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                            //     oReturn.IsNotValid = true;
-                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                            //     aCtrlMessage.push({
-                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
-                                            //         target: "/TrainingDetails/RewardPoints"
-                                            //     });
-                                            // } else
                                             if (data.RewardPoints < 0) {
                                                 oReturn.IsNotValid = true;
                                                 oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -940,14 +926,6 @@ sap.ui.define(
                             target: "/TrainingDetails/TrainingSubTypeId"
                         });
                     } else
-                        // if (data.RewardPoints === "" || data.RewardPoints === null) {
-                        //     oReturn.IsNotValid = true;
-                        //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                        //     aCtrlMessage.push({
-                        //         message: "MSG_PLS_ENTER_ERR_REWARD",
-                        //         target: "/TrainingDetails/RewardPoints"
-                        //     });
-                        // } else
                         if (data.RewardPoints < 0) {
                             oReturn.IsNotValid = true;
                             oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -1023,14 +1001,6 @@ sap.ui.define(
                                                 target: "/TrainingDetails/Duration"
                                             });
                                         } else
-                                            // if (data.RewardPoints === "" || data.RewardPoints === null) {
-                                            //     oReturn.IsNotValid = true;
-                                            //     oReturn.sMsg.push("MSG_PLS_ENTER_ERR_REWARD");
-                                            //     aCtrlMessage.push({
-                                            //         message: "MSG_PLS_ENTER_ERR_REWARD",
-                                            //         target: "/TrainingDetails/RewardPoints"
-                                            //     });
-                                            // } else
                                             if (data.RewardPoints < 0) {
                                                 oReturn.IsNotValid = true;
                                                 oReturn.sMsg.push("MSG_ENTER_REWARD_MORETHAN_ZERO");
@@ -1076,81 +1046,18 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
-                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
-                        oPayload.RewardPoints = 0;
-                    }
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     if (oPayload.Url === "") {
                         oPayload.Url = "";
                     }
 
-                    switch (oPayload.TrainingFilterType) {
-                        case "ALL":
-                            delete oPayload.TrainingZone;
-                            delete oPayload.TrainingDivision;
-                            delete oPayload.TrainingDepot;
-                            delete oPayload.TrainingPainterTypeDetails;
-                            delete oPayload.TrainingPainterArcheTypeDetails;
-                            delete oPayload.TrainingPainters;
-                            break;
-                        case "GROUP":
-                            delete oPayload.TrainingPainters;
-                            var Array = [];
-                            for (var x of oPayload.TrainingZone) {
-                                Array.push({
-                                    ZoneId: x,
-                                });
-                            }
-                            oPayload.TrainingZone = Array;
-
-                            Array = [];
-                            for (var x of oPayload.TrainingDivision) {
-                                Array.push({
-                                    DivisionId: x,
-                                });
-                            }
-                            oPayload.TrainingDivision = Array;
-
-                            Array = [];
-                            for (var x of oPayload.TrainingPainterTypeDetails) {
-                                Array.push({
-                                    PainterTypeId: parseInt(x),
-                                });
-                            }
-                            oPayload.TrainingPainterTypeDetails = Array;
-
-                            Array = [];
-                            for (var x of oPayload.TrainingPainterArcheTypeDetails) {
-                                Array.push({
-                                    PainterArcheTypeId: parseInt(x),
-                                });
-                            }
-                            oPayload.TrainingPainterArcheTypeDetails = Array;
-
-                            oPayload.TrainingDepot = oPayload.TrainingDepot.map(ele => ({ DepotId: ele.DepotId }));
-                            break;
-                        case "PAINTER":
-                            oPayload.TrainingPainters = oPayload.TrainingPainters.map(ele => ({ PainterId: parseInt(ele.PainterId) }));
-
-                            delete oPayload.TrainingZone;
-                            delete oPayload.TrainingDivision;
-                            delete oPayload.TrainingDepot;
-                            delete oPayload.TrainingPainterTypeDetails;
-                            delete oPayload.TrainingPainterArcheTypeDetails;
-                            break;
-                    }
+                    oPayload = this.trainingFilter(oPayload);
 
                     delete oPayload.Duration;
                     delete oPayload.LearningQuestionnaire;
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this,
                         sPath = "/TrainingSet";
-
-                    // oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.map(ele => ({ DepotId: ele.DepotId }));
 
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
@@ -1163,26 +1070,13 @@ sap.ui.define(
                     });
                 },
 
-                CUOperationVideo: function (oPayload, oEvent) {
-                    var oViewModel = this.getModel("oModelView");
+                trainingFilter: function (oPayload) {
                     oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                         oPayload.RewardPoints = 0;
                     }
                     oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-                    oPayload.Duration = parseInt(oPayload.Duration);
-                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-
-                    for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
-                        oPayload.LearningQuestionnaire.push(
-                            {
-                                Question: oPayload.TrainingQuestionnaire[i].Question,
-                                IsArchived: oPayload.TrainingQuestionnaire[i].IsArchived,
-                                LearningQuestionnaireOptions: oPayload.TrainingQuestionnaire[i].TrainingQuestionnaireOptions
-                            }
-                        );
-                    }
-
                     switch (oPayload.TrainingFilterType) {
                         case "ALL":
                             delete oPayload.TrainingZone;
@@ -1238,6 +1132,80 @@ sap.ui.define(
                             delete oPayload.TrainingPainterArcheTypeDetails;
                             break;
                     }
+                    return oPayload;
+                },
+
+                CUOperationVideo: function (oPayload, oEvent) {
+                    var oViewModel = this.getModel("oModelView");
+
+                    oPayload.Duration = parseInt(oPayload.Duration);
+                    for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
+                        oPayload.LearningQuestionnaire.push(
+                            {
+                                Question: oPayload.TrainingQuestionnaire[i].Question,
+                                IsArchived: oPayload.TrainingQuestionnaire[i].IsArchived,
+                                LearningQuestionnaireOptions: oPayload.TrainingQuestionnaire[i].TrainingQuestionnaireOptions
+                            }
+                        );
+                    }
+
+                    oPayload = this.trainingFilter(oPayload);
+
+                    // switch (oPayload.TrainingFilterType) {
+                    //     case "ALL":
+                    //         delete oPayload.TrainingZone;
+                    //         delete oPayload.TrainingDivision;
+                    //         delete oPayload.TrainingDepot;
+                    //         delete oPayload.TrainingPainterTypeDetails;
+                    //         delete oPayload.TrainingPainterArcheTypeDetails;
+                    //         delete oPayload.TrainingPainters;
+                    //         break;
+                    //     case "GROUP":
+                    //         delete oPayload.TrainingPainters;
+                    //         var Array = [];
+                    //         for (var x of oPayload.TrainingZone) {
+                    //             Array.push({
+                    //                 ZoneId: x,
+                    //             });
+                    //         }
+                    //         oPayload.TrainingZone = Array;
+
+                    //         Array = [];
+                    //         for (var x of oPayload.TrainingDivision) {
+                    //             Array.push({
+                    //                 DivisionId: x,
+                    //             });
+                    //         }
+                    //         oPayload.TrainingDivision = Array;
+
+                    //         Array = [];
+                    //         for (var x of oPayload.TrainingPainterTypeDetails) {
+                    //             Array.push({
+                    //                 PainterTypeId: parseInt(x),
+                    //             });
+                    //         }
+                    //         oPayload.TrainingPainterTypeDetails = Array;
+
+                    //         Array = [];
+                    //         for (var x of oPayload.TrainingPainterArcheTypeDetails) {
+                    //             Array.push({
+                    //                 PainterArcheTypeId: parseInt(x),
+                    //             });
+                    //         }
+                    //         oPayload.TrainingPainterArcheTypeDetails = Array;
+
+                    //         oPayload.TrainingDepot = oPayload.TrainingDepot.map(ele => ({ DepotId: ele.DepotId }));
+                    //         break;
+                    //     case "PAINTER":
+                    //         oPayload.TrainingPainters = oPayload.TrainingPainters.map(ele => ({ PainterId: parseInt(ele.PainterId) }));
+
+                    //         delete oPayload.TrainingZone;
+                    //         delete oPayload.TrainingDivision;
+                    //         delete oPayload.TrainingDepot;
+                    //         delete oPayload.TrainingPainterTypeDetails;
+                    //         delete oPayload.TrainingPainterArcheTypeDetails;
+                    //         break;
+                    // }
 
                     delete oPayload.StartDate;
                     delete oPayload.EndDate;
@@ -1245,8 +1213,6 @@ sap.ui.define(
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this,
                         sPath = "/LearningSet";
-
-                    // oClonePayload.TrainingDepot = oClonePayload.TrainingDepot.map(ele => ({ DepotId: ele.DepotId }));
 
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (createddata) {
