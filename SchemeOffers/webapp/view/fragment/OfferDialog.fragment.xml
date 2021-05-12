@@ -3,10 +3,10 @@
         resizable="false"
         contentWidth="30%"
 		id="selectDialog"
-		title="{i18n>tblTitle}"
+		title="{i18n>Offers}"
         growing="true"
         growingThreshold="15"
-		items="{path:'/OfferSet'}"
+		items="{path:'/OfferSet',sorter:{path:'CreatedAt',descending:true}}"
 		search=".onValueHelpSearch"
 		confirm=".onValueHelpClose"
 		cancel=".onValueHelpClose">

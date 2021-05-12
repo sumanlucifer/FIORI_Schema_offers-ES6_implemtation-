@@ -232,10 +232,10 @@ sap.ui.define(
 
           var aChkTblData = ["PCat1", "PClass1", "AppProd1", "AppPacks1"];
           var aChkTblData2 = ["PCat4", "PClass4", "AppProd4", "AppPacks4"];
-          if (aChkTblData.indexOf(sPathArray[0]) >= 0) {
+          if (aChkTblData.indexOf(sPathArray[2]) >= 0) {
             this._CreateRewardTableData();
           }
-          if (aChkTblData2.indexOf(sPathArray[0]) >= 0) {
+          if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
             this._CreateBonusRewardTable();
           }
         },

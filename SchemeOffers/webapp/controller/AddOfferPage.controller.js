@@ -98,41 +98,41 @@ sap.ui.define(
               PCat1: [],
               PCat2: [],
               PCat3: [],
-              PCat4:[],
+              PCat4: [],
               PClass1: [],
               PClass2: [],
               PClass3: [],
-              PClass4:[],
+              PClass4: [],
               AppProd1: [],
               AppProd2: [],
               AppProd3: [],
-              AppProd4:[],
+              AppProd4: [],
               AppPacks1: [],
               AppPacks2: [],
               AppPacks3: [],
-              AppPacks4:[],
+              AppPacks4: [],
               PainterType: [],
             },
             Rbtn: {
               PCat1: 0,
               PCat2: 0,
               PCat3: 0,
-              PCat4:0,
+              PCat4: 0,
               PClass1: 0,
               PClass2: 0,
               PClass3: 0,
-              PClass4:0,
+              PClass4: 0,
               AppProd1: 0,
               AppProd2: 0,
               AppProd3: 0,
-              AppProd4:0,
+              AppProd4: 0,
               AppPacks1: 0,
               AppPacks2: 0,
               AppPacks3: 0,
-              AppPacks4:0,
+              AppPacks4: 0,
               Rewards: 0,
-              BRewards:0,
-              TopAll:0
+              BRewards: 0,
+              TopAll: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -144,16 +144,15 @@ sap.ui.define(
               AppPacks2: false,
               PCat2: false,
               PCat3: false,
-              PCat4:false,
+              PCat4: false,
               PClass3: false,
-              PClass4:false,
+              PClass4: false,
               AppProd3: false,
-              AppProd4:false,
+              AppProd4: false,
               AppPacks3: false,
-              AppPacks4:false,
-              Rewards:false,
-              BRewards:false
-              
+              AppPacks4: false,
+              Rewards: false,
+              BRewards: false,
             },
             Table: {
               Table1: [
@@ -163,51 +162,38 @@ sap.ui.define(
                 },
               ],
               Table2: [],
-              Table3:[{
-                  ValidFrom:null,
-                  ValidTo:null
-              }],
-              Table4:[]
+              Table3: [
+                {
+                  ValidFrom: null,
+                  ValidTo: null,
+                },
+              ],
+              Table4: [],
             },
             oData: {
               Products: [],
               Packs: [],
-              PerGrowth:[{Name:"1"},{Name:"2"},{Name:"3"},{Name:"4"},{Name:"5"}]
+              PerGrowth: [
+                { Name: "1" },
+                { Name: "2" },
+                { Name: "3" },
+                { Name: "4" },
+                { Name: "5" },
+              ],
             },
             Fields: {
               Date1: null,
-              Date2: null
+              Date2: null,
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 
           var oDataView = {
-            SchemeTypeId: "",
+            OfferTypeId: "",
             Title: "",
             Description: "",
             StartDate: null,
             EndDate: null,
-            SchemeZones: [],
-            SchemeDivisions: [],
-            SchemeDepots: [],
-            IsSpecificPainter: false,
-            SchemePainterArchiTypes: [],
-            SchemePainterProducts: [],
-            PotentialId: "",
-            SlabId: "",
-            SchemeApplicableProducts: [],
-            PurchaseVolumeRequired: "",
-            AccuredPointsRequired: "",
-            RewardPoints: "",
-            RewardCash: "",
-            RewardGiftId: "",
-            HasBonusPercentage: false,
-            BonusRewardPoints: "",
-            SchemeBonusApplicableProducts: [],
-            BonusValidityDurationYear: "",
-            BonusValidityDurationMonth: "",
-            BonusValidityDurationDays: "",
-            BonusValidityDate: null,
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -274,13 +260,27 @@ sap.ui.define(
           }
           //validate the data
 
-          //this._postDataToSave(bFileFlag);
+          this._postDataToSave(bFileFlag);
         },
 
         onAfterRendering: function () {
           // this.getView().byId("startDate").setMinDate(new Date());
         },
-        _postDataToSave(bFileFlag) {
+        _postDataToSave: function (bFileFlag) {
+          var c1, c2, c3, c4;
+          var othat = this;
+
+          c1 = othat._CreatePayloadPart1();
+          //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger
+          c1.then(function (oPayload) {
+            c2 = othat._CreateOffer(oPayload);
+            c2.then(function (mParam1) {
+              c3 = othat._UploadFile(mParam1, bFileFlag);
+            });
+          });
+        },
+        _CreatePayloadPart1(bFileFlag) {
+          var promise = jQuery.Deferred();
           //creating the payload
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
@@ -289,38 +289,37 @@ sap.ui.define(
           var oViewData = oModelView.getData();
           var oPayLoad = this._RemoveEmptyValue(oViewData);
           //setting up zone data in the array.
-          oPayLoad["SchemeZones"] = oModelControl
-            .getProperty("/MultiCombo/Zones")
-            .map(function (k) {
-              return { ZoneId: k };
-            });
+          //   oPayLoad["SchemeZones"] = oModelControl
+          //     .getProperty("/MultiCombo/Zones")
+          //     .map(function (k) {
+          //       return { ZoneId: k };
+          //     });
           //setting up division data in the array.
-          oPayLoad["SchemeDivisions"] = oModelControl
-            .getProperty("/MultiCombo/Divisions")
-            .map(function (k) {
-              return { DivisionId: k };
-            });
-          oPayLoad["SchemeDepots"] = oModelControl
-            .getProperty("/MultiCombo/Depots")
-            .map(function (k) {
-              return { DepotId: k["DepotId"] };
-            });
+          //   oPayLoad["SchemeDivisions"] = oModelControl
+          //     .getProperty("/MultiCombo/Divisions")
+          //     .map(function (k) {
+          //       return { DivisionId: k };
+          //     });
+          //   oPayLoad["SchemeDepots"] = oModelControl
+          //     .getProperty("/MultiCombo/Depots")
+          //     .map(function (k) {
+          //       return { DepotId: k["DepotId"] };
+          //     });
           //setting up the depot data in the array.
-          console.log(
-            oView.byId("idDepots").getTokens(),
-            oModelControl.getData()
-          );
-          console.log(oPayLoad);
+          //   console.log(
+          //     oView.byId("idDepots").getTokens(),
+          //     oModelControl.getData()
+          //   );
 
           var inTegerProperty = [
-            "PurchaseVolumeRequired",
-            "AccuredPointsRequired",
-            "RewardPoints",
-            "RewardCash",
-            "BonusRewardPoints",
-            "BonusValidityDurationYear",
-            "BonusValidityDurationMonth",
-            "BonusValidityDurationDays",
+            // "PurchaseVolumeRequired",
+            // "AccuredPointsRequired",
+            // "RewardPoints",
+            // "RewardCash",
+            // "BonusRewardPoints",
+            // "BonusValidityDurationYear",
+            // "BonusValidityDurationMonth",
+            // "BonusValidityDurationDays",
           ];
           for (var y of inTegerProperty) {
             if (oPayLoad.hasOwnProperty(y)) {
@@ -329,37 +328,66 @@ sap.ui.define(
           }
           // setting the zone, division, depot data.
 
+          promise.resolve(oPayLoad);
+          return promise;
+        },
+        _CreateOffer: function (oPayLoad) {
+          var promise = jQuery.Deferred();
           var othat = this;
-          oDataModel.create("/SchemeSet", oPayLoad, {
-            success: function (data) {
-              MessageToast.show("Scheme Sucessfully Created.");
-              if (bFileFlag) {
-                othat._UploadFile(data);
-              }
-              //othat._navToHome();
-            },
-            error: function () {
-              MessageToast.show("Error In Creating the Schemes.");
-            },
+          var oView = this.getView();
+          var oDataModel = oView.getModel();
+          console.log(oPayLoad);
+          return new Promise((resolve, reject) => {
+            oDataModel.create("/OfferSet", oPayLoad, {
+              success: function (data) {
+                MessageToast.show("Offer Sucessfully Created.");
+                //othat._navToHome();
+                resolve(data);
+              },
+              error: function (data) {
+                MessageToast.show("Error In Creating the Schemes.");
+                reject(data);
+              },
+            });
           });
         },
-        _UploadFile: function (data) {
+        _CreateOffer1: function () {
+          var othat = this;
+        },
+        
+        _UploadFile: function (mParam1,mParam2) {
+          var promise = jQuery.Deferred();
+          if(!mParam2){
+               console.log("No File Found")
+              promise.resolve();
+              return promise;
+             
+          }
           var oView = this.getView();
           var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
           var sServiceUrl = this.getOwnerComponent(this)
             .getManifestObject()
             .getEntry("/sap.app").dataSources.mainService.uri;
-          var sUrl = sServiceUrl + "SchemeSet(" + data["Id"] + ")/$value";
-          jQuery.ajax({
+          
+          var data = mParam1;
+          var sUrl = sServiceUrl + "OfferSet(" + data["Id"] + ")/$value";
+          new Promise((resolve,reject)=>{
+            jQuery.ajax({
             method: "PUT",
             url: sUrl,
             cache: false,
             contentType: false,
             processData: false,
             data: oFile,
-            success: function (data) {},
-            error: function () {},
+            success: function (data) {
+                
+                resolve();
+            },
+            error: function () {
+                resolve();
+            },
           });
+          })
         },
         _NavBack: function () {},
 
