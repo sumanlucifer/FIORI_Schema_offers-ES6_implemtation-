@@ -179,6 +179,8 @@ sap.ui.define(
               aDivisions.push(y["DivisionId"]);
             }
           }
+          // 
+
           oModelControl2.setProperty("/Display/Divisions", aDivisions);
           if (oData["SchemeDepots"]["results"].length > 0) {
             for (var z of oData["SchemeDepots"]["results"]) {

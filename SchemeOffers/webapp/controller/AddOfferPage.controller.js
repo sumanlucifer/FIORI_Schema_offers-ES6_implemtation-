@@ -38,6 +38,7 @@ sap.ui.define(
       {
         customInt: customInt,
         cmbxDtype2: cmbxDtype2,
+
         onInit: function () {
           //Router Object
           this.oRouter = this.getRouter();
@@ -94,6 +95,88 @@ sap.ui.define(
               PainterProducts: [],
               ApplicableProducts: [],
               BonusApplicableProducts: [],
+              PCat1: [],
+              PCat2: [],
+              PCat3: [],
+              PCat4:[],
+              PClass1: [],
+              PClass2: [],
+              PClass3: [],
+              PClass4:[],
+              AppProd1: [],
+              AppProd2: [],
+              AppProd3: [],
+              AppProd4:[],
+              AppPacks1: [],
+              AppPacks2: [],
+              AppPacks3: [],
+              AppPacks4:[],
+              PainterType: [],
+            },
+            Rbtn: {
+              PCat1: 0,
+              PCat2: 0,
+              PCat3: 0,
+              PCat4:0,
+              PClass1: 0,
+              PClass2: 0,
+              PClass3: 0,
+              PClass4:0,
+              AppProd1: 0,
+              AppProd2: 0,
+              AppProd3: 0,
+              AppProd4:0,
+              AppPacks1: 0,
+              AppPacks2: 0,
+              AppPacks3: 0,
+              AppPacks4:0,
+              Rewards: 0,
+              BRewards:0,
+              TopAll:0
+            },
+            MultiEnabled: {
+              PCat1: false,
+              PClass1: false,
+              PClass2: false,
+              AppProd1: false,
+              AppProd2: false,
+              AppPacks1: false,
+              AppPacks2: false,
+              PCat2: false,
+              PCat3: false,
+              PCat4:false,
+              PClass3: false,
+              PClass4:false,
+              AppProd3: false,
+              AppProd4:false,
+              AppPacks3: false,
+              AppPacks4:false,
+              Rewards:false,
+              BRewards:false
+              
+            },
+            Table: {
+              Table1: [
+                {
+                  RVolume: "",
+                  RPoints: "",
+                },
+              ],
+              Table2: [],
+              Table3:[{
+                  ValidFrom:null,
+                  ValidTo:null
+              }],
+              Table4:[]
+            },
+            oData: {
+              Products: [],
+              Packs: [],
+              PerGrowth:[{Name:"1"},{Name:"2"},{Name:"3"},{Name:"4"},{Name:"5"}]
+            },
+            Fields: {
+              Date1: null,
+              Date2: null
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
@@ -177,7 +260,7 @@ sap.ui.define(
           var oForm = oView.byId("FormChange");
 
           var bFlagValidate = oValidate.validate(oForm);
-          console.log(bFlagValidate);
+
           var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
           var bFileFlag = false;
 
@@ -191,7 +274,7 @@ sap.ui.define(
           }
           //validate the data
 
-          this._postDataToSave(bFileFlag);
+          //this._postDataToSave(bFileFlag);
         },
 
         onAfterRendering: function () {
@@ -206,16 +289,22 @@ sap.ui.define(
           var oViewData = oModelView.getData();
           var oPayLoad = this._RemoveEmptyValue(oViewData);
           //setting up zone data in the array.
-          oPayLoad["SchemeZones"] = oModelControl.getProperty("/MultiCombo/Zones").map(function (k) {
-            return {ZoneId:k};
-          });
+          oPayLoad["SchemeZones"] = oModelControl
+            .getProperty("/MultiCombo/Zones")
+            .map(function (k) {
+              return { ZoneId: k };
+            });
           //setting up division data in the array.
-          oPayLoad["SchemeDivisions"] = oModelControl.getProperty("/MultiCombo/Divisions").map(function (k) {
-            return {DivisionId:k};
-          });
-          oPayLoad["SchemeDepots"] = oModelControl.getProperty("/MultiCombo/Depots").map(function (k) {
-            return {DepotId:k["DepotId"]};
-          });
+          oPayLoad["SchemeDivisions"] = oModelControl
+            .getProperty("/MultiCombo/Divisions")
+            .map(function (k) {
+              return { DivisionId: k };
+            });
+          oPayLoad["SchemeDepots"] = oModelControl
+            .getProperty("/MultiCombo/Depots")
+            .map(function (k) {
+              return { DepotId: k["DepotId"] };
+            });
           //setting up the depot data in the array.
           console.log(
             oView.byId("idDepots").getTokens(),
