@@ -172,30 +172,13 @@
                         </f:FormElement>
                       <f:FormElement label="{i18n>formApplicableLbl10}">
                             <f:fields>
-                                 <RadioButtonGroup columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
+                                 <RadioButtonGroup select="onRbRewardRatio"  columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <!-- <f:FormElement label="Applicable Packs">
-                        							<f:fields>
-                        								<MultiComboBox placeholder="{i18n>placeHolder1}">
-                                                            <core:Item key="1" text="Emulsion" />
-                                                            <core:Item key="2" text="Mica Marbel" />
-                                                        </MultiComboBox>
-                        							</f:fields>
-                        						</f:FormElement> -->
-                        <!-- <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
-                            <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formAppProdAccuredPoints}">
-                            <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
-                            </f:fields>
-                        </f:FormElement> -->
+                      
                     </f:formElements>
                 </f:FormContainer>
                    </f:formContainers>
@@ -209,10 +192,19 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>RequiredVolume}" />
+                    <Label text="{i18n>RequiredVolume}" required="true" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>RequiredPoints}" />
+                    <Text text="{i18n>RequiredPoints}"  />
+                </Column>
+                 <Column>
+                    <Label text="{i18n>Table1Label4}" required="true"/>
+                </Column>
+                 <Column>
+                    <Text text="{i18n>Table1Label5}" />
+                </Column>
+                  <Column>
+                    <Text text="{i18n>Table1Label6}" />
                 </Column>
             </columns>
 
@@ -220,35 +212,47 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                        
-                            <Input width="40%" value="{oModelControl>RVolume}" />
-                             <Input width="40%" value="{oModelControl>RPoints}" />
+                           
+                             <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RequiredVolume}" />
+                              <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RequiredPoints}" />
+                               <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RewardPoints}" />
+                                 <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                                    <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                                </ComboBox>
+                                <Input  placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RewardCash}" />
+                                
                             
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-         <Table items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
            <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formRewards}" />
                     <ToolbarSpacer />
-                  
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                  <Column>
-                    <Text text="Products" />
+                    <Text text="{i18n>Table1Label1}" />
                 </Column>
                 <Column>
-                    <Text text="Required Volume" />
+                    <Label text="{i18n>RequiredVolume}" required="true"/>
                 </Column>
-                <Column>
-                    <Text text="Required Points" />
+                    <Column>
+                    <Text text="{i18n>Table1Label2}" />
                 </Column>
-               
-              
-
+                 <Column>
+                    <Label text="{i18n>Table1Label4}" required="true" />
+                </Column>
+                 <Column>
+                    <Text text="{i18n>Table1Label5}" />
+                </Column>
+                  <Column>
+                    <Text text="{i18n>Table1Label6}" />
+                </Column>
             </columns>
 
             <items>
@@ -256,8 +260,13 @@
                     <cells>
                        
                            <Label text="{oModelControl>Name}" />
-                           <Input width="40%" value="{oModelControl>Value1}" />
-                           <Input width="40%" value="{oModelControl>Value2}" />
+                           <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredVolume}" />
+                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredPoints}" />
+                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardPoints}" />
+                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId'}">
+                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                           </ComboBox>
+                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardCash}" />
                             
                     </cells>
                 </ColumnListItem>
@@ -269,39 +278,7 @@
                 <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
             </f:layout>
             <f:formContainers>
-                <!-- <f:FormContainer title="{i18n>formRewards}">
-                    <f:formElements>
-
-                      <f:FormElement label="Reward Ration">
-                            <f:fields>
-                                <RadioButtonGroup columns="2" >
-                                    <RadioButton text="All"/>
-                                    <RadioButton text="Specific"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-                          <f:FormElement label="Reward Ratio">
-                                
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formRewardsPoints}">
-                            <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardPoints'}"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formRewardsCash}">
-                            <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/RewardCash'}"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formRewardsGift}">
-                            <f:fields>
-                                <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{path:'oModelView>/RewardGiftId',type:'.customInt'}" items="{path:'oModelControl>/RewardGift', type:'.customInt'}">
-                                    <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
-                                </ComboBox>
-                            </f:fields>
-                        </f:FormElement> 
-                    </f:formElements>
-                </f:FormContainer> -->
+        
                    <f:FormContainer title="{i18n>formApplicableLbl14}">
                     <f:formElements>
                         <f:FormElement label="{i18n>formApplicableLbl14}">
@@ -590,15 +567,52 @@
                 <Column>
                     <Text text="{i18n>formBonusValidaityTo}" />
                 </Column>
+               
+                 <Column>
+                    <Text text="{i18n>Table3Label1}" />
+                </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                       
-                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>ValidFrom}" />
-                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>ValidTo}" />
-                            
+                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>StartDate}" />
+                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>EndDate}" />
+                             <Input placeholder="{i18n>placeHolder3}" width="60%" value="{oModelControl>BonusPoints}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+           <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                 <Column>
+                    <Text text="{i18n>Table1Label1}" />
+                </Column>
+                 <Column>
+                    <Text text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>formBonusValidaityTo}" />
+                </Column>
+                 <Column>
+                    <Text text="{i18n>Table3Label1}" />
+                </Column>
+                
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>Name}" />
+                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>EndDate}" />
+                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>StartDate}" />
+                             <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />
                     </cells>
                 </ColumnListItem>
             </items>

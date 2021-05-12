@@ -77,16 +77,6 @@ sap.ui.define(
             modeEdit: false,
             StartDate: "",
             EndDate: "",
-            RewardGift: [
-              {
-                Id: 1,
-                Name: "TV",
-              },
-              {
-                Id: 2,
-                Name: "Washing Machine",
-              },
-            ],
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -136,7 +126,7 @@ sap.ui.define(
               TopAll: 0,
               Zones: 0,
               Divisions: 0,
-              Depots: 0
+              Depots: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -164,15 +154,19 @@ sap.ui.define(
             Table: {
               Table1: [
                 {
-                  RVolume: "",
-                  RPoints: "",
+                  RequiredVolume: "",
+                  RequiredPoints: "",
+                  RewardPoints: "",
+                  RewardGiftId: "",
+                  RewardCash: "",
                 },
               ],
               Table2: [],
               Table3: [
                 {
-                  ValidFrom: null,
-                  ValidTo: null,
+                  StartDate: null,
+                  EndDate: null,
+                  BonusPoints: 100,
                 },
               ],
               Table4: [],
@@ -186,6 +180,20 @@ sap.ui.define(
                 { Name: "3" },
                 { Name: "4" },
                 { Name: "5" },
+              ],
+              Rewards: [
+                {
+                  key: 1,
+                  Name: "TV",
+                },
+                {
+                  key: 2,
+                  Name: "Washing Machine",
+                },
+                {
+                  key: 3,
+                  Name: "Fridge",
+                },
               ],
             },
             Fields: {
@@ -214,10 +222,12 @@ sap.ui.define(
             PointSlabLowerLimit: "",
             PurchaseStartDate: null,
             PurchaseEndDate: null,
-            BonusApplicableTopPainter:"",
-            PerformanceStartDate:null,
-            PerformanceEndDate:null,
-            RedemptionCycle:1
+            BonusApplicableTopPainter: "",
+            PerformanceStartDate: null,
+            PerformanceEndDate: null,
+            RedemptionCycle: 1,
+            OfferProductRewardRatio: [],
+            OfferPackRewardRatio:[]
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -225,6 +235,20 @@ sap.ui.define(
 
           // adding the fragment
           this._showFormFragment("ChangeDetail");
+          //get products data
+          this._getProductsData();
+        },
+
+        _getProductsData: function () {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oData = oView.getModel();
+          oData.read("/MasterProductSet", {
+            success: function (mParam1) {
+              oModelControl.setProperty("/oData/Products", mParam1["results"]);
+            },
+            error: function (mParam1) {},
+          });
         },
 
         _showFormFragment: function (sFragmentName) {
@@ -291,7 +315,7 @@ sap.ui.define(
           // this.getView().byId("startDate").setMinDate(new Date());
         },
         _postDataToSave: function (bFileFlag) {
-          var c1, c2, c3, c4;
+          var c1, c2, c3, c4, c5, c6, c7;
           var othat = this;
 
           c1 = othat._CreatePayloadPart1();
@@ -304,10 +328,99 @@ sap.ui.define(
             c2.then(function (oPayload) {
               c3 = othat._CreatePayloadPart3(oPayload);
               c3.then(function (oPayLoad) {
-                othat._CreateOffer(oPayLoad);
+                c4 = othat._CreatePayLoadPart4(oPayLoad);
+                c4.then(function (oPayLoad) {
+                  c5 = othat._CreateOffer(oPayLoad);
+                });
               });
             });
           });
+        },
+        _CreatePayLoadPart4: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
+          var aFinalArray = [];
+          if (bRewardSelected === 0) {
+            var oDataTbl = JSON.parse(
+              JSON.stringify(oModel.getProperty("/Table/Table1"))
+            );
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["RequiredVolume"].trim() !== "" &&
+                ele["RewardPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  } else {
+                    ele[x] = parseInt(ele[x]);
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this menas that specific is selected we will check first
+          // if packs all is selected and products data will be displayed
+
+          var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
+          if (bAllProdSelected === 0) {
+            var oDataTbl = JSON.parse(
+              JSON.stringify(oModel.getProperty("/Table/Table2"))
+            );
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["RequiredVolume"].trim() !== "" &&
+                ele["RewardPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  } else if (x!=="ProductCode") {
+                    ele[x] = parseInt(ele[x]);
+                  }
+                }
+                delete ele ["Name"]
+                return ele;
+              }
+            });
+            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          if (bAllProdSelected === 1) {
+            var oDataTbl = JSON.parse(
+              JSON.stringify(oModel.getProperty("/Table/Table2"))
+            );
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["RequiredVolume"].trim() !== "" &&
+                ele["RewardPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  } else if (x!=="SkuCode") {
+                    ele[x] = parseInt(ele[x]);
+                  }
+                }
+                delete ele ["Name"]
+                return ele;
+              }
+            });
+            oPayLoad["OfferPackRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+
         },
         _CreatePayloadPart1(bFileFlag) {
           var promise = jQuery.Deferred();
@@ -318,42 +431,11 @@ sap.ui.define(
           var oDataModel = oView.getModel();
           var oViewData = oModelView.getData();
           var oPayLoad = this._RemoveEmptyValue(oViewData);
-          //setting up zone data in the array.
-          //   oPayLoad["SchemeZones"] = oModelControl
-          //     .getProperty("/MultiCombo/Zones")
-          //     .map(function (k) {
-          //       return { ZoneId: k };
-          //     });
-          //setting up division data in the array.
-          //   oPayLoad["SchemeDivisions"] = oModelControl
-          //     .getProperty("/MultiCombo/Divisions")
-          //     .map(function (k) {
-          //       return { DivisionId: k };
-          //     });
-          //   oPayLoad["SchemeDepots"] = oModelControl
-          //     .getProperty("/MultiCombo/Depots")
-          //     .map(function (k) {
-          //       return { DepotId: k["DepotId"] };
-          //     });
-          //setting up the depot data in the array.
-          //   console.log(
-          //     oView.byId("idDepots").getTokens(),
-          //     oModelControl.getData()
-          //   );
 
           var inTegerProperty = [
             "PointSlabUpperLimit",
             "PointSlabLowerLimit",
-            "BonusApplicableTopPainter"
-
-            // "PurchaseVolumeRequired",
-            // "AccuredPointsRequired",
-            // "RewardPoints",
-            // "RewardCash",
-            // "BonusRewardPoints",
-            // "BonusValidityDurationYear",
-            // "BonusValidityDurationMonth",
-            // "BonusValidityDurationDays",
+            "BonusApplicableTopPainter",
           ];
           for (var y of inTegerProperty) {
             if (oPayLoad.hasOwnProperty(y)) {
@@ -394,7 +476,7 @@ sap.ui.define(
             IsSpecificBonusProductClassification: "PClass4",
             IsSpecificBonusProduct: "AppProd4",
             IsSpecificBonusPack: "AppPacks4",
-            IsSpecificBonusRewardRatio: "BRewards"
+            IsSpecificBonusRewardRatio: "BRewards",
           };
           var oModelControl = oView.getModel("oModelControl");
           var oPropRbtn = oModelControl.getProperty("/Rbtn");
@@ -414,25 +496,25 @@ sap.ui.define(
           // setting the values of zone
           oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
             return {
-              ZoneId: elem
+              ZoneId: elem,
             };
           });
           oPayLoad["OfferDivision"] = sMultiKeys["Divisions"].map(function (
             elem
           ) {
             return {
-              DivisionId: elem
+              DivisionId: elem,
             };
           });
           oPayLoad["OfferDepot"] = sMultiKeys["Depots"].map(function (elem) {
             return {
-              DepotId: elem["DepotId"]
+              DepotId: elem["DepotId"],
             };
           });
           oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
             function (elem) {
               return {
-                ProductCategoryCode: elem
+                ProductCategoryCode: elem,
               };
             }
           );
@@ -440,48 +522,48 @@ sap.ui.define(
             "PClass1"
           ].map(function (elem) {
             return {
-              ProductClassificationCode: elem
+              ProductClassificationCode: elem,
             };
           });
           oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
             function (elem) {
               return {
-                ProductCode: elem
+                ProductCode: elem,
               };
             }
           );
           oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
             function (elem) {
               return {
-                SkuCode: elem
+                SkuCode: elem,
               };
             }
           );
           oPayLoad["OfferPainterType"] = sMultiKeys["PainterType"].map(
             function (elem) {
               return {
-                PainterTypeId: parseInt(elem)
+                PainterTypeId: parseInt(elem),
               };
             }
           );
           oPayLoad["OfferPainterArchiType"] = sMultiKeys["ArcheTypes"].map(
             function (elem) {
               return {
-                ArchiTypeId: parseInt(elem)
+                ArchiTypeId: parseInt(elem),
               };
             }
           );
           oPayLoad["OfferPainterPotential"] = sMultiKeys["Potential"].map(
             function (elem) {
               return {
-                PotentialId: parseInt(elem)
+                PotentialId: parseInt(elem),
               };
             }
           );
           oPayLoad["OfferBuyerProductCategory"] = sMultiKeys["PCat2"].map(
             function (elem) {
               return {
-                ProductCategoryCode: elem
+                ProductCategoryCode: elem,
               };
             }
           );
@@ -489,27 +571,27 @@ sap.ui.define(
             "PClass2"
           ].map(function (elem) {
             return {
-              ProductClassificationCode: elem
+              ProductClassificationCode: elem,
             };
           });
           oPayLoad["OfferBuyerProduct"] = sMultiKeys["AppProd2"].map(function (
             elem
           ) {
             return {
-              ProductCode: elem
+              ProductCode: elem,
             };
           });
           oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem
+              SkuCode: elem,
             };
           });
           oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
             function (elem) {
               return {
-                ProductCategoryCode: elem
+                ProductCategoryCode: elem,
               };
             }
           );
@@ -517,13 +599,13 @@ sap.ui.define(
             "PClass3"
           ].map(function (elem) {
             return {
-              ProductClassificationCode: elem
+              ProductClassificationCode: elem,
             };
           });
           oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
             function (elem) {
               return {
-                ProductCode: elem
+                ProductCode: elem,
               };
             }
           );
@@ -531,14 +613,14 @@ sap.ui.define(
             elem
           ) {
             return {
-              SkuCode: elem
+              SkuCode: elem,
             };
           });
           // Bonus Reward Ratio
-           oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
+          oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
             function (elem) {
               return {
-                ProductCategoryCode: elem
+                ProductCategoryCode: elem,
               };
             }
           );
@@ -546,16 +628,16 @@ sap.ui.define(
             "PClass4"
           ].map(function (elem) {
             return {
-              ProductClassificationCode: elem
+              ProductClassificationCode: elem,
             };
           });
-          oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(
-            function (elem) {
-              return {
-                ProductCode: elem
-              };
-            }
-          );
+          oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(function (
+            elem
+          ) {
+            return {
+              ProductCode: elem,
+            };
+          });
           oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
             elem
           ) {

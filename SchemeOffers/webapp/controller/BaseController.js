@@ -7,7 +7,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
   ],
   function (
     Controller,
@@ -97,7 +97,6 @@ sap.ui.define(
 
         onPostSchemeData: function (oPayload, fileFlag) {},
 
-       
         onDivisionChange: function (oEvent) {
           this._CheckAreaChange();
         },
@@ -200,9 +199,10 @@ sap.ui.define(
           this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
           this._oDepotDialog.open();
         },
-        onPAppDropChange:function(){
-            this._CreateRewardTableData();
+        onPAppDropChange: function () {
+          this._CreateRewardTableData();
         },
+
         onRbChnageMain: function (oEvent) {
           var oView = this.getView();
           var oSource = oEvent.getSource();
@@ -226,6 +226,9 @@ sap.ui.define(
             this._CreateBonusRewardTable();
           }
         },
+        onRbRewardRatio: function () {
+          this._CreateRewardTableData();
+        },
         onRbBonusRewardChange: function (oEvent) {},
         _CreateBonusRewardTable: function () {
           var oView = this.getView();
@@ -235,14 +238,14 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var c1, c2, c3, c4, c5;
 
-        //   if (sCheckPacks == 0) {
-        //     c1 = othat._getProductsData();
-        //     c1.then(function () {
-        //       othat._setProductsData();
-        //     });
-        //   } else {
-        //     othat._setPacksData();
-        //   }
+          //   if (sCheckPacks == 0) {
+          //     c1 = othat._getProductsData();
+          //     c1.then(function () {
+          //       othat._setProductsData();
+          //     });
+          //   } else {
+          //     othat._setPacksData();
+          //   }
         },
 
         _CreateRewardTableData: function (oEvent) {
@@ -255,10 +258,7 @@ sap.ui.define(
           var c1, c2, c3, c4, c5;
 
           if (sCheckPacks == 0) {
-            c1 = othat._getProductsData();
-            c1.then(function () {
-              othat._setProductsData();
-            });
+            othat._setProductsData();
           } else {
             othat._setPacksData();
           }
@@ -292,9 +292,12 @@ sap.ui.define(
 
             aSelectedData.push({
               Name: obj["ProductName"],
-              Key: obj["Id"],
-              value1: "",
-              value2: "",
+              ProductCode: obj["Id"],
+              RequiredVolume: "",
+              RequiredPoints: "",
+              RewardPoints: "",
+              RewardGiftId: "",
+              RewardCash: "",
             });
           }
 
@@ -313,44 +316,17 @@ sap.ui.define(
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
               Name: obj["Description"],
-              Key: obj["SkuCode"],
-              value1: "",
-              value2: "",
+              SkuCode: obj["SkuCode"],
+              RequiredVolume: "",
+              RequiredPoints: "",
+              RewardPoints: "",
+              RewardGiftId: "",
+              RewardCash: ""
             });
           }
           oModelControl.setProperty("/Table/Table2", aSelectedData);
         },
-        _getProductsData: function () {
-          var promise = jQuery.Deferred();
-          var oView = this.getView();
-          var oModelControl = oView.getModel("oModelControl");
-          var sProducts = oModelControl.getProperty("/oData/Products");
-          var sProDuctRbtn = oModelControl.getProperty("/Rbtn/AppProd1");
-          var oData = oView.getModel();
-          if (sProducts.length > 0) {
-            promise.resolve();
-            return promise;
-          }
-          if (sProDuctRbtn == 1) {
-            promise.resolve();
-            return promise;
-          }
 
-          return new Promise((resolve, reject) => {
-            oData.read("/MasterProductSet", {
-              success: function (mParam1) {
-                oModelControl.setProperty(
-                  "/oData/Products",
-                  mParam1["results"]
-                );
-                resolve();
-              },
-              error: function (mParam1) {
-                resolve();
-              },
-            });
-          });
-        },
         _getPacksData: function () {
           var promise = jQuery.Deferred();
           var oView = this.getView();
@@ -443,7 +419,6 @@ sap.ui.define(
         onAppProdChange: function (oEvent) {},
         onArchiTypeChange: function (oEvent) {},
 
-      
         onRbAppPainter: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
           var oView = this.getView();
@@ -461,7 +436,7 @@ sap.ui.define(
               [
                 "MultiCombo/ArcheTypes",
                 "MultiCombo/PainterType",
-                 "MultiCombo/Potential",
+                "MultiCombo/Potential",
                 "MultiCombo/PCat2",
                 "MultiCombo/PClass2",
                 "MultiCombo/AppProd2",
@@ -488,9 +463,9 @@ sap.ui.define(
           } //
           // making the fields blank
         },
-        onRbTopApp:function(oEvent){
-            var sKey = oEvent.getSource().getSelectedIndex();
-            this._propertyToBlank(["BonusApplicableTopPainter"])
+        onRbTopApp: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedIndex();
+          this._propertyToBlank(["BonusApplicableTopPainter"]);
         },
         onRbAppRewards: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -549,15 +524,14 @@ sap.ui.define(
           }
           oModelView.refresh(true);
         },
-        onValueHelpParentOffer:function(oEvent){
-            var sInputValue = oEvent.getSource().getValue(),
+        onValueHelpParentOffer: function (oEvent) {
+          var sInputValue = oEvent.getSource().getValue(),
             oView = this.getView();
 
           if (!this._pOfferpDialog) {
             this._pOfferpDialog = Fragment.load({
               id: oView.getId(),
-              name:
-                "com.knpl.pragati.SchemeOffers.view.fragment.OfferDialog",
+              name: "com.knpl.pragati.SchemeOffers.view.fragment.OfferDialog",
               controller: this,
             }).then(function (oDialog) {
               oView.addDependent(oDialog);
@@ -590,7 +564,6 @@ sap.ui.define(
             // Open ValueHelpDialog filtered by the input's value
             oDialog.open(sInputValue);
           });
-
         },
 
         /**
