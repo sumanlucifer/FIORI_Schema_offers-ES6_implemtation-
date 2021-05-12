@@ -21,7 +21,7 @@
                         label="Depot Id"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Id" />
+                            <m:Input name="Id" placeholder="{i18n>enterDepotId}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -30,7 +30,7 @@
                         label="Depot"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Depot" />
+                            <m:Input name="Depot" placeholder="{i18n>enterDepot}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>

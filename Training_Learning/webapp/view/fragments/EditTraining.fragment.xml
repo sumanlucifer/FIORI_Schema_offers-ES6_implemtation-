@@ -55,8 +55,8 @@
                                         visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                                 </HBox>
                                 <HBox>
-                                    <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text=".png, .jpg, .jpeg" class="sapUiSmallMargin"/>
-                                    <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB" class="sapUiSmallMargin"/>
+                                    <ObjectAttribute title="File Type" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text=".png, .jpg, .jpeg" class="sapUiSmallMarginEnd"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" text="2 MB" class="sapUiSmallMarginEnd"/>
                                     <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
                                 </HBox>
                         </VBox>
@@ -65,6 +65,7 @@
 
             <core:Title text="{= ${appView>/trainingType} !== 'OFFLINE' ? 'Target Group' : '' }"/>
 
+                <Label text="Select Target Group" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 <RadioButtonGroup id="rbg1" columns="3" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" select="onRadioBtnChange">
                     <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
                     <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>

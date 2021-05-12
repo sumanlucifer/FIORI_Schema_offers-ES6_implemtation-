@@ -74,9 +74,6 @@
 					<core:Item key="{Id}" text="{ArcheType}"/>
 				</MultiComboBox>
 
-                <!-- <Label text="{i18n>colImage}"/>
-                <Image width="5rem" src="{oModelView>/ProfilePicHeader}" class="sapUiTinyMarginBegin"/> -->
-
             </f:content>
         </f:SimpleForm>
     </VBox>

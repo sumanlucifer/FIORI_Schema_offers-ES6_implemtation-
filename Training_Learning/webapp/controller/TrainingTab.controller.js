@@ -110,9 +110,9 @@ sap.ui.define(
                     var sPath = "/" + oProp;
                     var params;
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
                     } else {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
                     }
                     oViewModel.setProperty("/sPath", sPath);
                     that.getModel().read(sPath, {
@@ -205,11 +205,19 @@ sap.ui.define(
                             oViewModel.setProperty("/displayDepots", aArray); // to display in view training
 
                             aArray = [];
+                            var editPainters = [];
                             if (data.TrainingPainters && data.TrainingPainters.results) {
-                                for (var r of data["TrainingPainters"]["results"]) {
+                                // for (var r of data["TrainingPainters"]["results"]) {
+                                //     aArray.push(r["PainterId"]);
+                                // }
+                                for (var r of data.TrainingPainters.results) {
+                                    editPainters.push({
+                                        PainterId: r.PainterId,
+                                        Name: r.PainterDetails.Name
+                                    });
                                     aArray.push(r["PainterId"]);
                                 }
-                                data.TrainingPainters = data.TrainingPainters.results;
+                                data.TrainingPainters = editPainters;
                             } else {
                                 data.TrainingPainters = aArray;  // for edit in Edit Training and will be used in payload
                             }
@@ -609,7 +617,7 @@ sap.ui.define(
                 onValueHelpRequestedPainter: function () {
                     this._oMultiInput = this.getView().byId("multiInputPainterEdit");
                     this.oColModel = new JSONModel({
-                         cols: [
+                        cols: [
                             {
                                 label: "Membership ID",
                                 template: "MembershipCard",
@@ -622,11 +630,6 @@ sap.ui.define(
                                 label: "Mobile Number",
                                 template: "Mobile",
                             },
-                            {
-                                label: "Division",
-                                template: "DivisionId",
-                            },
-
                             {
                                 label: "Zone",
                                 template: "ZoneId",
@@ -1225,87 +1228,23 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
+                    debugger;
                     var oViewModel = this.getModel("oModelView");
-                    var Array = [];
-                    var trainingType = this.getModel("appView").getProperty("/trainingType");
-                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    oPayload.Status = parseInt(oPayload.Status);
-                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
-                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
-                        oPayload.RewardPoints = 0;
-                    }
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-
                     delete oPayload.Duration;
                     delete oPayload.ViewStartDate;
                     delete oPayload.ViewEndDate;
 
-                    switch (oPayload.TrainingFilterType) {
-                        case "ALL":
-                            delete oPayload.TrainingZone;
-                            delete oPayload.TrainingDivision;
-                            delete oPayload.TrainingDepot;
-                            delete oPayload.TrainingPainterTypeDetails;
-                            delete oPayload.TrainingPainterArcheTypeDetails;
-                            delete oPayload.TrainingPainters;
-                            break;
-                        case "GROUP":
-                            delete oPayload.TrainingPainters;
-                            for (var x of oPayload.TrainingZone) {
-                                Array.push({
-                                    ZoneId: x,
-                                    TrainingId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingZone = Array;
+                    oPayload = this.trainingFilter(oPayload);
 
-                            Array = [];
-                            for (var x of oPayload.TrainingDivision) {
-                                Array.push({
-                                    DivisionId: x,
-                                    TrainingId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingDivision = Array;
-
-                            Array = [];
-                            for (var x of oPayload.TrainingPainterTypeDetails) {
-                                Array.push({
-                                    PainterTypeId: parseInt(x),
-                                    TrainingId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingPainterTypeDetails = Array;
-
-                            Array = [];
-                            for (var x of oPayload.TrainingPainterArcheTypeDetails) {
-                                Array.push({
-                                    PainterArcheTypeId: parseInt(x),
-                                    TrainingId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingPainterArcheTypeDetails = Array;
-
-                            if (oPayload.TrainingDepot && oPayload.TrainingDepot.results) {
-                                oPayload.TrainingDepot = oPayload.TrainingDepot.results;
-                            }
-                            break;
-                        case "PAINTER":
-                            Array = [];
-                            for (var x of oPayload.TrainingPainters) {
-                                Array.push({
-                                    PainterId: parseInt(x.PainterId),
-                                    TrainingId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingPainters = Array;
-
-                            delete oPayload.TrainingZone;
-                            delete oPayload.TrainingDivision;
-                            delete oPayload.TrainingDepot;
-                            delete oPayload.TrainingPainterTypeDetails;
-                            delete oPayload.TrainingPainterArcheTypeDetails;
-                            break;
+                    if (oPayload.TrainingFilterType === "PAINTER") {
+                        var Array = [];
+                        for (var x of oPayload.TrainingPainters) {
+                            Array.push({
+                                PainterId: parseInt(x.PainterId),
+                                TrainingId: parseInt(oPayload.Id)
+                            });
+                        }
+                        oPayload.TrainingPainters = Array;
                     }
 
                     var oClonePayload = $.extend(true, {}, oPayload),
@@ -1324,16 +1263,7 @@ sap.ui.define(
 
                 CUOperationVideo: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
-                    var Array = [];
-                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
-                    oPayload.Status = parseInt(oPayload.Status);
-                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
                     oPayload.Duration = parseInt(oPayload.Duration);
-                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
-                        oPayload.RewardPoints = 0;
-                    }
-                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
-
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
                         oPayload.LearningQuestionnaire.push(
                             {
@@ -1348,6 +1278,41 @@ sap.ui.define(
                     delete oPayload.EndDate;
                     delete oPayload.TrainingQuestionnaire;
 
+                    oPayload = this.trainingFilter(oPayload);
+
+                    if (oPayload.TrainingFilterType === "PAINTER") {
+                        var Array = [];
+                        for (var x of oPayload.TrainingPainters) {
+                            Array.push({
+                                PainterId: parseInt(x.PainterId),
+                                LearningId: parseInt(oPayload.Id)
+                            });
+                        }
+                        oPayload.TrainingPainters = Array;
+                    }
+
+                    var oClonePayload = $.extend(true, {}, oPayload),
+                        that = this;
+
+                    var sKey = that.getModel().createKey("/LearningSet", {
+                        Id: oClonePayload.Id
+                    });
+                    that.getModel().update(sKey, oClonePayload, {
+                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
+                            that)),
+                        error: that._Error.bind(that)
+                    });
+                },
+
+                trainingFilter: function (oPayload) {
+                    var Array = [];
+                    oPayload.TrainingTypeId = parseInt(oPayload.TrainingTypeId);
+                    oPayload.TrainingSubTypeId = parseInt(oPayload.TrainingSubTypeId);
+                    oPayload.Status = parseInt(oPayload.Status);
+                    if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
+                        oPayload.RewardPoints = 0;
+                    }
+                    oPayload.RewardPoints = parseInt(oPayload.RewardPoints);
                     switch (oPayload.TrainingFilterType) {
                         case "ALL":
                             delete oPayload.TrainingZone;
@@ -1399,15 +1364,6 @@ sap.ui.define(
                             }
                             break;
                         case "PAINTER":
-                            Array = [];
-                            for (var x of oPayload.TrainingPainters) {
-                                Array.push({
-                                    PainterId: parseInt(x.PainterId),
-                                    LearningId: parseInt(oPayload.Id)
-                                });
-                            }
-                            oPayload.TrainingPainters = Array;
-
                             delete oPayload.TrainingZone;
                             delete oPayload.TrainingDivision;
                             delete oPayload.TrainingDepot;
@@ -1415,18 +1371,7 @@ sap.ui.define(
                             delete oPayload.TrainingPainterArcheTypeDetails;
                             break;
                     }
-
-                    var oClonePayload = $.extend(true, {}, oPayload),
-                        that = this;
-
-                    var sKey = that.getModel().createKey("/LearningSet", {
-                        Id: oClonePayload.Id
-                    });
-                    that.getModel().update(sKey, oClonePayload, {
-                        success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
-                            that)),
-                        error: that._Error.bind(that)
-                    });
+                    return oPayload;
                 },
 
                 _Error: function (error) {
