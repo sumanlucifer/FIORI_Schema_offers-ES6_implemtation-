@@ -40,12 +40,15 @@
                                 <fb:control>
                                     <ComboBox id="idStatusInput" selectedKey="" data:filterName="Status" placeholder="{i18n>statusFilterPlaceholder}">
                                         <core:Item key="all" text="All" />
+                                        <!-- <core:Item key="PENDING" text="Pending" />
+                                        <core:Item key="REGISTERED" text="Registered" />
+                                        <core:Item key="COMPLETED" text="Completed" /> -->
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                    <DatePicker id="idDateInput" data:filterName="Creation Date" displayFormat="short" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -67,7 +70,8 @@
                         key="all">
                         <Table id="idAllRequestTable" width="auto" 
                         items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'}}" 
+                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished">
                             <headerToolbar>
@@ -115,14 +119,14 @@
                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                        <Text text="{PointTransactionType}"/>
-                                        <Text text="{PointType}"/>
+                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
+                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         
                                         <HBox>
-                                        <Text text="{PainterReferralHistory/ReferralStatus}" visible="{=${PainterReferralHistory} !== null }"/>
-                                        <Text text="{PainterTokenScanHistory/ScanStatus}" visible="{=${PainterTokenScanHistory} !== null }"/>
+                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
+                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
                                         </HBox>
                                         
                                     </cells>
@@ -144,7 +148,7 @@
                             </headerToolbar>
 
                             <columns>
-                                <Column>
+                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
@@ -173,14 +177,19 @@
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
                                     <cells>
-                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
+                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                        <Text text="{PointTransactionType}"/>
-                                        <Text text="{PointType}"/>
+                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
+                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        <Text text="{CustomerClass}"/>
+                                        
+                                        <HBox>
+                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
+                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
+                                        </HBox>
+                                        
                                     </cells>
                                 </ColumnListItem>
                             </items>

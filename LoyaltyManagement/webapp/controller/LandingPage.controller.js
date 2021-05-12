@@ -105,18 +105,18 @@ sap.ui.define([
                                 }));
                             }
                             break;
-                        case "Request Type":
-                            sValue = oControl.getSelectedKey();
-                            if (sValue && sValue !== "") {
-                                aFilters.push(new Filter({ path: "PointTransactionType", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
-                            }
-                            break;
-                        case "Created By":
-                            sValue = oControl.getValue();
-                            if (sValue && sValue !== "") {
-                                aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
-                            }
-                            break;
+                        // case "Request Type":
+                        //     sValue = oControl.getSelectedKey();
+                        //     if (sValue && sValue !== "") {
+                        //         aFilters.push(new Filter({ path: "PointTransactionType", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                        //     }
+                        //     break;
+                        // case "Created By":
+                        //     sValue = oControl.getValue();
+                        //     if (sValue && sValue !== "") {
+                        //         aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
+                        //     }
+                        //     break;
                     }
                 }
 
