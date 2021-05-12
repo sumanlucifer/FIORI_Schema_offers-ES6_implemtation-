@@ -487,7 +487,7 @@
 
                          <f:FormElement label="">
                             <f:fields>
-                                 <MultiComboBox required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" change="onProductCatChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                 <MultiComboBox required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" selectionFinish="onBRAppDropChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -495,7 +495,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl8}" >
                             <f:fields>
-                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}">
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -503,7 +503,7 @@
                         </f:FormElement>
                          <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectionFinish="onBRAppDropChange" >
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -519,7 +519,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox  enabled="{oModelControl>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl>/MultiCombo/AppProd4}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox id="AppProd4"  enabled="{oModelControl>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -534,14 +534,14 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox  enabled="{oModelControl>/MultiEnabled/AppPacks4}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks4}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox id="AppPacks4"  enabled="{oModelControl>/MultiEnabled/AppPacks4}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formBonusRewardRatio}">
                             <f:fields>
-                                 <RadioButtonGroup columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}" >
+                                 <RadioButtonGroup select="onBRRbChange" columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -562,22 +562,22 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>formBonusValidaityFrom}" />
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>formBonusValidaityTo}" />
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
                 </Column>
                
                  <Column>
-                    <Text text="{i18n>Table3Label1}" />
+                    <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>StartDate}" />
-                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>EndDate}" />
+                            <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
+                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
                              <Input placeholder="{i18n>placeHolder3}" width="60%" value="{oModelControl>BonusPoints}" />
                     </cells>
                 </ColumnListItem>
@@ -595,13 +595,14 @@
                     <Text text="{i18n>Table1Label1}" />
                 </Column>
                  <Column>
-                    <Text text="{i18n>formBonusValidaityFrom}" />
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>formBonusValidaityTo}" />
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
                 </Column>
+               
                  <Column>
-                    <Text text="{i18n>Table3Label1}" />
+                    <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
                 
             </columns>
@@ -609,9 +610,9 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>Name}" />
-                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>EndDate}" />
-                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>StartDate}" />
+                            <Label  width="80%" text="{oModelControl>Name}" />
+                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
+                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
                              <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />
                     </cells>
                 </ColumnListItem>

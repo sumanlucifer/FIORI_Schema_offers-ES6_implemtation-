@@ -166,7 +166,7 @@ sap.ui.define(
                 {
                   StartDate: null,
                   EndDate: null,
-                  BonusPoints: 100,
+                  BonusPoints: ""
                 },
               ],
               Table4: [],
@@ -227,7 +227,9 @@ sap.ui.define(
             PerformanceEndDate: null,
             RedemptionCycle: 1,
             OfferProductRewardRatio: [],
-            OfferPackRewardRatio:[]
+            OfferPackRewardRatio:[],
+            OfferBonusProductRewardRatio:[],
+            OfferBonusPackRewardRatio:[]
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -320,8 +322,9 @@ sap.ui.define(
 
           c1 = othat._CreatePayloadPart1();
           //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
-          // Cretate the Payload 2 in this we set the Blean Values of All/Specific to the respective backend fields;
+          // Create the Payload 2 in this we set the Bolean Values of All/Specific to the respective backend fields;
           // _CreatePayloadPart3 this is used to set the value of the elements in the array
+          // create payload 4 and 5 used for table 1,2 and table 3,4
           //othat._CreatePayloadPart2();othat._UploadFile(mParam1, bFileFlag);
           c1.then(function (oPayload) {
             c2 = othat._CreatePayloadPart2(oPayload);
@@ -330,11 +333,105 @@ sap.ui.define(
               c3.then(function (oPayLoad) {
                 c4 = othat._CreatePayLoadPart4(oPayLoad);
                 c4.then(function (oPayLoad) {
-                  c5 = othat._CreateOffer(oPayLoad);
+                  //c5 = othat._CreateOffer(oPayLoad);
+                  c5=othat._CreatePayLoadPart5(oPayLoad);
+                   c5.then(function(oPayLoad){
+                    c6 = othat._CreateOffer(oPayLoad);
+                   })
                 });
               });
             });
           });
+        },
+        _CreatePayLoadPart5:function(oPayLoad){
+            var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var bRewardSelected = oModel.getProperty("/Rbtn/BRewards");
+          var aFinalArray = [];
+          if (bRewardSelected === 0) {
+            var oDataTbl =oModel.getProperty("/Table/Table3").map(function(a){
+                return Object.assign({},a);
+            })
+            console.log(oDataTbl)
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["StartDate"] !== null &&
+                ele["EndDate"] !== null &&
+                ele["BonusPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  }else if(x=="BonusPoints"){
+                      ele[x] = parseInt(ele[x]);
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this menas that specific is selected we will check first
+          // if packs all is selected and products data will be displayed
+          var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks4");
+          if (bAllProdSelected === 0) {
+           var oDataTbl =oModel.getProperty("/Table/Table4").map(function(a){
+                return Object.assign({},a);
+            })
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["StartDate"] !== null &&
+                ele["EndDate"] !== null &&
+                ele["BonusPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  }else if(x=="BonusPoints"){
+                      ele[x] = parseInt(ele[x]);
+                  }
+                }
+                delete ele["Name"];
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this means that the user has selected specific for bonus reward packs
+          if (bAllProdSelected === 1) {
+           var oDataTbl =oModel.getProperty("/Table/Table4").map(function(a){
+                return Object.assign({},a);
+            })
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (
+                ele["StartDate"] !== null &&
+                ele["EndDate"] !== null &&
+                ele["BonusPoints"].trim() !== ""
+              ) {
+                for (var x in ele) {
+                  if (ele[x] == "") {
+                    ele[x] = null;
+                  }else if(x=="BonusPoints"){
+                      ele[x] = parseInt(ele[x]);
+                  }
+                }
+                delete ele["Name"];
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusPackRewardRatio"] = aFinalArray;
+           
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+
         },
         _CreatePayLoadPart4: function (oPayLoad) {
           var promise = jQuery.Deferred();
@@ -358,6 +455,7 @@ sap.ui.define(
                     ele[x] = parseInt(ele[x]);
                   }
                 }
+                
                 return ele;
               }
             });
