@@ -97,23 +97,7 @@ sap.ui.define(
 
         onPostSchemeData: function (oPayload, fileFlag) {},
 
-        onZoneChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              ZoneId: x,
-            });
-          }
-          var oDivision = oView.byId("idDivisions");
-          var aDivFilter = [];
-          for (var y of aArray) {
-            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y["ZoneId"]));
-          }
-          oDivision.getBinding("items").filter(aDivFilter);
-          this._CheckAreaChange();
-        },
+       
         onDivisionChange: function (oEvent) {
           this._CheckAreaChange();
         },
@@ -215,6 +199,9 @@ sap.ui.define(
 
           this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
           this._oDepotDialog.open();
+        },
+        onPAppDropChange:function(){
+            this._CreateRewardTableData();
         },
         onRbChnageMain: function (oEvent) {
           var oView = this.getView();
@@ -474,6 +461,7 @@ sap.ui.define(
               [
                 "MultiCombo/ArcheTypes",
                 "MultiCombo/PainterType",
+                 "MultiCombo/Potential",
                 "MultiCombo/PCat2",
                 "MultiCombo/PClass2",
                 "MultiCombo/AppProd2",
@@ -502,7 +490,7 @@ sap.ui.define(
         },
         onRbTopApp:function(oEvent){
             var sKey = oEvent.getSource().getSelectedIndex();
-            this._propertyToBlank(["BonusRewardPoints"])
+            this._propertyToBlank(["BonusApplicableTopPainter"])
         },
         onRbAppRewards: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();

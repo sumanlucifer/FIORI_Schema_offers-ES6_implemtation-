@@ -19,16 +19,16 @@
                                 <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBasicInfoLbl3}">
+                        <!-- <f:FormElement label="{i18n>formBasicInfoLbl3}">
                             <f:fields>
-                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="true"/>
+                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="false"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl4}">
                             <f:fields>
-                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
+                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="false"/>
                             </f:fields>
-                        </f:FormElement>
+                        </f:FormElement> -->
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
                             <f:fields>
                                 <TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
@@ -49,24 +49,49 @@
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>formRegion}">
                     <f:formElements>
-                        <f:FormElement label="{i18n>formRegionLbl1}">
+                         <f:FormElement  label="{i18n>formRegionLbl1}">
                             <f:fields>
-                                <MultiComboBox enabled="true" id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}" selectionChange="onZoneChange" items="{path:'/MasterZoneSet' }">
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/Zones}"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formRegionLbl2}">
+                         <f:FormElement  label="{i18n>formRegionLbl2}" >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/MultiCombo/Zones}.length>0 }" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" selectionChange="onDivisionChange" items="{/MasterDivisionSet}">
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/Divisions}" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formRegionLbl3}">
+                         <f:FormElement   label="{i18n>formRegionLbl3}" >
+                            <f:fields>
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
                             <f:fields>
                              
-                                <MultiInput enabled="{= ${oModelControl>/MultiCombo/Divisions}.length>0 }"
+                                <MultiInput enabled="{oModelControl>/MultiEnabled/Depots}"
                                 placeholder="{i18n>placeHolder1}"
                         id="idDepots"
 						valueHelpOnly="true"
@@ -95,7 +120,7 @@
                         </f:FormElement>
                          <f:FormElement label="" >
                             <f:fields>
-                                <MultiComboBox required="false" id="PCat1" enabled="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" change="onProductCatChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                <MultiComboBox required="false" id="PCat1" enabled="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -110,7 +135,7 @@
                         </f:FormElement>
                          <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{oModelControl>/MultiCombo/PClass1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                <MultiComboBox selectionFinish="onPAppDropChange" enabled="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{oModelControl>/MultiCombo/PClass1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -125,7 +150,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -140,7 +165,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppPacks1" enabled="{oModelControl>/MultiEnabled/AppPacks1}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppPacks1" enabled="{oModelControl>/MultiEnabled/AppPacks1}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -281,7 +306,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formApplicableLbl14}">
                             <f:fields>
-                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
+                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainPainter} === false ? 1 : 0}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
@@ -306,9 +331,10 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl4}">
                             <f:fields>
-                                <ComboBox enabled="{oModelView>/IsSpecificPainter}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet' }" selectedKey="{path:'oModelView>/PotentialId',type:'.cmbxDtype2' }">
+                                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Potential}"  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet'}">
                                     <core:Item text="{Potential}" key="{Id}"/>
-                                </ComboBox>
+                                </MultiComboBox>
+
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl12}">
@@ -328,12 +354,12 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <DatePicker enabled="{oModelView>/IsSpecificPainter}"  dateValue="{oModelControl>/Fields/Date1}" placeholder="DD/MM/YYYY"></DatePicker>
+                                <DatePicker displayFormat="dd/MM/yyyy" enabled="{oModelView>/IsSpecificPainter}"  dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <DatePicker enabled="{oModelView>/IsSpecificPainter}" dateValue="{oModelControl>/Fields/Date2}" placeholder="DD/MM/YYYY" ></DatePicker>
+                                <DatePicker displayFormat="dd/MM/yyyy"  enabled="{oModelView>/IsSpecificPainter}" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/YYYY" ></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}" >
@@ -393,7 +419,7 @@
                         <f:FormElement>
                             <f:fields>
                                 <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPacks2}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks2'}" >
-                                    <core:Item text="{Description}" key="{Id}"/>
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -456,7 +482,7 @@
                         <f:FormElement>
                             <f:fields>
                                 <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPacks3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks3'}" >
-                                    <core:Item text="{Description}" key="{Id}"/>
+                                    <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -596,7 +622,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
+                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
                         </f:FormElement>
                       
@@ -604,19 +630,19 @@
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>BonusValidity}">
                     <f:formElements>
-                         <f:FormElement label="{i18n>PercentageGrowth}">
+                         <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
-                                <Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PercentaggeGrowth', type:'sap.ui.model.type.String'}"/>
+                                <Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PainterGrowth', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <DatePicker placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <DatePicker placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         
@@ -624,9 +650,9 @@
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>RedemtionCycle}">
                     <f:formElements>
-                         <f:FormElement label="{i18n>PercentageGrowth}">
+                         <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
                             <f:fields>
-                                <Select items="{oModelControl>/oData/PerGrowth}">
+                                <Select items="{oModelControl>/oData/PerGrowth}" selectedKey="{path:'oModelView>/RedemptionCycle',type:'.customInt' }" >
                                     <core:Item text="{oModelControl>Name}" key="{oModelControl>Name}"/>
                                 </Select>
                             </f:fields>
