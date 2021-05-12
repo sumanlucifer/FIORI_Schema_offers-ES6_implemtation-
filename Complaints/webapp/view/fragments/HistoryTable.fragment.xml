@@ -13,6 +13,7 @@
                             enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="HistoryPersistenceKey"
+                             initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,SkuCode,TokenCode,UpdatedBy,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,Remark,AssigneUserType">
 
         <Table growing="true" growingThreshold="15" growingScrollToLoad="false">

@@ -69,6 +69,11 @@ sap.ui.define(
             oEvent.getParameter("element").setValueState(ValueState.None);
           });
 
+          //Himank: Workflow interaction model
+           this.oWorkflowModel = new JSONModel();
+            this.getView().setModel(this.oWorkflowModel,"wfmodel")                    
+         //End
+
           oRouter
             .getRoute("RouteEditCmp")
             .attachMatched(this._onRouteMatched, this);
@@ -83,6 +88,19 @@ sap.ui.define(
           //console.log(oProp);
 
           this._initData(oProp);
+
+           
+        },
+        _getExecLogData: function(sWorkFlowInstanceId){
+            //for Test case scenerios delete as needed
+            if(!sWorkFlowInstanceId)
+                sWorkFlowInstanceId = "41d8a91e-af04-11eb-a0a8-eeee0a81ec84"
+
+            var sUrl = "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" + sWorkFlowInstanceId + "/execution-logs";
+
+            this.oWorkflowModel.loadData(sUrl); 
+  
+    
         },
         _initData: function (oProp) {
           var oData = {
@@ -107,7 +125,10 @@ sap.ui.define(
           var oBindProp = oData["bindProp"];
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
+              //this._getExecLogData();
           c1.then(function () {
+               //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
+         
             c2 = othat._setDisplayData(oBindProp);
             c2.then(function () {
               c3 = othat._initEditData(oBindProp);
