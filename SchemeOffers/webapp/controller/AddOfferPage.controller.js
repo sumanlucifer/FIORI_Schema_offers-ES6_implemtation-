@@ -13,7 +13,7 @@ sap.ui.define(
     "sap/ui/core/ValueState",
     "com/knpl/pragati/SchemeOffers/controller/Validator",
     "com/knpl/pragati/SchemeOffers/model/customInt",
-    "com/knpl/pragati/SchemeOffers/model/cmbxDtype2"
+    "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
   ],
 
   function (
@@ -29,8 +29,7 @@ sap.ui.define(
     ValueState,
     Validator,
     customInt,
-    cmbxDtype2,
-   
+    cmbxDtype2
   ) {
     "use strict";
 
@@ -39,7 +38,7 @@ sap.ui.define(
       {
         customInt: customInt,
         cmbxDtype2: cmbxDtype2,
-       
+
         onInit: function () {
           //Router Object
           this.oRouter = this.getRouter();
@@ -97,65 +96,88 @@ sap.ui.define(
               ApplicableProducts: [],
               BonusApplicableProducts: [],
               PCat1: [],
-                PCat2:[],
-                 PCat3:[],
+              PCat2: [],
+              PCat3: [],
+              PCat4:[],
               PClass1: [],
-              PClass2:[],
-              PClass3:[],
+              PClass2: [],
+              PClass3: [],
+              PClass4:[],
               AppProd1: [],
-              AppProd2:[],
-              AppProd3:[],
+              AppProd2: [],
+              AppProd3: [],
+              AppProd4:[],
               AppPacks1: [],
-              AppPacks2:[],
-              AppPacks3:[],
-              PainterType:[]
-              
+              AppPacks2: [],
+              AppPacks3: [],
+              AppPacks4:[],
+              PainterType: [],
             },
             Rbtn: {
               PCat1: 0,
-              PCat2:0,
-              PCat3:0,
+              PCat2: 0,
+              PCat3: 0,
+              PCat4:0,
               PClass1: 0,
-              PClass2:0,
-              PClass3:0,
+              PClass2: 0,
+              PClass3: 0,
+              PClass4:0,
               AppProd1: 0,
-              AppProd2:0,
-              AppProd3:0,
+              AppProd2: 0,
+              AppProd3: 0,
+              AppProd4:0,
               AppPacks1: 0,
-              AppPacks2:0,
-               AppPacks3:0,
-              Rewards:0,
-            
+              AppPacks2: 0,
+              AppPacks3: 0,
+              AppPacks4:0,
+              Rewards: 0,
+              BRewards:0,
+              TopAll:0
             },
             MultiEnabled: {
               PCat1: false,
               PClass1: false,
-              PClass2:false,
-              AppProd1:false,
-              AppProd2:false,
-              AppPacks1:false,
-              AppPacks2:false,
-              PCat2:false,
-              PCat3:false,
-              PClass3:false,
-              AppProd3:false,
-              AppPacks3:false
+              PClass2: false,
+              AppProd1: false,
+              AppProd2: false,
+              AppPacks1: false,
+              AppPacks2: false,
+              PCat2: false,
+              PCat3: false,
+              PCat4:false,
+              PClass3: false,
+              PClass4:false,
+              AppProd3: false,
+              AppProd4:false,
+              AppPacks3: false,
+              AppPacks4:false,
+              Rewards:false,
+              BRewards:false
+              
             },
-            Table:{
-                Table1:[{
-                    RVolume:"",
-                    RPoints:""
-                }],
-                Table2:[]
+            Table: {
+              Table1: [
+                {
+                  RVolume: "",
+                  RPoints: "",
+                },
+              ],
+              Table2: [],
+              Table3:[{
+                  ValidFrom:null,
+                  ValidTo:null
+              }],
+              Table4:[]
             },
-            oData:{
-                Products:[],
-                Packs:[]
+            oData: {
+              Products: [],
+              Packs: [],
+              PerGrowth:[{Name:"1"},{Name:"2"},{Name:"3"},{Name:"4"},{Name:"5"}]
             },
-            Fields:{
-                Date1:null,
-                Date2:null
-            }
+            Fields: {
+              Date1: null,
+              Date2: null
+            },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
 

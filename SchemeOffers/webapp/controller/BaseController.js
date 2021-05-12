@@ -7,6 +7,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
   ],
   function (
     Controller,
@@ -14,7 +15,8 @@ sap.ui.define(
     Filter,
     FilterOperator,
     History,
-    JSONModel
+    JSONModel,
+    Fragment
   ) {
     "use strict";
 
@@ -229,12 +231,33 @@ sap.ui.define(
           }
 
           var aChkTblData = ["PCat1", "PClass1", "AppProd1", "AppPacks1"];
+          var aChkTblData2 = ["PCat4", "PClass4", "AppProd4", "AppPacks4"];
           if (aChkTblData.indexOf(sPathArray[0]) >= 0) {
-               this._CreateRewardTableData();
+            this._CreateRewardTableData();
           }
-         
+          if (aChkTblData2.indexOf(sPathArray[0]) >= 0) {
+            this._CreateBonusRewardTable();
+          }
         },
-      
+        onRbBonusRewardChange: function (oEvent) {},
+        _CreateBonusRewardTable: function () {
+          var oView = this.getView();
+          var othat = this;
+          var oModelControl = oView.getModel("oModelControl");
+          var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
+          var oDataModel = this.getView().getModel();
+          var c1, c2, c3, c4, c5;
+
+        //   if (sCheckPacks == 0) {
+        //     c1 = othat._getProductsData();
+        //     c1.then(function () {
+        //       othat._setProductsData();
+        //     });
+        //   } else {
+        //     othat._setPacksData();
+        //   }
+        },
+
         _CreateRewardTableData: function (oEvent) {
           //check if all or specific table is there or not
           var oView = this.getView();
@@ -431,37 +454,9 @@ sap.ui.define(
         },
         onProdClassChange: function (oEvent) {},
         onAppProdChange: function (oEvent) {},
-        onArchiTypeChange: function (oEvent) {
-        
-        },
-       
-       
-        onChangeAppProducts: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              SkuCode: x,
-            });
-          }
-          oView
-            .getModel("oModelView")
-            .setProperty("/SchemeApplicableProducts", aArray);
-        },
-        onBonusProdChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              SkuCode: x,
-            });
-          }
-          oView
-            .getModel("oModelView")
-            .setProperty("/SchemeBonusApplicableProducts", aArray);
-        },
+        onArchiTypeChange: function (oEvent) {},
+
+      
         onRbAppPainter: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
           var oView = this.getView();
@@ -473,9 +468,10 @@ sap.ui.define(
             this._propertyToBlank([
               "PotentialId",
               "PointSlabLowerLimit",
-              "PointSlabUpperLimit"
+              "PointSlabUpperLimit",
             ]);
-            this._propertyToBlank([
+            this._propertyToBlank(
+              [
                 "MultiCombo/ArcheTypes",
                 "MultiCombo/PainterType",
                 "MultiCombo/PCat2",
@@ -483,24 +479,30 @@ sap.ui.define(
                 "MultiCombo/AppProd2",
                 "MultiCombo/AppPacks2",
                 "MultiCombo/PCat3",
-                 "MultiCombo/PClass3",
-                 "MultiCombo/AppProd3",
-                 "MultiCombo/AppPacks3",
+                "MultiCombo/PClass3",
+                "MultiCombo/AppProd3",
+                "MultiCombo/AppPacks3",
                 "Fields/Date1",
-                "Fields/Date2"
-            ],true);
-            oModelControl.setProperty("/Rbtn/PCat2",0)
-             oModelControl.setProperty("/Rbtn/PClass2",0);
-              oModelControl.setProperty("/Rbtn/AppProd2",0)
-               oModelControl.setProperty("/Rbtn/AppPacks2",0);
-               oModelControl.setProperty("/Rbtn/PCat3",0)
-                oModelControl.setProperty("/Rbtn/PClass3",0);
-                oModelControl.setProperty("/Rbtn/AppProd3",0);
-                 oModelControl.setProperty("/Rbtn/AppPacks3",0)
+                "Fields/Date2",
+              ],
+              true
+            );
+            oModelControl.setProperty("/Rbtn/PCat2", 0);
+            oModelControl.setProperty("/Rbtn/PClass2", 0);
+            oModelControl.setProperty("/Rbtn/AppProd2", 0);
+            oModelControl.setProperty("/Rbtn/AppPacks2", 0);
+            oModelControl.setProperty("/Rbtn/PCat3", 0);
+            oModelControl.setProperty("/Rbtn/PClass3", 0);
+            oModelControl.setProperty("/Rbtn/AppProd3", 0);
+            oModelControl.setProperty("/Rbtn/AppPacks3", 0);
           } else if (iIndex == 1) {
             oModelView.setProperty("/IsSpecificPainter", true);
           } //
           // making the fields blank
+        },
+        onRbTopApp:function(oEvent){
+            var sKey = oEvent.getSource().getSelectedIndex();
+            this._propertyToBlank(["BonusRewardPoints"])
         },
         onRbAppRewards: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -558,6 +560,49 @@ sap.ui.define(
             }
           }
           oModelView.refresh(true);
+        },
+        onValueHelpParentOffer:function(oEvent){
+            var sInputValue = oEvent.getSource().getValue(),
+            oView = this.getView();
+
+          if (!this._pOfferpDialog) {
+            this._pOfferpDialog = Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.SchemeOffers.view.fragment.OfferDialog",
+              controller: this,
+            }).then(function (oDialog) {
+              oView.addDependent(oDialog);
+              return oDialog;
+            });
+          }
+          this._pOfferpDialog.then(function (oDialog) {
+            // Create a filter for the binding
+            oDialog
+              .getBinding("items")
+              .filter([
+                new Filter(
+                  [
+                    new Filter(
+                      "tolower(Title)",
+                      FilterOperator.Contains,
+                      "'" +
+                        sInputValue.trim().toLowerCase().replace("'", "''") +
+                        "'"
+                    ),
+                    new Filter(
+                      "Description",
+                      FilterOperator.Contains,
+                      sInputValue.trim()
+                    ),
+                  ],
+                  false
+                ),
+              ]);
+            // Open ValueHelpDialog filtered by the input's value
+            oDialog.open(sInputValue);
+          });
+
         },
 
         /**

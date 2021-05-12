@@ -474,162 +474,177 @@
                              
                 <f:FormContainer title="{i18n>formBonusReward}">
                     <f:formElements>
-                      <f:FormElement label="">
+                      <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
-                                <RadioButtonGroup columns="2" >
-                                    <RadioButton text="All"/>
-                                    <RadioButton text="Specific"/>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
+
                          <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                 <MultiComboBox required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" change="onProductCatChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
+
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="Product Cassification">
+                        <f:FormElement label="{i18n>formApplicableLbl8}" >
                             <f:fields>
-                               <RadioButtonGroup columns="2" >
-                                    <RadioButton text="All"/>
-                                    <RadioButton text="Specific"/>
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}">
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="">
+                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="{i18n>formApplicableProducts}">
+                        
+                    <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
-                               <RadioButtonGroup columns="2" >
-                                    <RadioButton text="All"/>
-                                    <RadioButton text="Specific"/>
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox  enabled="{oModelControl>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl>/MultiCombo/AppProd4}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="Products Based on SKU">
+                         <f:FormElement label="{i18n>formApplicableLbl9}" >
                             <f:fields>
-                               <RadioButtonGroup columns="2" >
-                                    <RadioButton text="All"/>
-                                    <RadioButton text="Specific"/>
+                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ApplicableProducts}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox  enabled="{oModelControl>/MultiEnabled/AppPacks4}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks4}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <!-- <f:FormElement label="Applicable Packs">
-                        							<f:fields>
-                        								<MultiComboBox placeholder="{i18n>placeHolder1}">
-                                                            <core:Item key="1" text="Emulsion" />
-                                                            <core:Item key="2" text="Mica Marbel" />
-                                                        </MultiComboBox>
-                        							</f:fields>
-                        						</f:FormElement> -->
-                        <!-- <f:FormElement label="{i18n>formAppProdPurchaseVolume}">
+                         <f:FormElement label="{i18n>formBonusRewardRatio}">
                             <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PurchaseVolumeRequired', type:'sap.ui.model.type.String'}"/>
+                                 <RadioButtonGroup columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formAppProdAccuredPoints}">
-                            <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/AccuredPointsRequired'}"/>
-                            </f:fields>
-                        </f:FormElement> -->
+
+
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>AdditionalRewards}">
+                </f:formContainers>
+        </f:Form>
+        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>formBonusValidaityTo}" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                       
+                            <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>ValidFrom}" />
+                             <DatePicker placeholder="DD/MM/YYYY" width="40%" dateValue="{oModelControl>ValidTo}" />
+                            
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <f:Form editable="false">
+            <f:layout>
+                <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
+            </f:layout>
+            <f:formContainers>
+
+                <f:FormContainer title="{i18n>BonusAppPainter}">
                     <f:formElements>
-                        <f:FormElement>
+                        <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
-                                <RadioButtonGroup select="onRbAppRewards" selectedIndex="{= ${oModelView>/HasBonusPercentage} === false? 0:1 }" columns="2">
-                                    <RadioButton text="{i18n>BonusPoints}"/>
-                                    <RadioButton text="{i18n>BonusPointsPercentage}"/>
+                                <RadioButtonGroup select="onRbTopApp" selectedIndex="{oModelControl>/Rbtn/TopAll}"  columns="2">
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Input type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
+                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusRewardPoints', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>BonusApplicableProducs}">
-                            <f:fields>
-                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/BonusApplicableProducts}" selectionChange="onBonusProdChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
-                                    <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
-                            </f:fields>
-                        </f:FormElement>
+                      
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>BonusValidity}">
                     <f:formElements>
-                        <f:FormElement>
+                         <f:FormElement label="{i18n>PercentageGrowth}">
                             <f:fields>
-                                <RadioButtonGroup selectedIndex="{= ${oModelControl>/HasTillDate} === false ? 0 : 1}" columns="2" select="onRbBonusValidity">
-                                    <RadioButton text="{i18n>TillDuration}"/>
-                                    <RadioButton text="{i18n>TillDate}"/>
-                                </RadioButtonGroup>
+                                <Input  type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/PercentaggeGrowth', type:'sap.ui.model.type.String'}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement visible="{= ${oModelControl>/HasTillDate} }">
+                        <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <DatePicker placeholder="DD/MM/YYYY" dateValue="{oModelView>/BonusValidityDate}" displayFormat="dd/MM/YYYY"/>
+                                <DatePicker placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement visible="{= !${oModelControl>/HasTillDate} }">
+                        <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                              
-                                  <ComboBox placeholder="{i18n>Years}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationYear}">
-                                    <core:Item text="{oModelControl>key} year(s)" key="{oModelControl>key}"/>
-                                    </ComboBox>
-                             
-                              
-                                <ComboBox placeholder="{i18n>Month}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationMonth}">
-                                    <core:Item text="{oModelControl>key} month(s)" key="{oModelControl>key}"/>
-                                </ComboBox>
-                                <ComboBox placeholder="{i18n>Days}" items="{oModelControl>/BonusValidity}" selectedKey="{oModelView>/BonusValidityDurationDays}">
-                                    <core:Item text="{oModelControl>key} day(s)" key="{oModelControl>key}"/>
-                                </ComboBox>
+                                <DatePicker placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
+                        
                     </f:formElements>
                 </f:FormContainer>
-
-                <f:FormContainer title="{i18n>statusFilterLabel}" visible="{oModelControl>/modeEdit}">
-                					<f:formElements>
-                                        <f:FormElement label="{i18n>ChangeStatus}">
-                							<f:fields>
-                								<ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/SchemeStatus}" >
-                                                  <core:Item text="Pending" key="PENDING"/>
-                                         <core:Item text="Approved" key="APPROVED"/>
-                                          <core:Item text="Rejected" key="REJECTED"/>
-                                                </ComboBox>
-                							</f:fields>
-                						</f:FormElement>
-                                        <f:FormElement label="{i18n>Reason}">
-                							<f:fields>
-                                                <TextArea placeholder="{i18n>Enter}" value="{oModelView>/Reason}"/>
-                							</f:fields>
-                						</f:FormElement>
-                					</f:formElements>
-                				</f:FormContainer>
+                <f:FormContainer title="{i18n>RedemtionCycle}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>PercentageGrowth}">
+                            <f:fields>
+                                <Select items="{oModelControl>/oData/PerGrowth}">
+                                    <core:Item text="{oModelControl>Name}" key="{oModelControl>Name}"/>
+                                </Select>
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="{i18n>ParentChildOffer}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>SelectParentOffer}">
+                            <f:fields>
+                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    </f:formElements>
+                </f:FormContainer>
             </f:formContainers>
         </f:Form>
     </VBox>

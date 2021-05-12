@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+        resizable="false"
+        contentWidth="30%"
+		id="selectDialog"
+		title="{i18n>tblTitle}"
+        growing="true"
+        growingThreshold="15"
+		items="{path:'/OfferSet'}"
+		search=".onValueHelpSearch"
+		confirm=".onValueHelpClose"
+		cancel=".onValueHelpClose">
+		<StandardListItem 
+			title="{Title}"
+			description="Desc: {Description}" />
+	</SelectDialog>
+</core:FragmentDefinition>
