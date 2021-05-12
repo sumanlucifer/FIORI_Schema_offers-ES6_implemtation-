@@ -8,7 +8,7 @@
         growingThreshold="15"
 		items="{path:'/OfferSet',sorter:{path:'CreatedAt',descending:true}}"
 		search=".onValueHelpSearch"
-		confirm=".onValueHelpClose"
+		confirm="onParentOfferValueHelpClose"
 		cancel=".onValueHelpClose">
 		<StandardListItem 
 			title="{Title}"

@@ -679,7 +679,8 @@
                     <f:formElements>
                          <f:FormElement label="{i18n>SelectParentOffer}">
                             <f:fields>
-                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/ParentOfferId'}" />
+                                
                             </f:fields>
                         </f:FormElement>
                         

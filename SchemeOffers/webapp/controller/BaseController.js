@@ -578,7 +578,7 @@ sap.ui.define(
         onValueHelpParentOffer: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
             oView = this.getView();
-
+            console.log(sInputValue)
           if (!this._pOfferpDialog) {
             this._pOfferpDialog = Fragment.load({
               id: oView.getId(),
@@ -591,31 +591,43 @@ sap.ui.define(
           }
           this._pOfferpDialog.then(function (oDialog) {
             // Create a filter for the binding
-            oDialog
-              .getBinding("items")
-              .filter([
-                new Filter(
-                  [
-                    new Filter(
-                      "tolower(Title)",
-                      FilterOperator.Contains,
-                      "'" +
-                        sInputValue.trim().toLowerCase().replace("'", "''") +
-                        "'"
-                    ),
-                    new Filter(
-                      "Description",
-                      FilterOperator.Contains,
-                      sInputValue.trim()
-                    ),
-                  ],
-                  false
-                ),
-              ]);
+            
             // Open ValueHelpDialog filtered by the input's value
-            oDialog.open(sInputValue);
+            oDialog.open();
           });
         },
+        onParentOfferValueHelpClose: function (oEvent) {
+          var oSelectedItem = oEvent.getParameter("selectedItem");
+          oEvent.getSource().getBinding("items").filter([]);
+          var oViewModel = this.getView().getModel("oModelView");
+          if (!oSelectedItem) {
+            return;
+          }
+          var obj = oSelectedItem.getBindingContext().getObject();
+          oViewModel.setProperty("/ParentOfferId", obj["Id"]);
+        },
+        onValueHelpSearch: function (oEvent) {
+          var sValue = oEvent.getParameter("value");
+          var oFilter = new Filter(
+            [
+              new Filter(
+                "Title",
+                FilterOperator.Contains,
+                sValue
+              ),
+              new Filter(
+                "Id",
+                FilterOperator.EQ,
+                sValue
+              )
+              
+            ],
+            false
+          );
+
+          oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+
 
         /**
          * Adds a history entry in the FLP page history

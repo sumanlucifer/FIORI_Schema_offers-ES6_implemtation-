@@ -534,6 +534,7 @@ sap.ui.define(
             "PointSlabUpperLimit",
             "PointSlabLowerLimit",
             "BonusApplicableTopPainter",
+            "ParentOfferId"
           ];
           for (var y of inTegerProperty) {
             if (oPayLoad.hasOwnProperty(y)) {
