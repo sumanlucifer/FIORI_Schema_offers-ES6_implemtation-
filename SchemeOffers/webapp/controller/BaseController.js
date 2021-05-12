@@ -214,8 +214,151 @@ sap.ui.define(
           this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
           this._oDepotDialog.open();
         },
+        onRbChnageMain: function (oEvent) {
+          var oView = this.getView();
+          var oSource = oEvent.getSource();
+          var sKey = oSource.getSelectedIndex();
+          var sPath = oSource.getBinding("selectedIndex").getPath();
+          var sPathArray = sPath.split("/");
+          var oModelControl = oView.getModel("oModelControl");
+          if (sKey == 1) {
+            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], true);
+          } else {
+            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], false);
+            this._propertyToBlank(["MultiCombo/" + sPathArray[2]], true);
+          }
+
+          var aChkTblData = ["PCat1", "PClass1", "AppProd1", "AppPacks1"];
+          if (aChkTblData.indexOf(sPathArray[0]) >= 0) {
+               this._CreateRewardTableData();
+          }
+         
+        },
+      
+        _CreateRewardTableData: function (oEvent) {
+          //check if all or specific table is there or not
+          var oView = this.getView();
+          var othat = this;
+          var oModelControl = oView.getModel("oModelControl");
+          var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
+          var oDataModel = this.getView().getModel();
+          var c1, c2, c3, c4, c5;
+
+          if (sCheckPacks == 0) {
+            c1 = othat._getProductsData();
+            c1.then(function () {
+              othat._setProductsData();
+            });
+          } else {
+            othat._setPacksData();
+          }
+        },
+        onRbTable1Change: function (oEvent) {
+          var oView = this.getView();
+          var sKey = oEvent.getSource().getSeleckedIndex();
+          var spath = oEvent.getSource().getBinding("selectedIndex").getPath();
+        },
         onDepotCancelPress: function () {
           this._oDepotDialog.close();
+        },
+        _setProductsData: function () {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd1");
+          var oControl = oView.byId("AppProd1").getSelectedItems();
+          var bRbProd = oModelControl.getProperty("/Rbtn/AppProd1");
+          if (oControl.length <= 0) {
+            oControl = oModelControl.getProperty("/oData/Products");
+          }
+          var aSelectedData = [],
+            obj;
+
+          for (var x of oControl) {
+            if (x instanceof sap.ui.base.ManagedObject) {
+              obj = x.getBindingContext().getObject();
+            } else {
+              obj = x;
+            }
+
+            aSelectedData.push({
+              Name: obj["ProductName"],
+              Key: obj["Id"],
+              value1: "",
+              value2: "",
+            });
+          }
+
+          oModelControl.setProperty("/Table/Table2", aSelectedData);
+        },
+        _setPacksData: function (sKey) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var aSelectedKeys = oModelControl.getProperty(
+            "/MultiCombo/AppPacks1"
+          );
+          var oControl = oView.byId("AppPacks1").getSelectedItems();
+          var aSelectedData = [],
+            obj;
+          for (var x of oControl) {
+            obj = x.getBindingContext().getObject();
+            aSelectedData.push({
+              Name: obj["Description"],
+              Key: obj["SkuCode"],
+              value1: "",
+              value2: "",
+            });
+          }
+          oModelControl.setProperty("/Table/Table2", aSelectedData);
+        },
+        _getProductsData: function () {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var sProducts = oModelControl.getProperty("/oData/Products");
+          var sProDuctRbtn = oModelControl.getProperty("/Rbtn/AppProd1");
+          var oData = oView.getModel();
+          if (sProducts.length > 0) {
+            promise.resolve();
+            return promise;
+          }
+          if (sProDuctRbtn == 1) {
+            promise.resolve();
+            return promise;
+          }
+
+          return new Promise((resolve, reject) => {
+            oData.read("/MasterProductSet", {
+              success: function (mParam1) {
+                oModelControl.setProperty(
+                  "/oData/Products",
+                  mParam1["results"]
+                );
+                resolve();
+              },
+              error: function (mParam1) {
+                resolve();
+              },
+            });
+          });
+        },
+        _getPacksData: function () {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var sPacks = oModelControl.getProperty("/oData/Packs");
+          var oData = oView.getModel();
+          if (sPacks.length > 0) {
+            promise.resolve();
+            return promise;
+          }
+          oData.read("/MasterRepProductSkuSet", {
+            success: function (mParam1) {
+              oModelControl.setProperty("/oData/Packs", mParam1["results"]);
+            },
+            error: function (mParam1) {},
+          });
+          promise.resolve();
+          return promise;
         },
         onValueHelpAfterClose: function () {
           if (this._DepotDialog) {
@@ -280,25 +423,7 @@ sap.ui.define(
             oValueHelpDialog.update();
           });
         },
-        onRbChnageMain: function (oEvent) {
-          var oView = this.getView();
-          var oSource = oEvent.getSource();
-          var sKey = oSource.getSelectedIndex();
-          var sPath = oSource.getBinding("selectedIndex").getPath();
-          var sPathArray = sPath.split("/");
-          var oModelControl = oView.getModel("oModelControl");
-          if (sKey == 1) {
-            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], true);
-          } else {
-            oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], false);
-            this._propertyToBlank(["MultiCombo/"+sPathArray[2]],true);
-          }
-        },
-        onRbTable1Change:function(oEvent){
-            var oView = this.getView();
-            var sKey = oEvent.getSource().getSeleckedIndex();
-            var spath = oEvent.getSource().getBinding("selectedIndex").getPath();
-        },
+
         onProductCatChange: function (oEvent) {
           var oView = this.getView();
           var oSource = oEvent.getSource();
@@ -307,41 +432,10 @@ sap.ui.define(
         onProdClassChange: function (oEvent) {},
         onAppProdChange: function (oEvent) {},
         onArchiTypeChange: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              ArchiTypeId: parseInt(x),
-            });
-          }
-          oView
-            .getModel("oModelView")
-            .setProperty("/SchemePainterArchiTypes", aArray);
+        
         },
-        onChangeProducts: function (oEvent) {
-          var sKeys = oEvent.getSource().getSelectedKeys();
-          var oView = this.getView();
-          var aArray = [];
-          for (var x of sKeys) {
-            aArray.push({
-              SkuCode: x,
-              HasPurchased: true,
-            });
-          }
-          oView
-            .getModel("oModelView")
-            .setProperty("/SchemePainterProducts", aArray);
-        },
-        onProdCatChange: function (oEvent) {
-          var oSource = oEvent.getSource();
-          var oView = this.getView();
-          var oBindingPath = oSource.getBinding("selectedKey").getPath();
-          var oJson = {};
-          var sKey1 = oSource.getSelectedkey();
-          var sKey2 = "";
-          this._applyFilterOnProducts(sKey1, sKey2, "");
-        },
+       
+       
         onChangeAppProducts: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
           var oView = this.getView();
@@ -372,15 +466,37 @@ sap.ui.define(
           var iIndex = oEvent.getSource().getSelectedIndex();
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
 
           if (iIndex == 0) {
             oModelView.setProperty("/IsSpecificPainter", false);
             this._propertyToBlank([
-              "SchemePainterArchiTypes",
               "PotentialId",
-              "SchemePainterProducts",
-              "SlabId",
+              "PointSlabLowerLimit",
+              "PointSlabUpperLimit"
             ]);
+            this._propertyToBlank([
+                "MultiCombo/ArcheTypes",
+                "MultiCombo/PainterType",
+                "MultiCombo/PCat2",
+                "MultiCombo/PClass2",
+                "MultiCombo/AppProd2",
+                "MultiCombo/AppPacks2",
+                "MultiCombo/PCat3",
+                 "MultiCombo/PClass3",
+                 "MultiCombo/AppProd3",
+                 "MultiCombo/AppPacks3",
+                "Fields/Date1",
+                "Fields/Date2"
+            ],true);
+            oModelControl.setProperty("/Rbtn/PCat2",0)
+             oModelControl.setProperty("/Rbtn/PClass2",0);
+              oModelControl.setProperty("/Rbtn/AppProd2",0)
+               oModelControl.setProperty("/Rbtn/AppPacks2",0);
+               oModelControl.setProperty("/Rbtn/PCat3",0)
+                oModelControl.setProperty("/Rbtn/PClass3",0);
+                oModelControl.setProperty("/Rbtn/AppProd3",0);
+                 oModelControl.setProperty("/Rbtn/AppPacks3",0)
           } else if (iIndex == 1) {
             oModelView.setProperty("/IsSpecificPainter", true);
           } //
@@ -429,8 +545,8 @@ sap.ui.define(
           for (var x of aProp) {
             var oGetProp = oModelView.getProperty("/" + x);
             if (Array.isArray(oGetProp)) {
-              oModelView.setProperty("/"+x,[]);
-              oView.byId(x.substring(x.indexOf('/') + 1)).fireChange();
+              oModelView.setProperty("/" + x, []);
+              //oView.byId(x.substring(x.indexOf("/") + 1)).fireChange();
             } else if (oGetProp === null) {
               oModelView.setProperty("/" + x, null);
               console.log("date made as null");
