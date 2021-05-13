@@ -92,7 +92,7 @@ sap.ui.define(
             modeEdit: true,
             bindProp: "OfferSet(" + oProp + ")",
             HasTillDate: true,
-            ImageLoaded: true,
+            ImageLoaded: false,
             SchemeId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
@@ -212,7 +212,7 @@ sap.ui.define(
           this.getView().setModel(oModel, "oModelControl2");
 
           var othat = this;
-          var c1, c2, c3, c4, c5, c7, c8;
+          var c1, c2, c3, c4, c5, c6, c7, c8;
           var oView = this.getView();
 
           c1 = this._loadEditProfile("Display");
@@ -225,6 +225,9 @@ sap.ui.define(
                 c4 = othat._setViewData1(data);
                 c4.then(function (data) {
                   c5 = othat._setViewData2(data);
+                  c5.then(function () {
+                    c6 = othat._CheckAttachment();
+                  });
                 });
               });
             });
@@ -1103,8 +1106,11 @@ sap.ui.define(
                   c5 = othat._CreatePayLoadPart5(oPayLoad);
                   c5.then(function (oPayLoad) {
                     c6 = othat._CreateOffer(oPayLoad);
-                    c6.then(function () {
-                      othat.handleCancelPress();
+                    c6.then(function (oPayLoad) {
+                      c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                      c7.then(function () {
+                        othat.handleCancelPress();
+                      });
                     });
                   });
                 });
@@ -1226,7 +1232,7 @@ sap.ui.define(
                     ele[x] = parseInt(ele[x]);
                   }
                 }
-               
+
                 return ele;
               }
             });
@@ -1239,7 +1245,7 @@ sap.ui.define(
             var oDataTbl = JSON.parse(
               JSON.stringify(oModel.getProperty("/Table/Table2"))
             );
-             
+
             oPayLoad["OfferPackRewardRatio"] = aFinalArray;
 
             promise.resolve(oPayLoad);
@@ -1512,10 +1518,8 @@ sap.ui.define(
           return new Promise((resolve, reject) => {
             oDataModel.update("/" + oProp, oPayLoad, {
               success: function (data) {
-                MessageToast.show("Offer Sucessfully Created.");
+                MessageToast.show("Offer Sucessfully Updated.");
                 //othat._navToHome();
-
-                console.log(data);
                 resolve(data);
               },
               error: function (data) {
@@ -1525,24 +1529,36 @@ sap.ui.define(
             });
           });
         },
-        _UploadFile: function (data) {
+        _UploadFile: function (mParam1, mParam2) {
+          var promise = jQuery.Deferred();
+          if (!mParam2) {
+            console.log("No File Found");
+            promise.resolve();
+            return promise;
+          }
           var oView = this.getView();
-          var data = oView.getModel("oModelView").getData();
           var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
           var sServiceUrl = this.getOwnerComponent(this)
             .getManifestObject()
             .getEntry("/sap.app").dataSources.mainService.uri;
 
-          var sUrl = sServiceUrl + "SchemeSet(" + data["Id"] + ")/$value";
-          jQuery.ajax({
-            method: "PUT",
-            url: sUrl,
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: oFile,
-            success: function (data) {},
-            error: function () {},
+          var data = oView.getModel("oModelView").getData();
+          var sUrl = sServiceUrl + "OfferSet(" + data["Id"] + ")/$value";
+          new Promise((resolve, reject) => {
+            jQuery.ajax({
+              method: "PUT",
+              url: sUrl,
+              cache: false,
+              contentType: false,
+              processData: false,
+              data: oFile,
+              success: function (data) {
+                resolve();
+              },
+              error: function () {
+                resolve();
+              },
+            });
           });
         },
         _RemoveEmptyValue: function (mParam) {
@@ -1558,7 +1574,7 @@ sap.ui.define(
         },
 
         _reLoadInitData: function () {},
-        
+
         _loadEditProfile: function (mParam) {
           var oView = this.getView();
           var promise = jQuery.Deferred();
