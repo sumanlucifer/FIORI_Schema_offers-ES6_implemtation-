@@ -17,10 +17,10 @@
                     </HBox>
                     <Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly Enter a mobile no with 10 digits or else leave blank." visible="{= ${oModelView>/AnotherMobField} === true }" type="Number" value="{path:'oModelView>/PainterAddDet/SMobile2',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10 } }"/> -->
                 </VBox>
-                <Label text="{i18n>PainterType}" />
+                <!-- <Label text="{i18n>PainterType}" />
                 <ComboBox items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterDetails/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{PainterType}" key="{Id}" />
-                </ComboBox>
+                </ComboBox> -->
                 <Label text="{i18n>AgeGroup}" />
                 <ComboBox items="{path:'/MasterAgeGroupSet',sorter:{path:'AgeGroup'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/PainterDetails/AgeGroupId',type : 'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <items>
