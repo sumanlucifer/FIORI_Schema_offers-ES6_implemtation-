@@ -9,6 +9,8 @@
             <Text text="{ComplaintType/ComplaintType}" />
             <Label text="{i18n>ComplaintDetails}" />
             <Text text="{ComplaintSubtype/ComplaintSubtype}" />
+            <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"  />
+            <Text text="{ComplaintDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"   />
 
             <Label text="{i18n>GiftDetails}" visible="{= ${ComplaintTypeId} === 13}" />
             <Text text="{RewardGiftId}" visible="{= ${ComplaintTypeId} === 13}" />
