@@ -613,7 +613,10 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                            <Label  width="80%" text="{oModelControl>Name}" />
+                            <VBox>
+                                <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
+                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
+                            </VBox>
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
                              <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />

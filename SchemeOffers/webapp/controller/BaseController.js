@@ -347,7 +347,6 @@ sap.ui.define(
             }
 
             aSelectedData.push({
-              Name: obj["ProductName"],
               ProductCode: obj["Id"],
               StartDate: null,
               EndDate: null,
@@ -367,7 +366,6 @@ sap.ui.define(
           for (var x of oControl) {
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
-              Name: obj["Description"],
               SkuCode: obj["SkuCode"],
               StartDate: null,
               EndDate: null,
