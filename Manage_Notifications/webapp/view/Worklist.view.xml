@@ -26,18 +26,18 @@
 				<items>
 					<IconTabFilter text="{worklistView>/draft}">
 						<Table id="table" width="auto"
-							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers/Role, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'DRAFT' } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'DRAFT' } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
-									<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+									</Button> -->
+									<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
@@ -70,7 +70,7 @@
 										<Text text="{Subject}"/>
 										<Text text="{Body}"/>
 										<Text text="{NotificationType}"/>
-										<Text text="{NotificationStatus}"/>
+										<!-- <Text text="{NotificationStatus}"/> -->
 										<VBox>
 											<Text text="{parts: [ {path: 'ScheduledDate'}, {path: 'ScheduledTime'} ], formatter : '.formatter.formatDate' }"
 												visible="{= !!${ScheduledDate}}"/>
@@ -90,18 +90,18 @@
 					</IconTabFilter>
 					<IconTabFilter text="{worklistView>/scheduled}">
 						<Table id="table1" width="auto"
-							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers/Role, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'SCHEDULED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'SCHEDULED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
-									<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+									</Button> -->
+									<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
@@ -124,14 +124,8 @@
 								<Column width="15%">
 									<Text text="{i18n>colCreatorName}"/>
 								</Column>
-								<Column width="5%">
-									<Text text="{i18n>colEdit}"/>
-								</Column>
-								<Column width="5%">
-									<Text text="{i18n>colView}"/>
-								</Column>
-								<Column width="6%">
-									<Text text="{i18n>colRemove}"/>
+								<Column width="16%">
+									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
@@ -147,9 +141,11 @@
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
 										<Text text="{CreatorName}"/>
-										<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
-										<Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/>
-										<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
+                                        <HBox>
+                                            <Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
+                                            <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/>
+                                            <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
+                                        </HBox>
 									</cells>
 								</ColumnListItem>
 							</items>
@@ -157,18 +153,18 @@
 					</IconTabFilter>
 					<IconTabFilter text="{worklistView>/triggered}">
 						<Table id="table2" width="auto"
-							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers/Role, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'TRIGGERED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'TRIGGERED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
+									<!-- <Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
-									</Button>
-									<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+									</Button> -->
+									<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd">
 										<layoutData>
 											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 										</layoutData>
@@ -185,14 +181,14 @@
 								<Column width="10%">
 									<Text text="{i18n>colNotificationType}"/>
 								</Column>
-								<Column width="20%">
+								<Column width="18%">
 									<Text text="{i18n>colScheduledDtTm}"/>
 								</Column>
 								<Column width="15%">
 									<Text text="{i18n>colCreatorName}"/>
 								</Column>
-								<Column width="5%">
-									<Text text="{i18n>colView}"/>
+								<Column width="7%">
+									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>

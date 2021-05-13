@@ -50,10 +50,6 @@ modules:
       - Training_Learning-content.zip
       name: Training_Learning
       target-path: resources/
-    - artifacts:
-      - comknplpragatigroupnotifications.zip
-      name: comknplpragatigroupnotifications
-      target-path: resources/
 - name: MasterDataManagement
   type: html5
   path: MasterDataManagement
@@ -111,16 +107,6 @@ modules:
     builder: custom
     commands:
     - npm run build
-    supported-platforms: []
-- name: comknplpragatigroupnotifications
-  type: html5
-  path: groupnotifications
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
     supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
