@@ -19,16 +19,16 @@
                                 <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                             </f:fields>
                         </f:FormElement>
-                        <!-- <f:FormElement label="{i18n>formBasicInfoLbl3}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl3}">
                             <f:fields>
-                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="false"/>
+                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="true"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl4}">
                             <f:fields>
-                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="false"/>
+                                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
                             </f:fields>
-                        </f:FormElement> -->
+                        </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
                             <f:fields>
                                 <TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
@@ -281,9 +281,9 @@
         
                    <f:FormContainer title="{i18n>formApplicableLbl14}">
                     <f:formElements>
-                        <f:FormElement label="{i18n>formApplicableLbl14}">
+                        <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainPainter} === false ? 1 : 0}" columns="2" select="onRbAppPainter">
+                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
@@ -319,7 +319,7 @@
                               <Input type="Number" value="{oModelView>/PointSlabLowerLimit}" placeholder="{i18n>placeHolder3}"  enabled="{oModelView>/IsSpecificPainter}" />
                             </f:fields>
                         </f:FormElement>
-                          <f:FormElement label="{i18n>formApplicableLbl12}">
+                          <f:FormElement label="{i18n>formApplicableLbl13}">
                             <f:fields>
                               <Input type="Number" value="{oModelView>/PointSlabUpperLimit}" placeholder="{i18n>placeHolder3}"  enabled="{oModelView>/IsSpecificPainter}" />
                             </f:fields>

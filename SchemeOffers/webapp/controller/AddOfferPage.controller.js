@@ -569,13 +569,13 @@ sap.ui.define(
             IsSpecificBuyerPack: "AppPacks2",
             IsSpecificNonBuyerProductCategory: "PCat3",
             IsSpecificNonBuyerProductClassification: "PClass3",
-            IsSpecificNonBuyerProduct: "AppProd2",
+            IsSpecificNonBuyerProduct: "AppProd3",
             IsSpecificNonBuyerPack: "AppPacks3",
             IsSpecificBonusProductCategory: "PCat4",
             IsSpecificBonusProductClassification: "PClass4",
             IsSpecificBonusProduct: "AppProd4",
             IsSpecificBonusPack: "AppPacks4",
-            IsSpecificBonusRewardRatio: "BRewards",
+            IsSpecificBonusRewardRatio: "BRewards"
           };
           var oModelControl = oView.getModel("oModelControl");
           var oPropRbtn = oModelControl.getProperty("/Rbtn");
@@ -634,7 +634,7 @@ sap.ui.define(
           oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
             function (elem) {
               return {
-                SkuCode: elem,
+                SkuCode: elem
               };
             }
           );
@@ -677,20 +677,20 @@ sap.ui.define(
             elem
           ) {
             return {
-              ProductCode: elem,
+              ProductCode: elem
             };
           });
           oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem
             };
           });
           oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
             function (elem) {
               return {
-                ProductCategoryCode: elem,
+                ProductCategoryCode: elem
               };
             }
           );

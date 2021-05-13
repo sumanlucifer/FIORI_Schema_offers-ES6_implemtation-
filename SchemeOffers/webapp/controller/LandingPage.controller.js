@@ -13,7 +13,7 @@ sap.ui.define(
     "sap/m/ColumnListItem",
     "sap/m/Label",
     "sap/m/Token",
-    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/DateFormat"
   ],
   function (
     BaseController,
