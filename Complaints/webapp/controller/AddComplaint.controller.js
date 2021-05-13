@@ -91,6 +91,7 @@ sap.ui.define(
               RewardPoints: "",
               RewardGiftId: "",
               ResolutionOthers: "",
+              ComplaintDescription:""
             },
             addCompAddData: {
               MembershipCard: "",
@@ -296,8 +297,7 @@ sap.ui.define(
             oModelControl.setProperty("/TokenCode", true);
           }
           // clearning the inreview and the resolution
-        //   oView.byId("scenario").setSelectedKey("");
-        //   oView.byId("resolution").setSelectedKey("");
+           oViewModel.setProperty("/addComplaint/ComplaintDescription", "");
         },
         onSenarioChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();

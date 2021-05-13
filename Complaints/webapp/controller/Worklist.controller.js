@@ -10,7 +10,7 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/ui/model/Sorter",
     "sap/ui/core/format/DateFormat",
-    "sap/ui/Device",
+    "sap/ui/Device"
   ],
   function (
     BaseController,
@@ -389,7 +389,10 @@ sap.ui.define(
               [iTotalItems]
             );
           } else {
-            sTitle = this.getResourceBundle().getText("worklistTableTitle");
+            sTitle = this.getResourceBundle().getText(
+              "worklistTableTitleCount",
+              [0]
+            );
           }
           this.getModel("worklistView").setProperty(
             "/worklistTableTitle",

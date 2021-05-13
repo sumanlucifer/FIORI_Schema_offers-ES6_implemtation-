@@ -189,8 +189,8 @@ sap.ui.define(
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
           // setting the resolved flag if we have the value from backend;
-          if (oModelView.getProperty("/ComplaintStatus") === "RESOLVED") {
-            console.log("Status is resolved");
+          if (oModelView.getProperty("/ComplaintStatus") === "RESOLVED" || oModelView.getProperty("/ComplaintStatus") === "WITHDRAWN") {
+           
             oModelControl.setProperty("/ComplainResolved", true);
             oModelControl.setProperty("/TokenCode", false);
           }
