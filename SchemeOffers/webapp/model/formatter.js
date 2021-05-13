@@ -18,12 +18,22 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
     fmtDate: function (mDate) {
       var date = new Date(mDate);
       var oDateFormat = DateFormat.getDateTimeInstance({
-        pattern: "dd/MM/yyyy",
-        UTC: true,
-        strictParsing: true,
+        pattern: "dd/MM/YYYY h:mm a",
+        UTC: false,
+        strictParsing: false,
       });
       return oDateFormat.format(date);
     },
+    fmtDate2: function (mDate) {
+      var date = new Date(mDate);
+      var oDateFormat = DateFormat.getDateTimeInstance({
+        pattern: "dd/MM/YYYY",
+        UTC: false,
+        strictParsing: false,
+      });
+      return oDateFormat.format(date);
+    },
+
     fmtLowerCase: function (mParam) {
       var sStatus = "";
       if (mParam) {
@@ -56,7 +66,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       return aArray.join(" ");
     },
     formatURL: function (sURL) {
-        console.log("format url trigerred")
+      console.log("format url trigerred");
       if (sURL) {
         return "https://".concat(
           location.host,
@@ -64,6 +74,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
           new URL(sURL).pathname
         );
       }
-    },
+    }
+    
   };
 });
