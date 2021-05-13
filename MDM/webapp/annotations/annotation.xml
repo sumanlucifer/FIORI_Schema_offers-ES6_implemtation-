@@ -37,8 +37,11 @@
              <Annotations Target="Metadata.MasterLanguageModel/LanguageCode">
                 <Annotation Term="Common.Label" String="Language Code"/>
             </Annotations>
-              <Annotations Target="Metadata.MasterLanguageModel/LanguageDescription">
+            <Annotations Target="Metadata.MasterLanguageModel/LanguageDescription">
                 <Annotation Term="Common.Label" String="Language Description"/>
+            </Annotations>
+             <Annotations Target="Metadata.MasterPainterTypeModel/PainterType">
+                <Annotation Term="Common.Label" String="Painter Type"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>
