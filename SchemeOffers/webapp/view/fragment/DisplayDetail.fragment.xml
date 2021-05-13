@@ -14,12 +14,12 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl3}">
                             <f:fields>
-                                <Text text="{path:'StartDate',formatter:'.formatter.fmtDate'}"/>
+                                <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl3}">
                             <f:fields>
-                                <Text text="{path:'EndDate',formatter:'.formatter.fmtDate'}"/>
+                                <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl2}">
@@ -326,13 +326,13 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <Text text="{path:'PurchaseStartDate',formatter:'.formatter.fmtDate'}"/>
+                                <Text text="{path:'PurchaseStartDate',formatter:'.formatter.fmtDate2'}"/>
                                 
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <Text text="{path:'PurchaseEndDate',formatter:'.formatter.fmtDate'}"/>
+                                <Text text="{path:'PurchaseEndDate',formatter:'.formatter.fmtDate2'}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}" >
@@ -463,79 +463,153 @@
                     </f:formElements>
                 </f:FormContainer>
 
-                <f:FormContainer title="{i18n>AdditionalRewards}">
+               <f:FormContainer title="{i18n>formBonusReward}">
                     <f:formElements>
-                        <f:FormElement>
+                      <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
-                                <RadioButtonGroup editable="false" selectedIndex="{= ${HasBonusPercentage} === false? 0:1 }" columns="2">
-                                    <RadioButton text="{i18n>BonusPoints}"/>
-                                    <RadioButton text="{i18n>BonusPointsPercentage}"/>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement>
+
+                         <f:FormElement label="">
                             <f:fields>
-                                <Text text="{BonusRewardPoints}"/>
+                                 <MultiComboBox editable="false" id="PCat4" visible="{oModelControl2>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl2>/MultiCombo/PCat4' }" selectionFinish="onBRAppDropChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                    <core:Item text="{Category}" key="{Id}"/>
+                                </MultiComboBox>
+
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>BonusApplicableProducs}">
+                        <f:FormElement label="{i18n>formApplicableLbl8}" >
                             <f:fields>
-                                <MultiComboBox editable="false" selectedKeys="{oModelControl2>/Display/BonusApplicableProducts}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                               <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox editable="false" visible="{oModelControl2>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl2>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectionFinish="onBRAppDropChange" >
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    <f:FormElement label="{i18n>formApplicableProducts}">
+                            <f:fields>
+                               <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox id="AppProd4"  visible="{oModelControl2>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl2>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                    <core:Item text="{ProductName}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="{i18n>formApplicableLbl9}" >
+                            <f:fields>
+                               <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppPacks4}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox editable="false" id="AppPacks4"  visible="{oModelControl2>/MultiEnabled/AppPacks4}"  selectedKeys="{oModelControl2>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer title="{i18n>BonusValidity}">
-                    <f:formElements>
-                        <f:FormElement>
+                         <f:FormElement label="{i18n>formBonusRewardRatio}">
                             <f:fields>
-                                <RadioButtonGroup editable="false" selectedIndex="{= ${oModelControl2>/HasTillDate} === false ? 0 : 1}" columns="2" select="onRbBonusValidity">
-                                    <RadioButton text="{i18n>TillDuration}"/>
-                                    <RadioButton text="{i18n>TillDate}"/>
+                                 <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl2>/Rbtn/BRewards}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement visible="{= ${oModelControl2>/HasTillDate} }">
-                            <f:fields>
-                                <Text class="sapUiSmallMarginBegin" text="{path:'BonusValidityDate',formatter:'.formatter.fmtDate'}"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement visible="{= !${oModelControl2>/HasTillDate} }">
-                            <f:fields>
-                                <Text class="sapUiSmallMarginBegin" text="{parts:['BonusValidityDurationYear','BonusValidityDurationMonth','BonusValidityDurationDays'],formatter:'.formatter.fmtVldtyDuration'}"/>
-                            </f:fields>
-                        </f:FormElement>
+
+
                     </f:formElements>
                 </f:FormContainer>
-                <!-- <f:FormContainer title="{i18n>Attachment}">
-                    <f:formElements>
-                        <f:FormElement>
-                            <f:fields>
-                                <Text text="{i18n>NoAttachmentFound}"  visible="{= !${oModelControl2>/ImageLoaded} }" />
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement>
-                            <f:fields>
-                                <Link text="{i18n>ViewAttachment}" visible="{oModelControl2>/ImageLoaded}" press="onViewAttachment" />
-                            </f:fields>
-                        </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer> -->
+            
             </f:formContainers>
+            
         </f:Form>
-        <!-- <UploadCollection id="UploadCollection" maximumFilenameLength="{settings>/maximumFilenameLength}" maximumFileSize="{settings>/maximumFileSize}" multiple="true" change="onChange" fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType="{fileTypes>/selected}" selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" numberOfAttachmentsText="Uploaded (8)" showSeparators="{settings>/showSeparators}" uploadEnabled="{settings>/uploadEnabled}" uploadButtonInvisible="{=!${settings>/uploadButtonVisible}}" mode="{settings>/mode}">
-                                            <toolbar>
-                                                <OverflowToolbar id="myId">
-                                                    <Title id="attachmentTitle" text="Uploded (0)"/>
-                                                    <ToolbarSpacer/>
-                                                    <UploadCollectionToolbarPlaceholder/>
-                                                    <SearchField width="10rem" search="onSearch"/>
-                                                    <Button id="deleteSelectedButton" text="Delete" press="onDeleteSelectedItems" enabled="false" visible="false" type="Transparent"/>
-                                                    <ToggleButton id="selectAllButton" text="Select all" press="onSelectAllPress" enabled="false" visible="false" type="Transparent"/>
-                                                </OverflowToolbar>
-                                            </toolbar>
-                                        </UploadCollection> -->
+        <Table id="Table3" visible="{= ${oModelControl2>/Rbtn/BRewards}=== 0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Label  text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Label  text="{i18n>formBonusValidaityTo}" />
+                </Column>
+               
+                 <Column>
+                    <Label  text="{i18n>Table3Label1}" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                             <Text text="{path:'oModelControl2>StartDate',formatter:'.formatter.fmtDate2'}"/>
+                              <Text text="{path:'oModelControl2>EndDate',formatter:'.formatter.fmtDate2'}"/>
+                              <Text text="{oModelControl2>BonusPoints}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+           <Table id="Table4" visible="{= ${oModelControl2>/Rbtn/BRewards}=== 1 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelContro2>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                 <Column>
+                    <Text text="{i18n>Table1Label1}" />
+                </Column>
+                 <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                </Column>
+               
+                 <Column>
+                    <Label required="true" text="{i18n>Table3Label1}" />
+                </Column>
+                
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                    <VBox ><Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 0}" text="{oModelControl2>Product/ProductName}" /> <Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 1}"  text="{oModelControl2>Pack/Description}" /> </VBox>
+                            
+                            <Text text="{path:'oModelControl2>StartDate',formatter:'.formatter.fmtDate2'}"/>
+                             <Text text="{path:'oModelControl2>EndDate',formatter:'.formatter.fmtDate2'}"/>
+                             <Text text="{oModelControl2>BonusPoints}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
     </VBox>
 </core:FragmentDefinition>

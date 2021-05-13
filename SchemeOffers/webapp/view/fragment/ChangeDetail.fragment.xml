@@ -578,7 +578,7 @@
                     <cells>
                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input placeholder="{i18n>placeHolder3}" width="60%" value="{oModelControl>BonusPoints}" />
+                             <Input  type="Number" placeholder="{i18n>placeHolder3}" width="60%" value="{oModelControl>BonusPoints}" />
                     </cells>
                 </ColumnListItem>
             </items>
@@ -613,7 +613,7 @@
                             <Label  width="80%" text="{oModelControl>Name}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />
+                             <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />
                     </cells>
                 </ColumnListItem>
             </items>

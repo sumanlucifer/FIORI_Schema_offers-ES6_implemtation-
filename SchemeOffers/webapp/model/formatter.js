@@ -24,6 +24,15 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       });
       return oDateFormat.format(date);
     },
+    fmtDate2: function (mDate) {
+      var date = new Date(mDate);
+      var oDateFormat = DateFormat.getDateTimeInstance({
+        pattern: "dd/MM/YYYY",
+        UTC: false,
+        strictParsing: false,
+      });
+      return oDateFormat.format(date);
+    },
 
     fmtLowerCase: function (mParam) {
       var sStatus = "";

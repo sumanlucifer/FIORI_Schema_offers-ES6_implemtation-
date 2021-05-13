@@ -247,9 +247,11 @@ sap.ui.define(
           var sPath = oModelControl2.getProperty("/bindProp");
           var othat = this;
           var exPand =
-            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio/Product,OfferPackRewardRatio/Pack,"+
-            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory,"+
-            "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack";
+            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio/Product,OfferPackRewardRatio/Pack," +
+            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
+            "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
+            "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack,"+
+            "OfferBonusProductRewardRatio/Product,OfferBonusPackRewardRatio/Pack";
           oView.getModel().read("/" + sPath, {
             urlParameters: {
               $expand: exPand,
@@ -265,12 +267,12 @@ sap.ui.define(
         },
         _setViewData2: function (oData) {
           var promise = jQuery.Deferred();
-          //console.log(oData);
+         
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
           var Table1 = [],
             Table2 = [];
-          //setting zone data
+          
           if (oData["OfferProductRewardRatio"]["results"].length > 0) {
             oModelControl2.setProperty(
               "/Table/Table1",
@@ -293,6 +295,28 @@ sap.ui.define(
             }
           }
 
+          if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+            oModelControl2.setProperty(
+              "/Table/Table3",
+              oData["OfferBonusProductRewardRatio"]["results"]
+            );
+          }
+          if (oData["IsSpecificBonusPack"] === false) {
+            if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+              oModelControl2.setProperty(
+                "/Table/Table4",
+                oData["OfferBonusProductRewardRatio"]["results"]
+              );
+            }
+          }else {
+            if (oData["OfferBonusPackRewardRatio"]["results"].length > 0) {
+              oModelControl2.setProperty(
+                "/Table/Table4",
+                oData["OfferBonusPackRewardRatio"]["results"]
+              );
+            }
+          }
+          //console.log(oModelControl2)
           promise.resolve(oData);
           return promise;
         },
@@ -322,7 +346,11 @@ sap.ui.define(
             PCat3 = [],
             PClass3 = [],
             AppProd3 = [],
-            AppPacks3 = [];
+            AppPacks3 = [],
+            PCat4 = [],
+            PClass4 = [],
+            AppProd4 = [],
+            AppPacks4 = [];
           //setting zone data
           if (oData["OfferZone"]["results"].length > 0) {
             for (var x of oData["OfferZone"]["results"]) {
@@ -426,15 +454,19 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks2", AppPacks2);
 
-           if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
+          if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
             for (var x of oData["OfferNonBuyerProductCategory"]["results"]) {
               PCat3.push(x["ProductCategoryCode"]);
             }
           }
           oModelControl2.setProperty("/MultiCombo/PCat3", PCat3);
 
-          if (oData["OfferNonBuyerProductClassification"]["results"].length > 0) {
-            for (var x of oData["OfferNonBuyerProductClassification"]["results"]) {
+          if (
+            oData["OfferNonBuyerProductClassification"]["results"].length > 0
+          ) {
+            for (var x of oData["OfferNonBuyerProductClassification"][
+              "results"
+            ]) {
               PClass3.push(x["ProductClassificationCode"]);
             }
           }
@@ -454,7 +486,33 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);
 
-          console.log(oModelControl2);
+          if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
+            for (var x of oData["OfferNonBuyerProductCategory"]["results"]) {
+              PCat4.push(x["ProductCategoryCode"]);
+            }
+          }
+          oModelControl2.setProperty("/MultiCombo/PCat4", PCat4);
+
+          if (oData["OfferBonusProductClassification"]["results"].length > 0) {
+            for (var x of oData["OfferBonusProductClassification"]["results"]) {
+              PClass4.push(x["ProductClassificationCode"]);
+            }
+          }
+          oModelControl2.setProperty("/MultiCombo/PClass4", PClass4);
+
+          if (oData["OfferBonusProduct"]["results"].length > 0) {
+            for (var x of oData["OfferBonusProduct"]["results"]) {
+              AppProd4.push(x["ProductCode"]);
+            }
+          }
+          oModelControl2.setProperty("/MultiCombo/AppProd4", AppProd4);
+
+          if (oData["OfferBonusPack"]["results"].length > 0) {
+            for (var x of oData["OfferBonusPack"]["results"]) {
+              AppPacks4.push(x["SkuCode"]);
+            }
+          }
+          oModelControl2.setProperty("/MultiCombo/AppPacks4", AppPacks4);
 
           promise.resolve(oData);
           return promise;
@@ -489,15 +547,15 @@ sap.ui.define(
             IsSpecificBonusRewardRatio: "BRewards",
             IsSpecificPainter: "IsSpecificPainter",
           };
-
-        
-          for (var x in aBoleanProps) {
-            oMultiEnabled[aBoleanProps[x]] = oData[x];
-            oRbtn[aBoleanProps[x]] = oData[x] == false ? 0 : 1;
+          for (var a in aBoleanProps) {
+            oMultiEnabled[aBoleanProps[a]] = oData[a];
+            if (oData[a] == true) {
+              oRbtn[aBoleanProps[a]] = 1;
+            } else {
+              oRbtn[aBoleanProps[a]] = 0;
+            }
           }
-          
-          oModel.refresh();
-          promise.resolve();
+          promise.resolve(oData);
           return promise;
         },
         handleEditPress: function () {
