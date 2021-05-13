@@ -204,9 +204,9 @@ sap.ui.define(
           var oConrtrolModel = new JSONModel(oDataControl);
 
           var oDataView = {
-            OfferTypeId: 1,
-            Title: "Title",
-            Description: "Check",
+            OfferTypeId: "",
+            Title: "",
+            Description: "",
             StartDate: null,
             EndDate: null,
             IsSpecificZone: false,
