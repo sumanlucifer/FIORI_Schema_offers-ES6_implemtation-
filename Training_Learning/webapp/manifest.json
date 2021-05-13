@@ -118,31 +118,15 @@
                     ]
                 },
                 {
-                    "pattern": "LearningSet/{objectId}",
-                    "name": "object",
+                    "name": "RouteAddT",
+                    "pattern": "TrainingManage/{mode}/{trtype}/{id}",
                     "target": [
-                        "object"
-                    ]
-                },
-                {
-                    "name": "createObject",
-                    "pattern": "LearningSet",
-                    "titleTarget": "",
-                    "greedy": false,
-                    "target": [
-                        "object"
-                    ]
-                },
-                {
-                    "name": "RouteAddEditT",
-                    "pattern": "TrainingManage/{mode}/{id}",
-                    "target": [
-                        "TargetRouteAddEditT"
+                        "TargetRouteAddT"
                     ]
                 },
                 {
                     "name": "RouteTrainingTab",
-                    "pattern": "TrainingTab/{mode}/{prop}",
+                    "pattern": "TrainingTab/{mode}/{trtype}/{prop}",
                     "target": [
                         "TargetTrainingTab"
                     ]
@@ -155,18 +139,12 @@
                     "viewLevel": 1,
                     "title": "{i18n>worklistViewTitle}"
                 },
-                "object": {
-                    "viewName": "Object",
-                    "viewId": "object",
-                    "viewLevel": 2,
-                    "title": "{i18n>objectViewTitle}"
-                },
-                "TargetRouteAddEditT": {
+                "TargetRouteAddT": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "AddEditTraining",
-                    "viewName": "AddEditTraining"
+                    "viewId": "AddTraining",
+                    "viewName": "AddTraining"
                 },
                 "TargetTrainingTab": {
                     "viewType": "XML",

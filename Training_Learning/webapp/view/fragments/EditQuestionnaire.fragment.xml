@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox id="idVbxQEdit" width="100%">
+        <f:SimpleForm id="EditTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+            <f:content>
+                <List id="EditTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
+					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer/>
+				    		<Button press="onAddQuestionnaire" type="Emphasized" text="{i18n>btnAddQuestionnaire}"/>
+						</Toolbar>
+					</headerToolbar>
+                    <CustomListItem>
+                        <VBox renderType="Bare" class="sapUiTinyMargin">
+                            <Text text=""/>
+                            <HBox alignItems="Start" justifyContent="SpaceBetween">
+                                <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
+                                <FlexBox alignItems="Start" justifyContent="End">
+				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
+				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Delete}" />
+			                    </FlexBox>
+                            </HBox>
+                            <VBox items="{oModelView>TrainingQuestionnaireOptions}">
+                                <ObjectStatus  text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin"/>
+                            </VBox>
+                            <Text text=""/>
+                        </VBox>
+                    </CustomListItem>
+				</List>
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

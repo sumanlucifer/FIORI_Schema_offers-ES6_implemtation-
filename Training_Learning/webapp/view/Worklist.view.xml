@@ -11,28 +11,65 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar showRestoreButton="false" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
+					<fb:FilterBar showRestoreButton="true" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
 						<fb:filterGroupItems>
-							<!-- <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingSubTypeId" groupTitle="Filters" label="{i18n>colTrainingType}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingTypeId}">
-										<core:Item key="{Id}" text="{TrainingType}"/>
+									<ComboBox placeholder="{i18n>enterTrType}" items="{ path: '/MasterTrainingSubTypeSet', parameters : { expand : 'MasterTrainingTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/TrainingSubTypeId}">
+										<core:Item key="{Id}" text="{TrainingSubType}-{MasterTrainingTypeDetails/TrainingType}"/>
 									</ComboBox>
 								</fb:control>
-							</fb:FilterGroupItem> -->
+							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="StartDate" label="{i18n>colStartDate}">
                                 <fb:control>
                                     <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'worklistView>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="RewardPoints" label="{i18n>colRewardPoints}">
+                                <fb:control>
+                                    <Input id="idPointInput" value="{worklistView>/filterBar/RewardPoints}" type="Number" placeholder="{i18n>PointFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Url" groupTitle="Filters" label="{i18n>colLink}">
 								<fb:control>
-									<ComboBox selectedKey="{worklistView>/filterBar/Status}">
+									<ComboBox selectedKey="{worklistView>/filterBar/Link}" placeholder="{i18n>enterLink}">
                                         <items>
-                                            <core:Item text="{i18n>active}" key="true"/>
-                                            <core:Item text="{i18n>inActive}" key="false"/>
+                                            <core:Item text="{i18n>Yes}" key="0"/>
+                                            <core:Item text="{i18n>No}" key="1"/>
                                         </items>
                                     </ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Status" groupTitle="Filters" label="{i18n>colStatus}">
+								<fb:control>
+									<ComboBox selectedKey="{worklistView>/filterBar/Status}" placeholder="{i18n>enterStatus}">
+                                        <items>
+                                            <core:Item text="{i18n>inActive}" key="0"/>
+                                            <core:Item text="{i18n>active}" key="1"/>
+                                            <core:Item text="{i18n>Expired}" key="2"/>
+                                        </items>
+                                    </ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>colZone}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterZoneSet' }" selectedKey="{worklistView>/filterBar/TrainingZone}" placeholder="{i18n>enterZone}">
+										<core:Item key="{Id}" text="{Id}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>colDivision}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterDivisionSet' }" selectedKey="{worklistView>/filterBar/TrainingDivision}" placeholder="{i18n>enterDivision}">
+										<core:Item key="{Id}" text="{Id}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>colDepot}">
+								<fb:control>
+									<ComboBox items="{ path: '/MasterDepotSet' }" selectedKey="{worklistView>/filterBar/TrainingDepot}" placeholder="{i18n>enterDepot}">
+										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
 						</fb:filterGroupItems>
@@ -41,66 +78,63 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}">
+			<IconTabBar id="idIconTabBar" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding traininglearning-tab">
 				<items>
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingType' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 9 } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-							updateFinished=".onUpdateFinished">
+							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
+							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
+							updateFinished="onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
-										<layoutData>
-											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-										</layoutData>
-									</Button>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddTraining">
-							            <layoutData>
-								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-							            </layoutData>
+                                        <Button text="{i18n>btnAddTraining}" type="Emphasized" icon="sap-icon://add" press="onAddOnlineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 						            </Button>
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
+								<Column width="31%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colStartDate}"/>
+                                <Column width="15%">
+									<Text text="{i18n>colTrainingType}"/>
 								</Column>
-                                <Column width="10%">
-									<Text text="{i18n>colTime}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colStartDateTime}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colCreationDate}"/>
+                                <Column width="16%">
+									<Text text="{i18n>colEndDateTime}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colCreatedBy}"/>
+                                <Column width="9%">
+									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
                                 <Column width="8%">
+									<Text text="{i18n>colLink}"/>
+								</Column>
+                                <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem press="onListItemPressTraining" type="Navigation">
+								<ColumnListItem press="onListItemPressOnlineTraining" type="Navigation">
 									<cells>
 										<Text text="{Title}"/>
-                                        <Text text="{StartDate}"/>
-                                        <Text text="{StartTime}-{EndTime}"/>
-                                        <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
+                                        <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
+                                        <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
+                                        <Text text="{RewardPoints}"/>
+                                        <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
-                                            <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
-                                            <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
+                                            <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
+                                            <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Success"/>
+                                            <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
-                                        <HBox>
-                                            <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
+                                        <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                            <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>
@@ -108,19 +142,11 @@
 						</Table>
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
-						<Table id="table2" width="auto"
-							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingType' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 10 } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-							updateFinished=".onUpdateFinished2">
+						<Table id="table2" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
-										<layoutData>
-											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-										</layoutData>
-									</Button>
-                                    <Button text="{i18n>btnAddTraining}" icon="sap-icon://add" press="onAddTraining">
+                                    <Button text="{i18n>btnUploadAttendance}" type="Emphasized" icon="sap-icon://upload" press="onAddOfflineTraining" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -128,44 +154,26 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
+								<Column width="55%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colStartDate}"/>
+                                <Column width="20%">
+									<Text text="{i18n>colTrainingType}"/>
+								</Column>
+                                <Column width="15%">
+									<Text text="{i18n>colAttendanceCount}"/>
 								</Column>
                                 <Column width="10%">
-									<Text text="{i18n>colTime}"/>
-								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colCreationDate}"/>
-								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colCreatedBy}"/>
-								</Column>
-                                <Column width="8%">
-									<Text text="{i18n>colStatus}"/>
-								</Column>
-                                <Column width="8%">
-									<Text text="{i18n>colAction}"/>
+									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem press="onListItemPressTraining" type="Navigation">
+								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
 									<cells>
 										<Text text="{Title}"/>
-                                        <Text text="{StartDate}"/>
-                                        <Text text="{StartTime}-{EndTime}"/>
-                                        <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
-                                        <HBox>
-                                            <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
-                                            <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
-                                        </HBox>
-                                        <HBox>
-                                            <Button icon="sap-icon://edit" press="onEditTraining" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDeleteTraining" type="Transparent" tooltip="{i18n>Remove}"/>
-                                        </HBox>
+                                        <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
+                                        <Text text="{PainterAttendanceCount}"/>
+                                        <Text text="{RewardPoints}"/>
 									</cells>
 								</ColumnListItem>
 							</items>
@@ -173,18 +181,13 @@
 					</IconTabFilter>
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
-							items="{ path: '/LearningSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
+							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
 							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-							updateFinished=".onUpdateFinished1">
+							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
-									<Button text="{i18n>btnRefresh}" icon="sap-icon://refresh" press="onRefreshView">
-										<layoutData>
-											<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-										</layoutData>
-									</Button>
-                                    <Button text="{i18n>btnAddLearning}" icon="sap-icon://add" press="onAddVideo">
+                                    <Button text="{i18n>btnAddTraining}" type="Emphasized" icon="sap-icon://add" press="onAddVideo" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 							            <layoutData>
 								            <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							            </layoutData>
@@ -192,39 +195,43 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="35%">
-									<Text text="{i18n>colLink}"/>
-								</Column>
-                                <Column width="22%">
+								<Column width="27%">
 									<Text text="{i18n>colTitle}"/>
 								</Column>
-                                <Column width="13%">
+                                <Column width="15%">
+									<Text text="{i18n>colTrainingType}"/>
+								</Column>
+                                <Column width="25%">
+									<Text text="{i18n>colLink}"/>
+								</Column>
+                                <Column width="10%">
 									<Text text="{i18n>colCreationDate}"/>
 								</Column>
-                                <Column width="13%">
-									<Text text="{i18n>colCreatedBy}"/>
+                                <Column width="9%">
+									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
-                                <Column width="8%">
+                                <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="9%">
+                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
 								<ColumnListItem press="onListItemPressVideo" type="Navigation">
 									<cells>
-                                        <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{Title}"/>
+                                        <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
+                                        <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
-                                        <Text text="{CreatedByName}"/>
+                                        <Text text="{RewardPoints}"/>
                                         <HBox>
-                                            <Text text="{i18n>active}" visible="{= ${Status} === true}"/>
-                                            <Text text="{i18n>inActive}" visible="{= ${Status} === false}"/>
+                                            <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
+                                            <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
                                         </HBox>
-										<HBox>
-                                            <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}"/>
-							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Remove}"/>
+                                        <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                            <Button icon="sap-icon://edit" press="onEditVideo" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${Status} === 0 }"/>
+							                <Button icon="sap-icon://delete" press="onDeleteVideo" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
 									</cells>
 								</ColumnListItem>

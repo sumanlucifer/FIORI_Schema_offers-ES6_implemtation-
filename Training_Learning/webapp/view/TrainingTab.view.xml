@@ -1,22 +1,21 @@
-<mvc:View xmlns:vbm="sap.ui.vbm" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:m="sap.m" controllerName="com.knpl.pragati.Training_Learning.controller.TrainingTab" height="100%">
+<mvc:View id="TrainingDisplayId" xmlns:vbm="sap.ui.vbm" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:m="sap.m" controllerName="com.knpl.pragati.Training_Learning.controller.TrainingTab" height="100%">
     <uxap:ObjectPageLayout showFooter="true" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
         <uxap:headerTitle>
             <uxap:ObjectPageDynamicHeaderTitle>
                 <uxap:breadcrumbs>
-                    <Breadcrumbs id="breadcrumbsId" currentLocationText="{i18n>TrainingDetails}">
+                    <Breadcrumbs id="breadcrumbsId" currentLocationText="{oModelView>/TrainingVideoDetails}">
                         <Link text="{i18n>TrainingVideo}" press="onCancel"/>
                     </Breadcrumbs>
                 </uxap:breadcrumbs>
                 <uxap:expandedHeading>
                     <m:Title text="{oModelView>/TrainingDetails/Title}" wrapping="true"/>
                 </uxap:expandedHeading>
+                <uxap:expandedContent>
+                    <m:Text text="{oModelView>/TrainingDetails/TrainingCode}"/>
+                </uxap:expandedContent>
 
                 <uxap:snappedHeading>
                     <m:FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
-                        <!-- <m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/> -->
-                        <!-- <FlexBox direction="Column" renderType="Bare">
-                            <Title text="{Title}" wrapping="true"/>
-                        </FlexBox> -->
                     </m:FlexBox>
                 </uxap:snappedHeading>
             </uxap:ObjectPageDynamicHeaderTitle>
@@ -24,23 +23,23 @@
 
         <uxap:headerContent>
             <m:FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
-                <m:Avatar src="sap-icon://picture" displaySize="L" class="sapUiTinyMarginBegin"/>
+                <!-- <m:Image src="{ parts : [{path : 'appView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" class="sapUiTinyMarginBegin" backgroundSize="cover" height="5rem" width="5rem"/> -->
+                <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{ parts : [{path : 'appView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
-                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{oModelView>/TrainingDetails/CreatedAt}"/>
+                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                    <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                     <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
-                    <m:ObjectStatus title="{i18n>colStartDate}" text="{oModelView>/TrainingDetails/StartDate}"/>
                 </m:FlexBox>
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
-                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{oModelView>/TrainingDetails/CreatedByName}"/>
-                    <m:ObjectStatus title="{i18n>colStartTime}" text="{oModelView>/TrainingDetails/StartTime}"/>
-                    <m:ObjectStatus title="{i18n>colEndTime}" text="{oModelView>/TrainingDetails/EndTime}"/>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
+                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewEndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                 </layout:VerticalLayout>
             </m:FlexBox>
         </uxap:headerContent>
 
         <uxap:sections>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TrainingDetails}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TrainingDetails}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbTrDetails" renderType="Bare">
@@ -49,7 +48,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Questionnaire}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbQuestionnaire" renderType="Bare">
@@ -58,7 +57,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}" visible="{= ${appView>/trainingType} === 'ONLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbEnrollment" renderType="Bare">
@@ -67,7 +66,16 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}" visible="{= ${appView>/trainingType} === 'VIDEO'}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox id="idVbEnrollmentVideo" renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.VideoEnrollment" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}" visible="{= ${appView>/trainingType} === 'OFFLINE'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbAttendance" renderType="Bare">
@@ -77,14 +85,15 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
         </uxap:sections>
-        <!-- <uxap:footer>
-            <Bar>
+        <uxap:footer>
+            <Bar visible="{= ${oModelView>/TrainingDetails/EndDate} > ${oModelView>/currDate} || ${appView>/flgViewOnVd} === true }">
                 <contentRight>
-                    <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button text="{i18n>Activate}" visible="{= ${oModelView>/TrainingDetails/Status} === 0 &amp;&amp; ${appView>/flgViewOn} === true &amp;&amp; ${appView>/loggedUserRoleId} !== 2 }" press="onActiveInActive" type="Emphasized"/>
+				    <Button text="{i18n>DeActivate}" visible="{= ${oModelView>/TrainingDetails/Status} === 1 &amp;&amp; ${appView>/flgViewOn} === true &amp;&amp; ${appView>/loggedUserRoleId} !== 2 }" press="onActiveInActive" type="Reject"/>
+                    <Button id="cancel" text="{i18n>btnCancel}" type="Ghost" visible="{= ${appView>/flgEditOn} === true}" press="onCancel"/>
+                    <Button id="save" text="{i18n>btnSave}" type="Emphasized" visible="{= ${appView>/flgEditOn} === true}" press="handleSavePress"/>
                 </contentRight>
             </Bar>
-        </uxap:footer> -->
+        </uxap:footer>
     </uxap:ObjectPageLayout>
 </mvc:View>

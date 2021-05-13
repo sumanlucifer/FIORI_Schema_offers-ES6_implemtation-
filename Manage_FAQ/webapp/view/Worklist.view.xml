@@ -11,11 +11,11 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" basicSearch="sfld" showGoOnFB="true" showRestoreOnFB="true">
+					<fb:FilterBar showRestoreButton="true" id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showRestoreOnFB="true">
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQCategoryId" groupTitle="Filters" label="{i18n>colFAQCategory}">
 								<fb:control>
-									<ComboBox items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
+									<ComboBox placeholder="{i18n>enterFAQCategory}" items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
 										<core:Item key="{Id}" text="{FAQCategory}"/>
 									</ComboBox>
 								</fb:control>
@@ -28,13 +28,13 @@
 		<f:content>
 			<Table id="table" width="auto"
 				items="{ path: '/MasterFAQSet', parameters : { expand : 'FAQCategory' }, filters : { path : 'IsArchived' , operator : 'EQ' , value1 : false }, sorter: { path: 'Id', descending: false } }"
-				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
-				updateFinished=".onUpdateFinished">
+				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false"
+				updateFinished="onUpdateFinished">
 				<headerToolbar>
 					<OverflowToolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
 						<ToolbarSpacer/>
-						<Button text="{i18n>btnAdd}" icon="sap-icon://add" press="onAdd">
+						<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }">
 							<layoutData>
 								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							</layoutData>
@@ -51,11 +51,8 @@
 					<Column width="53%">
 						<Text text="{i18n>colAnswer}"/>
 					</Column>
-                    <Column width="5%">
-						<Text text="{i18n>colEdit}"/>
-					</Column>
-					<Column width="7%">
-						<Text text="{i18n>colRemove}"/>
+                    <Column width="12%">
+						<Text text="{i18n>colAction}"/>
 					</Column>
 				</columns>
 				<items>
@@ -64,8 +61,10 @@
 							<Text text="{FAQCategory/FAQCategory}"/>
 							<Text text="{Question}"/>
 							<Text text="{Answer}"/>
-							<Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
-							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
+                            <HBox>
+							<Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
+							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="Delete" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
+                            </HBox>
 						</cells>
 					</ColumnListItem>
 				</items>

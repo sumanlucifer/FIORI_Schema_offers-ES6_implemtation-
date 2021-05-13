@@ -1,10 +1,10 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:u="sap.ui.unified" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table width="auto" items="{path: 'uploadModel>/'}" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblAttendance" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails/PrimaryDealerDetails' }, sorter: { path: 'CreatedAt', descending: false } }" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
             <headerToolbar>
                 <Toolbar>
-                    <ToolbarSpacer/>
-                     <SearchField width="20%"></SearchField>
+                    <ToolbarSpacer/> 
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/Attendance}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 
@@ -19,17 +19,33 @@
                     <Text text="{i18n>colMobileNumber}"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>colStartDate}"/>
+                    <Text text="{i18n>colZone}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colDivision}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colDepot}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colPrDealer}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colAttendanceDate}"/>
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Text text="{uploadModel>Col1}"/>
-                        <Text text="{uploadModel>Col2}"/>
-                        <Text text="{uploadModel>Col3}"/>
-                        <Text text="{uploadModel>Col4}"/>
+                        <ObjectIdentifier title="{PainterDetails/MembershipCard}" titleActive="true"/>
+                        <Text text="{PainterDetails/Name}"/>
+                        <Text text="{PainterDetails/Mobile}"/>
+                        <Text text="{PainterDetails/ZoneId}"/>
+                        <Text text="{PainterDetails/DivisionId}"/>
+                        <Text text="{PainterDetails/DepotId}"/>
+                        <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
                     </cells>
                 </ColumnListItem>
             </items>

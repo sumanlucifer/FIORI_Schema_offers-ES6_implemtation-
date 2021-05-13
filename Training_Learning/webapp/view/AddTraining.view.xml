@@ -1,0 +1,170 @@
+<mvc:View controllerName="com.knpl.pragati.Training_Learning.controller.AddTraining" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
+    <Page busy="{oModelView>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+        <headerContent>
+            <Bar>
+                <contentLeft>
+                    <Breadcrumbs currentLocationText="{oModelView>/AddEditTraining}">
+                        <Link text="{i18n>TrainingVideo}" press="onCancel"/>
+                    </Breadcrumbs>
+                </contentLeft>
+            </Bar>
+        </headerContent>
+        <VBox id="idVbxAddTraining" width="100%">
+        <f:SimpleForm id="AddTrainingDetails" editable="true" layout="ResponsiveGridLayout" title="{oModelView>/AddEditTrainingDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:content>
+            <core:Title text="{i18n>TrainingDetails}"/>
+                <Label text="{i18n>colTrainingMode}" required="true"/>
+                <ComboBox items="{path:'/MasterTrainingTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingTypeId}" editable="false">
+                    <items>
+                        <core:Item text="{TrainingType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>colTrainingType}" required="true"/>
+                <ComboBox id="idTrSubType" change="onTrainingTypeChange" items="{path:'/MasterTrainingSubTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelView>/TrainingDetails/TrainingSubTypeId}">
+                    <items>
+                        <core:Item text="{TrainingSubType}" key="{Id}"/>
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>colTitle}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input maxLength="100" value="{oModelView>/TrainingDetails/Title}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+
+                <Label text="{i18n>colTrainingDescription}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <TextArea value="{oModelView>/TrainingDetails/Description}" rows="5" maxLength="1000" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+
+                <Label text="{i18n>colLink}" required="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input maxLength="300" width="100%" value="{oModelView>/TrainingDetails/Url}" type="Url" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+
+                <!-- <l:HorizontalLayout> -->
+                    <!-- <l:VerticalLayout class="sapUiSmallMarginEnd"> -->
+                        <Label text="{i18n>colStartDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                        <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/StartDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                    <!-- </l:VerticalLayout> -->
+
+                    <!-- <l:VerticalLayout> -->
+                        <Label text="{i18n>colEndDateTime}" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                        <DateTimePicker width="35%" valueStateText="Enter a valid date and time" minDate="{oModelView>/currDate}" dateValue="{oModelView>/TrainingDetails/EndDate}" valueFormat="yyyy-MM-dd HH:mm:ss" displayFormat="dd MMM yyyy hh:mm a" required="true" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '1'}"/>
+                    <!-- </l:VerticalLayout> -->
+                <!-- </l:HorizontalLayout> -->
+
+                <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
+				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
+
+                <Label text="{i18n>colRewardPoints}"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" />
+
+                <Label text="Upload Thumbnail Image" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <HBox>
+                    <VBox>
+                        <VBox class="sapUiTinyMarginBottom">
+                                <HBox>
+                                    <u:FileUploader
+                                        id="idImageUploader"
+                                        width="100%"
+                                        tooltip="{i18n>fileUploaderTrainingtip}"
+                                        typeMissmatch="handleTypeMissmatch"
+                                        fileType="png,jpg,jpeg"
+                                        maximumFileSize="2.1"
+                                        fileSizeExceed="onFileSizeExceed"
+                                        useMultipart="false"
+                                        sendXHR="true"
+                                        fileAllowed="onUpload"
+                                        visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                                </HBox>
+                                <HBox>
+                                    <ObjectAttribute title="File Type" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text=".png, .jpg, .jpeg" class="sapUiSmallMarginEnd"/>
+                                    <ObjectAttribute title="Max Size" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" text="2 MB" class="sapUiSmallMarginEnd"/>
+                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/showPreviewImageButton} === true}" enabled="{= ${oModelView>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                                </HBox>
+                        </VBox>
+                    </VBox>                  
+                </HBox>
+
+            <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Target Group' : '' }"/>
+
+                <Label text="Select Target Group" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <RadioButtonGroup id="rbg1" columns="3" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" select="onRadioBtnChange">
+                    <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
+                    <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                    <RadioButton id="RB3" text="Painter Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
+                </RadioButtonGroup>
+
+                <Label text="{i18n>colPainter}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
+                <MultiInput id="multiInputPainterAdd" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}" tokens="{oModelView>/TrainingDetails/TrainingPainters}" valueHelpRequest="onValueHelpRequestedPainter">
+                    <tokens>
+                        <Token editable="false" text="{oModelView>Name}" key="{oModelView>Id}"/>
+                    </tokens>
+                </MultiInput>
+
+                <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/TrainingZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colDivision}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idDivision" selectedKeys="{oModelView>/TrainingDetails/TrainingDivision}" editable="{= ${oModelView>/TrainingDetails/TrainingZone}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
+					<core:Item key="{Id}" text="{Id}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colDepot}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiInput id="multiInputDepotAdd" editable="{= ${oModelView>/TrainingDetails/TrainingDivision}.length > 0 }" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" tokens="{oModelView>/TrainingDetails/TrainingDepot}" valueHelpRequest="onValueHelpRequestedDepot">
+	                <tokens>
+                        <Token editable="false" text="{oModelView>Depot}" key="{oModelView>DepotId}"/>
+                    </tokens>
+	            </MultiInput>
+
+                <Label text="{i18n>colPainterType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idPainterType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{PainterType}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colPainterArcheType}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                <MultiComboBox id="idPainterArcheType" selectedKeys="{oModelView>/TrainingDetails/TrainingPainterArcheTypeDetails}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<core:Item key="{Id}" text="{ArcheType}"/>
+				</MultiComboBox>
+
+                <Label text="{i18n>colAttendanceFile}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}"/>
+                <u:FileUploader id="idAttendanceFileUploader" fileType="csv" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '2'}">
+                </u:FileUploader>
+
+        </f:content>
+        </f:SimpleForm>
+        </VBox>
+        <VBox id="idVbxAddQuestionnaire" width="100%">
+        <f:SimpleForm id="AddQuestionnaireDetails" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+        <f:content>
+                <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Questionnaire' : '' }"/>
+                <List visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
+					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer/>
+				    		<Button press="onAddQuestionnaire" type="Emphasized" text="{i18n>btnAddQuestionnaire}"/>
+						</Toolbar>
+					</headerToolbar>
+                    <CustomListItem>
+                        <VBox renderType="Bare" class="sapUiTinyMargin">
+                            <HBox alignItems="Start" justifyContent="SpaceBetween">
+                                <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
+                                <FlexBox alignItems="Start" justifyContent="End">
+				                    <Button icon="sap-icon://edit" press="onEditQuestionnaire" type="Transparent" tooltip="{i18n>Edit}" class="sapUiSmallMarginEnd" />
+				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Delete}" />
+			                    </FlexBox>
+                            </HBox>
+                            <VBox items="{oModelView>TrainingQuestionnaireOptions}">
+                                <ObjectStatus text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiSmallMarginBegin"/>
+                            </VBox>
+                        </VBox>
+                    </CustomListItem>
+				</List>
+        </f:content>
+        </f:SimpleForm>
+        </VBox>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnCancel}" press="onCancel"/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press="onSaveTraining"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
