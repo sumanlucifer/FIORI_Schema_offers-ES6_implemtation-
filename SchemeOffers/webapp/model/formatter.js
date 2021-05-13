@@ -74,6 +74,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
           new URL(sURL).pathname
         );
       }
-    },
+    }
+    
   };
 });

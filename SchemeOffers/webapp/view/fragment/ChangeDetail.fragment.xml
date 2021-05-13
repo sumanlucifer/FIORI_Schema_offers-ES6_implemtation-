@@ -259,7 +259,10 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                        
-                           <Label text="{oModelControl>Name}" />
+                           <VBox>
+                                <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
+                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
+                            </VBox>
                            <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredVolume}" />
                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredPoints}" />
                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardPoints}" />

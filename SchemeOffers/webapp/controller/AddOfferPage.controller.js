@@ -241,17 +241,7 @@ sap.ui.define(
           this._getProductsData();
         },
 
-        _getProductsData: function () {
-          var oView = this.getView();
-          var oModelControl = oView.getModel("oModelControl");
-          var oData = oView.getModel();
-          oData.read("/MasterProductSet", {
-            success: function (mParam1) {
-              oModelControl.setProperty("/oData/Products", mParam1["results"]);
-            },
-            error: function (mParam1) {},
-          });
-        },
+        
 
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");

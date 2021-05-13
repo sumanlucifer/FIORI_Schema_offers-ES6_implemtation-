@@ -21,7 +21,7 @@
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreationDate}"/>
-                            <Text text="{path:'CreatedAt',formatter:'.formatter.fmtDate'}"/>
+                            <Text text="{path:'CreatedAt',formatter:'.formatter.fmtDate2'}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
@@ -35,11 +35,11 @@
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStartDate}"/>
-                            <Text text="{path:'StartDate',formatter:'.formatter.fmtDate'}"/>
+                            <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerEndDate}"/>
-                            <Text text="{path:'EndDate',formatter:'.formatter.fmtDate'}"/>
+                            <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/>
                         </layout:HorizontalLayout>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>

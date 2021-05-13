@@ -255,7 +255,7 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                        
-                           <VBox ><Label visible="{= ${oModelControl2>Product/ProductName}!==null }" text="{oModelControl2>Product/ProductName}" /> <Label text="{oModelControl2>Pack/Description}" /> </VBox>
+                           <VBox ><Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 0  }" text="{oModelControl2>Product/ProductName}" /> <Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 1  }" text="{oModelControl2>Pack/Description}" /> </VBox>
                            <Label  text="{oModelControl2>RequiredVolume}" />
                            <Label  text="{oModelControl2>RequiredPoints}" />
                            <Label text="{oModelControl2>RewardPoints}" />
@@ -326,13 +326,13 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <Text text="{path:'PurchaseStartDate',formatter:'.formatter.fmtDate2'}"/>
+                                <Text text="{path:'PurchaseStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
                                 
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <Text text="{path:'PurchaseEndDate',formatter:'.formatter.fmtDate2'}"/>
+                                <Text text="{path:'PurchaseEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}" >
@@ -567,8 +567,8 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                             <Text text="{path:'oModelControl2>StartDate',formatter:'.formatter.fmtDate2'}"/>
-                              <Text text="{path:'oModelControl2>EndDate',formatter:'.formatter.fmtDate2'}"/>
+                             <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                              <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                               <Text text="{oModelControl2>BonusPoints}"/>
                     </cells>
                 </ColumnListItem>
@@ -586,14 +586,14 @@
                     <Text text="{i18n>Table1Label1}" />
                 </Column>
                  <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                    <Label  text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                    <Label text="{i18n>formBonusValidaityTo}" />
                 </Column>
                
                  <Column>
-                    <Label required="true" text="{i18n>Table3Label1}" />
+                    <Label  text="{i18n>Table3Label1}" />
                 </Column>
                 
             </columns>
@@ -603,13 +603,84 @@
                     <cells>
                     <VBox ><Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 0}" text="{oModelControl2>Product/ProductName}" /> <Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 1}"  text="{oModelControl2>Pack/Description}" /> </VBox>
                             
-                            <Text text="{path:'oModelControl2>StartDate',formatter:'.formatter.fmtDate2'}"/>
-                             <Text text="{path:'oModelControl2>EndDate',formatter:'.formatter.fmtDate2'}"/>
+                            <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                             <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                              <Text text="{oModelControl2>BonusPoints}" />
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
+         <f:Form editable="false">
+            <f:layout>
+                <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
+            </f:layout>
+            <f:formContainers>
+
+                <f:FormContainer title="{i18n>BonusAppPainter}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>TopAll50}">
+                            <f:fields>
+                                <RadioButtonGroup editable="false" select="onRbTopApp" selectedIndex="{= ${BonusApplicableTopPainter}===null? 0:1}"  columns="2">
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/> -->
+                                <Text text="{BonusApplicableTopPainter}"/>
+                            </f:fields>
+                        </f:FormElement>
+                      
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="{i18n>BonusValidity}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>PainterGrowth}">
+                            <f:fields>
+                                <Text text="{PainterGrowth}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeFrom}">
+                            <f:fields>
+                               
+                               <Text text="{path:'PerformanceStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeTo}">
+                            <f:fields>
+                               
+                               <Text text="{path:'PerformanceEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="{i18n>RedemtionCycle}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
+                            <f:fields>
+                             
+                                <Text text="{RedemptionCycle}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="{i18n>ParentChildOffer}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>ParentOffer}">
+                            <f:fields>
+                                <Text text="{ParentOfferId}"/>
+                                
+                            </f:fields>
+                        </f:FormElement>
+                        
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
 
     </VBox>
 </core:FragmentDefinition>

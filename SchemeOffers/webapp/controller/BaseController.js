@@ -295,7 +295,6 @@ sap.ui.define(
             }
 
             aSelectedData.push({
-              Name: obj["ProductName"],
               ProductCode: obj["Id"],
               RequiredVolume: "",
               RequiredPoints: "",
@@ -319,7 +318,6 @@ sap.ui.define(
           for (var x of oControl) {
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
-              Name: obj["Description"],
               SkuCode: obj["SkuCode"],
               RequiredVolume: "",
               RequiredPoints: "",
@@ -614,11 +612,6 @@ sap.ui.define(
                 "Title",
                 FilterOperator.Contains,
                 sValue
-              ),
-              new Filter(
-                "Id",
-                FilterOperator.EQ,
-                sValue
               )
               
             ],
@@ -626,6 +619,31 @@ sap.ui.define(
           );
 
           oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        _getProductsData: function () {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oData = oView.getModel();
+          oData.read("/MasterProductSet", {
+            success: function (mParam1) {
+              oModelControl.setProperty("/oData/Products", mParam1["results"]);
+            },
+            error: function (mParam1) {},
+          });
+        },
+        GetPackName: function (mParam1) {
+          var sPath = "/MasterRepProductSkuSet('" + mParam1 + "')";
+          var oData = this.getView().getModel().getProperty(sPath);
+          if (oData !== undefined && oData !== null) {
+            return oData["Description"];
+          }
+        },
+        GetProdName: function (mParam1) {
+          var sPath = "/MasterProductSet('" + mParam1 + "')";
+          var oData = this.getView().getModel().getProperty(sPath);
+          if (oData !== undefined && oData !== null) {
+            return oData["ProductName"];
+          }
         },
 
 
