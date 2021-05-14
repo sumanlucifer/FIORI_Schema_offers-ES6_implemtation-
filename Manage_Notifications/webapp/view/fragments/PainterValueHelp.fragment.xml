@@ -1,0 +1,96 @@
+<core:FragmentDefinition
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <ValueHelpDialog
+        title="Painters"
+        ok=".onValueHelpOkPressPainter"
+        cancel=".onValueHelpCancelPressPainter"
+        afterClose=".onValueHelpAfterClosePainter"
+        afterOpen=".onValueHelpAfterOpenPainter"
+        supportRanges="false"
+        key="Id"
+        descriptionKey="Name">
+        <filterBar>
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ZoneId"
+                        label="Zone"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="ZoneId" placeholder="{i18n>enterZone}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="DivisionId"
+                        label="Division"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="DivisionId" placeholder="{i18n>enterDivision}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Depot/Depot"
+                        label="Depot"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Depot/Depot" placeholder="{i18n>enterDepot}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="PainterType/PainterType"
+                        label="Painter Type"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="PainterType/PainterType" placeholder="{i18n>enterPainterType}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ArcheType/ArcheType"
+                        label="Painter ArcheType"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="ArcheType/ArcheType" placeholder="{i18n>enterPainterArcheType}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="MembershipCard"
+                        label="Membership ID"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Name"
+                        label="Name"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Name" placeholder="{i18n>enterName}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Mobile"
+                        label="Mobile Number"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Mobile" placeholder="{i18n>enterMobile}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </filterBar>
+    </ValueHelpDialog>
+</core:FragmentDefinition>
+
+

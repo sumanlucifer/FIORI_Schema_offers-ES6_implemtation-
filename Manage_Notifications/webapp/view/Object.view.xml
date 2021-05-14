@@ -53,11 +53,17 @@
 									<core:Item key="{Id}" text="{GroupName}"/>
 								</ComboBox>
 								<Label visible="{= ${objectView>IsGroupNotification} === false}" required="true" text="{i18n>colReceivers}"/>
-								<MultiComboBox visible="{= ${objectView>IsGroupNotification} === false}" width="100%" selectedKeys="{objectView>Receivers}"
-									items="{ path : '/UserSet', parameters : { expand : 'Role', 'select' : 'Id,FirstName,LastName,Email,RoleId,Role/Role' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'RoleId' , operator : 'NE' , value1 : 4 } ], sorter : [ { path : 'Role/Role', descending : false, group: true }, { path : 'FirstName', descending : false } ], groupHeaderFactory: '.getGroupHeader' }"
+								<!-- <MultiComboBox visible="{= ${objectView>IsGroupNotification} === false}" width="100%" selectedKeys="{objectView>Receivers}"
+									items="{ path : '/UserSet', parameters : { expand : 'Role,Painter', 'select' : 'Id,RoleId,Role/Role,Painter/Name' }, groupHeaderFactory: '.getGroupHeader' }"
 									editable="{= ${appView>/viewFlag} === 'Y'}">
-									<core:Item key="{Id}" text="{FirstName} {LastName} - {Email}"/>
-								</MultiComboBox>
+									<core:Item key="{Id}" text="{Painter/Name}"/>
+								</MultiComboBox> -->
+                                 <MultiInput id="multiInputPainterAdd" visible="{= ${objectView>IsGroupNotification} === false}" tokens="{objectView>/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
+                                    <tokens>
+                                        <Token editable="false" text="{objectView>Name}" key="{objectView>Id}"/>
+                                    </tokens>
+                                 </MultiInput>
+
 							</VBox>
 							<VBox>
 								<Label text="{i18n>colIsLater}"/>
