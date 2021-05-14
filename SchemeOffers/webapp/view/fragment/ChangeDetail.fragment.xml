@@ -34,7 +34,7 @@
                                 <TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="Scheme Image">
+                        <f:FormElement label="Offer Image">
                             <f:fields>
                                 <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
                             </f:fields>
@@ -332,12 +332,12 @@
                        </f:FormContainer>
                        <f:FormContainer title="{i18n>formApplicableProducts} - I">
                     <f:formElements>
-                    <f:FormElement label="{i18n>formDateRangeFrom}">
+                    <f:FormElement label="{i18n>From}">
                             <f:fields>
                                 <DatePicker displayFormat="dd/MM/yyyy" enabled="{oModelView>/IsSpecificPainter}"  dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
-                          <f:FormElement label="{i18n>formDateRangeTo}">
+                          <f:FormElement label="{i18n>To}">
                             <f:fields>
                                 <DatePicker displayFormat="dd/MM/yyyy"  enabled="{oModelView>/IsSpecificPainter}" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/YYYY" ></DatePicker>
                             </f:fields>

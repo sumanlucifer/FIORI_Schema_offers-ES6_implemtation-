@@ -94,7 +94,9 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-            sTitle = this.getResourceBundle().getText("TableTitle");
+           sTitle = this.getResourceBundle().getText("TableDataCount", [
+              0
+            ]);
           }
           this.getView()
             .getModel("worklistView")
