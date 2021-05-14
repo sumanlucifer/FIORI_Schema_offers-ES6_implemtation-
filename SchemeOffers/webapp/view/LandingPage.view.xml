@@ -8,9 +8,6 @@
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:vm="sap.ui.comp.variants">
     <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiContentPadding">
-        <!-- DynamicPage Title -->
-      
-        <!-- DynamicPage Header -->
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>

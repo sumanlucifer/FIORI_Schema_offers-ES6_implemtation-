@@ -321,12 +321,11 @@ sap.ui.define(
               c3.then(function (oPayLoad) {
                 c4 = othat._CreatePayLoadPart4(oPayLoad);
                 c4.then(function (oPayLoad) {
-                  //c5 = othat._CreateOffer(oPayLoad);
                   c5 = othat._CreatePayLoadPart5(oPayLoad);
                   c5.then(function (oPayLoad) {
                     c6 = othat._CreateOffer(oPayLoad);
                     c6.then(function (oData) {
-                        c7=othat._UploadFile(oData,bFileFlag)
+                      c7 = othat._UploadFile(oData, bFileFlag);
                     });
                   });
                 });
@@ -752,8 +751,7 @@ sap.ui.define(
             oDataModel.create("/OfferSet", oPayLoad, {
               success: function (data) {
                 MessageToast.show("Offer Sucessfully Created.");
-                //othat._navToHome();
-                console.log(data);
+                othat._navToHome();
                 resolve(data);
               },
               error: function (data) {
