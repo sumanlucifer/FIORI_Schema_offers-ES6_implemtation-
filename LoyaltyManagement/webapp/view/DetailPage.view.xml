@@ -29,14 +29,14 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <ObjectAttribute title="Type of Accrual"/>
-                        <ObjectStatus text="{PointType}" />
+                        <ObjectStatus text="{path:'PointType',formatter:'.formatter.accuralType'}" />
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Status"/>
                         <VBox>
-                        <ObjectStatus text="{PainterReferralHistory/ReferralStatus}" state="Warning" visible="{=${PainterReferralHistory} !== null }"/>
-                        <ObjectStatus text="{PainterTokenScanHistory/ScanStatus}" state="Warning" visible="{=${PainterTokenScanHistory} !== null }"/>
+                        <ObjectStatus text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" state="Warning" visible="{=${PainterReferralHistory} !== null }"/>
+                        <ObjectStatus text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" state="Warning" visible="{=${PainterTokenScanHistory} !== null }"/>
                         </VBox>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -69,12 +69,12 @@
                             <form:formElements>
                                 <form:FormElement label="Type of Request">
                                     <form:fields>
-                                        <Text class="sapUiTinyMarginTop" text="{PointTransactionType}" />
+                                        <Text class="sapUiTinyMarginTop" text="{path:'PointTransactionType',formatter:'.formatter.requestType'}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Type of Accrual">
                                     <form:fields>
-                                        <Text  class="sapUiTinyMarginTop"  text="{PointType}" />
+                                        <Text  class="sapUiTinyMarginTop"  text="{path:'PointType',formatter:'.formatter.accuralType'}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Request ID">
