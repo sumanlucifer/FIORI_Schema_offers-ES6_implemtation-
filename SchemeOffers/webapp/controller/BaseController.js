@@ -138,6 +138,49 @@ sap.ui.define(
                   "Rbtn/Depots",
                   "Rbtn/AppPainter",
                 ]);
+              } else if (a === "ApplicablePainterProducts") {
+                othat._propertyToBlank(
+                  [
+                    "MultiCombo/PCat2",
+                    "MultiCombo/PClass2",
+                    "MultiCombo/AppProd2",
+                    "MultiCombo/AppPacks2",
+                    "MultiCombo/PCat3",
+                    "MultiCombo/PClass3",
+                    "MultiCombo/AppProd3",
+                    "MultiCombo/AppPacks3"
+                  ],
+                  true
+                );
+                othat._RbtnReset([
+                  "Rbtn/Zones",
+                  "Rbtn/PCat2",
+                  "Rbtn/PClass2",
+                  "Rbtn/AppProd2",
+                  "Rbtn/AppPacks2",
+                  "Rbtn/PCat3",
+                  "Rbtn/PClass3",
+                  "Rbtn/AppProd3",
+                  "Rbtn/AppPacks3"
+                ]);
+              } else if (a === "AdditionalReward") {
+                othat._propertyToBlank(
+                  [
+                    "MultiCombo/PCat4",
+                    "MultiCombo/PClass4",
+                    "MultiCombo/AppProd4",
+                    "MultiCombo/AppPacks4",
+                    "Table/Table3",
+                    "Table/Table4"
+                  ],
+                  true
+                );
+                othat._RbtnReset([
+                  "Rbtn/PCat4",
+                  "Rbtn/PClass4",
+                  "Rbtn/AppProd4",
+                  "Rbtn/AppPacks4"
+                ]);
               }
             }
           }
@@ -513,11 +556,8 @@ sap.ui.define(
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
-           this._propertyToBlank(
-            [
-              "PointSlabUpperLimit",
-              "PointSlabLowerLimit"
-            ],
+          this._propertyToBlank(
+            ["PointSlabUpperLimit", "PointSlabLowerLimit"],
             false
           );
           this._propertyToBlank(
@@ -537,7 +577,7 @@ sap.ui.define(
               "MultiCombo/Divisions",
               "MultiCombo/Depots",
               "Fields/Date1",
-              "Fields/Date2"
+              "Fields/Date2",
             ],
             true
           );
