@@ -108,7 +108,9 @@ sap.ui.define(
           oModelControl.setProperty("/OfferType", object);
           this._OfferTypeFieldsSet();
         },
+
         _OfferTypeFieldsSet: function () {
+          // disabling all the fields that we have to hide.
           var oView = this.getView();
           var oOfferType = oView
             .getModel("oModelControl")
@@ -148,7 +150,7 @@ sap.ui.define(
                     "MultiCombo/PCat3",
                     "MultiCombo/PClass3",
                     "MultiCombo/AppProd3",
-                    "MultiCombo/AppPacks3"
+                    "MultiCombo/AppPacks3",
                   ],
                   true
                 );
@@ -161,7 +163,7 @@ sap.ui.define(
                   "Rbtn/PCat3",
                   "Rbtn/PClass3",
                   "Rbtn/AppProd3",
-                  "Rbtn/AppPacks3"
+                  "Rbtn/AppPacks3",
                 ]);
               } else if (a === "AdditionalReward") {
                 othat._propertyToBlank(
@@ -171,7 +173,7 @@ sap.ui.define(
                     "MultiCombo/AppProd4",
                     "MultiCombo/AppPacks4",
                     "Table/Table3",
-                    "Table/Table4"
+                    "Table/Table4",
                   ],
                   true
                 );
@@ -179,7 +181,7 @@ sap.ui.define(
                   "Rbtn/PCat4",
                   "Rbtn/PClass4",
                   "Rbtn/AppProd4",
-                  "Rbtn/AppPacks4"
+                  "Rbtn/AppPacks4",
                 ]);
               }
             }

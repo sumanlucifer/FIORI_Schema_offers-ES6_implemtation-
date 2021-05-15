@@ -110,15 +110,17 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                      <f:FormElement label="{i18n>formApplicableLbl10}">
+                    </f:formElements>
+                </f:FormContainer>
+                 <f:FormContainer title="{i18n>ParentChildOffer}">
+                    <f:formElements>
+                         <f:FormElement label="{i18n>SelectParentOffer}">
                             <f:fields>
-                                 <RadioButtonGroup select="onRbRewardRatio"  columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
-                                </RadioButtonGroup>
+                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/ParentOfferId'}" />
+                                
                             </f:fields>
                         </f:FormElement>
-                      
+                        
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer  title="{i18n>formApplicableLbl10}">
@@ -127,7 +129,7 @@
                             <f:fields>
                                  <RadioButtonGroup select="onRbRewardRatio"  columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
                                     <RadioButton text="{i18n>All}" />
-                                    <RadioButton text="{i18n>Specific}" visible="{oModelControl>/OfferType/RewardRatio}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -179,7 +181,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 &amp;&amp; ${oModelControl>/OfferType/RewardRatio}===true  }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
            <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
@@ -217,12 +219,12 @@
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
                            <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
-                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+                           <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
-                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId'}">
+                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox>
-                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardCash}" />
+                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
                             
                     </cells>
                 </ColumnListItem>
@@ -631,7 +633,7 @@
                             </VBox>
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>BonusPoints}" />
+                             <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
                     </cells>
                 </ColumnListItem>
             </items>
@@ -693,17 +695,7 @@
                         
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>ParentChildOffer}">
-                    <f:formElements>
-                         <f:FormElement label="{i18n>SelectParentOffer}">
-                            <f:fields>
-                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/ParentOfferId'}" />
-                                
-                            </f:fields>
-                        </f:FormElement>
-                        
-                    </f:formElements>
-                </f:FormContainer>
+               
             </f:formContainers>
         </f:Form>
     </VBox>

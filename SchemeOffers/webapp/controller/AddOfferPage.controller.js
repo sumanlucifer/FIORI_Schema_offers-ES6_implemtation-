@@ -83,7 +83,7 @@ sap.ui.define(
               RewardRatio: true,
               ApplicablePainters: true,
               ApplicablePainterProducts: true,
-              AdditionalReward: true
+              AdditionalReward: true,
             },
             MultiCombo: {
               Zones: [],
@@ -110,7 +110,7 @@ sap.ui.define(
               AppPacks1: [],
               AppPacks2: [],
               AppPacks3: [],
-              AppPacks4: []
+              AppPacks4: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -135,7 +135,7 @@ sap.ui.define(
               Zones: 0,
               Divisions: 0,
               Depots: 0,
-              AppPainter:0
+              AppPainter: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -159,7 +159,7 @@ sap.ui.define(
               Zones: false,
               Divisions: false,
               Depots: false,
-              AppPainter:false
+              AppPainter: false,
             },
             Table: {
               Table1: [
@@ -355,7 +355,7 @@ sap.ui.define(
               .map(function (a) {
                 return Object.assign({}, a);
               });
-            console.log(oDataTbl);
+
             var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
             aFinalArray = oDataTbl.filter(function (ele) {
               if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
@@ -381,20 +381,14 @@ sap.ui.define(
               .map(function (a) {
                 return Object.assign({}, a);
               });
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["StartDate"] !== null &&
-                ele["EndDate"] !== null &&
-                ele["BonusPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x == "BonusPoints") {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
-                delete ele["Name"];
                 return ele;
               }
             });
@@ -410,20 +404,14 @@ sap.ui.define(
               .map(function (a) {
                 return Object.assign({}, a);
               });
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["StartDate"] !== null &&
-                ele["EndDate"] !== null &&
-                ele["BonusPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x == "BonusPoints") {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
-                delete ele["Name"];
                 return ele;
               }
             });
@@ -474,19 +462,20 @@ sap.ui.define(
             var oDataTbl = JSON.parse(
               JSON.stringify(oModel.getProperty("/Table/Table2"))
             );
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["RequiredVolume"].trim() !== "" &&
-                ele["RewardPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x !== "ProductCode") {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
-                delete ele["Name"];
                 return ele;
               }
             });
@@ -499,19 +488,20 @@ sap.ui.define(
             var oDataTbl = JSON.parse(
               JSON.stringify(oModel.getProperty("/Table/Table2"))
             );
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["RequiredVolume"].trim() !== "" &&
-                ele["RewardPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x !== "SkuCode") {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
-                delete ele["Name"];
                 return ele;
               }
             });
@@ -577,7 +567,7 @@ sap.ui.define(
             IsSpecificBonusProduct: "AppProd4",
             IsSpecificBonusPack: "AppPacks4",
             IsSpecificBonusRewardRatio: "BRewards",
-            IsSpecificPainter:"AppPainter"
+            IsSpecificPainter: "AppPainter",
           };
           var oModelControl = oView.getModel("oModelControl");
           var oPropRbtn = oModelControl.getProperty("/Rbtn");
