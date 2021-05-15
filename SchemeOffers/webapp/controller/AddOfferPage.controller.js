@@ -110,7 +110,7 @@ sap.ui.define(
               AppPacks1: [],
               AppPacks2: [],
               AppPacks3: [],
-              AppPacks4: [],
+              AppPacks4: []
             },
             Rbtn: {
               PCat1: 0,
@@ -135,6 +135,7 @@ sap.ui.define(
               Zones: 0,
               Divisions: 0,
               Depots: 0,
+              AppPainter:0
             },
             MultiEnabled: {
               PCat1: false,
@@ -158,6 +159,7 @@ sap.ui.define(
               Zones: false,
               Divisions: false,
               Depots: false,
+              AppPainter:false
             },
             Table: {
               Table1: [
@@ -575,6 +577,7 @@ sap.ui.define(
             IsSpecificBonusProduct: "AppProd4",
             IsSpecificBonusPack: "AppPacks4",
             IsSpecificBonusRewardRatio: "BRewards",
+            IsSpecificPainter:"AppPainter"
           };
           var oModelControl = oView.getModel("oModelControl");
           var oPropRbtn = oModelControl.getProperty("/Rbtn");

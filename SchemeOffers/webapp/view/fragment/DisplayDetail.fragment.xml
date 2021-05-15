@@ -278,7 +278,7 @@
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup editable="false" selectedIndex="{= ${oModelControl2>/MultiEnabled/IsSpecificPainPainter} === false ? 1 : 0}" columns="2" select="onRbAppPainter">
+                                <RadioButtonGroup editable="false" selectedIndex="{oModelControl>/Rbtn/AppPainter}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>

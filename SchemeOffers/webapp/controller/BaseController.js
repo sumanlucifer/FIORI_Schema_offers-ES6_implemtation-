@@ -100,13 +100,47 @@ sap.ui.define(
         onDivisionChange: function (oEvent) {
           this._CheckAreaChange();
         },
-        onOfferTypeChanged:function(oEvent){
-            var oView = this.getView();
-            var oSource = oEvent.getSource().getSelectedItem();
-            var object = oSource.getBindingContext().getObject();
-            var oModelControl = oView.getModel("oModelControl");
-            oModelControl.setProperty("/OfferType",object);
-            console.log(oModelControl)
+        onOfferTypeChanged: function (oEvent) {
+          var oView = this.getView();
+          var oSource = oEvent.getSource().getSelectedItem();
+          var object = oSource.getBindingContext().getObject();
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/OfferType", object);
+          this._OfferTypeFieldsSet();
+        },
+        _OfferTypeFieldsSet: function () {
+          var oView = this.getView();
+          var oOfferType = oView
+            .getModel("oModelControl")
+            .getProperty("/OfferType");
+          var othat = this;
+          for (var a in oOfferType) {
+            if (!oOfferType[a]) {
+              console.log(a);
+              if (a === "ApplicablePainters") {
+                othat._propertyToBlank(
+                  [
+                    "MultiCombo/ArcheTypes",
+                    "MultiCombo/PainterType",
+                    "MultiCombo/Potential",
+                    "MultiCombo/Zones",
+                    "MultiCombo/Divisions",
+                    "MultiCombo/Depots",
+                    "MultiEnabled/Zones",
+                    "MultiEnabled/Division",
+                    "MultiEnabled/Depots",
+                  ],
+                  true
+                );
+                othat._RbtnReset([
+                  "Rbtn/Zones",
+                  "Rbtn/Division",
+                  "Rbtn/Depots",
+                  "Rbtn/AppPainter",
+                ]);
+              }
+            }
+          }
         },
         onMultyZoneChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
@@ -289,7 +323,7 @@ sap.ui.define(
           var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd1");
           var oControl = oView.byId("AppProd1").getSelectedItems();
           var bRbProd = oModelControl.getProperty("/Rbtn/AppProd1");
-          if (oControl.length <= 0 && bRbProd==0) {
+          if (oControl.length <= 0 && bRbProd == 0) {
             oControl = oModelControl.getProperty("/oData/Products");
           }
           var aSelectedData = [],
@@ -479,42 +513,50 @@ sap.ui.define(
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
+           this._propertyToBlank(
+            [
+              "PointSlabUpperLimit",
+              "PointSlabLowerLimit"
+            ],
+            false
+          );
+          this._propertyToBlank(
+            [
+              "MultiCombo/ArcheTypes",
+              "MultiCombo/PainterType",
+              "MultiCombo/Potential",
+              "MultiCombo/PCat2",
+              "MultiCombo/PClass2",
+              "MultiCombo/AppProd2",
+              "MultiCombo/AppPacks2",
+              "MultiCombo/PCat3",
+              "MultiCombo/PClass3",
+              "MultiCombo/AppProd3",
+              "MultiCombo/AppPacks3",
+              "MultiCombo/Zones",
+              "MultiCombo/Divisions",
+              "MultiCombo/Depots",
+              "Fields/Date1",
+              "Fields/Date2"
+            ],
+            true
+          );
+          oModelControl.setProperty("/Rbtn/PCat2", 0);
+          oModelControl.setProperty("/Rbtn/PClass2", 0);
+          oModelControl.setProperty("/Rbtn/AppProd2", 0);
+          oModelControl.setProperty("/Rbtn/AppPacks2", 0);
+          oModelControl.setProperty("/Rbtn/PCat3", 0);
+          oModelControl.setProperty("/Rbtn/PClass3", 0);
+          oModelControl.setProperty("/Rbtn/AppProd3", 0);
+          oModelControl.setProperty("/Rbtn/AppPacks3", 0);
+          oModelControl.setProperty("/Rbtn/Zones", 0);
+          oModelControl.setProperty("/Rbtn/Divisions", 0);
+          oModelControl.setProperty("/Rbtn/Depots", 0);
 
           if (iIndex == 0) {
-            oModelView.setProperty("/IsSpecificPainter", false);
-            this._propertyToBlank([
-              "PotentialId",
-              "PointSlabLowerLimit",
-              "PointSlabUpperLimit",
-            ]);
-            this._propertyToBlank(
-              [
-                "MultiCombo/ArcheTypes",
-                "MultiCombo/PainterType",
-                "MultiCombo/Potential",
-                "MultiCombo/PCat2",
-                "MultiCombo/PClass2",
-                "MultiCombo/AppProd2",
-                "MultiCombo/AppPacks2",
-                "MultiCombo/PCat3",
-                "MultiCombo/PClass3",
-                "MultiCombo/AppProd3",
-                "MultiCombo/AppPacks3",
-                "Fields/Date1",
-                "Fields/Date2",
-              ],
-              true
-            );
-            oModelControl.setProperty("/Rbtn/PCat2", 0);
-            oModelControl.setProperty("/Rbtn/PClass2", 0);
-            oModelControl.setProperty("/Rbtn/AppProd2", 0);
-            oModelControl.setProperty("/Rbtn/AppPacks2", 0);
-            oModelControl.setProperty("/Rbtn/PCat3", 0);
-            oModelControl.setProperty("/Rbtn/PClass3", 0);
-            oModelControl.setProperty("/Rbtn/AppProd3", 0);
-            oModelControl.setProperty("/Rbtn/AppPacks3", 0);
+            oModelControl.setProperty("/MultiCombo/AppPainter", false);
           } else if (iIndex == 1) {
-            oModelView.setProperty("/IsSpecificPainter", true);
+            oModelControl.setProperty("/MultiCombo/AppPainter", true);
           } //
           // making the fields blank
         },
@@ -573,16 +615,34 @@ sap.ui.define(
             } else if (oGetProp instanceof Date) {
               oModelView.setProperty("/" + x, null);
               console.log("Non Empty Date made as null");
+            } else if (typeof oGetProp === "boolean") {
+              oModelView.setProperty("/" + x, false);
+              console.log("Set default value of the boolean flags");
             } else {
               oModelView.setProperty("/" + x, "");
             }
           }
           oModelView.refresh(true);
         },
+        _RbtnReset: function (aArray, aModel2 = true) {
+          var aProp = aArray;
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          if (aModel2) {
+            oModelView = oView.getModel("oModelControl");
+          }
+          for (var x of aProp) {
+            var oGetProp = oModelView.getProperty("/" + x);
+
+            oModelView.setProperty("/" + x, 0);
+            //oView.byId(x.substring(x.indexOf("/") + 1)).fireChange();
+          }
+          oModelView.refresh(true);
+        },
         onValueHelpParentOffer: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
             oView = this.getView();
-            console.log(sInputValue)
+          console.log(sInputValue);
           if (!this._pOfferpDialog) {
             this._pOfferpDialog = Fragment.load({
               id: oView.getId(),
@@ -595,7 +655,7 @@ sap.ui.define(
           }
           this._pOfferpDialog.then(function (oDialog) {
             // Create a filter for the binding
-            
+
             // Open ValueHelpDialog filtered by the input's value
             oDialog.open();
           });
@@ -613,14 +673,7 @@ sap.ui.define(
         onValueHelpSearch: function (oEvent) {
           var sValue = oEvent.getParameter("value");
           var oFilter = new Filter(
-            [
-              new Filter(
-                "Title",
-                FilterOperator.Contains,
-                sValue
-              )
-              
-            ],
+            [new Filter("Title", FilterOperator.Contains, sValue)],
             false
           );
 
@@ -651,7 +704,6 @@ sap.ui.define(
             return oData["ProductName"];
           }
         },
-
 
         /**
          * Adds a history entry in the FLP page history

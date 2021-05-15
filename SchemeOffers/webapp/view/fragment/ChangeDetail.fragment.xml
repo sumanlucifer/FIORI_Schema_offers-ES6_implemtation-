@@ -47,67 +47,7 @@
 
                     </f:formElements>
                 </f:FormContainer>
-                <!-- <f:FormContainer title="{i18n>formRegion}">
-                    <f:formElements>
-                         <f:FormElement  label="{i18n>formRegionLbl1}">
-                            <f:fields>
-                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-
-                        <f:FormElement >
-                            <f:fields>
-                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/Zones}"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
-                                    <core:Item text="{Id}" key="{Id}"/>
-                                </MultiComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                         <f:FormElement  label="{i18n>formRegionLbl2}" >
-                            <f:fields>
-                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement >
-                            <f:fields>
-                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/Divisions}" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
-                                    <core:Item text="{Id}" key="{Id}"/>
-                                </MultiComboBox>
-                            </f:fields>
-                        </f:FormElement>
-                         <f:FormElement   label="{i18n>formRegionLbl3}" >
-                            <f:fields>
-                               <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement>
-                            <f:fields>
-                             
-                                <MultiInput enabled="{oModelControl>/MultiEnabled/Depots}"
-                                placeholder="{i18n>placeHolder1}"
-                        id="idDepots"
-						valueHelpOnly="true"
-                        tokens="{path:'oModelControl>/MultiCombo/Depots',templateShareable:false}"
-						valueHelpRequest="onDepotValueHelpOpen"
-					>
-                     <tokens>
-                        <Token editable="false" text="{oModelControl>DepotId}" key="{oModelControl>DepotId}"/>
-                    </tokens>
-
-					</MultiInput>
-                            </f:fields>
-                        </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-              -->
+               
                 <f:FormContainer visible="{oModelControl>/OfferType/ApplicableProducts}" title="{i18n>formApplicableProducts2}">
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
@@ -295,11 +235,11 @@
             </f:layout>
             <f:formContainers>
         
-                   <f:FormContainer title="{i18n>formApplicableLbl14}" visible="{oModelControl>/OfferType/ApplicablePainters}">
+                   <f:FormContainer title="{i18n>ApplicablePainters}" visible="{oModelControl>/OfferType/ApplicablePainters}">
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup  selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
+                                <RadioButtonGroup selectedIndex="{oModelControl>/Rbtn/AppPainter}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
@@ -307,7 +247,7 @@
                         </f:FormElement>
                          <f:FormElement label="{i18n>formApplicableLbl15}">
                             <f:fields>
-                                <MultiComboBox id="PainterType" selectedKeys="{oModelControl>/MultiCombo/PainterType}"  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
+                                <MultiComboBox id="PainterType" selectedKeys="{oModelControl>/MultiCombo/PainterType}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
                                     <core:Item text="{PainterType}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -316,7 +256,7 @@
                      
                         <f:FormElement label="{i18n>formApplicableLbl3}">
                             <f:fields>
-                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}"  id="ArcheTypes" enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
+                                <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}"  id="ArcheTypes" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
                                     <core:Item text="{ArcheType}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -324,7 +264,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl4}">
                             <f:fields>
-                                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Potential}"  enabled="{oModelView>/IsSpecificPainter}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet'}">
+                                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Potential}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet'}">
                                     <core:Item text="{Potential}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -332,17 +272,17 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl12}">
                             <f:fields>
-                              <Input type="Number" value="{oModelView>/PointSlabLowerLimit}" placeholder="{i18n>placeHolder3}"  enabled="{oModelView>/IsSpecificPainter}" />
+                              <Input type="Number" value="{oModelView>/PointSlabLowerLimit}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>formApplicableLbl13}">
                             <f:fields>
-                              <Input type="Number" value="{oModelView>/PointSlabUpperLimit}" placeholder="{i18n>placeHolder3}"  enabled="{oModelView>/IsSpecificPainter}" />
+                              <Input type="Number" value="{oModelView>/PointSlabUpperLimit}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement  label="{i18n>formRegionLbl1}">
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -351,14 +291,14 @@
 
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{oModelView>/IsSpecificPainter}"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Zones}===1 }"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement  label="{i18n>formRegionLbl2}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -366,14 +306,14 @@
                         </f:FormElement>
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{oModelView>/IsSpecificPainter}" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Divisions}===1 }"  id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement   label="{i18n>formRegionLbl3}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -382,7 +322,8 @@
                         <f:FormElement>
                             <f:fields>
                              
-                                <MultiInput enabled="{oModelView>/IsSpecificPainter}"
+                                <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"
+                                editable="{= ${oModelControl>/Rbtn/Depots}===1 }"
                                 placeholder="{i18n>placeHolder1}"
                         id="idDepots"
 						valueHelpOnly="true"
@@ -403,17 +344,17 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>From}">
                             <f:fields>
-                                <DatePicker displayFormat="dd/MM/yyyy" enabled="{oModelView>/IsSpecificPainter}"  dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                                <DatePicker  displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>To}">
                             <f:fields>
-                                <DatePicker displayFormat="dd/MM/yyyy"  enabled="{oModelView>/IsSpecificPainter}" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/YYYY" ></DatePicker>
+                                <DatePicker displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/YYYY" ></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat2}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat2}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -422,14 +363,14 @@
                       
                          <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/PCat2}===1 }"  required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat2}===1 }"   required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="Buyer {i18n>formApplicableLbl8}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass2}" >
+                               <RadioButtonGroup  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass2}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -437,14 +378,14 @@
                         </f:FormElement>
                          <f:FormElement >
                             <f:fields>
-                              <MultiComboBox enabled="{= ${oModelControl>/Rbtn/PClass2}===1 }"  required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
+                              <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PClass2}===1 }"   required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formBuyerProducts}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd2}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd2}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -452,14 +393,14 @@
                         </f:FormElement>
                            <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppProd2}===1 }" selectedKeys="{path:'oModelControl>/MultiCombo/AppProd2'}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/AppProd2}===1 }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppProd2'}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formBuyerPacks}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks2}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks2}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -467,14 +408,14 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPacks2}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks2'}" >
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  editable="{= ${oModelControl>/Rbtn/AppPacks2}===1 }"   placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks2'}" >
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                        <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl7}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat3}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat3}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -482,7 +423,7 @@
                         </f:FormElement>
                          <f:FormElement >
                             <f:fields>
-                            <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/PCat3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/PCat3'}" >
+                            <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/PCat3'}" >
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
                              
@@ -490,7 +431,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl8}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass3}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass3}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -499,14 +440,14 @@
                          <f:FormElement >
                             <f:fields>
                                 
-                                  <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/PClass3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}" >
+                                  <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PClass3}===1 }"   placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}" >
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formNon} {i18n>formBuyerProducts}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd3}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd3}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -515,14 +456,14 @@
                            <f:FormElement>
                             <f:fields>
                                
-                                   <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppProd3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppProd3'}" >
+                                   <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/AppProd3}===1 }"   placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppProd3'}" >
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formNon} {i18n>formBuyerPacks}" >
                             <f:fields>
-                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks3}" >
+                               <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks3}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
@@ -530,7 +471,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <MultiComboBox  enabled="{= ${oModelControl>/Rbtn/AppPacks3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks3'}" >
+                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/AppPacks3}===1 }"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }"  selectedKeys="{path:'oModelControl>/MultiCombo/AppPacks3'}" >
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
