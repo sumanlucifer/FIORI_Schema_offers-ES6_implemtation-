@@ -75,6 +75,7 @@ sap.ui.define(
             ImageLoaded: false,
             BonusValidity: oBonusValidity,
             modeEdit: false,
+            mode:"add",
             StartDate: "",
             EndDate: "",
             OfferType: {

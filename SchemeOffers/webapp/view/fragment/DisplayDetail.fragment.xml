@@ -191,7 +191,7 @@
 
             <columns>
                  <Column>
-                    <Text text="{i18n>Table1Label1}" />
+                    <Text text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
                     <Label text="{i18n>RequiredVolume}"/>
@@ -597,7 +597,7 @@
 
             <columns>
                  <Column>
-                    <Text text="{i18n>Table1Label1}" />
+                    <Text text="{i18n>ProductsPacks}" />
                 </Column>
                  <Column>
                     <Label  text="{i18n>formBonusValidaityFrom}" />

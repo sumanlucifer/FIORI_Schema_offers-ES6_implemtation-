@@ -9,7 +9,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl1}">
                             <f:fields>
-                                <ComboBox selectionChange="onOfferTypeChanged" required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
+                                <ComboBox id="OfferType" selectionChange="onOfferTypeChanged" required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
                                     <core:Item text="{OfferType}" key="{Id}"/>
                                 </ComboBox>
                             </f:fields>

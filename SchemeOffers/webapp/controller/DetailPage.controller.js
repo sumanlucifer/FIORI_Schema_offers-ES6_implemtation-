@@ -89,10 +89,11 @@ sap.ui.define(
         },
         _initData: function (oProp) {
           var oData = {
-            modeEdit: true,
+            modeEdit: false,
             bindProp: "OfferSet(" + oProp + ")",
             HasTillDate: true,
             ImageLoaded: false,
+            mode:"display",
             SchemeId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
@@ -600,8 +601,8 @@ sap.ui.define(
                   c5 = othat._setEditViewData1(data);
                   c5.then(function (data) {
                     c6 = othat._setEditViewData2(data);
-                    c6.then(function(){
-                        othat._SetAdditionalEditData()
+                    c6.then(function(data){
+                        othat._SetAdditionalEditData(data)
                     })
                   });
                 });
@@ -614,6 +615,7 @@ sap.ui.define(
         },
         _SetAdditionalEditData:function(oData){
             console.log(oData);
+            this.getView().byId("OfferType").fireChange();
         },
         _GetInitEditData: function () {
           var promise = jQuery.Deferred();
@@ -651,7 +653,8 @@ sap.ui.define(
           var oBonusValidity = [];
               var oDataControl = {
             HasTillDate: false,
-            ImageLoaded: false,
+            ImageLoaded: oModelControl2.getProperty("/ImageLoaded"),
+            mode:"edit",
             BonusValidity: oBonusValidity,
             modeEdit: false,
             StartDate: "",
@@ -1146,8 +1149,8 @@ sap.ui.define(
                     c6 = othat._CreateOffer(oPayLoad);
                     c6.then(function (oPayLoad) {
                       c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                      c7.then(function () {
-                        //othat.handleCancelPress();
+                      c7.then(function (data) {
+                        othat.handleCancelPress(data);
                       });
                     });
                   });
