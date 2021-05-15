@@ -66,13 +66,13 @@
             </IconTabBar>
         </f:content>
         <f:footer>
-            <OverflowToolbar>
-                <ToolbarSpacer/>
-                <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+            <OverflowToolbar >
+             <ToolbarSpacer/>
+                  <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
                 <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-
             </OverflowToolbar>
+           
         </f:footer>
     </f:DynamicPage>
 </mvc:View>

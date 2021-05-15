@@ -522,7 +522,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppProd4"  visible="{oModelControl2>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl2>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox id="AppProd4" editable="false" visible="{oModelControl2>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl2>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
