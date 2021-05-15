@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.DetailPage" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" showFooter="true" class="sapUiNoContentPadding" busy="{DetailViewModel>/busy}">
+    <f:DynamicPage busyIndicatorDelay="0" headerExpanded="true" stickySubheaderProvider="idIconTabBar" showFooter="true" class="sapUiNoContentPadding" >
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -66,13 +66,13 @@
             </IconTabBar>
         </f:content>
         <f:footer>
-            <OverflowToolbar>
-                <ToolbarSpacer/>
-                <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+            <OverflowToolbar >
+             <ToolbarSpacer/>
+                  <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
                 <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-
             </OverflowToolbar>
+           
         </f:footer>
     </f:DynamicPage>
 </mvc:View>
