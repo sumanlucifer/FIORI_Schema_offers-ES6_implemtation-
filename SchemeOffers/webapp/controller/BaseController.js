@@ -100,6 +100,14 @@ sap.ui.define(
         onDivisionChange: function (oEvent) {
           this._CheckAreaChange();
         },
+        onOfferTypeChanged:function(oEvent){
+            var oView = this.getView();
+            var oSource = oEvent.getSource().getSelectedItem();
+            var object = oSource.getBindingContext().getObject();
+            var oModelControl = oView.getModel("oModelControl");
+            oModelControl.setProperty("/OfferType",object);
+            console.log(oModelControl)
+        },
         onMultyZoneChange: function (oEvent) {
           var sKeys = oEvent.getSource().getSelectedKeys();
           var oDivision = this.getView().byId("idDivision");
@@ -281,7 +289,7 @@ sap.ui.define(
           var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd1");
           var oControl = oView.byId("AppProd1").getSelectedItems();
           var bRbProd = oModelControl.getProperty("/Rbtn/AppProd1");
-          if (oControl.length <= 0) {
+          if (oControl.length <= 0 && bRbProd==0) {
             oControl = oModelControl.getProperty("/oData/Products");
           }
           var aSelectedData = [],

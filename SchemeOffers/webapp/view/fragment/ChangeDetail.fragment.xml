@@ -5,11 +5,11 @@
                 <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
             </f:layout>
             <f:formContainers>
-                <f:FormContainer title="{i18n>BasicInformation}">
+                <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>BasicInformation}">
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl1}">
                             <f:fields>
-                                <ComboBox required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
+                                <ComboBox selectionChange="onOfferTypeChanged" required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
                                     <core:Item text="{OfferType}" key="{Id}"/>
                                 </ComboBox>
                             </f:fields>
@@ -31,7 +31,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
                             <f:fields>
-                                <TextArea placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                                <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="50" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Offer Image">
@@ -47,7 +47,7 @@
 
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>formRegion}">
+                <!-- <f:FormContainer title="{i18n>formRegion}">
                     <f:formElements>
                          <f:FormElement  label="{i18n>formRegionLbl1}">
                             <f:fields>
@@ -107,8 +107,8 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-             
-                <f:FormContainer title="{i18n>formApplicableProducts}">
+              -->
+                <f:FormContainer visible="{oModelControl>/OfferType/ApplicableProducts}" title="{i18n>formApplicableProducts2}">
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
@@ -181,9 +181,22 @@
                       
                     </f:formElements>
                 </f:FormContainer>
+                <f:FormContainer  title="{i18n>formApplicableLbl10}">
+                    <f:formElements>
+                      <f:FormElement label="{i18n>formApplicableLbl10}">
+                            <f:fields>
+                                 <RadioButtonGroup select="onRbRewardRatio"  columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" visible="{oModelControl>/OfferType/RewardRatio}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                      
+                    </f:formElements>
+                </f:FormContainer>
                    </f:formContainers>
         </f:Form>
-        <Table id="Table1" visible="{= ${oModelControl>/Rbtn/Rewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table  id="Table1" visible="{= ${oModelControl>/Rbtn/Rewards}===0}" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
@@ -213,23 +226,23 @@
                     <cells>
                        
                            
-                             <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RequiredVolume}" />
-                              <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RequiredPoints}" />
-                               <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RewardPoints}" />
+                             <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+                              <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+                               <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
                                  <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                     <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                                 </ComboBox>
-                                <Input  placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{oModelControl>RewardCash}" />
+                                <Input  placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
                                 
                             
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 &amp;&amp; ${oModelControl>/OfferType/RewardRatio}===true  }" class="sapUiMediumMarginTop" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
            <headerToolbar>
                 <Toolbar>
-                    <Title text="{i18n>formRewards}" />
+                    <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
@@ -263,10 +276,10 @@
                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
-                           <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredVolume}" />
-                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RequiredPoints}" />
-                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardPoints}" />
-                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId'}">
+                           <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
+                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox>
                             <Input placeholder="{i18n>placeHolder3}" width="80%" value="{oModelControl>RewardCash}" />
@@ -282,11 +295,11 @@
             </f:layout>
             <f:formContainers>
         
-                   <f:FormContainer title="{i18n>formApplicableLbl14}">
+                   <f:FormContainer title="{i18n>formApplicableLbl14}" visible="{oModelControl>/OfferType/ApplicablePainters}">
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
+                                <RadioButtonGroup  selectedIndex="{= ${oModelView>/IsSpecificPainter} === false ? 0 : 1}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                                 </RadioButtonGroup>
@@ -327,10 +340,66 @@
                               <Input type="Number" value="{oModelView>/PointSlabUpperLimit}" placeholder="{i18n>placeHolder3}"  enabled="{oModelView>/IsSpecificPainter}" />
                             </f:fields>
                         </f:FormElement>
+                         <f:FormElement  label="{i18n>formRegionLbl1}">
+                            <f:fields>
+                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox enabled="{oModelView>/IsSpecificPainter}"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
+                                    <core:Item text="{Id}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement  label="{i18n>formRegionLbl2}" >
+                            <f:fields>
+                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox enabled="{oModelView>/IsSpecificPainter}" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
+                                    <core:Item text="{Id}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement   label="{i18n>formRegionLbl3}" >
+                            <f:fields>
+                               <RadioButtonGroup enabled="{oModelView>/IsSpecificPainter}"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                             
+                                <MultiInput enabled="{oModelView>/IsSpecificPainter}"
+                                placeholder="{i18n>placeHolder1}"
+                        id="idDepots"
+						valueHelpOnly="true"
+                        tokens="{path:'oModelControl>/MultiCombo/Depots',templateShareable:false}"
+						valueHelpRequest="onDepotValueHelpOpen"
+					>
+                     <tokens>
+                        <Token editable="false" text="{oModelControl>DepotId}" key="{oModelControl>DepotId}"/>
+                    </tokens>
+
+					</MultiInput>
+                            </f:fields>
+                        </f:FormElement>
                         
                        </f:formElements>
                        </f:FormContainer>
-                       <f:FormContainer title="{i18n>formApplicableProducts} - I">
+                       <f:FormContainer title="{i18n>formApplicableProducts}" visible="{oModelControl>/OfferType/ApplicablePainterProducts}">
                     <f:formElements>
                     <f:FormElement label="{i18n>From}">
                             <f:fields>
@@ -466,6 +535,8 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
+
+                        
                         
                     </f:formElements>
                 </f:FormContainer>
@@ -477,7 +548,7 @@
                 </f:FormContainer> -->
                 
                              
-                <f:FormContainer title="{i18n>formBonusReward}">
+                <f:FormContainer title="{i18n>formBonusReward}"  visible="{oModelControl>/OfferType/AdditionalReward}">
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
@@ -556,7 +627,7 @@
                 </f:FormContainer>
                 </f:formContainers>
         </f:Form>
-        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
@@ -581,12 +652,12 @@
                     <cells>
                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
                              <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input  type="Number" placeholder="{i18n>placeHolder3}" width="60%" value="{oModelControl>BonusPoints}" />
+                             <Input  type="Number" placeholder="{i18n>placeHolder3}" width="60%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-           <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+           <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />

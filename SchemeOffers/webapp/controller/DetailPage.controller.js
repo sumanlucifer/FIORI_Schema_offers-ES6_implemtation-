@@ -1187,71 +1187,7 @@ sap.ui.define(
           promise.resolve(oPayLoad);
           return promise;
         },
-        _CreatePayLoadPart4: function (oPayLoad) {
-          var promise = jQuery.Deferred();
-          var oView = this.getView();
-          var oModel = oView.getModel("oModelControl");
-          var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
-          var aFinalArray = [];
-          if (bRewardSelected === 0) {
-            var oDataTbl = JSON.parse(
-              JSON.stringify(oModel.getProperty("/Table/Table1"))
-            );
-            aFinalArray = oDataTbl.filter(function (ele) {
-              if (ele["RequiredVolume"] !== "" && ele["RewardPoints"] !== "") {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else {
-                    ele[x] = parseInt(ele[x]);
-                  }
-                }
-
-                return ele;
-              }
-            });
-            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
-
-            promise.resolve(oPayLoad);
-            return promise;
-          }
-          // this menas that specific is selected we will check first
-          // if packs all is selected and products data will be displayed
-
-          var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
-          if (bAllProdSelected === 0) {
-            var oDataTbl = JSON.parse(
-              JSON.stringify(oModel.getProperty("/Table/Table2"))
-            );
-            aFinalArray = oDataTbl.filter(function (ele) {
-              if (ele["RequiredVolume"] !== "" && ele["RewardPoints"] !== "") {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x !== "ProductCode") {
-                    ele[x] = parseInt(ele[x]);
-                  }
-                }
-
-                return ele;
-              }
-            });
-            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
-
-            promise.resolve(oPayLoad);
-            return promise;
-          }
-          if (bAllProdSelected === 1) {
-            var oDataTbl = JSON.parse(
-              JSON.stringify(oModel.getProperty("/Table/Table2"))
-            );
-
-            oPayLoad["OfferPackRewardRatio"] = aFinalArray;
-
-            promise.resolve(oPayLoad);
-            return promise;
-          }
-        },
+       
         _CreatePayLoadPart5: function (oPayLoad) {
           var promise = jQuery.Deferred();
           var oView = this.getView();

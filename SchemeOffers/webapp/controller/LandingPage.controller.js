@@ -13,7 +13,7 @@ sap.ui.define(
     "sap/m/ColumnListItem",
     "sap/m/Label",
     "sap/m/Token",
-    "sap/ui/core/format/DateFormat"
+    "sap/ui/core/format/DateFormat",
   ],
   function (
     BaseController,
@@ -94,9 +94,7 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-           sTitle = this.getResourceBundle().getText("TableDataCount", [
-              0
-            ]);
+            sTitle = this.getResourceBundle().getText("TableDataCount", [0]);
           }
           this.getView()
             .getModel("worklistView")
@@ -457,6 +455,41 @@ sap.ui.define(
             oDialog.setSortDescending(true);
             oDialog.setSelectedSortItem("CreatedAt");
           }
+        },
+        onDeactivate: function (oEvent) {
+          var oView = this.getView();
+          var oBject = oEvent.getSource().getBindingContext().getObject();
+          var sPath = oEvent.getSource().getBindingContext().getPath();
+          var oData = oView.getModel();
+          var othat = this;
+          console.log(sPath, oBject);
+          MessageBox.warning(
+            "Are you sure you want to remove the offer- " + oBject["Title"],
+            {
+              actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+              emphasizedAction: MessageBox.Action.OK,
+              onClose: function (sAction) {
+                if (sAction == "OK") {
+                  othat._Deactivate(oData, sPath, oBject);
+                }
+              },
+            }
+          );
+        },
+        _Deactivate: function (oData, sPath, oBject) {
+          var oPayload = {
+            IsArchived: true,
+          };
+          oData.update(sPath + "/IsArchived", oPayload, {
+            success: function (mData) {
+              MessageToast.show(oBject["Title"] + " Sucessfully Deactivated.");
+              oData.refresh();
+            },
+            error: function (data) {
+              var oRespText = JSON.parse(data.responseText);
+              MessageBox.error(oRespText["error"]["message"]["value"]);
+            },
+          });
         },
       }
     );

@@ -17,7 +17,7 @@
                                 <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBasicInfoLbl3}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}">
                             <f:fields>
                                 <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/>
                             </f:fields>

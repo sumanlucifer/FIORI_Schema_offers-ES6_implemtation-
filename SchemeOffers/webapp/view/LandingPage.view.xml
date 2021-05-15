@@ -79,7 +79,7 @@
             <Table
                 id="idOffersTable"
                 width="auto"
-               items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'CreatedByDetails' }}"
+               items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails' }}"
                 noDataText="{i18n>TableTitle}"
                 growing="true"
                 growingScrollToLoad="false"
@@ -90,10 +90,8 @@
                     <OverflowToolbar>
                         <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
-                        
                         <Button  icon="sap-icon://add" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                     
                     </OverflowToolbar>
                 </headerToolbar>
 
@@ -102,7 +100,7 @@
                         <Text text="{i18n>tblColOfferName}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="{i18n>tblColCreationDate}"/>
+                        <Text text="{i18n>offerTypeFilterLabel}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColReward}"/>
@@ -116,27 +114,34 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>tblColStatus}"/>
-                    </Column>
+                    </Column> -->
                     <Column>
+                        <Text text="{i18n>tolColActiveStatus}"/>
+                    </Column>
+                  <Column width="8%">
                         <Text text="{i18n>tblColAction}"/>
                     </Column>
-                
+
                 </columns>
 
                 <items>
                     <ColumnListItem type="Navigation" press="onPressListItem">
                         <cells>
-                            <Text text="{Title}"/>
-                            <Text text="{path:'CreatedAt',formatter:'.fmtDate'}"/>
+                            <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
+                            <Text text="{OfferType/OfferType}"/>
                             <Text text="{RewardGiftId}"/>
                              <Text text="{path:'StartDate',formatter:'.fmtDate'}"/>
                              <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" />
+                            <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
-                            
+                             <HBox justifyContent="Start">
+                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onPressListItem"></Button>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
+                            </HBox>
+
                         </cells>
                     </ColumnListItem>
                 </items>

@@ -77,6 +77,14 @@ sap.ui.define(
             modeEdit: false,
             StartDate: "",
             EndDate: "",
+            OfferType: {
+              BasicInformation: true,
+              ApplicableProducts: true,
+              RewardRatio: true,
+              ApplicablePainters: true,
+              ApplicablePainterProducts: true,
+              AdditionalReward: true
+            },
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -346,17 +354,12 @@ sap.ui.define(
                 return Object.assign({}, a);
               });
             console.log(oDataTbl);
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["StartDate"] !== null &&
-                ele["EndDate"] !== null &&
-                ele["BonusPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else if (x == "BonusPoints") {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
                 return ele;
@@ -438,16 +441,18 @@ sap.ui.define(
             var oDataTbl = JSON.parse(
               JSON.stringify(oModel.getProperty("/Table/Table1"))
             );
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
             aFinalArray = oDataTbl.filter(function (ele) {
-              if (
-                ele["RequiredVolume"].trim() !== "" &&
-                ele["RewardPoints"].trim() !== ""
-              ) {
-                for (var x in ele) {
-                  if (ele[x] == "") {
-                    ele[x] = null;
-                  } else {
-                    ele[x] = parseInt(ele[x]);
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
                   }
                 }
 
@@ -751,7 +756,7 @@ sap.ui.define(
             oDataModel.create("/OfferSet", oPayLoad, {
               success: function (data) {
                 MessageToast.show("Offer Sucessfully Created.");
-                othat._navToHome();
+                //othat._navToHome();
                 resolve(data);
               },
               error: function (data) {
