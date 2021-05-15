@@ -191,7 +191,7 @@
 
             <columns>
                  <Column>
-                    <Text text="{i18n>Table1Label1}" />
+                    <Text text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
                     <Label text="{i18n>RequiredVolume}" required="true"/>
@@ -609,7 +609,7 @@
 
             <columns>
                  <Column>
-                    <Text text="{i18n>Table1Label1}" />
+                    <Text text="{i18n>ProductsPacks}" />
                 </Column>
                  <Column>
                     <Label required="true" text="{i18n>formBonusValidaityFrom}" />
@@ -657,7 +657,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/>
+                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter'}"/> -->
                             </f:fields>
                         </f:FormElement>
                       

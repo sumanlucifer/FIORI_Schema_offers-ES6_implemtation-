@@ -112,6 +112,7 @@ sap.ui.define(
         _OfferTypeFieldsSet: function () {
           // disabling all the fields that we have to hide.
           var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
           var oOfferType = oView
             .getModel("oModelControl")
             .getProperty("/OfferType");
@@ -172,7 +173,6 @@ sap.ui.define(
                     "MultiCombo/PClass4",
                     "MultiCombo/AppProd4",
                     "MultiCombo/AppPacks4",
-                    "Table/Table3",
                     "Table/Table4",
                   ],
                   true
@@ -182,6 +182,13 @@ sap.ui.define(
                   "Rbtn/PClass4",
                   "Rbtn/AppProd4",
                   "Rbtn/AppPacks4",
+                ]);
+                oModelControl.setProperty("/Table/Table3", [
+                  {
+                    StartDate: null,
+                    EndDate: null,
+                    BonusPoints: "",
+                  },
                 ]);
               }
             }
@@ -744,6 +751,413 @@ sap.ui.define(
           var oData = this.getView().getModel().getProperty(sPath);
           if (oData !== undefined && oData !== null) {
             return oData["ProductName"];
+          }
+        },
+        _CreatePayloadPart1(bFileFlag) {
+          var promise = jQuery.Deferred();
+          //creating the payload
+          var oView = this.getView();
+          var oModelView = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl");
+          var oDataModel = oView.getModel();
+          var oViewData = oModelView.getData();
+          var oPayLoad = this._RemoveEmptyValue(oViewData);
+
+          var inTegerProperty = [
+            "PointSlabUpperLimit",
+            "PointSlabLowerLimit",
+            "BonusApplicableTopPainter",
+            "ParentOfferId",
+          ];
+          for (var y of inTegerProperty) {
+            if (oPayLoad.hasOwnProperty(y)) {
+              oPayLoad[y] = parseInt(oPayLoad[y]);
+            }
+          }
+          // setting the zone, division, depot data.
+
+          promise.resolve(oPayLoad);
+          return promise;
+        },
+        _CreatePayloadPart2: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          //      "IsSpecificApplicableProductCategory": false,
+          // "IsSpecificApplicableProductClassification": false,
+          // "IsSpecificApplicableProduct": false,
+          // "IsSpecificApplicablePack": false,
+          // "IsSpecificRewardRatio": false,
+          var aBoleanProps = {
+            IsSpecificZone: "Zones",
+            IsSpecificDivision: "Divisions",
+            IsSpecificDepot: "Depots",
+            IsSpecificApplicableProductCategory: "PCat1",
+            IsSpecificApplicableProductClassification: "PClass1",
+            IsSpecificApplicableProduct: "AppProd1",
+            IsSpecificApplicablePack: "AppPacks1",
+            IsSpecificRewardRatio: "Rewards",
+            IsSpecificBuyerProductCategory: "PCat2",
+            IsSpecificBuyerProductClassification: "PClass2",
+            IsSpecificBuyerProduct: "AppProd2",
+            IsSpecificBuyerPack: "AppPacks2",
+            IsSpecificNonBuyerProductCategory: "PCat3",
+            IsSpecificNonBuyerProductClassification: "PClass3",
+            IsSpecificNonBuyerProduct: "AppProd3",
+            IsSpecificNonBuyerPack: "AppPacks3",
+            IsSpecificBonusProductCategory: "PCat4",
+            IsSpecificBonusProductClassification: "PClass4",
+            IsSpecificBonusProduct: "AppProd4",
+            IsSpecificBonusPack: "AppPacks4",
+            IsSpecificBonusRewardRatio: "BRewards",
+            IsSpecificPainter: "AppPainter",
+          };
+          var oModelControl = oView.getModel("oModelControl");
+          var oPropRbtn = oModelControl.getProperty("/Rbtn");
+          for (var key in aBoleanProps) {
+            oPayLoad[key] = oPropRbtn[aBoleanProps[key]] == 0 ? false : true;
+          }
+
+          promise.resolve(oPayLoad);
+          return promise;
+        },
+
+        // postdata
+        _CreatePayloadPart3: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var sMultiKeys = oModelControl.getProperty("/MultiCombo");
+
+          // setting the values of zone
+          oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
+            return {
+              ZoneId: elem,
+            };
+          });
+          oPayLoad["OfferDivision"] = sMultiKeys["Divisions"].map(function (
+            elem
+          ) {
+            return {
+              DivisionId: elem,
+            };
+          });
+          oPayLoad["OfferDepot"] = sMultiKeys["Depots"].map(function (elem) {
+            return {
+              DepotId: elem["DepotId"],
+            };
+          });
+          oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
+            function (elem) {
+              return {
+                ProductCategoryCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferApplicableProductClassification"] = sMultiKeys[
+            "PClass1"
+          ].map(function (elem) {
+            return {
+              ProductClassificationCode: elem,
+            };
+          });
+          oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
+            function (elem) {
+              return {
+                ProductCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
+            function (elem) {
+              return {
+                SkuCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferPainterType"] = sMultiKeys["PainterType"].map(
+            function (elem) {
+              return {
+                PainterTypeId: parseInt(elem),
+              };
+            }
+          );
+          oPayLoad["OfferPainterArchiType"] = sMultiKeys["ArcheTypes"].map(
+            function (elem) {
+              return {
+                ArchiTypeId: parseInt(elem),
+              };
+            }
+          );
+          oPayLoad["OfferPainterPotential"] = sMultiKeys["Potential"].map(
+            function (elem) {
+              return {
+                PotentialId: parseInt(elem),
+              };
+            }
+          );
+          oPayLoad["OfferBuyerProductCategory"] = sMultiKeys["PCat2"].map(
+            function (elem) {
+              return {
+                ProductCategoryCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferBuyerProductClassification"] = sMultiKeys[
+            "PClass2"
+          ].map(function (elem) {
+            return {
+              ProductClassificationCode: elem,
+            };
+          });
+          oPayLoad["OfferBuyerProduct"] = sMultiKeys["AppProd2"].map(function (
+            elem
+          ) {
+            return {
+              ProductCode: elem,
+            };
+          });
+          oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
+            elem
+          ) {
+            return {
+              SkuCode: elem,
+            };
+          });
+          oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
+            function (elem) {
+              return {
+                ProductCategoryCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferNonBuyerProductClassification"] = sMultiKeys[
+            "PClass3"
+          ].map(function (elem) {
+            return {
+              ProductClassificationCode: elem,
+            };
+          });
+          oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
+            function (elem) {
+              return {
+                ProductCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferNonBuyerPack"] = sMultiKeys["AppPacks3"].map(function (
+            elem
+          ) {
+            return {
+              SkuCode: elem,
+            };
+          });
+          // Bonus Reward Ratio
+          oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
+            function (elem) {
+              return {
+                ProductCategoryCode: elem,
+              };
+            }
+          );
+          oPayLoad["OfferBonusProductClassification"] = sMultiKeys[
+            "PClass4"
+          ].map(function (elem) {
+            return {
+              ProductClassificationCode: elem,
+            };
+          });
+          oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(function (
+            elem
+          ) {
+            return {
+              ProductCode: elem,
+            };
+          });
+          oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
+            elem
+          ) {
+            return {
+              SkuCode: elem,
+            };
+          });
+          promise.resolve(oPayLoad);
+          return promise;
+        },
+        _CreatePayLoadPart4: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
+          var aFinalArray = [];
+          if (bRewardSelected === 0) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table1")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+
+                return ele;
+              }
+            });
+            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this menas that specific is selected we will check first
+          // if packs all is selected and products data will be displayed
+
+          var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
+          if (bAllProdSelected === 0) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table2")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          if (bAllProdSelected === 1) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table2")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+
+            var aCheckProp = [
+              "RequiredVolume",
+              "RequiredPoints",
+              "RewardPoints",
+              "RewardGiftId",
+              "RewardCash",
+            ];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["RequiredVolume"] && ele["RewardPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferPackRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+        },
+        _CreatePayLoadPart5: function (oPayLoad) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var bRewardSelected = oModel.getProperty("/Rbtn/BRewards");
+          var aFinalArray = [];
+          if (bRewardSelected === 0) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table3")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this menas that specific is selected we will check first
+          // if packs all is selected and products data will be displayed
+          var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks4");
+          if (bAllProdSelected === 0) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table4")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
+          }
+          // this means that the user has selected specific for bonus reward packs
+          if (bAllProdSelected === 1) {
+            var oDataTbl = oModel
+              .getProperty("/Table/Table4")
+              .map(function (a) {
+                return Object.assign({}, a);
+              });
+            var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
+            aFinalArray = oDataTbl.filter(function (ele) {
+              if (ele["StartDate"] && ele["EndDate"] && ele["BonusPoints"]) {
+                for (var a in aCheckProp) {
+                  if (ele[aCheckProp[a]] === "") {
+                    ele[aCheckProp[a]] = null;
+                  }
+                }
+                return ele;
+              }
+            });
+            oPayLoad["OfferBonusPackRewardRatio"] = aFinalArray;
+
+            promise.resolve(oPayLoad);
+            return promise;
           }
         },
 
