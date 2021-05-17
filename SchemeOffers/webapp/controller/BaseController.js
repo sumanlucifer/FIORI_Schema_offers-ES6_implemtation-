@@ -8,6 +8,8 @@ sap.ui.define(
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
   ],
   function (
     Controller,
@@ -16,7 +18,9 @@ sap.ui.define(
     FilterOperator,
     History,
     JSONModel,
-    Fragment
+    Fragment,
+    MessageBox,
+    MessageToast
   ) {
     "use strict";
 
@@ -96,7 +100,32 @@ sap.ui.define(
         },
 
         onPostSchemeData: function (oPayload, fileFlag) {},
-
+        onStartDateChange: function (oEvent) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oModelView = oView.getModel("oModelView");
+          var oStartDate = oEvent.getSource().getDateValue();
+          var oEndDate = oModelView.getProperty("/EndDate");
+          if (oEndDate) {
+            if (oStartDate > oEndDate) {
+              MessageToast.show("Kinldy select a date less than end date.");
+              oModelControl.setProperty("/StartDate", "");
+              oModelView.setProperty("/StartDate", null);
+            }
+          }
+        },
+        onEndDateChange: function (oEvent) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oModelView = oView.getModel("oModelView");
+          var oEndDate = oEvent.getSource().getDateValue();
+          var oStartDate = oModelControl.getProperty("/StartDate");
+          if (oStartDate > oEndDate) {
+            MessageToast.show("Kinldy select a date more than start date.");
+            oModelControl.setProperty("/EndDate", "");
+            oModelView.setProperty("/EndDate", null);
+          }
+        },
         onDivisionChange: function (oEvent) {
           this._CheckAreaChange();
         },

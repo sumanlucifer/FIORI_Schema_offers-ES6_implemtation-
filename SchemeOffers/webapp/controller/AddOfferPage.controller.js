@@ -75,9 +75,10 @@ sap.ui.define(
             ImageLoaded: false,
             BonusValidity: oBonusValidity,
             modeEdit: false,
-            mode:"add",
+            mode: "add",
             StartDate: "",
             EndDate: "",
+            MinDate: new Date(),
             OfferType: {
               BasicInformation: true,
               ApplicableProducts: true,
@@ -250,7 +251,9 @@ sap.ui.define(
           this._showFormFragment("ChangeDetail");
           //get products data
           this._getProductsData();
+          this._setDefaultValues();
         },
+        _setDefaultValues: function () {},
 
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
@@ -344,7 +347,7 @@ sap.ui.define(
             });
           });
         },
-       
+
         _CreateOffer: function (oPayLoad) {
           var promise = jQuery.Deferred();
           var othat = this;

@@ -27,10 +27,10 @@
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
                             <Text text="{CreatedByDetails/Name}"/>
                         </layout:HorizontalLayout>
-                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                        <!-- <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerOfferPoint}"/>
                             <Text text=""/>
-                        </layout:HorizontalLayout>
+                        </layout:HorizontalLayout> -->
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
@@ -59,7 +59,10 @@
                         <VBox id="idVbProfile"></VBox>
 
                     </IconTabFilter>
-                    <IconTabFilter text="{i18n>historyTabFilter}" key="history">
+                    <IconTabFilter text="{i18n>EligiblePainter}" key="history">
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML"/>
+                    </IconTabFilter>
+                       <IconTabFilter text="{i18n>QualifiedPainter}" key="history">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML"/>
                     </IconTabFilter>
                 </items>

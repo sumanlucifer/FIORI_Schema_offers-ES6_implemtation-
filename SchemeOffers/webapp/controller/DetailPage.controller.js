@@ -659,6 +659,7 @@ sap.ui.define(
             modeEdit: false,
             StartDate: "",
             EndDate: "",
+            MinDate:new Date(),
             OfferType: {
               BasicInformation: true,
               ApplicableProducts: true,
