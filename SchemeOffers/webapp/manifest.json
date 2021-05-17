@@ -128,7 +128,7 @@
         },
         {
           "name": "DetailPage",
-          "pattern": "DetailPage/{prop}",
+          "pattern": "Details/{prop}/{mode}",
           "target": ["TargetDetailPage"]
         },
         {

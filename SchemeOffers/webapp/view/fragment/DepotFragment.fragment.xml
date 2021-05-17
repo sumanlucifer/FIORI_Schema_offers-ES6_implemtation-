@@ -4,7 +4,7 @@
 	<ValueHelpDialog
 		title="{i18n>formRegionLbl3}"
 		ok="onDepotOkPress"
-		cancel="onDepotCancelPress"
+		cancel="onValueHelpClose"
 		afterClose="onValueHelpAfterClose"
         afterOpen="onDepotAfterOpen"
 		key="Id"

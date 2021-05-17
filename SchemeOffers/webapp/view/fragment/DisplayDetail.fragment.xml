@@ -114,7 +114,7 @@
                     <f:formElements>
                          <f:FormElement label="{i18n>ParentOffer}">
                             <f:fields>
-                                <Text text="{ParentOfferId}"/>
+                                <Text text="{path:'ParentOffer/Title',formatter:'.formatter.fmtCheckNull'}"/>
                                 
                             </f:fields>
                         </f:FormElement>
@@ -238,9 +238,21 @@
                         <f:FormElement >
                             <f:fields>
                                 <RadioButtonGroup editable="false" selectedIndex="{oModelControl2>/Rbtn/AppPainter}" columns="2" select="onRbAppPainter">
-                                    <RadioButton text="{i18n>formApplicableLbl1}"/>
+                                  <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
+                                    <RadioButton text="{i18n>formApplicableLbl16}"/>
                                 </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                           <f:FormElement label="{i18n>Painters}">
+                            <f:fields>
+                               <MultiInput editable="false"   tokens="{oModelControl2>/MultiCombo/Painters}" >
+                    <tokens>
+                        <Token editable="false" text="{oModelControl2>PainterName}" key="{oModelControl2>PainterId}"/>
+                    </tokens>
+                </MultiInput>
+
+
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formApplicableLbl15}">
@@ -481,7 +493,7 @@
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
-                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
+                                <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>

@@ -38,9 +38,8 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                    <ComboBox placeholder="{i18n>Enter} {i18n>tblColStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
-                                        <core:Item text="Pending" key="PENDING"/>
-                                         <core:Item text="Approved" key="APPROVED"/>
-                                          <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Active" key="true"/>
+                                         <core:Item text="Inactive" key="false"/>
                                         
                                     </ComboBox>
 
@@ -48,21 +47,21 @@
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectedKey="{oModelControl>/filterBar/TrainingZone}">
+									<ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange"  selectedKey="{oModelControl>/filterBar/TrainingZone}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>formRegionLbl2}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
+									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingZone}.length>1}"  id="idDivision"  selectionChange="onDivisionChange"  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>formRegionLbl3}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
+									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingDivision}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
 										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 									</ComboBox>
 								</fb:control>
@@ -138,7 +137,7 @@
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                              <HBox justifyContent="Start">
-                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onPressListItem"></Button>
+                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
 

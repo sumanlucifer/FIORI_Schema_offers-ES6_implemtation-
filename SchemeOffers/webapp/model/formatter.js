@@ -74,6 +74,12 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
           new URL(sURL).pathname
         );
       }
+    },
+    fmtCheckNull:function(mParam1){
+        if(mParam1){
+            return mParam1
+        }
+        return "NA"
     }
     
   };

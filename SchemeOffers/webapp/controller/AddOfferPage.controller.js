@@ -75,9 +75,10 @@ sap.ui.define(
             ImageLoaded: false,
             BonusValidity: oBonusValidity,
             modeEdit: false,
-            mode:"add",
+            mode: "add",
             StartDate: "",
             EndDate: "",
+            MinDate: new Date(),
             OfferType: {
               BasicInformation: true,
               ApplicableProducts: true,
@@ -112,6 +113,7 @@ sap.ui.define(
               AppPacks2: [],
               AppPacks3: [],
               AppPacks4: [],
+              Painters:[]
             },
             Rbtn: {
               PCat1: 0,
@@ -137,6 +139,7 @@ sap.ui.define(
               Divisions: 0,
               Depots: 0,
               AppPainter: 0,
+              ParentOffer:0
             },
             MultiEnabled: {
               PCat1: false,
@@ -161,6 +164,7 @@ sap.ui.define(
               Divisions: false,
               Depots: false,
               AppPainter: false,
+              ParentOffer:false
             },
             Table: {
               Table1: [
@@ -210,6 +214,7 @@ sap.ui.define(
             Fields: {
               Date1: null,
               Date2: null,
+              ParentOfferTitle:""
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
@@ -228,7 +233,6 @@ sap.ui.define(
             IsSpecificApplicableProduct: false,
             IsSpecificApplicablePack: false,
             IsSpecificRewardRatio: false,
-            IsSpecificPainter: false,
             PointSlabUpperLimit: "",
             PointSlabLowerLimit: "",
             PurchaseStartDate: null,
@@ -241,6 +245,9 @@ sap.ui.define(
             OfferPackRewardRatio: [],
             OfferBonusProductRewardRatio: [],
             OfferBonusPackRewardRatio: [],
+            PainterSelection:0,
+            OfferSpecificPainter:[],
+            ParentOfferId:null
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -250,7 +257,9 @@ sap.ui.define(
           this._showFormFragment("ChangeDetail");
           //get products data
           this._getProductsData();
+          this._setDefaultValues();
         },
+        _setDefaultValues: function () {},
 
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
@@ -344,7 +353,7 @@ sap.ui.define(
             });
           });
         },
-       
+
         _CreateOffer: function (oPayLoad) {
           var promise = jQuery.Deferred();
           var othat = this;
@@ -355,6 +364,7 @@ sap.ui.define(
             oDataModel.create("/OfferSet", oPayLoad, {
               success: function (data) {
                 MessageToast.show("Offer Sucessfully Created.");
+                console.log(data);
                 //othat._navToHome();
                 resolve(data);
               },
