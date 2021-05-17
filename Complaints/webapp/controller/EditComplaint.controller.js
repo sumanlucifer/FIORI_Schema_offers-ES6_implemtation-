@@ -70,9 +70,9 @@ sap.ui.define(
           });
 
           //Himank: Workflow interaction model
-           this.oWorkflowModel = new JSONModel();
-            this.getView().setModel(this.oWorkflowModel,"wfmodel")                    
-         //End
+          this.oWorkflowModel = new JSONModel();
+          this.getView().setModel(this.oWorkflowModel, "wfmodel");
+          //End
 
           oRouter
             .getRoute("RouteEditCmp")
@@ -83,24 +83,24 @@ sap.ui.define(
             oEvent.getParameter("arguments").prop
           );
           var oView = this.getView();
-          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
+          var sExpandParam =
+            "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
 
           //console.log(oProp);
 
           this._initData(oProp);
-
-           
         },
-        _getExecLogData: function(sWorkFlowInstanceId){
-            //for Test case scenerios delete as needed
-            if(!sWorkFlowInstanceId)
-                sWorkFlowInstanceId = "41d8a91e-af04-11eb-a0a8-eeee0a81ec84"
+        _getExecLogData: function (sWorkFlowInstanceId) {
+          //for Test case scenerios delete as needed
+          if (!sWorkFlowInstanceId)
+            sWorkFlowInstanceId = "41d8a91e-af04-11eb-a0a8-eeee0a81ec84";
 
-            var sUrl = "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" + sWorkFlowInstanceId + "/execution-logs";
+          var sUrl =
+            "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
+            sWorkFlowInstanceId +
+            "/execution-logs";
 
-            this.oWorkflowModel.loadData(sUrl); 
-  
-    
+          this.oWorkflowModel.loadData(sUrl);
         },
         _initData: function (oProp) {
           var oData = {
@@ -125,10 +125,10 @@ sap.ui.define(
           var oBindProp = oData["bindProp"];
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
-              this._getExecLogData();
+          this._getExecLogData();
           c1.then(function () {
-               //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
-         
+            //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
+
             c2 = othat._setDisplayData(oBindProp);
             c2.then(function () {
               c3 = othat._initEditData(oBindProp);
@@ -142,7 +142,8 @@ sap.ui.define(
           var promise = jQuery.Deferred();
           var oView = this.getView();
 
-          var sExpandParam = "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
+          var sExpandParam =
+            "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
           var othat = this;
           if (oProp.trim() !== "") {
             oView.bindElement({
@@ -170,7 +171,7 @@ sap.ui.define(
           var othat = this;
           var exPand = "PainterComplainsHistory";
           oView.getModel().read("/" + oProp, {
-              urlParameters: {
+            urlParameters: {
               //$expand: exPand,
             },
             success: function (data) {
@@ -189,8 +190,10 @@ sap.ui.define(
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
           // setting the resolved flag if we have the value from backend;
-          if (oModelView.getProperty("/ComplaintStatus") === "RESOLVED" || oModelView.getProperty("/ComplaintStatus") === "WITHDRAWN") {
-           
+          if (
+            oModelView.getProperty("/ComplaintStatus") === "RESOLVED" ||
+            oModelView.getProperty("/ComplaintStatus") === "WITHDRAWN"
+          ) {
             oModelControl.setProperty("/ComplainResolved", true);
             oModelControl.setProperty("/TokenCode", false);
           }
@@ -454,15 +457,16 @@ sap.ui.define(
           oBindingParams.filters.push(oFilter);
           oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
         },
-       onPressEscalate: function (oEvent) {
+        onPressEscalate: function (oEvent) {
           var oView = this.getView();
           var oBject = oView.getModel("oModelView").getData();
           var oData = oView.getModel();
           var othat = this;
-          var sPath= oView.getElementBinding().getPath();
+          var sPath = oView.getElementBinding().getPath();
           console.log(sPath, oBject);
           MessageBox.confirm(
-            "Kindly confirm to escalate the complain - " + oBject["ComplaintCode"],
+            "Kindly confirm to escalate the complain - " +
+              oBject["ComplaintCode"],
             {
               actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
               emphasizedAction: MessageBox.Action.OK,
@@ -474,15 +478,19 @@ sap.ui.define(
             }
           );
         },
-        
+
         _Deactivate: function (oData, sPath, oBject) {
           var oPayload = {
             InitiateForceTat: true,
           };
+          var othat = this;
           oData.update(sPath + "/InitiateForceTat", oPayload, {
             success: function (mData) {
-              MessageToast.show(oBject["ComplaintCode"] + " Sucessfully Escalated.");
+              MessageToast.show(
+                oBject["ComplaintCode"] + " Sucessfully Escalated."
+              );
               oData.refresh();
+              othat.onNavBack();
             },
             error: function (data) {
               var oRespText = JSON.parse(data.responseText);
