@@ -36,7 +36,12 @@
                         </f:FormElement>
                         <f:FormElement label="Offer Image">
                             <f:fields>
-                                <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                                <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                     <Text text="{i18n>FileUploadMessage}"/>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">

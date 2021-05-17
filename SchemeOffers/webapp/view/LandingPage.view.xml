@@ -48,21 +48,21 @@
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectedKey="{oModelControl>/filterBar/TrainingZone}">
+									<ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange"  selectedKey="{oModelControl>/filterBar/TrainingZone}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>formRegionLbl2}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
+									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingZone}.length>1}"  id="idDivision"  selectionChange="onDivisionChange"  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
 										<core:Item key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>formRegionLbl3}">
 								<fb:control>
-									<ComboBox  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
+									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingDivision}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
 										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
 									</ComboBox>
 								</fb:control>

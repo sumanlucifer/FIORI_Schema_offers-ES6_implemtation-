@@ -1189,6 +1189,9 @@ sap.ui.define(
             return promise;
           }
         },
+        onUploadMisMatch:function(){
+            MessageToast.show("Kindly upload a file of type .png, .jpg, .jpeg");
+        },
 
         /**
          * Adds a history entry in the FLP page history
