@@ -71,9 +71,13 @@
         <f:footer>
             <OverflowToolbar >
              <ToolbarSpacer/>
-                  <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+           
+              <Button id="edit" text="Edit" type="Emphasized"  enabled="true" press="handleEditPress"/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
                 <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                <Button press="onActivate"  text="{i18n>Activate}" type="Accept" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
+                <Button press="onDeactivate"  text="{i18n>Deactivate}" type="Reject"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
+             
             </OverflowToolbar>
            
         </f:footer>

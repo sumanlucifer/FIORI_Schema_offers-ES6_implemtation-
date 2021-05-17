@@ -73,7 +73,9 @@ sap.ui.define(
           var oProp = window.decodeURIComponent(
             oEvent.getParameter("arguments").prop
           );
-
+          var sMode = window.decodeURIComponent(
+            oEvent.getParameter("arguments").mode
+          );
           var oView = this.getView();
           var sExpandParam = "OfferType,CreatedByDetails";
           console.log(oProp);
@@ -85,7 +87,24 @@ sap.ui.define(
               },
             });
           }
-          this._initData(oProp);
+
+          this._SetDisplayData(oProp, sMode);
+        },
+        _SetDisplayData: function (oProp, sMode) {
+          var oData = {
+            ImageUploaded: "", // Have to check again,
+            bindProp: "OfferSet(" + oProp + ")",
+            mode: "display",
+            SchemeId: oProp,
+          };
+          var oModel = new JSONModel(oData);
+          this.getView().setModel(oModel, "oModelControl3");
+          console.log(sMode)
+          if (sMode === "edit") {
+            this.handleEditPress();
+          } else {
+            this._initData(oProp);
+          }
         },
         _initData: function (oProp) {
           var oData = {
@@ -93,7 +112,7 @@ sap.ui.define(
             bindProp: "OfferSet(" + oProp + ")",
             HasTillDate: true,
             ImageLoaded: false,
-            mode:"display",
+            mode: "display",
             SchemeId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
@@ -587,8 +606,9 @@ sap.ui.define(
         handleEditPress: function () {
           this._toggleButtonsAndView(true);
           var oView = this.getView();
-          var oCtrl2Model = oView.getModel("oModelControl2");
-          var c1, c2, c3, c4, c5, c6;
+          var oCtrl2Model = oView.getModel("oModelControl3");
+          oCtrl2Model.setProperty("/mode","edit");
+          var c1, c2, c3, c4, c5, c6, c7;
           var othat = this;
           c1 = othat._loadEditProfile("Edit");
           c1.then(function () {
@@ -601,9 +621,12 @@ sap.ui.define(
                   c5 = othat._setEditViewData1(data);
                   c5.then(function (data) {
                     c6 = othat._setEditViewData2(data);
-                    c6.then(function(data){
-                        othat._SetAdditionalEditData(data)
-                    })
+                    c6.then(function (data) {
+                      c6 = othat._CheckEditImage(data);
+                      c6.then(function (oData) {
+                        c7 = othat._SetAdditionalEditData(data);
+                      });
+                    });
                   });
                 });
               });
@@ -613,15 +636,34 @@ sap.ui.define(
 
           // this._initSaveModel();
         },
-        _SetAdditionalEditData:function(oData){
-            console.log(oData);
-            this.getView().byId("OfferType").fireChange();
+        _SetAdditionalEditData: function (oData) {
+          console.log(oData);
+          this.getView().byId("OfferType").fireChange();
+        },
+        _CheckEditImage: function (oData) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = this.getView().getModel("oModelControl3");
+          var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+          var sImageUrl =
+            "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
+          jQuery
+            .get(sImageUrl)
+            .done(function () {
+              oModelControl.setProperty("/ImageLoaded", true);
+            })
+            .fail(function () {
+              oModelControl.setProperty("/ImageLoaded", false);
+            });
+
+          promise.resolve(oData);
+          return promise;
         },
         _GetInitEditData: function () {
           var promise = jQuery.Deferred();
           var oView = this.getView();
           var oData = oView.getModel();
-          var oModelControl2 = oView.getModel("oModelControl2");
+          var oModelControl2 = oView.getModel("oModelControl3");
           var sPath = oModelControl2.getProperty("/bindProp");
           var othat = this;
           var exPand =
@@ -651,15 +693,15 @@ sap.ui.define(
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
           var oBonusValidity = [];
-              var oDataControl = {
+          var oDataControl = {
             HasTillDate: false,
-            ImageLoaded: oModelControl2.getProperty("/ImageLoaded"),
-            mode:"edit",
+            ImageLoaded: false,
+            mode: "edit",
             BonusValidity: oBonusValidity,
             modeEdit: false,
             StartDate: "",
             EndDate: "",
-            MinDate:new Date(),
+            MinDate: new Date(),
             OfferType: {
               BasicInformation: true,
               ApplicableProducts: true,
@@ -794,7 +836,7 @@ sap.ui.define(
               Date2: null,
             },
           };
-         
+
           var oConrtrolModel = new JSONModel(oDataControl);
           oView.setModel(oConrtrolModel, "oModelControl");
 
@@ -1165,7 +1207,7 @@ sap.ui.define(
           var othat = this;
           var oView = this.getView();
           var oDataModel = oView.getModel();
-          var oProp = oView.getModel("oModelControl2").getProperty("/bindProp");
+          var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
           console.log(oPayLoad);
           return new Promise((resolve, reject) => {
             oDataModel.update("/" + oProp, oPayLoad, {
@@ -1294,17 +1336,59 @@ sap.ui.define(
         },
         _toggleButtonsAndView: function (bEdit) {
           var oView = this.getView();
-          oView.byId("edit").setVisible(!bEdit);
+          oView.byId("edit").setVisible(false);
           oView.byId("save").setVisible(bEdit);
           oView.byId("cancel").setVisible(bEdit);
         },
         handleCancelPress: function () {
           var oView = this.getView();
           var othat = this;
-          var oProp = oView.getModel("oModelControl2").getProperty("/SchemeId");
+          var oProp = oView.getModel("oModelControl3").getProperty("/SchemeId");
 
           var c1, c2, c3, c4;
           this._initData(oProp);
+        },
+        onDeactivate: function (oEvent) {
+          var oView = this.getView();
+          var oBject = {};
+          var sPath =
+            "/" +
+            oView.getModel("oModelControl3").getProperty("/bindProp") +
+            "/IsActive";
+          var oData = oView.getModel();
+          var othat = this;
+          var oPayLoad = {
+            IsActive: false,
+          };
+          console.log(sPath);
+          oData.update(sPath, oPayLoad, {
+            success: function () {
+              othat._navToHome();
+            },
+            error: function () {
+              //console.log("Error")
+            },
+          });
+        },
+        onActivate: function (oEvent) {
+          var oView = this.getView();
+          var oBject = {};
+          var sPath =
+            "/" +
+            oView.getModel("oModelControl3").getProperty("/bindProp") +
+            "/IsActive";
+          var oData = oView.getModel();
+          var othat = this;
+          var oPayLoad = {
+            IsActive: true,
+          };
+          console.log(sPath);
+          oData.update(sPath, oPayLoad, {
+            success: function () {
+              othat._navToHome();
+            },
+            error: function () {},
+          });
         },
       }
     );

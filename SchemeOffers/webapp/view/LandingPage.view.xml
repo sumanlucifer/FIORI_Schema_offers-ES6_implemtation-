@@ -38,9 +38,8 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                    <ComboBox placeholder="{i18n>Enter} {i18n>tblColStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
-                                        <core:Item text="Pending" key="PENDING"/>
-                                         <core:Item text="Approved" key="APPROVED"/>
-                                          <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Active" key="true"/>
+                                         <core:Item text="Inactive" key="false"/>
                                         
                                     </ComboBox>
 
@@ -138,7 +137,7 @@
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                              <HBox justifyContent="Start">
-                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onPressListItem"></Button>
+                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
 

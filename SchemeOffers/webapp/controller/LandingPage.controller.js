@@ -110,13 +110,21 @@ sap.ui.define(
           var oBject = oEvent.getSource().getBindingContext().getObject();
           this.oRouter.navTo("DetailPage", {
             prop: oBject["Id"],
+            mode:"display"
           });
         },
-
-        onPressAdd: function (oEvent) {
-          this.oRouter.navTo("AddOfferPage");
+        onEditOffer: function (oEvent) {
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext()
+            .getPath()
+            .substr(1);
+          var oBject = oEvent.getSource().getBindingContext().getObject();
+          this.oRouter.navTo("DetailPage", {
+            prop: oBject["Id"],
+            mode:"edit"
+          });
         },
-
         onPressEdit: function (oEvent) {
           var sPath = oEvent.getSource().getBindingContext().getPath();
           this.oRouter.navTo("ActionPage", {
@@ -129,6 +137,7 @@ sap.ui.define(
           var oView = this.getView();
           var sPath = oEvent.getSource().getBindingContext().getPath();
           var oModel = this.getComponentModel();
+          n;
           var oViewModel = this.getView().getModel("ViewModel");
           var oResourceBundle = this.getOwnerComponent()
             .getModel("i18n")
@@ -209,13 +218,8 @@ sap.ui.define(
                 );
               } else if (prop === "Status") {
                 aFlaEmpty = false;
-
                 aCurrentFilterValues.push(
-                  new Filter(
-                    "OfferStatus",
-                    FilterOperator.EQ,
-                    oViewFilter[prop]
-                  )
+                  new Filter("IsActive", FilterOperator.EQ, true)
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "TrainingZone") {
@@ -456,10 +460,10 @@ sap.ui.define(
             oDialog.setSelectedSortItem("CreatedAt");
           }
         },
-         onZoneChange: function (oEvent) {
+        onZoneChange: function (oEvent) {
           var sId = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
-        
+
           var oDivision = oView.byId("idDivision");
           var oDivItems = oDivision.getBinding("items");
           var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
@@ -471,7 +475,6 @@ sap.ui.define(
           oDepot.clearSelection();
           oDepot.setValue("");
           // clearning data for dealer
-         
         },
         onDivisionChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
