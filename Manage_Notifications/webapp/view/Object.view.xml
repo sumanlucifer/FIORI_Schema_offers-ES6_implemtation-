@@ -58,7 +58,7 @@
 									editable="{= ${appView>/viewFlag} === 'Y'}">
 									<core:Item key="{Id}" text="{Painter/Name}"/>
 								</MultiComboBox> -->
-                                 <MultiInput id="multiInputPainterAdd" visible="{= ${objectView>IsGroupNotification} === false}" tokens="{objectView>/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
+                                 <MultiInput id="multiInputPainterAdd" visible="{= ${objectView>IsGroupNotification} === false}" tokens="{objectView>Receivers}" valueHelpRequest="onValueHelpRequestedPainter">
                                     <tokens>
                                         <Token editable="false" text="{objectView>Name}" key="{objectView>Id}"/>
                                     </tokens>

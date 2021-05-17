@@ -90,7 +90,7 @@ sap.ui.define([
 				that.getModel("objectView").setProperty("/sMode", "X");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
                 this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
-                this.getModel("objectView").setProperty("/Painters", []);
+                this.getModel("objectView").setProperty("/Receivers", []);
 			} else {
 				that.getModel("objectView").setProperty("/sMode", "E");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditNotification");
@@ -231,7 +231,7 @@ sap.ui.define([
 
 			oPayload.Receivers = oPayload.Receivers.map(function (ele) {
 				return {
-					Id: ele
+					Id: ele.Id
 				};
 			});
 
@@ -276,7 +276,7 @@ sap.ui.define([
 
 			oPayload.Receivers = oPayload.Receivers.map(function (ele) {
 				return {
-					Id: ele
+					Id: ele.Id
 				};
 			});
 
@@ -465,41 +465,45 @@ sap.ui.define([
                         cols: [
                             {
                                 label: "Membership ID",
-                                template: "MembershipCard",
+                                template: "Painter/MembershipCard",
                             },
                             {
                                 label: "Name",
-                                template: "Name",
+                                template: "Painter/Name",
                             },
                             {
                                 label: "Mobile Number",
-                                template: "Mobile",
+                                template: "Painter/Mobile",
                             },
                             {
                                 label: "Zone",
-                                template: "ZoneId",
+                                template: "Painter/ZoneId",
                             },
                             {
                                 label: "Division",
-                                template: "DivisionId",
+                                template: "Painter/DivisionId",
                             },
                             {
                                 label: "Depot",
-                                template: "Depot/Depot",
+                                template: "Painter/Depot/Depot",
                             },
                             {
                                 label: "Painter Type",
-                                template: "PainterType/PainterType",
+                                template: "Painter/PainterType/PainterType",
                             },
                             {
                                 label: "Painter ArcheType",
-                                template: "ArcheType/ArcheType",
+                                template: "Painter/ArcheType/ArcheType",
                             }
                         ],
                     });
 
                     var aCols = this.oColModel.getData().cols;
-                    var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
+                    //var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
+                     var oFilter = new sap.ui.model.Filter({filters:[
+                          new Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false),
+                          new Filter("PainterId", sap.ui.model.FilterOperator.GT, 0)
+                        ],and:true});
 
                     this._oValueHelpDialog = sap.ui.xmlfragment(
                         "com.knpl.pragati.Manage_Notifications.view.fragments.PainterValueHelp",
@@ -513,7 +517,7 @@ sap.ui.define([
 
                             if (oTable.bindRows) {
                                 oTable.bindAggregation("rows", {
-                                    path: "/PainterSet", filters: [oFilter], parameters: { expand: "Depot,PainterType,ArcheType" }, events:
+                                    path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
                                     {
                                         dataReceived: function () {
                                             this._oValueHelpDialog.update();
@@ -523,7 +527,7 @@ sap.ui.define([
                             }
 
                             if (oTable.bindItems) {
-                                oTable.bindAggregation("items", "/PainterSet", function () {
+                                oTable.bindAggregation("items", "/UserSet", function () {
                                     return new sap.m.ColumnListItem({
                                         cells: aCols.map(function (column) {
                                             return new sap.m.Label({
@@ -589,14 +593,14 @@ sap.ui.define([
                         if (xUnique.has(ele.getKey()) == false) {
                             oData.push({
                                 Name: ele.getText(),
-                                PainterId: ele.getKey(),
+                                //PainterId: ele.getKey(),
                                 Id: ele.getKey()
                             });
                             xUnique.add(ele.getKey());
                         }
                     });
 
-                    this.getView().getModel("objectView").setProperty("/Painters", oData);
+                    this.getView().getModel("objectView").setProperty("/oDetails/Receivers", oData);
                     this._oValueHelpDialog.close();
                 },
                 _filterTable: function (oFilter, sType) {

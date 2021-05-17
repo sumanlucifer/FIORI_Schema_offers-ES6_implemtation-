@@ -11,7 +11,7 @@
         afterOpen=".onValueHelpAfterOpenPainter"
         supportRanges="false"
         key="Id"
-        descriptionKey="Name">
+        descriptionKey="Painter/Name">
         <filterBar>
             <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
                 <fb:filterGroupItems>
@@ -21,7 +21,7 @@
                         label="Zone"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="ZoneId" placeholder="{i18n>enterZone}"/>
+                            <m:Input name="Painter/ZoneId" placeholder="{i18n>enterZone}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -30,7 +30,7 @@
                         label="Division"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="DivisionId" placeholder="{i18n>enterDivision}"/>
+                            <m:Input name="Painter/DivisionId" placeholder="{i18n>enterDivision}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -39,7 +39,7 @@
                         label="Depot"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Depot/Depot" placeholder="{i18n>enterDepot}"/>
+                            <m:Input name="Painter/Depot/Depot" placeholder="{i18n>enterDepot}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -48,7 +48,7 @@
                         label="Painter Type"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="PainterType/PainterType" placeholder="{i18n>enterPainterType}"/>
+                            <m:Input name="Painter/PainterType/PainterType" placeholder="{i18n>enterPainterType}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -57,7 +57,7 @@
                         label="Painter ArcheType"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="ArcheType/ArcheType" placeholder="{i18n>enterPainterArcheType}"/>
+                            <m:Input name="Painter/ArcheType/ArcheType" placeholder="{i18n>enterPainterArcheType}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -66,7 +66,7 @@
                         label="Membership ID"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
+                            <m:Input name="Painter/MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -75,7 +75,7 @@
                         label="Name"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Name" placeholder="{i18n>enterName}"/>
+                            <m:Input name="Painter/Name" placeholder="{i18n>enterName}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -84,7 +84,7 @@
                         label="Mobile Number"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Mobile" placeholder="{i18n>enterMobile}"/>
+                            <m:Input name="Painter/Mobile" placeholder="{i18n>enterMobile}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>
