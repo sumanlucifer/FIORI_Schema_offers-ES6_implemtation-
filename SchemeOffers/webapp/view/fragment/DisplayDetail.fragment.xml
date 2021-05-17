@@ -481,7 +481,7 @@
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
-                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
+                                <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
