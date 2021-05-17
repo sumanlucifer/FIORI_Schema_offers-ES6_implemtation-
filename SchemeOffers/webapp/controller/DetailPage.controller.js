@@ -679,6 +679,10 @@ sap.ui.define(
             "/Rbtn/AppPainter",
             oData["PainterSelection"]
           );
+
+          if(oData["ParentOfferId"]!==null && oData["ParentOfferId"]!==0 ){
+              oModelControl.setProperty("/Rbtn/ParentOffer",1)
+          }
           
           promise.resolve(oData);
           return promise;
