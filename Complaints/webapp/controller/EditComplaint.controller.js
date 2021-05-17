@@ -125,7 +125,7 @@ sap.ui.define(
           var oBindProp = oData["bindProp"];
           var c1, c2, c3, c4;
           c1 = othat._loadEditProfile("Display");
-              //this._getExecLogData();
+              this._getExecLogData();
           c1.then(function () {
                //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
          
@@ -246,7 +246,7 @@ sap.ui.define(
             "/ComplainCode",
             oModelView.getProperty("/ComplaintCode")
           );
-          oView.byId("smartHistory").rebindTable();
+          //oView.byId("smartHistory").rebindTable();
         },
         _CheckImage: function (oProp) {
           var oView = this.getView();
@@ -453,6 +453,42 @@ sap.ui.define(
           );
           oBindingParams.filters.push(oFilter);
           oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+        },
+       onPressEscalate: function (oEvent) {
+          var oView = this.getView();
+          var oBject = oView.getModel("oModelView").getData();
+          var oData = oView.getModel();
+          var othat = this;
+          var sPath= oView.getElementBinding().getPath();
+          console.log(sPath, oBject);
+          MessageBox.confirm(
+            "Kindly confirm to escalate the complain - " + oBject["ComplaintCode"],
+            {
+              actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+              emphasizedAction: MessageBox.Action.OK,
+              onClose: function (sAction) {
+                if (sAction == "OK") {
+                  othat._Deactivate(oData, sPath, oBject);
+                }
+              },
+            }
+          );
+        },
+        
+        _Deactivate: function (oData, sPath, oBject) {
+          var oPayload = {
+            InitiateForceTat: true,
+          };
+          oData.update(sPath + "/InitiateForceTat", oPayload, {
+            success: function (mData) {
+              MessageToast.show(oBject["ComplaintCode"] + " Sucessfully Escalated.");
+              oData.refresh();
+            },
+            error: function (data) {
+              var oRespText = JSON.parse(data.responseText);
+              MessageBox.error(oRespText["error"]["message"]["value"]);
+            },
+          });
         },
 
         fmtStatus: function (sStatus) {
