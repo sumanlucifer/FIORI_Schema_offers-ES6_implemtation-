@@ -55,6 +55,7 @@
                
                 <f:FormContainer visible="{oModelControl>/OfferType/ApplicableProducts}" title="{i18n>formApplicableProducts2}">
                     <f:formElements>
+                    
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat1}" >
@@ -119,9 +120,19 @@
                 </f:FormContainer>
                  <f:FormContainer title="{i18n>ParentChildOffer}">
                     <f:formElements>
-                         <f:FormElement label="{i18n>SelectParentOffer}">
+                    <f:FormElement label="{i18n>ApplyParentOffer}">
                             <f:fields>
-                                <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelView>/ParentOfferId'}" />
+                                 <RadioButtonGroup select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
+                                    <RadioButton text="{i18n>No}"/>
+                                    <RadioButton text="{i18n>Yes}" />
+                                   
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                         <f:FormElement label="{i18n>SelectParentOffer}">
+                            
+                            <f:fields>
+                                <Input editable="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
                                 
                             </f:fields>
                         </f:FormElement>
@@ -244,12 +255,25 @@
         
                    <f:FormContainer title="{i18n>ApplicablePainters}" visible="{oModelControl>/OfferType/ApplicablePainters}">
                     <f:formElements>
-                        <f:FormElement >
+                        
+                        <f:FormElement  >
                             <f:fields>
                                 <RadioButtonGroup selectedIndex="{oModelControl>/Rbtn/AppPainter}" columns="2" select="onRbAppPainter">
                                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                                     <RadioButton text="{i18n>formApplicableLbl2}"/>
+                                    <RadioButton text="{i18n>formApplicableLbl16}"/>
                                 </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>Painters}">
+                            <f:fields>
+                               <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }"  id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
+                    <tokens>
+                        <Token editable="false" text="{oModelControl>PainterName}" key="{oModelControl>PainterId}"/>
+                    </tokens>
+                </MultiInput>
+
+
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formApplicableLbl15}">

@@ -113,6 +113,13 @@ sap.ui.define(
               oModelView.setProperty("/StartDate", null);
             }
           }
+          if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
+            MessageToast.show(
+              "Kindly enter a date greater than or equal to current date"
+            );
+            oModelControl.setProperty("/StartDate", "");
+            oModelView.setProperty("/StartDate", null);
+          }
         },
         onEndDateChange: function (oEvent) {
           var oView = this.getView();
@@ -263,64 +270,15 @@ sap.ui.define(
           }
           oModelControl.setProperty("/MultiCombo/Depots", aDepotToken);
         },
-        onDepotValueHelpOpen: function (oEvent) {
-          this._oMultiInput = this.getView().byId("idDepots");
-          this.oColModel = new JSONModel({
-            cols: [
-              {
-                label: "Depot Id",
-                template: "Id",
-                width: "10rem",
-              },
-              {
-                label: "Depot Name",
-                template: "Depot",
-              },
-            ],
-          });
-
-          var aCols = this.oColModel.getData().cols;
-
-          this._oDepotDialog = sap.ui.xmlfragment(
-            "com.knpl.pragati.SchemeOffers.view.fragment.DepotFragment",
-            this
-          );
-          this.getView().addDependent(this._oDepotDialog);
-
-          this._oDepotDialog.getTableAsync().then(
-            function (oTable) {
-              //		oTable.setModel(this.oProductsModel);
-              oTable.setModel(this.oColModel, "columns");
-
-              if (oTable.bindRows) {
-                oTable.bindAggregation("rows", {
-                  path: "/MasterDepotSet",
-                  events: {
-                    dataReceived: function () {
-                      this._oDepotDialog.update();
-                    }.bind(this),
-                  },
-                });
-              }
-
-              if (oTable.bindItems) {
-                oTable.bindAggregation("items", "/MasterDepotSet", function () {
-                  return new sap.m.ColumnListItem({
-                    cells: aCols.map(function (column) {
-                      return new sap.m.Label({
-                        text: "{" + column.template + "}",
-                      });
-                    }),
-                  });
-                });
-              }
-
-              this._oDepotDialog.update();
-            }.bind(this)
-          );
-
-          this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
-          this._oDepotDialog.open();
+        onRbPrntOffer:function(oEvent){
+            var sKey = oEvent.getSource().getSelectedIndex();
+            var oView=this.getView();
+            var oModel=oView.getModel("oModelControl");
+            var oModel2=oView.getModel("oModelView");
+            if(sKey===0){
+                oModel.setProperty("/Fields/ParentOfferTitle","");
+                oModel2.setProperty("/ParentOfferId",null)
+            }
         },
         onPAppDropChange: function () {
           this._CreateRewardTableData();
@@ -395,9 +353,7 @@ sap.ui.define(
           var sKey = oEvent.getSource().getSeleckedIndex();
           var spath = oEvent.getSource().getBinding("selectedIndex").getPath();
         },
-        onDepotCancelPress: function () {
-          this._oDepotDialog.close();
-        },
+
         _setProductsData: function () {
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
@@ -516,10 +472,254 @@ sap.ui.define(
           promise.resolve();
           return promise;
         },
+        onValueHelpRequestedPainter: function () {
+          this._PainterMulti = this.getView().byId("Painters");
+          this.oColModel = new JSONModel({
+            cols: [
+              {
+                label: "Is Archived",
+                template: "IsArchived",
+              },
+              {
+                label: "Membership ID",
+                template: "MembershipCard",
+              },
+              {
+                label: "Name",
+                template: "Name",
+              },
+              {
+                label: "Mobile Number",
+                template: "Mobile",
+              },
+              {
+                label: "Zone",
+                template: "ZoneId",
+              },
+              {
+                label: "Division",
+                template: "DivisionId",
+              },
+              {
+                label: "Depot",
+                template: "Depot/Depot",
+              },
+              {
+                label: "Painter Type",
+                template: "PainterType/PainterType",
+              },
+              {
+                label: "Painter ArcheType",
+                template: "ArcheType/ArcheType",
+              },
+            ],
+          });
+
+          var aCols = this.oColModel.getData().cols;
+          var oFilter = new sap.ui.model.Filter(
+            "IsArchived",
+            sap.ui.model.FilterOperator.EQ,
+            false
+          );
+
+          this._PainterValueHelp = sap.ui.xmlfragment(
+            "com.knpl.pragati.SchemeOffers.view.fragment.PainterValueHelp",
+            this
+          );
+          this.getView().addDependent(this._PainterValueHelp);
+
+          this._PainterValueHelp.getTableAsync().then(
+            function (oTable) {
+              oTable.setModel(this.oColModel, "columns");
+
+              if (oTable.bindRows) {
+                oTable.bindAggregation("rows", {
+                  path: "/PainterSet",
+                  parameters: { expand: "Depot,PainterType,ArcheType" },
+                  events: {
+                    dataReceived: function () {
+                      this._PainterValueHelp.update();
+                    }.bind(this),
+                  },
+                });
+              }
+
+              if (oTable.bindItems) {
+                oTable.bindAggregation("items", "/PainterSet", function () {
+                  return new sap.m.ColumnListItem({
+                    cells: aCols.map(function (column) {
+                      return new sap.m.Label({
+                        text: "{" + column.template + "}",
+                      });
+                    }),
+                  });
+                });
+              }
+
+              this._PainterValueHelp.update();
+            }.bind(this)
+          );
+
+          this._PainterValueHelp.setTokens(this._PainterMulti.getTokens());
+          this._PainterValueHelp.open();
+        },
+        onPainterOkayPress: function (oEvent) {
+          var oData = [];
+          var oView = this.getView();
+          var aTokens = oEvent.getParameter("tokens");
+          var aArrayBackEnd = [];
+          aTokens.forEach(function (ele) {
+            oData.push({
+              PainterId: ele.getKey(),
+              PainterName: ele.getCustomData()[0].getValue()["Name"],
+            });
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty("/MultiCombo/Painters", oData);
+          console.log(oData);
+          this._PainterValueHelp.close();
+        },
+        onPainterValueAfterOpen: function () {
+          var aFilter = this._getFilterForPainterValue();
+          this._FilterPainterValueTable(aFilter, "Control");
+        },
+        _getFilterForPainterValue: function () {
+          var aFilters = [];
+          var aFilter1 = new Filter("IsArchived", FilterOperator.EQ, false);
+          aFilters.push(aFilter1);
+          if (aFilters.length == 0) {
+            return [];
+          }
+
+          return aFilter1;
+        },
+        _FilterPainterValueTable: function (oFilter, sType) {
+          var oValueHelpDialog = this._PainterValueHelp;
+
+          oValueHelpDialog.getTableAsync().then(function (oTable) {
+            if (oTable.bindRows) {
+              oTable.getBinding("rows").filter(oFilter, sType || "Application");
+            }
+
+            if (oTable.bindItems) {
+              oTable
+                .getBinding("items")
+                .filter(oFilter, sType || "Application");
+            }
+
+            oValueHelpDialog.update();
+          });
+        },
+        onFilterBarSearchPainter: function (oEvent) {
+          var afilterBar = oEvent.getParameter("selectionSet"),
+            aFilters = [];
+
+          for (var i = 0; i < afilterBar.length; i++) {
+            if (afilterBar[i].getValue()) {
+              aFilters.push(
+                new Filter({
+                  path: afilterBar[i].mProperties.name,
+                  operator: FilterOperator.Contains,
+                  value1: afilterBar[i].getValue(),
+                  caseSensitive: false,
+                })
+              );
+            }
+          }
+
+          aFilters.push(
+            new Filter({
+              path: "IsArchived",
+              operator: FilterOperator.EQ,
+              value1: false,
+            })
+          );
+
+          this._FilterPainterValueTable(
+            new Filter({
+              filters: aFilters,
+              and: true,
+            })
+          );
+        },
+
+        onDepotValueHelpOpen: function (oEvent) {
+          this._oMultiInput = this.getView().byId("idDepots");
+          this.oColModel = new JSONModel({
+            cols: [
+              {
+                label: "Depot Id",
+                template: "Id",
+                width: "10rem",
+              },
+              {
+                label: "Depot Name",
+                template: "Depot",
+              },
+            ],
+          });
+
+          var aCols = this.oColModel.getData().cols;
+
+          this._oDepotDialog = sap.ui.xmlfragment(
+            "com.knpl.pragati.SchemeOffers.view.fragment.DepotFragment",
+            this
+          );
+          this.getView().addDependent(this._oDepotDialog);
+
+          this._oDepotDialog.getTableAsync().then(
+            function (oTable) {
+              //		oTable.setModel(this.oProductsModel);
+              oTable.setModel(this.oColModel, "columns");
+
+              if (oTable.bindRows) {
+                oTable.bindAggregation("rows", {
+                  path: "/MasterDepotSet",
+                  events: {
+                    dataReceived: function () {
+                      this._oDepotDialog.update();
+                    }.bind(this),
+                  },
+                });
+              }
+
+              if (oTable.bindItems) {
+                oTable.bindAggregation("items", "/MasterDepotSet", function () {
+                  return new sap.m.ColumnListItem({
+                    cells: aCols.map(function (column) {
+                      return new sap.m.Label({
+                        text: "{" + column.template + "}",
+                      });
+                    }),
+                  });
+                });
+              }
+
+              this._oDepotDialog.update();
+            }.bind(this)
+          );
+
+          this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
+          this._oDepotDialog.open();
+        },
         onValueHelpAfterClose: function () {
           if (this._DepotDialog) {
             this._oDepotDialog.destroy();
             delete this._oDepotDialog;
+          }
+          if (this._PainterValueHelp) {
+            this._PainterValueHelp.destroy();
+            delete this._PainterValueHelp;
+          }
+        },
+        onValueHelpClose: function () {
+          if (this._oDepotDialog) {
+            this._oDepotDialog.close();
+          }
+          if (this._PainterValueHelp) {
+            this._PainterValueHelp.close();
           }
         },
         onDepotOkPress: function (oEvent) {
@@ -614,6 +814,7 @@ sap.ui.define(
               "MultiCombo/Zones",
               "MultiCombo/Divisions",
               "MultiCombo/Depots",
+              "MultiCombo/Painters",
               "Fields/Date1",
               "Fields/Date2",
             ],
@@ -633,8 +834,13 @@ sap.ui.define(
 
           if (iIndex == 0) {
             oModelControl.setProperty("/MultiCombo/AppPainter", false);
+            oModelView.setProperty("/PainterSelection", 0);
           } else if (iIndex == 1) {
             oModelControl.setProperty("/MultiCombo/AppPainter", true);
+            oModelView.setProperty("/PainterSelection", 1);
+          } else if (iIndex == 2) {
+            oModelControl.setProperty("/MultiCombo/AppPainter", true);
+            oModelView.setProperty("/PainterSelection", 2);
           } //
           // making the fields blank
         },
@@ -741,12 +947,15 @@ sap.ui.define(
         onParentOfferValueHelpClose: function (oEvent) {
           var oSelectedItem = oEvent.getParameter("selectedItem");
           oEvent.getSource().getBinding("items").filter([]);
-          var oViewModel = this.getView().getModel("oModelView");
+          var oView = this.getView();
+          var oViewModel = oView.getModel("oModelView");
+          var oModelControl = oView.getModel("oModelControl")
           if (!oSelectedItem) {
             return;
           }
           var obj = oSelectedItem.getBindingContext().getObject();
           oViewModel.setProperty("/ParentOfferId", obj["Id"]);
+          oModelControl.setProperty("/Fields/ParentOfferTitle",obj["Title"])
         },
         onValueHelpSearch: function (oEvent) {
           var sValue = oEvent.getParameter("value");
@@ -838,7 +1047,6 @@ sap.ui.define(
             IsSpecificBonusProduct: "AppProd4",
             IsSpecificBonusPack: "AppPacks4",
             IsSpecificBonusRewardRatio: "BRewards",
-            IsSpecificPainter: "AppPainter",
           };
           var oModelControl = oView.getModel("oModelControl");
           var oPropRbtn = oModelControl.getProperty("/Rbtn");
@@ -1007,6 +1215,14 @@ sap.ui.define(
           ) {
             return {
               SkuCode: elem,
+            };
+          });
+
+          oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(function (
+            elem
+          ) {
+            return {
+              PainterId: parseInt(elem["PainterId"])
             };
           });
           promise.resolve(oPayLoad);
@@ -1189,8 +1405,8 @@ sap.ui.define(
             return promise;
           }
         },
-        onUploadMisMatch:function(){
-            MessageToast.show("Kindly upload a file of type .png, .jpg, .jpeg");
+        onUploadMisMatch: function () {
+          MessageToast.show("Kindly upload a file of type .png, .jpg, .jpeg");
         },
 
         /**

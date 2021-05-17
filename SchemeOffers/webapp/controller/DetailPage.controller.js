@@ -99,7 +99,7 @@ sap.ui.define(
           };
           var oModel = new JSONModel(oData);
           this.getView().setModel(oModel, "oModelControl3");
-          console.log(sMode)
+          console.log(sMode);
           if (sMode === "edit") {
             this.handleEditPress();
           } else {
@@ -142,6 +142,7 @@ sap.ui.define(
               AppPacks2: [],
               AppPacks3: [],
               AppPacks4: [],
+              Painters: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -167,6 +168,7 @@ sap.ui.define(
               Divisions: 0,
               Depots: 0,
               AppPainter: 0,
+              ParentOffer: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -192,6 +194,7 @@ sap.ui.define(
               Depots: false,
               AppPainter: false,
             },
+
             Table: {
               Table1: [],
               Table2: [],
@@ -227,6 +230,7 @@ sap.ui.define(
             Fields: {
               Date1: null,
               Date2: null,
+              ParentOfferTitle: "",
             },
           };
           var oModel = new JSONModel(oData);
@@ -246,9 +250,12 @@ sap.ui.define(
                 c4.then(function (data) {
                   c5 = othat._setViewData2(data);
                   c5.then(function (data) {
-                    c6 = othat._OfferTypeValidation(data);
-                    c6.then(function () {
-                      c7 = othat._CheckAttachment();
+                    c6 = othat._setAdditionalData(data);
+                    c6.then(function (data) {
+                      c7 = othat._OfferTypeValidation(data);
+                      c7.then(function () {
+                        c8 = othat._CheckAttachment();
+                      });
                     });
                   });
                 });
@@ -256,6 +263,19 @@ sap.ui.define(
             });
           });
           this._toggleButtonsAndView(false);
+        },
+        _setAdditionalData: function (oData) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl2");
+          oModelControl.setProperty(
+            "/Rbtn/AppPainter",
+            oData["PainterSelection"]
+          );
+          console.log(oData["PainterSelection"]);
+          console.log("Set Additioanl Data", oData);
+          promise.resolve(oData);
+          return promise;
         },
         _OfferTypeValidation: function (oData) {
           var oFFerTypeId = oData["OfferTypeId"];
@@ -296,7 +316,7 @@ sap.ui.define(
             "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
             "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
             "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
-            "OfferBonusProductRewardRatio/Product,OfferBonusPackRewardRatio/Pack";
+            "OfferBonusProductRewardRatio/Product,OfferBonusPackRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
           oView.getModel().read("/" + sPath, {
             urlParameters: {
               $expand: exPand,
@@ -395,7 +415,8 @@ sap.ui.define(
             PCat4 = [],
             PClass4 = [],
             AppProd4 = [],
-            AppPacks4 = [];
+            AppPacks4 = [],
+            Painters = [];
           //setting zone data
           if (oData["OfferZone"]["results"].length > 0) {
             for (var x of oData["OfferZone"]["results"]) {
@@ -559,6 +580,17 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks4", AppPacks4);
 
+          if (oData["OfferSpecificPainter"]["results"].length > 0) {
+            for (var x of oData["OfferSpecificPainter"]["results"]) {
+              Painters.push({
+                PainterId: x["Painter"]["Id"],
+                PainterName: x["Painter"]["Name"],
+              });
+            }
+            console.log(Painters);
+          }
+          oModelControl2.setProperty("/MultiCombo/Painters", Painters);
+
           promise.resolve(oData);
           return promise;
         },
@@ -607,8 +639,8 @@ sap.ui.define(
           this._toggleButtonsAndView(true);
           var oView = this.getView();
           var oCtrl2Model = oView.getModel("oModelControl3");
-          oCtrl2Model.setProperty("/mode","edit");
-          var c1, c2, c3, c4, c5, c6, c7;
+          oCtrl2Model.setProperty("/mode", "edit");
+          var c1, c2, c3, c4, c5, c6, c7, c8;
           var othat = this;
           c1 = othat._loadEditProfile("Edit");
           c1.then(function () {
@@ -622,9 +654,12 @@ sap.ui.define(
                   c5.then(function (data) {
                     c6 = othat._setEditViewData2(data);
                     c6.then(function (data) {
-                      c6 = othat._CheckEditImage(data);
+                      c6 = othat._setAdditionalData2(data);
                       c6.then(function (oData) {
-                        c7 = othat._SetAdditionalEditData(data);
+                        c7 = othat._OfferTypeValidation2(data);
+                        c7.then(function (data) {
+                          c8 = othat._CheckEditImage(data);
+                        });
                       });
                     });
                   });
@@ -636,9 +671,24 @@ sap.ui.define(
 
           // this._initSaveModel();
         },
-        _SetAdditionalEditData: function (oData) {
-          console.log(oData);
-          this.getView().byId("OfferType").fireChange();
+        _setAdditionalData2: function (oData) {
+          var promise = jQuery.Deferred();
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty(
+            "/Rbtn/AppPainter",
+            oData["PainterSelection"]
+          );
+          
+          promise.resolve(oData);
+          return promise;
+        },
+        _OfferTypeValidation2: function (oData) {
+          var promise = jQuery.Deferred();
+          this.getView().byId("OfferType").fireSelectionChange();
+          console.log("Offer Type Validation")
+          promise.resolve(oData);
+          return promise;
         },
         _CheckEditImage: function (oData) {
           var promise = jQuery.Deferred();
@@ -671,7 +721,7 @@ sap.ui.define(
             "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
             "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
             "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
-            "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio";
+            "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
           oView.getModel().read("/" + sPath, {
             urlParameters: {
               $expand: exPand,
@@ -693,6 +743,7 @@ sap.ui.define(
           var oView = this.getView();
           var oModelControl2 = oView.getModel("oModelControl2");
           var oBonusValidity = [];
+          console.log();
           var oDataControl = {
             HasTillDate: false,
             ImageLoaded: false,
@@ -701,7 +752,7 @@ sap.ui.define(
             modeEdit: false,
             StartDate: "",
             EndDate: "",
-            MinDate: new Date(),
+            MinDate: data["StartDate"],
             OfferType: {
               BasicInformation: true,
               ApplicableProducts: true,
@@ -736,6 +787,7 @@ sap.ui.define(
               AppPacks2: [],
               AppPacks3: [],
               AppPacks4: [],
+              Painters: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -761,6 +813,7 @@ sap.ui.define(
               Divisions: 0,
               Depots: 0,
               AppPainter: 0,
+              ParentOffer: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -834,6 +887,7 @@ sap.ui.define(
             Fields: {
               Date1: null,
               Date2: null,
+              ParentOfferTitle: "",
             },
           };
 
@@ -974,7 +1028,9 @@ sap.ui.define(
             PCat4 = [],
             PClass4 = [],
             AppProd4 = [],
-            AppPacks4 = [];
+            AppPacks4 = [],
+            Painters = [],
+            ParentOffer = "";
           //setting zone data
           if (oData["OfferZone"]["results"].length > 0) {
             for (var x of oData["OfferZone"]["results"]) {
@@ -1138,6 +1194,20 @@ sap.ui.define(
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks4", AppPacks4);
 
+          if (oData["OfferSpecificPainter"]["results"].length > 0) {
+            for (var x of oData["OfferSpecificPainter"]["results"]) {
+              Painters.push({
+                PainterId: x["Painter"]["Id"],
+                PainterName: x["Painter"]["Name"],
+              });
+            }
+          }
+
+          if (oData["ParentOffer"] !== null) {
+            //ParentOffer
+            ParentOffer = oData["ParentOffer"]["Title"];
+          }
+          oModelControl2.setProperty("/Fields/ParentOfferTitle", ParentOffer);
           promise.resolve(oData);
           return promise;
         },
@@ -1344,9 +1414,9 @@ sap.ui.define(
           var oView = this.getView();
           var othat = this;
           var oProp = oView.getModel("oModelControl3").getProperty("/SchemeId");
-
+          this._navToHome();
           var c1, c2, c3, c4;
-          this._initData(oProp);
+          //this._initData(oProp);
         },
         onDeactivate: function (oEvent) {
           var oView = this.getView();

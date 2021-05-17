@@ -110,7 +110,7 @@ sap.ui.define(
           var oBject = oEvent.getSource().getBindingContext().getObject();
           this.oRouter.navTo("DetailPage", {
             prop: oBject["Id"],
-            mode:"display"
+            mode: "display",
           });
         },
         onEditOffer: function (oEvent) {
@@ -122,7 +122,7 @@ sap.ui.define(
           var oBject = oEvent.getSource().getBindingContext().getObject();
           this.oRouter.navTo("DetailPage", {
             prop: oBject["Id"],
-            mode:"edit"
+            mode: "edit",
           });
         },
         onPressEdit: function (oEvent) {
@@ -131,6 +131,10 @@ sap.ui.define(
             action: "edit",
             property: sPath.substr(1),
           });
+        },
+        onPressAdd: function () {
+          //var sPath = oEvent.getSource().getBindingContext().getPath();
+          this.oRouter.navTo("AddOfferPage");
         },
 
         onPressDelete: function (oEvent) {
@@ -219,7 +223,7 @@ sap.ui.define(
               } else if (prop === "Status") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter("IsActive", FilterOperator.EQ, true)
+                  new Filter("IsActive", FilterOperator.EQ, JSON.parse(oViewFilter[prop]))
                   //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                 );
               } else if (prop === "TrainingZone") {
