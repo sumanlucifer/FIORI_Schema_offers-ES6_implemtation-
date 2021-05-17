@@ -499,7 +499,6 @@ sap.ui.define([
                     });
 
                     var aCols = this.oColModel.getData().cols;
-                    //var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
                      var oFilter = new sap.ui.model.Filter({filters:[
                           new Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false),
                           new Filter("PainterId", sap.ui.model.FilterOperator.GT, 0)
