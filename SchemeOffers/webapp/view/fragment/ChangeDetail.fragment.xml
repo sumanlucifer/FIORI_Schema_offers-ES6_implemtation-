@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
-        <f:Form id="FormChange" editable="false">
+        <f:Form  id="FormChange" editable="false">
             <f:layout>
                 <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
             </f:layout>
@@ -26,7 +26,7 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl4}">
                             <f:fields>
-                                <DatePicker change="onStartDateChange" minDate="{oModelControl>/MinDate}" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
+                                <DatePicker change="onEndDateChange" minDate="{oModelControl>/MinDate}" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
@@ -122,7 +122,7 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>ApplyParentOffer}">
                             <f:fields>
-                                 <RadioButtonGroup select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
+                                 <RadioButtonGroup enabled="{= ${oModelView>/ParentOfferId}===0?false:true}" select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
                                     <RadioButton text="{i18n>No}"/>
                                     <RadioButton text="{i18n>Yes}" />
                                    
@@ -686,7 +686,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter'}"/> -->
+                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter'}"/>
                             </f:fields>
                         </f:FormElement>
                       

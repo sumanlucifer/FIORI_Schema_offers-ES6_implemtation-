@@ -5,9 +5,10 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="{i18n>tblColOfferName}" key="Title" selected="true" />
-            <ViewSettingsItem text="{i18n>tblColCreationDate}" key="CreatedAt" />
-                 <ViewSettingsItem text="{i18n>tblColStartDate}" key="StartDate" />
-                 <ViewSettingsItem text="{i18n>tblColEndDate}" key="EndDate" />
+            <ViewSettingsItem text="{i18n>offerTypeFilterLabel}" key="OfferType/OfferType"  />
+            <ViewSettingsItem text="{i18n>tblColCreatedBy}" key="CreatedByDetails/Name" />
+            <ViewSettingsItem text="{i18n>tblColStartDate}" key="StartDate" />
+            <ViewSettingsItem text="{i18n>tblColEndDate}" key="EndDate" />
                       
 			
 		</sortItems>

@@ -71,6 +71,7 @@ sap.ui.define(
             oBonusValidity.push({ key: i });
           }
           var oDataControl = {
+            FormTitle: "Add Offer Details",
             HasTillDate: false,
             ImageLoaded: false,
             BonusValidity: oBonusValidity,
@@ -113,7 +114,7 @@ sap.ui.define(
               AppPacks2: [],
               AppPacks3: [],
               AppPacks4: [],
-              Painters:[]
+              Painters: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -139,7 +140,7 @@ sap.ui.define(
               Divisions: 0,
               Depots: 0,
               AppPainter: 0,
-              ParentOffer:0
+              ParentOffer: 0,
             },
             MultiEnabled: {
               PCat1: false,
@@ -164,7 +165,7 @@ sap.ui.define(
               Divisions: false,
               Depots: false,
               AppPainter: false,
-              ParentOffer:false
+              ParentOffer: false,
             },
             Table: {
               Table1: [
@@ -214,7 +215,7 @@ sap.ui.define(
             Fields: {
               Date1: null,
               Date2: null,
-              ParentOfferTitle:""
+              ParentOfferTitle: "",
             },
           };
           var oConrtrolModel = new JSONModel(oDataControl);
@@ -245,9 +246,9 @@ sap.ui.define(
             OfferPackRewardRatio: [],
             OfferBonusProductRewardRatio: [],
             OfferBonusPackRewardRatio: [],
-            PainterSelection:0,
-            OfferSpecificPainter:[],
-            ParentOfferId:null
+            PainterSelection: 0,
+            OfferSpecificPainter: [],
+            ParentOfferId: null,
           };
           var oViewMOdel = new JSONModel(oDataView);
           oView.setModel(oViewMOdel, "oModelView");
@@ -375,10 +376,6 @@ sap.ui.define(
             });
           });
         },
-        _CreateOffer1: function () {
-          var othat = this;
-        },
-
         _UploadFile: function (mParam1, mParam2) {
           var promise = jQuery.Deferred();
           if (!mParam2) {
