@@ -412,9 +412,10 @@ sap.ui.define(
             }
           }
           var othat = this;
+          console.log(oPayload);
           oData.update(sPath, oPayload, {
             success: function () {
-              MessageToast.show("Complaint Sucessfully Updated");
+              MessageToast.show("Complaint Sucessfully Updated.");
               oData.refresh(true);
               othat.onNavBack();
             },
@@ -459,7 +460,8 @@ sap.ui.define(
         },
         onPressEscalate: function (oEvent) {
           var oView = this.getView();
-          var oBject = oView.getModel("oModelView").getData();
+          var oModel = oView.getModel("oModelView");
+          var oBject = oModel.getData();
           var oData = oView.getModel();
           var othat = this;
           var sPath = oView.getElementBinding().getPath();
@@ -472,7 +474,8 @@ sap.ui.define(
               emphasizedAction: MessageBox.Action.OK,
               onClose: function (sAction) {
                 if (sAction == "OK") {
-                  othat._Deactivate(oData, sPath, oBject);
+                  oModel.setProperty("/InitiateForceTat", true);
+                  othat._postDataToSave();
                 }
               },
             }
