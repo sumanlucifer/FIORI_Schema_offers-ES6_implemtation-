@@ -1150,63 +1150,6 @@ sap.ui.define(
                     }
 
                     oPayload = this.trainingFilter(oPayload);
-
-                    // switch (oPayload.TrainingFilterType) {
-                    //     case "ALL":
-                    //         delete oPayload.TrainingZone;
-                    //         delete oPayload.TrainingDivision;
-                    //         delete oPayload.TrainingDepot;
-                    //         delete oPayload.TrainingPainterTypeDetails;
-                    //         delete oPayload.TrainingPainterArcheTypeDetails;
-                    //         delete oPayload.TrainingPainters;
-                    //         break;
-                    //     case "GROUP":
-                    //         delete oPayload.TrainingPainters;
-                    //         var Array = [];
-                    //         for (var x of oPayload.TrainingZone) {
-                    //             Array.push({
-                    //                 ZoneId: x,
-                    //             });
-                    //         }
-                    //         oPayload.TrainingZone = Array;
-
-                    //         Array = [];
-                    //         for (var x of oPayload.TrainingDivision) {
-                    //             Array.push({
-                    //                 DivisionId: x,
-                    //             });
-                    //         }
-                    //         oPayload.TrainingDivision = Array;
-
-                    //         Array = [];
-                    //         for (var x of oPayload.TrainingPainterTypeDetails) {
-                    //             Array.push({
-                    //                 PainterTypeId: parseInt(x),
-                    //             });
-                    //         }
-                    //         oPayload.TrainingPainterTypeDetails = Array;
-
-                    //         Array = [];
-                    //         for (var x of oPayload.TrainingPainterArcheTypeDetails) {
-                    //             Array.push({
-                    //                 PainterArcheTypeId: parseInt(x),
-                    //             });
-                    //         }
-                    //         oPayload.TrainingPainterArcheTypeDetails = Array;
-
-                    //         oPayload.TrainingDepot = oPayload.TrainingDepot.map(ele => ({ DepotId: ele.DepotId }));
-                    //         break;
-                    //     case "PAINTER":
-                    //         oPayload.TrainingPainters = oPayload.TrainingPainters.map(ele => ({ PainterId: parseInt(ele.PainterId) }));
-
-                    //         delete oPayload.TrainingZone;
-                    //         delete oPayload.TrainingDivision;
-                    //         delete oPayload.TrainingDepot;
-                    //         delete oPayload.TrainingPainterTypeDetails;
-                    //         delete oPayload.TrainingPainterArcheTypeDetails;
-                    //         break;
-                    // }
-
                     delete oPayload.StartDate;
                     delete oPayload.EndDate;
                     delete oPayload.TrainingQuestionnaire;

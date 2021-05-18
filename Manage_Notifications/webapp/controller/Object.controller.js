@@ -2,8 +2,11 @@ sap.ui.define([
 	"./BaseController",
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
-	"sap/ui/core/SeparatorItem"
-], function (BaseController, JSONModel, formatter, SeparatorItem) {
+    "sap/ui/core/SeparatorItem",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+
+], function (BaseController, JSONModel, formatter, SeparatorItem,Filter,FilterOperator) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.Manage_Notifications.controller.Object", {
@@ -26,7 +29,8 @@ sap.ui.define([
 				oViewModel = new JSONModel({
 					busy: true,
 					IsLater: true,
-					delay: 0
+                    delay: 0
+
 				});
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -85,7 +89,8 @@ sap.ui.define([
 			if (viewchar === "X") {
 				that.getModel("objectView").setProperty("/sMode", "X");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
-				this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
+                this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
+                this.getModel("objectView").setProperty("/Receivers", []);
 			} else {
 				that.getModel("objectView").setProperty("/sMode", "E");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditNotification");
@@ -226,7 +231,7 @@ sap.ui.define([
 
 			oPayload.Receivers = oPayload.Receivers.map(function (ele) {
 				return {
-					Id: ele
+					Id: ele.Id
 				};
 			});
 
@@ -271,7 +276,7 @@ sap.ui.define([
 
 			oPayload.Receivers = oPayload.Receivers.map(function (ele) {
 				return {
-					Id: ele
+					Id: ele.Id
 				};
 			});
 
@@ -452,7 +457,170 @@ sap.ui.define([
 					});
 				}
 			});
-		}
+        },
+        
+                onValueHelpRequestedPainter: function () {
+                    this._oMultiInput = this.getView().byId("multiInputPainterAdd");
+                    this.oColModel = new JSONModel({
+                        cols: [
+                            {
+                                label: "Membership ID",
+                                template: "Painter/MembershipCard",
+                            },
+                            {
+                                label: "Name",
+                                template: "Painter/Name",
+                            },
+                            {
+                                label: "Mobile Number",
+                                template: "Painter/Mobile",
+                            },
+                            {
+                                label: "Zone",
+                                template: "Painter/ZoneId",
+                            },
+                            {
+                                label: "Division",
+                                template: "Painter/DivisionId",
+                            },
+                            {
+                                label: "Depot",
+                                template: "Painter/Depot/Depot",
+                            },
+                            {
+                                label: "Painter Type",
+                                template: "Painter/PainterType/PainterType",
+                            },
+                            {
+                                label: "Painter ArcheType",
+                                template: "Painter/ArcheType/ArcheType",
+                            }
+                        ],
+                    });
+
+                    var aCols = this.oColModel.getData().cols;
+                     var oFilter = new sap.ui.model.Filter({filters:[
+                          new Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false),
+                          new Filter("PainterId", sap.ui.model.FilterOperator.GT, 0)
+                        ],and:true});
+
+                    this._oValueHelpDialog = sap.ui.xmlfragment(
+                        "com.knpl.pragati.Manage_Notifications.view.fragments.PainterValueHelp",
+                        this
+                    );
+                    this.getView().addDependent(this._oValueHelpDialog);
+
+                    this._oValueHelpDialog.getTableAsync().then(
+                        function (oTable) {
+                            oTable.setModel(this.oColModel, "columns");
+
+                            if (oTable.bindRows) {
+                                oTable.bindAggregation("rows", {
+                                    path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
+                            }
+
+                            if (oTable.bindItems) {
+                                oTable.bindAggregation("items", "/UserSet", function () {
+                                    return new sap.m.ColumnListItem({
+                                        cells: aCols.map(function (column) {
+                                            return new sap.m.Label({
+                                                text: "{" + column.template + "}",
+                                            });
+                                        }),
+                                    });
+                                });
+                            }
+
+                            this._oValueHelpDialog.update();
+                        }.bind(this)
+                    );
+
+                    this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+                    this._oValueHelpDialog.open();
+                },
+
+                onFilterBarSearchPainter: function (oEvent) {
+                    //   debugger;
+                    var afilterBar = oEvent.getParameter("selectionSet"),
+                        aFilters = [];
+
+                    for (var i = 0; i < afilterBar.length; i++) {
+                        if (afilterBar[i].getValue()) {
+                            aFilters.push(
+                                new Filter({
+                                    path: afilterBar[i].mProperties.name,
+                                    operator: FilterOperator.Contains,
+                                    value1: afilterBar[i].getValue(),
+                                    caseSensitive: false,
+                                })
+                            );
+                        }
+                    }
+
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false,
+                        })
+                    );
+
+                    this._filterTable(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+
+                onValueHelpCancelPressPainter: function () {
+                    this._oValueHelpDialog.close();
+                },
+
+                onValueHelpOkPressPainter: function (oEvent) {
+                    var oData = [];
+                    var xUnique = new Set();
+                    var aTokens = oEvent.getParameter("tokens");
+
+                    aTokens.forEach(function (ele) {
+                        if (xUnique.has(ele.getKey()) == false) {
+                            oData.push({
+                                Name: ele.getText(),
+                                //PainterId: ele.getKey(),
+                                Id: ele.getKey()
+                            });
+                            xUnique.add(ele.getKey());
+                        }
+                    });
+
+                    this.getView().getModel("objectView").setProperty("/oDetails/Receivers", oData);
+                    this._oValueHelpDialog.close();
+                },
+                _filterTable: function (oFilter, sType) {
+                    var oValueHelpDialog = this._oValueHelpDialog;
+
+                    oValueHelpDialog.getTableAsync().then(function (oTable) {
+                        if (oTable.bindRows) {
+                            oTable.getBinding("rows").filter(oFilter, sType || "Application");
+                        }
+
+                        if (oTable.bindItems) {
+                            oTable
+                                .getBinding("items")
+                                .filter(oFilter, sType || "Application");
+                        }
+
+                        oValueHelpDialog.update();
+                    });
+                },
+
+
 
 	});
 
