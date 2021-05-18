@@ -11,7 +11,7 @@
         afterOpen=".onValueHelpAfterOpenPainter"
         supportRanges="false"
         key="Id"
-        descriptionKey="Painter/Name">
+        descriptionKey="Id">
         <filterBar>
             <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
                 <fb:filterGroupItems>
