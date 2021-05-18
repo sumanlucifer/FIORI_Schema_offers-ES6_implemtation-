@@ -86,7 +86,7 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="{i18n>formApplicableProducts}">
+                         <f:FormElement label="{i18n>formApplicableProducts2}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd1}" >
                                     <RadioButton text="{i18n>All}"/>
