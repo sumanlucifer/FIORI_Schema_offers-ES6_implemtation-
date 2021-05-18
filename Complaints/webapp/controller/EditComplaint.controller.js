@@ -486,12 +486,14 @@ sap.ui.define(
           var oPayload = {
             InitiateForceTat: true,
           };
+          var othat = this;
           oData.update(sPath + "/InitiateForceTat", oPayload, {
             success: function (mData) {
               MessageToast.show(
                 oBject["ComplaintCode"] + " Sucessfully Escalated."
               );
               oData.refresh();
+              othat.onNavBack();
             },
             error: function (data) {
               var oRespText = JSON.parse(data.responseText);
