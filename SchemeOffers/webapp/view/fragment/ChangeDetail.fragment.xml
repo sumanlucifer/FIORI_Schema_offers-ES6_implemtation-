@@ -122,7 +122,7 @@
                     <f:formElements>
                     <f:FormElement label="{i18n>ApplyParentOffer}">
                             <f:fields>
-                                 <RadioButtonGroup select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
+                                 <RadioButtonGroup enabled="{= ${oModelView>/ParentOfferId}===0?false:true}" select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
                                     <RadioButton text="{i18n>No}"/>
                                     <RadioButton text="{i18n>Yes}" />
                                    
@@ -686,7 +686,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter'}"/> -->
+                                <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter'}"/>
                             </f:fields>
                         </f:FormElement>
                       

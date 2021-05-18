@@ -270,15 +270,15 @@ sap.ui.define(
           }
           oModelControl.setProperty("/MultiCombo/Depots", aDepotToken);
         },
-        onRbPrntOffer:function(oEvent){
-            var sKey = oEvent.getSource().getSelectedIndex();
-            var oView=this.getView();
-            var oModel=oView.getModel("oModelControl");
-            var oModel2=oView.getModel("oModelView");
-            if(sKey===0){
-                oModel.setProperty("/Fields/ParentOfferTitle","");
-                oModel2.setProperty("/ParentOfferId",null)
-            }
+        onRbPrntOffer: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedIndex();
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var oModel2 = oView.getModel("oModelView");
+          if (sKey === 0) {
+            oModel.setProperty("/Fields/ParentOfferTitle", "");
+            oModel2.setProperty("/ParentOfferId", null);
+          }
         },
         onPAppDropChange: function () {
           this._CreateRewardTableData();
@@ -561,17 +561,20 @@ sap.ui.define(
         },
         onPainterOkayPress: function (oEvent) {
           var oData = [];
-          var oView = this.getView();
+          var xUnique = new Set();
           var aTokens = oEvent.getParameter("tokens");
-          var aArrayBackEnd = [];
+
           aTokens.forEach(function (ele) {
-            oData.push({
-              PainterId: ele.getKey(),
-              PainterName: ele.getCustomData()[0].getValue()["Name"],
-            });
+            if (xUnique.has(ele.getKey()) == false) {
+              oData.push({
+                PainterName: ele.getText(),
+                PainterId: ele.getKey(),
+              });
+              xUnique.add(ele.getKey());
+            }
           });
 
-          oView
+          this.getView()
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Painters", oData);
           console.log(oData);
@@ -945,13 +948,13 @@ sap.ui.define(
           oEvent.getSource().getBinding("items").filter([]);
           var oView = this.getView();
           var oViewModel = oView.getModel("oModelView");
-          var oModelControl = oView.getModel("oModelControl")
+          var oModelControl = oView.getModel("oModelControl");
           if (!oSelectedItem) {
             return;
           }
           var obj = oSelectedItem.getBindingContext().getObject();
           oViewModel.setProperty("/ParentOfferId", obj["Id"]);
-          oModelControl.setProperty("/Fields/ParentOfferTitle",obj["Title"])
+          oModelControl.setProperty("/Fields/ParentOfferTitle", obj["Title"]);
         },
         onValueHelpSearch: function (oEvent) {
           var sValue = oEvent.getParameter("value");
@@ -1005,7 +1008,9 @@ sap.ui.define(
           ];
           for (var y of inTegerProperty) {
             if (oPayLoad.hasOwnProperty(y)) {
-              oPayLoad[y] = parseInt(oPayLoad[y]);
+              if (oPayLoad[y] !== null) {
+                oPayLoad[y] = parseInt(oPayLoad[y]);
+              }
             }
           }
           // setting the zone, division, depot data.
@@ -1214,13 +1219,13 @@ sap.ui.define(
             };
           });
 
-          oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(function (
-            elem
-          ) {
-            return {
-              PainterId: parseInt(elem["PainterId"])
-            };
-          });
+          oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(
+            function (elem) {
+              return {
+                PainterId: parseInt(elem["PainterId"]),
+              };
+            }
+          );
           promise.resolve(oPayLoad);
           return promise;
         },

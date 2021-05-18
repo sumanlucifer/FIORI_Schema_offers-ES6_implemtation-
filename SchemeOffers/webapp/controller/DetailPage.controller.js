@@ -680,17 +680,21 @@ sap.ui.define(
             oData["PainterSelection"]
           );
 
-          if(oData["ParentOfferId"]!==null && oData["ParentOfferId"]!==0 ){
-              oModelControl.setProperty("/Rbtn/ParentOffer",1)
+          if (oData["ParentOfferId"] !== null && oData["ParentOfferId"] !== 0) {
+            oModelControl.setProperty("/Rbtn/ParentOffer", 1);
           }
-          
+
+          // setting the information for bonus applicable offers
+          if (oData["BonusApplicableTopPainter"]) {
+            oModelControl.setProperty("/Rbtn/TopAll", 1);
+          }
           promise.resolve(oData);
           return promise;
         },
         _OfferTypeValidation2: function (oData) {
           var promise = jQuery.Deferred();
           this.getView().byId("OfferType").fireSelectionChange();
-          console.log("Offer Type Validation")
+          console.log("Offer Type Validation");
           promise.resolve(oData);
           return promise;
         },
@@ -750,7 +754,7 @@ sap.ui.define(
           console.log();
           var oDataControl = {
             HasTillDate: false,
-            FormTitle:"",
+            FormTitle: "",
             ImageLoaded: false,
             mode: "edit",
             BonusValidity: oBonusValidity,
@@ -1207,12 +1211,13 @@ sap.ui.define(
               });
             }
           }
-
+          oModelControl2.setProperty("/MultiCombo/Painters", Painters);
           if (oData["ParentOffer"] !== null) {
             //ParentOffer
             ParentOffer = oData["ParentOffer"]["Title"];
           }
           oModelControl2.setProperty("/Fields/ParentOfferTitle", ParentOffer);
+          console.log(oModelControl2);
           promise.resolve(oData);
           return promise;
         },
