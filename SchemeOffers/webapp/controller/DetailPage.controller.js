@@ -750,6 +750,7 @@ sap.ui.define(
           console.log();
           var oDataControl = {
             HasTillDate: false,
+            FormTitle:"",
             ImageLoaded: false,
             mode: "edit",
             BonusValidity: oBonusValidity,

@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
-        <f:Form id="FormChange" editable="false">
+        <f:Form  id="FormChange" editable="false">
             <f:layout>
                 <f:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
             </f:layout>

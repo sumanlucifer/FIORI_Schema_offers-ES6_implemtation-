@@ -477,10 +477,6 @@ sap.ui.define(
           this.oColModel = new JSONModel({
             cols: [
               {
-                label: "Is Archived",
-                template: "IsArchived",
-              },
-              {
                 label: "Membership ID",
                 template: "MembershipCard",
               },
