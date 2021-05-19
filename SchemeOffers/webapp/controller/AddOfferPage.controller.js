@@ -90,6 +90,7 @@ sap.ui.define(
             },
             Dialog: {
               Bonus1: {},
+              Key1:""
             },
             MultiCombo: {
               Zones: [],

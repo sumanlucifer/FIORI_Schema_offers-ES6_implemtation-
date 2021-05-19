@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<Dialog beforeOpen="onRewardBeforeOpen" afterClose="onValueHelpAfterClose" showHeader="false" contentWidth="500px">
 		<customHeader>
 			<Bar >
@@ -8,7 +8,7 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<f:Form  editable="false" >
+			<f:Form binding="{oModelControl>/Dialog/Bonus1}"  editable="false" >
 				<f:layout>
 					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
 						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
@@ -68,8 +68,8 @@
 			</f:Form>
 		</content>
 		<buttons>
-			<Button type="Emphasized" text="Save" press="onSubmitRewards1"/>
 			<Button text="Cancel" type="Ghost" press="onValueHelpClose" />
+            <Button type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards1"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

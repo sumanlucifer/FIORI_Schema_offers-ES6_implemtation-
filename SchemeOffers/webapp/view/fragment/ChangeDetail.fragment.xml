@@ -202,7 +202,7 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
-                   <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards"/>
+                   <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -246,7 +246,7 @@
                            </ComboBox>
                              <Label   text="{path:'oModelControl>RewardCash'}" />
                              <HBox>
-                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressEditReward"></Button>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
                                  <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedReward"></Button>
                              </HBox>
                               

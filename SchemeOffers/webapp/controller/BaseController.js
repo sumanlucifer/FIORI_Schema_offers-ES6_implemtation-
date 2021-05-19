@@ -291,9 +291,28 @@ sap.ui.define(
         onBRRbChange: function () {
           this._CreateBonusRewardTable();
         },
-        onPressAddRewards: function () {
+        onPressAddRewards: function (oEvent) {
           var oView = this.getView();
           var othat = this;
+          var oModel = oView.getModel("oModelControl");
+          var oBj = {},
+            sPath = "";
+          if (oEvent !== "add") {
+            oBj = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject();
+            sPath = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject()
+              .getPath()
+              .split("/");
+            oModel.setProperty("/Dialog1/Key", sPath[sPath.length - 1]);
+          } else {
+            oBj = false;
+            oModel.setProperty("/Dialog1/Key", "add");
+          }
 
           if (!this._RewardsDialog1) {
             Fragment.load({
@@ -303,48 +322,59 @@ sap.ui.define(
               function (oDialog) {
                 this._RewardsDialog1 = oDialog;
                 oView.addDependent(this._RewardsDialog1);
+                this._setAddRewardDialog(oBj);
                 this._RewardsDialog1.open();
               }.bind(this)
             );
           } else {
             oView.addDependent(this._RewardsDialog1);
+            this._setAddRewardDialog(oBj);
             this._RewardsDialog1.open();
           }
         },
-        onRewardBeforeOpen: function () {
+        _setAddRewardDialog: function (oBj) {
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
+          var oBj1 = oBj;
+          var oBj2 = {
+            ProductCode: "",
+            RequiredVolume: "",
+            RequiredPoints: "",
+            RewardPoints: "",
+            RewardGiftId: "",
+            RewardCash: "",
+          };
+          var oBj3 = {
+            SkuCode: "",
+            RequiredVolume: "",
+            RequiredPoints: "",
+            RewardPoints: "",
+            RewardGiftId: "",
+            RewardCash: "",
+          };
+          var oBjFinal;
           var iRtnSelected = oModelControl.getProperty("/Rbtn/AppPacks1");
           if (iRtnSelected === 0) {
-            this._RewardsDialog1.bindElement("oModelControl>/Dialog/Bonus1");
-
-            oModelControl.setProperty("/Dialog/Bonus1", {
-              ProductCode: "",
-              RequiredVolume: "",
-              RequiredPoints: "",
-              RewardPoints: "",
-              RewardGiftId: "",
-              RewardCash: "",
-            });
+            oBjFinal = oBj1 !== false ? oBj1 : oBj2;
+            oModelControl.setProperty(
+              "/Dialog/Bonus1",
+              Object.assign({}, oBjFinal)
+            );
             this._setProductsData();
           } else {
-            this._RewardsDialog1.bindElement("oModelControl>/Dialog/Bonus1");
-
-            oModelControl.setProperty("/Dialog/Bonus1", {
-              SkuCode: "",
-              RequiredVolume: "",
-              RequiredPoints: "",
-              RewardPoints: "",
-              RewardGiftId: "",
-              RewardCash: "",
-            });
-             this._setPacksData();
+            oBjFinal = oBj1 !== false ? oBj1 : oBj3;
+            oModelControl.setProperty(
+              "/Dialog/Bonus1",
+              Object.assign({}, oBjFinal)
+            );
+            this._setPacksData();
           }
         },
         onSubmitRewards1: function () {
           var oView = this.getView();
-          var oModel2 = oView.getModel("oModelControl");
 
+          var oModel2 = oView.getModel("oModelControl");
+          console.log(oModel2.getProperty("/Dialog1/Key"));
           var oPayload = oModel2.getProperty("/Dialog/Bonus1");
           if (oPayload["RequiredVolume"] == "") {
             MessageToast.show("Kindly Input Required Volume to Continue");
