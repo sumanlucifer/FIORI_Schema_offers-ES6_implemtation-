@@ -78,21 +78,21 @@ xmlns:f="sap.ui.layout.form">
                               }"
         				placeholder="Enter Country Code ..."
         				valueStateText="CountryCode must not be empty."/>
-
+            
             <Label text="Role" labelFor="role" design="Bold" required="true"/>
         	<Select
             id="role"
-                        value="{ 
-                                  path : '/role', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                      
-                                  }
-                              }"
             valueStateText="Role must not be empty."
-				 items="{path: 'data>/MasterAdminRoleSet',
+            change="onRoleChange"
+			items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
+				<core:Item key="{data>Id}" text="{data>Description}" />
+			</Select>
+            <Label text="User Type" labelFor="UserType" design="Bold" required="true"/>
+            <Select
+            id="iduserType"
+            valueStateText="UserType must not be empty."
+			items="{path: 'data>/MasterUserTypeSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</Select>
 		
@@ -102,28 +102,14 @@ xmlns:f="sap.ui.layout.form">
 	
     <footer>
 			<OverflowToolbar>
-            <!-- <Button
-                    icon="sap-icon://alert"
-                    text="{= ${message>/}.length }"
-                    visible="{= ${message>/}.length > 0 }"
-                    type="Emphasized"
-                    press="onMessagePopoverPress" />
-                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
+            
 				<ToolbarSpacer/>
                 
-                <Button text="Cancel"
-                
-						press="onCancelPressForAdd"
-						>
-					
-				</Button>
+                <Button text="Cancel" press="onCancelPressForAdd"></Button>
 				<Button text="Save"
                 type="Emphasized"
-						press="add"
-						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
-
-					
-				</Button>
+				press="add"
+				ariaDescribedBy="defaultButtonDescription genericButtonDescription"></Button>
                   
 			</OverflowToolbar>
 		</footer>

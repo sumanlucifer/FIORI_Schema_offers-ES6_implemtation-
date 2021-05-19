@@ -12,25 +12,20 @@ xmlns:l="sap.ui.layout"
 		class="sapUiResponsiveContentPadding">
 		<items>
 			<IconTabFilter text="Users" key="users">
-				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',
-               
-                filters: {path: 'IsArchived', operator: 'EQ', value1: false},
+				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',filters: {path: 'IsArchived', operator: 'EQ', value1: false},
                 parameters : {expand:'Role'},
                 sorter:{
                     path: 'Id', 
                     descending: true
-                }
+                    }
                  }"
-                growing="true" 
-                growingThreshold="20">
+                growing="true" growingThreshold="20">
                             <headerToolbar>
                             
                                 <Toolbar class="tblTlbrAd">
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField id ="searchField" search=".onFilterUsers" width="20%" />
-                                    
-                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                    <Button text="{i18n>GenericAdd}" type="Emphasized" icon="sap-icon://add" press="onPressAdd"/>
                                 </Toolbar>
                             </headerToolbar>
                             <columns>

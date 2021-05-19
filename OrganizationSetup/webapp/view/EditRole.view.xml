@@ -14,17 +14,7 @@ floatingFooter="true"
 			columnsL="3"
 			columnsXL="4"
 			><f:content>
-				<!-- <Label text="Role" labelFor="role" design="Bold" required="true" />
-		<Input id="role"  type="Text"
-        				placeholder="Enter Role ..."
-        				valueStateText="Role must not be empty."
-                          value="{ 
-                                  path : 'data>Role', 
-                                  type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                      minLength : 1
-                                  }
-                              }" /> -->
+				
 
         <Label text="Description" labelFor="role" design="Bold" required="true" />
 		<Input id="description"  type="Text"
@@ -44,26 +34,15 @@ floatingFooter="true"
 	
     <footer>
 			<OverflowToolbar>
-            <!-- <Button
-                    icon="sap-icon://alert"
-                    text="{= ${message>/}.length }"
-                    visible="{= ${message>/}.length > 0 }"
-                    type="Emphasized"
-                    press="onMessagePopoverPress" />
-                    <Button text="Clear" press="onClearPress" visible="{= ${message>/}.length > 0 }"/> -->
+           
 				<ToolbarSpacer/>
                 
 
-                <Button text="Cancel"
-						press="onCancelPress"
-						>
-					
-				</Button>
+                <Button text="Cancel" press="onCancelPress"></Button>
 				<Button text="Save"
                 type="Emphasized"
-						press="update"
-						ariaDescribedBy="defaultButtonDescription genericButtonDescription">
-					
+				press="update"
+				ariaDescribedBy="defaultButtonDescription genericButtonDescription">
 				</Button>
                   
 			</OverflowToolbar>

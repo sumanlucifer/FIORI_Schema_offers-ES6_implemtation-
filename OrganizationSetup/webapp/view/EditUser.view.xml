@@ -79,13 +79,20 @@ floatingFooter="true"
 
             <Label text="Role" labelFor="role" design="Bold" required="true" />
         	<Select
-        
             id="role"
+            change="onRoleChange"
             selectedKey="{data>RoleId}"
-            
-        				valueStateText="Role must not be empty."
-				 items="{path: 'data>/MasterAdminRoleSet',
+            valueStateText="Role must not be empty."
+			items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
+				<core:Item key="{data>Id}" text="{data>Description}" />
+			</Select>
+            <Label text="User Type" labelFor="UserType" design="Bold" required="true"/>
+            <Select
+            id="iduserType"
+            selectedKey="{data>UserTypeId}"
+            valueStateText="UserType must not be empty."
+			items="{path: 'data>/MasterUserTypeSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</Select>
 		
