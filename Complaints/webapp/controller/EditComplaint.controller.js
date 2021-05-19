@@ -365,6 +365,7 @@ sap.ui.define(
             );
           }
           if (bValidation) {
+            oModel.setProperty("/InitiateForceTat", false);
             this._postDataToSave();
           }
         },
