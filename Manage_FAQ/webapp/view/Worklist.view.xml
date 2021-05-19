@@ -34,7 +34,7 @@
 					<OverflowToolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
 						<ToolbarSpacer/>
-						<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }">
+						<Button text="{i18n>btnAdd}" type="Emphasized" icon="sap-icon://add" press="onAdd" visible="{= (${worklistView>/loggedUserRoleId} !== 2) }">
 							<layoutData>
 								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							</layoutData>

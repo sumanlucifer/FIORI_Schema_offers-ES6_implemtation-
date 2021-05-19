@@ -2,12 +2,12 @@
     <VBox id="idVbxQEdit" width="100%">
         <f:SimpleForm id="EditTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
             <f:content>
-                <List id="EditTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" growing="true"
+                <List id="EditTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" noDataText="No data available" growing="true"
 					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
-				    		<Button press="onAddQuestionnaire" type="Emphasized" text="{i18n>btnAddQuestionnaire}"/>
+				    		<Button press="onAddQuestionnaire" icon="sap-icon://add" type="Emphasized" text="{i18n>btnAddQuestionnaire}"/>
 						</Toolbar>
 					</headerToolbar>
                     <CustomListItem>
