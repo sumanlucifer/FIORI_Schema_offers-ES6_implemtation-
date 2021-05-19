@@ -73,6 +73,7 @@
                                     </form:label>
                                     <form:fields>
                                         <HBox class="fileUploaderContainer">
+                                        <VBox>
                                             <u:FileUploader
                                                 id="idFormToolImgUploader"
                                                 name="formToolImgUploader"
@@ -84,6 +85,11 @@
                                                 useMultipart="false"
                                                 sendXHR="true"
                                                 uploadComplete="handleUploadComplete" />
+                                                <HBox width="70%">
+                                                <Label  text="Max Size: 2 MB "/>
+                                                <Label  text="File Type: .png, .jpg, .jpeg"/>
+                                                 </HBox>
+                                        </VBox>
                                             <Image id="idPreviewImage" width="100px" height="100px" />
                                         </HBox>
                                     </form:fields>

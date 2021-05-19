@@ -76,7 +76,7 @@
                     <OverflowToolbar>
                         <Title text="{i18n>tblTitle} ({ViewModel>/TotalCount})" />
                         <ToolbarSpacer />
-                        <Button text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
+                        <Button text="{i18n>addToolBtnText}" icon="sap-icon://add" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                     </OverflowToolbar>
                 </headerToolbar>
