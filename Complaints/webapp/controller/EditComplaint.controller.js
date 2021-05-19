@@ -398,6 +398,22 @@ sap.ui.define(
 
           oResolution.getBinding("items").filter(aFilter);
         },
+         handleSavePress: function () {
+          var oModel = this.getView().getModel("oModelView");
+          var oValidator = new Validator();
+          var oVbox = this.getView().byId("idVbx");
+          var bValidation = oValidator.validate(oVbox, true);
+          if (bValidation == false) {
+            MessageToast.show(
+              "Kindly input the fields in proper format to continue."
+            );
+          }
+          if (bValidation) {
+            oModel.setProperty("/InitiateForceTat", false);
+            console.log("Propery")
+            this._postDataToSave();
+          }
+        },
         _postDataToSave: function () {
           var oView = this.getView();
           var oModelView = oView.getModel("oModelView");
