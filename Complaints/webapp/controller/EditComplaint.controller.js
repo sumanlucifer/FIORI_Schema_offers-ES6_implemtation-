@@ -361,7 +361,7 @@ sap.ui.define(
           var bValidation = oValidator.validate(oVbox, true);
           if (bValidation == false) {
             MessageToast.show(
-              "Kindly input the fields in proper format to continue."
+              "Kindly input the fields in proper format to continue. "
             );
           }
           if (bValidation) {
