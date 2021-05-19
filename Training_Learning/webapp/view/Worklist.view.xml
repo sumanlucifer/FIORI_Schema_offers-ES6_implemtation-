@@ -94,7 +94,7 @@
 							</headerToolbar>
 							<columns>
 								<Column width="31%">
-									<Text text="{i18n>colTitle}"/>
+									<Text text="{i18n>colTrTitle}"/>
 								</Column>
                                 <Column width="15%">
 									<Text text="{i18n>colTrainingType}"/>
@@ -155,7 +155,7 @@
 							</headerToolbar>
 							<columns>
 								<Column width="55%">
-									<Text text="{i18n>colTitle}"/>
+									<Text text="{i18n>colTrTitle}"/>
 								</Column>
                                 <Column width="20%">
 									<Text text="{i18n>colTrainingType}"/>
@@ -196,7 +196,7 @@
 							</headerToolbar>
 							<columns>
 								<Column width="27%">
-									<Text text="{i18n>colTitle}"/>
+									<Text text="{i18n>colTrTitle}"/>
 								</Column>
                                 <Column width="15%">
 									<Text text="{i18n>colTrainingType}"/>
