@@ -88,6 +88,9 @@ sap.ui.define(
               ApplicablePainterProducts: true,
               AdditionalReward: true,
             },
+            Dialog: {
+              Bonus1: {},
+            },
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -115,6 +118,7 @@ sap.ui.define(
               AppPacks3: [],
               AppPacks4: [],
               Painters: [],
+              Reward: [],
             },
             Rbtn: {
               PCat1: 0,

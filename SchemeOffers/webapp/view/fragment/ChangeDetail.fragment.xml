@@ -202,6 +202,7 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
+                   <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -224,6 +225,9 @@
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
             </columns>
 
             <items>
@@ -234,14 +238,18 @@
                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
-                           <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
-                           <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
-                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
-                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                           <Label   text="{path:'oModelControl>RequiredVolume'}" />
+                           <Label   text="{path:'oModelControl>RequiredPoints'}" />
+                           <Label   text="{path:'oModelControl>RewardPoints'}" />
+                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox>
-                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
-                            
+                             <Label   text="{path:'oModelControl>RewardCash'}" />
+                             <HBox>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressEditReward"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedReward"></Button>
+                             </HBox>
+                              
                     </cells>
                 </ColumnListItem>
             </items>
