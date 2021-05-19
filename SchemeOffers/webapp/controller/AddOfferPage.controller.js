@@ -88,6 +88,12 @@ sap.ui.define(
               ApplicablePainterProducts: true,
               AdditionalReward: true,
             },
+            Dialog: {
+              Bonus1: {},
+              Key1: "",
+              Bonus2: {},
+              Key2: "",
+            },
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -115,6 +121,8 @@ sap.ui.define(
               AppPacks3: [],
               AppPacks4: [],
               Painters: [],
+              Reward: [],
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -366,7 +374,7 @@ sap.ui.define(
               success: function (data) {
                 MessageToast.show("Offer Sucessfully Created.");
                 console.log(data);
-                othat._navToHome();
+                //othat._navToHome();
                 resolve(data);
               },
               error: function (data) {

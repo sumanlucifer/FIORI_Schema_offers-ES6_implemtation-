@@ -86,7 +86,7 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                         <f:FormElement label="{i18n>formApplicableProducts}">
+                         <f:FormElement label="{i18n>formApplicableProducts2}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd1}" >
                                     <RadioButton text="{i18n>All}"/>
@@ -202,6 +202,7 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
+                   <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -210,19 +211,22 @@
                     <Text text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
-                    <Label text="{i18n>RequiredVolume}" required="true"/>
+                    <Label text="{i18n>RequiredVolume}" required="false"/>
                 </Column>
                     <Column>
                     <Text text="{i18n>Table1Label2}" />
                 </Column>
                  <Column>
-                    <Label text="{i18n>Table1Label4}" required="true" />
+                    <Label text="{i18n>Table1Label4}" required="false" />
                 </Column>
                  <Column>
                     <Text text="{i18n>Table1Label5}" />
                 </Column>
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
                 </Column>
             </columns>
 
@@ -234,14 +238,18 @@
                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
-                           <Input  placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
-                           <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
-                           <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
-                           <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                           <Label   text="{path:'oModelControl>RequiredVolume'}" />
+                           <Label   text="{path:'oModelControl>RequiredPoints'}" />
+                           <Label   text="{path:'oModelControl>RewardPoints'}" />
+                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox>
-                            <Input placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
-                            
+                             <Label   text="{path:'oModelControl>RewardCash'}" />
+                             <HBox>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedReward"></Button>
+                             </HBox>
+                              
                     </cells>
                 </ColumnListItem>
             </items>
@@ -633,6 +641,8 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <ToolbarSpacer ></ToolbarSpacer>
+                     <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -650,6 +660,9 @@
                  <Column>
                     <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
+                  <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
                 
             </columns>
 
@@ -660,9 +673,13 @@
                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
-                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
-                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
+                             <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                             <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                             <Text text="{oModelControl>BonusPoints}" />
+                               <HBox>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards2"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedReward2"></Button>
+                             </HBox>
                     </cells>
                 </ColumnListItem>
             </items>

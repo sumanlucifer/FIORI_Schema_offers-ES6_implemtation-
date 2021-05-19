@@ -155,7 +155,6 @@ sap.ui.define(
           var othat = this;
           for (var a in oOfferType) {
             if (!oOfferType[a]) {
-              console.log(a);
               if (a === "ApplicablePainters") {
                 othat._propertyToBlank(
                   [
@@ -292,7 +291,242 @@ sap.ui.define(
         onBRRbChange: function () {
           this._CreateBonusRewardTable();
         },
+        onPressAddRewards2: function (oEvent) {
+          var oView = this.getView();
+          var othat = this;
+          var oModel = oView.getModel("oModelControl");
+          var oBj = {},
+            sPath = "";
+          if (oEvent !== "add") {
+            oBj = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject();
+            sPath = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getPath()
+              .split("/");
+            oModel.setProperty("/Dialog/Key2", sPath[sPath.length - 1]);
+          } else {
+            oBj = false;
+            oModel.setProperty("/Dialog/Key2", "add");
+          }
 
+          if (!this._RewardsDialog2) {
+            Fragment.load({
+              name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks2",
+              controller: othat,
+            }).then(
+              function (oDialog) {
+                this._RewardsDialog2 = oDialog;
+                oView.addDependent(this._RewardsDialog2);
+                this._setAddRewardDialog2(oBj);
+                this._RewardsDialog2.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._RewardsDialog2);
+            this._setAddRewardDialog2(oBj);
+            this._RewardsDialog2.open();
+          }
+        },
+        _setAddRewardDialog2: function (oBj) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oBj1 = oBj;
+          var oBj2 = {
+            ProductCode: "",
+            StartDate: null,
+            EndDate: null,
+            BonusPoints: "",
+          };
+          var oBj3 = {
+            SkuCode: "",
+            StartDate: null,
+            EndDate: null,
+            BonusPoints: "",
+          };
+          var oBjFinal;
+          var iRtnSelected = oModelControl.getProperty("/Rbtn/AppPacks4");
+          if (iRtnSelected === 0) {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj2;
+            oModelControl.setProperty(
+              "/Dialog/Bonus2",
+              Object.assign({}, oBjFinal)
+            );
+            this._setBRProductsData();
+          } else {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj3;
+            oModelControl.setProperty(
+              "/Dialog/Bonus2",
+              Object.assign({}, oBjFinal)
+            );
+            this._setBRPacksData();
+          }
+        },
+        onSubmitRewards2: function () {
+          var oView = this.getView();
+
+          var oModel2 = oView.getModel("oModelControl");
+          var sKey = oModel2.getProperty("/Dialog/Key2");
+          var oPayload = oModel2.getProperty("/Dialog/Bonus2");
+          if (oPayload["StartDate"] == null) {
+            MessageToast.show("Kindly Input Start Date to Continue");
+            return;
+          }
+          if (oPayload["EndDate"] == null) {
+            MessageToast.show("Kindly Input End Date to Continue");
+            return;
+          }
+          if (oPayload["BonusPoints"] === "") {
+            MessageToast.show("Kindly Input Bonus Points to Continue");
+            return;
+          }
+          var oPayloadNew = Object.assign({}, oPayload);
+          if (sKey === "add") {
+            oModel2.getProperty("/Table/Table4").push(oPayloadNew);
+          } else {
+            oModel2
+              .getProperty("/Table/Table4")
+              .splice(parseInt(sKey), 1, oPayloadNew);
+          }
+
+          oModel2.refresh();
+          this._RewardsDialog2.close();
+        },
+        onRemovedReward2: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext("oModelControl")
+            .getPath()
+            .split("/");
+
+          var oTable = oModel.getProperty("/Table/Table4");
+
+          oTable.splice(sPath[sPath.length - 1], 1);
+          oModel.refresh();
+        },
+        onPressAddRewards: function (oEvent) {
+          var oView = this.getView();
+          var othat = this;
+          var oModel = oView.getModel("oModelControl");
+          var oBj = {},
+            sPath = "";
+          if (oEvent !== "add") {
+            oBj = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject();
+            sPath = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getPath()
+              .split("/");
+            oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
+          } else {
+            oBj = false;
+            oModel.setProperty("/Dialog/Key1", "add");
+          }
+
+          if (!this._RewardsDialog1) {
+            Fragment.load({
+              name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks",
+              controller: othat,
+            }).then(
+              function (oDialog) {
+                this._RewardsDialog1 = oDialog;
+                oView.addDependent(this._RewardsDialog1);
+                this._setAddRewardDialog(oBj);
+                this._RewardsDialog1.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._RewardsDialog1);
+            this._setAddRewardDialog(oBj);
+            this._RewardsDialog1.open();
+          }
+        },
+        _setAddRewardDialog: function (oBj) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oBj1 = oBj;
+          var oBj2 = {
+            ProductCode: "",
+            RequiredVolume: "",
+            RequiredPoints: "",
+            RewardPoints: "",
+            RewardGiftId: "",
+            RewardCash: "",
+          };
+          var oBj3 = {
+            SkuCode: "",
+            RequiredVolume: "",
+            RequiredPoints: "",
+            RewardPoints: "",
+            RewardGiftId: "",
+            RewardCash: "",
+          };
+          var oBjFinal;
+          var iRtnSelected = oModelControl.getProperty("/Rbtn/AppPacks1");
+          if (iRtnSelected === 0) {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj2;
+            oModelControl.setProperty(
+              "/Dialog/Bonus1",
+              Object.assign({}, oBjFinal)
+            );
+            this._setProductsData();
+          } else {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj3;
+            oModelControl.setProperty(
+              "/Dialog/Bonus1",
+              Object.assign({}, oBjFinal)
+            );
+            this._setPacksData();
+          }
+        },
+        onSubmitRewards1: function () {
+          var oView = this.getView();
+
+          var oModel2 = oView.getModel("oModelControl");
+          var sKey = oModel2.getProperty("/Dialog/Key1");
+          var oPayload = oModel2.getProperty("/Dialog/Bonus1");
+          if (oPayload["RequiredVolume"] == "") {
+            MessageToast.show("Kindly Input Required Volume to Continue");
+            return;
+          }
+          if (oPayload["RewardPoints"] == "") {
+            MessageToast.show("Kindly Input Reward Points to Continue");
+            return;
+          }
+          var oPayloadNew = Object.assign({}, oPayload);
+          if (sKey === "add") {
+            oModel2.getProperty("/Table/Table2").push(oPayloadNew);
+          } else {
+            oModel2
+              .getProperty("/Table/Table2")
+              .splice(parseInt(sKey), 1, oPayloadNew);
+          }
+
+          oModel2.refresh();
+          this._RewardsDialog1.close();
+        },
+        onRemovedReward: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext("oModelControl")
+            .getPath()
+            .split("/");
+
+          var oTable = oModel.getProperty("/Table/Table2");
+
+          oTable.splice(sPath[sPath.length - 1], 1);
+          oModel.refresh();
+        },
         onRbChnageMain: function (oEvent) {
           var oView = this.getView();
           var oSource = oEvent.getSource();
@@ -322,15 +556,16 @@ sap.ui.define(
           var oView = this.getView();
           var othat = this;
           var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Table/Table4", []);
           var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks4");
           var oDataModel = this.getView().getModel();
           var c1, c2, c3, c4, c5;
 
-          if (sCheckPacks == 0) {
-            othat._setBRProductsData();
-          } else {
-            othat._setBRPacksData();
-          }
+          //   if (sCheckPacks == 0) {
+          //     othat._setBRProductsData();
+          //   } else {
+          //     othat._setBRPacksData();
+          //   }
         },
 
         _CreateRewardTableData: function (oEvent) {
@@ -338,15 +573,16 @@ sap.ui.define(
           var oView = this.getView();
           var othat = this;
           var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Table/Table2", []);
           var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
           var oDataModel = this.getView().getModel();
           var c1, c2, c3, c4, c5;
 
-          if (sCheckPacks == 0) {
-            othat._setProductsData();
-          } else {
-            othat._setPacksData();
-          }
+          //   if (sCheckPacks == 0) {
+          //     othat._setProductsData();
+          //   } else {
+          //     othat._setPacksData();
+          //   }
         },
         onRbTable1Change: function (oEvent) {
           var oView = this.getView();
@@ -374,16 +610,12 @@ sap.ui.define(
             }
 
             aSelectedData.push({
-              ProductCode: obj["Id"],
-              RequiredVolume: "",
-              RequiredPoints: "",
-              RewardPoints: "",
-              RewardGiftId: "",
-              RewardCash: "",
+              Id: obj["Id"],
+              Name: obj["ProductName"],
             });
           }
 
-          oModelControl.setProperty("/Table/Table2", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
         },
         _setPacksData: function (sKey) {
           var oView = this.getView();
@@ -397,15 +629,11 @@ sap.ui.define(
           for (var x of oControl) {
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
-              SkuCode: obj["SkuCode"],
-              RequiredVolume: "",
-              RequiredPoints: "",
-              RewardPoints: "",
-              RewardGiftId: "",
-              RewardCash: "",
+              Id: obj["SkuCode"],
+              Name: obj["Description"],
             });
           }
-          oModelControl.setProperty("/Table/Table2", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _setBRProductsData: function () {
           var oView = this.getView();
@@ -426,14 +654,12 @@ sap.ui.define(
             }
 
             aSelectedData.push({
-              ProductCode: obj["Id"],
-              StartDate: null,
-              EndDate: null,
-              BonusPoints: "",
+              Id: obj["Id"],
+              Name: obj["ProductName"],
             });
           }
 
-          oModelControl.setProperty("/Table/Table4", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _setBRPacksData: function (sKey) {
           var oView = this.getView();
@@ -445,13 +671,11 @@ sap.ui.define(
           for (var x of oControl) {
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
-              SkuCode: obj["SkuCode"],
-              StartDate: null,
-              EndDate: null,
-              BonusPoints: "",
+              Id: obj["SkuCode"],
+              Name: obj["Description"],
             });
           }
-          oModelControl.setProperty("/Table/Table4", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _getPacksData: function () {
           var promise = jQuery.Deferred();
@@ -577,7 +801,7 @@ sap.ui.define(
           this.getView()
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Painters", oData);
-          console.log(oData);
+
           this._PainterValueHelp.close();
         },
         onPainterValueAfterOpen: function () {
@@ -712,6 +936,14 @@ sap.ui.define(
             this._PainterValueHelp.destroy();
             delete this._PainterValueHelp;
           }
+          if (this._RewardsDialog1) {
+            this._RewardsDialog1.destroy();
+            delete this._RewardsDialog1;
+          } //_RewardsDialog2
+          if (this._RewardsDialog2) {
+            this._RewardsDialog2.destroy();
+            delete this._RewardsDialog2;
+          }
         },
         onValueHelpClose: function () {
           if (this._oDepotDialog) {
@@ -719,6 +951,12 @@ sap.ui.define(
           }
           if (this._PainterValueHelp) {
             this._PainterValueHelp.close();
+          }
+          if (this._RewardsDialog1) {
+            this._RewardsDialog1.close();
+          }
+          if (this._RewardsDialog2) {
+            this._RewardsDialog2.close();
           }
         },
         onDepotOkPress: function (oEvent) {
@@ -736,7 +974,7 @@ sap.ui.define(
           oView
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Depots", oData);
-          console.log(oData);
+
           this._oDepotDialog.close();
         },
         onDepotAfterOpen: function () {
@@ -894,13 +1132,10 @@ sap.ui.define(
               //oView.byId(x.substring(x.indexOf("/") + 1)).fireChange();
             } else if (oGetProp === null) {
               oModelView.setProperty("/" + x, null);
-              console.log("date made as null");
             } else if (oGetProp instanceof Date) {
               oModelView.setProperty("/" + x, null);
-              console.log("Non Empty Date made as null");
             } else if (typeof oGetProp === "boolean") {
               oModelView.setProperty("/" + x, false);
-              console.log("Set default value of the boolean flags");
             } else {
               oModelView.setProperty("/" + x, "");
             }
@@ -925,7 +1160,7 @@ sap.ui.define(
         onValueHelpParentOffer: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
             oView = this.getView();
-          console.log(sInputValue);
+
           if (!this._pOfferpDialog) {
             this._pOfferpDialog = Fragment.load({
               id: oView.getId(),

@@ -116,6 +116,12 @@ sap.ui.define(
             SchemeId: oProp, //.replace(/[^0-9]/g, ""),
             //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
             tableDealay: 0,
+            Dialog: {
+              Bonus1: {},
+              Key1: "",
+              Bonus2: {},
+              Key2: "",
+            },
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -143,6 +149,8 @@ sap.ui.define(
               AppPacks3: [],
               AppPacks4: [],
               Painters: [],
+              Reward: [],
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -770,6 +778,12 @@ sap.ui.define(
               ApplicablePainterProducts: true,
               AdditionalReward: true,
             },
+            Dialog: {
+              Bonus1: {},
+              Key1: "",
+              Bonus2: {},
+              Key2: "",
+            },
             MultiCombo: {
               Zones: [],
               Divisions: [],
@@ -797,6 +811,8 @@ sap.ui.define(
               AppPacks3: [],
               AppPacks4: [],
               Painters: [],
+              Reward: [],
+              Reward2:[]
             },
             Rbtn: {
               PCat1: 0,
