@@ -211,13 +211,13 @@
                     <Text text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
-                    <Label text="{i18n>RequiredVolume}" required="true"/>
+                    <Label text="{i18n>RequiredVolume}" required="false"/>
                 </Column>
                     <Column>
                     <Text text="{i18n>Table1Label2}" />
                 </Column>
                  <Column>
-                    <Label text="{i18n>Table1Label4}" required="true" />
+                    <Label text="{i18n>Table1Label4}" required="false" />
                 </Column>
                  <Column>
                     <Text text="{i18n>Table1Label5}" />

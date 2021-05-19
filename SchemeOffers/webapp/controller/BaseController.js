@@ -155,7 +155,6 @@ sap.ui.define(
           var othat = this;
           for (var a in oOfferType) {
             if (!oOfferType[a]) {
-              console.log(a);
               if (a === "ApplicablePainters") {
                 othat._propertyToBlank(
                   [
@@ -327,6 +326,7 @@ sap.ui.define(
               RewardGiftId: "",
               RewardCash: "",
             });
+            this._setProductsData();
           } else {
             this._RewardsDialog1.bindElement("oModelControl>/Dialog/Bonus1");
 
@@ -338,6 +338,7 @@ sap.ui.define(
               RewardGiftId: "",
               RewardCash: "",
             });
+             this._setPacksData();
           }
         },
         onSubmitRewards1: function () {
@@ -368,7 +369,7 @@ sap.ui.define(
             .split("/");
 
           var oTable = oModel.getProperty("/Table/Table2");
-          console.log(sPath[sPath.length - 1]);
+
           oTable.splice(sPath[sPath.length - 1], 1);
           oModel.refresh();
         },
@@ -422,11 +423,11 @@ sap.ui.define(
           var oDataModel = this.getView().getModel();
           var c1, c2, c3, c4, c5;
 
-          if (sCheckPacks == 0) {
-            othat._setProductsData();
-          } else {
-            othat._setPacksData();
-          }
+          //   if (sCheckPacks == 0) {
+          //     othat._setProductsData();
+          //   } else {
+          //     othat._setPacksData();
+          //   }
         },
         onRbTable1Change: function (oEvent) {
           var oView = this.getView();
@@ -649,7 +650,7 @@ sap.ui.define(
           this.getView()
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Painters", oData);
-          console.log(oData);
+
           this._PainterValueHelp.close();
         },
         onPainterValueAfterOpen: function () {
@@ -815,7 +816,7 @@ sap.ui.define(
           oView
             .getModel("oModelControl")
             .setProperty("/MultiCombo/Depots", oData);
-          console.log(oData);
+
           this._oDepotDialog.close();
         },
         onDepotAfterOpen: function () {
@@ -973,13 +974,10 @@ sap.ui.define(
               //oView.byId(x.substring(x.indexOf("/") + 1)).fireChange();
             } else if (oGetProp === null) {
               oModelView.setProperty("/" + x, null);
-              console.log("date made as null");
             } else if (oGetProp instanceof Date) {
               oModelView.setProperty("/" + x, null);
-              console.log("Non Empty Date made as null");
             } else if (typeof oGetProp === "boolean") {
               oModelView.setProperty("/" + x, false);
-              console.log("Set default value of the boolean flags");
             } else {
               oModelView.setProperty("/" + x, "");
             }

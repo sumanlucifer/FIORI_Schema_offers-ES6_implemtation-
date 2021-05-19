@@ -1,0 +1,75 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog beforeOpen="onRewardBeforeOpen" afterClose="onValueHelpAfterClose" showHeader="false" contentWidth="500px">
+		<customHeader>
+			<Bar >
+				<contentMiddle>
+					<Title text="{i18n>formApplicableLbl10}" />
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<f:Form  editable="false" >
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
+						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<!--	<f:title>
+					<core:Title level="H3" text="Question 1" class="sapUiMediumMarginBegin"/>
+				</f:title>-->
+				<f:formContainers>
+					<f:FormContainer title=" ">
+						<f:formElements>
+							<f:FormElement>
+								<f:label>
+									<Label text="{i18n>ProductsPacks}"/>
+								</f:label>
+								<f:fields>
+                                    
+									<ComboBox selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" items="{oModelControl>/MultiCombo/Reward}" >
+                                        <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </ComboBox>
+                                    <ComboBox selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" items="{oModelControl>/MultiCombo/Reward}" >
+                                        <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </ComboBox>
+                                 
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="{i18n>RequiredVolume}">
+								<f:fields>
+										<Input required="true" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="{i18n>Table1Label2}">
+								<f:fields>
+									 <Input placeholder="{i18n>placeHolder3}" type="Number"  width="100%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="{i18n>Table1Label4}">
+								<f:fields>
+										<Input required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="{i18n>Table1Label5}">
+								<f:fields>
+										<ComboBox placeholder="{i18n>placeHolder1}" width="100%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                           </ComboBox>
+								</f:fields>
+							</f:FormElement>
+                            <f:FormElement label="{i18n>Table1Label6}">
+								<f:fields>
+										 <Input placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
+								</f:fields>
+							</f:FormElement>
+							
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</content>
+		<buttons>
+			<Button type="Emphasized" text="Save" press="onSubmitRewards1"/>
+			<Button text="Cancel" type="Ghost" press="onValueHelpClose" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

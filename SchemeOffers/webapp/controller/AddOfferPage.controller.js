@@ -370,7 +370,7 @@ sap.ui.define(
               success: function (data) {
                 MessageToast.show("Offer Sucessfully Created.");
                 console.log(data);
-                othat._navToHome();
+                //othat._navToHome();
                 resolve(data);
               },
               error: function (data) {
