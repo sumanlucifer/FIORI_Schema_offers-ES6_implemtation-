@@ -1,14 +1,14 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<Dialog beforeOpen="onRewardBeforeOpen" afterClose="onValueHelpAfterClose" showHeader="false" contentWidth="500px">
 		<customHeader>
 			<Bar >
 				<contentMiddle>
-					<Title text="{i18n>formApplicableLbl10}" />
+					<Title text="{i18n>formBonusRewardRatio}" />
 				</contentMiddle>
 			</Bar>
 		</customHeader>
 		<content>
-			<f:Form  editable="false" >
+			<f:Form binding="{oModelControl>/Dialog/Bonus2}"  editable="false" >
 				<f:layout>
 					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
 						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
@@ -21,44 +21,32 @@
 						<f:formElements>
 							<f:FormElement>
 								<f:label>
-									<Label text="{i18n>ProductsPacks}"/>
+									<Label text="{= ${oModelControl>/Rbtn/AppPacks4} === 0 ? 'Products' : 'Packs' }"/>
 								</f:label>
 								<f:fields>
                                     
-									<ComboBox selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" items="{oModelControl>/MultiCombo/Reward}" >
+									<ComboBox selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0 }" items="{oModelControl>/MultiCombo/Reward2}" >
                                         <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </ComboBox>
-                                    <ComboBox selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" items="{oModelControl>/MultiCombo/Reward}" >
+                                    <ComboBox selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }" items="{oModelControl>/MultiCombo/Reward2}" >
                                         <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </ComboBox>
                                  
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="{i18n>RequiredVolume}">
+							<f:FormElement label="{i18n>formBonusValidaityFrom}">
 								<f:fields>
-										<Input required="true" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+										<DatePicker  required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
 								</f:fields>
 							</f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label2}">
+                            <f:FormElement label="{i18n>formBonusValidaityTo}">
 								<f:fields>
-									 <Input placeholder="{i18n>placeHolder3}" type="Number"  width="100%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+									 <DatePicker  required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
 								</f:fields>
 							</f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label4}">
+                            <f:FormElement label="{i18n>Table3Label1}">
 								<f:fields>
-										<Input required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
-								</f:fields>
-							</f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label5}">
-								<f:fields>
-										<ComboBox placeholder="{i18n>placeHolder1}" width="100%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
-                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
-                           </ComboBox>
-								</f:fields>
-							</f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label6}">
-								<f:fields>
-										 <Input placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
+										<Input  required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
 								</f:fields>
 							</f:FormElement>
 							
@@ -68,8 +56,8 @@
 			</f:Form>
 		</content>
 		<buttons>
-			<Button type="Emphasized" text="Save" press="onSubmitRewards1"/>
 			<Button text="Cancel" type="Ghost" press="onValueHelpClose" />
+            <Button type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards2"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

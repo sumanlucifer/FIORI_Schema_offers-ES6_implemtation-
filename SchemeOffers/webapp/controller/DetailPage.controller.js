@@ -118,6 +118,9 @@ sap.ui.define(
             tableDealay: 0,
             Dialog: {
               Bonus1: {},
+              Key1: "",
+              Bonus2: {},
+              Key2: "",
             },
             MultiCombo: {
               Zones: [],
@@ -146,7 +149,8 @@ sap.ui.define(
               AppPacks3: [],
               AppPacks4: [],
               Painters: [],
-              Reward:[]
+              Reward: [],
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -776,6 +780,9 @@ sap.ui.define(
             },
             Dialog: {
               Bonus1: {},
+              Key1: "",
+              Bonus2: {},
+              Key2: "",
             },
             MultiCombo: {
               Zones: [],
@@ -805,6 +812,7 @@ sap.ui.define(
               AppPacks4: [],
               Painters: [],
               Reward: [],
+              Reward2:[]
             },
             Rbtn: {
               PCat1: 0,

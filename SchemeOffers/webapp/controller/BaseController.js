@@ -291,6 +291,124 @@ sap.ui.define(
         onBRRbChange: function () {
           this._CreateBonusRewardTable();
         },
+        onPressAddRewards2: function (oEvent) {
+          var oView = this.getView();
+          var othat = this;
+          var oModel = oView.getModel("oModelControl");
+          var oBj = {},
+            sPath = "";
+          if (oEvent !== "add") {
+            oBj = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject();
+            sPath = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getPath()
+              .split("/");
+            oModel.setProperty("/Dialog/Key2", sPath[sPath.length - 1]);
+          } else {
+            oBj = false;
+            oModel.setProperty("/Dialog/Key2", "add");
+          }
+
+          if (!this._RewardsDialog2) {
+            Fragment.load({
+              name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks2",
+              controller: othat,
+            }).then(
+              function (oDialog) {
+                this._RewardsDialog2 = oDialog;
+                oView.addDependent(this._RewardsDialog2);
+                this._setAddRewardDialog2(oBj);
+                this._RewardsDialog2.open();
+              }.bind(this)
+            );
+          } else {
+            oView.addDependent(this._RewardsDialog2);
+            this._setAddRewardDialog2(oBj);
+            this._RewardsDialog2.open();
+          }
+        },
+        _setAddRewardDialog2: function (oBj) {
+          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          var oBj1 = oBj;
+          var oBj2 = {
+            ProductCode: "",
+            StartDate: null,
+            EndDate: null,
+            BonusPoints: "",
+          };
+          var oBj3 = {
+            SkuCode: "",
+            StartDate: null,
+            EndDate: null,
+            BonusPoints: "",
+          };
+          var oBjFinal;
+          var iRtnSelected = oModelControl.getProperty("/Rbtn/AppPacks4");
+          if (iRtnSelected === 0) {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj2;
+            oModelControl.setProperty(
+              "/Dialog/Bonus2",
+              Object.assign({}, oBjFinal)
+            );
+            this._setBRProductsData();
+          } else {
+            oBjFinal = oBj1 !== false ? oBj1 : oBj3;
+            oModelControl.setProperty(
+              "/Dialog/Bonus2",
+              Object.assign({}, oBjFinal)
+            );
+            this._setBRPacksData();
+          }
+        },
+        onSubmitRewards2: function () {
+          var oView = this.getView();
+
+          var oModel2 = oView.getModel("oModelControl");
+          var sKey = oModel2.getProperty("/Dialog/Key2");
+          var oPayload = oModel2.getProperty("/Dialog/Bonus2");
+          if (oPayload["StartDate"] == null) {
+            MessageToast.show("Kindly Input Start Date to Continue");
+            return;
+          }
+          if (oPayload["EndDate"] == null) {
+            MessageToast.show("Kindly Input End Date to Continue");
+            return;
+          }
+          if (oPayload["BonusPoints"] === "") {
+            MessageToast.show("Kindly Input Bonus Points to Continue");
+            return;
+          }
+          var oPayloadNew = Object.assign({}, oPayload);
+          if (sKey === "add") {
+            oModel2.getProperty("/Table/Table4").push(oPayloadNew);
+          } else {
+            oModel2
+              .getProperty("/Table/Table4")
+              .splice(parseInt(sKey), 1, oPayloadNew);
+          }
+
+          oModel2.refresh();
+          this._RewardsDialog2.close();
+        },
+        onRemovedReward2: function (oEvent) {
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var sPath = oEvent
+            .getSource()
+            .getBindingContext("oModelControl")
+            .getPath()
+            .split("/");
+
+          var oTable = oModel.getProperty("/Table/Table4");
+
+          oTable.splice(sPath[sPath.length - 1], 1);
+          oModel.refresh();
+        },
         onPressAddRewards: function (oEvent) {
           var oView = this.getView();
           var othat = this;
@@ -305,13 +423,12 @@ sap.ui.define(
             sPath = oEvent
               .getSource()
               .getBindingContext("oModelControl")
-              .getObject()
               .getPath()
               .split("/");
-            oModel.setProperty("/Dialog1/Key", sPath[sPath.length - 1]);
+            oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
           } else {
             oBj = false;
-            oModel.setProperty("/Dialog1/Key", "add");
+            oModel.setProperty("/Dialog/Key1", "add");
           }
 
           if (!this._RewardsDialog1) {
@@ -374,7 +491,7 @@ sap.ui.define(
           var oView = this.getView();
 
           var oModel2 = oView.getModel("oModelControl");
-          console.log(oModel2.getProperty("/Dialog1/Key"));
+          var sKey = oModel2.getProperty("/Dialog/Key1");
           var oPayload = oModel2.getProperty("/Dialog/Bonus1");
           if (oPayload["RequiredVolume"] == "") {
             MessageToast.show("Kindly Input Required Volume to Continue");
@@ -385,7 +502,14 @@ sap.ui.define(
             return;
           }
           var oPayloadNew = Object.assign({}, oPayload);
-          oModel2.getProperty("/Table/Table2").push(oPayloadNew);
+          if (sKey === "add") {
+            oModel2.getProperty("/Table/Table2").push(oPayloadNew);
+          } else {
+            oModel2
+              .getProperty("/Table/Table2")
+              .splice(parseInt(sKey), 1, oPayloadNew);
+          }
+
           oModel2.refresh();
           this._RewardsDialog1.close();
         },
@@ -432,15 +556,16 @@ sap.ui.define(
           var oView = this.getView();
           var othat = this;
           var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Table/Table4", []);
           var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks4");
           var oDataModel = this.getView().getModel();
           var c1, c2, c3, c4, c5;
 
-          if (sCheckPacks == 0) {
-            othat._setBRProductsData();
-          } else {
-            othat._setBRPacksData();
-          }
+          //   if (sCheckPacks == 0) {
+          //     othat._setBRProductsData();
+          //   } else {
+          //     othat._setBRPacksData();
+          //   }
         },
 
         _CreateRewardTableData: function (oEvent) {
@@ -508,7 +633,7 @@ sap.ui.define(
               Name: obj["Description"],
             });
           }
-          oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _setBRProductsData: function () {
           var oView = this.getView();
@@ -529,14 +654,12 @@ sap.ui.define(
             }
 
             aSelectedData.push({
-              ProductCode: obj["Id"],
-              StartDate: null,
-              EndDate: null,
-              BonusPoints: "",
+              Id: obj["Id"],
+              Name: obj["ProductName"],
             });
           }
 
-          oModelControl.setProperty("/Table/Table4", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _setBRPacksData: function (sKey) {
           var oView = this.getView();
@@ -548,13 +671,11 @@ sap.ui.define(
           for (var x of oControl) {
             obj = x.getBindingContext().getObject();
             aSelectedData.push({
-              SkuCode: obj["SkuCode"],
-              StartDate: null,
-              EndDate: null,
-              BonusPoints: "",
+              Id: obj["SkuCode"],
+              Name: obj["Description"],
             });
           }
-          oModelControl.setProperty("/Table/Table4", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
         },
         _getPacksData: function () {
           var promise = jQuery.Deferred();
@@ -818,6 +939,10 @@ sap.ui.define(
           if (this._RewardsDialog1) {
             this._RewardsDialog1.destroy();
             delete this._RewardsDialog1;
+          } //_RewardsDialog2
+          if (this._RewardsDialog2) {
+            this._RewardsDialog2.destroy();
+            delete this._RewardsDialog2;
           }
         },
         onValueHelpClose: function () {
@@ -829,6 +954,9 @@ sap.ui.define(
           }
           if (this._RewardsDialog1) {
             this._RewardsDialog1.close();
+          }
+          if (this._RewardsDialog2) {
+            this._RewardsDialog2.close();
           }
         },
         onDepotOkPress: function (oEvent) {

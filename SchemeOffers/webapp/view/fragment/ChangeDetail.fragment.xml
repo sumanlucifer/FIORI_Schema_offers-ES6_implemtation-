@@ -641,6 +641,8 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <ToolbarSpacer ></ToolbarSpacer>
+                     <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -658,6 +660,9 @@
                  <Column>
                     <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
+                  <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
                 
             </columns>
 
@@ -668,9 +673,13 @@
                                 <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                                  <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                             </VBox>
-                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
-                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input type="Number" placeholder="{i18n>placeHolder3}" width="80%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
+                             <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                             <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                             <Text text="{oModelControl>BonusPoints}" />
+                               <HBox>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards2"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedReward2"></Button>
+                             </HBox>
                     </cells>
                 </ColumnListItem>
             </items>
