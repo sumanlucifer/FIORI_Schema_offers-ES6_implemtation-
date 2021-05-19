@@ -63,12 +63,12 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
-                                                                    maximumFileSize="10.1"
+                                                                    maximumFileSize="2.1"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
                                                                 <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf"/>
-                                                                <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="10 MB"/>
+                                                                <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB"/>
                                                                 </HBox>
                                                                 </VBox>
                                                             </FlexBox>
