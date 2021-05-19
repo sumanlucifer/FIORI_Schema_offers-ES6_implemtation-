@@ -164,10 +164,17 @@ sap.ui.define([
         onChangePdf: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
             if (oEvent.getParameter("files").length > 0) {
-                //this.pdfName = this.oFileUploaderPdf.getValue();
+                var pdfname = oEvent.getParameter("files")[0].name;
                 this.getModel("ActionViewModel").setProperty("file", oEvent.getParameter("files")[0], oContext);
                 this.getModel("ActionViewModel").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                 this.getModel("ActionViewModel").setProperty("bNew", true, oContext);
+                
+                var isValid= this.checkFileName(pdfname);
+                if(!isValid){
+                    MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
+                }
+                
+               
             }
         },
 
@@ -203,7 +210,8 @@ sap.ui.define([
                 var sServiceUri = this.sServiceURI;
                 //To DO promises for sync
                 catalogue.forEach(function (ele) {
-                    jQuery.ajax({
+                     var isValid= this.checkFileName(ele.fileName);
+                        jQuery.ajax({
                         method: "PUT",
                         url: sServiceUri + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                         cache: false,
@@ -215,6 +223,9 @@ sap.ui.define([
                         },
                         error: function () { },
                     })
+                   
+                   
+                    
                 });
 
             }
@@ -249,6 +260,7 @@ sap.ui.define([
 
             catalogue.forEach(function (ele) {
                 if (ele.bNew) {
+                   
                     jQuery.ajax({
                         method: "PUT",
                         url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
@@ -261,43 +273,10 @@ sap.ui.define([
                         },
                         error: function () { },
                     })
+                     
                 }
             })
-            // this.getView().byId("idPdf").getItems().forEach(function (ele, i) {
-            //     fileUploader = ele.getContent()[0].getItems()[1];
-            //     fileUploader.setUploadUrl(sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + catalogue[i].fileName + "&language_code=" + catalogue[i].LanguageCode);
-            //     fileUploader.checkFileReadable().then(function () {
-            //         // @ts-ignore
-            //         //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-            //         fileUploader.setHttpRequestMethod("PUT");
-            //         // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-            //         fileUploader.upload();
-            //     }.bind(this), function (error) {
-            //         MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-            //     }.bind(this)).then(function () {
-
-            //     }.bind(this));
-            // });
-
-            // for (var i = 0; i <= catalogue.length; i++) {
-            //     var LanguageCode = catalogue[i].LanguageCode;
-            //     console.log(LanguageCode);
-            //     this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=pdf&file_name=" + this.pdfName + "&language_code=" + LanguageCode);
-            //     this.oFileUploaderPdf.checkFileReadable().then(function () {
-            //         // @ts-ignore
-            //         //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-            //         this.oFileUploaderPdf.setHttpRequestMethod("PUT");
-            //         // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-            //         this.oFileUploaderPdf.upload();
-            //     }.bind(this), function (error) {
-            //         MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-            //     }.bind(this)).then(function () {
-
-            //         this.oFileUploaderPdf.clear();
-            //     }.bind(this));
-            // }
-
-
+         
         },
 
         handleUploadComplete: function () {
@@ -561,7 +540,18 @@ sap.ui.define([
             }
 
         },
+        checkFileName: function (fileName){
+             var isValid = false;
+                    var regex = /[~`!@#$%^&()_={}[\]:;,<>+\/?-]/;
+                    isValid = regex.test(fileName);
+                    if(!isValid){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
 
+        },
         onAddCompetitor: function () {
             var oModel = this.getView().getModel("ActionViewModel");
             var oCompetitorMdl = oModel.getProperty("/Competitor");
