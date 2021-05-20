@@ -1194,7 +1194,20 @@ sap.ui.define(
         onValueHelpSearch: function (oEvent) {
           var sValue = oEvent.getParameter("value");
           var oFilter = new Filter(
-            [new Filter("Title", FilterOperator.Contains, sValue)],
+            [
+              new Filter({
+                path: "Title",
+                operator: FilterOperator.Contains,
+                value1: sValue,
+                caseSensitive:false
+              }),
+               new Filter({
+                path: "Description",
+                operator: FilterOperator.Contains,
+                value1: sValue,
+                caseSensitive:false
+              }),
+            ],
             false
           );
 

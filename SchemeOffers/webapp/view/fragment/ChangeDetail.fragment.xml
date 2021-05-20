@@ -132,7 +132,7 @@
                          <f:FormElement label="{i18n>SelectParentOffer}">
                             
                             <f:fields>
-                                <Input editable="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
+                                <Input enabled="{= ${oModelControl>/Rbtn/ParentOffer}! == 0 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
                                 
                             </f:fields>
                         </f:FormElement>
