@@ -96,7 +96,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox selectionFinish="onProd1Change" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -111,7 +111,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppPacks1" enabled="{oModelControl>/MultiEnabled/AppPacks1}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox  id="AppPacks1" enabled="{= ${oModelControl>/Rbtn/AppPacks1} === 1 }"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -132,7 +132,7 @@
                          <f:FormElement label="{i18n>SelectParentOffer}">
                             
                             <f:fields>
-                                <Input editable="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
+                                <Input enabled="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
                                 
                             </f:fields>
                         </f:FormElement>
@@ -330,7 +330,7 @@
 
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Zones}===1 }"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox selectionFinish="onZoneChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  editable="{= ${oModelControl>/Rbtn/Zones}===1 }"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -345,7 +345,7 @@
                         </f:FormElement>
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Divisions}===1 }"  id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
+                                <MultiComboBox selectionFinish="onDivisionChange"  enabled="{= ${oModelControl>/Rbtn/AppPainter}===1 &amp;&amp; ${oModelControl>/MultiCombo/Zones}.length > 0 }" editable="{= ${oModelControl>/Rbtn/Divisions}===1 }"  id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -361,7 +361,7 @@
                         <f:FormElement>
                             <f:fields>
                              
-                                <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"
+                                <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter}===1 &amp;&amp; ${oModelControl>/MultiCombo/Divisions}.length > 0 }"
                                 editable="{= ${oModelControl>/Rbtn/Depots}===1 }"
                                 placeholder="{i18n>placeHolder1}"
                         id="idDepots"

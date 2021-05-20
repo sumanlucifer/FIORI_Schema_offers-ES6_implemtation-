@@ -133,9 +133,7 @@ sap.ui.define(
             oModelView.setProperty("/EndDate", null);
           }
         },
-        onDivisionChange: function (oEvent) {
-          this._CheckAreaChange();
-        },
+
         onOfferTypeChanged: function (oEvent) {
           var oView = this.getView();
           var oSource = oEvent.getSource().getSelectedItem();
@@ -280,7 +278,136 @@ sap.ui.define(
           }
         },
         onPAppDropChange: function () {
+          this.onPClass1Change();
           this._CreateRewardTableData();
+        },
+        onPClass1Change: function () {
+          var oView = this.getView(),
+            oModel = oView.getModel("oModelControl");
+          var aCat = oModel.getProperty("/MultiCombo/PCat1");
+          var aClass = oModel.getProperty("/MultiCombo/PClass1");
+          var oProducts = oView.byId("AppProd1");
+          var aFilter1 = [];
+          var aFilter2 = [];
+          for (var a of aCat) {
+            aFilter1.push(
+              new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+            );
+          }
+          for (var b of aClass) {
+            aFilter2.push(
+              new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+            );
+          }
+          var aFilterCat = new Filter({
+            filters: aFilter1,
+            and: false
+          });
+          var aFilterClass = new Filter({
+            filters: aFilter2,
+            and: false,
+          });
+          var aFinalFilter =  [];
+          if(aFilter1.length>0){
+            aFinalFilter.push(aFilterCat)
+          }
+          if(aFilter2.length>0){
+            aFinalFilter.push(aFilterClass)
+          }
+          oProducts.getBinding("items").filter(aFinalFilter);
+        },
+        onProd1Change: function (oEvent) {
+          var oSource = oEvent.getSource();
+          var sKeys = oSource.getSelectedKeys();
+          var aPackFilter = [];
+          var oPacks = this.getView().byId("AppPacks1");
+
+          for (var y of sKeys) {
+            aPackFilter.push(new Filter("ProductCode", FilterOperator.EQ, y));
+          }
+          oPacks.getBinding("items").filter(aPackFilter);
+
+          this._fnChangeProdPacks({
+            src: { path: "/MultiCombo/AppProd1" },
+            target: {
+              localPath: "/MultiCombo/AppPacks1",
+              oDataPath: "/MasterRepProductSkuSet",
+              key: "ProductCode",
+            },
+          });
+          this._CreateRewardTableData();
+        },
+        _fnChangeProdPacks: function (oChgdetl) {
+          var oView = this.getView();
+          var aSource = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.src.path),
+            oSourceSet = new Set(aSource);
+
+          var aTarget = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.target.localPath),
+            aNewTarget = [];
+
+          var oModel = this.getView().getModel(),
+            tempPath,
+            tempdata;
+
+          aTarget.forEach(function (ele) {
+            if (typeof ele === "string") {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                SkuCode: ele,
+              });
+            } else {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                SkuCode: ele[oChgdetl.target.targetKey],
+              });
+            }
+            tempdata = oModel.getData(tempPath);
+            if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+              aNewTarget.push(ele);
+            }
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty(oChgdetl.target.localPath, aNewTarget);
+        },
+        _fnChangeDivDepot: function (oChgdetl) {
+          var oView = this.getView();
+          var aSource = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.src.path),
+            oSourceSet = new Set(aSource);
+
+          var aTarget = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.target.localPath),
+            aNewTarget = [];
+
+          var oModel = this.getView().getModel(),
+            tempPath,
+            tempdata;
+
+          aTarget.forEach(function (ele) {
+            if (typeof ele === "string") {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele,
+              });
+            } else {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele[oChgdetl.target.targetKey],
+              });
+            }
+            tempdata = oModel.getData(tempPath);
+            if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+              aNewTarget.push(ele);
+            }
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty(oChgdetl.target.localPath, aNewTarget);
         },
         onBRAppDropChange: function () {
           this._CreateBonusRewardTable();
@@ -549,6 +676,7 @@ sap.ui.define(
           if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
             this._CreateBonusRewardTable();
           }
+          //checkFilters
         },
 
         onRbBonusRewardChange: function (oEvent) {},
@@ -866,6 +994,46 @@ sap.ui.define(
               and: true,
             })
           );
+        },
+        onZoneChange: function (oEvent) {
+          var oView = this.getView();
+          var oDivision = oView.byId("idDivisions");
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var aDivFilter = [];
+          for (var y of sKeys) {
+            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
+          }
+          oDivision.getBinding("items").filter(aDivFilter);
+
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Zones" },
+            target: {
+              localPath: "/MultiCombo/Divisions",
+              oDataPath: "/MasterDivisionSet",
+              key: "Zone",
+            },
+          });
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Divisions" },
+            target: {
+              localPath: "/MultiCombo/Depots",
+              oDataPath: "/MasterDepotSet",
+              key: "Division",
+              targetKey: "DepotId",
+            },
+          });
+        },
+        onDivisionChange: function (oEvent) {
+          // Not requred to set filter for the Depots as this is a valuehelp and filter is applied in onbeforeopen event
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Divisions" },
+            target: {
+              localPath: "/MultiCombo/Depots",
+              oDataPath: "/MasterDepotSet",
+              key: "Division",
+              targetKey: "DepotId",
+            },
+          });
         },
 
         onDepotValueHelpOpen: function (oEvent) {
@@ -1194,7 +1362,20 @@ sap.ui.define(
         onValueHelpSearch: function (oEvent) {
           var sValue = oEvent.getParameter("value");
           var oFilter = new Filter(
-            [new Filter("Title", FilterOperator.Contains, sValue)],
+            [
+              new Filter({
+                path: "Title",
+                operator: FilterOperator.Contains,
+                value1: sValue,
+                caseSensitive: false,
+              }),
+              new Filter({
+                path: "Description",
+                operator: FilterOperator.Contains,
+                value1: sValue,
+                caseSensitive: false,
+              }),
+            ],
             false
           );
 

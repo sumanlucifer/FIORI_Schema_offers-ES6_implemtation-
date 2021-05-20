@@ -812,7 +812,7 @@ sap.ui.define(
               AppPacks4: [],
               Painters: [],
               Reward: [],
-              Reward2:[]
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
