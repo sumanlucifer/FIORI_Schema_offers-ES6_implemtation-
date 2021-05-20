@@ -812,7 +812,7 @@ sap.ui.define(
               AppPacks4: [],
               Painters: [],
               Reward: [],
-              Reward2:[]
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -1289,7 +1289,7 @@ sap.ui.define(
                     c6.then(function (oPayLoad) {
                       c7 = othat._UploadFile(oPayLoad, bFileFlag);
                       c7.then(function (data) {
-                        //othat.handleCancelPress(data);
+                        othat.handleCancelPress(data);
                       });
                     });
                   });
