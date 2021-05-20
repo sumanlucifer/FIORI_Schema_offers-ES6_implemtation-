@@ -96,7 +96,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <MultiComboBox selectionFinish="onProd1Change" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -111,7 +111,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" id="AppPacks1" enabled="{oModelControl>/MultiEnabled/AppPacks1}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <MultiComboBox  id="AppPacks1" enabled="{= ${oModelControl>/Rbtn/AppPacks1} === 1 }"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox>
                             </f:fields>
