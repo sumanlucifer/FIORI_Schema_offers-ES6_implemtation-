@@ -25,7 +25,7 @@
             </Annotations>
 
             <Annotations Target="Metadata.PainterRequestModel/CreatedAt"> 
-                <Annotation Term="Common.Label" String="Creation Date"/> 
+                <Annotation Term="Common.Label" String="Created Date"/> 
             </Annotations>
 
             <Annotations Target="Metadata.PainterRequestModel/RequestTypeDetails/RequestType"> 
@@ -56,8 +56,8 @@
                             <PropertyValue Property="Value" Path="RequestTypeDetails/RequestType"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Creation Date"/>
-                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                            <PropertyValue Property="Label" String="Created Date"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>                        
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Last Updated By"/>
