@@ -6,7 +6,7 @@
 		title="{i18n>Offers}"
         growing="true"
         growingThreshold="15"
-		items="{path:'/OfferSet',sorter:{path:'CreatedAt',descending:true}}"
+		items="{path:'/OfferSet',filters:[{path:'Parent'}] sorter:{path:'CreatedAt',descending:true}}"
 		search=".onValueHelpSearch"
 		confirm="onParentOfferValueHelpClose"
 		cancel=".onValueHelpClose">
