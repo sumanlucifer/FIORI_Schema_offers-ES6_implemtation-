@@ -177,6 +177,7 @@ sap.ui.define([
                 var mobile = this.getView().byId("mobile").getValue();
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
+                var userType=this.getView().byId("iduserType").getSelectedKey();
 
                 var passedValidation = this.onValidateAdd();
 
@@ -193,9 +194,9 @@ sap.ui.define([
                     Name: name,
                     Email: email,
                     Mobile: mobile,
-
                     CountryCode: countrycode,
-                    RoleId: role
+                    RoleId: role,
+                    UserTypeId:userType
                 }
 
 
@@ -210,7 +211,7 @@ sap.ui.define([
                 var mobile = this.getView().byId("mobile").getValue();
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
-
+                var userType=this.getView().byId("iduserType").getSelectedKey();
                 var passedValidation = this.onValidateEdit();
 
                 if (passedValidation === false) {
@@ -228,16 +229,15 @@ sap.ui.define([
                     Email: email,
                     Mobile: mobile,
                     CountryCode: countrycode,
-                    RoleId: role
+                    RoleId: role,
+                    UserTypeId:userType
                 }
                 // console.log(oData);
 
                 var editSet = this.getView().getBindingContext("data").getPath();
 
                 oModel.update(editSet, oData, { success: this.onSuccessPress("Successfully Updated!") });
-
-
-            },
+                },
 
             onClearPress: function () {
                 // does not remove the manually set ValueStateText we set in onValueStatePress():
@@ -303,6 +303,20 @@ sap.ui.define([
                 }
 
                 this.oEscapePreventDialog.open();
+            },
+            onRoleChange :function (oEvent){
+            var roleId=oEvent.getParameter("selectedItem").getKey();
+            var binding = this.getView().byId("iduserType").getBinding("items");
+                 //binding.aFilters = null;
+  	        var filters = [new sap.ui.model.Filter("AdminRoleId", sap.ui.model.FilterOperator.EQ, parseInt(roleId)) ]; 
+			var oFilter1 = new sap.ui.model.Filter({aFilters:filters}); 
+			binding.filter(oFilter1);
+            this.getView().byId("iduserType").getModel().updateBindings(true);
+            
+                // var tfilter = new sap.ui.model.Filter("UserTypeId",sap.ui.model.FilterOperator.EQ,roleId);
+                // var userTypeDropdown=this.getView().byId("iduserType");
+                // userTypeDropdown.bindAggregation("items",tfilter);
+
             },
             onLiveChangeInputValidate: function (oEvent) {
                 var blockSpecialRegex = /[0-9~`!@#$%^&()_={}[\]:;,.<>+\/?-]/;
