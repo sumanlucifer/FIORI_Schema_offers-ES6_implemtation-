@@ -1,6 +1,6 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
-version: 0.0.1
+version: 1.0.1
 modules:
 - name: knpl-influencer-web-approuter
   type: approuter.nodejs
@@ -12,11 +12,13 @@ modules:
   - name: knpl-influencer-web_html_repo_runtime
   - name: destination-knpl-pragati
   - name: portal_resources_knpl-influencer-web
-  - name: knpl-portal-saas-registry
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: KNPL_PAINTER_API
+      url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
-    buildpack: nodejs_buildpack
     disk-quota: 256M
-    keep-existing-routes: true
     memory: 256M
     routes:
     - route: knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}
@@ -31,32 +33,76 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - MasterDataManagement-content.zip
-      name: MasterDataManagement
+      - MDM-content.zip
+      name: MDM
       target-path: resources/
     - artifacts:
-      - OrganizationModule-content.zip
-      name: OrganizationModule
+      - ContactPainter-content.zip
+      name: ContactPainter
       target-path: resources/
     - artifacts:
       - Manage_FAQ-content.zip
       name: Manage_FAQ
       target-path: resources/
     - artifacts:
+      - DealerManagement-content.zip
+      name: DealerManagement
+      target-path: resources/
+    - artifacts:
+      - OrganizationSetup-content.zip
+      name: OrganizationSetup
+      target-path: resources/
+    - artifacts:
       - Manage_Notifications-content.zip
       name: Manage_Notifications
+      target-path: resources/
+    - artifacts:
+      - Catelogue-content.zip
+      name: Catelogue
+      target-path: resources/
+    - artifacts:
+      - CompanySettings-content.zip
+      name: CompanySettings
       target-path: resources/
     - artifacts:
       - Training_Learning-content.zip
       name: Training_Learning
       target-path: resources/
     - artifacts:
-      - comknplpragatigroupnotifications.zip
-      name: comknplpragatigroupnotifications
+      - Tools-content.zip
+      name: Tools
       target-path: resources/
-- name: MasterDataManagement
+    - artifacts:
+      - Complaints-content.zip
+      name: Complaints
+      target-path: resources/
+    - artifacts:
+      - CallbackRequests-content.zip
+      name: CallbackRequests
+      target-path: resources/
+    - artifacts:
+      - LoyaltyManagement-content.zip
+      name: LoyaltyManagement
+      target-path: resources/
+    - artifacts:
+      - groupnotifications-content.zip
+      name: groupnotifications
+      target-path: resources/
+    - artifacts:
+      - Scheme-offers-content.zip
+      name: SchemeOffers
+      target-path: resources/
+- name: MDM
   type: html5
-  path: MasterDataManagement
+  path: MDM
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: ContactPainter
+  type: html5
+  path: ContactPainter
   build-parameters:
     builder: custom
     commands:
@@ -74,23 +120,31 @@ modules:
           content-endpoint: developer
         name: content-deploy-key
   - name: knpl-influencer-web_html_repo_host
-  - name: knpl-influencer-web_ui_deployer
   - name: uaa_knpl-influencer-web
-  - name: knpl-portal-saas-registry
   parameters:
     config:
       TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter.${default-domain}
-- name: OrganizationModule
+  deployed-after:
+  - knpl-influencer-web_ui_deployer
+- name: Manage_FAQ
   type: html5
-  path: OrganizationModule
+  path: Manage_FAQ
   build-parameters:
     builder: custom
     commands:
     - npm run build
     supported-platforms: []
-- name: Manage_FAQ
+- name: DealerManagement
   type: html5
-  path: Manage_FAQ
+  path: DealerManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: OrganizationSetup
+  type: html5
+  path: OrganizationSetup
   build-parameters:
     builder: custom
     commands:
@@ -104,6 +158,22 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: Catelogue
+  type: html5
+  path: Catelogue
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: CompanySettings
+  type: html5
+  path: CompanySettings
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 - name: Training_Learning
   type: html5
   path: Training_Learning
@@ -112,23 +182,61 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: comknplpragatigroupnotifications
+- name: Tools
+  type: html5
+  path: Tools
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Complaints
+  type: html5
+  path: Complaints
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: CallbackRequests
+  type: html5
+  path: CallbackRequests
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: LoyaltyManagement
+  type: html5
+  path: LoyaltyManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: SchemeOffers
+  type: html5
+  path: SchemeOffers
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: groupnotifications
   type: html5
   path: groupnotifications
   build-parameters:
-    build-result: dist
     builder: custom
     commands:
-    - npm install
-    - npm run build:cf
+    - npm run build
     supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
-  type: org.cloudfoundry.managed-service
+  type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: knpl-portal-xsuaa-service
+    service-name: knpl-pragati-uaa
     service-plan: application
 - name: knpl-influencer-web_html_repo_runtime
   type: org.cloudfoundry.managed-service
@@ -155,6 +263,8 @@ resources:
 - name: knpl-influencer-web_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
+    config:
+      sizeLimit: 10
     service: html5-apps-repo
     service-plan: app-host
 - name: portal_resources_knpl-influencer-web
@@ -162,22 +272,8 @@ resources:
   parameters:
     service: portal
     service-plan: standard
-- name: knpl-portal-saas-registry
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      appName: KNPL_Portal
-      appUrls:
-        getDependencies: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/dependencies
-        onSubscription: https://knpl-painter-dev-knpl-influencer-web-approuter.${default-domain}/callback/v1.0/tenants/{tenantId}
-      category: knplportalapps
-      description: KNPL Portal application
-      displayName: KNPL_Portal
-      xsappname: knpl-influencer-web
-    service: saas-registry
-    service-plan: application
 parameters:
-  deploy_mode: html5-repo
+  enable-parallel-deployments: true
 build-parameters:
   before-all:
   - builder: custom

@@ -1,18 +1,16 @@
 {
   "welcomeFile": "/index.html",
-  "authenticationMethod": "route",
+ "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
   "routes": [
-    {
-      "source": "^/resources/(.*)$",
-      "target": "/resources/$1",
-      "authenticationType": "none",
-      "destination": "ui5"
-    },
-    {
-      "source": "^/test-resources/(.*)$",
-      "target": "/test-resources/$1",
-      "authenticationType": "none",
-      "destination": "ui5"
+     {
+      "authenticationType": "xsuaa",
+      "csrfProtection": false,
+      "source": "^/KNPL_PAINTER_API/(.*)$",
+      "destination": "KNPL_PAINTER_API",
+      "target": "$1"
     },
     {
       "source": "^(.*)$",
@@ -20,5 +18,5 @@
       "service": "html5-apps-repo-rt",
       "authenticationType": "xsuaa"
     }
-  ]
+]
 }
