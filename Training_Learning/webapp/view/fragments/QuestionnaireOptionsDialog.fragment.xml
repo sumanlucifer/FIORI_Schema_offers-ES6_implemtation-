@@ -4,7 +4,7 @@
         <f:SimpleForm id="QuestionOptions" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
                 <Label text="{i18n>colQuestion}" required="true"/>
                 <TextArea maxLength="300" value="{oModelView>Question}" rows="3"/>
-                <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="No data available" growing="true"
+                <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growing="true"
 					items="{path: 'oModelView>TrainingQuestionnaireOptions/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>

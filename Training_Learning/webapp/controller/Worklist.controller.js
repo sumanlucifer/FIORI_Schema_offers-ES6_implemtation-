@@ -39,8 +39,7 @@ sap.ui.define([
                 shareOnJamTitle: this.getResourceBundle().getText("worklistTitle"),
                 shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
-                tableNoDataTextTraining: this.getResourceBundle().getText("tableNoDataTextTraining"),
-                tableNoDataTextVideo: this.getResourceBundle().getText("tableNoDataTextVideo"),
+                tableNoData: this.getResourceBundle().getText("tableNoData"),
                 tableBusyDelay: 0,
                 currDate: new Date(),
                 filterBar: {
