@@ -13,7 +13,7 @@ xmlns:l="sap.ui.layout"
 		<items>
 			<IconTabFilter text="Users" key="users">
 				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',filters: {path: 'IsArchived', operator: 'EQ', value1: false},
-                parameters : {expand:'Role'},
+                parameters : {expand:'Role,UserType'},
                 sorter:{
                     path: 'Id', 
                     descending: true
@@ -43,6 +43,9 @@ xmlns:l="sap.ui.layout"
                                 <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>role}"/>
                                 </Column>
+                                <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>type}"/>
+                                </Column>
 
                                 <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
                                     <Text text="{i18n>GenericEdit}"/>
@@ -61,6 +64,7 @@ xmlns:l="sap.ui.layout"
                                         <Text text="{data>Mobile}"/>
                                         <Text text="{data>Email}"/>
                                         <Text text="{data>Role/Description}"/>
+                                        <Text text="{data>UserType/Description}"/>
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
                                         <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveUser"></Button>
