@@ -12,25 +12,20 @@ xmlns:l="sap.ui.layout"
 		class="sapUiResponsiveContentPadding">
 		<items>
 			<IconTabFilter text="Users" key="users">
-				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',
-               
-                filters: {path: 'IsArchived', operator: 'EQ', value1: false},
-                parameters : {expand:'Role'},
+				<Table inset="false" id="tableUsers" items="{path: 'data>/AdminSet',filters: {path: 'IsArchived', operator: 'EQ', value1: false},
+                parameters : {expand:'Role,UserType'},
                 sorter:{
                     path: 'Id', 
                     descending: true
-                }
+                    }
                  }"
-                growing="true" 
-                growingThreshold="20">
+                growing="true" growingThreshold="20">
                             <headerToolbar>
                             
                                 <Toolbar class="tblTlbrAd">
                                     <ToolbarSpacer></ToolbarSpacer>
                                     <SearchField id ="searchField" search=".onFilterUsers" width="20%" />
-                                    
-                                    <!-- <Button text="{i18n>GenericRefresh}" type="Transparent" icon="sap-icon://refresh" press="onRefresh"/> -->
-                                    <Button text="{i18n>GenericAdd}" type="Transparent" icon="sap-icon://add" press="onPressAdd"/>
+                                    <Button text="{i18n>GenericAdd}" type="Emphasized" icon="sap-icon://add" press="onPressAdd"/>
                                 </Toolbar>
                             </headerToolbar>
                             <columns>
@@ -47,6 +42,9 @@ xmlns:l="sap.ui.layout"
                                 </Column>
                                 <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>role}"/>
+                                </Column>
+                                <Column width="20%" minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>type}"/>
                                 </Column>
 
                                 <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
@@ -66,6 +64,7 @@ xmlns:l="sap.ui.layout"
                                         <Text text="{data>Mobile}"/>
                                         <Text text="{data>Email}"/>
                                         <Text text="{data>Role/Description}"/>
+                                        <Text text="{data>UserType/Description}"/>
 
                                         <Button icon="sap-icon://edit" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" press="onPressEdit" tooltip="Edit"></Button>
                                         <Button icon="sap-icon://delete" visible="{oMdlCtrl>/IsAdmin}" type="Transparent" tooltip="remove" press="onPressRemoveUser"></Button>
