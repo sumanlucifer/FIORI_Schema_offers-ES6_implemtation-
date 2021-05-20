@@ -330,7 +330,7 @@
 
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Zones}===1 }"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
+                                <MultiComboBox selectionFinish="onZoneChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  editable="{= ${oModelControl>/Rbtn/Zones}===1 }"  id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Zones}"  items="{path:'/MasterZoneSet' }">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -345,7 +345,7 @@
                         </f:FormElement>
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/Divisions}===1 }"  id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
+                                <MultiComboBox selectionFinish="onDivisionChange"  enabled="{= ${oModelControl>/Rbtn/AppPainter}===1 &amp;&amp; ${oModelControl>/MultiCombo/Zones}.length > 0 }" editable="{= ${oModelControl>/Rbtn/Divisions}===1 }"  id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
                                     <core:Item text="{Id}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -361,7 +361,7 @@
                         <f:FormElement>
                             <f:fields>
                              
-                                <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"
+                                <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter}===1 &amp;&amp; ${oModelControl>/MultiCombo/Divisions}.length > 0 }"
                                 editable="{= ${oModelControl>/Rbtn/Depots}===1 }"
                                 placeholder="{i18n>placeHolder1}"
                         id="idDepots"

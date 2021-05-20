@@ -133,9 +133,7 @@ sap.ui.define(
             oModelView.setProperty("/EndDate", null);
           }
         },
-        onDivisionChange: function (oEvent) {
-          this._CheckAreaChange();
-        },
+
         onOfferTypeChanged: function (oEvent) {
           var oView = this.getView();
           var oSource = oEvent.getSource().getSelectedItem();
@@ -549,6 +547,7 @@ sap.ui.define(
           if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
             this._CreateBonusRewardTable();
           }
+          //checkFilters
         },
 
         onRbBonusRewardChange: function (oEvent) {},
@@ -868,6 +867,83 @@ sap.ui.define(
           );
         },
 
+        onZoneChange: function (oEvent) {
+          var oView = this.getView();
+          var oDivision = oView.byId("idDivisions");
+          var sKeys = oEvent.getSource().getSelectedKeys();
+          var aDivFilter = [];
+          for (var y of sKeys) {
+            aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
+          }
+          oDivision.getBinding("items").filter(aDivFilter);
+
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Zones" },
+            target: {
+              localPath: "/MultiCombo/Divisions",
+              oDataPath: "/MasterDivisionSet",
+              key: "Zone",
+            },
+          });
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Divisions" },
+            target: {
+              localPath: "/MultiCombo/Depots",
+              oDataPath: "/MasterDepotSet",
+              key: "Division",
+              targetKey: "DepotId",
+            },
+          });
+        },
+        onDivisionChange: function (oEvent) {
+          // Not requred to set filter for the Depots as this is a valuehelp and filter is applied in onbeforeopen event
+          this._fnChangeDivDepot({
+            src: { path: "/MultiCombo/Divisions" },
+            target: {
+              localPath: "/MultiCombo/Depots",
+              oDataPath: "/MasterDepotSet",
+              key: "Division",
+              targetKey: "DepotId",
+            },
+          });
+        },
+
+        _fnChangeDivDepot: function (oChgdetl) {
+          var oView = this.getView();
+          var aSource = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.src.path),
+            oSourceSet = new Set(aSource);
+
+          var aTarget = oView
+              .getModel("oModelControl")
+              .getProperty(oChgdetl.target.localPath),
+            aNewTarget = [];
+
+          var oModel = this.getView().getModel(),
+            tempPath,
+            tempdata;
+
+          aTarget.forEach(function (ele) {
+            if (typeof ele === "string") {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele,
+              });
+            } else {
+              tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                Id: ele[oChgdetl.target.targetKey],
+              });
+            }
+            tempdata = oModel.getData(tempPath);
+            if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+              aNewTarget.push(ele);
+            }
+          });
+
+          oView
+            .getModel("oModelControl")
+            .setProperty(oChgdetl.target.localPath, aNewTarget);
+        },
         onDepotValueHelpOpen: function (oEvent) {
           this._oMultiInput = this.getView().byId("idDepots");
           this.oColModel = new JSONModel({
@@ -1199,13 +1275,13 @@ sap.ui.define(
                 path: "Title",
                 operator: FilterOperator.Contains,
                 value1: sValue,
-                caseSensitive:false
+                caseSensitive: false,
               }),
-               new Filter({
+              new Filter({
                 path: "Description",
                 operator: FilterOperator.Contains,
                 value1: sValue,
-                caseSensitive:false
+                caseSensitive: false,
               }),
             ],
             false
