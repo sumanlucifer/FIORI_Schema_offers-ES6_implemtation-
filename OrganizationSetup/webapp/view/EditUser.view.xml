@@ -87,7 +87,7 @@ floatingFooter="true"
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</Select>
-            <Label text="User Type" labelFor="UserType" design="Bold" required="true"/>
+            <Label text="User Type" labelFor="UserType" design="Bold"/>
             <Select
             id="iduserType"
             selectedKey="{data>UserTypeId}"
