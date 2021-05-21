@@ -1761,14 +1761,14 @@ sap.ui.define(
             elem
           ) {
             return {
-              ProductCode: elem,
+              ProductCode: elem["Id"],
             };
           });
           oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem["Id"],
             };
           });
           oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(

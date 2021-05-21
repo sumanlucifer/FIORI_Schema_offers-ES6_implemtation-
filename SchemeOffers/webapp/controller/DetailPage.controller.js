@@ -736,7 +736,7 @@ sap.ui.define(
           var othat = this;
           var exPand =
             "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
-            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
+            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
             "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
             "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
             "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
@@ -1102,14 +1102,20 @@ sap.ui.define(
 
           if (oData["OfferApplicableProduct"]["results"].length > 0) {
             for (var x of oData["OfferApplicableProduct"]["results"]) {
-              AppProd1.push({Id:x["Product"]["ProductCode"],Name:x["Product"]["ProductName"]});
+              AppProd1.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd1", AppProd1);
 
           if (oData["OfferApplicablePack"]["results"].length > 0) {
             for (var x of oData["OfferApplicablePack"]["results"]) {
-              AppPacks1.push({Id:x["Pack"]["SkuCode"],Name:x["Pack"]["Description"]});
+              AppPacks1.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks1", AppPacks1);
@@ -1151,14 +1157,20 @@ sap.ui.define(
 
           if (oData["OfferBuyerProduct"]["results"].length > 0) {
             for (var x of oData["OfferBuyerProduct"]["results"]) {
-              AppProd2.push(x["ProductCode"]);
+              AppProd2.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd2", AppProd2);
 
           if (oData["OfferBuyerPack"]["results"].length > 0) {
             for (var x of oData["OfferBuyerPack"]["results"]) {
-              AppPacks2.push(x["SkuCode"]);
+              AppPacks2.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks2", AppPacks2);
