@@ -96,9 +96,14 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onProd1Change" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <!-- <MultiComboBox selectionFinish="onProd1Change" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}"  selectedKeys="{oModelControl>/MultiCombo/AppProd1}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd1}===1}" valueHelpOnly="true" id="AppProd1" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd1}">
+			                          <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+		                        </MultiInput>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formApplicableLbl9}" >
@@ -111,9 +116,14 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox  id="AppPacks1" enabled="{= ${oModelControl>/Rbtn/AppPacks1} === 1 }"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <!-- <MultiComboBox  id="AppPacks1" enabled="{= ${oModelControl>/Rbtn/AppPacks1} === 1 }"  selectedKeys="{oModelControl>/MultiCombo/AppPacks1}"  selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                   <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks1}===1}" valueHelpOnly="true" id="AppPacks1" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks1}">
+			                          <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+		                        </MultiInput>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>

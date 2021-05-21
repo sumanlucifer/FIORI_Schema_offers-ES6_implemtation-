@@ -93,6 +93,7 @@ sap.ui.define(
               Key1: "",
               Bonus2: {},
               Key2: "",
+              ProdKey:""
             },
             MultiCombo: {
               Zones: [],
