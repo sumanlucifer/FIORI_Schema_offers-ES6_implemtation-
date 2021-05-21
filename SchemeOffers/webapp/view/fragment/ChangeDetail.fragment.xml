@@ -558,7 +558,7 @@
 
                          <f:FormElement label="">
                             <f:fields>
-                                 <MultiComboBox required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" selectionFinish="onBRAppDropChange"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                 <MultiComboBox selectionFinish="onPAppDropChange"  required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }"   placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -574,7 +574,7 @@
                         </f:FormElement>
                          <f:FormElement >
                             <f:fields>
-                                <MultiComboBox enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectionFinish="onBRAppDropChange" >
+                                <MultiComboBox selectionFinish="onPAppDropChange"  enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}"  placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" >
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -590,9 +590,11 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppProd4"  enabled="{oModelControl>/MultiEnabled/AppProd4}"  selectedKeys="{oModelControl>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
-                                    <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                 <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd4}">
+			                          <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+		                        </MultiInput>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formApplicableLbl9}" >
@@ -605,9 +607,11 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppPacks4"  enabled="{oModelControl>/MultiEnabled/AppPacks4}"  selectedKeys="{oModelControl>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
-                                    <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                                 <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks4}">
+			                          <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+		                        </MultiInput>
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement label="{i18n>formBonusRewardRatio}">
