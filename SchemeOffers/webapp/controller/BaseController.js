@@ -1161,7 +1161,10 @@ sap.ui.define(
             .split("/");
           var mParam1 = aSpath[aSpath.length - 1];
           this._ClearPacksProducts(mParam1);
-          this._CreateRewardTableData();
+          var aNumber = mParam1.match(/\d+$/)[0];
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          }
         },
         _ClearPacksProducts: function (mParam1) {
           var aNumber = mParam1.match(/\d+$/)[0];

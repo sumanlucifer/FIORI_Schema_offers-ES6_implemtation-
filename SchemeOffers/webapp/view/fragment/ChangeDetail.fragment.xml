@@ -412,7 +412,7 @@
                       
                          <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat2}===1 }"   required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
+                                <MultiComboBox selectionFinish="onPC2SelectionFinish" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat2}===1 }"   required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>

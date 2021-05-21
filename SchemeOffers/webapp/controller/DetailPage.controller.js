@@ -121,6 +121,8 @@ sap.ui.define(
               Key1: "",
               Bonus2: {},
               Key2: "",
+              ProdVH: "",
+              PackVH: "",
             },
             MultiCombo: {
               Zones: [],
@@ -733,7 +735,7 @@ sap.ui.define(
           var sPath = oModelControl2.getProperty("/bindProp");
           var othat = this;
           var exPand =
-            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio,OfferPackRewardRatio," +
+            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
             "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
             "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
             "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
@@ -783,6 +785,8 @@ sap.ui.define(
               Key1: "",
               Bonus2: {},
               Key2: "",
+              ProdVH: "",
+              PackVH: "",
             },
             MultiCombo: {
               Zones: [],
@@ -1098,14 +1102,14 @@ sap.ui.define(
 
           if (oData["OfferApplicableProduct"]["results"].length > 0) {
             for (var x of oData["OfferApplicableProduct"]["results"]) {
-              AppProd1.push(x["ProductCode"]);
+              AppProd1.push({Id:x["Product"]["ProductCode"],Name:x["Product"]["ProductName"]});
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd1", AppProd1);
 
           if (oData["OfferApplicablePack"]["results"].length > 0) {
             for (var x of oData["OfferApplicablePack"]["results"]) {
-              AppPacks1.push(x["SkuCode"]);
+              AppPacks1.push({Id:x["Pack"]["SkuCode"],Name:x["Pack"]["Description"]});
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks1", AppPacks1);
