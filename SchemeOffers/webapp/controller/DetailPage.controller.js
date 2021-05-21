@@ -737,7 +737,7 @@ sap.ui.define(
           var exPand =
             "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
             "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
-            "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
+            "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
             "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
             "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
           oView.getModel().read("/" + sPath, {
@@ -1195,14 +1195,20 @@ sap.ui.define(
 
           if (oData["OfferNonBuyerProduct"]["results"].length > 0) {
             for (var x of oData["OfferNonBuyerProduct"]["results"]) {
-              AppProd3.push(x["ProductCode"]);
+              AppProd3.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd3", AppProd3);
 
           if (oData["OfferNonBuyerPack"]["results"].length > 0) {
             for (var x of oData["OfferNonBuyerPack"]["results"]) {
-              AppPacks3.push(x["SkuCode"]);
+              AppPacks3.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);

@@ -1788,7 +1788,7 @@ sap.ui.define(
           oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
             function (elem) {
               return {
-                ProductCode: elem,
+                ProductCode: elem["Id"],
               };
             }
           );
@@ -1796,7 +1796,7 @@ sap.ui.define(
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem["Id"],
             };
           });
           // Bonus Reward Ratio
