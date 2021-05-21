@@ -683,25 +683,25 @@ sap.ui.define(
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
           var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd1");
-          var oControl = oView.byId("AppProd1").getSelectedItems();
+          var oControl = [];
           var bRbProd = oModelControl.getProperty("/Rbtn/AppProd1");
-          if (oControl.length <= 0 && bRbProd == 0) {
+          var aSelectedData = [];
+          if (aSelectedKeys.length <= 0 && bRbProd == 0) {
             oControl = oModelControl.getProperty("/oData/Products");
-          }
-          var aSelectedData = [],
-            obj;
-
-          for (var x of oControl) {
-            if (x instanceof sap.ui.base.ManagedObject) {
-              obj = x.getBindingContext().getObject();
-            } else {
-              obj = x;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["ProductName"],
+              });
             }
-
-            aSelectedData.push({
-              Id: obj["Id"],
-              Name: obj["ProductName"],
-            });
+          } else {
+            oControl = aSelectedKeys;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["Name"],
+              });
+            }
           }
 
           oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
@@ -712,17 +712,16 @@ sap.ui.define(
           var aSelectedKeys = oModelControl.getProperty(
             "/MultiCombo/AppPacks1"
           );
-          var oControl = oView.byId("AppPacks1").getSelectedItems();
+
           var aSelectedData = [],
             obj;
-          for (var x of oControl) {
-            obj = x.getBindingContext().getObject();
+          for (var x of aSelectedKeys) {
             aSelectedData.push({
-              Id: obj["SkuCode"],
-              Name: obj["Description"],
+              Id: x["Id"],
+              Name: x["Name"],
             });
           }
-          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
         },
         _setBRProductsData: function () {
           var oView = this.getView();
@@ -1200,7 +1199,8 @@ sap.ui.define(
             .split("/");
           var sParam1 = aPath[aPath.length - 1];
           console.log(sParam1);
-          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Dialog/PackVH", sParam1);
           // create value help dialog
           if (!this._PackValueHelpDialog) {
             Fragment.load({
@@ -1242,6 +1242,9 @@ sap.ui.define(
         _handlePackValueHelpConfirm: function (oEvent) {
           var oSelected = oEvent.getParameter("selectedItems");
           var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var aField = oModel.getProperty("/Dialog/PackVH");
+          var aNumber = aField.match(/\d+$/)[0];
           var aProds = [],
             oBj;
           for (var a of oSelected) {
@@ -1250,7 +1253,12 @@ sap.ui.define(
           }
           oView
             .getModel("oModelControl")
-            .setProperty("/MultiCombo/AppPacks1", aProds);
+            .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          } else {
+            // clear the bonus reward table
+          }
         },
         handleProdValueHelp: function (oEvent) {
           var oView = this.getView();
@@ -1261,7 +1269,9 @@ sap.ui.define(
             .split("/");
           var sParam1 = aPath[aPath.length - 1];
           console.log(sParam1);
-          var oView = this.getView();
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Dialog/ProdVH", sParam1);
+
           // create value help dialog
           if (!this._ProdValueHelpDialog) {
             Fragment.load({
@@ -1310,7 +1320,8 @@ sap.ui.define(
 
           var oView = this.getView();
           var oModel = oView.getModel("oModelControl");
-          var aNumber = oModel.getProperty("/Dialog/ProdV").match(/\d+$/)[0];;
+          var aField = oModel.getProperty("/Dialog/ProdVH");
+          var aNumber = aField.match(/\d+$/)[0];
           var aProds = [],
             oBj;
           for (var a of oSelected) {
@@ -1318,9 +1329,15 @@ sap.ui.define(
             aProds.push({ Name: oBj["ProductName"], Id: oBj["Id"] });
           }
 
-          oModel.setProperty("/MultiCombo/AppProd"+aNumber, aProds);
-          oModel.setProperty("/MultiCombo/AppPacks"+aNumber, []);
-          this._CreateRewardTableData();
+          oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
+          oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+          var aFiledsCheck1 = ["1"];
+          var aFieldCheck2 = ["4"];
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          } else {
+            // clear the bonus reward table
+          }
         },
         _handleProdValueHelpClose: function () {
           if (this._ProdValueHelpDialog) {
