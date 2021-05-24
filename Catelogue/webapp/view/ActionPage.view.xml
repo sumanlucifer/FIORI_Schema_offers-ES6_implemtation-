@@ -33,7 +33,8 @@
                                             <Label text="Category:" required="true" />
                                                 <Select
                                                 id="idCategory"
-                                                 width="100%"
+                                                width="100%"
+                                                change="onCategoryChange"
                                                 forceSelection="false"
                                                 selectedKey="{ActionViewModel>/Category}"
                                                 items="{
@@ -49,6 +50,7 @@
                                             <Label text="Classification:" required="true" />
                                             <Select
                                             id="idClassification"
+                                            change="onClassificationChange"
                                             forceSelection="false"
                                             width="100%"
                                             selectedKey="{ActionViewModel>/Classification/}"
@@ -70,6 +72,7 @@
                                             selectedKey="{ActionViewModel>/Title/}"
                                             items="{
                                                 path: '/MasterProductSet',
+                                                expand:'ProductCategory,ProductClassification',
                                                 sorter: { path: 'ProductName' }
                                             }">
                                             <core:Item key="{Id}" text="{ProductName}" />

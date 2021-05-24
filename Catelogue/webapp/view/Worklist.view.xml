@@ -92,7 +92,7 @@
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
-                            requestAtLeastFields="Id,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
+                            requestAtLeastFields="Id,ProductDetails/ProductName,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
                             persistencyKey="CatalogueSmartTableKey"
                             >
                             	<smartTable:customToolbar>
@@ -108,7 +108,12 @@
                         <Table>
                     
                                 <columns>
-                                
+                                 <Column hAlign="Begin" width="15%">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "ProductDetails/ProductName","type":"string", "leadingProperty": "ProductDetails/ProductName", "columnIndex": 0 }'/>
+                                        </customData>
+                                          <Text text="{i18n>name}"/>
+                                    </Column>
                                  <Column hAlign="Begin">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "PdfViewerCount","type":"string", "leadingProperty": "PdfViewerCount", "columnIndex": 3 }'/>
@@ -145,7 +150,7 @@
                                         </customData>
                                          <Text text="{i18n>status}"/>
                                     </Column>
-                                    <Column hAlign="Begin">
+                                    <Column hAlign="Begin" width="5%">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
                                         </customData>
@@ -158,6 +163,7 @@
                                 <items>
                                     <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
+                                         <Text text="{path:'ProductDetails/ProductName'}"/>
                                  <Text text="{path:'PdfViewerCount'}"/>
                             <Text text="{path:'PdfDownloadCount'}"/>
                             

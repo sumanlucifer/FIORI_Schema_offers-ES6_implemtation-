@@ -95,8 +95,8 @@ sap.ui.define([
                     error: function (oError) {
                     }
                 });
-                this.oCategory.setEditable(false);
-                this.oTitle.setEditable(false);
+                //this.oCategory.setEditable(false);
+                //this.oTitle.setEditable(false);
                 // this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
                 // this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
                 // this.oPreviewImage.setVisible(true);
@@ -108,8 +108,8 @@ sap.ui.define([
 
 
             } else {
-                this.oCategory.setEditable(true);
-                this.oTitle.setEditable(true);
+                //this.oCategory.setEditable(true);
+               // this.oTitle.setEditable(true);
                 this.oPreviewImage.setVisible(false);
                 this.pdfBtn.setVisible(false);
                 this.imgBtn.setVisible(false);
@@ -676,6 +676,27 @@ sap.ui.define([
             this._imageDialog.destroy();
             delete this._imageDialog;
         },
+        onClassificationChange :function (oEvent){
+            var ClassificationId=oEvent.getParameter("selectedItem").getKey();
+            var CategoryId=this.getView().byId("idCategory").getSelectedKey();
+            var binding = this.getView().byId("idTitle").getBinding("items");
+                 //binding.aFilters = null;
+                
+               var filters = [(new sap.ui.model.Filter("ProductCategory/Id", sap.ui.model.FilterOperator.EQ, CategoryId)),
+                            (new sap.ui.model.Filter("ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
+            //var filters = [(new sap.ui.model.Filter("ProductCategory/ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
+			var oFilter1 = new sap.ui.model.Filter({aFilters:filters}); 
+			binding.filter(oFilter1);
+            this.getView().byId("idTitle").getModel("ActionViewModel").updateBindings(true);
+            
+
+        },
+        onCategoryChange :function (){
+            var classification=this.getView().byId("idClassification");
+            classification.setSelectedItem(null);
+            var product=this.getView().byId("idTitle");
+            product.setSelectedItem(null);
+        }
 
 
 

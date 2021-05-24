@@ -19,10 +19,10 @@
             <Annotations Target="Metadata.ProductCatalogueModel">
                 <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
                     <Collection>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Product Title"/>
                             <PropertyValue Property="Value" Path="ProductDetails/ProductName"/>
-                        </Record>
+                        </Record> -->
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Category"/>
                             <PropertyValue Property="Value" Path="ProductCategory/Category"/>
