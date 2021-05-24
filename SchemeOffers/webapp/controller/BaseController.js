@@ -277,45 +277,7 @@ sap.ui.define(
             oModel2.setProperty("/ParentOfferId", null);
           }
         },
-        onPAppDropChange: function () {
-          this.onPClass1Change();
-          this._CreateRewardTableData();
-        },
-        onPClass1Change: function () {
-          var oView = this.getView(),
-            oModel = oView.getModel("oModelControl");
-          var aCat = oModel.getProperty("/MultiCombo/PCat1");
-          var aClass = oModel.getProperty("/MultiCombo/PClass1");
-          var oProducts = oView.byId("AppProd1");
-          var aFilter1 = [];
-          var aFilter2 = [];
-          for (var a of aCat) {
-            aFilter1.push(
-              new Filter("ProductCategory/Id", FilterOperator.EQ, a)
-            );
-          }
-          for (var b of aClass) {
-            aFilter2.push(
-              new Filter("ProductClassification/Id", FilterOperator.EQ, b)
-            );
-          }
-          var aFilterCat = new Filter({
-            filters: aFilter1,
-            and: false
-          });
-          var aFilterClass = new Filter({
-            filters: aFilter2,
-            and: false,
-          });
-          var aFinalFilter =  [];
-          if(aFilter1.length>0){
-            aFinalFilter.push(aFilterCat)
-          }
-          if(aFilter2.length>0){
-            aFinalFilter.push(aFilterClass)
-          }
-          oProducts.getBinding("items").filter(aFinalFilter);
-        },
+
         onProd1Change: function (oEvent) {
           var oSource = oEvent.getSource();
           var sKeys = oSource.getSelectedKeys();
@@ -356,7 +318,7 @@ sap.ui.define(
           aTarget.forEach(function (ele) {
             if (typeof ele === "string") {
               tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
-                SkuCode: ele,
+                SkuCode: ele["Id"],
               });
             } else {
               tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
@@ -621,11 +583,11 @@ sap.ui.define(
           var sKey = oModel2.getProperty("/Dialog/Key1");
           var oPayload = oModel2.getProperty("/Dialog/Bonus1");
           if (oPayload["RequiredVolume"] == "") {
-            MessageToast.show("Kindly Input Required Volume to Continue");
+            MessageToast.show("Kindly Input Required Volume to Continue.");
             return;
           }
           if (oPayload["RewardPoints"] == "") {
-            MessageToast.show("Kindly Input Reward Points to Continue");
+            MessageToast.show("Kindly Input Reward Points to Continue.");
             return;
           }
           var oPayloadNew = Object.assign({}, oPayload);
@@ -676,7 +638,6 @@ sap.ui.define(
           if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
             this._CreateBonusRewardTable();
           }
-          //checkFilters
         },
 
         onRbBonusRewardChange: function (oEvent) {},
@@ -722,25 +683,25 @@ sap.ui.define(
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
           var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd1");
-          var oControl = oView.byId("AppProd1").getSelectedItems();
+          var oControl = [];
           var bRbProd = oModelControl.getProperty("/Rbtn/AppProd1");
-          if (oControl.length <= 0 && bRbProd == 0) {
+          var aSelectedData = [];
+          if (aSelectedKeys.length <= 0 && bRbProd == 0) {
             oControl = oModelControl.getProperty("/oData/Products");
-          }
-          var aSelectedData = [],
-            obj;
-
-          for (var x of oControl) {
-            if (x instanceof sap.ui.base.ManagedObject) {
-              obj = x.getBindingContext().getObject();
-            } else {
-              obj = x;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["ProductName"],
+              });
             }
-
-            aSelectedData.push({
-              Id: obj["Id"],
-              Name: obj["ProductName"],
-            });
+          } else {
+            oControl = aSelectedKeys;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["Name"],
+              });
+            }
           }
 
           oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
@@ -751,40 +712,40 @@ sap.ui.define(
           var aSelectedKeys = oModelControl.getProperty(
             "/MultiCombo/AppPacks1"
           );
-          var oControl = oView.byId("AppPacks1").getSelectedItems();
+
           var aSelectedData = [],
             obj;
-          for (var x of oControl) {
-            obj = x.getBindingContext().getObject();
+          for (var x of aSelectedKeys) {
             aSelectedData.push({
-              Id: obj["SkuCode"],
-              Name: obj["Description"],
+              Id: x["Id"],
+              Name: x["Name"],
             });
           }
-          oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
+          oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
         },
         _setBRProductsData: function () {
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
-          var oControl = oView.byId("AppProd4").getSelectedItems();
+          var aSelectedKeys = oModelControl.getProperty("/MultiCombo/AppProd4");
+          var oControl = [];
           var bRbProd = oModelControl.getProperty("/Rbtn/AppProd4");
-          if (oControl.length <= 0) {
+          var aSelectedData = [];
+          if (aSelectedKeys.length <= 0 && bRbProd == 0) {
             oControl = oModelControl.getProperty("/oData/Products");
-          }
-          var aSelectedData = [],
-            obj;
-
-          for (var x of oControl) {
-            if (x instanceof sap.ui.base.ManagedObject) {
-              obj = x.getBindingContext().getObject();
-            } else {
-              obj = x;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["ProductName"],
+              });
             }
-
-            aSelectedData.push({
-              Id: obj["Id"],
-              Name: obj["ProductName"],
-            });
+          } else {
+            oControl = aSelectedKeys;
+            for (var x of oControl) {
+              aSelectedData.push({
+                Id: x["Id"],
+                Name: x["Name"],
+              });
+            }
           }
 
           oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
@@ -792,15 +753,16 @@ sap.ui.define(
         _setBRPacksData: function (sKey) {
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
+          var aSelectedKeys = oModelControl.getProperty(
+            "/MultiCombo/AppPacks4"
+          );
 
-          var oControl = oView.byId("AppPacks4").getSelectedItems();
           var aSelectedData = [],
             obj;
-          for (var x of oControl) {
-            obj = x.getBindingContext().getObject();
+          for (var x of aSelectedKeys) {
             aSelectedData.push({
-              Id: obj["SkuCode"],
-              Name: obj["Description"],
+              Id: x["Id"],
+              Name: x["Name"],
             });
           }
           oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
@@ -1193,7 +1155,242 @@ sap.ui.define(
         onProdClassChange: function (oEvent) {},
         onAppProdChange: function (oEvent) {},
         onArchiTypeChange: function (oEvent) {},
+        onPAppDropChange: function (oEvent) {
+          var aSpath = oEvent
+            .getSource()
+            .getBinding("selectedKeys")
+            .getPath()
+            .split("/");
+          var mParam1 = aSpath[aSpath.length - 1];
+          this._ClearPacksProducts(mParam1);
+          var aNumber = mParam1.match(/\d+$/)[0];
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          } else if (aNumber == "4") {
+            this._CreateBonusRewardTable();
+          }
+        },
+        _ClearPacksProducts: function (mParam1) {
+          var aNumber = mParam1.match(/\d+$/)[0];
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          oModel.setProperty("/MultiCombo/AppProd" + aNumber, []);
+          oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+        },
+        onPackTokenUpdate: function (oEvent) {
+          if (oEvent.getParameter("type") === "removed") {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelControl");
+            var sPath = oEvent.getSource().getBinding("tokens").getPath();
+            var aArray = oModel.getProperty(sPath);
+            var aNewArray;
+            var aRemovedTokens = oEvent.getParameter("removedTokens");
+            var aRemovedKeys = [];
+            aRemovedTokens.forEach(function (item) {
+              aRemovedKeys.push(item.getKey());
+            });
+            console.log(aRemovedKeys);
+            aNewArray = aArray.filter(function (item) {
+              return aRemovedKeys.indexOf(item["Id"]) < 0;
+            });
+            console.log(aNewArray);
+            oModel.setProperty(sPath, aNewArray);
+          }
+        },
+        handlePackValueHelp: function (oEvent) {
+          var oView = this.getView();
+          var aPath = oEvent
+            .getSource()
+            .getBinding("tokens")
+            .getPath()
+            .split("/");
+          var sParam1 = aPath[aPath.length - 1];
+          console.log(sParam1);
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Dialog/PackVH", sParam1);
+          // create value help dialog
+          if (!this._PackValueHelpDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.SchemeOffers.view.fragment.AppPackValueHelp",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._PackValueHelpDialog = oValueHelpDialog;
+                this.getView().addDependent(this._PackValueHelpDialog);
+                this._OpenPackValueHelp(sParam1);
+              }.bind(this)
+            );
+          } else {
+            this._OpenPackValueHelp(sParam1);
+          }
+        },
+        _OpenPackValueHelp: function (mParam1) {
+          var sPath = mParam1;
+          this._FilterForPack(mParam1);
+        },
+        _FilterForPack: function (mParam1) {
+          var oView = this.getView(),
+            oModel = oView.getModel("oModelControl");
+          var aNumber = mParam1.match(/\d+$/)[0];
+          var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+          var aFilter1 = [];
 
+          for (var a of aProd) {
+            aFilter1.push(
+              new Filter("ProductCode", FilterOperator.EQ, a["Id"])
+            );
+          }
+
+          this._PackValueHelpDialog.getBinding("items").filter(aFilter1);
+          this._PackValueHelpDialog.open();
+        },
+        _handlePackValueHelpConfirm: function (oEvent) {
+          var oSelected = oEvent.getParameter("selectedItems");
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var aField = oModel.getProperty("/Dialog/PackVH");
+          var aNumber = aField.match(/\d+$/)[0];
+          var aProds = [],
+            oBj;
+          for (var a of oSelected) {
+            oBj = a.getBindingContext().getObject();
+            aProds.push({ Name: oBj["Description"], Id: oBj["SkuCode"] });
+          }
+          oView
+            .getModel("oModelControl")
+            .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          } else if (aNumber == "4") {
+            this._CreateBonusRewardTable();
+          }
+        },
+        handleProdValueHelp: function (oEvent) {
+          var oView = this.getView();
+          var aPath = oEvent
+            .getSource()
+            .getBinding("tokens")
+            .getPath()
+            .split("/");
+          var sParam1 = aPath[aPath.length - 1];
+          console.log(sParam1);
+          var oModelControl = oView.getModel("oModelControl");
+          oModelControl.setProperty("/Dialog/ProdVH", sParam1);
+
+          // create value help dialog
+          if (!this._ProdValueHelpDialog) {
+            Fragment.load({
+              id: oView.getId(),
+              name:
+                "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp",
+              controller: this,
+            }).then(
+              function (oValueHelpDialog) {
+                this._ProdValueHelpDialog = oValueHelpDialog;
+                this.getView().addDependent(this._ProdValueHelpDialog);
+                this._openPValueHelpDialog(sParam1);
+              }.bind(this)
+            );
+          } else {
+            this._openPValueHelpDialog(sParam1);
+          }
+        },
+        _openPValueHelpDialog: function (mParam1) {
+          var sPath = mParam1;
+          this._FilterForProds1(mParam1);
+        },
+        onProdTokenUpdate: function (oEvent) {
+          if (oEvent.getParameter("type") === "removed") {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelControl");
+            var sPath = oEvent.getSource().getBinding("tokens").getPath();
+            var aArray = oModel.getProperty(sPath);
+            var aNewArray;
+            var aRemovedTokens = oEvent.getParameter("removedTokens");
+            var aRemovedKeys = [];
+            aRemovedTokens.forEach(function (item) {
+              aRemovedKeys.push(item.getKey());
+            });
+            console.log(aRemovedKeys);
+            aNewArray = aArray.filter(function (item) {
+              return aRemovedKeys.indexOf(item["Id"]) < 0;
+            });
+            console.log(aNewArray);
+            oModel.setProperty(sPath, aNewArray);
+          }
+        },
+        _handleProdValueHelpConfirm: function (oEvent) {
+          var oSelected = oEvent.getParameter("selectedItems");
+
+          var oView = this.getView();
+          var oModel = oView.getModel("oModelControl");
+          var aField = oModel.getProperty("/Dialog/ProdVH");
+          var aNumber = aField.match(/\d+$/)[0];
+          var aProds = [],
+            oBj;
+          for (var a of oSelected) {
+            oBj = a.getBindingContext().getObject();
+            aProds.push({ Name: oBj["ProductName"], Id: oBj["Id"] });
+          }
+
+          oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
+          oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+
+          if (aNumber == "1") {
+            this._CreateRewardTableData();
+          } else if (aNumber == "4") {
+            this._CreateBonusRewardTable();
+          }
+        },
+        _handleProdValueHelpClose: function () {
+          if (this._ProdValueHelpDialog) {
+            this._ProdValueHelpDialog.destroy();
+            delete this._ProdValueHelpDialog;
+          }
+          if (this._PackValueHelpDialog) {
+            this._PackValueHelpDialog.destroy();
+            delete this._PackValueHelpDialog;
+          }
+        },
+        _FilterForProds1: function (mParam1) {
+          var oView = this.getView(),
+            oModel = oView.getModel("oModelControl");
+          var aNumber = mParam1.match(/\d+$/)[0];
+          console.log(aNumber);
+          var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
+          var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+          var aFilter1 = [];
+          var aFilter2 = [];
+          for (var a of aCat) {
+            aFilter1.push(
+              new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+            );
+          }
+          for (var b of aClass) {
+            aFilter2.push(
+              new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+            );
+          }
+          var aFilterCat = new Filter({
+            filters: aFilter1,
+            and: false,
+          });
+          var aFilterClass = new Filter({
+            filters: aFilter2,
+            and: false,
+          });
+          var aFinalFilter = [];
+          if (aFilter1.length > 0) {
+            aFinalFilter.push(aFilterCat);
+          }
+          if (aFilter2.length > 0) {
+            aFinalFilter.push(aFilterClass);
+          }
+          this._ProdValueHelpDialog.getBinding("items").filter(aFinalFilter);
+          this._ProdValueHelpDialog.open();
+        },
         onRbAppPainter: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
           var oView = this.getView();
@@ -1517,14 +1714,14 @@ sap.ui.define(
           oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
             function (elem) {
               return {
-                ProductCode: elem,
+                ProductCode: elem["Id"],
               };
             }
           );
           oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
             function (elem) {
               return {
-                SkuCode: elem,
+                SkuCode: elem["Id"],
               };
             }
           );
@@ -1567,14 +1764,14 @@ sap.ui.define(
             elem
           ) {
             return {
-              ProductCode: elem,
+              ProductCode: elem["Id"],
             };
           });
           oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem["Id"],
             };
           });
           oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
@@ -1594,7 +1791,7 @@ sap.ui.define(
           oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
             function (elem) {
               return {
-                ProductCode: elem,
+                ProductCode: elem["Id"],
               };
             }
           );
@@ -1602,7 +1799,7 @@ sap.ui.define(
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem["Id"],
             };
           });
           // Bonus Reward Ratio
@@ -1624,14 +1821,14 @@ sap.ui.define(
             elem
           ) {
             return {
-              ProductCode: elem,
+              ProductCode: elem["Id"],
             };
           });
           oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem,
+              SkuCode: elem["Id"],
             };
           });
 
