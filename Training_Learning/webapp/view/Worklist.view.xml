@@ -108,6 +108,9 @@
                                 <Column width="9%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
+                                  <Column width="9%">
+									<Text text="{i18n>EnrolledCount}"/>
+								</Column>
                                 <Column width="8%">
 									<Text text="{i18n>colLink}"/>
 								</Column>
@@ -126,6 +129,7 @@
                                         <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{RewardPoints}"/>
+                                          <Text text="{TotalEnrollments}"/>
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>

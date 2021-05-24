@@ -725,6 +725,18 @@ sap.ui.define(
                         "com.knpl.pragati.Training_Learning.view.fragments.PainterValueHelp",
                         this
                     );
+                    var oDataFilter = {
+                        ZoneId: "",
+                        DivisionId: "",
+                        DepotId: "",
+                        PainterType: "",
+                        ArcheType: "",
+                        MembershipCard: "",
+                        Name: "",
+                        MobileNo: ""
+                    }
+                    var oModel = new JSONModel(oDataFilter);
+                    this.getView().setModel(oModel, "PainterFilter")
                     this.getView().addDependent(this._oValueHelpDialog);
 
                     this._oValueHelpDialog.getTableAsync().then(
@@ -767,33 +779,75 @@ sap.ui.define(
                     var afilterBar = oEvent.getParameter("selectionSet"),
                         aFilters = [];
 
-                    for (var i = 0; i < afilterBar.length; i++) {
-                        if (afilterBar[i].getValue()) {
-                            aFilters.push(
-                                new Filter({
-                                    path: afilterBar[i].mProperties.name,
-                                    operator: FilterOperator.Contains,
-                                    value1: afilterBar[i].getValue(),
-                                    caseSensitive: false,
-                                })
-                            );
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView()
+                        .getModel("PainterFilter")
+                        .getData();
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "PainterType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "PainterTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "ArcheType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "ArcheTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "MembershipCard") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "MembershipCard", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Name", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Mobile") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Mobile", operator: FilterOperator.Contains, value1: oViewFilter[prop] })
+                                );
+                            } 
                         }
                     }
-
-                    aFilters.push(
-                        new Filter({
-                            path: "IsArchived",
-                            operator: FilterOperator.EQ,
-                            value1: false,
-                        })
-                    );
-
+                    aCurrentFilterValues.push(new Filter({
+                        path: "IsArchived",
+                        operator: FilterOperator.EQ,
+                        value1: false,
+                    }))
                     this._filterTable(
                         new Filter({
-                            filters: aFilters,
+                            filters: aCurrentFilterValues,
                             and: true,
                         })
                     );
+
+
+
+                    // aFilters.push(
+                    //     
+                    // );
+
+
                 },
 
                 onValueHelpCancelPressPainter: function () {
