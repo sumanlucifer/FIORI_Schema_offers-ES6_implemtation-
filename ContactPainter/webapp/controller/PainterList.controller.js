@@ -10,7 +10,7 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/Device",
     "sap/ui/core/format/DateFormat",
-    "com/knpl/pragati/ContactPainter/model/customInt"
+    "com/knpl/pragati/ContactPainter/model/customInt",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -47,10 +47,11 @@ sap.ui.define(
               RegistrationStatus: "",
               Name: "",
               MembershipId: "",
-              ZoneId:"",
+              ZoneId: "",
               DepotId: "",
               DivisionId: "",
-              PreferredLanguage:""
+              PreferredLanguage: "",
+              SourceRegistration: "",
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
@@ -132,17 +133,21 @@ sap.ui.define(
                 aCurrentFilterValues.push(
                   new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
                 );
-              }else if (prop === "PreferredLanguage") {
+              } else if (prop === "PreferredLanguage") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter("Preference/LanguageId", FilterOperator.EQ,oViewFilter[prop])
+                  new Filter(
+                    "Preference/LanguageId",
+                    FilterOperator.EQ,
+                    oViewFilter[prop]
+                  )
                 );
-              }else if (prop === "ZoneId") {
+              } else if (prop === "ZoneId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
                 );
-              }  else if (prop === "DivisionId") {
+              } else if (prop === "DivisionId") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
@@ -164,7 +169,7 @@ sap.ui.define(
                   new Filter("CreatedAt", FilterOperator.LT, oDate)
                 );
               } else if (prop === "PainterType") {
-               aFlaEmpty = false;
+                aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
                     "PainterTypeId",
@@ -172,7 +177,18 @@ sap.ui.define(
                     oViewFilter[prop]
                   )
                 );
-              }else if (prop === "Name") {
+              } else if (prop === "SourceRegistration") {
+                aFlaEmpty = false;
+                if (oViewFilter[prop] == "MOBILE") {
+                  aCurrentFilterValues.push(
+                    new Filter("CreatedBy", FilterOperator.EQ, 0)
+                  );
+                } else if (oViewFilter[prop] == "PORTAL") {
+                  aCurrentFilterValues.push(
+                    new Filter("CreatedBy", FilterOperator.GT, 0)
+                  );
+                }
+              } else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
@@ -201,7 +217,7 @@ sap.ui.define(
                         "Mobile",
                         FilterOperator.Contains,
                         oViewFilter[prop].trim()
-                      )
+                      ),
                     ],
                     false
                   )
@@ -234,7 +250,7 @@ sap.ui.define(
         onResetFilterBar: function () {
           this._ResetFilterBar();
         },
-      
+
         _ResetFilterBar: function () {
           var aCurrentFilterValues = [];
           var aResetProp = {
@@ -243,12 +259,12 @@ sap.ui.define(
             EndDate: null,
             RegistrationStatus: "",
             MembershipId: "",
-            Name:"",
-            ZoneId:"",
+            Name: "",
+            ZoneId: "",
             DepotId: "",
             DivisionId: "",
-            PreferredLanguage:"",
-            PainterType:""
+            PreferredLanguage: "",
+            PainterType: "",
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
@@ -413,17 +429,16 @@ sap.ui.define(
               iTotalItems,
             ]);
           } else {
-            sTitle = this.getResourceBundle().getText("PainterList",[0]);
+            sTitle = this.getResourceBundle().getText("PainterList", [0]);
           }
           this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
         },
         fmtDate: function (mDate) {
-            
           var date = new Date(mDate);
           var oDateFormat = DateFormat.getDateTimeInstance({
             pattern: "dd/MM/yyyy",
-            UTC:true,
-            strictParsing:true
+            UTC: true,
+            strictParsing: true,
           });
           return oDateFormat.format(date);
         },
@@ -464,7 +479,7 @@ sap.ui.define(
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteProfile", {
             mode: "edit",
-            prop:oBject["Id"],
+            prop: oBject["Id"],
           });
         },
 
@@ -511,7 +526,7 @@ sap.ui.define(
             }
           );
         },
-        
+
         _Deactivate: function (oData, sPath, oBject) {
           var oPayload = {
             IsArchived: true,

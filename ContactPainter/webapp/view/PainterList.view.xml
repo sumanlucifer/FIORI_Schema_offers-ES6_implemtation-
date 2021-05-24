@@ -69,11 +69,13 @@
                                         </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="PainterType" label="{i18n>PainterType}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="SourceRegistration" label="{i18n>SourceRegistration}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                       <ComboBox placeholder="{i18n>PainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelControl>/filterBar/PainterType'}">
-                                            <core:Item text="{PainterType}" key="{Id}" />
-                                        </ComboBox>
+                                    <ComboBox placeholder="{i18n>SourceRegistration}"  selectedKey="{oModelControl>/filterBar/SourceRegistration}">
+                                        <core:Item text="Mobile" key="MOBILE"/>
+                                        <core:Item text="Portal" key="PORTAL"/>
+                                         <core:Item text="System Migrated" key="MIGRATED"/>
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Preferredlanguage" label="{i18n>PreferredLanguage}" visibleInFilterBar="true" class="searchFieldLabelHidden">
