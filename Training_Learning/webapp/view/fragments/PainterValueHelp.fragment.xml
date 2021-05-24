@@ -21,7 +21,9 @@
                         label="Zone"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="ZoneId" placeholder="{i18n>enterZone}"/>
+                             <m:ComboBox  placeholder="{i18n>enterZone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'PainterFilter>/ZoneId' }">
+                                    <core:Item text="{Id} " key="{Id}" />
+                             </m:ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -30,7 +32,10 @@
                         label="Division"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="DivisionId" placeholder="{i18n>enterDivision}"/>
+                           <m:ComboBox  enabled="{= ${PainterFilter>/ZoneId}.length>1}" placeholder="{i18n>enterDivision}"  selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'PainterFilter>/DivisionId'}">
+                    <core:Item text="{Id}" key="{Id}" />
+                </m:ComboBox>
+
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -39,7 +44,10 @@
                         label="Depot"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Depot/Depot" placeholder="{i18n>enterDepot}"/>
+                             <m:ComboBox enabled="{= ${PainterFilter>/DivisionId}.length>1}"  placeholder="{i18n>enterDepot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'PainterFilter>/DepotId' }">
+                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                                    </m:ComboBox>
+
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -48,7 +56,10 @@
                         label="Painter Type"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="PainterType/PainterType" placeholder="{i18n>enterPainterType}"/>
+                           <m:ComboBox placeholder="{i18n>enterPainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'PainterFilter>/PainterType'}">
+                                            <core:Item text="{PainterType}" key="{Id}" />
+                                        </m:ComboBox>
+
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -57,7 +68,11 @@
                         label="Painter ArcheType"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="ArcheType/ArcheType" placeholder="{i18n>enterPainterArcheType}"/>
+                            
+                <m:ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
+                    <core:Item text="{ArcheType}" key="{Id}" />
+                </m:ComboBox>
+
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -66,7 +81,7 @@
                         label="Membership ID"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
+                            <m:Input value="{PainterFilter>/MembershipCard}" name="MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -75,7 +90,7 @@
                         label="Name"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Name" placeholder="{i18n>enterName}"/>
+                            <m:Input  value="{PainterFilter>/Name}"  name="Name" placeholder="{i18n>enterName}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem
@@ -84,7 +99,7 @@
                         label="Mobile Number"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Mobile" placeholder="{i18n>enterMobile}"/>
+                            <m:Input value="{PainterFilter>/Mobile}"  name="Mobile" placeholder="{i18n>enterMobile}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>
