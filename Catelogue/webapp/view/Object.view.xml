@@ -9,14 +9,15 @@
     xmlns:f="sap.f"
     xmlns:card="sap.f.cards"
     xmlns:tnt="sap.tnt"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     class="sapUiSizeCompact"
     >
- <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
+ <uxap:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showFooter="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true"  >
             <uxap:headerTitle>
                 <uxap:ObjectPageDynamicHeaderTitle>
                     <uxap:breadcrumbs>
-                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catelogue Details">
-                            <Link text="Catelogues" press="handleAllCatelogueLinkPress"/>
+                        <Breadcrumbs id="breadcrumbsId" currentLocationText="Catalogue Details">
+                            <Link text="Catalogues" press="handleAllCatelogueLinkPress"/>
                         </Breadcrumbs>
                     </uxap:breadcrumbs>
 
@@ -26,7 +27,7 @@
 
                     <uxap:snappedHeading>
                         <FlexBox fitContainer="true" alignItems="Center" renderType="Bare">
-                            <f:Avatar class="sapUiTinyMarginEnd" displayShape="Square"/>
+                            <f:Avatar class="sapUiTinyMarginEnd"  src="{ImageModel>/Image}" displayShape="Square"/>
                             <FlexBox direction="Column" renderType="Bare">
                                 <Title text="{Name}" wrapping="true"/>
                                 <!-- <Text text="{Id}"/> -->
@@ -51,19 +52,19 @@
             <uxap:headerContent>
                 <FlexBox wrap="Wrap" height="100%" class="sapUiSmallMarginBottom" renderType="Bare">
                     
-                    <f:Avatar class="sapUiSmallMarginEnd" displayShape="Square" displaySize="XL"/>
+                    <f:Avatar class="sapUiSmallMarginEnd" src="{ImageModel>/Image}" displayShape="Square" displaySize="XL"/>
 
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectAttribute title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                            <ObjectIdentifier title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                              
                         </items>
                     </FlexBox>
 
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                           <ObjectAttribute title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
+                           <ObjectIdentifier title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
                             
                         </items>
                     </FlexBox>
@@ -81,24 +82,39 @@
                     <uxap:ObjectPageSubSection>
                     
         <!-- <ObjectAttribute title="Title" text="{Title}"/> -->
-         <VBox >
-                <Title  text="Catelogue Details"  />
-                <VBox class="sapUiMediumMarginTop" width="50%" >
-                <Title text="Title:"/>
-                <Text text="{Title}"/>
+         <VBox>
+                <Title  text="Catalogue Details"  />
+                <HBox width="100%"  class="sapUiSmallMarginTop">
+               
+                <VBox class="sapUiMediumMarginBeginEnd">
+                <!-- <Title text="Title:"/>
+                <Text text="{Title}"/> -->
+                <ObjectIdentifier title="Title" text="{ProductDetails/ProductName}"/>
                 </VBox>
+                <VBox class="sapUiMediumMarginBeginEnd">
+               <ObjectIdentifier title="Category" text="{ProductCategory/Category}"/>
+                </VBox>
+                <VBox class="sapUiMediumMarginBeginEnd">
+                <ObjectIdentifier title="Classification" text="{ProductClassification/Classification}"/>
+               
+                </VBox>
+                <VBox class="sapUiMediumMarginBeginEnd">
+               <ObjectIdentifier title="Price Range" text="{ProductRange/Range}"/>
+                </VBox>
+
+                
+                </HBox>
                 </VBox>
 		
 	
                     </uxap:ObjectPageSubSection>
-                        <uxap:ObjectPageSubSection  class="sapUiMediumMargin">
+                        <uxap:ObjectPageSubSection  class="sapUiTinyMargin">
                               
                
-            
+            <VBox width="100%">
+             <ObjectIdentifier title="Catalogue Thumbnail"/>
             	<UploadCollection
 			id="UploadCollectionImage"
-			maximumFilenameLength="55"
-			maximumFileSize="10"
 			multiple="false"
 			change="onChange"
 			fileSizeExceed=""
@@ -106,33 +122,33 @@
 			typeMissmatch="onTypeMissmatch"
 			uploadComplete=""
 			beforeUploadStarts=""
-            uploadEnabled="false"
-            mode="MultiSelect">
+            uploadEnabled="false">
 			<toolbar>
 				<OverflowToolbar id="myId">
 					<Title id="attachmentTitle" />
 					<ToolbarSpacer />
-					<Button
+					<!-- <Button
 						id="downloadButton"
 						text="Download"
 						press="onDownloadImage"
 						enabled="false"
-						type="Transparent" />
+						type="Transparent" /> -->
 					
 					<UploadCollectionToolbarPlaceholder/>
 				</OverflowToolbar>
 			</toolbar>
 			<items>
 				<UploadCollectionItem
-					documentId="{documentId}"
-					fileName="{Title}"
+					documentId="1"
+					fileName="{objectView>/ImageName}"
 					mimeType="{mimeType}"
-					thumbnailUrl="{= ${__metadata/media_src}.concat('?doc_type=image')}"
-					url="{= ${__metadata/media_src}.concat('?doc_type=image')}"
+					thumbnailUrl="{ImageModel>/Image}"
+					url="{ImageModel>/Image}"
 					enableEdit="false"
 					enableDelete="false"
 					visibleDelete="false"
 					visibleEdit="false"
+                    press="onPressImage"
 					>
 					<attributes>
 						<ObjectAttribute
@@ -145,8 +161,7 @@
 							active="false" />
                             <ObjectAttribute
 							title="File size"
-							text="
-							222222"
+							text="{objectView>/ImageSize}"
 							active="false" />
 					</attributes>
                     
@@ -155,82 +170,131 @@
 			</items>
 		</UploadCollection>
         
+       <ObjectIdentifier title="Catalogue PDF" class="sapUiSmallMarginTop"/>
+       <Table id="idPdf" width="auto" items="{path: 'objectView>/Catalogue', templateShareable: false}" class="sapUiSmallMarginTopBottom" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>catalogues}" />
+                                                
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <Column>
+                                                    <Text text="{i18n>selectCatalogue}" />
+                                                </Column>
+
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
+                                                            editable="false"
+                                                            selectedKey="{objectView>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                        <VBox>
+                                                           <FlexBox class="sapUiTinyMarginBeginEnd">
+                                                                <Text text="{objectView>MediaName}" />
+                                                            </FlexBox>
+                                                        
+                                                        </VBox>
+                                                        <HBox>
+                                                           
+                                                    
+                                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                            </Table>
+        
+        <HBox width="100%" class="sapUiSmallMarginTopBottom">
+        
+                    <Table id="idCompetitorDetils" width="auto" items="{path: 'objectView>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                     <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>Competitors}" />
+                            
+                        </Toolbar>
+                    </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>compititor}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>competitorProduct}" />
+                </Column>
+
+
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <VBox>
+                            <Select items="{path:'/MasterCompetitorCompanySet', templateShareable: true}" editable="false" selectedKey="{path:'objectView>CompetitorCompanyId' }">
+                                <items>
+                                    <core:Item text="{CompanyName}" key="{Id}" />
+                                </items>
+                            </Select>
+                           
+                        </VBox>
+                        
+                        <VBox>
+                            <Input editable="false" width="70%" required="true" value="{path:'objectView>CompetitorProductName',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLngth:50, search:'^[a-zA-Z]{1}[wW]*'} }" />
+                           
+                        </VBox>
+                        
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+                </HBox>
+         </VBox>
         
         
                                           
                             
                         </uxap:ObjectPageSubSection>
-                        <uxap:ObjectPageSubSection class="sapUiMediumMargin">
+                        <!-- <uxap:ObjectPageSubSection >
 
                         
-        	<UploadCollection
-			id="UploadCollectionPdf"
-			maximumFilenameLength="55"
-			maximumFileSize="10"
-			multiple="false"
-			change="onChange"
-			fileSizeExceed=""
-			selectionChange="onSelectionChangePdf"
-			typeMissmatch=""
-			uploadComplete=""
-			beforeUploadStarts=""
-            uploadEnabled="false"
-            mode="MultiSelect"
-			>
-            <toolbar>
-				<OverflowToolbar id="myId1">
-					<Title id="attachmentTitle1" />
-					<ToolbarSpacer />
-					<Button
-						id="downloadButton1"
-						text="Download"
-						press="onDownloadPdf"
-						enabled="false"
-						type="Transparent" />
-					
-					<UploadCollectionToolbarPlaceholder/>
-				</OverflowToolbar>
-			</toolbar>
-			
-			<items>
-				<UploadCollectionItem
-					documentId="{documentId}"
-					fileName="{Title}"
-					mimeType="{mimeType}"
-					thumbnailUrl="sap-icon://pdf-attachment"
-					url="{= ${__metadata/media_src}.concat('?doc_type=pdf')}"
-					enableEdit="false"
-					enableDelete="false"
-					visibleDelete="false"
-					visibleEdit="false"
-					>
-					<attributes>
-						<ObjectAttribute
-							title="Uploaded By"
-							text="{path:'CreatedByDetails/Name'}"
-							active="true" />
-                            <ObjectAttribute
-							title="Uploladed on"
-							text="{path:'UpdatedAt',formatter:'.formatter.dateFormatter2'}"
-							active="false" />
-                            <ObjectAttribute
-							title="File size"
-							text="
-							222222"
-							active="false" />
-					</attributes>
-					
-				</UploadCollectionItem>
-			</items>
-		</UploadCollection> 
-        
 
 
-                        </uxap:ObjectPageSubSection>
+                        </uxap:ObjectPageSubSection> -->
                         
                     </uxap:subSections>
                 </uxap:ObjectPageSection>
             </uxap:sections>
+            <uxap:footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+                 <Button 
+                                type="{= ${Status} === true? 'Reject' : undefined || ${Status} === false? 'Emphasized' : undefined }"
+                                text="{path: 'Status',
+                                    formatter: '.formatter.status'}"
+                                data:remarks="{Status}" press="onPressStatus" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+            </OverflowToolbar>
+        </uxap:footer>
         </uxap:ObjectPageLayout>
 
 </mvc:View>

@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+xmlns:core="sap.ui.core"
+xmlns="sap.m">
+  <Dialog title="Image">
+    <content>
+      <HBox justifyContent="Center">
+      <Image src="{path:'ActionViewModel>/ImageUrl'}" alt="No Image Found"/>
+      </HBox>
+    </content>
+    <buttons>
+       <Button text="Close" press="onDialogClose" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

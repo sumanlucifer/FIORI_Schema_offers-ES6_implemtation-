@@ -8,7 +8,8 @@
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:vm="sap.ui.comp.variants"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:semantic="sap.f.semantic">
+	xmlns:semantic="sap.f.semantic"
+    xmlns:smartTable="sap.ui.comp.smarttable">
 
 <f:DynamicPage headerExpanded="true">
         <!-- DynamicPage Title -->
@@ -19,6 +20,7 @@
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
+        <!-- DynamicPage Header -->
         <!-- DynamicPage Header -->
         <f:header>
             <f:DynamicPageHeader pinnable="true">
@@ -40,20 +42,34 @@
                                     <Input id="idTitleInput" data:filterName="Title" value="{ViewModel>/filterBar/title}" placeholder="{i18n>titleFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input
-                                        id="idCreatedByInput"
-                                        data:filterName="Created By"
-                                        value="{Viewmodel>/filterBar/createdBy}"
-                                        placeholder="{i18n>createdByFilterPlaceholder}"
-                                        showSuggestion="false"
-                                        autocomplete="false"
-                                        showValueHelp="false"
-						
-                                       >
-                                        
-                                    </Input>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Category" label="Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                 <fb:control>
+                                    <ComboBox
+                                    id="idCategory" 
+                                    data:filterName="Category"
+                                    value="{ViewModel>/filterBar/category}"
+                                        items="{
+                                            path: '/MasterProductCategorySet',
+                                            sorter: { path: 'Category' }
+                                        }">
+                                        <core:Item key="{Id}" text="{Category}" />
+                                    </ComboBox>
+                                    <!-- <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" /> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Classification" label="Classification" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                 <fb:control>
+                                    <ComboBox
+                                    id="idClassification" 
+                                    data:filterName="Classification"
+                                    value="{ViewModel>/filterBar/classification}"
+                                        items="{
+                                            path: '/MasterProductClassificationSet',
+                                            sorter: { path: 'Classification' }
+                                        }">
+                                        <core:Item key="{Id}" text="{Classification}" />
+                                    </ComboBox>
+                                    <!-- <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" /> -->
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -61,69 +77,125 @@
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
-
-        <!-- DynamicPage Content -->
-        <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails'},sorter:{
-                    path: 'Id', 
-                    descending: true
-                } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
-                <headerToolbar>
-                    <OverflowToolbar>
+         <f:content>
+        <smartTable:SmartTable
+                            id="idCatlogueTable"
+                            editable="false"
+                            beforeRebindTable="fnrebindTable"                    
+                            entitySet="ProductCatalogueSet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            ignoredFields="Status,UpdatedAt,UpdatedBy,ProductCategoryId,ProductClassificationId,ProductRangeId,Description,CreatedBy,IsArchived,IsSelected,Id"
+                            demandPopin="true"
+                            enableAutoBinding="true"
+                            placeToolbarInTable="true"
+                            requestAtLeastFields="Id,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
+                            persistencyKey="CatalogueSmartTableKey"
+                            >
+                            	<smartTable:customToolbar>
+			<OverflowToolbar>
                         <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
-                        <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
-                            <layoutData>
-                                <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
-                            </layoutData>
-                        </SearchField> -->
-                        <Button text="Add Catalogue" press="onPressAdd" />
-                        <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                        <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                        
+                        <Button icon="sap-icon://add" type="Emphasized" text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+
                         
                     </OverflowToolbar>
-                </headerToolbar>
-
-                <columns>
-                    <Column>
-                        <Text text="{i18n>title}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>creationDate}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>createdBy}"/>
-                    </Column>
-                    <!-- <Column>
-                        <Text text="{i18n>action}"/>
-                    </Column> -->
-                    <Column width="15%" minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                    <Text text="{i18n>GenericEdit}"/>
-                                </Column>
-                            
-                   
-                   
+		</smartTable:customToolbar>
+                        <Table>
                     
-                </columns>
+                                <columns>
+                                 <Column hAlign="Begin" width="15%">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "ProductDetails/ProductName","type":"string", "leadingProperty": "ProductDetails/ProductName", "columnIndex": 0 }'/>
+                                        </customData>
+                                          <Text text="{i18n>name}"/>
+                                    </Column>
+                                 <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PdfViewerCount","type":"string", "leadingProperty": "PdfViewerCount", "columnIndex": 3 }'/>
+                                        </customData>
+                                          <Text text="{i18n>views}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PdfDownloadCount","type":"string", "leadingProperty": "PdfDownloadCount", "columnIndex": 4 }'/>
+                                        </customData>
+                                          <Text text="{i18n>downloads}" />
+                                    </Column>
+                                <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfViewerCount","type":"string", "leadingProperty": "TotalPdfViewerCount", "columnIndex": 5 }'/>
+                                        </customData>
+                                          <Text text="{i18n>totalViews}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPdfDownloadCount","type":"string", "leadingProperty": "TotalPdfDownloadCount", "columnIndex": 6 }'/>
+                                        </customData>
+                                          <Text text="{i18n>totalDownloads}"/>
+                                    </Column>
+                                   <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 7 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>date}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 8,"columnKey":"actionStatus" }'/>
+                                        </customData>
+                                         <Text text="{i18n>status}"/>
+                                    </Column>
+                                    <Column hAlign="Begin" width="5%">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{ "columnIndex": 9,"columnKey":"edit" }'/>
+                                        </customData>
+                                         <Text text="{i18n>GenericAction}"/>
+                                    </Column>
+                                     
 
-                <items>
-                    <ColumnListItem type="Navigation" press="onPress">
-                        <!-- <dependents>
-                            <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
-                        </dependents> -->
-                        <cells>
-                            <ObjectIdentifier title="{Title}" />
-                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                            <Text text="{CreatedByDetails/Name}"/>
-                            <!-- <Text text="{Status}"/> -->
-                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit"/>
-                            
-                            
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </f:content>
+
+                                </columns>
+                                <items>
+                                    <ColumnListItem  type="Navigation" press="onPress">
+                                        <cells>
+                                            <Text text="{path:'ProductDetails/ProductName'}"/>
+                                            <FlexBox >
+                                            <Text text="{path:'PdfViewerCount'}" visible="{= (${PdfViewerCount} === 0) }"/>
+                                            <Link
+                                            visible="{= (${PdfViewerCount} !== 0) }"
+                                                text="{path:'PdfViewerCount'}"
+                                                press="onViewsPress"/>
+                                            </FlexBox>
+                                            
+                                            <!-- <Button
+                                            icon="sap-icon://display"
+                                            text="{path:'PdfViewerCount'}"
+                                            press="onViewsPress"/> -->
+                                           
+                                            
+                                            <Text text="{path:'PdfDownloadCount'}"/>
+                                        
+                                            <Text text="{path:'TotalPdfViewerCount'}"/>
+                                            <Text text="{path:'TotalPdfDownloadCount'}"/>
+                                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                        
+                                            <ObjectStatus text="{path: 'Status',
+                                                formatter: '.formatter.statusList'}" 
+                                                data:remarks="{Status}"
+                                            
+                                                state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Warning' : undefined }"/>
+                                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+                                        </cells>      
+                                    </ColumnListItem>
+                                </items> 
+                            </Table> 
+                        </smartTable:SmartTable>
+ </f:content>
     </f:DynamicPage>
 
 </mvc:View>

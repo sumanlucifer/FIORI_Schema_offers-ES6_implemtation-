@@ -1,0 +1,145 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified">
+    <!-- <form:SimpleForm
+				minWidth="1024"
+				maxContainerCols="2"
+                title="Add Catalogue" 
+                
+				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
+                
+				<form:content> -->
+             <Table id="idPdf" width="auto" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>catalogues}" />
+                                                <ToolbarSpacer />
+                                                <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add"/>
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <Column>
+                                                    <Text text="{i18n>selectCatalogue}" />
+                                                </Column>
+                                                <Column>
+                                                    <Text text="{i18n>media}" />
+                                                </Column>
+
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
+                                                            selectedKey="{ActionViewModel>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                        <VBox>
+                                                            <FlexBox>
+                                                                <VBox>
+                                                                <u:FileUploader
+                                                                    id="idFormToolPdfUploader"
+                                                                    name="formToolPdfUploader"
+                                                                    class="sapUiSmallMarginTop"
+                                                                    tooltip="{i18n>fileUploaderTooltip}"
+                                                                    change="onChangePdf"
+                                                                    typeMissmatch="handleTypeMissmatch"
+                                                                    fileType="pdf"
+                                                                    useMultipart="false"
+                                                                    sendXHR="true"
+                                                                    maximumFileSize="2.1"
+                                                                    fileSizeExceed="onFileSizeExceed"
+                                                                    uploadComplete="handleUploadCompletePdf" />
+                                                                    <HBox>
+                                                                <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf"/>
+                                                                <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB"/>
+                                                                </HBox>
+                                                                </VBox>
+                                                            </FlexBox>
+                                                        
+                                                        </VBox>
+                                                        <VBox >
+                                                            <Text text="{ActionViewModel>MediaName}"></Text>
+                                                            </VBox>
+                                                        <HBox>
+                        
+                                                    
+                                                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="Delete" />
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                        </Table>
+
+                                        
+                                       
+                
+                    <Table id="idCompetitorDetils" width="auto" items="{path: 'ActionViewModel>/Competitor', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                            <headerToolbar>
+                                <Toolbar>
+                                    <Title text="{i18n>competitors}" />
+                                    <ToolbarSpacer />
+                                    <Button icon="sap-icon://add" text="{i18n>Add}" type="Emphasized" press="onAddCompetitor" tooltip="{i18n>AddPainter}"></Button>
+                                </Toolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>selectCompititor}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>competitorProduct}" />
+                                </Column>
+
+                                <Column width="10%">
+                                    <Text text="{i18n>Action}" />
+                                </Column>
+
+
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <VBox>
+                                            <Select items="{path:'/MasterCompetitorCompanySet', templateShareable: true}" selectedKey="{path:'ActionViewModel>CompetitorCompanyId' }">
+                                                <items>
+                                                    <core:Item text="{CompanyName}" key="{Id}" />
+                                                </items>
+                                            </Select>
+                                        
+                                        </VBox>
+                                        <VBox>
+                                            <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed" maxLength="50" width="70%" required="true" value="{path:'ActionViewModel>CompetitorProductName',type : 'sap.ui.model.type.String', constraints : {minLength:1,maxLngth:50, search:'^[a-zA-Z]{1}[wW]*'} }" />
+                                        
+                                        </VBox>
+                                        <HBox>
+                                    
+                                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveCompetitor"></Button>
+                                        </HBox>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                      </Table>
+                
+               <!-- </form:content>
+			</form:SimpleForm> -->
+	
+</core:FragmentDefinition>

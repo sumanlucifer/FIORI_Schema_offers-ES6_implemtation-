@@ -7,12 +7,14 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device',
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/m/PDFViewer"
 
 
 
 
-], function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageToast, MessageBox) {
+], function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, MessageToast,
+    MessageBox, PDFViewer) {
     "use strict";
     return BaseController.extend("com.knpl.pragati.Catelogue.controller.ActionPage", {
 
@@ -22,9 +24,22 @@ sap.ui.define([
             this.oPreviewPdf = this.getView().byId("idPreviewPdf");
             this.oFileUploader = this.getView().byId("idFormToolImgUploader");
             this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+            this.pdfBtn = this.getView().byId("pdfBtn");
+            this.imgBtn = this.getView().byId("imageBtn");
+            this.oCategory = this.getView().byId("idCategory");
+            this.oClassification = this.getView().byId("idClassification");
+            this.oTitle = this.getView().byId("idTitle");
+            this.oForm = this.getView().byId("idCatalogueDetailsForm");
+            this.imageName = "";
+            this.pdfName = "";
             //Router Object
             this.oRouter = this.getRouter();
             this.oRouter.getRoute("ActionPage").attachPatternMatched(this._onObjectMatched, this);
+            this.entityObject;
+            this._pdfViewer = new PDFViewer();
+            this.getView().addDependent(this._pdfViewer);
+
+
         },
 
         _onObjectMatched: function (oEvent) {
@@ -35,34 +50,88 @@ sap.ui.define([
                 busy: false,
                 action: this._action,
                 Title: "",
-                
+                Category: "",
+                Classification: "",
+                Range: "",
+                ImageUrl: "",
+                Competitor: [],
+                Catalogue: []
+
+
             };
             if (this._action === "edit") {
                 var oComponentModel = this.getComponentModel();
-                var oItem = oComponentModel.getProperty("/" + this._property);
-                if (!oItem) {
-                    return this._navToHome();
-                }
-                console.log(oItem.Title);
-                oData.Title = oItem.Title;
-               
-                this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
-                this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
-                this.oPreviewImage.setVisible(true);
+                var html = new sap.ui.core.HTML();
+                //var oItem = oComponentModel.getProperty("/" + this._property);
+                // this.oItem;
+
+                var that = this;
+                this.getView().getModel().read("/" + this._property, {
+                    urlParameters: {
+                        "$expand": "ProductCompetitors,MediaList"
+                    },
+                    success: function (data, response) {
+                        that.entityObject = data;
+                        oData.Title = data.ProductId;
+                        oData.Category = data.ProductCategoryId
+                        oData.Classification = data.ProductClassificationId
+                        oData.Range = data.ProductRangeId
+                        oData.Competitor = data.ProductCompetitors.results
+                        oData.Catalogue = data.MediaList.results.filter(function (ele) {
+                            return !ele.ContentType.includes("image");
+
+                        });
+                        oData.ImageUrl = that.sServiceURI + that._property + "/$value?doc_type=image&time=" + new Date().getTime();
+                        var oViewModel = new JSONModel(oData);
+                        that.getView().setModel(oViewModel, "ActionViewModel");
+
+                        that.oPreviewImage.setSrc(that.sServiceURI + that._property + "/$value?doc_type=image");
+                        that.oFileUploader.setUploadUrl(that.sServiceURI + that._property + "/$value?doc_type=image");
+                        that.oPreviewImage.setVisible(false);
+                        //that.getView().getModel("ActionViewModel").setProperty("/Image",that.sServiceURI + that._property + "/$value?doc_type=image");
+
+
+
+                    },
+                    error: function (oError) {
+                    }
+                });
+                this.oCategory.setEditable(false);
+                this.oTitle.setEditable(false);
+                this.oClassification.setEditable(false);
+                // this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
+                // this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
+                // this.oPreviewImage.setVisible(true);
+
+                var pdfURL = this.sServiceURI + this._property + "/$value?doc_type=pdf";
+                this.pdfBtn.setVisible(true);
+                this.imgBtn.setVisible(true);
+
+
+
             } else {
-                
+                this.oCategory.setEditable(true);
+                this.oTitle.setEditable(true);
+                 this.oClassification.setEditable(true);
                 this.oPreviewImage.setVisible(false);
+                this.pdfBtn.setVisible(false);
+                this.imgBtn.setVisible(false);
             }
             this.oFileUploader.clear();
             var oViewModel = new JSONModel(oData);
             this.getView().setModel(oViewModel, "ActionViewModel");
             this._setDefaultValueState();
+
+
         },
+        onAfterRendering: function () {
+
+        },
+
 
         onPressBreadcrumbLink: function () {
             this._navToHome();
-            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //   oRouter.navTo("");
+
         },
 
         onPressCancel: function () {
@@ -71,11 +140,14 @@ sap.ui.define([
 
         onChangeFile: function (oEvent) {
             if (oEvent.getSource().oFileUpload.files.length > 0) {
+                this.getModel("ActionViewModel").setProperty("/bNewImage", true);
+                this.imageName = this.oFileUploader.getValue();
                 var file = oEvent.getSource().oFileUpload.files[0];
                 var path = URL.createObjectURL(file);
                 this.oPreviewImage.setSrc(path);
                 this.oPreviewImage.setVisible(true);
             } else {
+                this.getModel("ActionViewModel").setProperty("/bNewImage", false);
                 if (this._action === "add") {
                     this.oPreviewImage.setSrc(path);
                     this.oPreviewImage.setVisible(false);
@@ -84,26 +156,35 @@ sap.ui.define([
                 }
             }
         },
+        openPdf: function (oEvent) {
+            var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
+            var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+            // this._pdfViewer.setSource(sSource);
+            // this._pdfViewer.setTitle("Catalogue");
+            // this._pdfViewer.open();
+            sap.m.URLHelper.redirect(sSource, true)
+        },
         onChangePdf: function (oEvent) {
-            if (oEvent.getSource().oFileUpload.files.length > 0) {
-                var file = oEvent.getSource().oFileUpload.files[0];
-                var path = URL.createObjectURL(file);
-                this.oPreviewPdf.setSrc(path);
-                this.oPreviewPdf.setVisible(true);
-            } else {
-                if (this._action === "add") {
-                    this.oPreviewPdf.setSrc(path);
-                    this.oPreviewPdf.setVisible(false);
-                } else {
-                    this.oPreviewPdf.setSrc(this.sServiceURI + this._property + "/$value");
+            var oContext = oEvent.getSource().getBindingContext("ActionViewModel");
+            if (oEvent.getParameter("files").length > 0) {
+                var pdfname = oEvent.getParameter("files")[0].name;
+                this.getModel("ActionViewModel").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                this.getModel("ActionViewModel").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                this.getModel("ActionViewModel").setProperty("bNew", true, oContext);
+                
+                var isValid= this.checkFileName(pdfname);
+                if(!isValid){
+                    MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
                 }
+                
+               
             }
         },
 
         _uploadToolImage: function (oData) {
             var oModel = this.getComponentModel();
             if (this._action === "add") {
-                this.oFileUploader.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=image");
+                this.oFileUploader.setUploadUrl(this.sServiceURI + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=image&file_name=" + this.imageName);
             }
             if (!this.oFileUploader.getValue()) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
@@ -121,42 +202,53 @@ sap.ui.define([
                 this.oFileUploader.clear();
             }.bind(this));
         },
-        _updateImage: function (propertySet) {
+        _uploadPdf: function (oData) {
+
             var oModel = this.getComponentModel();
-            
-                this.oFileUploader.setUploadUrl(this.sServiceURI + propertySet+"/$value?doc_type=image");
-            if (!this.oFileUploader.getValue()) {
-                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+            if (this._action === "add") {
+
+                var oModel = this.getModel("ActionViewModel");
+                var catalogue = oModel.getProperty("/Catalogue");
+                var fileUploader;
+                var sServiceUri = this.sServiceURI;
+                //To DO promises for sync
+                catalogue.forEach(function (ele) {
+                     var isValid= this.checkFileName(ele.fileName);
+                        jQuery.ajax({
+                        method: "PUT",
+                        url: sServiceUri + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+                   
+                   
+                    
+                });
+
+            }
+
+        },
+
+        //Update methods for pdf and Image
+        _updateImage: function (propertySet) {
+            if (this.getModel("ActionViewModel").getProperty("/bNewImage") == false) {
                 return;
             }
+            var oModel = this.getComponentModel();
+
+            this.oFileUploader.setUploadUrl(this.sServiceURI + propertySet + "/$value?doc_type=image&file_name=" + this.imageName);
             this.oFileUploader.checkFileReadable().then(function () {
                 // @ts-ignore
                 //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
                 this.oFileUploader.setHttpRequestMethod("PUT");
-                //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
+                // this.getView().getModel("ActionViewModel").setProperty("/busy", true);
                 this.oFileUploader.upload();
-            }.bind(this), function (error) {
-               // MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-            }.bind(this)).then(function () {
-                
-                this.oFileUploader.clear();
-            }.bind(this));
-        },
-         _uploadPdf: function (oData) {
-            var oModel = this.getComponentModel();
-            if (this._action === "add") {
-                this.oFileUploaderPdf.setUploadUrl(this.sServiceURI + "MasterProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf");
-            }
-            if (!this.oFileUploaderPdf.getValue()) {
-                MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
-                return;
-            }
-            this.oFileUploaderPdf.checkFileReadable().then(function () {
-                // @ts-ignore
-                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-                this.oFileUploaderPdf.setHttpRequestMethod("PUT");
-                this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-                this.oFileUploaderPdf.upload();
             }.bind(this), function (error) {
                 MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
             }.bind(this)).then(function () {
@@ -164,77 +256,134 @@ sap.ui.define([
             }.bind(this));
         },
         _updatePdf: function (propertySet) {
-            var oModel = this.getComponentModel();
-                 this.oFileUploaderPdf.setUploadUrl(this.sServiceURI +propertySet+"/$value?doc_type=pdf");
-           
-            this.oFileUploaderPdf.checkFileReadable().then(function () {
-                // @ts-ignore
-                //this.oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: this.oFileUploader.getValue() }));
-                this.oFileUploaderPdf.setHttpRequestMethod("PUT");
-                //this.getView().getModel("ActionViewModel").setProperty("/busy", true);
-                this.oFileUploaderPdf.upload();
-            }.bind(this), function (error) {
-                MessageToast.show(this.oResourceBundle.getText("fileUploaderNotReadableTxt"));
-            }.bind(this)).then(function () {
-                
-                this.oFileUploader.clear();
-            }.bind(this));
+            var oModel = this.getModel("ActionViewModel");
+            var catalogue = oModel.getProperty("/Catalogue");
+            var fileUploader;
+            var sServiceUri = this.sServiceURI;
+
+            catalogue.forEach(function (ele) {
+                if (ele.bNew) {
+                   
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+                     
+                }
+            })
+         
         },
 
         handleUploadComplete: function () {
-            console.log("sdsds");
+            this._showSuccessMsg();
+        },
+        handleUploadCompleteImage: function () {
+            this.idPreviewImage;
+            this._showSuccessMsg();
+        },
+        handleUploadCompletePdf: function () {
             this._showSuccessMsg();
         },
 
         onPressSaveOrUpdate: function () {
+            
+
+
             if (this._validateRequiredFields()) {
                 var oDataModel = this.getComponentModel();
                 var oViewModel = this.getView().getModel("ActionViewModel");
+                var Competitors = JSON.parse(
+                    JSON.stringify(oViewModel.getProperty("/Competitor"))
+                ).map((item) => {
+                    var id = parseInt(item.CompetitorCompanyId);
+                    var name = item.CompetitorProductName;
+
+                    var list = { CompetitorCompanyId: id, CompetitorProductName: name }
+                    return list;
+                });
+
+                
+                var oParam = {};
+                $.extend(true, oParam, this.entityObject);
+                //delete oParam.__metadata;
+                delete oParam.MediaList;
+                var Title=this.getView().byId("idTitle").getSelectedItem().getText();    
+
+                oParam.Title = Title,
+                    oParam.Description = Title,
+                    oParam.ProductId = oViewModel.getProperty("/Title"),
+                    oParam.ProductCategoryId = oViewModel.getProperty("/Category"),
+                    oParam.ProductClassificationId = oViewModel.getProperty("/Classification"),
+                    oParam.ProductRangeId = parseInt(oViewModel.getProperty("/Range")),
+                    oParam.ProductCompetitors = Competitors
+
                 var oPayload = {
-                    Title: oViewModel.getProperty("/Title"),
-                    Description: oViewModel.getProperty("/Title"),
-                    // Url: oViewModel.getProperty("/Url")
+
+                    Title: Title,
+                    Description: Title,
+                    ProductId : oViewModel.getProperty("/Title"),
+                    ProductCategoryId: oViewModel.getProperty("/Category"),
+                    ProductClassificationId:oViewModel.getProperty("/Classification"),
+                    ProductRangeId: parseInt(oViewModel.getProperty("/Range")),
+                    ProductCompetitors: Competitors
                 };
-                console.log(oPayload);
-                var cFiles=[];
-                cFiles.push( this.oFileUploader.getValue());
-                cFiles.push( this.oFileUploaderPdf.getValue());
-                //  console.log(cFiles);
+
+                var cFiles = [];
+                cFiles.push(this.oFileUploader.getValue());
+                cFiles.push(this.oFileUploaderPdf.getValue());
+
                 if (cFiles) {
-                   
+
+
+
+
                     //oViewModel.setProperty("/busy", true);
                     if (this._action === "add") {
-                        var that=this
-                        oDataModel.create("/MasterProductCatalogueSet", oPayload, {
-                            success: function (oData, response) {
-                                var id = oData.Id;
-                                console.log(id);
-                                that._uploadToolImage(oData);
-                                that._uploadPdf(oData);
-                            },
-                            error: function (oError) {
-                                console.log("Error!");
-                            }
-                        });
+                        if (!this.oFileUploader.getValue()) {
+                            MessageToast.show(this.oResourceBundle.getText("fileUploaderChooseFirstValidationTxt"));
+
+                        } else {
+                            var that = this
+                            oDataModel.create("/ProductCatalogueSet", oPayload, {
+                                success: function (oData, response) {
+                                    var id = oData.Id;
+                                    that._uploadToolImage(oData);
+                                    that._uploadPdf(oData);
+                                },
+                                error: function (oError) {
+                                    console.log("Error!");
+                                }
+                            });
+                        }
                     } else {
-                        console.log("Else");
-                        console.log(this._property);
-                        var that=this;
-                        var _property=this._property;
-                        oDataModel.update("/" +_property, oPayload, {
-                             success: function () {
-                               
-                                 that._updateImage(_property);
-                                 that._updatePdf(_property);
+                        var that = this;
+                        var _property = this._property;
+
+                        // console.log(oPayload);
+                        oDataModel.update("/" + _property, oParam, {
+                            success: function () {
+
+                                that._showSuccessMsg();
+                                that._updateImage(_property);
+                                that._updatePdf(_property);
                             },
                             error: function (oError) {
                                 console.log("Error!");
                             }
                         });
                     }
-                }
 
+                }
             }
+
         },
 
         _onLoadSuccess: function (oData) {
@@ -253,9 +402,10 @@ sap.ui.define([
         },
 
         _showSuccessMsg: function () {
-           console.log("success");
             var oViewModel = this.getView().getModel("ActionViewModel");
-            oViewModel.setProperty("/busy", false);
+            oViewModel.refresh(true);
+            // oViewModel.setProperty("/busy", false);
+
             var sMessage = (this._action === "add") ? this.oResourceBundle.getText("messageToastCreateMsg") : this.oResourceBundle.getText("messageToastUpdateMsg");
             MessageToast.show(sMessage);
             this._navToHome();
@@ -265,13 +415,86 @@ sap.ui.define([
             var oControl = oEvent.getSource();
             this._setControlValueState([oControl]);
         },
+        onFileSizeExceed: function () {
+            var sMessage = "Maximum file size exceeded!";
+            MessageToast.show(sMessage);
+        },
 
         _validateRequiredFields: function () {
-            var oTitleControl = this.getView().byId("idTitle")
+            var oTitleControl = this.getView().byId("idTitle");
+            var oCategoryControl = this.getView().byId("idCategory");
+            var oClassificationControl = this.getView().byId("idClassification");
+            var oRangeControl = this.getView().byId("idRange");
+            var oObjectCatalogue = this.getModel("ActionViewModel").getProperty("/Catalogue");
+            var oObjectCompetitors = this.getModel("ActionViewModel").getProperty("/Competitor");
+           
 
-            this._setControlValueState([oTitleControl]);
-            if (oTitleControl.getValue()) {
+            var oSet = new Set();
+            var bCataloguePDF = oObjectCatalogue.every(function (ele) {
+                if (oSet.has(ele.LanguageCode) !== true) {
+                    oSet.add(ele.LanguageCode);
+                    return true
+                }
+                return false;
+            });
+            var bCompetitors = oObjectCompetitors.every(function (ele) {
+                if (ele.CompetitorProductName == "" || ele.CompetitorProductName == null) {
+                    return false;
+                }
                 return true;
+            });
+
+            
+        
+        
+            // var bEnglishPDF = oObjectCatalogue.every(function (ele) {
+            //     if (ele.LanguageCode == "EN") {
+            //         return true
+            //     }
+            //     return false;
+            // });
+            var bEnglishPDF=oObjectCatalogue.find(function(ele){
+                if(ele.LanguageCode==="EN"){
+                    return true;
+                }
+                return false;
+            })
+
+           // this._setControlValueState([oTitleControl]);
+            this._setSelectControlValueState([oTitleControl,oCategoryControl, oClassificationControl, oRangeControl]);
+            if (oTitleControl.getSelectedKey() && oCategoryControl.getSelectedKey() &&
+                oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
+
+                if (!bEnglishPDF) {
+                    var sMessage = "English PDF Required";
+                    MessageToast.show(sMessage);
+                    return false;
+                }
+                if (!bCataloguePDF) {
+                    var sMessage = "Multiple PDF of same Language";
+                    MessageToast.show(sMessage);
+                    return false;
+                }
+                if (oObjectCatalogue.length > 0) {
+                    if (oObjectCompetitors.length > 0) {
+                        if (!bCompetitors) {
+                            var sMessage = "Add Competitor Product Name!";
+                            MessageToast.show(sMessage);
+                            return false;
+                        }
+                        return true;
+
+                    } else {
+                        return true;
+                    }
+
+                }
+                else {
+                    var sMessage = "Upload English Catalogue";
+                    MessageToast.show(sMessage);
+                }
+
+
             } else {
                 return false;
             }
@@ -279,11 +502,18 @@ sap.ui.define([
 
         _setDefaultValueState: function () {
             var oTitleControl = this.getView().byId("idTitle");
-            //oUrlControl = this.getView().byId("idUrlInput");
+            var oCategoryControl = this.getView().byId("idCategory");
+            var oClassificationControl = this.getView().byId("idClassification");
+            var oRangeControl = this.getView().byId("idRange");
+
             oTitleControl.setValueState("None");
             oTitleControl.setValueStateText("");
-            // oUrlControl.setValueState("None");
-            // oUrlControl.setValueStateText("");
+            oCategoryControl.setValueState("None");
+            oCategoryControl.setValueStateText("");
+            oClassificationControl.setValueState("None");
+            oClassificationControl.setValueStateText("");
+            oRangeControl.setValueState("None");
+            oRangeControl.setValueStateText("");
         },
 
         _setControlValueState: function (aControl) {
@@ -299,6 +529,184 @@ sap.ui.define([
                 }
             }
         },
+        _setSelectControlValueState: function (aControl) {
+            for (var i = 0; i < aControl.length; i++) {
+                var oControl = aControl[i],
+                    sValue = oControl.getSelectedKey();
+                if (sValue) {
+                    oControl.setValueState("None");
+                    oControl.setValueStateText("");
+                } else {
+                    oControl.setValueState("Error");
+                    oControl.setValueStateText(this.oResourceBundle.getText("requiredValueText"));
+                }
+            }
+
+        },
+        checkFileName: function (fileName){
+             var isValid = false;
+                    var regex = /[~`!@#$%^&()_={}[\]:;,<>+\/?-]/;
+                    isValid = regex.test(fileName);
+                    if(!isValid){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+
+        },
+        onAddCompetitor: function () {
+            var oModel = this.getView().getModel("ActionViewModel");
+            var oCompetitorMdl = oModel.getProperty("/Competitor");
+            var bFlag = true;
+
+            oCompetitorMdl.push({
+                CompetitorCompanyId: "",
+                CompetitorProductName: ""
+            });
+            oModel.refresh(true);
+        },
+        onPressRemoveCompetitor: function (oEvent) {
+            var oView = this.getView();
+            var oModel = oView.getModel("ActionViewModel");
+            var sPath = oEvent
+                .getSource()
+                .getBindingContext("ActionViewModel")
+                .getPath()
+                .split("/");
+            var aCompetitor = oModel.getProperty("/Competitor");
+            aCompetitor.splice(parseInt(sPath[sPath.length - 1]), 1);
+            //this._setFDLTbleFlag();
+            oModel.refresh(true);
+        },
+        onAddCatalogue: function () {
+            var oModel = this.getView().getModel("ActionViewModel");
+            var oObject = this.getModel("ActionViewModel").getProperty("/Catalogue");
+
+            oObject.push({
+                LanguageCode: "",
+                file: null,
+                fileName: ""
+            });
+            oModel.refresh(true);
+
+            // var pdfContainer = this.byId("idPdf");
+            //  pdfContainer.getBinding("items").refresh(true);
+
+            //oModel.setProperty("/Catalogue", oObject);
+
+
+
+
+
+
+        },
+        onPressRemoveCatalogue: function (oEvent) {
+            var oView = this.getView();
+            var oModel = oView.getModel("ActionViewModel");
+            var sPath = oEvent
+                .getSource()
+                .getBindingContext("ActionViewModel")
+                .getPath()
+                .split("/");
+            var aCatalogue = oModel.getProperty("/Catalogue");
+            var index = parseInt(sPath[sPath.length - 1]);
+            var delItems = [];
+            var property = this._property;
+            var sServiceUri = this.sServiceURI;
+            // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+            //To DO promises for sync
+            for (var i = 0; i <= aCatalogue.length; i++) {
+
+                if (i == index) {
+                    delItems = aCatalogue[i];
+                    if(delItems.MediaName!=null)
+                    {
+                    jQuery.ajax({
+                        method: "DELETE",
+                        url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        // data: delItems,
+                        success: function (data) {
+                            // aCatalogue.splice(i);
+                            
+                            aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                            var sMessage = "Catalogue Deleted!";
+                            MessageToast.show(sMessage);
+                            oModel.refresh(true);
+                            
+                        },
+                        error: function () { },
+                    })
+                   
+                }
+                else{
+                        aCatalogue.splice(i);
+                }
+                }
+                
+
+            };
+            
+
+            oModel.refresh(true);
+        },
+        onImageView: function (oEvent) {
+            var oButton = oEvent.getSource();
+            var oView = this.getView();
+            if (!this._imageDialog) {
+                Fragment.load({
+                    name: "com.knpl.pragati.Catelogue.view.fragments.ImagePopup",
+                    controller: this,
+                }).then(
+                    function (oDialog) {
+                        this._imageDialog = oDialog;
+                        oView.addDependent(this._imageDialog);
+                        this._imageDialog.open();
+                    }.bind(this)
+                );
+            } else {
+                oView.addDependent(this._imageDialog);
+                this._imageDialog.open();
+            }
+        },
+        onPressCloseDialog: function (oEvent) {
+            oEvent.getSource().getParent().close();
+        },
+        onDialogClose: function (oEvent) {
+            this._imageDialog.destroy();
+            delete this._imageDialog;
+        },
+        onClassificationChange :function (oEvent){
+            var ClassificationId=oEvent.getParameter("selectedItem").getKey();
+            var CategoryId=this.getView().byId("idCategory").getSelectedKey();
+            var binding = this.getView().byId("idTitle").getBinding("items");
+                 //binding.aFilters = null;
+                
+               var filters = [(new sap.ui.model.Filter("ProductCategory/Id", sap.ui.model.FilterOperator.EQ, CategoryId)),
+                            (new sap.ui.model.Filter("ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
+     
+			binding.filter(filters);
+            this.getView().byId("idTitle").getModel("ActionViewModel").updateBindings(true);
+            
+
+        },
+        onCategoryChange :function (){
+            var classification=this.getView().byId("idClassification");
+            classification.setSelectedItem(null);
+            var product=this.getView().byId("idTitle");
+            product.setSelectedItem(null);
+        }
+
+
+
+
+
+
+
+
 
 
 
