@@ -21,7 +21,7 @@
 						<f:formElements>
 							<f:FormElement>
 								<f:label>
-									<Label text="{i18n>ProductsPacks}"/>
+									<Label text="{= ${oModelControl>/Rbtn/AppPacks1} === 0 ? 'Products' : 'Packs' }"/>
 								</f:label>
 								<f:fields>
                                     
