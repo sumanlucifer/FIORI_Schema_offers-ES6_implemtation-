@@ -583,11 +583,11 @@ sap.ui.define(
           var sKey = oModel2.getProperty("/Dialog/Key1");
           var oPayload = oModel2.getProperty("/Dialog/Bonus1");
           if (oPayload["RequiredVolume"] == "") {
-            MessageToast.show("Kindly Input Required Volume to Continue");
+            MessageToast.show("Kindly Input Required Volume to Continue.");
             return;
           }
           if (oPayload["RewardPoints"] == "") {
-            MessageToast.show("Kindly Input Reward Points to Continue");
+            MessageToast.show("Kindly Input Reward Points to Continue.");
             return;
           }
           var oPayloadNew = Object.assign({}, oPayload);
@@ -1229,7 +1229,6 @@ sap.ui.define(
         _OpenPackValueHelp: function (mParam1) {
           var sPath = mParam1;
           this._FilterForPack(mParam1);
-          this._PackValueHelpDialog.open();
         },
         _FilterForPack: function (mParam1) {
           var oView = this.getView(),
@@ -1245,6 +1244,7 @@ sap.ui.define(
           }
 
           this._PackValueHelpDialog.getBinding("items").filter(aFilter1);
+          this._PackValueHelpDialog.open();
         },
         _handlePackValueHelpConfirm: function (oEvent) {
           var oSelected = oEvent.getParameter("selectedItems");
@@ -1300,7 +1300,6 @@ sap.ui.define(
         _openPValueHelpDialog: function (mParam1) {
           var sPath = mParam1;
           this._FilterForProds1(mParam1);
-          this._ProdValueHelpDialog.open();
         },
         onProdTokenUpdate: function (oEvent) {
           if (oEvent.getParameter("type") === "removed") {
@@ -1390,6 +1389,7 @@ sap.ui.define(
             aFinalFilter.push(aFilterClass);
           }
           this._ProdValueHelpDialog.getBinding("items").filter(aFinalFilter);
+          this._ProdValueHelpDialog.open();
         },
         onRbAppPainter: function (oEvent) {
           var iIndex = oEvent.getSource().getSelectedIndex();
@@ -1821,14 +1821,14 @@ sap.ui.define(
             elem
           ) {
             return {
-              ProductCode: elem["Id"]
+              ProductCode: elem["Id"],
             };
           });
           oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
             elem
           ) {
             return {
-              SkuCode: elem["Id"]
+              SkuCode: elem["Id"],
             };
           });
 
