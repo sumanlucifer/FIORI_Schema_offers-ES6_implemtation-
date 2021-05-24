@@ -139,6 +139,13 @@
                     "target": [
                         "TargetActionPage"
                     ]
+                },
+                 {
+                    "name": "PainterList",
+                    "pattern": "PainterList/{catalogueId}",
+                    "target": [
+                        "TargetPainterList"
+                    ]
                 }
             ],
             "targets": {
@@ -168,6 +175,13 @@
                     "viewName": "ActionPage",
                     "viewLevel": 2,
                     "viewId": "actionPage"
+                },
+                "TargetPainterList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "PainterList",
+                    "viewLevel": 2,
+                    "viewId": "painterList"
                 }
             }
         }

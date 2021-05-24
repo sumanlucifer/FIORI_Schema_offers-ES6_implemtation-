@@ -517,6 +517,12 @@ sap.ui.define([
                 }
             });
         },
+        onViewsPress: function (oEvent){
+           var catalogueId=oEvent.getSource().getBindingContext().getObject('Id'); 
+                this.getRouter().navTo("PainterList",{
+                     catalogueId:catalogueId
+                });
+        }
 
     });
 });

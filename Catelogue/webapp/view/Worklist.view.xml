@@ -92,7 +92,7 @@
                             demandPopin="true"
                             enableAutoBinding="true"
                             placeToolbarInTable="true"
-                            requestAtLeastFields="Id,ProductDetails/ProductName,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
+                            requestAtLeastFields="Id,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount"
                             persistencyKey="CatalogueSmartTableKey"
                             >
                             	<smartTable:customToolbar>
@@ -124,7 +124,7 @@
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "PdfDownloadCount","type":"string", "leadingProperty": "PdfDownloadCount", "columnIndex": 4 }'/>
                                         </customData>
-                                          <Text text="{i18n>downloads}"/>
+                                          <Text text="{i18n>downloads}" />
                                     </Column>
                                 <Column hAlign="Begin">
                                         <customData>
@@ -163,24 +163,34 @@
                                 <items>
                                     <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
-                                         <Text text="{path:'ProductDetails/ProductName'}"/>
-                                 <Text text="{path:'PdfViewerCount'}"/>
-                            <Text text="{path:'PdfDownloadCount'}"/>
-                            
-                            <Text text="{path:'TotalPdfViewerCount'}"/>
-                            <Text text="{path:'TotalPdfDownloadCount'}"/>
-                           <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-            
-                                <ObjectStatus text="{path: 'Status',
-                                    formatter: '.formatter.statusList'}" 
-                                    data:remarks="{Status}"
-                                
-                                    state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Warning' : undefined }"/>
-                               
-                            
-                            
-                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
-                                         </cells>      
+                                            <Text text="{path:'ProductDetails/ProductName'}"/>
+                                            <!-- <FlexBox >
+                                            <Text text="{path:'PdfViewerCount'}" visible="{= (${PdfViewerCount} === 0) }"/>
+                                            <Link
+                                            visible="{= (${PdfViewerCount} !== 0) }"
+                                                text="{path:'PdfViewerCount'}"
+                                                press="onViewsPress"/>
+                                            </FlexBox> -->
+                                            
+                                            <Button
+                                            icon="sap-icon://display"
+                                            text="{path:'PdfViewerCount'}"
+                                            press="onViewsPress"/>
+                                           
+                                            
+                                            <Text text="{path:'PdfDownloadCount'}"/>
+                                        
+                                            <Text text="{path:'TotalPdfViewerCount'}"/>
+                                            <Text text="{path:'TotalPdfDownloadCount'}"/>
+                                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                        
+                                            <ObjectStatus text="{path: 'Status',
+                                                formatter: '.formatter.statusList'}" 
+                                                data:remarks="{Status}"
+                                            
+                                                state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Warning' : undefined }"/>
+                                            <Button  icon="sap-icon://edit" type="Transparent" press="onPressEdit" tooltip="Edit" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
+                                        </cells>      
                                     </ColumnListItem>
                                 </items> 
                             </Table> 
