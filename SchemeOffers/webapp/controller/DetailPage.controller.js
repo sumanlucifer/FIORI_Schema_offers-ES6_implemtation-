@@ -121,6 +121,8 @@ sap.ui.define(
               Key1: "",
               Bonus2: {},
               Key2: "",
+              ProdVH: "",
+              PackVH: "",
             },
             MultiCombo: {
               Zones: [],
@@ -733,10 +735,10 @@ sap.ui.define(
           var sPath = oModelControl2.getProperty("/bindProp");
           var othat = this;
           var exPand =
-            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio,OfferPackRewardRatio," +
-            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
-            "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
-            "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
+            "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
+            "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
+            "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
+            "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
             "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
           oView.getModel().read("/" + sPath, {
             urlParameters: {
@@ -783,6 +785,8 @@ sap.ui.define(
               Key1: "",
               Bonus2: {},
               Key2: "",
+              ProdVH: "",
+              PackVH: "",
             },
             MultiCombo: {
               Zones: [],
@@ -812,7 +816,7 @@ sap.ui.define(
               AppPacks4: [],
               Painters: [],
               Reward: [],
-              Reward2:[]
+              Reward2: [],
             },
             Rbtn: {
               PCat1: 0,
@@ -1098,14 +1102,20 @@ sap.ui.define(
 
           if (oData["OfferApplicableProduct"]["results"].length > 0) {
             for (var x of oData["OfferApplicableProduct"]["results"]) {
-              AppProd1.push(x["ProductCode"]);
+              AppProd1.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd1", AppProd1);
 
           if (oData["OfferApplicablePack"]["results"].length > 0) {
             for (var x of oData["OfferApplicablePack"]["results"]) {
-              AppPacks1.push(x["SkuCode"]);
+              AppPacks1.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks1", AppPacks1);
@@ -1147,14 +1157,20 @@ sap.ui.define(
 
           if (oData["OfferBuyerProduct"]["results"].length > 0) {
             for (var x of oData["OfferBuyerProduct"]["results"]) {
-              AppProd2.push(x["ProductCode"]);
+              AppProd2.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd2", AppProd2);
 
           if (oData["OfferBuyerPack"]["results"].length > 0) {
             for (var x of oData["OfferBuyerPack"]["results"]) {
-              AppPacks2.push(x["SkuCode"]);
+              AppPacks2.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks2", AppPacks2);
@@ -1179,14 +1195,20 @@ sap.ui.define(
 
           if (oData["OfferNonBuyerProduct"]["results"].length > 0) {
             for (var x of oData["OfferNonBuyerProduct"]["results"]) {
-              AppProd3.push(x["ProductCode"]);
+              AppProd3.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd3", AppProd3);
 
           if (oData["OfferNonBuyerPack"]["results"].length > 0) {
             for (var x of oData["OfferNonBuyerPack"]["results"]) {
-              AppPacks3.push(x["SkuCode"]);
+              AppPacks3.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);
@@ -1207,14 +1229,20 @@ sap.ui.define(
 
           if (oData["OfferBonusProduct"]["results"].length > 0) {
             for (var x of oData["OfferBonusProduct"]["results"]) {
-              AppProd4.push(x["ProductCode"]);
+              AppProd4.push({
+                Id: x["Product"]["Id"],
+                Name: x["Product"]["ProductName"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppProd4", AppProd4);
 
           if (oData["OfferBonusPack"]["results"].length > 0) {
             for (var x of oData["OfferBonusPack"]["results"]) {
-              AppPacks4.push(x["SkuCode"]);
+              AppPacks4.push({
+                Id: x["Pack"]["SkuCode"],
+                Name: x["Pack"]["Description"],
+              });
             }
           }
           oModelControl2.setProperty("/MultiCombo/AppPacks4", AppPacks4);

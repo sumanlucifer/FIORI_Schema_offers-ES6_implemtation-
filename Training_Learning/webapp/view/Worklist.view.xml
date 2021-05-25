@@ -83,7 +83,7 @@
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
 							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished="onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -108,6 +108,9 @@
                                 <Column width="9%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
+                                  <Column width="9%">
+									<Text text="{i18n>EnrolledCount}"/>
+								</Column>
                                 <Column width="8%">
 									<Text text="{i18n>colLink}"/>
 								</Column>
@@ -126,6 +129,7 @@
                                         <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{RewardPoints}"/>
+                                          <Text text="{TotalEnrollments}"/>
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
@@ -133,7 +137,7 @@
                                             <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
                                         <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
-                                            <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate}}"/>
+                                            <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate} &amp;&amp; ${Status} === 0 }"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
 									</cells>
@@ -142,7 +146,7 @@
 						</Table>
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
-						<Table id="table2" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoDataTextTraining}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
+						<Table id="table2" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
@@ -182,7 +186,7 @@
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataTextVideo}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
