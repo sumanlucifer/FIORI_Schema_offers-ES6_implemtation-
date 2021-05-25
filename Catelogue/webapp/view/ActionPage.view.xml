@@ -65,18 +65,29 @@
                                 
                                         <VBox class="sapUiMediumMarginBottom" width="80%">
                                             <Label text="Product:" required="true" />
+                                            
                                             <Select
+                                            id="idTitle"
+                                            visible="false"
+                                            forceSelection="false"
+                                            width="100%"
+                                            items="{
+                                                path: 'ActionViewModel>/Products',
+                                                sorter: { path: 'ProductName' }
+                                            }">
+                                            <core:Item key="{ActionViewModel>Id}" text="{ActionViewModel>ProductName}" />
+                                            </Select>
+                                            <Input id="idInputProduct" width="100%" visible="false" value="{ActionViewModel>/Name}"/>
+                                            
+                                             <!-- <Select
                                             id="idTitle"
                                             forceSelection="false"
                                             width="100%"
-                                            selectedKey="{ActionViewModel>/Title/}"
                                             items="{
-                                                path: '/MasterProductSet',
-                                                expand:'ProductCategory,ProductClassification',
-                                                sorter: { path: 'ProductName' }
+                                                path: 'ActionViewModel>/Products'
                                             }">
-                                            <core:Item key="{Id}" text="{ProductName}" />
-                                            </Select>
+                                            <core:Item key="{ActionViewModel>Id}" text="{ActionViewModel>ProductName}" />
+                                            </Select> -->
                                          </VBox>
                                 
                                  

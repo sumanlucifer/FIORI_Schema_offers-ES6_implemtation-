@@ -27,7 +27,9 @@ sap.ui.define([
             this.pdfBtn = this.getView().byId("pdfBtn");
             this.imgBtn = this.getView().byId("imageBtn");
             this.oCategory = this.getView().byId("idCategory");
+            this.oClassification = this.getView().byId("idClassification");
             this.oTitle = this.getView().byId("idTitle");
+            this.oProduct = this.getView().byId("idInputProduct");
             this.oForm = this.getView().byId("idCatalogueDetailsForm");
             this.imageName = "";
             this.pdfName = "";
@@ -49,6 +51,7 @@ sap.ui.define([
                 busy: false,
                 action: this._action,
                 Title: "",
+                Name:"",
                 Category: "",
                 Classification: "",
                 Range: "",
@@ -72,6 +75,7 @@ sap.ui.define([
                     success: function (data, response) {
                         that.entityObject = data;
                         oData.Title = data.ProductId;
+                        oData.Name = data.Title;
                         oData.Category = data.ProductCategoryId
                         oData.Classification = data.ProductClassificationId
                         oData.Range = data.ProductRangeId
@@ -95,8 +99,12 @@ sap.ui.define([
                     error: function (oError) {
                     }
                 });
-                //this.oCategory.setEditable(false);
-                //this.oTitle.setEditable(false);
+                this.oCategory.setEditable(false);
+                this.oTitle.setEditable(false);
+                this.oTitle.setVisible(false);
+                this.oClassification.setEditable(false);
+                this.oProduct.setVisible(true);
+                this.oProduct.setEditable(false);
                 // this.oPreviewImage.setSrc(this.sServiceURI + this._property + "/$value?doc_type=image");
                 // this.oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value?doc_type=image");
                 // this.oPreviewImage.setVisible(true);
@@ -108,8 +116,11 @@ sap.ui.define([
 
 
             } else {
-                //this.oCategory.setEditable(true);
-               // this.oTitle.setEditable(true);
+                this.oCategory.setEditable(true);
+                this.oTitle.setVisible(true);
+                this.oTitle.setEditable(true);
+                 this.oClassification.setEditable(true);
+                  this.oProduct.setVisible(false);
                 this.oPreviewImage.setVisible(false);
                 this.pdfBtn.setVisible(false);
                 this.imgBtn.setVisible(false);
@@ -209,8 +220,9 @@ sap.ui.define([
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
                 //To DO promises for sync
+               // var that=this;
                 catalogue.forEach(function (ele) {
-                     var isValid= this.checkFileName(ele.fileName);
+                    //  var isValid= that.checkFileName(ele.fileName);
                         jQuery.ajax({
                         method: "PUT",
                         url: sServiceUri + "ProductCatalogueSet(" + oData.Id + ")/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
@@ -312,26 +324,31 @@ sap.ui.define([
                 $.extend(true, oParam, this.entityObject);
                 //delete oParam.__metadata;
                 delete oParam.MediaList;
-                var Title=this.getView().byId("idTitle").getSelectedItem().getText();    
-
-                oParam.Title = Title,
-                    oParam.Description = Title,
+                    
+                //OParams are used when update 
+                oParam.Title = oViewModel.getProperty("/Name"),
+                    oParam.Description = oViewModel.getProperty("/Name"),
                     oParam.ProductId = oViewModel.getProperty("/Title"),
                     oParam.ProductCategoryId = oViewModel.getProperty("/Category"),
                     oParam.ProductClassificationId = oViewModel.getProperty("/Classification"),
                     oParam.ProductRangeId = parseInt(oViewModel.getProperty("/Range")),
                     oParam.ProductCompetitors = Competitors
-
+                if(this._action !== "edit"){
+                    var Title=this.getView().byId("idTitle").getSelectedItem().getText();
+                   
+                    //oPayload are used when create 
                 var oPayload = {
 
                     Title: Title,
-                    Description: Title,
-                    ProductId : oViewModel.getProperty("/Title"),
+                    Description:Title,
+                    ProductId :this.getView().byId("idTitle").getSelectedItem().getKey(),
                     ProductCategoryId: oViewModel.getProperty("/Category"),
                     ProductClassificationId:oViewModel.getProperty("/Classification"),
                     ProductRangeId: parseInt(oViewModel.getProperty("/Range")),
                     ProductCompetitors: Competitors
                 };
+                 }
+               
 
                 var cFiles = [];
                 cFiles.push(this.oFileUploader.getValue());
@@ -418,7 +435,7 @@ sap.ui.define([
         },
 
         _validateRequiredFields: function () {
-            var oTitleControl = this.getView().byId("idTitle");
+           // var oTitleControl = this.getView().byId("idTitle");
             var oCategoryControl = this.getView().byId("idCategory");
             var oClassificationControl = this.getView().byId("idClassification");
             var oRangeControl = this.getView().byId("idRange");
@@ -458,8 +475,8 @@ sap.ui.define([
             })
 
            // this._setControlValueState([oTitleControl]);
-            this._setSelectControlValueState([oTitleControl,oCategoryControl, oClassificationControl, oRangeControl]);
-            if (oTitleControl.getSelectedKey() && oCategoryControl.getSelectedKey() &&
+            this._setSelectControlValueState([oCategoryControl, oClassificationControl, oRangeControl]);
+            if (oCategoryControl.getSelectedKey() &&
                 oClassificationControl.getSelectedKey() && oRangeControl.getSelectedKey()) {
 
                 if (!bEnglishPDF) {
@@ -498,13 +515,13 @@ sap.ui.define([
         },
 
         _setDefaultValueState: function () {
-            var oTitleControl = this.getView().byId("idTitle");
+            //var oTitleControl = this.getView().byId("idTitle");
             var oCategoryControl = this.getView().byId("idCategory");
             var oClassificationControl = this.getView().byId("idClassification");
             var oRangeControl = this.getView().byId("idRange");
 
-            oTitleControl.setValueState("None");
-            oTitleControl.setValueStateText("");
+            // oTitleControl.setValueState("None");
+            // oTitleControl.setValueStateText("");
             oCategoryControl.setValueState("None");
             oCategoryControl.setValueStateText("");
             oClassificationControl.setValueState("None");
@@ -679,14 +696,22 @@ sap.ui.define([
         onClassificationChange :function (oEvent){
             var ClassificationId=oEvent.getParameter("selectedItem").getKey();
             var CategoryId=this.getView().byId("idCategory").getSelectedKey();
-            var binding = this.getView().byId("idTitle").getBinding("items");
-                 //binding.aFilters = null;
-                
-               var filters = [(new sap.ui.model.Filter("ProductCategory/Id", sap.ui.model.FilterOperator.EQ, CategoryId)),
-                            (new sap.ui.model.Filter("ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
-            
-			binding.filter(filters);
-            this.getView().byId("idTitle").getModel("ActionViewModel").updateBindings(true);
+        
+               var Products=[];
+           
+            var that = this;
+                this.getView().getModel().read("/GetProducts", {
+                    urlParameters: {
+                        "CategoryCode":"'"+CategoryId+"'",
+                        "ClassificationCode": "'"+ClassificationId+"'"
+                    },
+                    success: function (data, response) {
+                    Products=data.results;
+                    that.getView().getModel("ActionViewModel").setProperty("/Products",Products);
+                    },
+                    error: function (oError) {
+                    }
+                });
             
 
         },

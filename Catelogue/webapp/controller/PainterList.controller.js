@@ -84,35 +84,27 @@ sap.ui.define([
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter([
-                                new Filter({ path: "ProductCatalogueId", operator: FilterOperator.Contains, value1: this.sObjectId,caseSensitive: false }),
-                                new Filter({ path: "IsViewed", operator: FilterOperator.Contains, value1: true, caseSensitive: false }),
+                                //new Filter({ path: "ProductCatalogueId", operator: FilterOperator.Contains, value1: this.sObjectId,caseSensitive: false }),
+                               // new Filter({ path: "IsViewed", operator: FilterOperator.Contains, value1: true, caseSensitive: false }),
                                 new Filter({ path: "Painter/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                                 //new Filter({ path: "Painter/Membershipcard", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
                                 //new Filter({ path: "ProductCompetitors/CompetitorProductName", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                             ], false));
+                            }
                         }
-                        
-                   
-                    
-                    
-                       
-                }
-            }
+                     }
+                       if (aFilters.length > 0) {
+                                this.oFilter = new Filter({
+                                    filters: aFilters,
+                                    and: true,
+                                });
+                         } else {
+                                this.oFilter = null;
+                                }
 
-            if (aFilters.length > 0) {
-                this.oFilter = new Filter({
-                    filters: aFilters,
-                    and: true,
-                });
-
-            } else {
-                
-                this.oFilter = null;
-            }
-
-            var binding = this.getView().byId("idPaintersTable").getBinding("items");
-            binding.filter(this.oFilter);
-        },
+                            var binding = this.getView().byId("idPaintersTable").getBinding("items");
+                            binding.filter(this.oFilter);
+                },
             onPressBreadcrumbLink: function () {
                  this._navToHome();
             }
