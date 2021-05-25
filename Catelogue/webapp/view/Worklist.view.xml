@@ -164,18 +164,18 @@
                                     <ColumnListItem  type="Navigation" press="onPress">
                                         <cells>
                                             <Text text="{path:'ProductDetails/ProductName'}"/>
-                                            <!-- <FlexBox >
+                                            <FlexBox >
                                             <Text text="{path:'PdfViewerCount'}" visible="{= (${PdfViewerCount} === 0) }"/>
                                             <Link
                                             visible="{= (${PdfViewerCount} !== 0) }"
                                                 text="{path:'PdfViewerCount'}"
                                                 press="onViewsPress"/>
-                                            </FlexBox> -->
+                                            </FlexBox>
                                             
-                                            <Button
+                                            <!-- <Button
                                             icon="sap-icon://display"
                                             text="{path:'PdfViewerCount'}"
-                                            press="onViewsPress"/>
+                                            press="onViewsPress"/> -->
                                            
                                             
                                             <Text text="{path:'PdfDownloadCount'}"/>
