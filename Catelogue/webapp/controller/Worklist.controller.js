@@ -343,13 +343,14 @@ sap.ui.define([
 
             var oBindingParams = oEvent.getParameter("bindingParams");
             oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "ProductDetails,ProductCategory,ProductClassification";
             if (this.oFilter) {
                 oBindingParams.filters.push(this.oFilter);
             }
             if (this.oCustom) {
                 oBindingParams.parameters.custom = this.oCustom;
             }
-           // oBindingParams.parameters["expand"] = "ProductDetails";
+           
 
         },
         onResetFilters: function (oEvent) {
@@ -516,6 +517,12 @@ sap.ui.define([
                 }
             });
         },
+        onViewsPress: function (oEvent){
+           var catalogueId=oEvent.getSource().getBindingContext().getObject('Id'); 
+                this.getRouter().navTo("PainterList",{
+                     catalogueId:catalogueId
+                });
+        }
 
     });
 });
