@@ -31,6 +31,9 @@
                     <Text text="{i18n>colPrDealer}"/>
                 </Column>
                 <Column>
+                    <Text text="{i18n>colEarnedPoint}"/>
+                </Column>
+                <Column>
                     <Text text="{i18n>colAttendanceDate}"/>
                 </Column>
             </columns>
@@ -45,6 +48,7 @@
                         <Text text="{PainterDetails/DivisionId}"/>
                         <Text text="{PainterDetails/DepotId}"/>
                         <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
+                        <Text text="{EarnedPoints}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
                     </cells>
                 </ColumnListItem>

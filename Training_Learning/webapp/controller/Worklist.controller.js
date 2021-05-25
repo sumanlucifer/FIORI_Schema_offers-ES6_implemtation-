@@ -163,6 +163,32 @@ sap.ui.define([
             this.getModel("worklistView").setProperty("/offlineTraining", sTitle);
         },
 
+        onZoneChange: function (oEvent) {
+          var sId = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+        //   var oModelView = oView.getModel("worklistView");
+          var oDivision = oView.byId("idDivision");
+          var oDivItems = oDivision.getBinding("items");
+        //   var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+          oDivision.clearSelection();
+          oDivision.setValue("");
+          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+          //setting the data for depot;
+          var oDepot = oView.byId("idDepot");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+        },
+
+        onDivisionChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var oDepot = oView.byId("idDepot");
+          var oDepBindItems = oDepot.getBinding("items");
+          oDepot.clearSelection();
+          oDepot.setValue("");
+          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+        },
+
 		/**
 		 * Event handler when a table item gets pressed
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
@@ -216,7 +242,6 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
-            debugger;
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
 
@@ -335,12 +360,14 @@ sap.ui.define([
                         aCurrentFilterValues2.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
                         );
-                    } else if (prop === "RewardPoints") {
-                        aFlaEmpty2 = false;
-                        aCurrentFilterValues2.push(
-                            new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
-                        );
-                    } else if (prop === "Search") {
+                    } 
+                    // else if (prop === "RewardPoints") {
+                    //     aFlaEmpty2 = false;
+                    //     aCurrentFilterValues2.push(
+                    //         new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
+                    //     );
+                    // } 
+                    else if (prop === "Search") {
                         aFlaEmpty2 = false;
                         if (/^\+?(0|[1-9]\d*)$/.test(oViewFilter2[prop])) {
                             aCurrentFilterValues2.push(

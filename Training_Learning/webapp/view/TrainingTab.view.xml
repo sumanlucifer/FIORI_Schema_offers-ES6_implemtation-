@@ -29,7 +29,7 @@
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
                     <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
                     <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
-                    <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}"/>
+                    <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
@@ -66,7 +66,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalEnrollment}" visible="{= ${appView>/trainingType} === 'VIDEO'}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>totalViews}" visible="{= ${appView>/trainingType} === 'VIDEO'}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox id="idVbEnrollmentVideo" renderType="Bare">

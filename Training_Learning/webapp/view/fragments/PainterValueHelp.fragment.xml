@@ -21,7 +21,7 @@
                         label="Zone"
                         visibleInFilterBar="true">
                         <fb:control>
-                             <m:ComboBox  placeholder="{i18n>enterZone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'PainterFilter>/ZoneId' }">
+                             <m:ComboBox id="idSingleZone" placeholder="{i18n>enterZone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'PainterFilter>/ZoneId' }">
                                     <core:Item text="{Id} " key="{Id}" />
                              </m:ComboBox>
                         </fb:control>
@@ -32,10 +32,9 @@
                         label="Division"
                         visibleInFilterBar="true">
                         <fb:control>
-                           <m:ComboBox  enabled="{= ${PainterFilter>/ZoneId}.length>1}" placeholder="{i18n>enterDivision}"  selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'PainterFilter>/DivisionId'}">
-                    <core:Item text="{Id}" key="{Id}" />
-                </m:ComboBox>
-
+                            <m:ComboBox id="idSingleDivision" enabled="{= ${PainterFilter>/ZoneId}.length>1}" placeholder="{i18n>enterDivision}"  selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'PainterFilter>/DivisionId'}">
+                                <core:Item text="{Id}" key="{Id}" />
+                            </m:ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -44,10 +43,9 @@
                         label="Depot"
                         visibleInFilterBar="true">
                         <fb:control>
-                             <m:ComboBox enabled="{= ${PainterFilter>/DivisionId}.length>1}"  placeholder="{i18n>enterDepot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'PainterFilter>/DepotId' }">
-                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
-                                    </m:ComboBox>
-
+                            <m:ComboBox id="idSingleDepot" enabled="{= ${PainterFilter>/DivisionId}.length>1}"  placeholder="{i18n>enterDepot}"  items="{/MasterDepotSet}" selectedKey="{path:'PainterFilter>/DepotId' }">
+                                <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                            </m:ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -56,10 +54,9 @@
                         label="Painter Type"
                         visibleInFilterBar="true">
                         <fb:control>
-                           <m:ComboBox placeholder="{i18n>enterPainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'PainterFilter>/PainterType'}">
-                                            <core:Item text="{PainterType}" key="{Id}" />
-                                        </m:ComboBox>
-
+                            <m:ComboBox placeholder="{i18n>enterPainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'PainterFilter>/PainterType'}">
+                                <core:Item text="{PainterType}" key="{Id}" />
+                            </m:ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -67,12 +64,10 @@
                         name="ArcheType/ArcheType"
                         label="Painter ArcheType"
                         visibleInFilterBar="true">
-                        <fb:control>
-                            
-                <m:ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
-                    <core:Item text="{ArcheType}" key="{Id}" />
-                </m:ComboBox>
-
+                        <fb:control>   
+                            <m:ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
+                                <core:Item text="{ArcheType}" key="{Id}" />
+                            </m:ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
                       <fb:FilterGroupItem

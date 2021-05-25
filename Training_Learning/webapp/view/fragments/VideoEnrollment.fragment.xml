@@ -31,7 +31,7 @@
                     <Text text="{i18n>colPrDealer}"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>colEnrollmentDate}"/>
+                    <Text text="{i18n>colViewDate}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>colEarnedPoint}"/>

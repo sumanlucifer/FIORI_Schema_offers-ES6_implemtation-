@@ -4,7 +4,8 @@
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
-                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/Enrollment}"></SearchField>
+                        <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onExportEnrollment"/> 
+                        <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/Enrollment}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 

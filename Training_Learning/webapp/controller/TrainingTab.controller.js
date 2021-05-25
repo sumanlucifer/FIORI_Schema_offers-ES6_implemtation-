@@ -19,7 +19,9 @@ sap.ui.define(
         "sap/ui/core/routing/History",
         "sap/ui/core/SeparatorItem",
         "sap/m/Token",
-        'sap/ui/model/type/String',
+        "sap/ui/model/type/String",
+        "sap/ui/core/util/Export",
+        "sap/ui/core/util/ExportTypeCSV",
         "../model/formatter"
     ],
     /**
@@ -46,6 +48,8 @@ sap.ui.define(
         SeparatorItem,
         Token,
         typeString,
+        Export,
+        ExportTypeCSV,
         formatter
     ) {
         "use strict";
@@ -258,6 +262,100 @@ sap.ui.define(
                             }
                         }
                     })
+                },
+
+                onExportEnrollment: function (oEvent) {
+                    debugger;
+                    var that = this;
+                    var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
+                    var aFilters = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('TrainingId', sap.ui.model.FilterOperator.EQ, trainingId)
+                        ],
+                        and: true
+                    });
+                    that.getModel().read("/PainterTrainingSet", {
+                        urlParameters: {
+                            "$expand": "PainterDetails"
+                        },
+                        filters: [aFilters],
+                        success: function (data) {
+                            that.getModel("oModelView").setProperty("/TrainingEnrollments", data.results);
+
+                            var oExport = new Export({
+                                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                                exportType: new ExportTypeCSV({
+                                    separatorChar: ";"
+                                }),
+                                // Pass in the model created above
+                                models: that.getView().getModel("oModelView"),
+
+                                // binding information for the rows aggregation
+                                rows: {
+                                    path: "/TrainingEnrollments"
+                                },
+
+                                // column definitions with column name and binding info for the content
+
+                                columns: [{
+                                    name: "Name",
+                                    template: {
+                                        content: "{PainterDetails/Name}"
+                                    }
+                                }, {
+                                    name: "Membership Id",
+                                    template: {
+                                        content: "{PainterDetails/MembershipCard}"
+                                    }
+                                }, {
+                                    name: "Mobile Number",
+                                    template: {
+                                        content: "{PainterDetails/Mobile}"
+                                    }
+                                }, {
+                                    name: "Zone",
+                                    template: {
+                                        content: "{PainterDetails/ZoneId}"
+                                    }
+                                }, {
+                                    name: "Division",
+                                    template: {
+                                        content: "{PainterDetails/DivisionId}"
+                                    }
+                                }, {
+                                    name: "Depot",
+                                    template: {
+                                        content: "{PainterDetails/DepotId}"
+                                    }
+                                }, {
+                                    name: "Primary Dealer",
+                                    template: {
+                                        content: "{PainterDetails/PrimaryDealerDetails/DealerName}"
+                                    }
+                                }, {
+                                    name: "Enrollment Date",
+                                    template: {
+                                        content: "{CreatedAt}"
+                                    }
+                                }, {
+                                    name: "Earned Points",
+                                    template: {
+                                        content: "{EarnedPoints}"
+                                    }
+                                }
+                                ]
+                            });
+
+                            // download exported file
+                            oExport.saveFile().catch(function (oError) {
+                                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                            }).then(function () {
+                                oExport.destroy();
+                            });
+                        }
+                    });
+
                 },
 
                 onRadioBtnChange: function (oEvent) {
@@ -589,6 +687,24 @@ sap.ui.define(
                     });
                 },
 
+                _filterTableP: function (oFilter, sType) {
+                    var oValueHelpDialogP = this._oValueHelpDialogP;
+
+                    oValueHelpDialogP.getTableAsync().then(function (oTable) {
+                        if (oTable.bindRows) {
+                            oTable.getBinding("rows").filter(oFilter, sType || "Application");
+                        }
+
+                        if (oTable.bindItems) {
+                            oTable
+                                .getBinding("items")
+                                .filter(oFilter, sType || "Application");
+                        }
+
+                        oValueHelpDialogP.update();
+                    });
+                },
+
                 onValueHelpCancelPress: function () {
                     this._oValueHelpDialog.close();
                 },
@@ -612,6 +728,29 @@ sap.ui.define(
                         .getModel("oModelView")
                         .setProperty("/TrainingDetails/TrainingDepot", oData);
                     this._oValueHelpDialog.close();
+                },
+
+                onZoneChange: function (oEvent) {
+                    debugger;
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oDivision = sap.ui.getCore().byId("idSingleDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+                    //setting the data for depot;
+                    var oDepot = sap.ui.getCore().byId("idSingleDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                },
+
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oDepot = sap.ui.getCore().byId("idSingleDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
                 },
 
                 onValueHelpRequestedPainter: function () {
@@ -656,65 +795,126 @@ sap.ui.define(
                     var aCols = this.oColModel.getData().cols;
                     var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
 
-                    this._oValueHelpDialog = sap.ui.xmlfragment(
-                        "com.knpl.pragati.Training_Learning.view.fragments.PainterValueHelp",
-                        this
-                    );
-                    this.getView().addDependent(this._oValueHelpDialog);
+                    if (!this._oValueHelpDialogP) {
+                        this._oValueHelpDialogP = sap.ui.xmlfragment(
+                            "com.knpl.pragati.Training_Learning.view.fragments.PainterValueHelp",
+                            this
+                        );
+                        var oDataFilter = {
+                            ZoneId: "",
+                            DivisionId: "",
+                            DepotId: "",
+                            PainterType: "",
+                            ArcheType: "",
+                            MembershipCard: "",
+                            Name: "",
+                            MobileNo: ""
+                        }
+                        var oModel = new JSONModel(oDataFilter);
+                        this.getView().setModel(oModel, "PainterFilter")
+                        this.getView().addDependent(this._oValueHelpDialogP);
 
-                    this._oValueHelpDialog.getTableAsync().then(
-                        function (oTable) {
-                            oTable.setModel(this.oColModel, "columns");
+                        this._oValueHelpDialogP.getTableAsync().then(
+                            function (oTable) {
+                                oTable.setModel(this.oColModel, "columns");
 
-                            if (oTable.bindRows) {
-                                oTable.bindAggregation("rows", {
-                                    path: "/PainterSet", filters: [oFilter], parameters: { expand: "Depot,PainterType,ArcheType" }, events:
-                                    {
-                                        dataReceived: function () {
-                                            this._oValueHelpDialog.update();
-                                        }.bind(this)
-                                    }
-                                });
-                            }
-
-                            if (oTable.bindItems) {
-                                oTable.bindAggregation("items", "/PainterSet", function () {
-                                    return new sap.m.ColumnListItem({
-                                        cells: aCols.map(function (column) {
-                                            return new sap.m.Label({
-                                                text: "{" + column.template + "}",
-                                            });
-                                        }),
+                                if (oTable.bindRows) {
+                                    oTable.bindAggregation("rows", {
+                                        path: "/PainterSet", filters: [oFilter], parameters: { expand: "Depot,PainterType,ArcheType" }, events:
+                                        {
+                                            dataReceived: function () {
+                                                this._oValueHelpDialogP.update();
+                                            }.bind(this)
+                                        }
                                     });
-                                });
-                            }
+                                }
 
-                            this._oValueHelpDialog.update();
-                        }.bind(this)
-                    );
+                                if (oTable.bindItems) {
+                                    oTable.bindAggregation("items", "/PainterSet", function () {
+                                        return new sap.m.ColumnListItem({
+                                            cells: aCols.map(function (column) {
+                                                return new sap.m.Label({
+                                                    text: "{" + column.template + "}",
+                                                });
+                                            }),
+                                        });
+                                    });
+                                }
 
-                    this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
-                    this._oValueHelpDialog.open();
+                                this._oValueHelpDialogP.update();
+                            }.bind(this)
+                        );
+
+                        this._oValueHelpDialogP.setTokens(this._oMultiInput.getTokens());
+                    }
+                    this._oValueHelpDialogP.open();
                 },
 
                 onFilterBarSearchPainter: function (oEvent) {
+                    debugger;
                     var afilterBar = oEvent.getParameter("selectionSet"),
-                        aFilters = [];
-
-                    for (var i = 0; i < afilterBar.length; i++) {
-                        if (afilterBar[i].getValue()) {
-                            aFilters.push(
-                                new Filter({
-                                    path: afilterBar[i].mProperties.name,
-                                    operator: FilterOperator.Contains,
-                                    value1: afilterBar[i].getValue(),
-                                    caseSensitive: false,
-                                })
-                            );
+                        aCurrentFilterValues = [];
+                    var oViewFilter = this.getView().getModel("PainterFilter").getData();
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "PainterType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "PainterTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "ArcheType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "ArcheTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "MembershipCard") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "MembershipCard", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Name", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Mobile") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Mobile", operator: FilterOperator.Contains, value1: oViewFilter[prop] })
+                                );
+                            }
                         }
                     }
+                    // for (var i = 0; i < afilterBar.length; i++) {
+                    //     if (afilterBar[i].getValue()) {
+                    //         aFilters.push(
+                    //             new Filter({
+                    //                 path: afilterBar[i].mProperties.name,
+                    //                 operator: FilterOperator.Contains,
+                    //                 value1: afilterBar[i].getValue(),
+                    //                 caseSensitive: false,
+                    //             })
+                    //         );
+                    //     }
+                    // }
 
-                    aFilters.push(
+                    aCurrentFilterValues.push(
                         new Filter({
                             path: "IsArchived",
                             operator: FilterOperator.EQ,
@@ -722,16 +922,18 @@ sap.ui.define(
                         })
                     );
 
-                    this._filterTable(
+                    this._filterTableP(
                         new Filter({
-                            filters: aFilters,
+                            filters: aCurrentFilterValues,
                             and: true,
                         })
                     );
                 },
 
                 onValueHelpCancelPressPainter: function () {
-                    this._oValueHelpDialog.close();
+                    this._oValueHelpDialogP.close();
+                    this._oValueHelpDialogP.destroy();
+                    delete this._oValueHelpDialogP;
                 },
 
                 onValueHelpOkPressPainter: function (oEvent) {
@@ -751,10 +953,14 @@ sap.ui.define(
                     });
 
                     this.getView().getModel("oModelView").setProperty("/TrainingDetails/TrainingPainters", oData);
-                    this._oValueHelpDialog.close();
+                    this._oValueHelpDialogP.close();
                 },
 
                 onCancel: function () {
+                    if (this._oValueHelpDialogP) {
+                        this._oValueHelpDialogP.destroy();
+                        delete this._oValueHelpDialogP;
+                    }
                     if (this.getModel("oModelView").getProperty("/bChange")) {
                         this.showWarning("MSG_PENDING_CHANGES", this.navToHome);
                     }
@@ -788,6 +994,8 @@ sap.ui.define(
                             that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_TYPE_BEFORE_ACTIVATING_TRAINING");
                         } else if (sData.TrainingPainterArcheTypeDetails.length == 0 && filtertype === "GROUP") {
                             that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_ARCHETYPE_BEFORE_ACTIVATING_TRAINING");
+                        } else if (sData.TrainingPainters.length == 0 && filtertype === "PAINTER") {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_PAINTER_BEFORE_ACTIVATING_TRAINING");
                         } else {
                             that.getModel().update(data, {
                                 Status: 1
@@ -1389,6 +1597,10 @@ sap.ui.define(
                     oModel.refresh(true);
                     this.getRouter().navTo("worklist", true);
                     this.getModel().setProperty("/busy", false);
+                    if (this._oValueHelpDialogP) {
+                        this._oValueHelpDialogP.destroy();
+                        delete this._oValueHelpDialogP;
+                    }
                 },
 
                 onUpload: function (oEvent) {

@@ -49,8 +49,8 @@
                 <Label required="true" text="{i18n>colDuration}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 				<Input width="35%" value="{oModelView>/TrainingDetails/Duration}" maxLength="10" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} === '3'}"/>
 
-                <Label text="{i18n>colRewardPoints}"/>
-                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" />
+                <Label text="{i18n>colRewardPoints}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
+                <Input width="35%" value="{oModelView>/TrainingDetails/RewardPoints}" type="Number" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
 
                 <Label text="Upload Thumbnail Image" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <HBox>
