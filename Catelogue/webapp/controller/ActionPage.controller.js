@@ -684,9 +684,8 @@ sap.ui.define([
                 
                var filters = [(new sap.ui.model.Filter("ProductCategory/Id", sap.ui.model.FilterOperator.EQ, CategoryId)),
                             (new sap.ui.model.Filter("ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
-            //var filters = [(new sap.ui.model.Filter("ProductCategory/ProductClassification/Id", sap.ui.model.FilterOperator.EQ, ClassificationId))]; 
-			var oFilter1 = new sap.ui.model.Filter({aFilters:filters}); 
-			binding.filter(oFilter1);
+            
+			binding.filter(filters);
             this.getView().byId("idTitle").getModel("ActionViewModel").updateBindings(true);
             
 
