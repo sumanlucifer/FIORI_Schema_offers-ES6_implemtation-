@@ -2,17 +2,16 @@
     <VBox id="idVbxQView" width="100%">
         <f:SimpleForm id="ViewTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
             <f:content>
-                <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true"
-					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-                    <CustomListItem type="Active">
-                        <VBox renderType="Bare">
-                            <Text text=""/>
-                            <Text text="{oModelView>Question}" class="sapUiSmallMarginBeginEnd"/>
-                            <Text text=""/>
-                            <HBox items="{oModelView>TrainingQuestionnaireOptions}">
-                                <!-- <CheckBox selected="true" /> -->
-                                <ObjectStatus text="{oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiSmallMarginBeginEnd" visible="{= ${oModelView>IsArchived} === false}"/>
+                <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true" noDataText="No data available" items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+                    <CustomListItem>
+                        <VBox renderType="Bare" class="sapUiTinyMargin">
+                            <HBox renderType="Bare">
+                                <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
                             </HBox>
+                            <Text text=""/>
+                            <VBox items="{oModelView>TrainingQuestionnaireOptions}">
+                                <ObjectStatus text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin" visible="{= ${oModelView>IsArchived} === false}"/>
+                            </VBox>
                             <Text text=""/>
                         </VBox>
                     </CustomListItem>

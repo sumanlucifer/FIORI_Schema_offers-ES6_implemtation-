@@ -22,10 +22,6 @@ sap.ui.define([], function () {
             }
             var sValue = dValue;
             var pattern = "dd/MM/yyyy";
-            // var pattern = "dd MMM yyyy";
-            // if (tValue) {
-            // 	sValue = sValue + " " + tValue;
-            // }
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
@@ -42,10 +38,6 @@ sap.ui.define([], function () {
             var dateValue = dValue.toDateString();
             var timeValue = dValue.toLocaleTimeString();
             var pattern = "dd/MM/yyyy hh:mm a";
-            // var pattern = "dd MMM yyyy";  dd/MM/yyyy
-            // if (tValue) {
-            // 	sValue = sValue + " " + tValue;
-            // }
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
@@ -56,27 +48,34 @@ sap.ui.define([], function () {
 
         },
 
-        giveImage : function(oMetadata, ImageData){
-            if(oMetadata && oMetadata.media_src && !ImageData  )
-            {  
-                var sPathname = new URL(oMetadata.media_src).pathname;
-                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+        giveImage: function (oMetadata, ImageData) {
+            if (ImageData && ImageData.Image) {
+                return URL.createObjectURL(ImageData.Image);
             }
-            
-            if (ImageData)
-		 	return URL.createObjectURL(ImageData.Image);	
+            if (oMetadata && oMetadata.media_src) {
+                var sPathname = new URL(oMetadata.media_src).pathname;
+                return ("/KNPL_PAINTER_API").concat(sPathname);
+            }
+            return "";
         },
-        
-        giveAttendance : function(oMetadata, AttendanceData){
-            if(oMetadata && oMetadata.media_src && !AttendanceData  )
-            {  
+
+        giveAttendance: function (oMetadata, AttendanceData) {
+            if (oMetadata && oMetadata.media_src && !AttendanceData) {
                 var sPathname = new URL(oMetadata.media_src).pathname;
-                return ("/KNPL_PAINTER_API").concat(sPathname) ;
+                return ("/KNPL_PAINTER_API").concat(sPathname);
             }
-            
+
             if (AttendanceData)
-		 	return URL.createObjectURL(AttendanceData.Image);	
-		}
+                return URL.createObjectURL(AttendanceData.Image);
+        },
+
+        UploadStatus: function (fValue) {
+            if (fValue === true) {
+                return "Success";
+            } else {
+                return "Failure";
+            }
+        }
 
     };
 

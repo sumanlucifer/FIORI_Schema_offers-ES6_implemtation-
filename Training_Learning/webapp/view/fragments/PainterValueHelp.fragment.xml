@@ -1,0 +1,106 @@
+<core:FragmentDefinition
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <ValueHelpDialog
+        title="Painters"
+        ok=".onValueHelpOkPressPainter"
+        cancel=".onValueHelpCancelPressPainter"
+        afterClose=".onValueHelpAfterClosePainter"
+        afterOpen=".onValueHelpAfterOpenPainter"
+        supportRanges="false"
+        key="Id"
+        descriptionKey="Name">
+        <filterBar>
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ZoneId"
+                        label="Zone"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                             <m:ComboBox id="idSingleZone" placeholder="{i18n>enterZone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'PainterFilter>/ZoneId' }">
+                                    <core:Item text="{Id} " key="{Id}" />
+                             </m:ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="DivisionId"
+                        label="Division"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:ComboBox id="idSingleDivision" enabled="{= ${PainterFilter>/ZoneId}.length>1}" placeholder="{i18n>enterDivision}"  selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'PainterFilter>/DivisionId'}">
+                                <core:Item text="{Id}" key="{Id}" />
+                            </m:ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Depot/Depot"
+                        label="Depot"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:ComboBox id="idSingleDepot" enabled="{= ${PainterFilter>/DivisionId}.length>1}"  placeholder="{i18n>enterDepot}"  items="{/MasterDepotSet}" selectedKey="{path:'PainterFilter>/DepotId' }">
+                                <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                            </m:ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="PainterType/PainterType"
+                        label="Painter Type"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:ComboBox placeholder="{i18n>enterPainterType}" items="{/MasterPainterTypeSet}" selectedKey="{path:'PainterFilter>/PainterType'}">
+                                <core:Item text="{PainterType}" key="{Id}" />
+                            </m:ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="ArcheType/ArcheType"
+                        label="Painter ArcheType"
+                        visibleInFilterBar="true">
+                        <fb:control>   
+                            <m:ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
+                                <core:Item text="{ArcheType}" key="{Id}" />
+                            </m:ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="MembershipCard"
+                        label="Membership ID"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input value="{PainterFilter>/MembershipCard}" name="MembershipCard" placeholder="{i18n>enterMembershipCard}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Name"
+                        label="Name"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input  value="{PainterFilter>/Name}"  name="Name" placeholder="{i18n>enterName}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                      <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Mobile"
+                        label="Mobile Number"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input value="{PainterFilter>/Mobile}"  name="Mobile" placeholder="{i18n>enterMobile}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </filterBar>
+    </ValueHelpDialog>
+</core:FragmentDefinition>
+
+

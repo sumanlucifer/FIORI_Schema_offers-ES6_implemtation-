@@ -1,15 +1,10 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:u="sap.ui.unified" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblAttendance" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>AttendancetableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
+        <Table id="idTblAttendance" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails/PrimaryDealerDetails' }, sorter: { path: 'CreatedAt', descending: false } }" noDataText="{i18n>tableNoData}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/> 
-                    <HBox>
-                        <u:FileUploader visible="{= ${appView>/EditAttendance} === true}" id="idAttendanceFileUploader" width="90%" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized">
-                        </u:FileUploader>
-                        <!-- <Button visible="{= ${appView>/EditAttendance} === true}" text="Upload" press="onUploadAttendance"></Button> -->
-                    </HBox> 
-                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Attendance}"></SearchField>
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/Attendance}"></SearchField>
                 </Toolbar>
             </headerToolbar>
 
@@ -24,6 +19,21 @@
                     <Text text="{i18n>colMobileNumber}"/>
                 </Column>
                 <Column>
+                    <Text text="{i18n>colZone}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colDivision}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colDepot}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colPrDealer}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colEarnedPoint}"/>
+                </Column>
+                <Column>
                     <Text text="{i18n>colAttendanceDate}"/>
                 </Column>
             </columns>
@@ -31,12 +41,15 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <!-- <Text text="{PainterDetails/MembershipCard}" titleActive="true"/> -->
                         <ObjectIdentifier title="{PainterDetails/MembershipCard}" titleActive="true"/>
                         <Text text="{PainterDetails/Name}"/>
                         <Text text="{PainterDetails/Mobile}"/>
+                        <Text text="{PainterDetails/ZoneId}"/>
+                        <Text text="{PainterDetails/DivisionId}"/>
+                        <Text text="{PainterDetails/DepotId}"/>
+                        <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
+                        <Text text="{EarnedPoints}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
-                        <!-- <Text text="{parts: [ {path: 'AttendedAt'} ], formatter : '.formatter.formatDate' }"/> -->
                     </cells>
                 </ColumnListItem>
             </items>

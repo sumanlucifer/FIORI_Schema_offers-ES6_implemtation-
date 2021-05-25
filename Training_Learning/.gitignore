@@ -1,3 +1,10 @@
 /node_modules/
 /dist/
-
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2
+# auto generated wildcard
+training/Training_Learning/.env9
+# auto generated wildcard
+training/Training_Learning/.env10
+# auto generated wildcard
+Training/Training_Learning/.env11

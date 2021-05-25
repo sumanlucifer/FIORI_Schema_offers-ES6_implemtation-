@@ -1,2 +1,5 @@
 /node_modules/
 /dist/
+
+# auto generated wildcard
+Training/Training_Learning/.env11

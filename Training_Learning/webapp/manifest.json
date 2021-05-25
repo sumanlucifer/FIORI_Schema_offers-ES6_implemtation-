@@ -118,31 +118,15 @@
                     ]
                 },
                 {
-                    "pattern": "LearningSet/{objectId}",
-                    "name": "object",
-                    "target": [
-                        "object"
-                    ]
-                },
-                {
-                    "name": "createObject",
-                    "pattern": "LearningSet",
-                    "titleTarget": "",
-                    "greedy": false,
-                    "target": [
-                        "object"
-                    ]
-                },
-                {
                     "name": "RouteAddT",
-                    "pattern": "TrainingManage/{mode}/{id}",
+                    "pattern": "TrainingManage/{mode}/{trtype}/{id}",
                     "target": [
                         "TargetRouteAddT"
                     ]
                 },
                 {
                     "name": "RouteTrainingTab",
-                    "pattern": "TrainingTab/{mode}/{prop}",
+                    "pattern": "TrainingTab/{mode}/{trtype}/{prop}",
                     "target": [
                         "TargetTrainingTab"
                     ]
@@ -154,12 +138,6 @@
                     "viewId": "worklist",
                     "viewLevel": 1,
                     "title": "{i18n>worklistViewTitle}"
-                },
-                "object": {
-                    "viewName": "Object",
-                    "viewId": "object",
-                    "viewLevel": 2,
-                    "title": "{i18n>objectViewTitle}"
                 },
                 "TargetRouteAddT": {
                     "viewType": "XML",

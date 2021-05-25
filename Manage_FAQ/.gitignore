@@ -7,3 +7,6 @@
 *.env1
 *.zip
 .vscode/
+
+# auto generated wildcard
+Training/Training_Learning/.env11
