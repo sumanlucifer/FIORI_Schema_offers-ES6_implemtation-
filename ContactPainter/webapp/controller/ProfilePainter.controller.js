@@ -373,12 +373,106 @@ sap.ui.define(
           // this._postDataToSave();
         },
 
-        onCrossNavigate: function(sSemAction){
-              var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
-               oNavigationHandler.navigate("Manage", sSemAction, {Add: true});
+        // onCrossNavigate: function(sSemAction){
+        //       var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
+        //        oNavigationHandler.navigate("Manage", sSemAction, {Add: true});
+        // },
+
+        sActivationStatus : function(sStatus){
+
+            switch(sStatus){
+
+                case "ACTIVATED" : return "Activated" ;
+                case "DEACTIVATED"  : return "Deactivated";
+                case "NOT_CONTACTABLE" : return "Not Contactable";
+
+            }
+
         },
 
+        onCloseStatus : function(){
+            this.byId("ChangeStatus").close();
+        },
 
+        onChangeStatus: function(){
+
+
+            var oView = this.getView(),
+             aStatus = [ {key:"ACTIVATED"}, {key:"DEACTIVATED" },{key:"NOT_CONTACTABLE"}],
+             oModelControl = oView.getModel("oModelControl2"),
+             sCurrentStatus = oView.getBindingContext().getProperty("ActivationStatus"),
+             oChangeStatus = { 
+                 aApplicableStatus : aStatus.filter( ele => ele.key != sCurrentStatus ),
+                 oPayload : {
+                     ActivationStatus : "",
+                     ActivationStatusChangeReason : ""
+                 }
+             } ;
+        
+            oModelControl.setProperty("/oChangeStatus", oChangeStatus);
+
+			// create dialog lazily
+			if (!this.byId("ChangeStatus")) {
+				// load asynchronous XML fragment
+				Fragment.load({
+					id: oView.getId(),
+                    name: "com.knpl.pragati.ContactPainter.view.fragments.ChangeStatus",
+                    controller: this
+				}).then(function (oDialog) {
+					// connect dialog to the root view of this component (models, lifecycle)
+					oView.addDependent(oDialog);
+					oDialog.open();
+				});
+			} else {
+				this.byId("ChangeStatus").open();
+			}
+        },
+
+        onConfirmStatus: function(){
+            var oPayload = this.getView().getModel("oModelControl2").getProperty("/oChangeStatus/oPayload");
+
+            if(!oPayload.ActivationStatus) 
+                return;
+            
+            if(!oPayload.ActivationStatusChangeReason) 
+                return;
+
+            var sPath = this.getView().getBindingContext().getPath();    
+           this.getView().getModel().update(sPath 
+            + "/ActivationStatus", oPayload, {
+                success : function(){
+                    MessageToast.show(`Status has been changed to ${oPayload.ActivationStatus}`);
+                    this.onCloseStatus();
+                }.bind(this)
+            })    
+            
+
+        },
+
+        onCrossNavigate: function (sAction) {
+				this.Navigate({
+					target: {
+						semanticObject: "Manage",
+						action: sAction
+					}
+				});
+			},
+
+		Navigate: function (oSemAct) {
+				var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
+
+				oCrossAppNav.isNavigationSupported([{
+					target: {
+						shellHash: oSemAct.target.semanticObject.concat("-", oSemAct.target.action)
+					}
+				}]).done(function (aResponse) {
+					if (!(aResponse[0].supported)) return;
+
+					oCrossAppNav.toExternal(oSemAct);
+
+				});
+
+			},
 
         onPressSave: function () {
           var oView = this.getView();

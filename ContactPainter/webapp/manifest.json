@@ -114,6 +114,15 @@
         "type": "sap.ui.model.json.JSONModel"
       }
     },
+    "services": {
+			"ShellUIService": {
+				"factoryName": "sap.ushell.ui5service.ShellUIService",
+				"lazy": false,
+				"settings": {
+					"setTitle": "auto"
+				}
+			}
+	},
     "resources": {
       "css": [
         {
