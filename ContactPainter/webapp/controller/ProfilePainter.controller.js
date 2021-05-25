@@ -372,6 +372,14 @@ sap.ui.define(
           this.onPressSave();
           // this._postDataToSave();
         },
+
+        onCrossNavigate: function(sSemAction){
+              var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
+               oNavigationHandler.navigate("Manage", sSemAction, {Add: true});
+        },
+
+
+
         onPressSave: function () {
           var oView = this.getView();
           var oModelControl = oView.getModel("oModelControl");
