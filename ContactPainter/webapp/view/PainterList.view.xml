@@ -74,7 +74,6 @@
                                     <ComboBox placeholder="{i18n>SourceRegistration}"  selectedKey="{oModelControl>/filterBar/SourceRegistration}">
                                         <core:Item text="Mobile" key="MOBILE"/>
                                         <core:Item text="Portal" key="PORTAL"/>
-                                       
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
