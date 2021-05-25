@@ -84,6 +84,10 @@ modules:
       - LoyaltyManagement-content.zip
       name: LoyaltyManagement
       target-path: resources/
+    - artifacts:
+      - condonation-content.zip
+      name: condonation
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -201,6 +205,14 @@ modules:
 - name: LoyaltyManagement
   type: html5
   path: LoyaltyManagement
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: condonation
+  type: html5
+  path: condonation
   build-parameters:
     builder: custom
     commands:
