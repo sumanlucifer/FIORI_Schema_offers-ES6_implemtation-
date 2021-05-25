@@ -74,7 +74,7 @@
                                     <ComboBox placeholder="{i18n>SourceRegistration}"  selectedKey="{oModelControl>/filterBar/SourceRegistration}">
                                         <core:Item text="Mobile" key="MOBILE"/>
                                         <core:Item text="Portal" key="PORTAL"/>
-                                         <core:Item text="System Migrated" key="MIGRATED"/>
+                                       
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -161,7 +161,7 @@
                             <Text text="{path:'Preference/Language/Language'}"/>
                             <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
                             <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
-                            <Text text="{= ${ProfileCompleted}===true?'True':'False'}"/>
+                            <Text text="{= ${ProfileCompleted}===true?'Yes':'No'}"/>
                             <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
                             <HBox justifyContent="End">
                                  <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
