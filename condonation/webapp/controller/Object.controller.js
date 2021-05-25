@@ -4,12 +4,17 @@ sap.ui.define([
     "sap/ui/core/routing/History",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, History, formatter,Filter,FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/ValueState",
+    "sap/ui/core/Fragment",
+    "com/knpl/pragati/condonation/model/cmbxDtype2",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast"
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, cmbxDtype2, MessageBox, MessageToast) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.condonation.controller.Object", {
-
+        cmbxDtype2: cmbxDtype2,
         formatter: formatter,
 
         /* =========================================================== */
@@ -24,38 +29,197 @@ sap.ui.define([
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
             // between the busy indication for loading the view's meta data
-            var iOriginalBusyDelay,
-                oViewModel = new JSONModel({
-                    busy: true,
-                    delay: 0,
-                    ProductCategory: "",
-                    ProductClassification : "",
-                    aQuantity: [
-                        { key: 1 },
-                        { key: 2 },
-                        { key: 3 },
-                        { key: 4 },
-                        { key: 5 },
-                        { key: 6 },
-                        { key: 7 },
-                        { key: 8 },
-                        { key: 9 },
-                        { key: 10 }
-                    ]
-                });
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.getRoute("Add").attachMatched(this._onRouterMatched, this);
 
-            this.getRouter().getRoute("Add").attachPatternMatched(this._onAddMatched, this);
-            this.getRouter().getRoute("Edit").attachPatternMatched(this._onEditMatched, this);
-
-            // Store original busy indicator delay, so it can be restored later on
-            iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-            this.setModel(oViewModel, "objectView");
-            this.getOwnerComponent().getModel().metadataLoaded().then(function () {
-                // Restore original busy indicator delay for the object view
-                oViewModel.setProperty("/delay", iOriginalBusyDelay);
-            }
-            );
         },
+        _onRouterMatched: function (oEvent) {
+            this._initData();
+        },
+        _initData: function () {
+            var oView = this.getView();
+
+            var oDataControl = {
+                aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }],
+                aFileds: {
+                    MembershipId: "",
+                    PainterName: ""
+                }
+            };
+            var oDataView = {
+                PainterId: "",
+                AddFields: {
+                    CategoryId: "",
+                    ClassId: "",
+                    ProductId: "",
+                    Mobile: "",
+                    Name: "",
+                    MembershipCard: ""
+                },
+                Remark: "",
+                ComplaintSubtypeId: 1,
+                ComplaintTypeId: 1,
+                PainterComplainProducts: [{
+                    PainterId: "",//integer
+                    ProductSKUCode: "",
+                    ProductQuantity: 1,//integer
+                    Points: 0,//integer
+
+                }]
+            }
+            var oModel1 = new JSONModel(oDataView);
+            var oModel2 = new JSONModel(oDataControl)
+            oView.setModel(oModel1, "oModelView");
+            oView.setModel(oModel2, "oModelControl");
+            this._showFormFragment("Add");
+        },
+        onPressSave: function () {
+            console.log(this.getView().getModel("oModelView").getData());
+            this._postDataToSave();
+        },
+        _postDataToSave: function () {
+            var oView = this.getView();
+            var othat = this;
+            var oData = oView.getModel();
+            var oModelView = oView.getModel("oModelView");
+            var oPayLoad = Object.assign({}, oModelView.getData());
+            delete oPayLoad["AddFields"];
+            console.log(oPayLoad);
+            oData.create("/PainterComplainsSet", oPayLoad, {
+                success: function () {
+                    MessageToast.show("Condonation request Sucessfully Submitted.")
+                    othat.onNavBack();
+                },
+                error: function (a) {
+                    MessageBox.error(
+                        "Unable to create Condonation request due to the server issues",
+                        {
+                            title: "Error Code: " + a.statusCode,
+                        }
+                    );
+
+                }
+            })
+
+        },
+        onCategoryChange: function (oEvent) {
+            this._ClearProdPack()
+
+        },
+        onClassificationChange: function () {
+            this._ClearProdPack()
+        },
+        _ClearProdPack: function () {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            oModel.setProperty("/AddFields/ProductId", "")
+            oModel.setProperty("/PainterComplainProducts/0/ProductSKUCode", "");
+            oModel.refresh();
+            var oFilter = [];
+            var sCategory = oModel.getProperty("/AddFields/CategoryId");
+            var sClass = oModel.getProperty("/AddFields/ClassId");
+            if (sCategory) {
+                oFilter.push(new Filter("ProductCategory/Id", FilterOperator.EQ, sCategory));
+            }
+            if (sClass) {
+                oFilter.push(new Filter("ProductClassification/Id", FilterOperator.EQ, sClass));
+            }
+
+            oView.byId("Products").getBinding("items").filter(oFilter);
+        },
+        onProductChange: function (oEvent) {
+            var sKey = oEvent.getSource().getSelectedKey();
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            oModel.setProperty("/PainterComplainProducts/0/ProductSKUCode", "");
+            var aFilter = new Filter("ProductCode", FilterOperator.EQ, sKey);
+            oView.byId("Packs").getBinding("items").filter(aFilter)
+        },
+           onPackChange: function (oEvent) {
+            var oView = this.getView();
+            var sKey = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
+            var oModel = oView.getModel("oModelView");
+            oModel.setProperty("/PainterComplainProducts/0/Points",parseInt(sKey["Points"]))
+            console.log(parseInt(sKey["Points"]));
+
+        },
+        onValueHelpRequest: function (oEvent) {
+            var sInputValue = oEvent.getSource().getValue(),
+                oView = this.getView();
+
+            if (!this._pValueHelpDialog) {
+                this._pValueHelpDialog = Fragment.load({
+                    id: oView.getId(),
+                    name:
+                        "com.knpl.pragati.condonation.view.subview.ValueHelpDialog",
+                    controller: this,
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pValueHelpDialog.then(function (oDialog) {
+                // Create a filter for the binding
+                oDialog
+                    .getBinding("items")
+                    .filter([
+                        new Filter(
+                            [
+                                new Filter(
+                                    "tolower(Name)",
+                                    FilterOperator.Contains,
+                                    "'" +
+                                    sInputValue.trim().toLowerCase().replace("'", "''") +
+                                    "'"
+                                ),
+                                new Filter(
+                                    "Mobile",
+                                    FilterOperator.Contains,
+                                    sInputValue.trim()
+                                ),
+                            ],
+                            false
+                        ),
+                    ]);
+                // Open ValueHelpDialog filtered by the input's value
+                oDialog.open(sInputValue);
+            });
+        },
+        onValueHelpSearch: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new Filter(
+                [
+                    new Filter(
+                        "tolower(Name)",
+                        FilterOperator.Contains,
+                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                    ),
+                    new Filter("Mobile", FilterOperator.Contains, sValue.trim()),
+                ],
+                false
+            );
+
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        onValueHelpClose: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            var oViewModel = this.getView().getModel("oModelView");
+            if (!oSelectedItem) {
+                return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+            oViewModel.setProperty(
+                "/AddFields/MembershipCard",
+                obj["MembershipCard"]
+            );
+            oViewModel.setProperty("/AddFields/Mobile", obj["Mobile"]);
+            oViewModel.setProperty("/AddFields/Name", obj["Name"]);
+            oViewModel.setProperty("/PainterId", obj["Id"]);
+            oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
+        },
+        
+
 
         /* =========================================================== */
         /* event handlers                                              */
@@ -77,6 +241,36 @@ sap.ui.define([
                 this.getRouter().navTo("worklist", {}, true);
             }
         },
+        _showFormFragment: function (sFragmentName) {
+            var objSection = this.getView().byId("oVbxSmtTbl");
+            var oView = this.getView();
+            objSection.destroyItems();
+            var othat = this;
+            this._getFormFragment(sFragmentName).then(function (oVBox) {
+                oView.addDependent(oVBox);
+                objSection.addItem(oVBox);
+                //othat._setDataValue.call(othat);
+                //othat._setUploadCollectionMethod.call(othat);
+            });
+        },
+
+        _getFormFragment: function (sFragmentName) {
+            var oView = this.getView();
+            var othat = this;
+            // if (!this._formFragments) {
+            this._formFragments = Fragment.load({
+                id: oView.getId(),
+                name:
+                    "com.knpl.pragati.condonation.view.subview." + sFragmentName,
+                controller: othat,
+            }).then(function (oFragament) {
+                return oFragament;
+            });
+            // }
+
+            return this._formFragments;
+
+        },
 
         /* =========================================================== */
         /* internal methods                                            */
@@ -88,23 +282,7 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
 		 * @private
 		 */
-        _onEditMatched: function (oEvent) {
-            var sObjectId = oEvent.getParameter("arguments").objectId;
-            this.getModel().metadataLoaded().then(function () {
-                var sObjectPath = this.getModel().createKey("PainterSet", {
-                    Id: sObjectId
-                });
-                this._bindView("/" + sObjectPath);
-            }.bind(this));
-        },
 
-        _onAddMatched: function () {
-            this._setView();
-
-
-
-
-        },
 
 
         _setView: function () {
@@ -179,23 +357,23 @@ sap.ui.define([
             oViewModel.setProperty("/shareSendEmailMessage",
                 oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         },
+     
 
 
-        
 
-        _filterProduct: function(aFilters){
-          
-          var oViewModel = this.getModel("objectView"),
-                aFilters = [  ];
+        _filterProduct: function (aFilters) {
 
-            if( oViewModel.getProperty("/ProductCategory"))
-                aFilters.push(new Filter ("ProductCategory/Id", FilterOperator.EQ, oViewModel.getProperty("/ProductCategory") ));
+            var oViewModel = this.getModel("objectView"),
+                aFilters = [];
 
-            if(oViewModel.getProperty("/ProductClassification"))
-                aFilters.push(new Filter ("ProductClassification/Id" ,FilterOperator.EQ ,oViewModel.getProperty("/ProductClassification")  ));
+            if (oViewModel.getProperty("/ProductCategory"))
+                aFilters.push(new Filter("ProductCategory/Id", FilterOperator.EQ, oViewModel.getProperty("/ProductCategory")));
 
-            this.getView().byId( sap.ui.core.Fragment.createId("Add", "Product") ).getBinding("items").filter(aFilters);
-       
+            if (oViewModel.getProperty("/ProductClassification"))
+                aFilters.push(new Filter("ProductClassification/Id", FilterOperator.EQ, oViewModel.getProperty("/ProductClassification")));
+
+            this.getView().byId(sap.ui.core.Fragment.createId("Add", "Product")).getBinding("items").filter(aFilters);
+
             oViewModel.setProperty("/ProductId", "");
         }
 
