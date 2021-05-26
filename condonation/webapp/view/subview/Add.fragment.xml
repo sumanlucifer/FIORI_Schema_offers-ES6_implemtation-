@@ -1,18 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-        <f:SimpleForm title="{i18n>AddComplaint}"  editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:SimpleForm id="FormCondonation" title="{i18n>AddComplaint}"  editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>TtlProductDetails}" />
 
 
                 <Label text="{i18n>LblCategory}" />
-                <ComboBox selectionChange="onCategoryChange" required="true" items="{path:'/MasterProductCategorySet' , parameters:{expand:'ProductClassification'} }" selectedKey="{path:'oModelView>/AddFields/CategoryId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox selectionChange="onCategoryChange" required="true" items="{path:'/MasterProductCategorySet'  }" selectedKey="{path:'oModelView>/AddFields/CategoryId',type :'sap.ui.model.type.String', constraints:{minLength:1,maxLength:10} }">
                     <items>
                        <core:Item key="{Id}" text="{Category}" />
                     </items>
                 </ComboBox>
 
                 <Label text="{i18n>LblClassification}" />
-                <ComboBox  selectionChange="onClassificationChange" required="true" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelView>/AddFields/ClassId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox  selectionChange="onClassificationChange" required="true" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelView>/AddFields/ClassId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
                     <items>
                       <core:Item key="{Id}" text="{Classification}" />
                     </items>
@@ -20,13 +20,13 @@
 
               
                 <Label text="{i18n>LblProduct}" />
-                <ComboBox id="Products" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox id="Products" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
                     <items>
                          <core:Item key="{Id}" text="{ProductName}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>Pack}" />
-                <ComboBox id="Packs" change="onPackChange" required="true" items="{path:'/MasterRepProductSkuSet' }" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductSKUCode',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox id="Packs" change="onPackChange" required="true" items="{path:'/MasterRepProductSkuSet' }" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductSKUCode',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
                     <items>
                          <core:Item key="{SkuCode}" text="{Description}" />
                     </items>
@@ -41,7 +41,7 @@
                <Text text="{= ${oModelView>/PainterComplainProducts/0/Points} * ${oModelView>/PainterComplainProducts/0/ProductQuantity}}"  />
                 <core:Title text="{i18n>LblPainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
-                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1, maxLength:10} }" />
                 <Label text="{i18n>PainterName}" />
                 <Text text="{oModelView>/AddFields/Name}" />
                 <Label text="{i18n>MembershipId}" />
@@ -55,7 +55,7 @@
                  <Label text="{i18n>PrimaryDealer}" />
                 <Text  text="{oModelView>/AddFields/PDealer}" />
                    <Label text="{i18n>Remark}"/>
-            <TextArea required="true" value="{oModelView>/Remark}" />
+            <TextArea required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.String',constraints:{minLength:1}}" />
 
                 <!-- <Label text="{i18n>PainterName}" />
                 <Input editable="false" value="{oModelView>/addCompAddData/Name}" />

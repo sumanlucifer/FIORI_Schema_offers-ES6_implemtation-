@@ -8,9 +8,10 @@ sap.ui.define([
     "sap/ui/core/ValueState",
     "sap/ui/core/Fragment",
     "com/knpl/pragati/condonation/model/cmbxDtype2",
+    "com/knpl/pragati/condonation/controller/Validator",
     "sap/m/MessageBox",
     "sap/m/MessageToast"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, cmbxDtype2, MessageBox, MessageToast) {
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, cmbxDtype2, Validator, MessageBox, MessageToast) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.condonation.controller.Object", {
@@ -29,8 +30,21 @@ sap.ui.define([
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
             // between the busy indication for loading the view's meta data
+            sap.ui.getCore().attachValidationError(function (oEvent) {
+                if (oEvent.getParameter("element").getRequired()) {
+                    oEvent.getParameter("element").setValueState(ValueState.Error);
+                } else {
+                    oEvent.getParameter("element").setValueState(ValueState.None);
+                }
+            });
+            sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                oEvent.getParameter("element").setValueState(ValueState.None);
+            });
+
+
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("Add").attachMatched(this._onRouterMatched, this);
+
 
         },
         _onRouterMatched: function (oEvent) {
@@ -56,10 +70,10 @@ sap.ui.define([
                     Name: "",
                     MembershipCard: "",
                     Points: 0,
-                    ZoneId:"",
-                    DivisionId:"",
-                    Depot:"",
-                    PDealer:""
+                    ZoneId: "",
+                    DivisionId: "",
+                    Depot: "",
+                    PDealer: ""
                 },
                 Remark: "",
                 ComplaintStatus: "RESOLVED",
@@ -80,8 +94,18 @@ sap.ui.define([
             this._showFormFragment("Add");
         },
         onPressSave: function () {
+
             console.log(this.getView().getModel("oModelView").getData());
-            this._postDataToSave();
+            var oView = this.getView();
+          var oValidate = new Validator();
+          var oForm = oView.byId("FormCondonation");
+
+          var bFlagValidate = oValidate.validate(oForm);
+          if (bFlagValidate == false) {
+            MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+            return;
+          }
+           this._postDataToSave();
         },
         _postDataToSave: function () {
             var oView = this.getView();
@@ -220,11 +244,11 @@ sap.ui.define([
                     oViewModel.setProperty("/AddFields/ZoneId", obj["ZoneId"]);
                     oViewModel.setProperty("/AddFields/DivisionId", obj["DivisionId"]);
                     oViewModel.setProperty("/PainterId", obj["Id"]);
-                    if(obj["Depot"]){
-                         oViewModel.setProperty("/AddFields/Depot", obj["Depot"]["Depot"]);
+                    if (obj["Depot"]) {
+                        oViewModel.setProperty("/AddFields/Depot", obj["Depot"]["Depot"]);
                     }
-                    if(obj["PrimaryDealerDetails"]){
-                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
+                    if (obj["PrimaryDealerDetails"]) {
+                        oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
                     }
                 },
                 error: function () {
