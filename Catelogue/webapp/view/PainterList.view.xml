@@ -106,7 +106,7 @@
                                             <Text
                                             text="{Painter/Division/Zone}" />
                                             <Text
-                                            text="{painter/Depot/Division}" />
+                                            text="{Painter/Depot/Division}" />
                                             <Text
                                             text="{Painter/Depot/Depot}" />
                                         
