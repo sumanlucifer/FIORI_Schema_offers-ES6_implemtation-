@@ -89,7 +89,7 @@ modules:
       name: SchemeOffers
       target-path: resources/
     - artifacts:
-      - condonation-offers-content.zip
+      - condonation-content.zip
       name: condonation
       target-path: resources/
 - name: MDM
