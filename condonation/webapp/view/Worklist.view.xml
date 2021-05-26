@@ -78,7 +78,7 @@
                 </columns>
 
                 <items>
-                    <ColumnListItem press="onListItemPress" type="Navigation">
+                    <ColumnListItem>
                         <cells>
                             <Text text="{Painter/Name}"/>
                             <Text text="{Painter/MembershipCard}"/>
