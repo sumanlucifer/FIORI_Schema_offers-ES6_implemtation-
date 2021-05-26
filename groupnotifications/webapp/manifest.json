@@ -113,12 +113,21 @@
                     ]
                 },
                 {
-                    "pattern": "MasterZoneSet/{objectId}",
-                    "name": "object",
-                    "target": [
-                        "object"
-                    ]
-                }
+					"pattern": "NotificationGroupSet/{objectId}",
+					"name": "object",
+					"target": [
+						"object"
+					]
+				},
+				{
+					"name": "createObject",
+					"pattern": "NotificationGroupSet",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"object"
+					]
+				}
             ],
             "targets": {
                 "worklist": {
@@ -127,12 +136,12 @@
                     "viewLevel": 1,
                     "title": "{i18n>worklistViewTitle}"
                 },
-                "object": {
-                    "viewName": "Object",
-                    "viewId": "object",
-                    "viewLevel": 2,
-                    "title": "{i18n>objectViewTitle}"
-                },
+               "object": {
+					"viewName": "Object",
+					"viewId": "object",
+					"viewLevel": 2,
+					"title": "{i18n>objectViewTitle}"
+				},
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",
                     "viewId": "objectNotFound"

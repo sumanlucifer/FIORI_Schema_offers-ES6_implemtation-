@@ -9,7 +9,6 @@ sap.ui.define([
 
 	return BaseController.extend("com.knpl.pragati.groupnotifications.controller.Worklist", {
 
-		
 		formatter: formatter,
 
 		/* =========================================================== */
@@ -52,12 +51,12 @@ sap.ui.define([
 				oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 			});
 			// Add the worklist page to the flp routing history
-			this.addHistoryEntry({
-				title: this.getResourceBundle().getText("worklistViewTitle"),
-				icon: "sap-icon://table-view",
-				intent: "#Groups-display"
-			}, true);
-		},
+		// 	this.addHistoryEntry({
+		// 		title: this.getResourceBundle().getText("worklistViewTitle"),
+		// 		icon: "sap-icon://table-view",
+		// 		intent: "#Groups-display"
+		// 	}, true);
+		 },
 
 		/* =========================================================== */
 		/* event handlers                                              */
@@ -227,5 +226,5 @@ sap.ui.define([
 			}
 		}
 
-    });
+	});
 });

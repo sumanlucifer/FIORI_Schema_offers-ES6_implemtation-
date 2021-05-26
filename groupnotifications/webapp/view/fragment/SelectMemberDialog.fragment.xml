@@ -1,12 +1,21 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<TableSelectDialog id="tableDialog" noDataText="{i18n>NoUsersFound}" title="{i18n>SelectUsers}" search=".handleSearch"
 		confirm=".handleConfirm" cancel=".handleClose"
-		items="{ path : '/UserSet', parameters : { expand : 'Role', select : 'Id,FirstName,LastName,Email,RoleId,Role/Role' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'RoleId' , operator : 'NE' , value1 : 4 } ], sorter : [ { path : 'RoleId', descending : false }, { path : 'FirstName', descending : false } ] }">
+		items="{ path : '/UserSet', parameters : { expand : 'Admin,Role,Painter', select : 'Id,Admin/Name,Painter/Name,Admin/Email,Painter/Email,RoleId,Role/Role' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'RoleId' , operator : 'NE' , value1 : 4 } ], sorter : [ { path : 'RoleId', descending : false } ] }">
 		<ColumnListItem id ="userDialog">
 			<cells>
-				<Text text="{FirstName}"/>
-				<Text text="{LastName}"/>
-				<Text text="{Email}"/>
+            <FlexBox >
+				<Text text="{Admin/Name} "  visible="{=${Admin} !== null }"/>
+                <Text text="{Painter/Name} "  visible="{=${Painter} !== null }"/>
+            </FlexBox>
+            <FlexBox >
+				<Text text="{Admin/Mobile} "  visible="{=${Admin} !== null }"/>
+                <Text text="{Painter/Mobile} "  visible="{=${Painter} !== null }"/>
+            </FlexBox>
+            <FlexBox >
+				<Text text="{Admin/Email} "  visible="{=${Admin} !== null }"/>
+                <Text text="{Painter/Email} "  visible="{=${Painter} !== null }"/>
+            </FlexBox>
 				<Text text="{Role/Role}"/>
 			</cells>
 		</ColumnListItem>
@@ -15,7 +24,7 @@
 				<Text text="{i18n>colFirstName}"/>
 			</Column>
 			<Column>
-				<Text text="{i18n>colLastName}"/>
+				<Text text="{i18n>colMobile}"/>
 			</Column>
 			<Column>
 				<Text text="{i18n>colEmail}"/>

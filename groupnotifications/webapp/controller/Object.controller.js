@@ -1,13 +1,12 @@
 sap.ui.define([
 	"./BaseController",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/routing/History",
-    "../model/formatter",
+	"../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/core/Fragment",
 	"sap/ui/core/syncStyleClass"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, Fragment, syncStyleClass) {
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, syncStyleClass) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.groupnotifications.controller.Object", {
