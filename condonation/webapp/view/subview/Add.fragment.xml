@@ -38,7 +38,7 @@
                 </Select>    
                
                <Label text="{i18n>LblTotalPoints}" />
-               <Text text="{oModelView>/PainterComplainProducts/0/Points}"  />
+               <Text text="{= ${oModelView>/PainterComplainProducts/0/Points}*${oModelView>/PainterComplainProducts/0/ProductQuantity} }"  />
                 <core:Title text="{i18n>LblPainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
                 <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1, maxLength:10} }" />
@@ -55,7 +55,7 @@
                  <Label text="{i18n>PrimaryDealer}" />
                 <Text  text="{oModelView>/AddFields/PDealer}" />
                 <Label text="{i18n>Remark}"/>
-                 <TextArea maxLength="50" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:50}}" />
+                <TextArea maxLength="50" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:50}}" />
 
                 <!-- <Label text="{i18n>PainterName}" />
                 <Input editable="false" value="{oModelView>/addCompAddData/Name}" />

@@ -487,7 +487,7 @@ sap.ui.define(
                         var sPath = "/" + mParam1[0];
                         var oData = this.getView().getModel().getProperty(sPath);
                         if (oData) {
-                            return oData["Points"];
+                            return oData["Points"] * oData["ProductQuantity"];
                         } else {
                             return "NA";
                         }

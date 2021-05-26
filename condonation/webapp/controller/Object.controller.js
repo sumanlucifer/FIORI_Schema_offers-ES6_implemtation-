@@ -263,10 +263,10 @@ sap.ui.define([
         onPointsChange: function (oEvent) {
             var oView = this.getView();
             var oModel = oView.getModel("oModelView");
-            var iPoints = oModel.getProperty("/PainterComplainProducts/0/Points");
-            var sKey = oEvent.getSource().getSelectedKey();
-            var aNewPoints = iPoints * sKey;
-            oModel.setProperty("/PainterComplainProducts/0/Points", aNewPoints);
+            // var iPoints = oModel.getProperty("/PainterComplainProducts/0/Points");
+            // var sKey = oEvent.getSource().getSelectedKey();
+            // var aNewPoints = iPoints * sKey;
+            // oModel.setProperty("/PainterComplainProducts/0/Points", aNewPoints);
 
         },
         /* =========================================================== */
