@@ -32,10 +32,10 @@
 							</headerToolbar>
 							<columns>
 								<Column>
-									<Text text="{i18n>colFirstName}"/>
+									<Text text="{i18n>colName}"/>
 								</Column>
 								<Column>
-									<Text text="{i18n>colLastName}"/>
+									<Text text="{i18n>colMobile}"/>
 								</Column>
 								<Column>
 									<Text text="{i18n>colEmail}"/>
@@ -47,8 +47,8 @@
 							<items>
 								<ColumnListItem>
 									<cells>
-										<Text text="{objectView>FirstName}" visible="{= ${objectView>IsArchived} !== true }"/>
-										<Text text="{objectView>LastName}" visible="{= ${objectView>IsArchived} !== true }"/>
+										<Text text="{objectView>Name}" visible="{= ${objectView>IsArchived} !== true }"/>
+										<Text text="{objectView>Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
 										<Text text="{objectView>Email}" visible="{= ${objectView>IsArchived} !== true }"/>
 										<Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/>
 									</cells>

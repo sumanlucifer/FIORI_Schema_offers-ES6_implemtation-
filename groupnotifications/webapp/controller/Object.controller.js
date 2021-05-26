@@ -93,7 +93,7 @@ sap.ui.define([
 				// this._bindView("/" + sObjectPath, sObjectId);
 				this.getModel().read(sObjectPath, {
 					urlParameters: {
-						"$expand": "Members/Role"
+						"$expand": "Members,Members/Painter,Members/Admin,Members/Role"
 					},
 					success: this._setView.bind(this)
 				});
@@ -368,10 +368,9 @@ sap.ui.define([
 				};
 			}
 			var oSorter = new sap.ui.model.Sorter("RoleId", false);
-			// var oSorter = new sap.ui.model.Sorter("FirstName", false );
-			// { path : 'FirstName', descending : false }
-			var sExpand = "Role";
-			var sSelect = "Id,FirstName,LastName,Email,RoleId,Role/Role";
+			
+			var sExpand = "Admin,Role,Painter";
+			var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Painter/Email,RoleId,Role/Role";
 
 			this._Template = this._Template ? this._Template : sap.ui.getCore().byId("userDialog");
 			var aFilters = new sap.ui.model.Filter({

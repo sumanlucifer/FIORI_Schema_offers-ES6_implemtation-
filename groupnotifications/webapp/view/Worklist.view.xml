@@ -52,11 +52,8 @@
 					<Column width="20%">
 						<Text text="{i18n>colCreator}"/>
 					</Column>
-					<Column width="4%">
-						<Text text="{i18n>colEdit}"/>
-					</Column>
-					<Column width="6%">
-						<Text text="{i18n>colRemove}"/>
+					<Column >
+						<Text text="{i18n>colAction}"/>
 					</Column>
 				</columns>
 				<items>
@@ -65,9 +62,11 @@
 							<Text text="{GroupName}"/>
 							<Text text="{TotalMembers}"/>
 							<Text text="{= ${CreatorName}=== null ? 'SYSTEM' : ${CreatorName} }"/>
-							<Button icon="sap-icon://edit" visible="{= ${IsDefault} !== true }" press="onEdit" type="Transparent"/>
+                            <FlexBox >
+							<Button icon="sap-icon://edit"  press="onEdit" type="Transparent"/>
 							<Button icon="sap-icon://delete" visible="{= ${IsDefault} !== true }" press="onDelete" type="Transparent" tooltip="remove"/>
-						</cells>
+                            </FlexBox>
+                        </cells>
 					</ColumnListItem>
 				</items>
 			</Table>
