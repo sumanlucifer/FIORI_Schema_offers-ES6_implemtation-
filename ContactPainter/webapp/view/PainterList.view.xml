@@ -86,11 +86,20 @@
                 </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>RegistrationStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" id="cmbx" selectedKey="{oModelControl>/filterBar/RegistrationStatus}">
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>RegistrationStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/RegistrationStatus}">
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Registered" key="REGISTERED"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ActivationStatus" label="{i18n>ActivationStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>ActivationStatus}" selectedKey="{oModelControl>/filterBar/ActivationStatus}">
+                                        <core:Item text="Activated" key="ACTIVATED"/>
+                                        <core:Item text="Deactivated" key="DEACTIVATED"/>
+                                        <core:Item text="Not Contactable" key="NOT_CONTACTABLE"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -138,9 +147,9 @@
                     <Column>
                         <Text text="{i18n>ProfileCompleted}"/>
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>RegStatus}"/>
-                    </Column>
+                    </Column> -->
                     <Column width="8%">
                         <Text text="{i18n>Action}"/>
                     </Column>
@@ -149,7 +158,11 @@
                 <items>
                     <ColumnListItem press="onListItemPress" type="Navigation">
                         <cells>
+                            <HBox  >
+                            <core:Icon class="sapUiTinyMarginEnd" src="{path:'RegistrationStatus',formatter:'.formatter.RegStatusIcon'}" 
+                                       color="{path:'RegistrationStatus',formatter:'.formatter.RegStatusColor'}" />
                             <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
+                            </HBox>
                             <VBox width="100%" >
                                 <Text text="{MembershipCard}" visible="{= ${MembershipCard} !== null }"/>
                                 <Button tooltip="{i18n>GenerateMId}" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
@@ -161,7 +174,7 @@
                             <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
                             <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
                             <Text text="{= ${ProfileCompleted}===true?'Yes':'No'}"/>
-                            <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/>
+                            <!-- <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/> -->
                             <HBox justifyContent="End">
                                  <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                                 <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>

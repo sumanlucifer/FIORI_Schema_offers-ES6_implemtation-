@@ -378,24 +378,13 @@ sap.ui.define(
         //        oNavigationHandler.navigate("Manage", sSemAction, {Add: true});
         // },
 
-        sActivationStatus : function(sStatus){
-
-            switch(sStatus){
-
-                case "ACTIVATED" : return "Activated" ;
-                case "DEACTIVATED"  : return "Deactivated";
-                case "NOT_CONTACTABLE" : return "Not Contactable";
-
-            }
-
-        },
+       
 
         onCloseStatus : function(){
             this.byId("ChangeStatus").close();
         },
 
         onChangeStatus: function(){
-
 
             var oView = this.getView(),
              aStatus = [ {key:"ACTIVATED"}, {key:"DEACTIVATED" },{key:"NOT_CONTACTABLE"}],
