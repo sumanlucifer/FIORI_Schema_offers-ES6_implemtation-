@@ -315,7 +315,7 @@ sap.ui.define(
 
                 handleSortButtonPressed: function () {
                     this.getViewSettingsDialog(
-                        "com.knpl.pragati.Complaints.view.fragments.SortDialog"
+                        "com.knpl.pragati.condonation.view.subview.SortDialog"
                     ).then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
@@ -341,7 +341,7 @@ sap.ui.define(
                     var sId = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-                   
+
                     var oDivision = oView.byId("idDivision");
                     var oDivItems = oDivision.getBinding("items");
                     var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
@@ -483,6 +483,21 @@ sap.ui.define(
                 onRefresh: function () {
                     var oTable = this.byId("table");
                     oTable.getBinding("items").refresh();
+                },
+                fmtPoints: function (mParam1) {
+                    console.log(mParam1);
+                    if (mParam1) {
+                        var sPath = "/" + mParam1[0];
+                        var oData = this.getView().getModel().getProperty(sPath);
+                        if (oData) {
+                            return oData["Points"];
+                        } else {
+                            return "NA";
+                        }
+
+                    }
+                    return "NA"
+
                 },
 
                 /* =========================================================== */
