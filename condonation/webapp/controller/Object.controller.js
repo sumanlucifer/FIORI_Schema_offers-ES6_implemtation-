@@ -40,7 +40,7 @@ sap.ui.define([
             var oView = this.getView();
 
             var oDataControl = {
-                aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }],
+                aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
                     MembershipId: "",
                     PainterName: ""
@@ -54,9 +54,15 @@ sap.ui.define([
                     ProductId: "",
                     Mobile: "",
                     Name: "",
-                    MembershipCard: ""
+                    MembershipCard: "",
+                    Points: 0,
+                    ZoneId:"",
+                    DivisionId:"",
+                    Depot:"",
+                    PDealer:""
                 },
                 Remark: "",
+                ComplaintStatus: "RESOLVED",
                 ComplaintSubtypeId: 1,
                 ComplaintTypeId: 1,
                 PainterComplainProducts: [{
@@ -135,11 +141,11 @@ sap.ui.define([
             var aFilter = new Filter("ProductCode", FilterOperator.EQ, sKey);
             oView.byId("Packs").getBinding("items").filter(aFilter)
         },
-           onPackChange: function (oEvent) {
+        onPackChange: function (oEvent) {
             var oView = this.getView();
             var sKey = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
             var oModel = oView.getModel("oModelView");
-            oModel.setProperty("/PainterComplainProducts/0/Points",parseInt(sKey["Points"]))
+            oModel.setProperty("/PainterComplainProducts/0/Points", parseInt(sKey["Points"]))
             console.log(parseInt(sKey["Points"]));
 
         },
@@ -160,29 +166,9 @@ sap.ui.define([
             }
             this._pValueHelpDialog.then(function (oDialog) {
                 // Create a filter for the binding
-                oDialog
-                    .getBinding("items")
-                    .filter([
-                        new Filter(
-                            [
-                                new Filter(
-                                    "tolower(Name)",
-                                    FilterOperator.Contains,
-                                    "'" +
-                                    sInputValue.trim().toLowerCase().replace("'", "''") +
-                                    "'"
-                                ),
-                                new Filter(
-                                    "Mobile",
-                                    FilterOperator.Contains,
-                                    sInputValue.trim()
-                                ),
-                            ],
-                            false
-                        ),
-                    ]);
+
                 // Open ValueHelpDialog filtered by the input's value
-                oDialog.open(sInputValue);
+                oDialog.open();
             });
         },
         onValueHelpSearch: function (oEvent) {
@@ -209,16 +195,44 @@ sap.ui.define([
                 return;
             }
             var obj = oSelectedItem.getBindingContext().getObject();
-            oViewModel.setProperty(
-                "/AddFields/MembershipCard",
-                obj["MembershipCard"]
-            );
-            oViewModel.setProperty("/AddFields/Mobile", obj["Mobile"]);
-            oViewModel.setProperty("/AddFields/Name", obj["Name"]);
-            oViewModel.setProperty("/PainterId", obj["Id"]);
+
             oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
+            this._getPainterDetails(obj["Id"]);
         },
-        
+        _getPainterDetails: function (mParam) {
+            var oView = this.getView();
+            var oData = oView.getModel();
+            var oViewModel = oView.getModel("oModelView");
+            var sPath = "/PainterSet(" + mParam + ")";
+            oData.read(sPath, {
+                urlParameters: {
+                    $expand: 'Depot,PrimaryDealerDetails',
+                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName'
+                },
+                success: function (obj) {
+                    console.log(obj)
+                    oViewModel.setProperty(
+                        "/AddFields/MembershipCard",
+                        obj["MembershipCard"]
+                    );
+                    oViewModel.setProperty("/AddFields/Mobile", obj["Mobile"]);
+                    oViewModel.setProperty("/AddFields/Name", obj["Name"]);
+                    oViewModel.setProperty("/AddFields/ZoneId", obj["ZoneId"]);
+                    oViewModel.setProperty("/AddFields/DivisionId", obj["DivisionId"]);
+                    oViewModel.setProperty("/PainterId", obj["Id"]);
+                    if(obj["Depot"]){
+                         oViewModel.setProperty("/AddFields/Depot", obj["Depot"]["Depot"]);
+                    }
+                    if(obj["PrimaryDealerDetails"]){
+                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        },
+
 
 
         /* =========================================================== */
@@ -357,7 +371,7 @@ sap.ui.define([
             oViewModel.setProperty("/shareSendEmailMessage",
                 oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         },
-     
+
 
 
 

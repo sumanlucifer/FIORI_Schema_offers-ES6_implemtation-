@@ -24,7 +24,7 @@
         </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[  {path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
