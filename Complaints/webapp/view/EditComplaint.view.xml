@@ -1,59 +1,68 @@
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint"  xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage showFooter="true" id="dynamicPageId" headerExpanded="true">
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage 	stickySubheaderProvider="iconTabBar"
+			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                   <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{ComplaintType/ComplaintType}"/>
                 </f:heading>
-                	<f:breadcrumbs>
-						<Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
                         <Link text="{i18n>worklistTitle}" press="onNavBack"/>
                     </Breadcrumbs>
-					</f:breadcrumbs>
-                	<f:expandedContent>
-						<Label text="{ComplaintCode}"/>
-					</f:expandedContent>
-					<f:snappedContent>
-						<Label text="{ComplaintCode}"/>
-					</f:snappedContent>
-					<f:snappedTitleOnMobile>
-						<Title text="{ComplaintType/ComplaintType}"/>
-					</f:snappedTitleOnMobile>
+                </f:breadcrumbs>
+                <f:expandedContent>
+                    <Label text="{ComplaintCode}"/>
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label text="{ComplaintCode}"/>
+                </f:snappedContent>
+                <f:snappedTitleOnMobile>
+                    <Title text="{ComplaintType/ComplaintType}"/>
+                </f:snappedTitleOnMobile>
             </f:DynamicPageTitle>
         </f:title>
-        	<f:header>
-				<f:DynamicPageHeader pinnable="true">
-					<layout:HorizontalLayout allowWrapping="false">
-						<layout:VerticalLayout class="sapUiMediumMarginEnd">
-							<ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
-							<ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
-							
-						</layout:VerticalLayout>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="false">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
+                        <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
 
-						 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
-                                <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
-                        </layout:VerticalLayout>
-                        <layout:VerticalLayout>
-                            <Label text="{i18n>Status}:"/>
-							<ObjectStatus
-                                class="sapMObjectStatusLarge"
-                                text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"
-                                state="None" />
-							
-						</layout:VerticalLayout>
-					</layout:HorizontalLayout>
-				</f:DynamicPageHeader>
-			</f:header>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
+                        <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <Label text="{i18n>Status}:"/>
+                        <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
+
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
         <f:content>
-            <VBox id="idVbx" renderType="Bare">
-            
-            </VBox>
+            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+                <items>
+                    <IconTabFilter  text="{i18n>Overview}" >
+                        <VBox id="idVbx" width="100%">
+                          </VBox>
+                        </IconTabFilter>
+                         <IconTabFilter  text="{i18n>History}" >
+                            <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/> -->
+                                <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+         
         </f:content>
         <f:footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                    <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
-                    <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
+                <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
+                   <Button text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
+                <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
             </Toolbar>
         </f:footer>
     </f:DynamicPage>

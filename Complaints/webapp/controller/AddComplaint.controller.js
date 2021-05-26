@@ -91,6 +91,7 @@ sap.ui.define(
               RewardPoints: "",
               RewardGiftId: "",
               ResolutionOthers: "",
+              ComplaintDescription:""
             },
             addCompAddData: {
               MembershipCard: "",
@@ -278,19 +279,45 @@ sap.ui.define(
           oCmbxSubType.clearSelection();
           oCmbxSubType.setValue("");
           oCmbxSubType.getBinding("items").filter(oFilter);
+
+          // clearning the inreview and the resolution
+        //   oView.byId("scenario").setSelectedKey("");
+        //   oView.byId("resolution").setSelectedKey("");
         },
         onComplainSubTypeChange: function (oEvent) {
           var sKey = oEvent.getSource().getSelectedKey();
           var oView = this.getView();
           var oViewModel = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
-         
+
           if (sKey == "2" || sKey == "3") {
             oViewModel.setProperty("/addComplaint/RewardPoints", "");
             oViewModel.setProperty("/addComplaint/TokenCode", "");
             oModelControl.setProperty("/tokenCodeValue", "");
             oModelControl.setProperty("/TokenCode", true);
           }
+          // clearning the inreview and the resolution
+           oViewModel.setProperty("/addComplaint/ComplaintDescription", "");
+        },
+        onSenarioChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
+          var oView = this.getView();
+          var sSuTypeId = oView
+            .getModel("oModelView")
+            .getProperty("/addComplaint/ComplaintSubtypeId");
+          
+          var oResolution = oView.byId("resolution");
+          //clearning the serction for the resolution
+          var aFilter = [];
+          if (sKey) {
+            aFilter.push(new Filter("Scenario", FilterOperator.EQ, sKey));
+          }
+          if (sSuTypeId !== "") {
+            aFilter.push(new Filter("TypeId", FilterOperator.EQ, sSuTypeId));
+          }
+          oResolution.setSelectedKey("");
+
+          oResolution.getBinding("items").filter(aFilter);
         },
         onPressTokenCode: function () {
           var oView = this.getView();
@@ -432,10 +459,10 @@ sap.ui.define(
           var oView = this.getView();
           var oModel = oView.getModel("oModelView");
           var sKey = oEvent.getSource().getSelectedKey();
-          if (sKey !== 22) {
+          if (sKey !== 90) {
             oModel.setProperty("/addComplaint/ResolutionOthers", "");
           }
-          console.log(oModel);
+          console.log(sKey)
         },
         navPressBack: function () {
           var oHistory = History.getInstance();

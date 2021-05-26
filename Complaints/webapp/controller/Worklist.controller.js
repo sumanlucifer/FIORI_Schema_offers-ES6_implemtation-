@@ -9,7 +9,8 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
     "sap/ui/model/Sorter",
-    "sap/ui/Device",
+    "sap/ui/core/format/DateFormat",
+    "sap/ui/Device"
   ],
   function (
     BaseController,
@@ -21,6 +22,7 @@ sap.ui.define(
     MessageToast,
     Fragment,
     Sorter,
+    DateFormat,
     Device
   ) {
     "use strict";
@@ -48,6 +50,9 @@ sap.ui.define(
               EndDate: null,
               ComplaintStatus: "",
               Name: "",
+              ZoneId: "",
+              DivisionId: "",
+              DepotId: "",
             },
           };
           var oMdlCtrl = new JSONModel(oDataControl);
@@ -159,10 +164,20 @@ sap.ui.define(
               } else if (prop === "ComplaintStatus") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
-                  new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
-                  //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
-                );
-              } else if (prop === "Name") {
+                  new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
+              } else if (prop === "ZoneId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "DivisionId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "DepotId") {
+                aFlaEmpty = false;
+                aCurrentFilterValues.push(
+                  new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+              }else if (prop === "Name") {
                 aFlaEmpty = false;
                 aCurrentFilterValues.push(
                   new Filter(
@@ -243,6 +258,9 @@ sap.ui.define(
             EndDate: null,
             ComplaintStatus: "",
             Name: "",
+            ZoneId: "",
+            DivisionId: "",
+            DepotId: "",
           };
           var oViewModel = this.getView().getModel("oModelControl");
           oViewModel.setProperty("/filterBar", aResetProp);
@@ -252,7 +270,7 @@ sap.ui.define(
           oBinding.filter([]);
           oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
           //reset the sort order of the dialog box
-          this._fiterBarSort() 
+          this._fiterBarSort();
         },
         _addSearchFieldAssociationToFB: function () {
           let oFilterBar = this.getView().byId("filterbar");
@@ -294,6 +312,15 @@ sap.ui.define(
           }
 
           return newStatus;
+        },
+        fmtDate: function (mDate) {
+          var date = new Date(mDate);
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/YYYY h:mm a",
+            UTC: false,
+            strictParsing: false,
+          });
+          return oDateFormat.format(date);
         },
 
         handleSortButtonPressed: function () {
@@ -362,7 +389,10 @@ sap.ui.define(
               [iTotalItems]
             );
           } else {
-            sTitle = this.getResourceBundle().getText("worklistTableTitle");
+            sTitle = this.getResourceBundle().getText(
+              "worklistTableTitleCount",
+              [0]
+            );
           }
           this.getModel("worklistView").setProperty(
             "/worklistTableTitle",
@@ -411,6 +441,7 @@ sap.ui.define(
         },
         onListItemPress: function (oEvent) {
           var oRouter = this.getOwnerComponent().getRouter();
+          var oObject = oEvent.getSource().getBindingContext().getObject();
           var sPath = oEvent
             .getSource()
             .getBindingContext()
@@ -419,7 +450,7 @@ sap.ui.define(
 
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter.navTo("RouteEditCmp", {
-            prop: window.encodeURIComponent(sPath),
+            prop: oObject["Id"],
           });
         },
 
