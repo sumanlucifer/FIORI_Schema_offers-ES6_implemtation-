@@ -25,7 +25,7 @@
                         <l:GridData span="XL10 L10 M10 S12" />
                     </layoutData>
                 </Input>
-                <Button visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>Apply}" press="onPressTokenCode" enabled="{oModelControl>/TokenCode}" />
+                <Button visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>btnView}" press="onPressTokenCode" enabled="{oModelControl>/TokenCode}" />
                 <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>Points}" />
                 <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" editable="false" value="{path:'oModelView>/addComplaint/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
                  

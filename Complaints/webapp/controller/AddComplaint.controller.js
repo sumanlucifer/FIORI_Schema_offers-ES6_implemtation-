@@ -321,9 +321,10 @@ sap.ui.define(
         },
         onPressTokenCode: function () {
           var oView = this.getView();
+          var that = this;
           var oModelView = oView.getModel("oModelView");
           var oModelControl = oView.getModel("oModelControl");
-          var oData = oView.getModel();
+         // var oData = oView.getModel();
           var sPainterId = oModelView.getProperty("/addComplaint/PainterId");
           var sTokenCode = oModelControl.getProperty("/tokenCodeValue");
 
@@ -335,11 +336,13 @@ sap.ui.define(
             MessageToast.show("Kindly Input the token code.");
             return;
           }
-          oData.read("/QRCodeValidationAdmin", {
+          
+          
+          oView.getModel().callFunction("/QRCodeValidationAdmin",
+           {
             urlParameters: {
-              qrcode: "'" + sTokenCode + "'",
-              painterid: sPainterId,
-              channel: "'Complains'",
+              qrcode: sTokenCode.toString(),
+              painterid: sPainterId.toString()
             },
             success: function (oData) {
               if (oData !== null) {
@@ -354,7 +357,7 @@ sap.ui.define(
                       sTokenCode
                     );
                     oModelControl.setProperty("/TokenCode", false);
-                    MessageToast.show(oData["Message"]);
+                    that.showSuccessDialog(oData["Message"]);
                   } else if (oData["Status"] == false) {
                     oModelView.setProperty("/addComplaint/RewardPoints", "");
                     oModelView.setProperty("/addComplaint/TokenCode", "");
@@ -364,10 +367,13 @@ sap.ui.define(
                   }
                 }
               }
-            },
-            error: function () {},
-          });
+            }
+          })
+
+       
+          
         },
+
         onValueHelpRequest: function (oEvent) {
           var sInputValue = oEvent.getSource().getValue(),
             oView = this.getView();

@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
-	"sap/m/library"
-], function (Controller, UIComponent, mobileLibrary) {
+    "sap/m/library",
+    'sap/m/MessageBox'
+], function (Controller, UIComponent, mobileLibrary,MessageBox) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
@@ -46,7 +47,19 @@ sap.ui.define([
 		 */
 		getResourceBundle : function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
-		},
+        },
+        
+        showSuccessDialog: function(sMessage){
+         	var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+			MessageBox.information(
+				sMessage,
+				{
+					styleClass: bCompact ? "sapUiSizeCompact" : ""
+				}
+			);
+
+
+        },
 
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
