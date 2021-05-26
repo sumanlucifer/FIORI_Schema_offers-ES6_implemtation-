@@ -25,6 +25,7 @@ sap.ui.define(
     "sap/m/ObjectStatus",
     "com/knpl/pragati/ContactPainter/model/customInt",
     "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
+      "../model/formatter"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -54,13 +55,15 @@ sap.ui.define(
     Token,
     ObjectStatus,
     customInt1,
-    customInt2
+    customInt2,
+    formatter
   ) {
     "use strict";
 
     return BaseController.extend(
       "com.knpl.pragati.ContactPainter.controller.ProfilePainter",
       {
+          formatter:formatter,
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter(this);
           sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -620,6 +623,11 @@ sap.ui.define(
           );
           oView
             .byId("IdTblComplaints")
+            .getBinding("items")
+            .filter(oFilComplaints);
+
+         oView
+            .byId("IdTblCondonations")
             .getBinding("items")
             .filter(oFilComplaints);
 

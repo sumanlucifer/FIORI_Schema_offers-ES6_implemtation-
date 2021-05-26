@@ -43,6 +43,16 @@ sap.ui.define([], function () {
 
             }
 
+        },
+        ProductProperty: function(sPath, sProperty){
+            var oProduct =  this.getView().getModel().getData("/"+ sPath)
+
+           // if(sProperty === "Points")
+           //return oProduct.ProductQuantity * oProduct.Points;
+            
+           return oProduct[sProperty];
+
+         //   
         }
 
 	};
