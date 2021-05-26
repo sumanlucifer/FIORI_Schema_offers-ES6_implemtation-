@@ -93,6 +93,7 @@ sap.ui.define([
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
         },
+        
         onPressSave: function () {
 
             console.log(this.getView().getModel("oModelView").getData());
