@@ -11,6 +11,7 @@ sap.ui.define(
     "sap/ui/Device",
     "sap/ui/core/format/DateFormat",
     "com/knpl/pragati/ContactPainter/model/customInt",
+      "../model/formatter"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -26,13 +27,15 @@ sap.ui.define(
     Sorter,
     Device,
     DateFormat,
-    customInt
+    customInt,
+    formatter
   ) {
     "use strict";
 
     return BaseController.extend(
       "com.knpl.pragati.ContactPainter.controller.PainterList",
       {
+        formatter:formatter,
         onInit: function () {
           var oRouter = this.getOwnerComponent().getRouter();
 
@@ -45,6 +48,7 @@ sap.ui.define(
               StartDate: null,
               EndDate: null,
               RegistrationStatus: "",
+              ActivationStatus:"",
               Name: "",
               MembershipId: "",
               ZoneId: "",

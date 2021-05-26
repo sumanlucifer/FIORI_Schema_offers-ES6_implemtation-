@@ -14,6 +14,18 @@ sap.ui.define([
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
 
+         sActivationStatus : function(sStatus){
+
+            switch(sStatus){
+
+                case "ACTIVATED" : return "Activated" ;
+                case "DEACTIVATED"  : return "Deactivated";
+                case "NOT_CONTACTABLE" : return "Not Contactable";
+
+            }
+
+        },
+
         addContentDensityClass: function () {
             return this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
         },
