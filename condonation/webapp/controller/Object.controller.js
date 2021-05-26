@@ -171,6 +171,8 @@ sap.ui.define([
             var sKey = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
             var oModel = oView.getModel("oModelView");
             oModel.setProperty("/PainterComplainProducts/0/Points", parseInt(sKey["Points"]));
+            oModel.setProperty("/PainterComplainProducts/0/ProductQuantity", 1);
+
 
         },
         onValueHelpRequest: function (oEvent) {
@@ -190,6 +192,7 @@ sap.ui.define([
             }
             this._pValueHelpDialog.then(function (oDialog) {
                 // Create a filter for the binding
+            
 
                 // Open ValueHelpDialog filtered by the input's value
                 oDialog.open();
@@ -199,12 +202,13 @@ sap.ui.define([
             var sValue = oEvent.getParameter("value");
             var oFilter = new Filter(
                 [
-                    new Filter(
-                        "tolower(Name)",
-                        FilterOperator.Contains,
-                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
-                    ),
-                    new Filter("Mobile", FilterOperator.Contains, sValue.trim()),
+                    new Filter({
+                        path:"Name",
+                        operator:"Contains",
+                        value1:sValue.trim(),
+                        caseSensitive:false
+                    }),
+                    new Filter("Mobile", FilterOperator.Contains,sValue.trim() ),
                 ],
                 false
             );
@@ -262,7 +266,7 @@ sap.ui.define([
             var iPoints = oModel.getProperty("/PainterComplainProducts/0/Points");
             var sKey = oEvent.getSource().getSelectedKey();
             var aNewPoints = iPoints * sKey;
-            oModel.setProperty("/PainterComplainProducts/0/Points",aNewPoints);
+            oModel.setProperty("/PainterComplainProducts/0/Points", aNewPoints);
 
         },
         /* =========================================================== */

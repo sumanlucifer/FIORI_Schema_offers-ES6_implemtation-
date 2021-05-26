@@ -181,24 +181,20 @@ sap.ui.define(
                                     new Filter(
                                         [
                                             new Filter(
-                                                "tolower(Painter/Name)",
-                                                FilterOperator.Contains,
-                                                "'" +
-                                                oViewFilter[prop]
-                                                    .trim()
-                                                    .toLowerCase()
-                                                    .replace("'", "''") +
-                                                "'"
+                                                {
+                                                    path:"Painter/Name",
+                                                    operator:"Contains",
+                                                    value1:oViewFilter[prop].trim(),
+                                                    caseSensitive:false
+                                                }
                                             ),
                                             new Filter(
-                                                "tolower(Painter/MembershipCard)",
-                                                FilterOperator.Contains,
-                                                "'" +
-                                                oViewFilter[prop]
-                                                    .trim()
-                                                    .toLowerCase()
-                                                    .replace("'", "''") +
-                                                "'"
+                                                {
+                                                    path:"Painter/MembershipCard",
+                                                    operator:"Contains",
+                                                    value1:oViewFilter[prop].trim(),
+                                                    caseSensitive:false
+                                                }
                                             ),
                                             new Filter(
                                                 "Painter/Mobile",
@@ -486,7 +482,7 @@ sap.ui.define(
                     oTable.getBinding("items").refresh();
                 },
                 fmtPoints: function (mParam1) {
-                    console.log(mParam1);
+                 //   console.log(mParam1);
                     if (mParam1) {
                         var sPath = "/" + mParam1[0];
                         var oData = this.getView().getModel().getProperty(sPath);

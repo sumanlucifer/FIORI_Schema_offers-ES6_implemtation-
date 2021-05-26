@@ -54,8 +54,8 @@
                 <Text  text="{oModelView>/AddFields/Depot}" />
                  <Label text="{i18n>PrimaryDealer}" />
                 <Text  text="{oModelView>/AddFields/PDealer}" />
-                   <Label text="{i18n>Remark}"/>
-            <TextArea maxLength="50" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.String',constraints:{minLength:1,maxLength:50}}" />
+                <Label text="{i18n>Remark}"/>
+                 <TextArea maxLength="50" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:50}}" />
 
                 <!-- <Label text="{i18n>PainterName}" />
                 <Input editable="false" value="{oModelView>/addCompAddData/Name}" />
