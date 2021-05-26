@@ -78,7 +78,7 @@ sap.ui.define(
                     // Model used to manipulate control states
                     oViewModel = new JSONModel({
                         worklistTableTitle: this.getResourceBundle().getText(
-                            "worklistTableTitle"
+                            "worklistTableTitle1"
                         ),
                         shareOnJamTitle: this.getResourceBundle().getText("worklistTitle"),
                         shareSendEmailSubject: this.getResourceBundle().getText(
@@ -407,7 +407,7 @@ sap.ui.define(
                             [iTotalItems]
                         );
                     } else {
-                        sTitle = this.getResourceBundle().getText("worklistTableTitle");
+                        sTitle = this.getResourceBundle().getText("worklistTableTitleCount",[0]);
                     }
                     this.getModel("worklistView").setProperty(
                         "/worklistTableTitle",
@@ -434,6 +434,7 @@ sap.ui.define(
                     // eslint-disable-next-line sap-no-history-manipulation
                     history.go(-1);
                 },
+                
 
                 onSearch: function (oEvent) {
                     if (oEvent.getParameters().refreshButtonPressed) {

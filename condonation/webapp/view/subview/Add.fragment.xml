@@ -33,12 +33,12 @@
                 </ComboBox> 
 
                 <Label text="{i18n>LblQuantity}" />
-                <Select selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductQuantity',type:'.cmbxDtype2'}" width="10%" items="{oModelControl>/aQuantity}" >
+                <Select change="onPointsChange" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductQuantity',type:'.cmbxDtype2'}" width="10%" items="{oModelControl>/aQuantity}" >
                  <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
                 </Select>    
                
                <Label text="{i18n>LblTotalPoints}" />
-               <Text text="{= ${oModelView>/PainterComplainProducts/0/Points} * ${oModelView>/PainterComplainProducts/0/ProductQuantity}}"  />
+               <Text text="{oModelView>/PainterComplainProducts/0/Points}"  />
                 <core:Title text="{i18n>LblPainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
                 <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1, maxLength:10} }" />

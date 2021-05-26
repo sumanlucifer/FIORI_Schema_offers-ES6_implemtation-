@@ -93,20 +93,20 @@ sap.ui.define([
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
         },
-        
+
         onPressSave: function () {
 
             console.log(this.getView().getModel("oModelView").getData());
             var oView = this.getView();
-          var oValidate = new Validator();
-          var oForm = oView.byId("FormCondonation");
+            var oValidate = new Validator();
+            var oForm = oView.byId("FormCondonation");
 
-          var bFlagValidate = oValidate.validate(oForm);
-          if (bFlagValidate == false) {
-            MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
-            return;
-          }
-           this._postDataToSave();
+            var bFlagValidate = oValidate.validate(oForm);
+            if (bFlagValidate == false) {
+                MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+                return;
+            }
+            this._postDataToSave();
         },
         _postDataToSave: function () {
             var oView = this.getView();
@@ -170,8 +170,7 @@ sap.ui.define([
             var oView = this.getView();
             var sKey = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
             var oModel = oView.getModel("oModelView");
-            oModel.setProperty("/PainterComplainProducts/0/Points", parseInt(sKey["Points"]))
-            console.log(parseInt(sKey["Points"]));
+            oModel.setProperty("/PainterComplainProducts/0/Points", parseInt(sKey["Points"]));
 
         },
         onValueHelpRequest: function (oEvent) {
@@ -257,9 +256,15 @@ sap.ui.define([
                 }
             })
         },
+        onPointsChange: function (oEvent) {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            var iPoints = oModel.getProperty("/PainterComplainProducts/0/Points");
+            var sKey = oEvent.getSource().getSelectedKey();
+            var aNewPoints = iPoints * sKey;
+            oModel.setProperty("/PainterComplainProducts/0/Points",aNewPoints);
 
-
-
+        },
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */

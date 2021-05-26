@@ -27,11 +27,11 @@
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                       <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
-                    <core:Item text="{Id}" key="{Id}" />
-                </ComboBox>
+                                        <core:Item text="{Id}" key="{Id}" />
+                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
                                         <core:Item text="{Depot} ( {Id} )" key="{Id}" />
@@ -47,7 +47,7 @@
         </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1},{path:'ComplaintTypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
