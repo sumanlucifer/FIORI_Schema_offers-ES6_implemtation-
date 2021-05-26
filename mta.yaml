@@ -88,6 +88,10 @@ modules:
       - Scheme-offers-content.zip
       name: SchemeOffers
       target-path: resources/
+    - artifacts:
+      - condonation-offers-content.zip
+      name: condonation
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -213,6 +217,14 @@ modules:
 - name: SchemeOffers
   type: html5
   path: SchemeOffers
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: condonation
+  type: html5
+  path: condonation
   build-parameters:
     builder: custom
     commands:
