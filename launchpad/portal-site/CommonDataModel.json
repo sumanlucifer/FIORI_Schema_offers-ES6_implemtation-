@@ -71,6 +71,10 @@
 					"id": "com.knpl.pragati.SchemeOffers-11-1617801677345",
 					"appId": "com.knpl.pragati.SchemeOffers",
 					"vizId": "Manage-SM"
+				}, {
+					"id": "com.knpl.pragati.condonation-12-1622002293582",
+					"appId": "com.knpl.pragati.condonation",
+					"vizId": "Manage-CON"
 				}]
 			}
 		}, {
