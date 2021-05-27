@@ -54,6 +54,7 @@
                             <content>
                                 <Title text="Painters" level="H2"/>
                                 <ToolbarSpacer />
+                                 <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onExportCSV"/>
                             
                             </content>
                         </OverflowToolbar>
