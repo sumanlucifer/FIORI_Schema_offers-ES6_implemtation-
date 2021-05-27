@@ -15,8 +15,15 @@
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQCategoryId" groupTitle="Filters" label="{i18n>colFAQCategory}">
 								<fb:control>
-									<ComboBox placeholder="{i18n>enterFAQCategory}" items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
+									<ComboBox placeholder="{i18n>enterFAQCategory}" selectionChange="onFAQCategoryChange" items="{ path: '/MasterFAQCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{worklistView>/filterBar/FAQCategoryId}">
 										<core:Item key="{Id}" text="{FAQCategory}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="FAQSubcategoryId" groupTitle="Filters" label="{i18n>colFAQSubcategory}">
+								<fb:control>
+									<ComboBox id="idFAQSubCategory" enabled="{= ${worklistView>/hasFAQSubcategory} === true}" placeholder="{i18n>enterFAQSubcategory}" items="{ path: '/MasterFAQSubcategorySet' }" selectedKey="{worklistView>/filterBar/FAQSubcategoryId}">
+										<core:Item key="{Id}" text="{FAQSubcategory}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
@@ -27,7 +34,7 @@
 		</f:header>
 		<f:content>
 			<Table id="table" width="auto"
-				items="{ path: '/MasterFAQSet', parameters : { expand : 'FAQCategory' }, filters : { path : 'IsArchived' , operator : 'EQ' , value1 : false }, sorter: { path: 'Id', descending: false } }"
+				items="{ path: '/MasterFAQSet', parameters : { expand : 'FAQCategory,FAQSubcategory' }, filters : { path : 'IsArchived' , operator : 'EQ' , value1 : false }, sorter: { path: 'Id', descending: false } }"
 				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false"
 				updateFinished="onUpdateFinished">
 				<headerToolbar>
@@ -45,13 +52,16 @@
                     <Column width="15%">
 						<Text text="{i18n>colFAQCategory}"/>
 					</Column>
+                    <Column width="15%">
+						<Text text="{i18n>colFAQSubcategory}"/>
+					</Column>
 					<Column width="20%">
 						<Text text="{i18n>colQuestion}"/>
 					</Column>
-					<Column width="53%">
+					<Column width="40%">
 						<Text text="{i18n>colAnswer}"/>
 					</Column>
-                    <Column width="12%">
+                    <Column width="10%">
 						<Text text="{i18n>colAction}"/>
 					</Column>
 				</columns>
@@ -59,6 +69,7 @@
 					<ColumnListItem>
 						<cells>
 							<Text text="{FAQCategory/FAQCategory}"/>
+                            <Text text="{FAQSubcategory/FAQSubcategory}"/>
 							<Text text="{Question}"/>
 							<Text text="{Answer}"/>
                             <HBox>

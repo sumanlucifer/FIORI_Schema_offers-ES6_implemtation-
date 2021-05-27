@@ -8,6 +8,7 @@
 *.zip
 .vscode/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 # auto generated wildcard
@@ -47,3 +48,17 @@ debasisa_web/Manage_FAQ/.env
 # auto generated wildcard
 debasisa_web/Manage_Notifications/.env2
 >>>>>>> debasisa
+=======
+# auto generated wildcard
+debasisa_web/Manage_FAQ/.env
+# auto generated wildcard
+debasisa_web/Manage_Notifications/.env2
+# auto generated wildcard
+training/Training_Learning/.env9
+# auto generated wildcard
+training/Training_Learning/.env10
+# auto generated wildcard
+Training/Training_Learning/.env11
+# auto generated wildcard
+FAQ/Manage_FAQ/.env3
+>>>>>>> ProdFaq
