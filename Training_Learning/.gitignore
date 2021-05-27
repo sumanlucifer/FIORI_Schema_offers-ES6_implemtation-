@@ -3,8 +3,14 @@
 
 /dist/
 
+<<<<<<< HEAD
 =======
 /dist/
 # auto generated wildcard
 debasisa_web/Manage_Notifications/.env2
 >>>>>>> debasisa
+=======
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

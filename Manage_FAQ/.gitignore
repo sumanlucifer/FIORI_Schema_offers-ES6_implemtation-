@@ -9,6 +9,7 @@
 .vscode/
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 # auto generated wildcard
@@ -62,3 +63,8 @@ Training/Training_Learning/.env11
 # auto generated wildcard
 FAQ/Manage_FAQ/.env3
 >>>>>>> ProdFaq
+=======
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

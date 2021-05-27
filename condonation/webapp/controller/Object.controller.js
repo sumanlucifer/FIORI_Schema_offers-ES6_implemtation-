@@ -148,13 +148,13 @@ sap.ui.define([
             oModel.refresh();
             var oFilter = [];
             var sCategory = oModel.getProperty("/AddFields/CategoryId");
-            var sClass = oModel.getProperty("/AddFields/ClassId");
+            //var sClass = oModel.getProperty("/AddFields/ClassId");
             if (sCategory) {
                 oFilter.push(new Filter("ProductCategory/Id", FilterOperator.EQ, sCategory));
             }
-            if (sClass) {
-                oFilter.push(new Filter("ProductClassification/Id", FilterOperator.EQ, sClass));
-            }
+            // if (sClass) {
+            //     oFilter.push(new Filter("ProductClassification/Id", FilterOperator.EQ, sClass));
+            // }
 
             oView.byId("Products").getBinding("items").filter(oFilter);
         },
@@ -192,7 +192,7 @@ sap.ui.define([
             }
             this._pValueHelpDialog.then(function (oDialog) {
                 // Create a filter for the binding
-            
+
 
                 // Open ValueHelpDialog filtered by the input's value
                 oDialog.open();
@@ -203,12 +203,12 @@ sap.ui.define([
             var oFilter = new Filter(
                 [
                     new Filter({
-                        path:"Name",
-                        operator:"Contains",
-                        value1:sValue.trim(),
-                        caseSensitive:false
+                        path: "Name",
+                        operator: "Contains",
+                        value1: sValue.trim(),
+                        caseSensitive: false
                     }),
-                    new Filter("Mobile", FilterOperator.Contains,sValue.trim() ),
+                    new Filter("Mobile", FilterOperator.Contains, sValue.trim()),
                 ],
                 false
             );
@@ -280,45 +280,8 @@ sap.ui.define([
 		 * If not, it will replace the current entry of the browser history with the worklist route.
 		 * @public
 		 */
-        onNavBack: function () {
-            var sPreviousHash = History.getInstance().getPreviousHash();
 
-            if (sPreviousHash !== undefined) {
-                history.go(-1);
-            } else {
-                this.getRouter().navTo("worklist", {}, true);
-            }
-        },
-        _showFormFragment: function (sFragmentName) {
-            var objSection = this.getView().byId("oVbxSmtTbl");
-            var oView = this.getView();
-            objSection.destroyItems();
-            var othat = this;
-            this._getFormFragment(sFragmentName).then(function (oVBox) {
-                oView.addDependent(oVBox);
-                objSection.addItem(oVBox);
-                //othat._setDataValue.call(othat);
-                //othat._setUploadCollectionMethod.call(othat);
-            });
-        },
 
-        _getFormFragment: function (sFragmentName) {
-            var oView = this.getView();
-            var othat = this;
-            // if (!this._formFragments) {
-            this._formFragments = Fragment.load({
-                id: oView.getId(),
-                name:
-                    "com.knpl.pragati.condonation.view.subview." + sFragmentName,
-                controller: othat,
-            }).then(function (oFragament) {
-                return oFragament;
-            });
-            // }
-
-            return this._formFragments;
-
-        },
 
         /* =========================================================== */
         /* internal methods                                            */

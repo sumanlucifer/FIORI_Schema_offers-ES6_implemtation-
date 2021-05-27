@@ -55,4 +55,11 @@ complaint/Complaints/.env2
 knpl-influencer-web/ContactPainter/.env4
 # auto generated wildcard
 knpl/ContactPainter/.env2
+<<<<<<< HEAD
 >>>>>>> aditya
+=======
+>>>>>>> manik
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

@@ -182,18 +182,18 @@ sap.ui.define(
                                         [
                                             new Filter(
                                                 {
-                                                    path:"Painter/Name",
-                                                    operator:"Contains",
-                                                    value1:oViewFilter[prop].trim(),
-                                                    caseSensitive:false
+                                                    path: "Painter/Name",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
                                                 }
                                             ),
                                             new Filter(
                                                 {
-                                                    path:"Painter/MembershipCard",
-                                                    operator:"Contains",
-                                                    value1:oViewFilter[prop].trim(),
-                                                    caseSensitive:false
+                                                    path: "Painter/MembershipCard",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
                                                 }
                                             ),
                                             new Filter(
@@ -278,6 +278,7 @@ sap.ui.define(
                             value: "{oModelControl>/filterBar/Name}",
                             showSearchButton: true,
                             search: othat.onFilter.bind(othat),
+                            submit:othat.onFilter.bind(othat)
                         });
                     } else {
                         oSearchField = null;
@@ -403,7 +404,7 @@ sap.ui.define(
                             [iTotalItems]
                         );
                     } else {
-                        sTitle = this.getResourceBundle().getText("worklistTableTitleCount",[0]);
+                        sTitle = this.getResourceBundle().getText("worklistTableTitleCount", [0]);
                     }
                     this.getModel("worklistView").setProperty(
                         "/worklistTableTitle",
@@ -430,7 +431,7 @@ sap.ui.define(
                     // eslint-disable-next-line sap-no-history-manipulation
                     history.go(-1);
                 },
-                
+
 
                 onSearch: function (oEvent) {
                     if (oEvent.getParameters().refreshButtonPressed) {
@@ -453,15 +454,14 @@ sap.ui.define(
                 },
                 onListItemPress: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
-                    var sPath = oEvent
+                    var oObj = oEvent
                         .getSource()
                         .getBindingContext()
-                        .getPath()
-                        .substr(1);
-
+                        .getObject();
+                    console.log(oObj);
                     var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("Edit", {
-                        Id: oEvent.getSource().getBindingContext().getProperty("Id"),
+                    oRouter.navTo("Detail", {
+                        Id: oObj["Id"]
                     });
 
 
@@ -482,7 +482,7 @@ sap.ui.define(
                     oTable.getBinding("items").refresh();
                 },
                 fmtPoints: function (mParam1) {
-                 //   console.log(mParam1);
+                    //   console.log(mParam1);
                     if (mParam1) {
                         var sPath = "/" + mParam1[0];
                         var oData = this.getView().getModel().getProperty(sPath);

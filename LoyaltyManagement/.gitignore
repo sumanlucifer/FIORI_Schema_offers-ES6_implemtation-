@@ -7,6 +7,7 @@ package-lock.json
 /*-content.zip/
 =======
 
+<<<<<<< HEAD
 # auto generated wildcard
 knpl-influencer-web/LoyaltyManagement/.env
 # auto generated wildcard
@@ -62,3 +63,9 @@ knpl-influencer-web/ContactPainter/.env4
 # auto generated wildcard
 knpl/ContactPainter/.env2
 >>>>>>> aditya
+=======
+
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

@@ -47,7 +47,7 @@
         </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1},{path:'ComplaintTypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1},{path:'ComplaintTypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
@@ -78,7 +78,7 @@
                 </columns>
 
                 <items>
-                    <ColumnListItem press="onListItemPress" type="Navigation">
+                    <ColumnListItem type="Navigation" press="onListItemPress" >
                         <cells>
                             <Text text="{Painter/Name}"/>
                             <Text text="{Painter/MembershipCard}"/>

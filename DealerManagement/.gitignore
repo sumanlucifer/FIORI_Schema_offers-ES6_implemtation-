@@ -4,6 +4,7 @@ package-lock.json
 /.vscode/
 /*-content.zip/ 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 # auto generated wildcard
@@ -99,3 +100,8 @@ knpl-influencer-web/ContactPainter/.env4
 knpl/ContactPainter/.env2
 >>>>>>> 8361af284e7f3caa603e3bae11caeec846689136
 >>>>>>> aditya
+=======
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

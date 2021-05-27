@@ -71,6 +71,12 @@ knpl-influencer-web/ContactPainter/.env4
 <<<<<<< HEAD
 knpl/ContactPainter/.env2
 >>>>>>> manik
+<<<<<<< HEAD
 =======
 knpl/ContactPainter/.env2
 >>>>>>> aditya
+=======
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation

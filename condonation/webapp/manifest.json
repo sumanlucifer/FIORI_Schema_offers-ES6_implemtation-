@@ -113,10 +113,10 @@
                     ]
                 },
                 {
-                    "pattern": "condonation/{objectId}",
-                    "name": "Edit",
+                    "pattern": "Detail/{Id}",
+                    "name": "Detail",
                     "target": [
-                        "object"
+                        "Detail"
                     ]
                 },
                  {
@@ -143,6 +143,12 @@
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",
                     "viewId": "objectNotFound"
+                },
+                "Detail": {
+                    "viewName": "Detail",
+                    "viewId": "Detail",
+                    "viewLevel": 2,
+                    "title": "{i18n>DisplayCondonation}"
                 },
                 "notFound": {
                     "viewName": "NotFound",

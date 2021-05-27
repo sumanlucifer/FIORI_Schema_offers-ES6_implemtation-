@@ -3,6 +3,7 @@ package-lock.json
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 # auto generated wildcard
 knpl-influencer-web/OrganizationSetup/.env1
 # auto generated wildcard
@@ -56,3 +57,8 @@ debasisa_web/Training_Learning/.env8
 # auto generated wildcard
 debasisa_web/Manage_Notifications/.env2
 >>>>>>> debasisa
+=======
+
+# auto generated wildcard
+knpl-influencer-web/condonation/.env3
+>>>>>>> origin/condonation
