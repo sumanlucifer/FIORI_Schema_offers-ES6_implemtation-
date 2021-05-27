@@ -4,7 +4,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{i18n>CondonationDetails}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>CondonationDetails}">

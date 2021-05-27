@@ -11,16 +11,16 @@
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>LblClassification}" />
+                <!-- <Label text="{i18n>LblClassification}" />
                 <ComboBox  selectionChange="onClassificationChange" required="true" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelView>/AddFields/ClassId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
                     <items>
                       <core:Item key="{Id}" text="{Classification}" />
                     </items>
-                </ComboBox>
+                </ComboBox> -->
 
               
                 <Label text="{i18n>LblProduct}" />
-                <ComboBox id="Products" enabled="{= ${oModelView>/AddFields/CategoryId}.length>0 &amp;&amp; ${oModelView>/AddFields/ClassId}.length>0 }" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
+                <ComboBox id="Products" enabled="{= ${oModelView>/AddFields/CategoryId}.length>0}" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
                     <items>
                          <core:Item key="{Id}" text="{ProductName}" />
                     </items>
@@ -41,7 +41,7 @@
                <Text text="{= ${oModelView>/PainterComplainProducts/0/Points}*${oModelView>/PainterComplainProducts/0/ProductQuantity} }"  />
                 <core:Title text="{i18n>LblPainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
-                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1, maxLength:10} }" />
+                  <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
                 <Label text="{i18n>PainterName}" />
                 <Text text="{oModelView>/AddFields/Name}" />
                 <Label text="{i18n>MembershipId}" />
