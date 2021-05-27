@@ -15,7 +15,7 @@
                             persistencyKey="LoyaltySmartTableKey"
                             initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false"  >
+                        <Table >
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
