@@ -47,10 +47,19 @@
 							<items>
 								<ColumnListItem>
 									<cells>
-										<Text text="{objectView>Name}" visible="{= ${objectView>IsArchived} !== true }"/>
-										<Text text="{objectView>Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
-										<Text text="{objectView>Email}" visible="{= ${objectView>IsArchived} !== true }"/>
-										<Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <FlexBox >
+                                    <Text text="{objectView>Admin/Name}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/Name}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+									<FlexBox >
+                                    <Text text="{objectView>Admin/Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+									<FlexBox >
+                                    <Text text="{objectView>Admin/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                    <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/>
 									</cells>
 								</ColumnListItem>
 							</items>
