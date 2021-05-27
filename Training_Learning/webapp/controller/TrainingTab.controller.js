@@ -86,6 +86,7 @@ sap.ui.define(
                     var oViewModel = this.getModel("oModelView");
                     var oView = this.getView();
 
+                    this.getView().setBusy(false);
                     //FIX: Need pop for changes
                     oViewModel.setProperty("/bChange", false);
                     oViewModel.detachPropertyChange(this.onModelPropertyChange, this);
@@ -209,6 +210,7 @@ sap.ui.define(
                             oViewModel.setProperty("/displayDepots", aArray); // to display in view training
 
                             aArray = [];
+                            debugger;
                             var editPainters = [];
                             if (data.TrainingPainters && data.TrainingPainters.results) {
                                 // for (var r of data["TrainingPainters"]["results"]) {
@@ -793,7 +795,14 @@ sap.ui.define(
                     });
 
                     var aCols = this.oColModel.getData().cols;
-                    var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
+                    var oFilter = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('RegistrationStatus', sap.ui.model.FilterOperator.NotContains, "DEREGISTERED"),
+                            new sap.ui.model.Filter('ActivationStatus', sap.ui.model.FilterOperator.NotContains, "DEACTIVATED"),
+                        ],
+                        and: true
+                    });
 
                     if (!this._oValueHelpDialogP) {
                         this._oValueHelpDialogP = sap.ui.xmlfragment(
@@ -851,7 +860,6 @@ sap.ui.define(
                 },
 
                 onFilterBarSearchPainter: function (oEvent) {
-                    debugger;
                     var afilterBar = oEvent.getParameter("selectionSet"),
                         aCurrentFilterValues = [];
                     var oViewFilter = this.getView().getModel("PainterFilter").getData();
@@ -901,26 +909,23 @@ sap.ui.define(
                             }
                         }
                     }
-                    // for (var i = 0; i < afilterBar.length; i++) {
-                    //     if (afilterBar[i].getValue()) {
-                    //         aFilters.push(
-                    //             new Filter({
-                    //                 path: afilterBar[i].mProperties.name,
-                    //                 operator: FilterOperator.Contains,
-                    //                 value1: afilterBar[i].getValue(),
-                    //                 caseSensitive: false,
-                    //             })
-                    //         );
-                    //     }
-                    // }
-
-                    aCurrentFilterValues.push(
-                        new Filter({
+                    
+                    aCurrentFilterValues.push(new Filter({
                             path: "IsArchived",
                             operator: FilterOperator.EQ,
                             value1: false,
                         })
                     );
+                    aCurrentFilterValues.push(new Filter({
+                        path: "RegistrationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEREGISTERED"
+                    }));
+                    aCurrentFilterValues.push(new Filter({
+                        path: "ActivationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEACTIVATED"
+                    }));
 
                     this._filterTableP(
                         new Filter({
@@ -1220,6 +1225,7 @@ sap.ui.define(
                 handleSavePress: function (oEvent) {
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
+                    oViewModel.setProperty("/busy", true);
                     var oPayload = {};
                     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -1436,8 +1442,8 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-                    debugger;
                     var oViewModel = this.getModel("oModelView");
+                    this.getView().setBusy(true);
                     delete oPayload.Duration;
                     delete oPayload.ViewStartDate;
                     delete oPayload.ViewEndDate;
@@ -1470,6 +1476,7 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
+                    this.getView().setBusy(true);
                     var oViewModel = this.getModel("oModelView");
                     oPayload.Duration = parseInt(oPayload.Duration);
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
@@ -1597,6 +1604,7 @@ sap.ui.define(
                     oModel.refresh(true);
                     this.getRouter().navTo("worklist", true);
                     this.getModel().setProperty("/busy", false);
+                    this.getView().setBusy(false);
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;
