@@ -161,7 +161,7 @@
                         <cells>
                             <HBox  >
                             <core:Icon class="sapUiTinyMarginEnd" src="{path:'RegistrationStatus',formatter:'.formatter.RegStatusIcon'}" 
-                                       color="{path:'RegistrationStatus',formatter:'.formatter.RegStatusColor'}" />
+                                       color="{path:'RegistrationStatus',formatter:'.formatter.RegStatusColor'}" tooltip="{RegistrationStatus}" />
                             <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
                             </HBox>
                             <VBox width="100%" >
@@ -178,7 +178,7 @@
                             <!-- <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/> -->
                             <HBox justifyContent="End">
                                  <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
-                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
+                                <Button tooltip="{i18n>Edit}" visible="{= ${ActivationStatus} !== 'DEACTIVATED'  }" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                                 
                             </HBox>
