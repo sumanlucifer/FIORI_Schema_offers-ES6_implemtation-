@@ -577,7 +577,7 @@ sap.ui.define(
                             oPayload["PainterSegmentation"][c] = null;
                         }
                     }
-                    var aFlagSeg = ["TeamSizeId", "PainterExperience", "SitesPerMonth", "PotentialId"];
+                    var aFlagSeg = ["TeamSizeId", "PainterExperience", "SitePerMonthId", "PotentialId"];
                     var bSegFalg = false;
                     bSegFalg = aFlagSeg.every(function (a) {
                         return oPayload["PainterSegmentation"][a] === null;
