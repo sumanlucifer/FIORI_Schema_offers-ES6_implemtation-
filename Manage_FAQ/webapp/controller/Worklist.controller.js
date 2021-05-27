@@ -41,8 +41,10 @@ sap.ui.define([
                 tableBusyDelay: 0,
                 filterBar: {
                     FAQCategoryId: "",
+                    FAQSubcategoryId: "",
                     Search: ""
-                }
+                },
+                hasFAQSubcategory: false
             });
             this.setModel(oViewModel, "worklistView");
 
@@ -84,6 +86,26 @@ sap.ui.define([
             }
 
             oFilterBar.setBasicSearch(oBasicSearch);
+        },
+
+        onFAQCategoryChange: function (oEvent) {
+            var oViewModel = this.getModel("worklistView");
+            var aFilter = [];
+            var sId = oEvent.getSource().getSelectedKey();
+            if (sId) {
+                oViewModel.setProperty("/hasFAQSubcategory", oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasSubcategory);
+                if (oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasSubcategory === true) {
+                    var oFAQSubcategory = this.getView().byId("idFAQSubCategory");
+                    var oFAQSubcategoryItems = oFAQSubcategory.getBinding("items");
+                    oFAQSubcategory.clearSelection();
+                    oFAQSubcategory.setValue("");
+                    aFilter.push(new Filter("IsArchived", FilterOperator.EQ, false));
+                    aFilter.push(new Filter("FAQCategoryId", FilterOperator.EQ, sId));
+                    oFAQSubcategoryItems.filter(aFilter);
+                }
+            } else {
+                oViewModel.setProperty("/hasFAQSubcategory", false);
+            }
         },
 
         /* =========================================================== */
@@ -153,9 +175,11 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var aResetProp = {
                 FAQCategoryId: "",
+                FAQSubcategoryId: "",
                 searchBar: ""
             };
             var oViewModel = this.getView().getModel("worklistView");
+            oViewModel.setProperty("/hasFAQSubcategory", false);
             oViewModel.setProperty("/filterBar", aResetProp);
             var oTable = this.byId("table");
             var oBinding = oTable.getBinding("items");
@@ -192,7 +216,11 @@ sap.ui.define([
                     console.log(oViewFilter[prop]);
 
                     if (prop === "FAQCategoryId") {
-
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "FAQSubcategoryId") {
                         aFlaEmpty = false;
                         aCurrentFilterValues.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
@@ -232,6 +260,16 @@ sap.ui.define([
                                             .replace("'", "''") +
                                         "'"
                                     ),
+                                    new Filter(
+                                        "tolower(FAQSubcategory/FAQSubcategory)",
+                                        FilterOperator.Contains,
+                                        "'" +
+                                        oViewFilter[prop]
+                                            .trim()
+                                            .toLowerCase()
+                                            .replace("'", "''") +
+                                        "'"
+                                    ),
                                 ],
                                 false
                             )
@@ -263,23 +301,6 @@ sap.ui.define([
                 oBinding.filter([]);
             }
         },
-
-        // onSearch: function (oEvent) {
-        //     var aFilters = this.getFiltersfromFB(),
-        //         oTable = this.getView().byId("table");
-        //     oTable.getBinding("items").filter(aFilters);
-        //     if (aFilters.length !== 0) {
-        //         if (aFilters[0].sPath === "FAQCategoryId") {
-        //             this.getModel("worklistView").setProperty("/FAQCategoryId", aFilters[0].oValue1);
-        //         } else {
-        //             this.getModel("worklistView").setProperty("/FAQCategoryId", null);
-        //         }
-
-        //         this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-        //     } else {
-        //         this.getModel("worklistView").setProperty("/FAQCategoryId", null);
-        //     }
-        // },
 
         getFiltersfromFB: function () {
             var oFBCtrl = this.getView().byId("filterbar"),
