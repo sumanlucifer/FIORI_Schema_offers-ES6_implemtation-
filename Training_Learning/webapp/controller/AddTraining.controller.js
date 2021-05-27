@@ -60,7 +60,7 @@ sap.ui.define(
 
                     oViewModel.setProperty("/onlineTrType", "1");
                     oViewModel.setProperty("/offlineTrType", "2");
-
+                    this.getView().setBusy(false);
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
                             oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -443,6 +443,7 @@ sap.ui.define(
                 onSaveTraining: function (oEvent) {
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
+                    oViewModel.setProperty("/busy", true);
                     var oPayload = {};
                     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -763,10 +764,15 @@ sap.ui.define(
                     });
 
                     var aCols = this.oColModel.getData().cols;
-                    var oFilter = new sap.ui.model.Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false);
+                    var oFilter = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('RegistrationStatus', sap.ui.model.FilterOperator.NotContains, "DEREGISTERED"),
+                            new sap.ui.model.Filter('ActivationStatus', sap.ui.model.FilterOperator.NotContains, "DEACTIVATED"),
+                        ],
+                        and: true
+                    });
 
-                    debugger;
-                    // var that = this;
                     if (!this._oValueHelpDialogP) {
                         this._oValueHelpDialogP = sap.ui.xmlfragment(
                             "com.knpl.pragati.Training_Learning.view.fragments.PainterValueHelp",
@@ -872,11 +878,23 @@ sap.ui.define(
                             }
                         }
                     }
+                    
                     aCurrentFilterValues.push(new Filter({
                         path: "IsArchived",
                         operator: FilterOperator.EQ,
-                        value1: false,
+                        value1: false
                     }))
+                    aCurrentFilterValues.push(new Filter({
+                        path: "RegistrationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEREGISTERED"
+                    }))
+                    aCurrentFilterValues.push(new Filter({
+                        path: "ActivationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEACTIVATED"
+                    }))
+                    
                     this._filterTableP(
                         new Filter({
                             filters: aCurrentFilterValues,
@@ -1145,6 +1163,7 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
+                    this.getView().setBusy(true);
                     var oViewModel = this.getModel("oModelView");
                     if (oPayload.Url === "") {
                         oPayload.Url = "";
@@ -1160,6 +1179,7 @@ sap.ui.define(
 
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
+                            oViewModel.setProperty("/busy", false);
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1235,6 +1255,7 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
+                    this.getView().setBusy(true);
                     var oViewModel = this.getModel("oModelView");
 
                     oPayload.Duration = parseInt(oPayload.Duration);
@@ -1258,6 +1279,7 @@ sap.ui.define(
 
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (createddata) {
+                            oViewModel.setProperty("/busy", false);
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1295,11 +1317,13 @@ sap.ui.define(
                 },
 
                 _UploadAttendanceOfflineTr: function (oPayload) {
+                    this.getView().setBusy(true);
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
-
+                    var oViewModel = this.getModel("oModelView");
+                    oViewModel.setProperty("/busy", false);
                     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                     //     oPayload.RewardPoints = 0;
                     // }
@@ -1441,6 +1465,7 @@ sap.ui.define(
                     var oModel = this.getModel();
                     oModel.refresh(true);
                     oModel.setProperty("/busy", false);
+                    this.getView().setBusy(false);
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;

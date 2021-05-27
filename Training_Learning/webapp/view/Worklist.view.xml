@@ -129,7 +129,7 @@
                                         <Text text="{parts: [ {path: 'StartDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{RewardPoints}"/>
-                                          <Text text="{TotalEnrollments}"/>
+                                        <Text text="{TotalEnrollments}"/>
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
@@ -215,10 +215,10 @@
                                     <Text text="{i18n>colRewardPoints}"/>
                                 </Column>
                                 <Column width="10%">
-                                    <Text text="{i18n>colViewCount}"/>
+                                    <Text text="{i18n>colUniqueViewCount}"/>
                                 </Column>
                                 <Column width="10%">
-                                    <Text text="{i18n>colUniqueViewCount}"/>
+                                    <Text text="{i18n>colViewCount}"/>
                                 </Column>
                                 <Column width="7%">
                                     <Text text="{i18n>colStatus}"/>
@@ -235,8 +235,8 @@
                                         <Link text="{Url}" target="_blank" href="{Url}"/>
                                         <Text text="{parts: [ {path: 'CreatedAt'} ], formatter : '.formatter.formatDate' }"/>
                                         <Text text="{RewardPoints}"/>
-                                        <Text text="{TotalViewCounts}"/>
                                         <Text text="{UniqueViewCounts}"/>
+                                        <Text text="{TotalViewCounts}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
