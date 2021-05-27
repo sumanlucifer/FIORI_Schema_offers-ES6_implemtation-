@@ -129,7 +129,7 @@ sap.ui.define(
                     var oModel = new JSONModel(oData);
 
                     oView.setModel(oModel, "oModelControl2");
-                    var c1,c2,c3,c4;
+                    var c1, c2, c3, c4;
 
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
@@ -143,7 +143,7 @@ sap.ui.define(
                     oView.byId("smrtVideoTraining").rebindTable();
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
-                    
+
                 },
                 handleEditPress: function () {
                     this._toggleButtonsAndView(true);
@@ -529,6 +529,7 @@ sap.ui.define(
                             delete prop["editable"];
                         }
                     }
+
                     // setting up contact number data
                     var aPainterSecContact = [];
                     var SMobile1 = JSON.parse(
@@ -576,6 +577,16 @@ sap.ui.define(
                             oPayload["PainterSegmentation"][c] = null;
                         }
                     }
+                    var aFlagSeg = ["TeamSizeId", "PainterExperience", "SitePerMonthId", "PotentialId"];
+                    var bSegFalg = false;
+                    bSegFalg = aFlagSeg.every(function (a) {
+                        return oPayload["PainterSegmentation"][a] === null;
+                    });
+                    if (bSegFalg) {
+                        oPayload["PainterSegmentation"] = null;
+                    }
+
+
                     for (var d in oPayload["PainterAddress"]) {
                         if (oPayload["PainterAddress"][d] === "") {
                             oPayload["PainterAddress"][d] = null;
