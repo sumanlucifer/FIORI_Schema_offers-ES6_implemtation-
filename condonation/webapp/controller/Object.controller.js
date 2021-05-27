@@ -280,45 +280,8 @@ sap.ui.define([
 		 * If not, it will replace the current entry of the browser history with the worklist route.
 		 * @public
 		 */
-        onNavBack: function () {
-            var sPreviousHash = History.getInstance().getPreviousHash();
-
-            if (sPreviousHash !== undefined) {
-                history.go(-1);
-            } else {
-                this.getRouter().navTo("worklist", {}, true);
-            }
-        },
-        _showFormFragment: function (sFragmentName) {
-            var objSection = this.getView().byId("oVbxSmtTbl");
-            var oView = this.getView();
-            objSection.destroyItems();
-            var othat = this;
-            this._getFormFragment(sFragmentName).then(function (oVBox) {
-                oView.addDependent(oVBox);
-                objSection.addItem(oVBox);
-                //othat._setDataValue.call(othat);
-                //othat._setUploadCollectionMethod.call(othat);
-            });
-        },
-
-        _getFormFragment: function (sFragmentName) {
-            var oView = this.getView();
-            var othat = this;
-            // if (!this._formFragments) {
-            this._formFragments = Fragment.load({
-                id: oView.getId(),
-                name:
-                    "com.knpl.pragati.condonation.view.subview." + sFragmentName,
-                controller: othat,
-            }).then(function (oFragament) {
-                return oFragament;
-            });
-            // }
-
-            return this._formFragments;
-
-        },
+       
+       
 
         /* =========================================================== */
         /* internal methods                                            */

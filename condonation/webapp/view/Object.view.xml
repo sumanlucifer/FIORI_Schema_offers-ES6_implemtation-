@@ -5,7 +5,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	>
 
- <Page busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+ <Page busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
         <headerContent>
             <Bar>
                 <contentLeft>
@@ -24,7 +24,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="navPressBack"/>
+                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavBack"/>
                  <Button width="7%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
             </Toolbar>
         </footer>
