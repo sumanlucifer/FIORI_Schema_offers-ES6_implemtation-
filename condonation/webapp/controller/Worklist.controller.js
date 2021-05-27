@@ -278,6 +278,7 @@ sap.ui.define(
                             value: "{oModelControl>/filterBar/Name}",
                             showSearchButton: true,
                             search: othat.onFilter.bind(othat),
+                            submit:othat.onFilter.bind(othat)
                         });
                     } else {
                         oSearchField = null;
