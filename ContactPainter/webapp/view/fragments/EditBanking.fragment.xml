@@ -6,7 +6,7 @@
                 <Label text="{i18n>IFSCCode}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
                     <Input editable="false" value="{PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdPrAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }"/>
+                    <Input id="IdPrAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String' }"/>
                 </VBox>
                 <Label text="{i18n>BankName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>

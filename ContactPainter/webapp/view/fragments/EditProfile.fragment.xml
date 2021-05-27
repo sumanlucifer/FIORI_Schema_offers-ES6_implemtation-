@@ -97,13 +97,13 @@
                 
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
-                <ComboBox  items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox required="true"  items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{Question}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>Answer}" />
-                <Input  maxLength="50" value="{path : 'oModelView>/Preference/SecurityAnswer', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }" />
+                <Input required="true"  maxLength="50" value="{path : 'oModelView>/Preference/SecurityAnswer', type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z0-9]{1}[wW]*'} }" />
                 <core:Title text="{i18n>SegmentationDetails}" />
                 <Label text="{i18n>TeamSize}" />
                 <ComboBox items="{path:'/MasterTeamSizeSet',sorter:{path:'Id'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterSegmentation/TeamSizeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">

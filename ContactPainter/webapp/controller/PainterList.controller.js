@@ -68,7 +68,7 @@ sap.ui.define(
                 },
                 _initData: function () {
                     var oViewModel = new JSONModel({
-                        pageTitle: this.getResourceBundle().getText("PainterList"),
+                        pageTitle: "Painters (0)",
                         tableNoDataText: this.getResourceBundle().getText(
                             "tableNoDataText"
                         ),
@@ -190,6 +190,11 @@ sap.ui.define(
                                 } else if (oViewFilter[prop] == "PORTAL") {
                                     aCurrentFilterValues.push(
                                         new Filter("CreatedBy", FilterOperator.GT, 0)
+                                    );
+                                }
+                                 else if (oViewFilter[prop] == "MIGRATED") {
+                                    aCurrentFilterValues.push(
+                                        new Filter("IsMigrated", FilterOperator.EQ, true)
                                     );
                                 }
                             } else if (prop === "Name") {
