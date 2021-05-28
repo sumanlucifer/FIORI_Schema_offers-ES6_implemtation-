@@ -381,24 +381,45 @@ sap.ui.define(
                                             "/addComplaint/RewardPoints",
                                             oData["RewardPoints"]
                                         );
-                                        oModelView.setProperty(
-                                            "/addComplaint/TokenCode",
-                                            sTokenCode
-                                        );
-                                        oModelControl.setProperty("/TokenCode", false);
-                                        MessageToast.show(oData["Message"]);
-                                    } else if (oData["Status"] == false) {
-                                        oModelView.setProperty("/addComplaint/RewardPoints", "");
-                                        oModelView.setProperty("/addComplaint/TokenCode", "");
-                                        oModelControl.setProperty("/tokenCodeValue", "");
-                                        oModelControl.setProperty("/TokenCode", true);
-                                        MessageToast.show(oData["Message"]);
+
+                                        var patt1 = /Id/g;
+
+                                        for (var i in oNew) {
+                                            if (i.match(patt1) !== null) {
+                                                oNew[i] = parseInt(oNew[i]);
+                                            }
+                                            if (i === "RewardPoints") {
+                                                oNew[i] = parseInt(oNew[i]);
+                                            }
+                                        }
+                                        return oNew;
                                     }
                                 }
                             }
-                        },
-                        error: function () { },
+                        }
                     });
+                },
+
+                showQRCodedetails: function (data) {
+
+                    var oModelView = this.getView().getModel("oModelView");
+                    oModelView.setProperty("/QRCodeData", data);
+
+                    if (!this.oQRCodeDialog) {
+                        Fragment.load({ type: "XML", controller: this, name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails" }).then(function (oDialog) {
+                            this.oQRCodeDialog = oDialog;
+                            this.getView().addDependent(oDialog);
+                            oDialog.open();
+                        }.bind(this));
+                    } else {
+                        this.oQRCodeDialog.open();
+                    }
+
+
+
+                },
+                onTokenDlgClose: function () {
+                    this.oQRCodeDialog.close();
                 },
                 onValueHelpRequest: function (oEvent) {
                     var sInputValue = oEvent.getSource().getValue(),
