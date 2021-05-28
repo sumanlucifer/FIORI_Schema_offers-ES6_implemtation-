@@ -69,12 +69,12 @@
 					<ColumnListItem>
 						<cells>
 							<Text text="{FAQCategory/FAQCategory}"/>
-                            <Text text="{FAQSubcategory/FAQSubcategory}"/>
+                            <Text text="{= ${FAQSubcategoryId} === null ? 'NA' : ${FAQSubcategory/FAQSubcategory} }"/>
 							<Text text="{Question}"/>
 							<Text text="{Answer}"/>
                             <HBox>
-							<Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
-							<Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="Delete" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
+                                <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
+                                <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="Delete" enabled="{= (${worklistView>/loggedUserRoleId} !== 2) }"/>
                             </HBox>
 						</cells>
 					</ColumnListItem>
