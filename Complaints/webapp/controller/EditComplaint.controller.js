@@ -414,12 +414,6 @@ sap.ui.define(
                         return;
                     }
 
-                    MessageToast.show("Service called!!");
-
-
-                    return;
-
-
                     if (bValidation) {
                         oModel.setProperty("/InitiateForceTat", false);
                         this._postDataToSave();
