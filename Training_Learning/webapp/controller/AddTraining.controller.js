@@ -183,17 +183,102 @@ sap.ui.define(
                     }
                 },
 
+                onClearPainterSearch: function () {
+                    var aCurrentFilterValues = [];
+                    var oDataFilter = {
+                        ZoneId: "",
+                        DivisionId: "",
+                        DepotId: "",
+                        PainterType: "",
+                        ArcheType: "",
+                        MembershipCard: "",
+                        Name: "",
+                        MobileNo: ""
+                    };
+                    var oModel = new JSONModel(oDataFilter);
+                    this.getView().setModel(oModel, "PainterFilter");
+
+                    aCurrentFilterValues.push(new Filter({
+                        path: "IsArchived",
+                        operator: FilterOperator.EQ,
+                        value1: false
+                    }))
+                    aCurrentFilterValues.push(new Filter({
+                        path: "RegistrationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEREGISTERED"
+                    }))
+                    aCurrentFilterValues.push(new Filter({
+                        path: "ActivationStatus",
+                        operator: FilterOperator.NotContains,
+                        value1: "DEACTIVATED"
+                    }))
+
+                    this._filterTableP(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+                },
+
+                onClearDepotSearch: function () {
+                    var aCurrentFilterValues = [];
+                    var oDataFilter = {
+                        Id: "",
+                        Depot: "",
+                    };
+                    var oModel = new JSONModel(oDataFilter);
+                    this.getView().setModel(oModel, "DepotFilter");
+
+                    var sDivision = this.getView().getModel("oModelView").getProperty("/TrainingDetails/TrainingDivision");
+                    if (sDivision) {
+                        for (var y of sDivision) {
+                            aCurrentFilterValues.push(new Filter("Division", FilterOperator.EQ, y));
+                        }
+                    }
+
+                    this._filterTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: false,
+                        })
+                    );
+                },
+
                 onRadioBtnChange: function (oEvent) {
                     var selectedIndex = oEvent.mParameters.selectedIndex;
+                    var oViewModel = this.getModel("oModelView");
+
                     switch (selectedIndex) {
                         case 0:
                             this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "ALL");
+                            oViewModel.setProperty("/TrainingDetails/TrainingZone", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingDivision", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingDepot", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainters", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainterTypeDetails", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainterArcheTypeDetails", []);
+                            if (this._oValueHelpDialogP) {
+                                this._oValueHelpDialogP.destroy();
+                                delete this._oValueHelpDialogP;
+                            }
                             break;
                         case 1:
                             this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "GROUP");
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainters", []);
+                            if (this._oValueHelpDialogP) {
+                                this._oValueHelpDialogP.destroy();
+                                delete this._oValueHelpDialogP;
+                            }
                             break;
                         case 2:
                             this.getModel("oModelView").setProperty("/TrainingDetails/TrainingFilterType", "PAINTER");
+                            oViewModel.setProperty("/TrainingDetails/TrainingZone", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingDivision", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingDepot", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainterTypeDetails", []);
+                            oViewModel.setProperty("/TrainingDetails/TrainingPainterArcheTypeDetails", []);
                             break;
                     }
                 },
@@ -572,6 +657,13 @@ sap.ui.define(
                         "com.knpl.pragati.Training_Learning.view.fragments.DepotValueHelp",
                         this
                     );
+                    var oDataFilter = {
+                        Id: "",
+                        Depot: "",
+                    }
+                    var oModel = new JSONModel(oDataFilter);
+                    this.getView().setModel(oModel, "DepotFilter");
+
                     this.getView().addDependent(this._oValueHelpDialog);
 
                     this._oValueHelpDialog.getTableAsync().then(
@@ -690,9 +782,7 @@ sap.ui.define(
                         }
 
                         if (oTable.bindItems) {
-                            oTable
-                                .getBinding("items")
-                                .filter(oFilter, sType || "Application");
+                            oTable.getBinding("items").filter(oFilter, sType || "Application");
                         }
 
                         oValueHelpDialogP.update();
@@ -789,7 +879,7 @@ sap.ui.define(
                             MobileNo: ""
                         }
                         var oModel = new JSONModel(oDataFilter);
-                        this.getView().setModel(oModel, "PainterFilter")
+                        this.getView().setModel(oModel, "PainterFilter");
                         this.getView().addDependent(this._oValueHelpDialogP);
 
                         this._oValueHelpDialogP.getTableAsync().then(
@@ -878,7 +968,7 @@ sap.ui.define(
                             }
                         }
                     }
-                    
+
                     aCurrentFilterValues.push(new Filter({
                         path: "IsArchived",
                         operator: FilterOperator.EQ,
@@ -894,21 +984,13 @@ sap.ui.define(
                         operator: FilterOperator.NotContains,
                         value1: "DEACTIVATED"
                     }))
-                    
+
                     this._filterTableP(
                         new Filter({
                             filters: aCurrentFilterValues,
                             and: true,
                         })
                     );
-
-
-
-                    // aFilters.push(
-                    //     
-                    // );
-
-
                 },
 
                 onValueHelpCancelPressPainter: function () {
