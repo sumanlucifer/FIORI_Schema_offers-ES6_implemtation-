@@ -374,7 +374,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                    this._dealerReset();
+                   
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
