@@ -450,10 +450,14 @@ sap.ui.define(
                 },
 
                 onCrossNavigate: function (sAction) {
+                    console.log("Cross Navigate Trigerred");
+                    var sPainterId = this.getView().getModel("oModelControl2").getProperty("/PainterId")+"";
+                    console.log(sPainterId);
                     this.Navigate({
                         target: {
                             semanticObject: "Manage",
-                            action: sAction
+                            action: sAction,
+                            params: { PainterId: sPainterId }
                         }
                     });
                 },
@@ -465,6 +469,7 @@ sap.ui.define(
                         target: {
                             shellHash: oSemAct.target.semanticObject.concat("-", oSemAct.target.action)
                         }
+
                     }]).done(function (aResponse) {
                         if (!(aResponse[0].supported)) return;
 
