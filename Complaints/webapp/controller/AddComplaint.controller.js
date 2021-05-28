@@ -74,10 +74,11 @@ sap.ui.define(
                 },
                 _onRouteMatched: function (oEvent) {
                     this._GetServiceData();
-                    this._initData("add", "");
+                    var sId = oEvent.getParameter("arguments").Id;
+                    this._initData("add", "", sId);
                 },
                 _GetServiceData: function () { },
-                _initData: function (mParMode, mKey) {
+                _initData: function (mParMode, mKey, mPainterId) {
                     var oViewModel = new JSONModel({
                         sIctbTitle: mParMode == "add" ? "Add" : "Edit",
                         busy: false,
@@ -119,7 +120,38 @@ sap.ui.define(
                     //this._initMessage(oViewModel);
                     this.getView().getModel().resetChanges();
                     //used to intialize the message class for displaying the messages
+                    if (mPainterId !== "new") {
+                        this._getPainterDetails(mPainterId);
+                    }
                 },
+                _getPainterDetails: function (mParam) {
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oViewModel = oView.getModel("oModelView");
+                    var sPath = "/PainterSet(" + mParam + ")";
+                    oData.read(sPath, {
+                        urlParameters: {
+                            $select: 'Id,Mobile,Name,MembershipCard'
+                        },
+                        success: function (obj) {
+                            console.log(obj)
+                            oViewModel.setProperty(
+                                "/addCompAddData/MembershipCard",
+                                obj["MembershipCard"]
+                            );
+                            oViewModel.setProperty("/addCompAddData/Mobile", obj["Mobile"]);
+                            oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
+                            oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
+                        },
+                        error: function () {
+
+                        }
+                    })
+
+
+
+                },
+
                 onPressSave: function () {
                     this.sServiceURI = this.getOwnerComponent(this)
                         .getManifestObject()
