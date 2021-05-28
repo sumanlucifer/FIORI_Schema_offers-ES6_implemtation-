@@ -58,6 +58,8 @@ sap.ui.define(
                     oRouter
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
+                         var startupParams = this.getOwnerComponent().getComponentData().startupParameters;
+                         console.log(startupParams);
                     //console.log("Init View");
                 },
                 _onRouteMatched: function () {
