@@ -58,6 +58,8 @@ sap.ui.define(
                     oRouter
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
+                         var startupParams = this.getOwnerComponent().getComponentData().startupParameters;
+                         console.log(startupParams);
                     //console.log("Init View");
                 },
                 _onRouteMatched: function () {
@@ -278,7 +280,7 @@ sap.ui.define(
                             value: "{oModelControl>/filterBar/Name}",
                             showSearchButton: true,
                             search: othat.onFilter.bind(othat),
-                            submit:othat.onFilter.bind(othat)
+                            submit: othat.onFilter.bind(othat)
                         });
                     } else {
                         oSearchField = null;
@@ -466,10 +468,11 @@ sap.ui.define(
 
 
                 },
-
                 onPressAdd: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("Add");
+                    oRouter.navTo("Add", {
+                        Id: "new"
+                    });
                 },
 
                 /**
