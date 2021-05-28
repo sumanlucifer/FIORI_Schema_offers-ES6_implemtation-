@@ -148,10 +148,10 @@ sap.ui.define(
           var oModelContrl = oView.getModel("oModelControl");
 
           // if tokecode property is set to true, we have make the string empty
-          if (oModelContrl.getProperty("/TokenCode") == true) {
-            oAddCompData["RewardPoints"] = "";
-            oAddCompData["TokenCode"] = "";
-          }
+        //   if (oModelContrl.getProperty("/TokenCode") == true) {
+        //     oAddCompData["RewardPoints"] = "";
+        //     oAddCompData["TokenCode"] = "";
+        //   }
           var oPayLoad = this._ReturnObjects(oAddCompData);
           var othat = this;
           var oData = this.getView().getModel();
@@ -293,8 +293,8 @@ sap.ui.define(
           if (sKey == "2" || sKey == "3") {
             oViewModel.setProperty("/addComplaint/RewardPoints", "");
             oViewModel.setProperty("/addComplaint/TokenCode", "");
-            oModelControl.setProperty("/tokenCodeValue", "");
-            oModelControl.setProperty("/TokenCode", true);
+           // oModelControl.setProperty("/tokenCodeValue", "");
+           // oModelControl.setProperty("/TokenCode", true);
           }
           // clearning the inreview and the resolution
            oViewModel.setProperty("/addComplaint/ComplaintDescription", "");
@@ -325,7 +325,7 @@ sap.ui.define(
           var oModelControl = oView.getModel("oModelControl");
           var oData = oView.getModel();
           var sPainterId = oModelView.getProperty("/addComplaint/PainterId");
-          var sTokenCode = oModelControl.getProperty("/tokenCodeValue");
+        //  var sTokenCode = oModelControl.getProperty("/tokenCodeValue");
 
           if (sPainterId == "") {
             MessageToast.show("Kindly select a valid painter");
