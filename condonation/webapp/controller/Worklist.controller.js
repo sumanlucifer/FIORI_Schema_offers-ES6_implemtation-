@@ -278,7 +278,7 @@ sap.ui.define(
                             value: "{oModelControl>/filterBar/Name}",
                             showSearchButton: true,
                             search: othat.onFilter.bind(othat),
-                            submit:othat.onFilter.bind(othat)
+                            submit: othat.onFilter.bind(othat)
                         });
                     } else {
                         oSearchField = null;
@@ -466,10 +466,11 @@ sap.ui.define(
 
 
                 },
-
                 onPressAdd: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("Add");
+                    oRouter.navTo("Add", {
+                        Id: "new"
+                    });
                 },
 
                 /**

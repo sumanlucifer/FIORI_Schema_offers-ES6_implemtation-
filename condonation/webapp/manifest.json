@@ -79,16 +79,16 @@
                 }
             },
             "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {
-          "defaultBindingMode": "TwoWay",
-          "defaultCountMode": "Inline",
-          "refreshAfterChange": true,
-          "defaultUpdateMethod": "Put",
-          "useBatch": false
-        }
-      }
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "defaultUpdateMethod": "Put",
+                    "useBatch": false
+                }
+            }
         },
         "routing": {
             "config": {
@@ -119,8 +119,8 @@
                         "Detail"
                     ]
                 },
-                 {
-                    "pattern": "add_condonation",
+                {
+                    "pattern": "Add/{Id}",
                     "name": "Add",
                     "target": [
                         "object"

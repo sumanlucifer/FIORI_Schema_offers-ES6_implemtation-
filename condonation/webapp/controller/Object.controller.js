@@ -48,9 +48,10 @@ sap.ui.define([
 
         },
         _onRouterMatched: function (oEvent) {
-            this._initData();
+            var sPainterId = oEvent.getParameter("arguments").Id;
+            this._initData(sPainterId);
         },
-        _initData: function () {
+        _initData: function (mParam1) {
             var oView = this.getView();
 
             var oDataControl = {
@@ -92,6 +93,25 @@ sap.ui.define([
             oView.setModel(oModel1, "oModelView");
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
+            console.log(mParam1);
+            if (mParam1 !== "new") {
+                this._getPainterDetails(mParam1);
+            }
+
+
+        },
+        _getInitialPainterDetails: function (mParam1) {
+            var oView = this.getView()
+            var oData = oView.getModel()
+            var sPath = "/PainterSet(" + mParam1 + ")";
+            oData.read(sPath, {
+                success: function () {
+
+                },
+                error: function () {
+
+                }
+            })
         },
 
         onPressSave: function () {
@@ -106,7 +126,7 @@ sap.ui.define([
                 MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
                 return;
             }
-            this._postDataToSave();
+            //this._postDataToSave();
         },
         _postDataToSave: function () {
             var oView = this.getView();
@@ -224,7 +244,6 @@ sap.ui.define([
             }
             var obj = oSelectedItem.getBindingContext().getObject();
 
-            oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
             this._getPainterDetails(obj["Id"]);
         },
         _getPainterDetails: function (mParam) {
@@ -247,6 +266,7 @@ sap.ui.define([
                     oViewModel.setProperty("/AddFields/Name", obj["Name"]);
                     oViewModel.setProperty("/AddFields/ZoneId", obj["ZoneId"]);
                     oViewModel.setProperty("/AddFields/DivisionId", obj["DivisionId"]);
+                    oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
                     oViewModel.setProperty("/PainterId", obj["Id"]);
                     if (obj["Depot"]) {
                         oViewModel.setProperty("/AddFields/Depot", obj["Depot"]["Depot"]);
