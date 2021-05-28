@@ -95,6 +95,7 @@
                     "defaultOperationMode": "Server",
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Request",
+                     "defaultUpdateMethod":"PUT",
                     "useBatch": false
                 },
                 "dataSource": "KNPL_CBR",
