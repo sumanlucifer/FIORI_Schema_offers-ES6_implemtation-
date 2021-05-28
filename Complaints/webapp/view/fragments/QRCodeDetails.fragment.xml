@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog   binding="{oModelView>/QRCodeData}" class="sapUiContentPadding" title="{i18n>TokenCodeDetails}" titleAlignment="Center" >
+        <content>
+            <form:SimpleForm visible="{= ${oModelView>ProductCategory} === null ? false: true }"	columnsL="2" layout="ResponsiveGridLayout"	columnsM="2"	singleContainerFullSize="false"  >
+                <Label text="Category" />
+                <Text text="{oModelView>ProductCategory}" />
+                <Label text="Classification" />
+                <Text text="{oModelView>ProductClassification}" />
+                <Label text="Product Name" />
+                <Text text="{oModelView>ProductName}" />
+                <Label text="Points" />
+                <Text text="{oModelView>RewardPoints}" />
+                 <Label text="Painter Name" visible="{= ${oModelView>PainterName} !== null }" />
+                <Text text="{oModelView>PainterName}" visible="{= ${oModelView>PainterName} !== null }"  />
+                 <Label text="Painter Mobile No." visible="{= ${oModelView>PainterName} !== null }"  />
+                <Text text="{oModelView>PainterMobile}" visible="{= ${oModelView>PainterName} !== null }"  />
+            </form:SimpleForm>
+                <ObjectStatus  state="{= ${oModelView>Status} ? 'Success'  : 'Error'   }" text= "{oModelView>Message}" />
+        </content>
+        <endButton>
+            <Button text="Close" press="onTokenDlgClose" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
