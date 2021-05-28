@@ -451,7 +451,7 @@ sap.ui.define(
 
                 onCrossNavigate: function (sAction) {
                     console.log("Cross Navigate Trigerred");
-                    var sPainterId = this.getView().getModel("oModelControl2").getProperty("/PainterId")+"";
+                    var sPainterId = this.getView().getModel("oModelControl2").getProperty("/PainterId") + "";
                     console.log(sPainterId);
                     this.Navigate({
                         target: {
@@ -463,20 +463,22 @@ sap.ui.define(
                 },
 
                 Navigate: function (oSemAct) {
-                    var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
+                    console.log(oSemAct)
+                    const oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
 
-                    oCrossAppNav.isNavigationSupported([{
+                    const hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
                         target: {
-                            shellHash: oSemAct.target.semanticObject.concat("-", oSemAct.target.action)
+                            semanticObject: oSemAct.target.semanticObject,
+                            action: oSemAct.target.sAction
+                        },
+                        params: oSemAct.target.params
+                    })) || "";
+                    console.log(hash)
+                    oCrossAppNavigator.toExternal({
+                        target: {
+                            shellHash: hash
                         }
-
-                    }]).done(function (aResponse) {
-                        if (!(aResponse[0].supported)) return;
-
-                        oCrossAppNav.toExternal(oSemAct);
-
                     });
-
                 },
 
                 onPressSave: function () {
