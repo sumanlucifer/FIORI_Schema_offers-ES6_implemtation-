@@ -126,7 +126,7 @@ sap.ui.define([
                 MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
                 return;
             }
-            //this._postDataToSave();
+            this._postDataToSave();
         },
         _postDataToSave: function () {
             var oView = this.getView();
