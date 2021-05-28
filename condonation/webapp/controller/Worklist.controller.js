@@ -58,9 +58,13 @@ sap.ui.define(
                     oRouter
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
-                         var startupParams = this.getOwnerComponent().getComponentData().startupParameters;
-                         console.log(startupParams);
-                    //console.log("Init View");
+                    var startupParams = null;// = this.getOwnerComponent().getComponentData().startupParameters;
+                    if (this.getOwnerComponent().getComponentData()) {
+                        console.log("Inside If Condition")
+                        startupParams = this.getOwnerComponent().getComponentData().startupParameters
+                    }
+                    console.log(startupParams, "Initial App Loaded");
+                    console.log("Init View");
                 },
                 _onRouteMatched: function () {
                     this._InitData();
@@ -279,8 +283,7 @@ sap.ui.define(
                         oBasicSearch = new sap.m.SearchField({
                             value: "{oModelControl>/filterBar/Name}",
                             showSearchButton: true,
-                            search: othat.onFilter.bind(othat),
-                            submit: othat.onFilter.bind(othat)
+                            search: othat.onFilter.bind(othat)
                         });
                     } else {
                         oSearchField = null;
@@ -473,7 +476,41 @@ sap.ui.define(
                     oRouter.navTo("Add", {
                         Id: "new"
                     });
+                    //this.onCrossNavigate("CP")
+
                 },
+                onCrossNavigate: function (sAction) {
+                    console.log("Cross Navigate Trigerred");
+
+                    this.Navigate({
+                        target: {
+                            semanticObject: "Manage",
+                            action: sAction,
+                            params: { PainterId: "Id1" }
+                        }
+                    });
+                },
+
+                Navigate: function (oSemAct) {
+                    console.log(oSemAct)
+                    const oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+
+                    const hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                        target: {
+                            semanticObject: oSemAct.target.semanticObject,
+                            action: oSemAct.target.sAction
+                        },
+                        params: oSemAct.target.params
+                    })) || "";
+                    console.log(hash)
+                    oCrossAppNavigator.toExternal({
+                        target: {
+                            shellHash: hash
+                        }
+                    });
+
+                },
+
 
                 /**
                  * Event handler for refresh event. Keeps filter, sort
