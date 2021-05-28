@@ -492,22 +492,13 @@ sap.ui.define(
                 },
 
                 Navigate: function (oSemAct) {
-                    console.log(oSemAct)
-                    const oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-
-                    const hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-                        target: {
-                            semanticObject: oSemAct.target.semanticObject,
-                            action: oSemAct.target.sAction
-                        },
-                        params: oSemAct.target.params
-                    })) || "";
-                    console.log(hash)
-                    oCrossAppNavigator.toExternal({
-                        target: {
-                            shellHash: hash
-                        }
-                    });
+                    if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
+                        var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
+                        oCrossAppNav.toExternal({
+                            target: { semanticObject:oSemAct.target.semanticObject , action:oSemAct.target.action },
+                            params: oSemAct.target.params
+                        })
+                    }
 
                 },
 
