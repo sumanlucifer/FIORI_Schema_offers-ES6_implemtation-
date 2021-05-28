@@ -13,7 +13,7 @@
         key="Id"
         descriptionKey="Name">
         <filterBar>
-            <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter">
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter" showRestoreButton="true" showRestoreOnFB="true" reset="onClearPainterSearch">
                 <fb:filterGroupItems>
                     <fb:FilterGroupItem
                         groupName="__$INTERNAL$"
@@ -65,7 +65,7 @@
                         label="Painter ArcheType"
                         visibleInFilterBar="true">
                         <fb:control>   
-                            <m:ComboBox items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
+                            <m:ComboBox placeholder="{i18n>enterPainterArcheType}" items="{/MasterArcheTypeSet}" selectedKey="{path:'PainterFilter>/ArcheType' }">
                                 <core:Item text="{ArcheType}" key="{Id}" />
                             </m:ComboBox>
                         </fb:control>

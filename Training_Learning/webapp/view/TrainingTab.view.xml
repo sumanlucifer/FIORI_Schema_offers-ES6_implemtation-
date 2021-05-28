@@ -86,7 +86,7 @@
             </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
-            <Bar visible="{= ${oModelView>/TrainingDetails/EndDate} > ${oModelView>/currDate} || ${appView>/flgViewOnVd} === true }">
+            <Bar visible="{= ${oModelView>/TrainingDetails/StartDate} > ${oModelView>/currDate} || ${appView>/flgViewOnVd} === true }">
                 <contentRight>
                     <Button text="{i18n>Activate}" visible="{= ${oModelView>/TrainingDetails/Status} === 0 &amp;&amp; ${appView>/flgViewOn} === true &amp;&amp; ${appView>/loggedUserRoleId} !== 2 }" press="onActiveInActive" type="Emphasized"/>
 				    <Button text="{i18n>DeActivate}" visible="{= ${oModelView>/TrainingDetails/Status} === 1 &amp;&amp; ${appView>/flgViewOn} === true &amp;&amp; ${appView>/loggedUserRoleId} !== 2 }" press="onActiveInActive" type="Reject"/>

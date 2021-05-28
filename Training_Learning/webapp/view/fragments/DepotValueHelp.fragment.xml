@@ -13,7 +13,7 @@
         key="Id"
         descriptionKey="Depot">
         <filterBar>
-            <fb:FilterBar advancedMode="false" search="onFilterBarSearch">
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearch" showRestoreButton="true" showRestoreOnFB="true" reset="onClearDepotSearch">
                 <fb:filterGroupItems>
                     <fb:FilterGroupItem
                         groupName="__$INTERNAL$"
@@ -21,7 +21,7 @@
                         label="Depot Id"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Id" placeholder="{i18n>enterDepotId}"/>
+                            <m:Input name="Id" placeholder="{i18n>enterDepotId}" value="{DepotFilter>/Id}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
@@ -30,7 +30,7 @@
                         label="Depot"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input name="Depot" placeholder="{i18n>enterDepot}"/>
+                            <m:Input name="Depot" placeholder="{i18n>enterDepot}" value="{DepotFilter>/Depot}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>
