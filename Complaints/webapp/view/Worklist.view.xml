@@ -21,7 +21,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintDetails" label="{i18n>ComplaintDetails}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[ {path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
                                         <core:Item text="{ComplaintSubtype}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>

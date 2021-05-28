@@ -10,7 +10,7 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>ComplaintDetails}" />
-                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/addComplaint/ComplaintTypeId} !== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}  ] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }">
+                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }">
                     <items>
                         <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
@@ -18,9 +18,9 @@
                 
                 <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  />
                 <TextArea required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1}}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"/>
-               
-                <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
-                <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" value="{oModelControl>/TokenCode}" editable="{= ${oModelView>/addComplaint/RewardPoints} === ''  }" >
+              <!-- Token Apply flow change 28/05/2021 -              -->
+            <!--     <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
+                <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
                     <layoutData>
                         <l:GridData span="XL10 L10 M10 S12" />
                     </layoutData>
@@ -28,7 +28,7 @@
                 <Button visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>btnVerifyToken}" press="onPressTokenCode"  />
                 <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>Points}" />
                 <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" editable="false" value="{path:'oModelView>/addComplaint/RewardPoints',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" />
-                 
+                  -->
                 <Label text="{i18n>Status}" />
                 <Text text="{i18n>Open}" />
                 <Label text="{i18n>Images}" />

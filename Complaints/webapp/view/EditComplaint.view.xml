@@ -50,8 +50,8 @@
                           </VBox>
                         </IconTabFilter>
                          <IconTabFilter  text="{i18n>History}" >
-                            <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/> -->
-                                <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
+                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
+                                <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
@@ -61,7 +61,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
-                   <Button text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
+                   <Button visible="false" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
                 <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
             </Toolbar>
         </f:footer>
