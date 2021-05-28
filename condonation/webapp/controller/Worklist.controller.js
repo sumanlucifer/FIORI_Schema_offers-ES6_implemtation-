@@ -58,16 +58,35 @@ sap.ui.define(
                     oRouter
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
-                    var startupParams = null;// = this.getOwnerComponent().getComponentData().startupParameters;
+                    var startupParams = null;
+                    console.log("Init Trigerred");
                     if (this.getOwnerComponent().getComponentData()) {
                         console.log("Inside If Condition")
-                        startupParams = this.getOwnerComponent().getComponentData().startupParameters
+                        startupParams = this.getOwnerComponent().getComponentData().startupParameters;
+
                     }
-                    console.log(startupParams, "Initial App Loaded");
-                    console.log("Init View");
+                     console.log(startupParams);
+                    if (startupParams) {
+                        if (startupParams.hasOwnProperty("PainterId")) {
+                            if (startupParams["PainterId"].length > 0) {
+                                this._onNavToAdd(startupParams["PainterId"][0]);
+                            }
+                        }
+                    }
+                   
                 },
-                _onRouteMatched: function () {
+                _onRouteMatched: function (mParam1) {
                     this._InitData();
+
+
+                },
+                _onNavToAdd: function (mParam) {
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("Add", {
+                        Id: mParam
+                    });
+                    //this.onCrossNavigate("CP")
+
                 },
                 _InitData: function () {
                     var oViewModel,
@@ -492,22 +511,13 @@ sap.ui.define(
                 },
 
                 Navigate: function (oSemAct) {
-                    console.log(oSemAct)
-                    const oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-
-                    const hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-                        target: {
-                            semanticObject: oSemAct.target.semanticObject,
-                            action: oSemAct.target.sAction
-                        },
-                        params: oSemAct.target.params
-                    })) || "";
-                    console.log(hash)
-                    oCrossAppNavigator.toExternal({
-                        target: {
-                            shellHash: hash
-                        }
-                    });
+                    if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
+                        var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
+                        oCrossAppNav.toExternal({
+                            target: { semanticObject: oSemAct.target.semanticObject, action: oSemAct.target.action },
+                            params: oSemAct.target.params
+                        })
+                    }
 
                 },
 
