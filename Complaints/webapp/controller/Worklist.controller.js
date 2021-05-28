@@ -60,11 +60,36 @@ sap.ui.define(
                     oRouter
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
+                    var startupParams = null;
+                    if (this.getOwnerComponent().getComponentData()) {
+                        console.log("Inside If Condition")
+                        startupParams = this.getOwnerComponent().getComponentData().startupParameters;
+
+                    }
+                    console.log(startupParams);
+                    if (startupParams) {
+                        if (startupParams.hasOwnProperty("PainterId")) {
+                            if (startupParams["PainterId"].length > 0) {
+                                this._onNavToAdd(startupParams["PainterId"][0]);
+                            }
+                        }
+                    }
+
+
                     //console.log("Init View");
                 },
                 _onRouteMatched: function () {
                     this._InitData();
                 },
+                _onNavToAdd: function (mParam) {
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("RouteAddCmp", {
+                        Id: mParam
+                    });
+                    //this.onCrossNavigate("CP")
+
+                },
+
                 _InitData: function () {
                     var oViewModel,
                         iOriginalBusyDelay,
@@ -249,6 +274,34 @@ sap.ui.define(
                         oCmbxSubType.getBinding("items").filter(oFilter);
                     }
                 },
+                  onZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+
+                    var oDivision = oView.byId("idDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+                    //setting the data for depot;
+                    var oDepot = oView.byId("idDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    // clearning data for dealer
+                   
+                },
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = oView.byId("idDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+                },
+
                 _ResetFilterBar: function () {
                     var aCurrentFilterValues = [];
                     var aResetProp = {
