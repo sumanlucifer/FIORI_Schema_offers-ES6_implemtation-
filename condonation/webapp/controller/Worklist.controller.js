@@ -60,6 +60,7 @@ sap.ui.define(
                         .attachMatched(this._onRouteMatched, this);
                     var startupParams = null;// = this.getOwnerComponent().getComponentData().startupParameters;
                     if (this.getOwnerComponent().getComponentData()) {
+                        console.log("Inside If Condition")
                         startupParams = this.getOwnerComponent().getComponentData().startupParameters
                     }
                     console.log(startupParams, "Initial App Loaded");
