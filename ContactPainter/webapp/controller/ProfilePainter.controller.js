@@ -150,7 +150,6 @@ sap.ui.define(
                     var oView = this.getView();
                     var oSection = oEvent.getParameter("section");
                     var sId = oSection.getId();
-
                     if (sId.match("loyaltysection")) {
                         console.log("loyalty")
                         oView.byId("smrtLoyalty").rebindTable();
