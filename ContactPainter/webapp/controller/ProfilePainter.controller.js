@@ -137,7 +137,10 @@ sap.ui.define(
 
 
                     //rebind Loyalty table
-
+                    oView.byId("smrtLiveTraining").rebindTable();
+                    oView.byId("smrtOfflineTraining").rebindTable();
+                    oView.byId("smrtVideoTraining").rebindTable();
+                     oView.byId("smrtLoyalty").rebindTable();
 
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
