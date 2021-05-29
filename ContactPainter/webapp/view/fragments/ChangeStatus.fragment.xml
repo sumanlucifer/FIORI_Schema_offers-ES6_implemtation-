@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <Dialog class="sapUiContentPadding" id="ChangeStatus" title="{i18n>btnChangeStatus}" titleAlignment="Center" binding="{oModelControl2>/oChangeStatus}">
+    <Dialog class="sapUiContentPadding" id="ChangeStatus" title="{i18n>btnChangeStatus}" titleAlignment="Center" binding="{oModelControl2>/oChangeStatus}" >
         <content>
             <!-- <VBox >
         <HBox> <Label text="{i18n>LblNewStatus}" />
