@@ -5,7 +5,7 @@
                 <Toolbar>
                     <ToolbarSpacer />
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Tokens}"></SearchField>
-                    <Button type="Emphasized"  text="{i18n>ApplyToken}" press="onPressOpenTokenDialog"></Button>
+                    <Button icon="sap-icon://add" type="Emphasized"  text="{i18n>ApplyToken}" press="onPressOpenTokenDialog"></Button>
                 </Toolbar>
             </headerToolbar>
 
