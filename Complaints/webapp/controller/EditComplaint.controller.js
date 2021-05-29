@@ -236,29 +236,38 @@ sap.ui.define(
                             oModelView.setProperty("/" + k, "");
                         }
                     }
-                    //setting token code scenario
-                    if (oModelView.getProperty("/TokenCode") !== "") {
-                        oModelControl.setProperty(
-                            "/tokenCodeValue",
-                            oModelView.getProperty("/TokenCode")
-                        );
-                        oModelControl.setProperty("/TokenCode", "");
-                    }
+                    // //setting token code scenario
+                    // if (oModelView.getProperty("/TokenCode") !== "") {
+                    //     oModelControl.setProperty(
+                    //         "/tokenCodeValue",
+                    //         oModelView.getProperty("/TokenCode")
+                    //     );
+                    //     oModelControl.setProperty("/TokenCode", "");
+                    // }
                     //set data for the smart table
-                    oModelControl.setProperty(
-                        "/ComplainCode",
-                        oModelView.getProperty("/ComplaintCode")
-                    );
+                    oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode")   );
                     oView.byId("smartHistory").rebindTable();
                 },
+
+                onChangeStatus: function(){
+                        var currObject = this.getView().getBindingContext().getObject();    
+                    if(currObject.ComplaintStatus == "INREVIEW" || currObject.ComplaintStatus == "REGISTERED" )
+                    {
+                       
+                    var oModelView = this.getView().getModel("oModelView");
+                        oModelView.setProperty("/TokenCode","");
+                        oModelView.setProperty("/RewardPoints","");
+
+                    }
+                },
+
                 _CheckImage: function (oProp) {
                     var oView = this.getView();
                     var oModelControl = this.getView().getModel("oModelControl");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
+                    jQuery.get(sImageUrl)
+                          .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
                             console.log("Image Exist");
                         })
@@ -290,7 +299,7 @@ sap.ui.define(
                     var oModelView = oView.getModel("oModelView");
                     var oModelControl = oView.getModel("oModelControl");
                     var that = this;
-                    var sTokenCode = oModelControl.getProperty("/TokenCode").trim();
+                    var sTokenCode = oModelView.getProperty("/TokenCode").trim();
                     if (sTokenCode == "") {
                         MessageToast.show("Kindly enter the token code to continue");
                         return;
@@ -500,15 +509,6 @@ sap.ui.define(
                     });
 
                     //var oProp =
-                },
-
-                _payloadHardCleaning: function(oPayload){
-                  var oDataSkeleton =  this.getView().getModel().createEntry("/PainterComplainsSet");
-                  Object.seal(oDataSkeleton);
-
-                  Object.assign(oDataSkeleton, oPayload);
-
-                  return oDataSkeleton;
                 },
 
                 handleCancelPress: function () {

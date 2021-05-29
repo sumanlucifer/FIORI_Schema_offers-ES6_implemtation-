@@ -37,7 +37,7 @@
             <Label text="{i18n>PrimaryMobileNo}" />
             <Text text="{Painter/Mobile}" />
              <Label text="{i18n>ComplaintStatus}" required="true" />
-            <Select editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
+            <Select change="onChangeStatus" editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
                 <core:Item text="Registered" key="REGISTERED" />
                 <core:Item text="In Review" key="INREVIEW" />
                 <core:Item text="Resolved" key="RESOLVED" />
@@ -53,17 +53,17 @@
             <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
 
             <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>TokenCode}" />
-            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelControl>/TokenCode}" editable="{= ${oModelView>/RewardPoints} === '' ? true : false  }"  >
+            <Input  visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelView>/TokenCode}" editable="{=  ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp; ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   >
                 <layoutData>
                     <l:GridData span="XL8 L8 M8 S12" />
                 </layoutData>
             </Input>
-            <Button  visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" >
+            <Button  visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" >
              <layoutData>
                     <l:GridData span="XL1 L1 M1 S6" />
                 </layoutData>
             </Button>
-            <Button visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>VerifyApply}" press="onPressTokenCode" >
+            <Button visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>VerifyApply}" press="onPressTokenCode" >
               <layoutData>
                     <l:GridData span="XL3 L3 M3 S12" />
                 </layoutData>
