@@ -107,16 +107,6 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            
-              <!-- <uxap:ObjectPageSection titleUppercase="false" title="{i18n>VideoTraining}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection >
-                        <VBox renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.OnlineTraining" type="XML"/>
-                        </VBox>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection> -->
            
              <uxap:ObjectPageSection titleUppercase="false" title="{i18n>LoyaltyPoints}">
                 <uxap:subSections>
