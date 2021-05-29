@@ -137,10 +137,8 @@ sap.ui.define(
 
 
                     //rebind Loyalty table
-                  
-                    oView.byId("smrtLiveTraining").rebindTable();
-                    oView.byId("smrtOfflineTraining").rebindTable();
-                    oView.byId("smrtVideoTraining").rebindTable();
+
+
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
 
@@ -152,14 +150,17 @@ sap.ui.define(
 
                     if (sId.match("loyaltysection")) {
                         console.log("loyalty")
-                          oView.byId("smrtLoyalty").rebindTable();
+                        oView.byId("smrtLoyalty").rebindTable();
                     } else if (sId.match("learnSection")) {
-                       // console.log("learnSection")
+                        console.log("learnSection")
+                        oView.byId("smrtLiveTraining").rebindTable();
+                        oView.byId("smrtOfflineTraining").rebindTable();
+                        oView.byId("smrtVideoTraining").rebindTable();
                     }
 
 
                 },
-                
+
                 handleEditPress: function () {
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
