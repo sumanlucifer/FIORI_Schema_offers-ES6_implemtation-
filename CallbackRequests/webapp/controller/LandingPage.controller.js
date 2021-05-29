@@ -42,6 +42,7 @@ sap.ui.define(
         onInit: function () {
           var oModel = new JSONModel({
             busy: false,
+            sRemarks: ""
           });
           this.getView().setModel(oModel, "ViewModel");
 
@@ -108,11 +109,12 @@ sap.ui.define(
 					type: DialogType.Message,
 					content: [
 						new Label({
-							text: oResourceBundle.getText("updateConfirmationMessage"),
-							labelFor: "confirmNote"
+							text: oResourceBundle.getText("updateConfirmationMessage")
+							
 						}),
-						new TextArea("confirmNote", {
+						new TextArea( {
                             width: "100%",
+                            value: "{ViewModel>/sRemarks}",
                             maxLength: 200,
 							placeholder: oResourceBundle.getText("remarkInputPlaceholder")
 						})
@@ -120,10 +122,11 @@ sap.ui.define(
 					beginButton: new Button({
 						type: ButtonType.Emphasized,
 						text: oResourceBundle.getText("confirmationDailogOkBtnText"),
-						press: function () {
-                            oPayload.Remarks = Core.byId("confirmNote").getValue();
-							oViewModel.setProperty("/busy", true);
-                            oModel.update(sPath, oPayload, {
+						press: function (oEvent) {
+                            oPayload.Remarks = oViewModel.getProperty("/sRemarks")
+                            oViewModel.setProperty("/busy", true);
+                            
+                            oModel.update( oEvent.getSource().getBindingContext().getPath(), oPayload, {
                                 success: function () {
                                     MessageToast.show(
                                         oResourceBundle.getText(
@@ -131,7 +134,7 @@ sap.ui.define(
                                         )
                                     );
                                     oViewModel.setProperty("/busy", false);
-                                    oView.byId("idPendingSmartTable").getModel().refresh();
+                                    oView.byId("idPendingSmartTable").getModel().refresh(true);
                                 },
                                 error: function () {
                                     oViewModel.setProperty("/busy", false);
@@ -152,8 +155,11 @@ sap.ui.define(
 						}.bind(this)
 					})
 				});
+             this.getView().addDependent(this.oDialog);   
             }
-            Core.byId("confirmNote").setValue("");
+            oViewModel.setProperty("/sRemarks", "");
+            this.oDialog.bindElement(sPath);
+           // oViewModel.setProperty("/PainterId", "");
 			this.oDialog.open();
         },
 
