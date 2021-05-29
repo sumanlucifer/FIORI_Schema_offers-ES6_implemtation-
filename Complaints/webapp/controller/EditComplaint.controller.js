@@ -476,9 +476,16 @@ sap.ui.define(
                     }
                     var othat = this;
                     console.log(oPayload);
+                    
+                  delete oPayload.QRCodeData;
+                 delete oPayload.InitiateForceTat;
+
+              //      oPayload = this._payloadHardCleaning(oPayload);
+
                     oData.update(sPath, oPayload, {
                         success: function () {
-                            if( oPayload.TokenCode.length > 0 && +(oPayload.RewardPoints) > 0 &&  (oData.ComplaintSubtypeId === 2 || oData.ComplaintSubtypeId === 3 ) )
+                            debugger;
+                            if( oPayload.TokenCode.length > 0 &&  (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3 ) )
                                 othat._postQRCode.call(othat,oPayload);
 
                             MessageToast.show("Complaint Sucessfully Updated.");
@@ -494,6 +501,16 @@ sap.ui.define(
 
                     //var oProp =
                 },
+
+                _payloadHardCleaning: function(oPayload){
+                  var oDataSkeleton =  this.getView().getModel().createEntry("/PainterComplainsSet");
+                  Object.seal(oDataSkeleton);
+
+                  Object.assign(oDataSkeleton, oPayload);
+
+                  return oDataSkeleton;
+                },
+
                 handleCancelPress: function () {
                     this.onNavBack();
                 },
