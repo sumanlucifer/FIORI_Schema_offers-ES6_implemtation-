@@ -46,7 +46,7 @@ sap.ui.define([], function () {
         ProductProperty: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath),
                 oPackDetails = this.getView().getModel().getData("/" + oProduct.ProductPackDetails.__ref)
-            debugger;
+          
             
             switch(sProperty){
 
@@ -80,7 +80,7 @@ sap.ui.define([], function () {
         },
         PackDetails: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath)
-            debugger;
+          
         }
 
     };

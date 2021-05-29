@@ -137,7 +137,7 @@ sap.ui.define(
 
 
                     //rebind Loyalty table
-                    oView.byId("smrtLoyalty").rebindTable();
+                  
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
@@ -145,6 +145,21 @@ sap.ui.define(
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
 
                 },
+                onSectionChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oSection = oEvent.getParameter("section");
+                    var sId = oSection.getId();
+
+                    if (sId.match("loyaltysection")) {
+                        console.log("loyalty")
+                          oView.byId("smrtLoyalty").rebindTable();
+                    } else if (sId.match("learnSection")) {
+                       // console.log("learnSection")
+                    }
+
+
+                },
+                
                 handleEditPress: function () {
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
@@ -699,6 +714,7 @@ sap.ui.define(
                         .getModel("oModelControl")
                         .setProperty("/AnotherMobField", true);
                 },
+
                 onPrimaryNoChang: function (oEvent) {
                     var oSource = oEvent.getSource();
                     if (oSource.getValueState() == "Error") {
