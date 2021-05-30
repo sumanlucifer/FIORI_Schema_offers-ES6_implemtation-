@@ -42,7 +42,7 @@
                             persistencyKey="PendingSmartTableKey"
                             ignoredFields="AdminDetails/Name"
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                            <Table>
+                            <Table  growing="true" growingThreshold="30">
                                 <columns>
                                     <!-- <Column>
                                         <customData>
@@ -94,7 +94,7 @@
                             placeToolbarInTable="true"
                             persistencyKey="CompletedSmartTableKey"
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                            <Table>
+                            <Table growing="true" growingThreshold="30" >
                                 <columns>
                                     <!-- <Column>
                                         <customData>
