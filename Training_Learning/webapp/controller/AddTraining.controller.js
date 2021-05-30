@@ -1512,13 +1512,14 @@ sap.ui.define(
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                 
+                     var oModelView = that.getModel("oModelView");
+                     oModelView.setProperty("/busy",false);
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
                         } else {
                             var oView = that.getView();
-                            var oModelView = that.getModel("oModelView");
+                           
                             oModelView.setProperty("/oResult", result);
                             if (!that.AttendanceUploadedStatusMsg) {
                                 // load asynchronous XML fragment
