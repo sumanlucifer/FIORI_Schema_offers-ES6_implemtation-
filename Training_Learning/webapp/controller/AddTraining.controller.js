@@ -60,7 +60,6 @@ sap.ui.define(
 
                     oViewModel.setProperty("/onlineTrType", "1");
                     oViewModel.setProperty("/offlineTrType", "2");
-                    this.getView().setBusy(false);
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
                             oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -528,7 +527,7 @@ sap.ui.define(
                 onSaveTraining: function (oEvent) {
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/busy", true);
+
                     var oPayload = {};
                     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -545,7 +544,8 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-
+                    
+                    oViewModel.setProperty("/busy", true);
                     if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
                     } else if (trainingType === 'ONLINE') {
@@ -1245,7 +1245,7 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-                    this.getView().setBusy(true);
+              
                     var oViewModel = this.getModel("oModelView");
                     if (oPayload.Url === "") {
                         oPayload.Url = "";
@@ -1261,7 +1261,7 @@ sap.ui.define(
 
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
-                            oViewModel.setProperty("/busy", false);
+                       
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1337,7 +1337,7 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
-                    this.getView().setBusy(true);
+                   
                     var oViewModel = this.getModel("oModelView");
 
                     oPayload.Duration = parseInt(oPayload.Duration);
@@ -1361,7 +1361,7 @@ sap.ui.define(
 
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (createddata) {
-                            oViewModel.setProperty("/busy", false);
+                        
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1399,13 +1399,13 @@ sap.ui.define(
                 },
 
                 _UploadAttendanceOfflineTr: function (oPayload) {
-                    this.getView().setBusy(true);
+                  
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
                     var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/busy", false);
+                 
                     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                     //     oPayload.RewardPoints = 0;
                     // }
@@ -1506,12 +1506,13 @@ sap.ui.define(
                 },
 
                 _Error: function (error) {
+                    this.getModel("oModelView").setProperty("/busy",false);
                     MessageToast.show(error.toString());
                 },
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                    this.getModel().setProperty("/busy", false);
+                 
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
@@ -1542,12 +1543,13 @@ sap.ui.define(
                 },
 
                 _SuccessAdd: function () {
+                    this.getModel("oModelView").setProperty("/busy",false);
                     this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
-                    oModel.setProperty("/busy", false);
-                    this.getView().setBusy(false);
+                
+                
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;
