@@ -244,7 +244,7 @@ sap.ui.define(
                         return promise;
                     }
                     var sUrl =
-                        this.sServiceURI +
+                        "/KNPL_PAINTER_API/api/v2/odata.svc/" +
                         "PainterComplainsSet(" +
                         oData["Id"] +
                         ")/$value";
@@ -271,6 +271,7 @@ sap.ui.define(
                     if (oItems.length > 0) {
                         jQuery.when.apply(null, async_request).then(
                             function () {
+                                console.log("File successfully uploaded")
                                 //promise.resolve("FileUpdated");
                             },
                             function () {
