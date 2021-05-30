@@ -86,7 +86,6 @@ sap.ui.define(
                     var oViewModel = this.getModel("oModelView");
                     var oView = this.getView();
 
-                    this.getView().setBusy(false);
                     //FIX: Need pop for changes
                     oViewModel.setProperty("/bChange", false);
                     oViewModel.detachPropertyChange(this.onModelPropertyChange, this);
@@ -1315,7 +1314,6 @@ sap.ui.define(
                 handleSavePress: function (oEvent) {
                     this._oMessageManager.removeAllMessages();
                     var oViewModel = this.getModel("oModelView");
-                    oViewModel.setProperty("/busy", true);
                     var oPayload = {};
                     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -1329,7 +1327,7 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                    oViewModel.setProperty("/busy", true);
+                     oViewModel.setProperty("/busy", true);
                     if (trainingType === 'ONLINE') {
                         this.CUOperationOnlineTraining(oPayload, oEvent);
                     } else if (trainingType === 'VIDEO') {
@@ -1533,7 +1531,6 @@ sap.ui.define(
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
                     var oViewModel = this.getModel("oModelView");
-                    this.getView().setBusy(true);
                     delete oPayload.Duration;
                     delete oPayload.ViewStartDate;
                     delete oPayload.ViewEndDate;
@@ -1557,7 +1554,7 @@ sap.ui.define(
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
                     });
-
+                   
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
@@ -1566,7 +1563,6 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
-                    this.getView().setBusy(true);
                     var oViewModel = this.getModel("oModelView");
                     oPayload.Duration = parseInt(oPayload.Duration);
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
@@ -1602,6 +1598,7 @@ sap.ui.define(
                     var sKey = that.getModel().createKey("/LearningSet", {
                         Id: oClonePayload.Id
                     });
+                  
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
@@ -1680,10 +1677,13 @@ sap.ui.define(
                 },
 
                 _Error: function (error) {
+                    this.getModel("oModelView").setProperty("/busy", false);
                     MessageToast.show(error.toString());
                 },
 
                 _Success: function () {
+                    this.getModel("oModelView").setProperty("/busy", false);
+
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
                         MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_UPATE"));
@@ -1693,8 +1693,7 @@ sap.ui.define(
                     var oModel = this.getModel();
                     oModel.refresh(true);
                     this.getRouter().navTo("worklist", true);
-                    this.getModel().setProperty("/busy", false);
-                    this.getView().setBusy(false);
+
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;
