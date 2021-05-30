@@ -63,7 +63,7 @@
                     <l:GridData span="XL1 L1 M1 S6" />
                 </layoutData>
             </Button>
-            <Button visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>VerifyApply}" press="onPressTokenCode" >
+            <Button visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>btnValidate}" press="onPressTokenCode" >
               <layoutData>
                     <l:GridData span="XL3 L3 M3 S12" />
                 </layoutData>

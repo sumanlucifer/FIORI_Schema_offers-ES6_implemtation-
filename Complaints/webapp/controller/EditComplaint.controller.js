@@ -269,10 +269,12 @@ sap.ui.define(
                     jQuery.get(sImageUrl)
                           .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
+                            oModelControl.refresh()
                             console.log("Image Exist");
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
+                            oModelControl.refresh();
                             console.log("Image Doesnt Exist");
                         });
                 },
@@ -418,7 +420,7 @@ sap.ui.define(
 
                     if ((oModel.getProperty("/ComplaintSubtypeId") === 3
                         || oModel.getProperty("/ComplaintSubtypeId") === 2 ) &&
-                        this.getModel("oModelControl").getProperty("/TokenCode").length > 0 && oModel.getProperty("/RewardPoints") == "") {
+                        oModel.getProperty("/TokenCode").length > 0 && oModel.getProperty("/RewardPoints") == "") {
                         MessageToast.show("Please verify token first");
                         return;
                     }
@@ -494,10 +496,10 @@ sap.ui.define(
                     oData.update(sPath, oPayload, {
                         success: function () {
                             debugger;
-                            if( oPayload.TokenCode.length > 0 &&  (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3 ) )
+                            if( +(oPayload.RewardPoints) > 0 &&  (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3 ) )
                                 othat._postQRCode.call(othat,oPayload);
 
-                            MessageToast.show("Complaint Sucessfully Updated.");
+                            MessageToast.show("Complain Sucessfully Updated.");
                             oData.refresh(true);
                             othat.onNavBack();
                         },
