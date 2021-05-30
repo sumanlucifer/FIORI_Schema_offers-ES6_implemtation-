@@ -269,10 +269,12 @@ sap.ui.define(
                     jQuery.get(sImageUrl)
                           .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
+                            oModelControl.refresh()
                             console.log("Image Exist");
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
+                            oModelControl.refresh();
                             console.log("Image Doesnt Exist");
                         });
                 },
