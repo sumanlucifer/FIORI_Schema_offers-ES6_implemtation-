@@ -499,7 +499,7 @@ sap.ui.define(
                             if( +(oPayload.RewardPoints) > 0 &&  (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3 ) )
                                 othat._postQRCode.call(othat,oPayload);
 
-                            MessageToast.show("Complaint Sucessfully Updated.");
+                            MessageToast.show("Complain Sucessfully Updated.");
                             oData.refresh(true);
                             othat.onNavBack();
                         },
