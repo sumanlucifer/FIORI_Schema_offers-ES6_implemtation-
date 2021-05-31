@@ -90,14 +90,14 @@ sap.ui.define(
                 _navToHome: function () {
                     var oHistory = History.getInstance();
                     var sPreviousHash = oHistory.getPreviousHash();
-
+                    this._destroyDialogs();
                     if (sPreviousHash !== undefined) {
                         window.history.go(-1);
                     } else {
                         var oRouter = this.getOwnerComponent().getRouter();
                         oRouter.navTo("RouteLandingPage", {}, true);
                     }
-                    this._destroyDialogs();
+
                 },
 
                 onPostSchemeData: function (oPayload, fileFlag) { },
@@ -1349,7 +1349,7 @@ sap.ui.define(
                     });
                     var aCurrentFilterValues = [];
                     this._FilterDepotTable(
-                       []
+                        []
                     );
 
                 },
