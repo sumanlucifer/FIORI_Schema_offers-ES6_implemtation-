@@ -5,31 +5,37 @@
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-    <f:DynamicPage id="idAddOfferPage" class="actionPage" showFooter="true" busy="{AddOfferViewModel>/busy}">
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:breadcrumbs>
+    <Page id="idAddOfferPage" class="actionPage" showFooter="true" busy="{AddOfferViewModel>/busy}">
+       <headerContent>
+            <Bar>
+                <contentLeft>
                     <Breadcrumbs currentLocationText="{i18n>currentBreadcrumbText}">
                         <Link press="onPressBreadcrumbLink" text="{i18n>homeBreadcrumbText}" />
                     </Breadcrumbs>
-                </f:breadcrumbs>
-            </f:DynamicPageTitle>
-        </f:title>
+                </contentLeft>
+            </Bar>
+        </headerContent>
 
-        <f:content>
-            <VBox id="oVbxSmtTbl" class="sapUiSmallMargin">
-                <OverflowToolbar>
+        <content>
+        <layout:VerticalLayout>
+                <Toolbar>
                     <Title level="H1" text="{i18n>AddTitle}" />
-                </OverflowToolbar>
-                <!-- <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail" type="XML" /> -->
-            </VBox>
-        </f:content>
-        <f:footer>
+                    
+                </Toolbar>
+                 <VBox width="100%" id="oVbxSmtTbl" />
+        </layout:VerticalLayout>
+          
+
+           
+            
+        
+        </content>
+           <footer>
             <OverflowToolbar>
 				<ToolbarSpacer/>
                 <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel"/>
                 <Button text="{i18n>saveBtnText}" type="Emphasized" press="onPressSave"/>
 			</OverflowToolbar>
-        </f:footer>
-    </f:DynamicPage>
+        </footer>
+    </Page>
 </mvc:View>

@@ -88,6 +88,18 @@ sap.ui.define(
               ApplicablePainterProducts: true,
               AdditionalReward: true,
             },
+            Search:{
+                PainterVh:{
+                    ZoneId:"",
+                    DivisionId:"",
+                    DepotId:"",
+                    PainterType:"",
+                    ArcheType:"",
+                    MembershipCard:"",
+                    Name:"",
+                    Mobile:""
+                }
+            },
             Dialog: {
               Bonus1: {},
               Key1: "",
@@ -399,7 +411,7 @@ sap.ui.define(
             .getEntry("/sap.app").dataSources.mainService.uri;
 
           var data = mParam1;
-          var sUrl = sServiceUrl + "OfferSet(" + data["Id"] + ")/$value";
+          var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value";
           new Promise((resolve, reject) => {
             jQuery.ajax({
               method: "PUT",
@@ -437,6 +449,9 @@ sap.ui.define(
         onUploadFileTypeMis: function () {
           MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
         },
+        onExit:function(){
+            console.log("you have exited the view")
+        }
       }
     );
   }
