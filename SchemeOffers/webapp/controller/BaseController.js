@@ -858,7 +858,7 @@ sap.ui.define(
                                 if (oTable.bindRows) {
                                     oTable.bindAggregation("rows", {
                                         path: "/PainterSet",
-                                        parameters: { expand: "Depot,PainterType,ArcheType" },
+                                        parameters: { expand: "Depot,PainterType,ArcheType",select:"Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType" },
                                         events: {
                                             dataReceived: function () {
                                                 this._PainterValueHelp.update();
