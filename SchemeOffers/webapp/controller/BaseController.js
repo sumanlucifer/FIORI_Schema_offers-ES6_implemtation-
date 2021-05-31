@@ -97,6 +97,7 @@ sap.ui.define(
                         var oRouter = this.getOwnerComponent().getRouter();
                         oRouter.navTo("RouteLandingPage", {}, true);
                     }
+                    this._destroyDialogs();
                 },
 
                 onPostSchemeData: function (oPayload, fileFlag) { },
@@ -858,7 +859,7 @@ sap.ui.define(
                                 if (oTable.bindRows) {
                                     oTable.bindAggregation("rows", {
                                         path: "/PainterSet",
-                                        parameters: { expand: "Depot,PainterType,ArcheType",select:"Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType" },
+                                        parameters: { expand: "Depot,PainterType,ArcheType", select: "Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType" },
                                         events: {
                                             dataReceived: function () {
                                                 this._PainterValueHelp.update();
@@ -943,6 +944,7 @@ sap.ui.define(
                         oValueHelpDialog.update();
                     });
                 },
+
                 onFilterBarSearchPainter: function (oEvent) {
                     var afilterBar = oEvent.getParameter("selectionSet");
 
@@ -1071,7 +1073,7 @@ sap.ui.define(
                         operator: FilterOperator.NotContains,
                         value1: "DEACTIVATED"
                     }));
-                     this._FilterPainterValueTable(
+                    this._FilterPainterValueTable(
                         new Filter({
                             filters: aCurrentFilterValues,
                             and: true,
@@ -1136,53 +1138,62 @@ sap.ui.define(
                     });
 
                     var aCols = this.oColModel.getData().cols;
+                    var oView = this.getView();
+                    oView.getModel("oModelControl").setProperty("/Search/DepotVh", {
+                        DepotId: "",
+                        Depot: ""
+                    })
+                    if (!this._oDepotDialog) {
+                        this._oDepotDialog = sap.ui.xmlfragment(
+                            "com.knpl.pragati.SchemeOffers.view.fragment.DepotFragment",
+                            this
+                        );
+                        this.getView().addDependent(this._oDepotDialog);
 
-                    this._oDepotDialog = sap.ui.xmlfragment(
-                        "com.knpl.pragati.SchemeOffers.view.fragment.DepotFragment",
-                        this
-                    );
-                    this.getView().addDependent(this._oDepotDialog);
+                        this._oDepotDialog.getTableAsync().then(
+                            function (oTable) {
+                                //		oTable.setModel(this.oProductsModel);
+                                oTable.setModel(this.oColModel, "columns");
 
-                    this._oDepotDialog.getTableAsync().then(
-                        function (oTable) {
-                            //		oTable.setModel(this.oProductsModel);
-                            oTable.setModel(this.oColModel, "columns");
-
-                            if (oTable.bindRows) {
-                                oTable.bindAggregation("rows", {
-                                    path: "/MasterDepotSet",
-                                    events: {
-                                        dataReceived: function () {
-                                            this._oDepotDialog.update();
-                                        }.bind(this),
-                                    },
-                                });
-                            }
-
-                            if (oTable.bindItems) {
-                                oTable.bindAggregation("items", "/MasterDepotSet", function () {
-                                    return new sap.m.ColumnListItem({
-                                        cells: aCols.map(function (column) {
-                                            return new sap.m.Label({
-                                                text: "{" + column.template + "}",
-                                            });
-                                        }),
+                                if (oTable.bindRows) {
+                                    oTable.bindAggregation("rows", {
+                                        path: "/MasterDepotSet",
+                                        events: {
+                                            dataReceived: function () {
+                                                this._oDepotDialog.update();
+                                            }.bind(this),
+                                        },
                                     });
-                                });
-                            }
+                                }
 
-                            this._oDepotDialog.update();
-                        }.bind(this)
-                    );
+                                if (oTable.bindItems) {
+                                    oTable.bindAggregation("items", "/MasterDepotSet", function () {
+                                        return new sap.m.ColumnListItem({
+                                            cells: aCols.map(function (column) {
+                                                return new sap.m.Label({
+                                                    text: "{" + column.template + "}",
+                                                });
+                                            }),
+                                        });
+                                    });
+                                }
 
-                    this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
-                    this._oDepotDialog.open();
+                                this._oDepotDialog.update();
+                            }.bind(this)
+                        );
+
+                        this._oDepotDialog.setTokens(this._oMultiInput.getTokens());
+                        this._oDepotDialog.open();
+                    } else {
+                        this._oDepotDialog.open();
+                    }
+
                 },
                 _destroyDialogs: function () {
-                    // if (this._DepotDialog) {
-                    //     this._oDepotDialog.destroy();
-                    //     delete this._oDepotDialog;
-                    // }
+                    if (this._DepotDialog) {
+                        this._oDepotDialog.destroy();
+                        delete this._oDepotDialog;
+                    }
                     if (this._PainterValueHelp) {
                         this._PainterValueHelp.destroy();
                         delete this._PainterValueHelp;
@@ -1197,10 +1208,10 @@ sap.ui.define(
                     // }
                 },
                 onValueHelpAfterClose: function () {
-                    if (this._DepotDialog) {
-                        this._oDepotDialog.destroy();
-                        delete this._oDepotDialog;
-                    }
+                    // if (this._DepotDialog) {
+                    //     this._oDepotDialog.destroy();
+                    //     delete this._oDepotDialog;
+                    // }
                     //   if (this._PainterValueHelp) {
                     //     this._PainterValueHelp.destroy();
                     //     delete this._PainterValueHelp;
@@ -1228,6 +1239,7 @@ sap.ui.define(
                         this._RewardsDialog2.close();
                     }
                 },
+
                 onDepotOkPress: function (oEvent) {
                     var oData = [];
                     var oView = this.getView();
@@ -1236,7 +1248,7 @@ sap.ui.define(
                     aTokens.forEach(function (ele) {
                         oData.push({
                             DepotId: ele.getKey(),
-                            Division: ele.getCustomData()[0].getValue()["Division"],
+                            Division: ele.getCustomData()[0].getValue()["Depot"],
                         });
                     });
 
@@ -1246,6 +1258,7 @@ sap.ui.define(
 
                     this._oDepotDialog.close();
                 },
+
                 onDepotAfterOpen: function () {
                     var aFilter = this._getFilterForDepot();
                     this._FilterDepotTable(aFilter, "Control");
@@ -1284,6 +1297,61 @@ sap.ui.define(
 
                         oValueHelpDialog.update();
                     });
+                },
+                onDepotVhSearch: function () {
+                    var oView = this.getView();
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView().getModel("oModelControl").getProperty("/Search/DepotVh");
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({
+                                        path: "Id",
+                                        operator: "Contains",
+                                        value1: oViewFilter[prop],
+                                        caseSensitive: false
+                                    }
+                                    )
+                                );
+                            } else if (prop === "Depot") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({
+                                        path: "Depot",
+                                        operator: "Contains",
+                                        value1: oViewFilter[prop],
+                                        caseSensitive: false
+                                    })
+                                );
+                            }
+                        }
+                    }
+
+
+
+                    this._FilterDepotTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+
+                },
+                onClearDepotFilterVh: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    oModel.setProperty("/Search/DepotVh", {
+                        DepotId: "",
+                        Depot: ""
+                    });
+                    var aCurrentFilterValues = [];
+                    this._FilterDepotTable(
+                       []
+                    );
+
                 },
 
                 onProductCatChange: function (oEvent) {
@@ -1582,7 +1650,7 @@ sap.ui.define(
                     } else if (iIndex == 2) {
                         oModelControl.setProperty("/MultiCombo/AppPainter", true);
                         oModelView.setProperty("/PainterSelection", 2);
-                        
+
                     } //
                     // making the fields blank
                 },

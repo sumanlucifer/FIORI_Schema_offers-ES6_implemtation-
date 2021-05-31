@@ -98,6 +98,10 @@ sap.ui.define(
                     MembershipCard:"",
                     Name:"",
                     Mobile:""
+                },
+                DepotVh:{
+                    DepotId:"",
+                    Division:""
                 }
             },
             Dialog: {
@@ -280,10 +284,10 @@ sap.ui.define(
           this._showFormFragment("ChangeDetail");
           //get products data
           this._getProductsData();
-          this._setDefaultValues();
+          //this._setDefaultValues();
+          this._destroyDialogs();
         },
-        _setDefaultValues: function () {},
-
+    
         _showFormFragment: function (sFragmentName) {
           var objSection = this.getView().byId("oVbxSmtTbl");
           var oView = this.getView();

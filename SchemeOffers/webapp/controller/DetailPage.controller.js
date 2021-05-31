@@ -650,8 +650,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl3");
                     oCtrl2Model.setProperty("/mode", "edit");
-                    var c1, c2, c3, c4, c5, c6, c7, c8;
+                    var c1, c2, c3, c4, c5, c6, c7, c8, c9;
                     var othat = this;
+
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
                         c2 = othat._GetInitEditData();
@@ -669,6 +670,10 @@ sap.ui.define(
                                                 c7 = othat._OfferTypeValidation2(data);
                                                 c7.then(function (data) {
                                                     c8 = othat._CheckEditImage(data);
+                                                    c8.then(function () {
+                                                        c9 = othat._destroyDialogs();
+                                                    })
+
                                                 });
                                             });
                                         });
@@ -790,6 +795,10 @@ sap.ui.define(
                                 MembershipCard: "",
                                 Name: "",
                                 Mobile: ""
+                            },
+                            DepotVh: {
+                                DepotId: "",
+                                Division: ""
                             }
                         },
                         Dialog: {
