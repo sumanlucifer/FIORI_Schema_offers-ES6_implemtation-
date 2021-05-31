@@ -284,8 +284,10 @@ sap.ui.define([
 				aContexts = oEvent.getParameter("selectedContexts");
 			if (aContexts && aContexts.length) {
 				for (var i = 0; i < aContexts.length; i++) {
-					var userData = aContexts[i].getObject();
-					var roleData = this.getModel().getData("/" + userData.Role.__ref);
+                    var userData = aContexts[i].getObject();
+                    var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                    var roleData = this.getModel().getData("/" + userData.Role.__ref);
+                    userData.Painter=painterData;
 					userData.Role.Role = roleData.Role;
 					aData.push(userData);
 				}

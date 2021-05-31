@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.groupnotifications.controller.Worklist", {
@@ -205,7 +206,11 @@ sap.ui.define([
 					Members: data.Members.results,
 					IsArchived: true
 				}, {
-					success: this.showToast.bind(this, "MSG_SUCCESS_ADM_REMOVE")
+					 success: function () {
+                        this.showToast("MSG_SUCCESS_ADM_REMOVE");
+                    },
+                    error: function (oError) {}
+
 				});
 			}
 			this.showWarning("MSG_CONFIRM_DELETE", onYes.bind(this));
@@ -224,7 +229,23 @@ sap.ui.define([
 			if (aTableSearchState.length !== 0) {
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 			}
-		}
+        },
+        showWarning: function (sMsgTxt, _fnYes) {
+            var that = this;
+            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        _fnYes && _fnYes.apply(that);
+                    }
+                }
+            });
+        },
+         showToast: function (msg) {
+            MessageToast.show(msg);
+        },
+
+
 
 	});
 });
