@@ -445,16 +445,20 @@ sap.ui.define(
                                 new Filter(
                                     [
                                         new Filter(
-                                            "tolower(Name)",
-                                            FilterOperator.Contains,
-                                            "'" +
-                                            sInputValue.trim().toLowerCase().replace("'", "''") +
-                                            "'"
+                                            {
+                                                path: "Name",
+                                                operator: "Contains",
+                                                value1: sInputValue.trim(),
+                                                caseSensitive: false
+                                            }
                                         ),
                                         new Filter(
-                                            "Mobile",
-                                            FilterOperator.Contains,
-                                            sInputValue.trim()
+                                            {
+                                                path: "Mobile",
+                                                operator: "Contains",
+                                                value1: sInputValue.trim(),
+                                                caseSensitive: false
+                                            }
                                         ),
                                     ],
                                     false
@@ -469,11 +473,21 @@ sap.ui.define(
                     var oFilter = new Filter(
                         [
                             new Filter(
-                                "tolower(Name)",
-                                FilterOperator.Contains,
-                                "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                {
+                                    path: "Name",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }
                             ),
-                            new Filter("Mobile", FilterOperator.Contains, sValue.trim()),
+                            new Filter(
+                                {
+                                    path: "Mobile",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }
+                            )
                         ],
                         false
                     );
