@@ -20,39 +20,61 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
-                        <fb:filterGroupItems>
+                    <fb:FilterBar id="filterbar" reset="_ResetFilterBar" search="onFilter" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
+                        <!-- <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
                                     <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Request Type" label="{i18n>requestTypeFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <ComboBox id="idRequestTypeInput" data:filterName="Request Type" selectedKey="" placeholder="{i18n>requestTypeFilterPlaceholder}">
-                                        <!-- <core:Item key="all" text="All" /> -->
-                                         <core:Item key="accrued" text="Accural" />
-                                          <core:Item key="redemption" text="Redemption" />
-                                    </ComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status"  label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <ComboBox id="idStatusInput" selectedKey="" data:filterName="Status" placeholder="{i18n>statusFilterPlaceholder}">
-                                        <core:Item key="all" text="All" />
-                                        <!-- <core:Item key="PENDING" text="Pending" />
-                                        <core:Item key="REGISTERED" text="Registered" />
-                                        <core:Item key="COMPLETED" text="Completed" /> -->
-                                    </ComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
+                            
+                            
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DatePicker id="idDateInput" data:filterName="Creation Date" displayFormat="short" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                </fb:control>
+                                 
+
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems> -->
+                        <fb:filterGroupItems>
+                         <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <SearchField id="idSearchInput"  value="{oModelControl>/filterBar/Name}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
+                         <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
+                                        <core:Item text="{Id} " key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                        <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
+                                         <core:Item text="{Id}" key="{Id}" />
+                                        </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
+                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                             
                         </fb:filterGroupItems>
+
                     </fb:FilterBar>
+                     
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
@@ -105,9 +127,9 @@
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
-                                <Column>
+                                <!-- <Column>
                                     <Text text="{i18n>tblColStatus}"/>
-                                </Column>
+                                </Column> -->
                             </columns>
 
                             <items>
@@ -124,10 +146,10 @@
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         
-                                        <HBox>
+                                        <!-- <HBox>
                                         <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
                                         <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
-                                        </HBox>
+                                        </HBox> -->
                                         
                                     </cells>
                                 </ColumnListItem>
@@ -136,19 +158,25 @@
                     </IconTabFilter>
                     <IconTabFilter
                         text="{i18n>accrualRequestIconTabarTitle}"
-                        key="accrual"
+                        key="accrual" 
                        >
-                        <Table id="idAccrualRequestTable" width="auto" items="{path: '/PainterPointsHistorySet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                        <Table id="idAccrualRequestTable" width="auto" 
+                        items="{path: '/PainterPointsHistorySet' ,
+                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        sorter: { path: 'Id',descending: true} }" 
+                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
+                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                 </OverflowToolbar>
                             </headerToolbar>
 
                             <columns>
-                                 <Column>
+                                <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
@@ -169,15 +197,18 @@
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
-                                <Column>
+                                <!-- <Column>
                                     <Text text="{i18n>tblColStatus}"/>
-                                </Column>
+                                </Column> -->
                             </columns>
 
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
+                                    <dependents>
+                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
+                                    </dependents>
                                     <cells>
-                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
+                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
                                         <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
@@ -185,10 +216,10 @@
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         
-                                        <HBox>
+                                        <!-- <HBox>
                                         <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
                                         <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
-                                        </HBox>
+                                        </HBox> -->
                                         
                                     </cells>
                                 </ColumnListItem>
@@ -199,13 +230,16 @@
                         text="{i18n>redemptionRequestIconTabarTitle}"
                         key="redemption"
                         >
-                        <Table id="idRedemptionRequestTable" width="auto"
-                         items="{path: '/PainterPointsHistorySet' ,
-                         parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'}}" 
-                         noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+                    <Table id="idRedemptionRequestTable" width="auto" 
+                        items="{path: '/PainterPointsHistorySet' ,
+                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        sorter: { path: 'Id',descending: true} }" 
+                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
+                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
                                 </OverflowToolbar>
@@ -215,40 +249,48 @@
                                 <Column>
                                     <Text text="{i18n>tblColName}"/>
                                 </Column>
-                                <Column >
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColMembershipId}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
-                                <Column >
+                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
-                                <Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
-                                <Column>
+                                <!-- <Column>
                                     <Text text="{i18n>tblColStatus}"/>
-                                </Column>
+                                </Column> -->
                             </columns>
 
                             <items>
                                 <ColumnListItem type="Navigation" press="onListItemPress">
-                                     <cells>
+                                    <dependents>
+                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
+                                    </dependents>
+                                    <cells>
                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                        <Text text="{PointTransactionType}"/>
-                                        <Text text="{PointType}"/>
+                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
+                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        <Text text="sdsdsds"/>
+                                        
+                                        <!-- <HBox>
+                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
+                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
+                                        </HBox> -->
+                                        
                                     </cells>
                                 </ColumnListItem>
                             </items>

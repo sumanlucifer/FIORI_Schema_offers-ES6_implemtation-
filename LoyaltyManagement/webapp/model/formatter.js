@@ -52,6 +52,9 @@ sap.ui.define([
             else if (accuralType == "REFERRAL") {
                 return "Referral"
             }
+            else if (accuralType == "CONDONATION") {
+                return "Condonation"
+            }
         },
         status: function (status) {
                  if (status == "PENDING") {

@@ -32,13 +32,13 @@
                         <ObjectStatus text="{path:'PointType',formatter:'.formatter.accuralType'}" />
                     </layout:VerticalLayout>
 
-                    <layout:VerticalLayout>
+                    <!-- <layout:VerticalLayout>
                         <ObjectAttribute title="Status"/>
                         <VBox>
                         <ObjectStatus text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" state="Warning" visible="{=${PainterReferralHistory} !== null }"/>
                         <ObjectStatus text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" state="Warning" visible="{=${PainterTokenScanHistory} !== null }"/>
                         </VBox>
-                    </layout:VerticalLayout>
+                    </layout:VerticalLayout> -->
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
@@ -82,11 +82,16 @@
                                         <Text class="sapUiTinyMarginTop" text="{Id}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Requested Through">
+                                <form:FormElement label="Point">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <!-- <form:FormElement label="Requested Through">
                                     <form:fields>
                                         <Text class="sapUiTinyMarginTop" text="Mobile App" />
                                     </form:fields>
-                                </form:FormElement>
+                                </form:FormElement> -->
                             </form:formElements>
                         </form:FormContainer>
                         <form:FormContainer title="">
@@ -96,11 +101,17 @@
                                         <Text class="sapUiTinyMarginTop" text="{Painter/Name}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Point">
+                                <form:FormElement label="Membership Id">
                                     <form:fields>
-                                        <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/MembershipCard}" />
                                     </form:fields>
                                 </form:FormElement>
+                                <form:FormElement label="Mobile Number">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/Mobile}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                
                             
                                 <form:FormElement label="Date">
                                     <form:fields>
