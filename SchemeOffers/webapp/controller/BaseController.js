@@ -461,6 +461,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key2");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus2");
+                    if (oPayload.hasOwnProperty("SkuCode")) {
+                        if (oPayload["SkuCode"] === "") {
+                            MessageToast.show("Kindly Select a Pack To Continue.");
+                            return;
+                        }
+                    }
+                    if (oPayload.hasOwnProperty("ProductCode")) {
+                        if (oPayload["ProductCode"] === "") {
+                            MessageToast.show("Kindly Select a Product To Continue.");
+                            return;
+                        }
+
+                    }
                     if (oPayload["StartDate"] == null) {
                         MessageToast.show("Kindly Input Start Date to Continue");
                         return;
@@ -583,6 +596,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key1");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus1");
+                    if (oPayload.hasOwnProperty("SkuCode")) {
+                        if (oPayload["SkuCode"] === "") {
+                            MessageToast.show("kindly Select a Pack To Continue.");
+                            return;
+                        }
+                    }
+                    if (oPayload.hasOwnProperty("ProductCode")) {
+                        if (oPayload["ProductCode"] === "") {
+                            MessageToast.show("Kindly Select a Product To Continue.");
+                            return;
+                        }
+
+                    }
                     if (oPayload["RequiredVolume"] == "") {
                         MessageToast.show("Kindly Input Required Volume to Continue.");
                         return;
