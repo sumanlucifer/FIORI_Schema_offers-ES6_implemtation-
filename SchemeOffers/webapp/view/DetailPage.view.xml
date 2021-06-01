@@ -53,7 +53,7 @@
         </f:header>
 
         <f:content>
-            <IconTabBar id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
+            <IconTabBar selectedKey="{oModelControl3>/selectedKey}" id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="offerDetails">
                         <VBox id="idVbProfile"></VBox>
