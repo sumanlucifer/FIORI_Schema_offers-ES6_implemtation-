@@ -19,15 +19,29 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
 
-                var oModel = new JSONModel({
-                    TotalCount: 0,
-                    busy: true,
-                    filterBar: {
-                        search: "",
-                        createdAt: ""
-                    }
-                });
-                this.getView().setModel(oModel, "ViewModel");
+                // var oModel = new JSONModel({
+                //     TotalCount: 0,
+                //     busy: true,
+                //     filterBar: {
+                //         search: "",
+                //         createdAt: ""
+                //     }
+                // });
+                // this.getView().setModel(oModel, "ViewModel");
+
+                 var oDataControl = {
+                        filterBar: {
+                            AgeGroupId: "",
+                            StartDate: null,
+                            Name: "",
+                            MembershipId: "",
+                            ZoneId: "",
+                            DepotId: "",
+                            DivisionId: ""
+                        },
+                    };
+                    var oMdlCtrl = new JSONModel(oDataControl);
+                    this.getView().setModel(oMdlCtrl, "oModelControl");
 
 
 
@@ -64,16 +78,16 @@ sap.ui.define([
                     ]
                 }));
 
-                //  var oTableRedemption = this.getView().byId("idRedemptionRequestTable");
-                // oTableRedemption.getBinding("items").filter(new Filter({
-                //     filters: [
-                //         new Filter({
-                //             filters: [
-                //                 new Filter("PointTransactionType", sap.ui.model.FilterOperator.EQ, "Redemption")
-                //             ], and: false
-                //         })
-                //     ]
-                // }));
+                 var oTableRedemption = this.getView().byId("idRedemptionRequestTable");
+                oTableRedemption.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.NE, "ACCRUED")
+                            ], and: false
+                        })
+                    ]
+                }));
             },
 
             onSearch: function (oEvent) {
@@ -97,6 +111,7 @@ sap.ui.define([
                         case "Creation Date":
                             sValue = oControl.getValue();
                             if (sValue && sValue !== "") {
+                                
                                 aFilters.push(new Filter({
                                     path: "CreatedAt",
                                     operator: FilterOperator.BT,
@@ -155,6 +170,134 @@ sap.ui.define([
                 // var oBinding = oTable.getBinding("items");
                 // oBinding.filter([]);
             },
+            onFilter: function (oEvent) {
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView()
+                        .getModel("oModelControl")
+                        .getProperty("/filterBar");
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "AgeGroupId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "MembershipId") {
+                                aFlaEmpty = false;
+                                if (oViewFilter[prop] == "Generated") {
+                                    aCurrentFilterValues.push(
+                                        new Filter("MembershipCard", FilterOperator.NE, null)
+                                    );
+                                } else {
+                                    aCurrentFilterValues.push(
+                                        new Filter("MembershipCard", FilterOperator.EQ, null)
+                                    );
+                                }
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "StartDate") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "CreatedAt",
+                                        FilterOperator.GE,
+                                        new Date(oViewFilter[prop])
+                                    )
+                                );
+                            }   else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        [
+                                            new Filter(
+                                                {
+                                                    path: "Painter/Name",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "Painter/MembershipCard",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "Painter/Mobile",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                        ],
+                                        false
+                                    )
+                                );
+                            } else {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        prop,
+                                        FilterOperator.Contains,
+                                        oViewFilter[prop].trim()
+                                    )
+                                );
+                            }
+                        }
+                    }
+
+                    var endFilter = new Filter({
+                        filters: aCurrentFilterValues,
+                        and: true,
+                    });
+                    var oTable = this.getView().byId("idAllRequestTable");
+                    var oBinding = oTable.getBinding("items");
+                    if (!aFlaEmpty) {
+                        oBinding.filter(endFilter);
+                    } else {
+                        oBinding.filter([]);
+                    }
+                },
+                _ResetFilterBar: function () {
+                    var aCurrentFilterValues = [];
+                    var aResetProp = {
+                        StartDate: null,
+                        MembershipId: "",
+                        Name: "",
+                        ZoneId: "",
+                        DepotId: "",
+                        DivisionId: "",
+                        PreferredLanguage: "",
+                        PainterType: "",
+                    };
+                    var oViewModel = this.getView().getModel("oModelControl");
+                    oViewModel.setProperty("/filterBar", aResetProp);
+                    var oTable = this.byId("idAllRequestTable");
+                    var oBinding = oTable.getBinding("items");
+                    oBinding.filter([]);
+                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    //this._fiterBarSort();
+                },
+
+
 
 
 
