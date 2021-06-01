@@ -461,6 +461,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key2");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus2");
+                    if (oPayload.hasOwnProperty("SkuCode")) {
+                        if (oPayload["SkuCode"] === "") {
+                            MessageToast.show("Kindly Select a Pack To Continue.");
+                            return;
+                        }
+                    }
+                    if (oPayload.hasOwnProperty("ProductCode")) {
+                        if (oPayload["ProductCode"] === "") {
+                            MessageToast.show("Kindly Select a Product To Continue.");
+                            return;
+                        }
+
+                    }
                     if (oPayload["StartDate"] == null) {
                         MessageToast.show("Kindly Input Start Date to Continue");
                         return;
@@ -583,6 +596,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key1");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus1");
+                    if (oPayload.hasOwnProperty("SkuCode")) {
+                        if (oPayload["SkuCode"] === "") {
+                            MessageToast.show("kindly Select a Pack To Continue.");
+                            return;
+                        }
+                    }
+                    if (oPayload.hasOwnProperty("ProductCode")) {
+                        if (oPayload["ProductCode"] === "") {
+                            MessageToast.show("Kindly Select a Product To Continue.");
+                            return;
+                        }
+
+                    }
                     if (oPayload["RequiredVolume"] == "") {
                         MessageToast.show("Kindly Input Required Volume to Continue.");
                         return;
@@ -932,7 +958,7 @@ sap.ui.define(
 
                     oValueHelpDialog.getTableAsync().then(function (oTable) {
                         if (oTable.bindRows) {
-                            oTable.getBinding("rows").filter(oFilter, sType || "Application");
+                            oTable.getBinding("rows").filter(oFilter, sType || "ApplicatApplication");
                         }
 
                         if (oTable.bindItems) {
@@ -1450,8 +1476,22 @@ sap.ui.define(
                         );
                     }
 
-                    this._PackValueHelpDialog.getBinding("items").filter(aFilter1);
+                    this._PackValueHelpDialog.getBinding("items").filter(aFilter1,"Control");
                     this._PackValueHelpDialog.open();
+                },
+                 _handlePackValueHelpSearch: function (oEvent) {
+                    var sValue = oEvent.getParameter("value").trim();
+                    console.log(sValue,"Pack Valuehelp");
+                    if (sValue.length > 0) {
+                        var aFilter = new Filter({
+                            path: "Description",
+                            operator: "Contains",
+                            value1: sValue,
+                            caseSensitive: false
+                        })
+                        this._PackValueHelpDialog.getBinding("items").filter(aFilter, "Application");
+                    }
+
                 },
                 _handlePackValueHelpConfirm: function (oEvent) {
                     var oSelected = oEvent.getParameter("selectedItems");
@@ -1472,6 +1512,26 @@ sap.ui.define(
                         this._CreateRewardTableData();
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
+                    }
+                },
+                onProdTokenUpdate: function (oEvent) {
+                    if (oEvent.getParameter("type") === "removed") {
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var sPath = oEvent.getSource().getBinding("tokens").getPath();
+                        var aArray = oModel.getProperty(sPath);
+                        var aNewArray;
+                        var aRemovedTokens = oEvent.getParameter("removedTokens");
+                        var aRemovedKeys = [];
+                        aRemovedTokens.forEach(function (item) {
+                            aRemovedKeys.push(item.getKey());
+                        });
+                        console.log(aRemovedKeys);
+                        aNewArray = aArray.filter(function (item) {
+                            return aRemovedKeys.indexOf(item["Id"]) < 0;
+                        });
+                        console.log(aNewArray);
+                        oModel.setProperty(sPath, aNewArray);
                     }
                 },
                 handleProdValueHelp: function (oEvent) {
@@ -1508,26 +1568,7 @@ sap.ui.define(
                     var sPath = mParam1;
                     this._FilterForProds1(mParam1);
                 },
-                onProdTokenUpdate: function (oEvent) {
-                    if (oEvent.getParameter("type") === "removed") {
-                        var oView = this.getView();
-                        var oModel = oView.getModel("oModelControl");
-                        var sPath = oEvent.getSource().getBinding("tokens").getPath();
-                        var aArray = oModel.getProperty(sPath);
-                        var aNewArray;
-                        var aRemovedTokens = oEvent.getParameter("removedTokens");
-                        var aRemovedKeys = [];
-                        aRemovedTokens.forEach(function (item) {
-                            aRemovedKeys.push(item.getKey());
-                        });
-                        console.log(aRemovedKeys);
-                        aNewArray = aArray.filter(function (item) {
-                            return aRemovedKeys.indexOf(item["Id"]) < 0;
-                        });
-                        console.log(aNewArray);
-                        oModel.setProperty(sPath, aNewArray);
-                    }
-                },
+
                 _handleProdValueHelpConfirm: function (oEvent) {
                     var oSelected = oEvent.getParameter("selectedItems");
 
@@ -1595,8 +1636,22 @@ sap.ui.define(
                     if (aFilter2.length > 0) {
                         aFinalFilter.push(aFilterClass);
                     }
-                    this._ProdValueHelpDialog.getBinding("items").filter(aFinalFilter);
+                    this._ProdValueHelpDialog.getBinding("items").filter(aFinalFilter,"Control");
                     this._ProdValueHelpDialog.open();
+                },
+                _handlePValueHelpSearch: function (oEvent) {
+                    var sValue = oEvent.getParameter("value").trim();
+                    console.log(sValue);
+                    if (sValue.length > 0) {
+                        var aFilter = new Filter({
+                            path: "ProductName",
+                            operator: "Contains",
+                            value1: sValue,
+                            caseSensitive: false
+                        })
+                        this._ProdValueHelpDialog.getBinding("items").filter(aFilter, "Application");
+                    }
+
                 },
                 onRbAppPainter: function (oEvent) {
                     var iIndex = oEvent.getSource().getSelectedIndex();

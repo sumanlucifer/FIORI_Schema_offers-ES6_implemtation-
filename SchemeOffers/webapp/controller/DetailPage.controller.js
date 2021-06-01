@@ -91,15 +91,17 @@ sap.ui.define(
                     this._SetDisplayData(oProp, sMode);
                 },
                 _SetDisplayData: function (oProp, sMode) {
+                    var oView = this.getView();
                     var oData = {
                         ImageUploaded: "", // Have to check again,
                         bindProp: "OfferSet(" + oProp + ")",
                         mode: "display",
                         SchemeId: oProp,
+                        selectedKey:0
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
-                    console.log(sMode);
+                    //oView.byId("idIconTabBar").setSelectedKey("0");
                     if (sMode === "edit") {
                         this.handleEditPress();
                     } else {

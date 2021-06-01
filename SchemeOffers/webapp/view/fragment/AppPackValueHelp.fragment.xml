@@ -3,9 +3,11 @@
 	xmlns:core="sap.ui.core">
 		<SelectDialog
 		title="Packs"
+        growing="true"
+        growingThreshold="15"
 		class="sapUiPopupWithPadding"
 		items="{/MasterRepProductSkuSet}"
-	    search="_handlePValueHelpSearch"
+	    search="_handlePackValueHelpSearch"
 		confirm="_handlePackValueHelpConfirm"
         cancel="_handleProdValueHelpClose"
 		multiSelect="true">
