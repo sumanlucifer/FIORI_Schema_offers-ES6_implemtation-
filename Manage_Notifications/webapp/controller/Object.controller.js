@@ -85,7 +85,8 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var that = this;
 			var TtlNotification;
-			var viewchar = this.getModel("appView").getProperty("/viewFlag");
+            var viewchar = this.getModel("appView").getProperty("/viewFlag");
+            this._initData();
 			if (viewchar === "X") {
 				that.getModel("objectView").setProperty("/sMode", "X");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
@@ -125,8 +126,37 @@ sap.ui.define([
 			var TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlAddNotification");
 			this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
 			this.getModel("objectView").setProperty("/busy", true);
-			this._setView();
-		},
+            this._setView();
+            this._initData();
+        },
+        _initData: function (){
+            
+            var oView = this.getView();
+            
+            var oDataControl = {
+                 Search: {
+                            PainterVh: {
+                                ZoneId: "",
+                                DivisionId: "",
+                                DepotId: "",
+                                PainterType: "",
+                                ArcheType: "",
+                                MembershipCard: "",
+                                Name: "",
+                                Mobile: ""
+                            },
+                            DepotVh: {
+                                DepotId: "",
+                                Division: ""
+                            }
+                        },
+                     }
+
+
+            var oConrtrolModel = new JSONModel(oDataControl);
+            oView.setModel(oConrtrolModel, "oModelControl");
+
+        },
 
 		/** 
 		 * 
@@ -516,7 +546,7 @@ sap.ui.define([
 
                             if (oTable.bindRows) {
                                 oTable.bindAggregation("rows", {
-                                    path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
+                                    path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter,Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
                                     {
                                         dataReceived: function () {
                                             this._oValueHelpDialog.update();
@@ -545,39 +575,39 @@ sap.ui.define([
                     this._oValueHelpDialog.open();
                 },
 
-                onFilterBarSearchPainter: function (oEvent) {
-                    //   debugger;
-                    var afilterBar = oEvent.getParameter("selectionSet"),
-                        aFilters = [];
+                // onFilterBarSearchPainter: function (oEvent) {
+                //     //   debugger;
+                //     var afilterBar = oEvent.getParameter("selectionSet"),
+                //         aFilters = [];
 
-                    for (var i = 0; i < afilterBar.length; i++) {
-                        if (afilterBar[i].getValue()) {
-                            aFilters.push(
-                                new Filter({
-                                    path: afilterBar[i].mProperties.name,
-                                    operator: FilterOperator.Contains,
-                                    value1: afilterBar[i].getValue(),
-                                    caseSensitive: false,
-                                })
-                            );
-                        }
-                    }
+                //     for (var i = 0; i < afilterBar.length; i++) {
+                //         if (afilterBar[i].getValue()) {
+                //             aFilters.push(
+                //                 new Filter({
+                //                     path: afilterBar[i].mProperties.name,
+                //                     operator: FilterOperator.Contains,
+                //                     value1: afilterBar[i].getValue(),
+                //                     caseSensitive: false,
+                //                 })
+                //             );
+                //         }
+                //     }
 
-                    aFilters.push(
-                        new Filter({
-                            path: "IsArchived",
-                            operator: FilterOperator.EQ,
-                            value1: false,
-                        })
-                    );
+                //     aFilters.push(
+                //         new Filter({
+                //             path: "IsArchived",
+                //             operator: FilterOperator.EQ,
+                //             value1: false,
+                //         })
+                //     );
 
-                    this._filterTable(
-                        new Filter({
-                            filters: aFilters,
-                            and: true,
-                        })
-                    );
-                },
+                //     this._filterTable(
+                //         new Filter({
+                //             filters: aFilters,
+                //             and: true,
+                //         })
+                //     );
+                // },
 
                 onValueHelpCancelPressPainter: function () {
                     this._oValueHelpDialog.close();
@@ -602,6 +632,15 @@ sap.ui.define([
                     this.getView().getModel("objectView").setProperty("/oDetails/Receivers", oData);
                     this._oValueHelpDialog.close();
                 },
+                onValueHelpAfterClose: function () {
+                  
+                    if (this._oValueHelpDialog) {
+                        this._oValueHelpDialog.destroy();
+                        delete this._oValueHelpDialog;
+                    } 
+                   
+                },
+
                 _filterTable: function (oFilter, sType) {
                     var oValueHelpDialog = this._oValueHelpDialog;
 
@@ -619,6 +658,144 @@ sap.ui.define([
                         oValueHelpDialog.update();
                     });
                 },
+
+
+                onFilterBarSearchPainter: function (oEvent) {
+                    var afilterBar = oEvent.getParameter("selectionSet");
+
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView().getModel("oModelControl").getProperty("/Search/PainterVh");
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "PainterType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/PainterTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "ArcheType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/ArcheTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "MembershipCard") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/MembershipCard", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/Name", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Mobile") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/Mobile", operator: FilterOperator.Contains, value1: oViewFilter[prop] })
+                                );
+                            }
+                        }
+                    }
+
+                    // aCurrentFilterValues.push(new Filter({
+                    //     path: "IsArchived",
+                    //     operator: FilterOperator.EQ,
+                    //     value1: false
+                    // }))
+                    
+                   
+
+                    this._FilterPainterValueTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+                },
+                onPVhZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+
+                    var oDivision = sap.ui.getCore().byId("idPVhDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+                    //setting the data for depot;
+                    var oDepot = sap.ui.getCore().byId("idPVhDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    // clearning data for dealer
+                },
+                onPVhDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = sap.ui.getCore().byId("idPVhDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+                },
+                onClearPainterVhSearch: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl"), aCurrentFilterValues = [];
+                    oModel.setProperty("/Search/PainterVh", {
+                        ZoneId: "",
+                        DivisionId: "",
+                        DepotId: "",
+                        PainterType: "",
+                        ArcheType: "",
+                        MembershipCard: "",
+                        Name: "",
+                        Mobile: ""
+                    });
+                    aCurrentFilterValues.push(new Filter({
+                        path: "IsArchived",
+                        operator: FilterOperator.EQ,
+                        value1: false
+                    }));
+                   
+                    this._FilterPainterValueTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+                },
+                _FilterPainterValueTable: function (oFilter, sType) {
+                    var oValueHelpDialog = this._oValueHelpDialog;
+
+                    oValueHelpDialog.getTableAsync().then(function (oTable) {
+                        if (oTable.bindRows) {
+                            oTable.getBinding("rows").filter(oFilter, sType || "ApplicatApplication");
+                        }
+
+                        if (oTable.bindItems) {
+                            oTable
+                                .getBinding("items")
+                                .filter(oFilter, sType || "Application");
+                        }
+
+                        oValueHelpDialog.update();
+                    });
+                },
+
 
 
 
