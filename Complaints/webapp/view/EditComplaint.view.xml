@@ -45,11 +45,11 @@
         <f:content>
             <IconTabBar selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
-                    <IconTabFilter  text="{i18n>Overview}" >
+                    <IconTabFilter  text="{i18n>Overview}" key="0" >
                         <VBox id="idVbx" width="100%">
                           </VBox>
                         </IconTabFilter>
-                         <IconTabFilter  text="{i18n>History}" >
+                         <IconTabFilter  text="{i18n>History}" key="1" >
                             <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
                                 <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
                         </IconTabFilter>
