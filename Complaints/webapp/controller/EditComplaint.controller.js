@@ -113,6 +113,7 @@ sap.ui.define(
                         ProbingSteps: "",
                         ComplainCode: "",
                         ComplainId: oProp,
+                        IcnTabKey:"0"
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);

@@ -43,7 +43,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <IconTabBar selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter  text="{i18n>Overview}" >
                         <VBox id="idVbx" width="100%">
