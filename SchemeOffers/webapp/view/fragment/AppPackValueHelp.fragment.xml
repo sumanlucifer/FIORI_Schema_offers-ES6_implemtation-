@@ -5,7 +5,7 @@
 		title="Packs"
 		class="sapUiPopupWithPadding"
 		items="{/MasterRepProductSkuSet}"
-	    search="_handlePValueHelpSearch"
+	    search="_handlePackValueHelpSearch"
 		confirm="_handlePackValueHelpConfirm"
         cancel="_handleProdValueHelpClose"
 		multiSelect="true">
