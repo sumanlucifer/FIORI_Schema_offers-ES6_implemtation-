@@ -4,8 +4,9 @@ sap.ui.define([
 	"../model/formatter",
 	"sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageBox"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox) {
+    "sap/m/MessageBox",
+    "sap/m/MessageToast"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageBox,MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.groupnotifications.controller.Worklist", {
@@ -200,14 +201,15 @@ sap.ui.define([
 			var sPath = oEvent.getSource().getBindingContext().getPath();
 
 			function onYes() {
-				var data = this.getModel().getData(sPath);
+                var data = this.getModel().getData(sPath);
+                var that=this;
 				this.getModel().update(sPath, {
 					GroupName: data.GroupName,
 					Members: data.Members.results,
 					IsArchived: true
 				}, {
 					 success: function () {
-                        this.showToast("MSG_SUCCESS_ADM_REMOVE");
+                        that.showToast("MSG_SUCCESS_ADM_REMOVE");
                     },
                     error: function (oError) {}
 
@@ -242,7 +244,9 @@ sap.ui.define([
             });
         },
          showToast: function (msg) {
+
             MessageToast.show(msg);
+            this.getModel("worklistView").refresh(true);
         },
 
 

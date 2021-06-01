@@ -251,7 +251,7 @@ sap.ui.define([
 						success: function () {
 							oViewModel.setProperty("/busy", false);
 							that.getRouter().navTo("worklist", true);
-							that.showToast.call(that, "MSG_SUCCESS_UPDATE");
+							//that.showToast.call(that, "MSG_SUCCESS_UPDATE");
 							res(oClonePayload);
 							// that.onCancel();
 						},
@@ -265,7 +265,7 @@ sap.ui.define([
 						success: function (data) {
 							oViewModel.setProperty("/busy", false);
 							that.getRouter().navTo("worklist", true);
-							that.showToast.call(that, "MSG_SUCCESS_CREATE");
+							//that.showToast.call(that, "MSG_SUCCESS_CREATE");
 							res(data);
 							// that.onCancel();
 						},
@@ -388,18 +388,6 @@ sap.ui.define([
 				this.bindTable("tableDialog", sPath, this._Template, aFilters, sExpand, sSelect, oSorter);
 			}
 
-			// var InputFilter = new sap.ui.model.Filter({
-			// 	filters: [
-			// 		new sap.ui.model.Filter("tolower(FirstName)", sap.ui.model.FilterOperator.Contains, sQuery, false),
-			// 		new sap.ui.model.Filter("tolower(LastName)", sap.ui.model.FilterOperator.Contains, sQuery, false),
-			// 		new sap.ui.model.Filter("tolower(Email)", sap.ui.model.FilterOperator.Contains, sQuery, false)
-			// 	],
-			// 	and: false
-			// });
-
-			// var oBinding = oEvent.getSource().getBinding("items");
-			// oBinding.filter([InputFilter]);
-			// }
 		},
 
 		/** 
