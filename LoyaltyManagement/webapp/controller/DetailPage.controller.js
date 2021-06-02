@@ -43,7 +43,7 @@ sap.ui.define([
                 });
             },
             onPressBreadcrumbLink: function () {
-                this._navToHome();
+               this.oRouter.navTo("RouteLandingPage");
             },
 
 

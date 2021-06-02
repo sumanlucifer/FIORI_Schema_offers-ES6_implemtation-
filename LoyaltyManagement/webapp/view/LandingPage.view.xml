@@ -64,11 +64,27 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Type" label="{i18n>Type}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <Input  id="idType" name="Type" placeholder="{i18n>Enter} {i18n>Type}" value="{oModelControl>/filterBar/Type}"></Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Points" label="{i18n>Point}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <Input  id="idPoint" name="Point" placeholder="{i18n>Enter} {i18n>Point}" value="{oModelControl>/filterBar/Point}"></Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
 
                              
                         </fb:filterGroupItems>
@@ -94,14 +110,14 @@
                         items="{path: '/PainterPointsHistorySet' ,
                         parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
                         sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        noDataText="No Data Available" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
-                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Emphasized" icon="sap-icon://add" press="onPressAddPointBtn"/>
+                                    <!-- <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
                                 </OverflowToolbar>
                             </headerToolbar>
 
@@ -164,14 +180,14 @@
                         items="{path: '/PainterPointsHistorySet' ,
                         parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
                         sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        noDataText="No Data Available" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
+                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
                                 </OverflowToolbar>
                             </headerToolbar>
 
@@ -231,17 +247,15 @@
                         key="redemption"
                         >
                     <Table id="idRedemptionRequestTable" width="auto" 
-                        items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
-                        sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
+                        items="" 
+                        noDataText="No Data Available" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
+                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
+                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
                                 </OverflowToolbar>
                             </headerToolbar>
 
@@ -278,18 +292,15 @@
                                         <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
                                     </dependents>
                                     <cells>
-                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
-                                        <Text text="{Painter/MembershipCard}"/>
-                                        <Text text="{Painter/Mobile}"/>
-                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
-                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                        <Text text="{RewardPoints}"/>
-                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                                        <ObjectIdentifier title="" titleActive="true"/>
+                                        <Text text=""/>
+                                        <Text text=""/>
+                                        <Text text=""/>
+                                        <Text text=""/>
+                                        <Text text=""/>
+                                        <Text text=""/>
                                         
-                                        <!-- <HBox>
-                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
-                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
-                                        </HBox> -->
+                                        
                                         
                                     </cells>
                                 </ColumnListItem>
