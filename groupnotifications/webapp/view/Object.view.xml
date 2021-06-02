@@ -27,7 +27,7 @@
 							<headerToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
-									<Button press="addMember" text="{i18n>btnAddMember}"/>
+									<Button press="addMember" icon="sap-icon://add" type="Emphasized" text="{i18n>btnAddMember}"/>
 								</Toolbar>
 							</headerToolbar>
 							<columns>

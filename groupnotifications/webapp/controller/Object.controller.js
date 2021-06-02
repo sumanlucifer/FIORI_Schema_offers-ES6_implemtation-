@@ -372,7 +372,7 @@ sap.ui.define([
 			var oSorter = new sap.ui.model.Sorter("RoleId", false);
 			
 			var sExpand = "Admin,Role,Painter";
-			var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Painter/Email,RoleId,Role/Role";
+			var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Admin/Mobile,Painter/Mobile,Painter/Email,RoleId,Role/Role";
 
 			this._Template = this._Template ? this._Template : sap.ui.getCore().byId("userDialog");
 			var aFilters = new sap.ui.model.Filter({
