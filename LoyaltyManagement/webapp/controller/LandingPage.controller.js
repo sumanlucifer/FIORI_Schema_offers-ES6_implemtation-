@@ -184,33 +184,29 @@ sap.ui.define([
                             if (prop === "AgeGroupId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
+                                    new Filter("Painter/AgeGroupId", FilterOperator.EQ, oViewFilter[prop])
                                 );
                             } else if (prop === "MembershipId") {
                                 aFlaEmpty = false;
-                                if (oViewFilter[prop] == "Generated") {
+
                                     aCurrentFilterValues.push(
-                                        new Filter("MembershipCard", FilterOperator.NE, null)
+                                        new Filter("Painter/MembershipCard", FilterOperator.EQ, oViewFilter[prop])
                                     );
-                                } else {
-                                    aCurrentFilterValues.push(
-                                        new Filter("MembershipCard", FilterOperator.EQ, null)
-                                    );
-                                }
+                        
                             } else if (prop === "DepotId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop])
                                 );
                             } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop])
                                 );
                             } else if (prop === "DivisionId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop])
                                 );
                             } 
                             else if (prop === "Point") {
