@@ -294,14 +294,15 @@ sap.ui.define([
 
 		},
 		
-		onView: function (oEvent) {
-			// this.getModel("appView").setProperty("/viewFlag", "X");
-            // this._showObject(oEvent.getSource());
-            this.oRouter.navTo("object", {
-                action: "view",
-                property: oEvent.getSource().getBindingContext().getProperty("UUID")
-            });
-		},
+		// onView: function (oEvent) {
+		// 	// this.getModel("appView").setProperty("/viewFlag", "X");
+        //     // this._showObject(oEvent.getSource());
+        //     this.oRouter.navTo("object", {
+        //         action: "view",
+        //         property: oEvent.getSource().getBindingContext().getProperty("UUID")
+        //     });
+        // },
+        
 
 		onDelete: function (oEvent) {
 			var sPath = oEvent.getSource().getBindingContext().getPath();
@@ -323,7 +324,13 @@ sap.ui.define([
 				});
 			}
 			this.showWarning("MSG_CONFIRM_DELETE", onYes);
-		},
+        },
+        onListItemPress:function (oEvent){
+                 this.oRouter.navTo("object", {
+                action: "view",
+                property: oEvent.getSource().getBindingContext().getProperty("UUID")
+            });
+        },
 
 		/* =========================================================== */
 		/* internal methods                                            */
