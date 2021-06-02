@@ -285,7 +285,12 @@ sap.ui.define([
 			if (aContexts && aContexts.length) {
 				for (var i = 0; i < aContexts.length; i++) {
                     var userData = aContexts[i].getObject();
-                    var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                    if(userData.Admin){
+                         var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                    }
+                    else {
+                    var painterData=this.getModel().getData("/" + userData.Painter.__ref);
+                   }
                     var roleData = this.getModel().getData("/" + userData.Role.__ref);
                     userData.Painter=painterData;
 					userData.Role.Role = roleData.Role;
