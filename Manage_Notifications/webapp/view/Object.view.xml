@@ -91,7 +91,7 @@
 							</VBox>
 							<VBox>
 								<Label required="true" text="{i18n>colScheduledTime}"/>
-								<TimePicker width="100%" valueFormat="HH:mm" displayFormat="hh:mm" value="{objectView>ScheduledTime}"
+								<TimePicker width="100%" valueFormat="HH:mm" displayFormat="hh:mm a" value="{objectView>ScheduledTime}"
 									editable="{= ${objectView>/sMode} !== 'V'}"/>
 							</VBox>
                             </VBox>
