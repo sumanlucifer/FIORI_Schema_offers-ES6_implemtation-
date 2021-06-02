@@ -42,7 +42,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().metadataLoaded().then(function () {
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
-			});
+            });
+            this.oRouter = this.getRouter();
 		},
 
 		/* =========================================================== */
@@ -94,7 +95,7 @@ sap.ui.define([
             this._initData();
 			if ( this._action === "edit") {
 				that.getModel("objectView").setProperty("/sMode", "E");
-				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
+				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditNotification");
                 this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
                 this.getModel("objectView").setProperty("/Receivers", []);
                 that.getModel("objectView").setProperty("/busy", true);
@@ -119,8 +120,8 @@ sap.ui.define([
                     this._onCreateObjectMatched();
             }
             else {
-				that.getModel("objectView").setProperty("/sMode", "V");
-				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditNotification");
+                that.getModel("objectView").setProperty("/sMode", "V");
+                TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
                 this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
                 that.getModel("objectView").setProperty("/busy", true);
                 this.getObjectData(this._property);
@@ -362,8 +363,7 @@ sap.ui.define([
 				},
 				aCtrlMessage = [],
 				url = data.RedirectionTo,
-				regex =
-				/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+				regex =/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 			if (!data.Subject) {
 				oReturn.IsNotValid = true;
@@ -389,7 +389,7 @@ sap.ui.define([
 					target: "/oDetails/RedirectionTo"
 				});
 			} else
-			if (data.RedirectionTo && data.RedirectionType === 'LINK' && !url.match(regex)) {
+			if (data.RedirectionTo!== "" && data.RedirectionType === 'LINK' && !url.match(regex)) {
 				oReturn.IsNotValid = true;
 				oReturn.sMsg.push("MSG_VALDTN_ERR_URL");
 				aCtrlMessage.push({
@@ -446,6 +446,21 @@ sap.ui.define([
 				aCtrlMessage.push({
 					message: "MSG_VALDTN_ERR_SUBJECT",
 					target: "/oDetails/Subject"
+				});
+			}if (!data.ScheduledDate && data.IsLater === true) {
+				oReturn.IsNotValid = true;
+				oReturn.sMsg.push("MSG_VALDTN_ERR_SDATE");
+				aCtrlMessage.push({
+					message: "MSG_VALDTN_ERR_SDATE",
+					target: "/oDetails/ScheduledDate"
+				});
+			} else
+			if (!data.ScheduledTime && data.IsLater === true) {
+				oReturn.IsNotValid = true;
+				oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+				aCtrlMessage.push({
+					message: "MSG_VALDTN_ERR_STIME",
+					target: "/oDetails/ScheduledTime"
 				});
 			}
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
@@ -826,6 +841,9 @@ sap.ui.define([
                         oValueHelpDialog.update();
                     });
                 },
+        onPressBreadcrumbLink: function(){
+            this.oRouter.navTo("worklist");
+        }
 
 
 

@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Sorter) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.Manage_Notifications.controller.Worklist", {
@@ -67,6 +68,17 @@ sap.ui.define([
 			// 	intent: "#Notifications-display"
             // }, true);
             this.oRouter = this.getRouter();
+            var oDataControl = {
+                        filterBar: {
+                            StartDate: null,
+                            EndDate:null,
+                            Title:"",
+                            Name:"" 
+                        },
+                    };
+                    var oMdlCtrl = new JSONModel(oDataControl);
+                    this.getView().setModel(oMdlCtrl, "oModelControl");
+
 
 		},
 
@@ -294,14 +306,15 @@ sap.ui.define([
 
 		},
 		
-		onView: function (oEvent) {
-			// this.getModel("appView").setProperty("/viewFlag", "X");
-            // this._showObject(oEvent.getSource());
-            this.oRouter.navTo("object", {
-                action: "view",
-                property: oEvent.getSource().getBindingContext().getProperty("UUID")
-            });
-		},
+		// onView: function (oEvent) {
+		// 	// this.getModel("appView").setProperty("/viewFlag", "X");
+        //     // this._showObject(oEvent.getSource());
+        //     this.oRouter.navTo("object", {
+        //         action: "view",
+        //         property: oEvent.getSource().getBindingContext().getProperty("UUID")
+        //     });
+        // },
+        
 
 		onDelete: function (oEvent) {
 			var sPath = oEvent.getSource().getBindingContext().getPath();
@@ -323,7 +336,13 @@ sap.ui.define([
 				});
 			}
 			this.showWarning("MSG_CONFIRM_DELETE", onYes);
-		},
+        },
+        onListItemPress:function (oEvent){
+                 this.oRouter.navTo("object", {
+                action: "view",
+                property: oEvent.getSource().getBindingContext().getProperty("UUID")
+            });
+        },
 
 		/* =========================================================== */
 		/* internal methods                                            */
@@ -359,7 +378,117 @@ sap.ui.define([
 			if (aTableSearchState.length !== 0) {
 				oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
 			}
-		}
+        },
+        onFilter: function (oEvent) {
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView()
+                        .getModel("oModelControl")
+                        .getProperty("/filterBar");
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "Title") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                   new Filter(
+                                                {
+                                                    path: "Subject",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                );
+                            }
+                            else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                   new Filter(
+                                                {
+                                                    path: "CreatorName",
+                                                    operator: "Contains",
+                                                    value1: oViewFilter[prop].trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                );
+                            }else if (prop === "StartDate") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "CreatedAt",
+                                        FilterOperator.GE,
+                                        new Date(oViewFilter[prop])
+                                    )
+                                );
+                            } else if (prop === "EndDate") {
+                                aFlaEmpty = false;
+                                var oDate = new Date(oViewFilter[prop]);
+                                oDate.setDate(oDate.getDate() + 1);
+                                aCurrentFilterValues.push(
+                                    new Filter("CreatedAt", FilterOperator.LT, oDate)
+                                );
+                            } 
+                                else {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        prop,
+                                        FilterOperator.Contains,
+                                        oViewFilter[prop].trim()
+                                    )
+                                );
+                            }
+                        }
+                    }
+
+                    var endFilter = new Filter({
+                        filters: aCurrentFilterValues,
+                        and: true,
+                    });
+                    var oTable = this.getView().byId("table");
+                    var oTable1 = this.getView().byId("table1");
+                    var oTable2 = this.getView().byId("table2");
+                    var oBinding = oTable.getBinding("items");
+                    var oBinding1 = oTable1.getBinding("items");
+                    var oBinding2 = oTable2.getBinding("items");
+                    if (!aFlaEmpty) {
+                        oBinding.filter(endFilter);
+                        oBinding1.filter(endFilter);
+                        oBinding2.filter(endFilter);
+                    } else {
+                        oBinding.filter([]);
+                        oBinding1.filter([]);
+                        oBinding2.filter([]);
+                    }
+                },
+                _ResetFilterBar: function () {
+                    var aCurrentFilterValues = [];
+                    var aResetProp = {
+                        StartDate: null,
+                        EndDate:null,
+                        Title:"",
+                        Name:"" 
+                       
+                    };
+                    var oViewModel = this.getView().getModel("oModelControl");
+                    oViewModel.setProperty("/filterBar", aResetProp);
+                    var oTable = this.byId("table");
+                    var oTable1 = this.getView().byId("table1");
+                    var oTable2 = this.getView().byId("table2");
+                    var oBinding = oTable.getBinding("items");
+                    var oBinding1 = oTable1.getBinding("items");
+                    var oBinding2 = oTable2.getBinding("items");
+                    oBinding.filter([]);
+                    oBinding1.filter([]);
+                    oBinding2.filter([]);
+                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding1.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding2.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    //this._fiterBarSort();
+                },
+
+
 
 	});
 });

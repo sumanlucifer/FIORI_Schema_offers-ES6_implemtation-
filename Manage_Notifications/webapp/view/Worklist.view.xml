@@ -6,18 +6,72 @@
 				<f:heading>
 					<Title text="{i18n>worklistTitle}"/>
 				</f:heading>
+                
 			</f:DynamicPageTitle>
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<l:VerticalLayout>
+					<!-- <l:VerticalLayout>
 						<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
 							<layoutData>
 								<OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
 							</layoutData>
 						</SearchField>
-					</l:VerticalLayout>
+					</l:VerticalLayout> -->
+                    <fb:FilterBar id="filterbar" reset="_ResetFilterBar" search="onFilter" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
+                        <!-- <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            
+                            
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
+                                </fb:control>
+                                 
+
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems> -->
+                         
+                        <fb:filterGroupItems>
+                         <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <SearchField id="idSearchInput"  value="{oModelControl>/filterBar/Name}" placeholder="{i18n>searchFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem> -->
+                         
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="{i18n>Title}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <Input  id="idTitle" name="Title" placeholder="{i18n>Enter} {i18n>Title}" value="{oModelControl>/filterBar/Title}"></Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Scheduled By" label="{i18n>Name}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <Input  id="idTName" name="Name" placeholder="{i18n>Enter} {i18n>Name}" value="{oModelControl>/filterBar/Name}"></Input>
+                                </fb:control>
+                            </fb:FilterGroupItem> -->
+                            
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+
+                             
+                        </fb:filterGroupItems>
+
+                    </fb:FilterBar>
+
 				</f:content>
 			</f:DynamicPageHeader>
 		</f:header>
@@ -48,7 +102,7 @@
 								<Column width="15%">
 									<Text text="{i18n>colSubject}"/>
 								</Column>
-								<Column width="25%">
+								<Column width="50%">
 									<Text text="{i18n>colBody}"/>
 								</Column>
 								<Column width="10%">
@@ -60,12 +114,12 @@
 								<Column width="15%">
 									<Text text="{i18n>colCreatorName}"/>
 								</Column>
-								<Column width="16%">
+								<Column width="10%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem>
+								<ColumnListItem type="Navigation" press="onListItemPress">
 									<cells>
 										<Text text="{Subject}"/>
 										<Text text="{Body}"/>
@@ -74,13 +128,13 @@
 										<VBox>
 											<Text text="{parts: [ {path: 'ScheduledDate'}, {path: 'ScheduledTime'} ], formatter : '.formatter.formatDate' }"
 												visible="{= !!${ScheduledDate}}"/>
-											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd MMM yyyy, hh:mm a' } }"
+											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
 										<Text text="{CreatorName}"/>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit"/>
-                                            <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="Display"/>
+                                            <!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="Display"/> -->
                                             <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="Delete"/>
                                         </HBox>
 									</cells>
@@ -112,7 +166,7 @@
 								<Column width="15%">
 									<Text text="{i18n>colSubject}"/>
 								</Column>
-								<Column width="25%">
+								<Column width="50%">
 									<Text text="{i18n>colBody}"/>
 								</Column>
 								<Column width="10%">
@@ -124,12 +178,12 @@
 								<Column width="15%">
 									<Text text="{i18n>colCreatorName}"/>
 								</Column>
-								<Column width="16%">
+								<Column width="10%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
 							<items>
-								<ColumnListItem>
+								<ColumnListItem type="Navigation" press="onListItemPress">
 									<cells>
 										<Text text="{Subject}"/>
 										<Text text="{Body}"/>
@@ -137,13 +191,13 @@
 										<VBox>
 											<Text text="{parts: [ {path: 'ScheduledDate'}, {path: 'ScheduledTime'} ], formatter : '.formatter.formatDate' }"
 												visible="{= !!${ScheduledDate}}"/>
-											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd MMM yyyy, hh:mm a' } }"
+											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
 										<Text text="{CreatorName}"/>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
-                                            <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/>
+                                            <!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/> -->
                                             <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="remove"/>
                                         </HBox>
 									</cells>
@@ -175,7 +229,7 @@
 								<Column width="20%">
 									<Text text="{i18n>colSubject}"/>
 								</Column>
-								<Column width="30%">
+								<Column width="50%">
 									<Text text="{i18n>colBody}"/>
 								</Column>
 								<Column width="10%">
@@ -187,12 +241,12 @@
 								<Column width="15%">
 									<Text text="{i18n>colCreatorName}"/>
 								</Column>
-								<Column width="7%">
+								<!-- <Column width="7%">
 									<Text text="{i18n>colAction}"/>
-								</Column>
+								</Column> -->
 							</columns>
 							<items>
-								<ColumnListItem>
+								<ColumnListItem type="Navigation" press="onListItemPress">
 									<cells>
 										<Text text="{Subject}"/>
 										<Text text="{Body}"/>
@@ -200,11 +254,11 @@
 										<VBox>
 											<Text text="{parts: [ {path: 'ScheduledDate'}, {path: 'ScheduledTime'} ], formatter : '.formatter.formatDate' }"
 												visible="{= !!${ScheduledDate}}"/>
-											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd MMM yyyy, hh:mm a' } }"
+											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
 										<Text text="{CreatorName}"/>
-										<Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/>
+										<!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/> -->
 									</cells>
 								</ColumnListItem>
 							</items>
