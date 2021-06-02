@@ -32,9 +32,9 @@ sap.ui.define([
                     delay: 0
 
 				});
-
+               
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
-			this.getRouter().getRoute("createObject").attachPatternMatched(this._onCreateObjectMatched, this);
+			//this.getRouter().getRoute("createObject").attachPatternMatched(this._onCreateObjectMatched, this);
 
 			// Store original busy indicator delay, so it can be restored later on
 			iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
@@ -83,37 +83,49 @@ sap.ui.define([
 		 * @private
 		 */
 		_onObjectMatched: function (oEvent) {
+
+            this._action = oEvent.getParameter("arguments").action;
+            this._property = oEvent.getParameter("arguments").property;
+
+
 			var that = this;
 			var TtlNotification;
-            var viewchar = this.getModel("appView").getProperty("/viewFlag");
+            //var viewchar = this.getModel("appView").getProperty("/viewFlag");
             this._initData();
-			if (viewchar === "X") {
-				that.getModel("objectView").setProperty("/sMode", "X");
+			if ( this._action === "edit") {
+				that.getModel("objectView").setProperty("/sMode", "E");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlViewNotification");
                 this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
                 this.getModel("objectView").setProperty("/Receivers", []);
-			} else {
-				that.getModel("objectView").setProperty("/sMode", "E");
+                that.getModel("objectView").setProperty("/busy", true);
+			// var sObjectId = oEvent.getParameter("arguments").property;
+			// this.getModel().metadataLoaded().then(function () {
+			// 	var sObjectPath = that.getModel().createKey("/NotificationSet", {
+			// 		UUID: sObjectId
+			// 	});
+			// 	// this._bindView("/" + sObjectPath); Redirection
+			// 	that.getModel().read(sObjectPath, {
+			// 		urlParameters: {
+			// 			"$expand": "Redirection,Receivers/Role"
+			// 		},
+			// 		// success: this._setView.bind(this)
+			// 		success: function (data) {
+			// 			that._setView.call(that, data);
+			// 		}
+			// 	});
+            // }.bind(that));
+            this.getObjectData(this._property);
+			} else if(this._action === "add"){
+                    this._onCreateObjectMatched();
+            }
+            else {
+				that.getModel("objectView").setProperty("/sMode", "V");
 				TtlNotification = this.getView().getModel("i18n").getResourceBundle().getText("TtlEditNotification");
-				this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
+                this.getModel("objectView").setProperty("/TtlNotification", TtlNotification);
+                that.getModel("objectView").setProperty("/busy", true);
+                this.getObjectData(this._property);
 			}
-			that.getModel("objectView").setProperty("/busy", true);
-			var sObjectId = oEvent.getParameter("arguments").objectId;
-			this.getModel().metadataLoaded().then(function () {
-				var sObjectPath = that.getModel().createKey("/NotificationSet", {
-					UUID: sObjectId
-				});
-				// this._bindView("/" + sObjectPath); Redirection
-				that.getModel().read(sObjectPath, {
-					urlParameters: {
-						"$expand": "Redirection,Receivers/Role"
-					},
-					// success: this._setView.bind(this)
-					success: function (data) {
-						that._setView.call(that, data);
-					}
-				});
-			}.bind(that));
+			
 		},
 
 		/** 
@@ -128,6 +140,25 @@ sap.ui.define([
 			this.getModel("objectView").setProperty("/busy", true);
             this._setView();
             this._initData();
+        },
+        getObjectData: function(objectId) {
+            var sObjectId = objectId;
+            var that=this;
+			this.getModel().metadataLoaded().then(function () {
+				var sObjectPath = this.getModel().createKey("/NotificationSet", {
+					UUID: sObjectId
+				});
+				// this._bindView("/" + sObjectPath); Redirection
+				this.getModel().read(sObjectPath, {
+					urlParameters: {
+						"$expand": "Redirection,Receivers,Receivers/Painter,Receivers/Role"
+					},
+					// success: this._setView.bind(this)
+					success: function (data) {
+						that._setView.call(that, data);
+					}
+				});
+			}.bind(that));
         },
         _initData: function (){
             
@@ -173,7 +204,7 @@ sap.ui.define([
 			if (data) {
 				if (data.Receivers) {
 					data.Receivers = data.Receivers.results.map(function (ele) {
-						return ele.Id;
+						return ele;
 					});
 				}
 				oViewModel.setProperty("/oDetails", data);

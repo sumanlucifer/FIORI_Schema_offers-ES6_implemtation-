@@ -65,7 +65,8 @@ sap.ui.define([
 			// 	title: this.getResourceBundle().getText("worklistViewTitle"),
 			// 	icon: "sap-icon://table-view",
 			// 	intent: "#Notifications-display"
-			// }, true);
+            // }, true);
+            this.oRouter = this.getRouter();
 
 		},
 
@@ -248,10 +249,7 @@ sap.ui.define([
 
 		},
 
-		onAdd: function (oEvent) {
-			this.getModel("appView").setProperty("/viewFlag", "Y");
-			this.getRouter().navTo("createObject");
-		},
+		
 
 		onRefreshView: function () {
 			var oModel = this.getModel();
@@ -274,16 +272,35 @@ sap.ui.define([
 
 		// onLink: function (oEvent) {
 		// 	window.open(url, '_blank');
-		// },
+        // },
+        onAdd: function (oEvent) {
+			// this.getModel("appView").setProperty("/viewFlag", "Y");
+            // this.getRouter().navTo("createObject");
+            this.oRouter.navTo("object", {
+                action: "add",
+                property: ""
+            });
+
+		},
 
 		onEdit: function (oEvent) {
-			this.getModel("appView").setProperty("/viewFlag", "Y");
-			this._showObject(oEvent.getSource());
+			// this.getModel("appView").setProperty("/viewFlag", "Y");
+            // this._showObject(oEvent.getSource());
+           // var sPath = oEvent.getSource().getBindingContext().getPath();
+            this.oRouter.navTo("object", {
+                action: "edit",
+                property: oEvent.getSource().getBindingContext().getProperty("UUID")
+            });
+
 		},
 		
 		onView: function (oEvent) {
-			this.getModel("appView").setProperty("/viewFlag", "X");
-			this._showObject(oEvent.getSource());
+			// this.getModel("appView").setProperty("/viewFlag", "X");
+            // this._showObject(oEvent.getSource());
+            this.oRouter.navTo("object", {
+                action: "view",
+                property: oEvent.getSource().getBindingContext().getProperty("UUID")
+            });
 		},
 
 		onDelete: function (oEvent) {

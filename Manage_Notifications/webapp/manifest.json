@@ -17,9 +17,14 @@
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0",
-                    "localUri": "localService/metadata.xml"
+                    "localUri": "localService/metadata.xml",
+                    "annotations": ["annotation0"]
+                 }
+            },
+             "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotation/annotation.xml"
                 }
-            }
         },
         "crossNavigation": {
             "inbounds": {
@@ -118,7 +123,7 @@
                     ]
                 },
                 {
-                    "pattern": "NotificationSet/{objectId}",
+                    "pattern": "NotificationSet/{action}/:property:",
                     "name": "object",
                     "target": [
                         "object"
