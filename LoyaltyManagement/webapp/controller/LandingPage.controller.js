@@ -307,11 +307,19 @@ sap.ui.define([
                         and: true,
                     });
                     var oTable = this.getView().byId("idAllRequestTable");
+                    var oTable1 = this.getView().byId("idAccrualRequestTable");
+                    var oTable2 = this.getView().byId("idRedemptionRequestTable");
                     var oBinding = oTable.getBinding("items");
+                    var oBinding1 = oTable1.getBinding("items");
+                    var oBinding2 = oTable2.getBinding("items");
                     if (!aFlaEmpty) {
                         oBinding.filter(endFilter);
+                        oBinding1.filter(endFilter);
+                        oBinding2.filter(endFilter);
                     } else {
                         oBinding.filter([]);
+                        oBinding1.filter([]);
+                        oBinding2.filter([]);
                     }
                 },
                 _ResetFilterBar: function () {
@@ -332,9 +340,17 @@ sap.ui.define([
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
                     var oTable = this.byId("idAllRequestTable");
+                    var oTable1 = this.byId("idAccrualRequestTable");
+                    var oTable2 = this.byId("idRedemptionRequestTable");
                     var oBinding = oTable.getBinding("items");
+                    var oBinding1 = oTable1.getBinding("items");
+                    var oBinding2 = oTable2.getBinding("items");
                     oBinding.filter([]);
+                    oBinding1.filter([]);
+                    oBinding2.filter([]);
                     oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding1.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding2.sort(new Sorter({ path: "CreatedAt", descending: true }));
                     //this._fiterBarSort();
                 },
 
