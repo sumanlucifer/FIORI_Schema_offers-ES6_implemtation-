@@ -187,14 +187,14 @@ sap.ui.define([
 					target: "/oDetails/GroupName"
 				});
 			} else
-			if (data.Members.length === 0) {
-				oReturn.IsNotValid = true;
-				oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
-				aCtrlMessage.push({
-					message: "MSG_VALDTN_ERR_MEMBERS",
-					target: "/oDetails/Members"
-				});
-			}
+			// if (data.Members.length === 0) {
+			// 	oReturn.IsNotValid = true;
+			// 	oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
+			// 	aCtrlMessage.push({
+			// 		message: "MSG_VALDTN_ERR_MEMBERS",
+			// 		target: "/oDetails/Members"
+			// 	});
+			// }
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
 		},
