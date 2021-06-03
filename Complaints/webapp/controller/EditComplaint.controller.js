@@ -214,22 +214,25 @@ sap.ui.define(
                     var oDataValue = "";
                     var othat = this;
                     var exPand = "PainterComplainsHistory";
-                    oView.getModel().read("/" + oProp, {
-                        urlParameters: {
-                            //$expand: exPand,
-                        },
-                        success: function (data) {
-                            var oViewModel = new JSONModel(data);
-                            //console.log(data);
-                            oView.setModel(oViewModel, "oModelView");
-                            othat._setInitData();
-                        },
-                        error: function () { },
+                    return new Promise((resolve, reject) => {
+                        oView.getModel().read("/" + oProp, {
+                            urlParameters: {
+                                //$expand: exPand,
+                            },
+                            success: function (data) {
+                                var oViewModel = new JSONModel(data);
+                                //console.log(data);
+                                oView.setModel(oViewModel, "oModelView");
+                                othat._setInitData();
+                                resolve();
+                            },
+                            error: function () { },
+                        });
                     });
-                    promise.resolve();
-                    return promise;
+
                 },
                 _setInitData: function () {
+                    //var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
                     var oModelControl = oView.getModel("oModelControl");
@@ -291,6 +294,8 @@ sap.ui.define(
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
                     oView.byId("smartHistory").rebindTable();
+                    // promise.resolve();
+                    // return promise;
                 },
 
                 onChangeStatus: function () {
@@ -321,7 +326,7 @@ sap.ui.define(
                             //oModelControl.refresh();
                             console.log("Image Doesnt Exist");
                         });
-                    promise.resolved();
+                    promise.resolve();
                     return promise;
                 },
                 _loadEditProfile: function (mParam) {
@@ -631,7 +636,7 @@ sap.ui.define(
                         },
                     });
                 },
-                
+
                 fmtStatus: function (sStatus) {
                     var newStatus = "";
                     if (sStatus === "REGISTERED") {
