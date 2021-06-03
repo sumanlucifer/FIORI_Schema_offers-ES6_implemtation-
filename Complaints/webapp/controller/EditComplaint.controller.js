@@ -113,7 +113,12 @@ sap.ui.define(
                         ProbingSteps: "",
                         ComplainCode: "",
                         ComplainId: oProp,
-                        IcnTabKey:"0"
+                        IcnTabKey: "0",
+                        workFlowFlag: {
+                            Button1: true,
+                            Button2: true,
+                        }
+
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -124,7 +129,7 @@ sap.ui.define(
                         .getResourceBundle()
                         .getText("errorText");
                     var oBindProp = oData["bindProp"];
-                    var c1, c2, c3, c4;
+                    var c1, c2, c3, c4, c5;
                     c1 = othat._loadEditProfile("Display");
                     // this._getExecLogData();
                     c1.then(function () {
@@ -135,10 +140,48 @@ sap.ui.define(
                             c3 = othat._initEditData(oBindProp);
                             c3.then(function () {
                                 c4 = othat._CheckImage(oBindProp);
+                                c4.then(function () {
+                                    c5 = othat._setWorkFlowFlag();
+                                })
                             });
                         });
                     });
                 },
+                _setWorkFlowFlag: function () {
+                    var oView = this.getView();
+                    var oLoginInfo = oView.getModel("LoginInfo").getData();
+                    console.log(oLoginInfo, "loginInfo");
+
+                    var oData = oView.getModel("oModelView").getData();
+                    var oModelControl = oView.getModel("oModelControl");
+
+                    if (oData["ComplaintStatus"] !== "INREVIEW") {
+                        oModelControl.setProperty("/workFlowFlag/Button1", false);
+                        oModelControl.setProperty("/workFlowFlag/Button2", false);
+                        return;
+                    }
+
+                    if (oData["AssigneUserType"] === oLoginInfo["UserType"]["UserType"]) {
+                        if (oLoginInfo["UserTypeId"] === 5) {
+                            oModelControl.setProperty("/workFlowFlag/Button1", false);
+                            oModelControl.setProperty("/workFlowFlag/Button2", true);
+                            return;
+                            // only escalate to be hidden
+                        } else {
+                            oModelControl.setProperty("/workFlowFlag/Button1", true);
+                            oModelControl.setProperty("/workFlowFlag/Button2", true);
+                            return;
+                        }
+
+
+                    } else {
+                        oModelControl.setProperty("/workFlowFlag/Button1", false);
+                        oModelControl.setProperty("/workFlowFlag/Button2", false);
+                        return;
+                    }
+
+                },
+
                 _setDisplayData: function (oProp) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -171,22 +214,25 @@ sap.ui.define(
                     var oDataValue = "";
                     var othat = this;
                     var exPand = "PainterComplainsHistory";
-                    oView.getModel().read("/" + oProp, {
-                        urlParameters: {
-                            //$expand: exPand,
-                        },
-                        success: function (data) {
-                            var oViewModel = new JSONModel(data);
-                            //console.log(data);
-                            oView.setModel(oViewModel, "oModelView");
-                            othat._setInitData();
-                        },
-                        error: function () { },
+                    return new Promise((resolve, reject) => {
+                        oView.getModel().read("/" + oProp, {
+                            urlParameters: {
+                                //$expand: exPand,
+                            },
+                            success: function (data) {
+                                var oViewModel = new JSONModel(data);
+                                //console.log(data);
+                                oView.setModel(oViewModel, "oModelView");
+                                othat._setInitData();
+                                resolve();
+                            },
+                            error: function () { },
+                        });
                     });
-                    promise.resolve();
-                    return promise;
+
                 },
                 _setInitData: function () {
+                    //var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
                     var oModelControl = oView.getModel("oModelControl");
@@ -246,29 +292,31 @@ sap.ui.define(
                     //     oModelControl.setProperty("/TokenCode", "");
                     // }
                     //set data for the smart table
-                    oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode")   );
+                    oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
                     oView.byId("smartHistory").rebindTable();
+                    // promise.resolve();
+                    // return promise;
                 },
 
-                onChangeStatus: function(){
-                        var currObject = this.getView().getBindingContext().getObject();    
-                    if(currObject.ComplaintStatus == "INREVIEW" || currObject.ComplaintStatus == "REGISTERED" )
-                    {
-                       
-                    var oModelView = this.getView().getModel("oModelView");
-                        oModelView.setProperty("/TokenCode","");
-                        oModelView.setProperty("/RewardPoints","");
+                onChangeStatus: function () {
+                    var currObject = this.getView().getBindingContext().getObject();
+                    if (currObject.ComplaintStatus == "INREVIEW" || currObject.ComplaintStatus == "REGISTERED") {
+
+                        var oModelView = this.getView().getModel("oModelView");
+                        oModelView.setProperty("/TokenCode", "");
+                        oModelView.setProperty("/RewardPoints", "");
 
                     }
                 },
 
                 _CheckImage: function (oProp) {
+                    var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = this.getView().getModel("oModelControl");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
                     jQuery.get(sImageUrl)
-                          .done(function () {
+                        .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
                             //oModelControl.refresh()
                             console.log("Image Exist");
@@ -278,6 +326,8 @@ sap.ui.define(
                             //oModelControl.refresh();
                             console.log("Image Doesnt Exist");
                         });
+                    promise.resolve();
+                    return promise;
                 },
                 _loadEditProfile: function (mParam) {
                     var promise = jQuery.Deferred();
@@ -404,9 +454,9 @@ sap.ui.define(
                 onResetToken: function () {
                     var oModelView = this.getView().getModel("oModelView");
                     var oModelControl = this.getView().getModel("oModelControl");
-                    oModelView.setProperty( "/RewardPoints", "" );
-                    oModelView.setProperty("/TokenCode","");
-                    oModelControl.setProperty("/TokenCode","");
+                    oModelView.setProperty("/RewardPoints", "");
+                    oModelView.setProperty("/TokenCode", "");
+                    oModelControl.setProperty("/TokenCode", "");
                 },
                 handleSavePress: function () {
                     var oModel = this.getView().getModel("oModelView");
@@ -420,7 +470,7 @@ sap.ui.define(
                     }
 
                     if ((oModel.getProperty("/ComplaintSubtypeId") === 3
-                        || oModel.getProperty("/ComplaintSubtypeId") === 2 ) &&
+                        || oModel.getProperty("/ComplaintSubtypeId") === 2) &&
                         oModel.getProperty("/TokenCode").length > 0 && oModel.getProperty("/RewardPoints") == "") {
                         MessageToast.show("Please verify token first");
                         return;
@@ -461,17 +511,17 @@ sap.ui.define(
                     oResolution.getBinding("items").filter(aFilter);
                 },
 
-               _postQRCode: function(oData){            
-                     this.getView().getModel().callFunction("/QRCodeValidationAdmin", {
-                           urlParameters: {
-                             qrcode: oData.TokenCode ,
-                             painterid: oData.PainterId,
-                             channel: "Complains",
-                            }
-                   });
+                _postQRCode: function (oData) {
+                    this.getView().getModel().callFunction("/QRCodeValidationAdmin", {
+                        urlParameters: {
+                            qrcode: oData.TokenCode,
+                            painterid: oData.PainterId,
+                            channel: "Complains",
+                        }
+                    });
                 },
 
-               
+
                 _postDataToSave: function () {
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
@@ -488,17 +538,17 @@ sap.ui.define(
                     }
                     var othat = this;
                     console.log(oPayload);
-                    
-                  delete oPayload.QRCodeData;
-                 delete oPayload.InitiateForceTat;
 
-              //      oPayload = this._payloadHardCleaning(oPayload);
+                    delete oPayload.QRCodeData;
+                    //delete oPayload.InitiateForceTat;
+
+                    //      oPayload = this._payloadHardCleaning(oPayload);
 
                     oData.update(sPath, oPayload, {
                         success: function () {
                             debugger;
-                            if( +(oPayload.RewardPoints) > 0 &&  (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3 ) )
-                                othat._postQRCode.call(othat,oPayload);
+                            if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
+                                othat._postQRCode.call(othat, oPayload);
 
                             MessageToast.show("Complain Sucessfully Updated.");
                             oData.refresh(true);
@@ -567,7 +617,6 @@ sap.ui.define(
                         }
                     );
                 },
-
                 _Deactivate: function (oData, sPath, oBject) {
                     var oPayload = {
                         InitiateForceTat: true,
