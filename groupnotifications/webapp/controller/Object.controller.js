@@ -187,14 +187,14 @@ sap.ui.define([
 					target: "/oDetails/GroupName"
 				});
 			} else
-			if (data.Members.length === 0) {
-				oReturn.IsNotValid = true;
-				oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
-				aCtrlMessage.push({
-					message: "MSG_VALDTN_ERR_MEMBERS",
-					target: "/oDetails/Members"
-				});
-			}
+			// if (data.Members.length === 0) {
+			// 	oReturn.IsNotValid = true;
+			// 	oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
+			// 	aCtrlMessage.push({
+			// 		message: "MSG_VALDTN_ERR_MEMBERS",
+			// 		target: "/oDetails/Members"
+			// 	});
+			// }
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
 		},
@@ -361,81 +361,133 @@ sap.ui.define([
 			syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 		},
 
-		handleSearch: function (oEvent) {
+		// handleSearch: function (oEvent) {
 
-			var sQuery = oEvent.getParameter("value").toLowerCase();
-			sQuery = "'" + sQuery + "'";
+		// 	var sQuery = oEvent.getParameter("value").toLowerCase();
+		// 	sQuery = "'" + sQuery + "'";
 
-			// if (sQuery && sQuery.length > 0) {
+		// 	// if (sQuery && sQuery.length > 0) {
 
-			var sPath = "/UserSet";
-			if (sQuery) {
-				var oCustomParam = {
-					Query: sQuery
-				};
-			}
-			var oSorter = new sap.ui.model.Sorter("RoleId", false);
+		// 	var sPath = "/UserSet";
+		// 	if (sQuery) {
+		// 		var oCustomParam = {
+		// 			Query: sQuery
+		// 		};
+		// 	}
+		// 	var oSorter = new sap.ui.model.Sorter("RoleId", false);
 			
+		// 	var sExpand = "Admin,Role,Painter";
+		// 	var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Admin/Mobile,Painter/Mobile,Painter/Email,RoleId,Role/Role";
+
+		// 	this._Template = this._Template ? this._Template : sap.ui.getCore().byId("userDialog");
+		// 	var aFilters = new sap.ui.model.Filter({
+		// 		filters: [
+		// 			new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false)
+		// 		]
+		// 	});
+
+		// 	//Call bindTable with function parameters....
+		// 	if (sQuery) {
+		// 		this.bindTable("tableDialog", sPath, this._Template, aFilters, sExpand, sSelect, oSorter, oCustomParam);
+		// 	} else {
+		// 		this.bindTable("tableDialog", sPath, this._Template, aFilters, sExpand, sSelect, oSorter);
+		// 	}
+
+		// },
+
+
+
+		// /** 
+		//  * 
+		//  * @param sTableId - Table Id
+		//  * @param sPath - binding path
+		//  * @param oTemplate - Item template 
+		//  * Optional? @param aFilters - filters array
+		//  * Optional? @param aCustomParam - Custom paramter
+		//  */
+		// bindTable: function (sTableId, sPath, oTemplate, aFilters, sExpand, sSelect, oSorter, oCustomParam) {
+		// 	// debugger;
+		// 	var oBindSettings = {
+		// 		path: sPath,
+		// 		template: oTemplate.clone(),
+		// 		parameters: {}
+		// 	};
+
+		// 	if (!!aFilters) {
+		// 		oBindSettings.filters = aFilters;
+		// 	}
+
+		// 	if (!!oCustomParam) {
+		// 		oBindSettings.parameters.custom = oCustomParam;
+		// 	}
+
+		// 	if (!!sExpand) {
+		// 		oBindSettings.parameters.expand = sExpand;
+		// 	}
+
+		// 	if (!!sSelect) {
+		// 		oBindSettings.parameters.select = sSelect;
+		// 	}
+
+		// 	if (!!oSorter) {
+		// 		oBindSettings.sorter = oSorter;
+		// 	}
+
+		// 	// this.getView().byId(sTableId).bindItems(oBindSettings);
+		// 	sap.ui.getCore().byId(sTableId).unbindItems();
+		// 	sap.ui.getCore().byId(sTableId).bindItems(oBindSettings);
+
+        // },
+        handleFilters: function(oEvent){
+            var sQuery = oEvent.getParameter("value").toLowerCase();
+            sQuery = "'" + sQuery + "'";
+            var sPath = "/UserSet";
+			var oSorter = new sap.ui.model.Sorter("RoleId", false);
 			var sExpand = "Admin,Role,Painter";
 			var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Admin/Mobile,Painter/Mobile,Painter/Email,RoleId,Role/Role";
+            var aFilters =[];
+            aFilters.push(new Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false));
+            aFilters.push(new Filter('PainterId', sap.ui.model.FilterOperator.GT, 0));
+            if(sQuery){
+            aFilters.push( new Filter(
+                                        [
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Name)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Email)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Mobile)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            )
+                                            
+                                        ],
+                                        false
+                                    )
+                                );
+                            }
 
-			this._Template = this._Template ? this._Template : sap.ui.getCore().byId("userDialog");
-			var aFilters = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false)
-				]
-			});
+                            
+                     var oBinding = oEvent.getSource().getBinding("items");
+			        oBinding.filter(aFilters);
 
-			//Call bindTable with function parameters....
-			if (sQuery) {
-				this.bindTable("tableDialog", sPath, this._Template, aFilters, sExpand, sSelect, oSorter, oCustomParam);
-			} else {
-				this.bindTable("tableDialog", sPath, this._Template, aFilters, sExpand, sSelect, oSorter);
-			}
 
-		},
-
-		/** 
-		 * 
-		 * @param sTableId - Table Id
-		 * @param sPath - binding path
-		 * @param oTemplate - Item template 
-		 * Optional? @param aFilters - filters array
-		 * Optional? @param aCustomParam - Custom paramter
-		 */
-		bindTable: function (sTableId, sPath, oTemplate, aFilters, sExpand, sSelect, oSorter, oCustomParam) {
-			// debugger;
-			var oBindSettings = {
-				path: sPath,
-				template: oTemplate.clone(),
-				parameters: {}
-			};
-
-			if (!!aFilters) {
-				oBindSettings.filters = aFilters;
-			}
-
-			if (!!oCustomParam) {
-				oBindSettings.parameters.custom = oCustomParam;
-			}
-
-			if (!!sExpand) {
-				oBindSettings.parameters.expand = sExpand;
-			}
-
-			if (!!sSelect) {
-				oBindSettings.parameters.select = sSelect;
-			}
-
-			if (!!oSorter) {
-				oBindSettings.sorter = oSorter;
-			}
-
-			// this.getView().byId(sTableId).bindItems(oBindSettings);
-			sap.ui.getCore().byId(sTableId).unbindItems();
-			sap.ui.getCore().byId(sTableId).bindItems(oBindSettings);
-
-		}
+        }
 
 	});
 
