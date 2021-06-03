@@ -21,7 +21,7 @@ sap.ui.define([], function () {
 				return "";
 			}
 			var sValue = dValue;
-			var pattern = "dd MMM yyyy, hh:mm a";
+			var pattern = "dd/MM/yyyy, hh:mm a";
 			if (tValue) {
 				sValue = sValue + " " + tValue;
 			}
