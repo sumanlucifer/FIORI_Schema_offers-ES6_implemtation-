@@ -87,6 +87,9 @@
                     "bundleName": "com.knpl.pragati.Complaints.i18n.i18n"
                 }
             },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
             "": {
                 "dataSource": "mainService",
                 "preload": true,

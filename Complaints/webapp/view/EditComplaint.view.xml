@@ -61,8 +61,9 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
-                   <Button visible="false" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
-                <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/>
+                     <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
+                <Button visible="{oModelControl>/workFlowFlag/Button2}" id="save" text="Save" type="Emphasized" press="handleSavePress"/>
+
             </Toolbar>
         </f:footer>
     </f:DynamicPage>

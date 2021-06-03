@@ -132,6 +132,7 @@ sap.ui.define(
                     this.getView().getModel().refresh();
                     //this._fiterBarSort();
                     this._addSearchFieldAssociationToFB();
+                    this._getLoggedInInfo();
                 },
                 _fiterBarSort: function () {
                     if (this._ViewSortDialog) {
@@ -140,6 +141,25 @@ sap.ui.define(
                         oDialog.setSelectedSortItem("CreatedAt");
                     }
                 },
+                _getLoggedInInfo: function () {
+                    var oData = this.getModel();
+                    var oLoginData = this.getView().getModel("LoginInfo");
+                    oData.callFunction("/GetLoggedInAdmin", {
+                        method: "GET",
+                        urlParameters: {
+                            $expand: "UserType",
+                        },
+                        success: function (data) {
+                            if (data.hasOwnProperty("results")) {
+                                if (data["results"].length > 0) {
+                                    oLoginData.setData(data["results"][0]);
+                                    console.log(oLoginData)
+                                }
+                            }
+                        },
+                    });
+                },
+
                 onFilter: function () {
                     var aCurrentFilterValues = [];
                     var oViewFilter = this.getView()
@@ -274,7 +294,7 @@ sap.ui.define(
                         oCmbxSubType.getBinding("items").filter(oFilter);
                     }
                 },
-                  onZoneChange: function (oEvent) {
+                onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
@@ -290,7 +310,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                   
+
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
