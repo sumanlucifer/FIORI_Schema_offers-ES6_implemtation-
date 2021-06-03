@@ -28,6 +28,7 @@
 								<Label required="true" text="{i18n>colBody}"/>
 								<TextArea width="100%" value="{objectView>Body}" rows="4" maxLength="250" placeholder="{i18n>MessagePlaceHolder}" showExceededText="false"
 									editable="{= ${objectView>/sMode} !== 'V'}"/>
+                                    <ObjectAttribute title="Max Length" text="250 characters" />
 							</VBox>
 							<VBox>
 								<Label text="{i18n>colRedirectionType}"/>
