@@ -75,7 +75,13 @@
 					"id": "com.knpl.pragati.condonation-12-1622002293582",
 					"appId": "com.knpl.pragati.condonation",
 					"vizId": "Manage-CON"
-				}]
+                },
+                {
+					"id": "com.knpl.pragati.groupnotifications-12-1622002293582",
+					"appId": "com.knpl.pragati.groupnotifications",
+					"vizId": "Manage-GNT"
+				}
+            ]
 			}
 		}, {
 			"_version": "3.0.0",
