@@ -85,21 +85,16 @@ modules:
       name: LoyaltyManagement
       target-path: resources/
     - artifacts:
-<<<<<<< HEAD
       - Scheme-offers-content.zip
       name: SchemeOffers
       target-path: resources/
     - artifacts:
       - condonation-content.zip
       name: condonation
-=======
-      - groupnotifications-content.zip
-      name: groupnotifications
       target-path: resources/
     - artifacts:
-      - Scheme-offers-content.zip
-      name: SchemeOffers
->>>>>>> origin/grpntfn
+      - groupnotifications-content.zip
+      name: groupnotifications
       target-path: resources/
 - name: MDM
   type: html5
@@ -231,15 +226,17 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-<<<<<<< HEAD
 - name: condonation
   type: html5
   path: condonation
-=======
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 - name: groupnotifications
   type: html5
   path: groupnotifications
->>>>>>> origin/grpntfn
   build-parameters:
     builder: custom
     commands:
