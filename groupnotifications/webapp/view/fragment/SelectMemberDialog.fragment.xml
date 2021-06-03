@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<TableSelectDialog id="tableDialog" noDataText="{i18n>NoUsersFound}" title="{i18n>SelectUsers}" search=".handleSearch"
+	<TableSelectDialog id="tableDialog" noDataText="{i18n>NoUsersFound}" title="{i18n>SelectUsers}" search=".handleFilters"
 		confirm=".handleConfirm" cancel=".handleClose"
 		items="{ path : '/UserSet', parameters : { expand : 'Admin,Role,Painter', select : 'Id,Admin/Name,Painter/Name,Admin/Email,Admin/Mobile,Painter/Email,Painter/Mobile,RoleId,Role/Role' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter : [ { path : 'RoleId', descending : false } ] }">
 		<ColumnListItem id ="userDialog">

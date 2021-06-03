@@ -395,6 +395,8 @@ sap.ui.define([
 
 		},
 
+
+
 		/** 
 		 * 
 		 * @param sTableId - Table Id
@@ -435,7 +437,52 @@ sap.ui.define([
 			sap.ui.getCore().byId(sTableId).unbindItems();
 			sap.ui.getCore().byId(sTableId).bindItems(oBindSettings);
 
-		}
+        },
+        handleFilters: function(oEvent){
+            var sQuery = oEvent.getParameter("value").toLowerCase();
+            sQuery = "'" + sQuery + "'";
+            var sPath = "/UserSet";
+			var oSorter = new sap.ui.model.Sorter("RoleId", false);
+			var sExpand = "Admin,Role,Painter";
+			var sSelect = "Id,Admin/Name,Painter/Name,Admin/Email,Admin/Mobile,Painter/Mobile,Painter/Email,RoleId,Role/Role";
+            var aFilters =[];
+            aFilters.push(new Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false));
+            aFilters.push( new Filter(
+                                        [
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Name)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Email)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            ),
+                                            new Filter(
+                                                {
+                                                    path: "tolower(Painter/Mobile)",
+                                                    operator: "Contains",
+                                                    value1: sQuery.trim(),
+                                                    caseSensitive: false
+                                                }
+                                            )
+                                            
+                                        ],
+                                        false
+                                    )
+                                );
+                     var oBinding = oEvent.getSource().getBinding("items");
+			        oBinding.filter(aFilters);
+
+
+        }
 
 	});
 
