@@ -209,13 +209,13 @@ sap.ui.define([
 					IsArchived: true
 				}, {
 					 success: function () {
-                        that.showToast("MSG_SUCCESS_ADM_REMOVE");
+                        that.showToast(that.getResourceBundle().getText("MSG_SUCCESS_ADM_REMOVE"));
                     },
                     error: function (oError) {}
 
 				});
 			}
-			this.showWarning("MSG_CONFIRM_DELETE", onYes.bind(this));
+			this.showWarning(this.getResourceBundle().getText("MSG_CONFIRM_DELETE"), onYes.bind(this));
 		},
 
 		/**

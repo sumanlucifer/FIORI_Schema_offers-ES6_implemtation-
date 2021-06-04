@@ -5,8 +5,11 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/core/Fragment",
-	"sap/ui/core/syncStyleClass"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, syncStyleClass) {
+    "sap/ui/core/syncStyleClass",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast"
+
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, syncStyleClass,MessageBox,MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.knpl.pragati.groupnotifications.controller.Object", {
@@ -166,7 +169,8 @@ sap.ui.define([
 			var oValid = this._fnValidation(oPayload);
 
 			if (oValid.IsNotValid) {
-				this.showError(this._fnMsgConcatinator(oValid.sMsg));
+                //this.showError(this._fnMsgConcatinator(oValid.sMsg));
+               MessageToast.show(this.getResourceBundle().getText(oValid.sMsg));
 				return;
 			}
 			oViewModel.setProperty("/busy", true);
@@ -185,16 +189,17 @@ sap.ui.define([
 				aCtrlMessage.push({
 					message: "MSG_VALDTN_ERR_GROUP",
 					target: "/oDetails/GroupName"
-				});
+                });
+                
 			} else
-			// if (data.Members.length === 0) {
-			// 	oReturn.IsNotValid = true;
-			// 	oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
-			// 	aCtrlMessage.push({
-			// 		message: "MSG_VALDTN_ERR_MEMBERS",
-			// 		target: "/oDetails/Members"
-			// 	});
-			// }
+			if (data.Members.length === 0) {
+				oReturn.IsNotValid = true;
+				oReturn.sMsg.push("MSG_VALDTN_ERR_MEMBERS");
+				aCtrlMessage.push({
+					message: "MSG_VALDTN_ERR_MEMBERS",
+					target: "/oDetails/Members"
+				});
+			}
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
 		},
