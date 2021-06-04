@@ -60,7 +60,7 @@
 							<VBox>
 								<Label visible="{= ${objectView>IsGroupNotification} === true}" required="true" text="{i18n>colGroup}"/>
 								<ComboBox visible="{= ${objectView>IsGroupNotification} === true}" width="100%" selectedKey="{objectView>GroupId}"
-									items="{ path: '/NotificationGroupSet' }" editable="{= ${objectView>/sMode} !== 'V'}">
+									items="{ path: '/NotificationGroupSet',filters: [{ path : 'IsArchived' , operator : 'EQ' , value1 : false }] }" editable="{= ${objectView>/sMode} !== 'V'}">
 									<core:Item key="{Id}" text="{GroupName}"/>
 								</ComboBox>
 								<Label visible="{= ${objectView>IsGroupNotification} === false}" required="true" text="{i18n>colReceivers}"/>
