@@ -325,7 +325,7 @@ sap.ui.define(
                     var othat = this;
                     var exPand =
                         "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio/Product,OfferPackRewardRatio/Pack," +
-                        "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
+                        "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
                         "OfferBonusProductRewardRatio/Product,OfferBonusPackRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
@@ -490,9 +490,9 @@ sap.ui.define(
                     }
                     oModelControl2.setProperty("/MultiCombo/PainterType", PainterType);
 
-                    if (oData["OfferPainterArchiType"]["results"].length > 0) {
-                        for (var x of oData["OfferPainterArchiType"]["results"]) {
-                            ArcheTypes.push(x["ArchiTypeId"]);
+                    if (oData["OfferPainterArcheType"]["results"].length > 0) {
+                        for (var x of oData["OfferPainterArcheType"]["results"]) {
+                            ArcheTypes.push(x["ArcheTypeId"]);
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/ArcheTypes", ArcheTypes);
@@ -743,7 +743,7 @@ sap.ui.define(
                     var othat = this;
                     var exPand =
                         "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
-                        "OfferPainterType,OfferPainterArchiType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
+                        "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
                         "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
@@ -1150,9 +1150,9 @@ sap.ui.define(
                     }
                     oModelControl2.setProperty("/MultiCombo/PainterType", PainterType);
 
-                    if (oData["OfferPainterArchiType"]["results"].length > 0) {
-                        for (var x of oData["OfferPainterArchiType"]["results"]) {
-                            ArcheTypes.push(x["ArchiTypeId"]);
+                    if (oData["OfferPainterArcheType"]["results"].length > 0) {
+                        for (var x of oData["OfferPainterArcheType"]["results"]) {
+                            ArcheTypes.push(x["ArcheTypeId"]);
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/ArcheTypes", ArcheTypes);
