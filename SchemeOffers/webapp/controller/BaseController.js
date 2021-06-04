@@ -1995,10 +1995,10 @@ sap.ui.define(
                             };
                         }
                     );
-                    oPayLoad["OfferPainterArchiType"] = sMultiKeys["ArcheTypes"].map(
+                    oPayLoad["OfferPainterArcheType"] = sMultiKeys["ArcheTypes"].map(
                         function (elem) {
                             return {
-                                ArchiTypeId: parseInt(elem),
+                                ArcheTypeId: parseInt(elem),
                             };
                         }
                     );

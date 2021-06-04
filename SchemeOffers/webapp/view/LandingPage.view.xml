@@ -37,7 +37,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>Enter} {i18n>tblColStatus}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
+                                   <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
                                         <core:Item text="Active" key="true"/>
                                          <core:Item text="Inactive" key="false"/>
                                         
@@ -101,9 +101,9 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>offerTypeFilterLabel}"/>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+                    <!-- <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColReward}"/>
-                    </Column>
+                    </Column> -->
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColStartDate}"/>
                     </Column>
@@ -128,7 +128,7 @@
                         <cells>
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
                             <Text text="{OfferType/OfferType}"/>
-                            <Text text="{RewardGiftId}"/>
+                            <!-- <Text text="{RewardGiftId}"/> -->
                              <Text text="{path:'StartDate',formatter:'.fmtDate'}"/>
                              <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
                             <Text text="{CreatedByDetails/Name}"/>
