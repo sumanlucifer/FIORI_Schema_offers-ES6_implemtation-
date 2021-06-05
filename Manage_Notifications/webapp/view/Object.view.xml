@@ -71,7 +71,7 @@
 								</MultiComboBox> -->
                                  <MultiInput id="multiInputPainterAdd" editable="{= ${objectView>/sMode} !== 'V'}" visible="{= ${objectView>IsGroupNotification} === false}" tokens="{objectView>Receivers}" valueHelpRequest="onValueHelpRequestedPainter">
                                     <tokens>
-                                        <Token editable="false" text="{objectView>Painter/Name}" key="{objectView>Id}"/>
+                                        <Token editable="false" text="{objectView>PainterName}" key="{objectView>Id}"/>
                                     </tokens>
                                  </MultiInput>
 

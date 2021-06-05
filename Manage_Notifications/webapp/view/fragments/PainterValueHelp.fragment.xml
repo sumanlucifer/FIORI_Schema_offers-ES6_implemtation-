@@ -11,7 +11,7 @@
         afterOpen=".onValueHelpAfterOpenPainter"
         supportRanges="false"
         key="Id"
-        descriptionKey="Id">
+        descriptionKey="PainterName">
         <filterBar>
             <fb:FilterBar advancedMode="false" search="onFilterBarSearchPainter" showRestoreButton="true" showRestoreOnFB="true" reset="onClearPainterVhSearch">
                  <fb:filterGroupItems>
