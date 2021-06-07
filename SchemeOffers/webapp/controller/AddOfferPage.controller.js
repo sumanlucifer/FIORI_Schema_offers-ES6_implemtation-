@@ -53,6 +53,7 @@ sap.ui.define(
                         oEvent.getParameter("element").setValueState(ValueState.None);
                     });
 
+
                     this.getOwnerComponent()
                         .getRouter()
                         .getRoute("AddOfferPage")
@@ -262,6 +263,7 @@ sap.ui.define(
                         IsSpecificRewardRatio: false,
                         PointSlabUpperLimit: "",
                         PointSlabLowerLimit: "",
+                        PainterGrowth:"",
                         PurchaseStartDate: null,
                         PurchaseEndDate: null,
                         BonusApplicableTopPainter: "",
@@ -328,9 +330,9 @@ sap.ui.define(
                 onPressSave: function () {
                     var oView = this.getView();
                     var oValidate = new Validator();
-                    var oForm = oView.byId("FormChange");
+                    var oForm = oView.byId("vBoxForms");
 
-                    var bFlagValidate = oValidate.validate(oForm);
+                    var bFlagValidate = oValidate.validate(oForm,true);
 
                     var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
@@ -348,7 +350,7 @@ sap.ui.define(
                         MessageToast.show("Kindly upload an image to continue.");
                         return
                     }
-                    if(!aTableValidation[0]){
+                    if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
@@ -362,7 +364,7 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var oModelData = oModel.getData();
                     if (oModelData["Rbtn"]["Rewards"] == 0) {
-                        if (!oModelData["Table"]["Table1"][0]["RequiredVolume"] || !oModelData["Table"]["Table1"][0]["RewardPoints"] ) {
+                        if (!oModelData["Table"]["Table1"][0]["RequiredVolume"] || !oModelData["Table"]["Table1"][0]["RewardPoints"]) {
                             return [false, "Kinldy Enter the data in the Reward Ratio Table1 to Continue"]
                         }
 
@@ -373,7 +375,7 @@ sap.ui.define(
                         }
                     }
 
-                    return [true,""]
+                    return [true, ""]
 
                 },
                 onAfterRendering: function () {
