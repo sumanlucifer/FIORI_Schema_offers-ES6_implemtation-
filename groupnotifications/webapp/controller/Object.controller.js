@@ -109,7 +109,8 @@ sap.ui.define([
 					},
 					success: this._setView.bind(this)
 				});
-			}.bind(this));
+            }.bind(this));
+            this._initData();
 		},
 
 		/** 
@@ -155,7 +156,36 @@ sap.ui.define([
 			var oMessageProcessor = this.getModel("objectView");
 			this._oMessageManager = sap.ui.getCore().getMessageManager();
 			this._oMessageManager.registerMessageProcessor(oMessageProcessor);
-		},
+        },
+        _initData: function (){
+            
+            var oView = this.getView();
+            
+            var oDataControl = {
+                 Search: {
+                            PainterVh: {
+                                ZoneId: "",
+                                DivisionId: "",
+                                DepotId: "",
+                                PainterType: "",
+                                ArcheType: "",
+                                MembershipCard: "",
+                                Name: "",
+                                Mobile: ""
+                            },
+                            DepotVh: {
+                                DepotId: "",
+                                Division: ""
+                            }
+                        },
+                     }
+
+
+            var oConrtrolModel = new JSONModel(oDataControl);
+            oView.setModel(oConrtrolModel, "oModelControl");
+
+        },
+
 
 		onDeleteMember: function (oEvent) {
 			var oViewModel = this.getModel("objectView"),
@@ -501,7 +531,296 @@ sap.ui.define([
 			        oBinding.filter(aFilters);
 
 
-        }
+        },
+         onValueHelpRequestedPainter: function () {
+                    this._oMultiInput = this.getView().byId("multiInputPainterAdd");
+                    this.oColModel = new JSONModel({
+                        cols: [
+                            {
+                                label: "Membership ID",
+                                template: "Painter/MembershipCard",
+                            },
+                            {
+                                label: "Name",
+                                template: "Painter/Name",
+                            },
+                            {
+                                label: "Mobile Number",
+                                template: "Painter/Mobile",
+                            },
+                            {
+                                label: "Zone",
+                                template: "Painter/ZoneId",
+                            },
+                            {
+                                label: "Division",
+                                template: "Painter/DivisionId",
+                            },
+                            {
+                                label: "Depot",
+                                template: "Painter/Depot/Depot",
+                            },
+                            {
+                                label: "Painter Type",
+                                template: "Painter/PainterType/PainterType",
+                            },
+                            {
+                                label: "Painter ArcheType",
+                                template: "Painter/ArcheType/ArcheType",
+                            }
+                        ],
+                    });
+
+                    var aCols = this.oColModel.getData().cols;
+                     var oFilter = new sap.ui.model.Filter({filters:[
+                          new Filter("IsArchived", sap.ui.model.FilterOperator.EQ, false),
+                          new Filter("PainterId", sap.ui.model.FilterOperator.GT, 0)
+                        ],and:true});
+
+                    this._oValueHelpDialog = sap.ui.xmlfragment(
+                        "com.knpl.pragati.groupnotifications.view.fragment.PainterValueHelp",
+                        this
+                    );
+                    this.getView().addDependent(this._oValueHelpDialog);
+
+                    this._oValueHelpDialog.getTableAsync().then(
+                        function (oTable) {
+                            oTable.setModel(this.oColModel, "columns");
+
+                            if (oTable.bindRows) {
+                                oTable.bindAggregation("rows", {
+                                    path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter,Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
+                            }
+
+                            if (oTable.bindItems) {
+                                oTable.bindAggregation("items", "/UserSet", function () {
+                                    return new sap.m.ColumnListItem({
+                                        cells: aCols.map(function (column) {
+                                            return new sap.m.Label({
+                                                text: "{" + column.template + "}",
+                                            });
+                                        }),
+                                    });
+                                });
+                            }
+
+                            this._oValueHelpDialog.update();
+                        }.bind(this)
+                    );
+
+                   // this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+                    this._oValueHelpDialog.open();
+                },
+
+                
+                onValueHelpCancelPressPainter: function () {
+                    this._oValueHelpDialog.close();
+                },
+
+                onValueHelpOkPressPainter: function (oEvent) {
+                    var oData = [];
+                    var xUnique = new Set();
+                    var oViewModel = this.getModel("objectView"),
+				aData = oViewModel.getProperty("/oDetails/Members");
+                    var aTokens = oEvent.getParameter("tokens");
+                    if (aTokens && aTokens.length) {
+				for (var i = 0; i < aTokens.length; i++) {
+                    var userData = aTokens[i].getCustomData()[0].getValue();
+                    if(userData.AdminId){
+                         var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                    }
+                    else {
+                    var painterData=this.getModel().getData("/" + userData.Painter.__ref);
+                   }
+                    //var roleData = this.getModel().getData("/" + userData.Role.__ref);
+                    userData.Painter=painterData;
+					//userData.Role.Role = roleData.Role;
+					aData.push(userData);
+				}
+			}
+			var uniqueArray = this.removeDuplicates(aData, "Id");
+			oViewModel.setProperty("/oDetails/Members", uniqueArray);
+			oViewModel.refresh(true);
+
+			
+
+                    // aTokens.forEach(function (ele) {
+                    //     if (xUnique.has(ele.getKey()) == false) {
+                    //         oData.push({
+                    //             Name: ele.getText(),
+                    //             Id: ele.getKey()
+                    //         });
+                    //         xUnique.add(ele.getKey());
+                    //     }
+                    // });
+
+                    // this.getView().getModel("objectView").setProperty("/oDetails/Receivers", oData);
+                    this._oValueHelpDialog.close();
+                },
+                onValueHelpAfterClose: function () {
+                  
+                    if (this._oValueHelpDialog) {
+                        this._oValueHelpDialog.destroy();
+                        delete this._oValueHelpDialog;
+                    } 
+                   
+                },
+
+                _filterTable: function (oFilter, sType) {
+                    var oValueHelpDialog = this._oValueHelpDialog;
+
+                    oValueHelpDialog.getTableAsync().then(function (oTable) {
+                        if (oTable.bindRows) {
+                            oTable.getBinding("rows").filter(oFilter, sType || "Application");
+                        }
+
+                        if (oTable.bindItems) {
+                            oTable
+                                .getBinding("items")
+                                .filter(oFilter, sType || "Application");
+                        }
+
+                        oValueHelpDialog.update();
+                    });
+                },
+
+
+                onFilterBarSearchPainter: function (oEvent) {
+                    var afilterBar = oEvent.getParameter("selectionSet");
+
+                    var aCurrentFilterValues = [];
+                    var oViewFilter = this.getView().getModel("oModelControl").getProperty("/Search/PainterVh");
+                    var aFlaEmpty = true;
+                    for (let prop in oViewFilter) {
+                        if (oViewFilter[prop]) {
+                            if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                            } else if (prop === "PainterType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/PainterTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "ArcheType") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/ArcheTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                );
+                            } else if (prop === "MembershipCard") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/MembershipCard", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Name") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/Name", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                );
+                            } else if (prop === "Mobile") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter({ path: "Painter/Mobile", operator: FilterOperator.Contains, value1: oViewFilter[prop] })
+                                );
+                            }
+                        }
+                    }
+
+                    this._FilterPainterValueTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+                },
+                 _FilterPainterValueTable: function (oFilter, sType) {
+                    var oValueHelpDialog = this._oValueHelpDialog;
+
+                    oValueHelpDialog.getTableAsync().then(function (oTable) {
+                        if (oTable.bindRows) {
+                            oTable.getBinding("rows").filter(oFilter, sType || "ApplicatApplication");
+                        }
+
+                        if (oTable.bindItems) {
+                            oTable
+                                .getBinding("items")
+                                .filter(oFilter, sType || "Application");
+                        }
+
+                        oValueHelpDialog.update();
+                    });
+                },
+                 onPVhZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+
+                    var oDivision = sap.ui.getCore().byId("idPVhDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+                    //setting the data for depot;
+                    var oDepot = sap.ui.getCore().byId("idPVhDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    // clearning data for dealer
+                },
+                onPVhDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = sap.ui.getCore().byId("idPVhDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+                },
+                onClearPainterVhSearch: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl"), aCurrentFilterValues = [];
+                    oModel.setProperty("/Search/PainterVh", {
+                        ZoneId: "",
+                        DivisionId: "",
+                        DepotId: "",
+                        PainterType: "",
+                        ArcheType: "",
+                        MembershipCard: "",
+                        Name: "",
+                        Mobile: ""
+                    });
+                    aCurrentFilterValues.push(new Filter({
+                        path: "IsArchived",
+                        operator: FilterOperator.EQ,
+                        value1: false
+                    }));
+                   
+                    this._FilterPainterValueTable(
+                        new Filter({
+                            filters: aCurrentFilterValues,
+                            and: true,
+                        })
+                    );
+                },
+
+
+
 
 	});
 
