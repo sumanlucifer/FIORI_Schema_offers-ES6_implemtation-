@@ -251,7 +251,7 @@ sap.ui.define(
                     for (var j of oDivisionItems) {
                         oDivObj = j.getBindingContext().getObject();
                         if (sZoneKey.indexOf(oDivObj["Zone"]) < 0) {
-                            oDivision.removeSelectedItem(j);
+                            oDivision.removeSelectedItem(j);f
                         }
                     }
                     // check for the depot tokens
