@@ -19,8 +19,8 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       var date = new Date(mDate);
       var oDateFormat = DateFormat.getDateTimeInstance({
         pattern: "dd/MM/YYYY h:mm a",
-        UTC: false,
-        strictParsing: false,
+        UTC: true,
+        strictParsing: true,
       });
       return oDateFormat.format(date);
     },

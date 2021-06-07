@@ -129,8 +129,8 @@
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
                             <Text text="{OfferType/OfferType}"/>
                             <!-- <Text text="{RewardGiftId}"/> -->
-                             <Text text="{path:'StartDate',formatter:'.fmtDate'}"/>
-                             <Text text="{path:'EndDate',formatter:'.fmtDate'}"/>
+                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                             <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
