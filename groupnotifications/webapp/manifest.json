@@ -113,7 +113,7 @@
                     ]
                 },
                 {
-					"pattern": "NotificationGroupSet/{objectId}",
+					"pattern": "NotificationGroupSet/{action}/:objectId:",
 					"name": "object",
 					"target": [
 						"object"

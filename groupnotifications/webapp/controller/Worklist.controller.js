@@ -110,10 +110,10 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
 		 * @public
 		 */
-		onPress: function (oEvent) {
+		onPressView: function (oEvent) {
 			// The source is the list item that got pressed
-			this._showObject(oEvent.getSource());
-		},
+			this._showObject(oEvent.getSource(),"view");
+        },
 
 		/**
 		 * Event handler when the share in JAM button has been clicked
@@ -178,10 +178,15 @@ sap.ui.define([
 		 * @param {sap.m.ObjectListItem} oItem selected Item
 		 * @private
 		 */
-		_showObject: function (oItem) {
-			this.getRouter().navTo("object", {
-				objectId: oItem.getBindingContext().getProperty("Id")
-			});
+		_showObject: function (oItem,action) {
+			// this.getRouter().navTo("object", {
+			// 	objectId: oItem.getBindingContext().getProperty("Id")
+            // });
+              this.getRouter().navTo("object", {
+                action: action,
+                objectId: oItem.getBindingContext().getProperty("Id")
+            });
+
 		},
 
 		onAdd: function (oEvent) {
@@ -189,7 +194,7 @@ sap.ui.define([
 		},
 
 		onEdit: function (oEvent) {
-			this._showObject(oEvent.getSource());
+			this._showObject(oEvent.getSource(),"edit");
 		},
 
 		onRefreshView: function () {
