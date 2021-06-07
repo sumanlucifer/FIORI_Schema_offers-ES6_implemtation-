@@ -57,7 +57,7 @@
 					</Column>
 				</columns>
 				<items>
-					<ColumnListItem>
+					<ColumnListItem type="Navigation" press="onPressView">
 						<cells>
 							<Text text="{GroupName}"/>
 							<Text text="{TotalMembers}"/>

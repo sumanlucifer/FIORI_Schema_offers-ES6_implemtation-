@@ -85,8 +85,17 @@ sap.ui.define([
 		 * @private
 		 */
 		_onObjectMatched: function (oEvent) {
-			this.getModel("objectView").setProperty("/sMode", "E");
-			this.getModel("objectView").setProperty("/busy", true);
+			
+            this._action = oEvent.getParameter("arguments").action;
+           // this._property = oEvent.getParameter("arguments").property;
+            if(this._action=="edit"){
+                this.getModel("objectView").setProperty("/sMode", "E");
+            }
+            else{
+                this.getModel("objectView").setProperty("/sMode", "V");
+            }
+            
+            this.getModel("objectView").setProperty("/busy", true);
 			var sObjectId = oEvent.getParameter("arguments").objectId;
 			this.getModel().metadataLoaded().then(function () {
 				var sObjectPath = this.getModel().createKey("/NotificationGroupSet", {
