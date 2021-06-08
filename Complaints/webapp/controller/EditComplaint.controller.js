@@ -303,7 +303,10 @@ sap.ui.define(
                     // }
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
-                    oView.byId("smartHistory").rebindTable();
+                    var oHistoryTable = oView.byId("smartHistory")
+                    if(oHistoryTable){
+                        oHistoryTable.rebindTable();
+                    }
                     // promise.resolve();
                     // return promise;
                 },
