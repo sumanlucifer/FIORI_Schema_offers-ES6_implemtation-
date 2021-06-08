@@ -53,6 +53,7 @@ sap.ui.define(
                             ZoneId: "",
                             DivisionId: "",
                             DepotId: "",
+                            Escalate: ""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -208,8 +209,19 @@ sap.ui.define(
                                 );
                             } else if (prop === "ComplaintStatus") {
                                 aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
+                               
+                                    aCurrentFilterValues.push(
+                                        new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
+                            } else if (prop === "Escalate") {
+                                aFlaEmpty = false;
+                                if (oViewFilter[prop] === "YES") {
+                                    aCurrentFilterValues.push(
+                                        new Filter("EscalationType", FilterOperator.EQ,"TAT"));
+                                } else {
+                                    aCurrentFilterValues.push(
+                                        new Filter("EscalationType", FilterOperator.EQ,null));
+                                }
+                               
                             } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -334,6 +346,7 @@ sap.ui.define(
                         ZoneId: "",
                         DivisionId: "",
                         DepotId: "",
+                        Escalate: ""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);

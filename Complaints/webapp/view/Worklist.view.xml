@@ -46,6 +46,14 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Escalate" label="{i18n>Escalate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>Escalate}" selectedKey="{oModelControl>/filterBar/Escalate}">
+                                        <core:Item text="Yes" key="YES"/>
+                                        <core:Item text="No" key="NO"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">

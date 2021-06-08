@@ -85,9 +85,6 @@ sap.ui.define(
                     var oView = this.getView();
                     var sExpandParam =
                         "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
-
-                    //console.log(oProp);
-
                     this._initData(oProp);
                 },
                 _getExecLogData: function (sWorkFlowInstanceId) {
@@ -129,33 +126,75 @@ sap.ui.define(
                         .getResourceBundle()
                         .getText("errorText");
                     var oBindProp = oData["bindProp"];
-                    var c1, c2, c3, c4, c5;
+                    var c1, c2, c2A, c3, c4, c5;
                     c1 = othat._loadEditProfile("Display");
-                    // this._getExecLogData();
+                    this._getExecLogData();
                     c1.then(function () {
                         //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
-
-                        c2 = othat._setDisplayData(oBindProp);
-                        c2.then(function () {
-                            c3 = othat._initEditData(oBindProp);
-                            c3.then(function () {
-                                c4 = othat._CheckImage(oBindProp);
-                                c4.then(function () {
-                                    c5 = othat._setWorkFlowFlag();
-                                })
+                        c2A = othat._CheckLoginData();
+                        c2A.then(function () {
+                            c2 = othat._setDisplayData(oBindProp);
+                            c2.then(function () {
+                                c3 = othat._initEditData(oBindProp);
+                                c3.then(function () {
+                                    c4 = othat._CheckImage(oBindProp);
+                                    c4.then(function () {
+                                        c5 = othat._setWorkFlowFlag();
+                                    })
+                                });
                             });
-                        });
+                        })
+
                     });
+                },
+                _CheckLoginData: function () {
+                    var promise = jQuery.Deferred();
+                    var oData = this.getModel();
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var oLoginData = oLoginModel.getData()
+                  
+                    if (Object.keys(oLoginData).length === 0) {
+                    
+                        return new Promise((resolve, reject) => {
+                            oData.callFunction("/GetLoggedInAdmin", {
+                                method: "GET",
+                                urlParameters: {
+                                    $expand: "UserType",
+                                },
+                                success: function (data) {
+                                    if (data.hasOwnProperty("results")) {
+                                        if (data["results"].length > 0) {
+                                            oLoginModel.setData(data["results"][0]);
+
+                                        }
+                                    }
+                                    resolve();
+                                },
+                            });
+
+
+                        })
+
+                    } else {
+                      
+                        promise.resolve();
+                        return promise;
+                    }
+
+
+
+
                 },
                 _setWorkFlowFlag: function () {
                     var oView = this.getView();
                     var oLoginInfo = oView.getModel("LoginInfo").getData();
-                    console.log(oLoginInfo, "loginInfo");
+                
 
                     var oData = oView.getModel("oModelView").getData();
                     var oModelControl = oView.getModel("oModelControl");
                     if (oData["ComplaintTypeId"] === 1 || oData["ComplaintTypeId"] === 2 || oData["ComplaintTypeId"] === 3) {
-                        this._SetEscalationFlag()
+                        this._SetEscalationFlag();
+                      
                     }
 
 
@@ -231,7 +270,7 @@ sap.ui.define(
                             },
                             success: function (data) {
                                 var oViewModel = new JSONModel(data);
-                                //console.log(data);
+                              
                                 oView.setModel(oViewModel, "oModelView");
                                 othat._setInitData();
                                 resolve();
@@ -303,7 +342,10 @@ sap.ui.define(
                     // }
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
-                    oView.byId("smartHistory").rebindTable();
+                    var oHistoryTable = oView.byId("smartHistory")
+                    if (oHistoryTable) {
+                        oHistoryTable.rebindTable();
+                    }
                     // promise.resolve();
                     // return promise;
                 },
@@ -328,13 +370,11 @@ sap.ui.define(
                     jQuery.get(sImageUrl)
                         .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
-                            //oModelControl.refresh()
-                            console.log("Image Exist");
+                          
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
-                            //oModelControl.refresh();
-                            console.log("Image Doesnt Exist");
+                           
                         });
                     promise.resolve();
                     return promise;
@@ -498,7 +538,8 @@ sap.ui.define(
                     if (sKey !== 90) {
                         oModel.setProperty("/ResolutionOthers", "");
                     }
-                    //console.log(oModel);
+                 
+                    
                 },
                 onScenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -611,7 +652,6 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var othat = this;
                     var sPath = oView.getElementBinding().getPath();
-                    console.log(sPath, oBject);
                     MessageBox.confirm(
                         "Kindly confirm to escalate the complain - " +
                         oBject["ComplaintCode"],
