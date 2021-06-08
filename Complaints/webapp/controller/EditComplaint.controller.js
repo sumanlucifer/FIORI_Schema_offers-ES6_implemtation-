@@ -85,9 +85,6 @@ sap.ui.define(
                     var oView = this.getView();
                     var sExpandParam =
                         "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
-
-                    //console.log(oProp);
-
                     this._initData(oProp);
                 },
                 _getExecLogData: function (sWorkFlowInstanceId) {
@@ -155,9 +152,9 @@ sap.ui.define(
                     var oData = this.getModel();
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     var oLoginData = oLoginModel.getData()
-                    console.log();
+                  
                     if (Object.keys(oLoginData).length === 0) {
-                        console.log("calling login information")
+                    
                         return new Promise((resolve, reject) => {
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
@@ -179,7 +176,7 @@ sap.ui.define(
                         })
 
                     } else {
-                        console.log("login info callled from the worklist opage")
+                      
                         promise.resolve();
                         return promise;
                     }
@@ -191,13 +188,13 @@ sap.ui.define(
                 _setWorkFlowFlag: function () {
                     var oView = this.getView();
                     var oLoginInfo = oView.getModel("LoginInfo").getData();
-                    console.log(oLoginInfo, "loginInfo");
+                
 
                     var oData = oView.getModel("oModelView").getData();
                     var oModelControl = oView.getModel("oModelControl");
                     if (oData["ComplaintTypeId"] === 1 || oData["ComplaintTypeId"] === 2 || oData["ComplaintTypeId"] === 3) {
                         this._SetEscalationFlag();
-                        console.log("inside login info");
+                      
                     }
 
 
@@ -273,7 +270,7 @@ sap.ui.define(
                             },
                             success: function (data) {
                                 var oViewModel = new JSONModel(data);
-                                //console.log(data);
+                              
                                 oView.setModel(oViewModel, "oModelView");
                                 othat._setInitData();
                                 resolve();
@@ -373,13 +370,11 @@ sap.ui.define(
                     jQuery.get(sImageUrl)
                         .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
-                            //oModelControl.refresh()
-                            console.log("Image Exist");
+                          
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
-                            //oModelControl.refresh();
-                            console.log("Image Doesnt Exist");
+                           
                         });
                     promise.resolve();
                     return promise;
@@ -543,7 +538,8 @@ sap.ui.define(
                     if (sKey !== 90) {
                         oModel.setProperty("/ResolutionOthers", "");
                     }
-                    //console.log(oModel);
+                 
+                    
                 },
                 onScenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -656,7 +652,6 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var othat = this;
                     var sPath = oView.getElementBinding().getPath();
-                    console.log(sPath, oBject);
                     MessageBox.confirm(
                         "Kindly confirm to escalate the complain - " +
                         oBject["ComplaintCode"],
