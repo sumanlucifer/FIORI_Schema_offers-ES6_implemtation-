@@ -54,7 +54,7 @@
                                 <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
                         </IconTabFilter>
                           <IconTabFilter  text="Execution Log" key="2" >
-                           <VBox width="100%">
+                           <VBox height="100%" width="100%">
                                  <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
                           </VBox>
                                
