@@ -157,6 +157,7 @@ sap.ui.define(
                     var oLoginData = oLoginModel.getData()
                     console.log();
                     if (Object.keys(oLoginData).length === 0) {
+                        console.log("calling login information")
                         return new Promise((resolve, reject) => {
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
@@ -178,6 +179,7 @@ sap.ui.define(
                         })
 
                     } else {
+                        console.log("login info callled from the worklist opage")
                         promise.resolve();
                         return promise;
                     }
@@ -194,7 +196,8 @@ sap.ui.define(
                     var oData = oView.getModel("oModelView").getData();
                     var oModelControl = oView.getModel("oModelControl");
                     if (oData["ComplaintTypeId"] === 1 || oData["ComplaintTypeId"] === 2 || oData["ComplaintTypeId"] === 3) {
-                        this._SetEscalationFlag()
+                        this._SetEscalationFlag();
+                        console.log("inside login info");
                     }
 
 
