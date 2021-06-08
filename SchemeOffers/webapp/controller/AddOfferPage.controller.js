@@ -195,23 +195,9 @@ sap.ui.define(
                             ParentOffer: false,
                         },
                         Table: {
-                            Table1: [
-                                {
-                                    RequiredVolume: "",
-                                    RequiredPoints: "",
-                                    RewardPoints: "",
-                                    RewardGiftId: "",
-                                    RewardCash: "",
-                                },
-                            ],
+                            Table1: [],
                             Table2: [],
-                            Table3: [
-                                {
-                                    StartDate: null,
-                                    EndDate: null,
-                                    BonusPoints: "",
-                                },
-                            ],
+                            Table3: [],
                             Table4: [],
                         },
                         oData: {
@@ -263,7 +249,7 @@ sap.ui.define(
                         IsSpecificRewardRatio: false,
                         PointSlabUpperLimit: "",
                         PointSlabLowerLimit: "",
-                        PainterGrowth:"",
+                        PainterGrowth: "",
                         PurchaseStartDate: null,
                         PurchaseEndDate: null,
                         BonusApplicableTopPainter: "",
@@ -332,7 +318,7 @@ sap.ui.define(
                     var oValidate = new Validator();
                     var oForm = oView.byId("vBoxForms");
 
-                    var bFlagValidate = oValidate.validate(oForm,true);
+                    var bFlagValidate = oValidate.validate(oForm, true);
 
                     var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
@@ -356,7 +342,7 @@ sap.ui.define(
                     }
                     //validate the data
 
-                    //this._postDataToSave(bFileFlag);
+                    this._postDataToSave(bFileFlag);
                 },
                 _CheckTableValidation: function () {
                     // check if the table 1 or 2 is visible
@@ -364,8 +350,8 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var oModelData = oModel.getData();
                     if (oModelData["Rbtn"]["Rewards"] == 0) {
-                        if (!oModelData["Table"]["Table1"][0]["RequiredVolume"] || !oModelData["Table"]["Table1"][0]["RewardPoints"]) {
-                            return [false, "Kinldy Enter the data in the Reward Ratio Table1 to Continue"]
+                        if (oModelData["Table"]["Table1"].length == 0) {
+                            return [false, "Kinldy Enter the data in the Reward Ratio to Continue"]
                         }
 
                     }

@@ -182,6 +182,8 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
+                    <ToolbarSpacer />
+                   <Button enabled="{= ${oModelControl>/Table/Table1}.length &lt; 1 }"  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -201,6 +203,9 @@
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
+                  <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
             </columns>
 
             <items>
@@ -208,13 +213,17 @@
                     <cells>
                        
                            
-                             <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
-                              <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
-                               <Input placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
-                                 <ComboBox placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
-                                    <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
-                                </ComboBox>
-                                <Input  placeholder="{i18n>placeHolder3}" type="Number"  width="80%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
+                            <Label   text="{path:'oModelControl>RequiredVolume'}" />
+                           <Label   text="{path:'oModelControl>RequiredPoints'}" />
+                           <Label   text="{path:'oModelControl>RewardPoints'}" />
+                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                           </ComboBox>
+                             <Label   text="{path:'oModelControl>RewardCash'}" />
+                             <HBox>
+                                <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericRewards"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedGenericReward"></Button>
+                             </HBox>
                                 
                             
                     </cells>
@@ -659,6 +668,8 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <ToolbarSpacer ></ToolbarSpacer>
+                     <Button enabled="{= ${oModelControl>/Table/Table3}.length===0 }"  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericReward2('add')"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -673,14 +684,22 @@
                  <Column>
                     <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
+                   <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                            <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>StartDate}" />
-                             <DatePicker displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="80%" dateValue="{oModelControl>EndDate}" />
-                             <Input  type="Number" placeholder="{i18n>placeHolder3}" width="60%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
+                           
+                             <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                             <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                             <Text   width="60%" text="{path:'oModelControl>BonusPoints'}" />
+                              <HBox>
+                                  <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2"></Button>
+                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}"  press="onRemovedGenericReward2"></Button>
+                             </HBox>
                     </cells>
                 </ColumnListItem>
             </items>
@@ -772,7 +791,7 @@
                 </f:FormContainer>
                 <f:FormContainer title="{i18n>BonusValidity}">
                     <f:formElements>
-                        <f:FormElement label="1{i18n>PainterGrowth}">
+                        <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
                              <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits." type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{ search :'^[0-9]+$', minLength:1,maxLength:4} }" />
                             </f:fields>

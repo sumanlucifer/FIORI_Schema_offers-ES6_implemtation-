@@ -19,7 +19,7 @@
 				<f:formContainers>
 					<f:FormContainer title=" ">
 						<f:formElements>
-							<f:FormElement>
+							<f:FormElement  visible="{= ${oModelControl>/Rbtn/Rewards}===1 }">
 								<f:label>
 									<Label required="true" text="{= ${oModelControl>/Rbtn/AppPacks1} === 0 ? 'Products' : 'Packs' }"/>
 								</f:label>
@@ -69,7 +69,8 @@
 		</content>
 		<buttons>
 			<Button text="Cancel" type="Ghost" press="onValueHelpClose" />
-            <Button type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards1"/>
+            <Button  visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards1"/>
+             <Button  visible="{= ${oModelControl>/Rbtn/Rewards}===0 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitGenericRewards1"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>
