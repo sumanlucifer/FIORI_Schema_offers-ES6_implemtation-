@@ -793,7 +793,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
-                             <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits. Max 4" type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{ minLength:1,maxLength:4} }" />
+                             <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits. Max 4" type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{search :'^[0-9]', minLength:1,maxLength:5} }" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
