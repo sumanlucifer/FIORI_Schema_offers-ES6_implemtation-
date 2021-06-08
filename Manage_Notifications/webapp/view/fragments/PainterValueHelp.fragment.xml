@@ -10,6 +10,7 @@
         afterClose="onValueHelpAfterClose"
         afterOpen=".onValueHelpAfterOpenPainter"
         supportRanges="false"
+        tokenDisplayBehaviour="descriptionOnly"
         key="Id"
         descriptionKey="PainterName">
         <filterBar>

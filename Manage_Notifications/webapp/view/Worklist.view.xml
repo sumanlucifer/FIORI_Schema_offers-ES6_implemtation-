@@ -20,40 +20,17 @@
 						</SearchField>
 					</l:VerticalLayout> -->
                     <fb:FilterBar id="filterbar" reset="_ResetFilterBar" search="onFilter" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
-                        <!-- <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            
-                            
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
-                                </fb:control>
-                                 
-
-                            </fb:FilterGroupItem>
-                        </fb:filterGroupItems> -->
+                       
                          
                         <fb:filterGroupItems>
-                         <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <SearchField id="idSearchInput"  value="{oModelControl>/filterBar/Name}" placeholder="{i18n>searchFilterPlaceholder}" />
-                                </fb:control>
-                            </fb:FilterGroupItem> -->
+                         
                          
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="{i18n>Title}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <Input  id="idTitle" name="Title" placeholder="{i18n>Enter} {i18n>Title}" value="{oModelControl>/filterBar/Title}"></Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Scheduled By" label="{i18n>Name}" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                     <Input  id="idTName" name="Name" placeholder="{i18n>Enter} {i18n>Name}" value="{oModelControl>/filterBar/Name}"></Input>
-                                </fb:control>
-                            </fb:FilterGroupItem> -->
+                            
                             
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
@@ -81,7 +58,7 @@
 					<IconTabFilter text="{worklistView>/draft}">
 						<Table id="table" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'DRAFT' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -145,7 +122,7 @@
 					<IconTabFilter text="{worklistView>/scheduled}">
 						<Table id="table1" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'SCHEDULED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -208,7 +185,7 @@
 					<IconTabFilter text="{worklistView>/triggered}">
 						<Table id="table2" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'TRIGGERED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="15" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
 								<OverflowToolbar>

@@ -96,112 +96,57 @@ sap.ui.define([
 		 * @public
 		 */
 		onUpdateFinished: function (oEvent) {
-			// update the worklist's object counter after the table update
-			var sDraft,
-				that = this,
-				aFilters,
-				sQuery = this.getModel("worklistView").getProperty("/sQuery");
-			if (sQuery && sQuery.length > 0) {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "DRAFT"),
-						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
-					],
-					and: true
-				});
-			} else {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "DRAFT")
-					],
-					and: true
-				});
-			}
-			this.getModel().read("/NotificationSet/$count", {
-				filters: [aFilters],
-				async: true,
-				success: function (counter) {
-					sDraft = that.getResourceBundle().getText("draftCount", [counter]);
-					that.getModel("worklistView").setProperty("/draft", sDraft);
-				}
-			});
+            // update the worklist's object counter after the table update
+            var sTitle,sDraft,
+                        oTable = this.getView().byId("table"),
+                        iTotalItems = oEvent.getParameter("total");
+                    sDraft = this.getResourceBundle().getText("draftCount", [iTotalItems]);
+                    this.getModel("worklistView").setProperty("/draft", sDraft);
+                    
+                    // if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                    //     sDraft = this.getResourceBundle().getText("draftCount", [
+                    //         iTotalItems,
+                    //     ]);
+                    // } else {
+                    //     sDraft = this.getResourceBundle().getText("draftCount", [0]);
+                    // }
+                    // this.getModel("worklistView").setProperty("/draft", sDraft);
+
+				
 		},
 
 		onUpdateFinished1: function (oEvent) {
 			// update the worklist's object counter after the table update
-			var sScheduled,
-				that = this,
-				aFilters,
-				sQuery = this.getModel("worklistView").getProperty("/sQuery");
-			if (sQuery && sQuery.length > 0) {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "SCHEDULED"),
-						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
-					],
-					and: true
-				});
-			} else {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "SCHEDULED")
-					],
-					and: true
-				});
-			}
-
-			this.getModel().read("/NotificationSet/$count", {
-				filters: [aFilters],
-				async: true,
-				success: function (counter) {
-					sScheduled = that.getResourceBundle().getText("scheduledCount", [counter]);
-					that.getModel("worklistView").setProperty("/scheduled", sScheduled);
-				}
-			});
+			 var sTitle,sSchedule,
+                        oTable = this.getView().byId("table1"),
+                        iTotalItems = oEvent.getParameter("total");
+                   sSchedule = this.getResourceBundle().getText("scheduledCount", [iTotalItems]);
+                   this.getModel("worklistView").setProperty("/scheduled", sSchedule);
+                    // if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                    //     sDraft = this.getResourceBundle().getText("draftCount", [
+                    //         iTotalItems,
+                    //     ]);
+                    // } else {
+                    //     sDraft = this.getResourceBundle().getText("scheduledCount", [0]);
+                    // }
+                    // this.getModel("worklistView").setProperty("/scheduled", sDraft);
 		},
-
+   
 		onUpdateFinished2: function (oEvent) {
 			// update the worklist's object counter after the table update
-			var sTriggered,
-				that = this,
-				aFilters,
-				sQuery = this.getModel("worklistView").getProperty("/sQuery");
-			if (sQuery && sQuery.length > 0) {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "TRIGGERED"),
-						new sap.ui.model.Filter('tolower(Subject)', sap.ui.model.FilterOperator.Contains, sQuery)
-					],
-					and: true
-				});
-			} else {
-				aFilters = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('IsSystemGenerated', sap.ui.model.FilterOperator.EQ, false),
-						new sap.ui.model.Filter('NotificationStatus', sap.ui.model.FilterOperator.EQ, "TRIGGERED")
-					],
-					and: true
-				});
-			}
-			this.getModel().read("/NotificationSet/$count", {
-				filters: [aFilters],
-				async: true,
-				success: function (counter) {
-					sTriggered = that.getResourceBundle().getText("triggeredCount", [counter]);
-					that.getModel("worklistView").setProperty("/triggered", sTriggered);
-				}
-			});
+			 var sTitle,sTrigger,
+                        oTable = this.getView().byId("table2"),
+                        iTotalItems = oEvent.getParameter("total");
+                    sTrigger = this.getResourceBundle().getText("triggeredCount", [iTotalItems]);
+                    this.getModel("worklistView").setProperty("/triggered", sTrigger);
+                    //  if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                    //     sDraft = this.getResourceBundle().getText("draftCount", [
+                    //         iTotalItems,
+                    //     ]);
+                    // } else {
+                    //     sDraft = this.getResourceBundle().getText("triggeredCount", [0]);
+                    // }
+                    // this.getModel("worklistView").setProperty("/triggered", sDraft);
 		},
 
 		/**
