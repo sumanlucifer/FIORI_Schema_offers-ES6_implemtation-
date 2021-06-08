@@ -129,23 +129,62 @@ sap.ui.define(
                         .getResourceBundle()
                         .getText("errorText");
                     var oBindProp = oData["bindProp"];
-                    var c1, c2, c3, c4, c5;
+                    var c1, c2, c2A, c3, c4, c5;
                     c1 = othat._loadEditProfile("Display");
                     this._getExecLogData();
                     c1.then(function () {
                         //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
-
-                        c2 = othat._setDisplayData(oBindProp);
-                        c2.then(function () {
-                            c3 = othat._initEditData(oBindProp);
-                            c3.then(function () {
-                                c4 = othat._CheckImage(oBindProp);
-                                c4.then(function () {
-                                    c5 = othat._setWorkFlowFlag();
-                                })
+                        c2A = othat._CheckLoginData();
+                        c2A.then(function () {
+                            c2 = othat._setDisplayData(oBindProp);
+                            c2.then(function () {
+                                c3 = othat._initEditData(oBindProp);
+                                c3.then(function () {
+                                    c4 = othat._CheckImage(oBindProp);
+                                    c4.then(function () {
+                                        c5 = othat._setWorkFlowFlag();
+                                    })
+                                });
                             });
-                        });
+                        })
+
                     });
+                },
+                _CheckLoginData: function () {
+                    var promise = jQuery.Deferred();
+                    var oData = this.getModel();
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var oLoginData = oLoginModel.getData()
+                    console.log();
+                    if (Object.keys(oLoginData).length === 0) {
+                        return new Promise((resolve, reject) => {
+                            oData.callFunction("/GetLoggedInAdmin", {
+                                method: "GET",
+                                urlParameters: {
+                                    $expand: "UserType",
+                                },
+                                success: function (data) {
+                                    if (data.hasOwnProperty("results")) {
+                                        if (data["results"].length > 0) {
+                                            oLoginModel.setData(data["results"][0]);
+
+                                        }
+                                    }
+                                    resolve();
+                                },
+                            });
+
+
+                        })
+
+                    } else {
+                        promise.resolve();
+                        return promise;
+                    }
+
+
+
+
                 },
                 _setWorkFlowFlag: function () {
                     var oView = this.getView();
@@ -304,7 +343,7 @@ sap.ui.define(
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
                     var oHistoryTable = oView.byId("smartHistory")
-                    if(oHistoryTable){
+                    if (oHistoryTable) {
                         oHistoryTable.rebindTable();
                     }
                     // promise.resolve();
