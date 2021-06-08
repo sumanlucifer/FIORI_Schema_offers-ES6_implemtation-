@@ -157,26 +157,26 @@ sap.ui.define(
 
                     if (oData["ComplaintStatus"] !== "INREVIEW") {
                         oModelControl.setProperty("/workFlowFlag/Button1", false);
-                        oModelControl.setProperty("/workFlowFlag/Button2", false);
+                        //oModelControl.setProperty("/workFlowFlag/Button2", false);
                         return;
                     }
 
                     if (oData["AssigneUserType"] === oLoginInfo["UserType"]["UserType"]) {
                         if (oLoginInfo["UserTypeId"] === 5) {
                             oModelControl.setProperty("/workFlowFlag/Button1", false);
-                            oModelControl.setProperty("/workFlowFlag/Button2", true);
+                            //oModelControl.setProperty("/workFlowFlag/Button2", true);
                             return;
                             // only escalate to be hidden
                         } else {
                             oModelControl.setProperty("/workFlowFlag/Button1", true);
-                            oModelControl.setProperty("/workFlowFlag/Button2", true);
+                            //oModelControl.setProperty("/workFlowFlag/Button2", true);
                             return;
                         }
 
 
                     } else {
                         oModelControl.setProperty("/workFlowFlag/Button1", false);
-                        oModelControl.setProperty("/workFlowFlag/Button2", false);
+                        //oModelControl.setProperty("/workFlowFlag/Button2", false);
                         return;
                     }
 
