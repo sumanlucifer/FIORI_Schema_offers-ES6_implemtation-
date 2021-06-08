@@ -154,7 +154,18 @@ sap.ui.define(
 
                     var oData = oView.getModel("oModelView").getData();
                     var oModelControl = oView.getModel("oModelControl");
+                    if (oData["ComplaintTypeId"] === 1 || oData["ComplaintTypeId"] === 2 || oData["ComplaintTypeId"] === 3) {
+                        this._SetEscalationFlag()
+                    }
 
+
+                },
+                _SetEscalationFlag: function () {
+                    var oView = this.getView();
+                    var oLoginInfo = oView.getModel("LoginInfo").getData();
+
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oData = oView.getModel("oModelView").getData();
                     if (oData["ComplaintStatus"] !== "INREVIEW") {
                         oModelControl.setProperty("/workFlowFlag/Button1", false);
                         //oModelControl.setProperty("/workFlowFlag/Button2", false);
@@ -179,7 +190,6 @@ sap.ui.define(
                         //oModelControl.setProperty("/workFlowFlag/Button2", false);
                         return;
                     }
-
                 },
 
                 _setDisplayData: function (oProp) {
