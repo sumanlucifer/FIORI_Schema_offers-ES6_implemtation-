@@ -54,6 +54,23 @@ sap.ui.define([
             }
             else if (accuralType == "CONDONATION") {
                 return "Condonation"
+            }else if (accuralType == "BANK_TRANSFER") {
+                return "Bank Transfer"
+            }
+            else if (accuralType == "GIFT_REDEMPTION") {
+                return "Gift Redemption"
+            }
+            else if (accuralType == "OFFER_BONUS_POINTS") {
+                return "Offer Bonus Points"
+            }
+            else if (accuralType == "OFFER_POINTS") {
+                return "Offer Points"
+            }
+             else if (accuralType == "REFERRAL_CLUB") {
+                return "Referral Club"
+            }
+             else if (accuralType == "SYSTEM_MIGRATION") {
+                return "System Migration"
             }
         },
         status: function (status) {
