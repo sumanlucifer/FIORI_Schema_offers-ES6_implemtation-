@@ -1,5 +1,6 @@
 <core:FragmentDefinition xmlns="sap.suite.ui.commons" xmlns:core="sap.ui.core">
 <Timeline
+            height="100%"
 			id="idTimeline"
             alignment="Right"
             scrollingFadeout="None"
@@ -11,6 +12,7 @@
 			growingThreshold="100"
 			filterTitle="Task Type"
             showIcons="true"
+            enableScroll="false"
             sortOldestFirst="false"
 			content="{wfmodel>/}">
 		<content>
