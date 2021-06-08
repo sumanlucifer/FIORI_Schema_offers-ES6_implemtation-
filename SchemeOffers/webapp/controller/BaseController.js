@@ -147,6 +147,7 @@ sap.ui.define(
                 _OfferTypeFieldsSet: function () {
                     // disabling all the fields that we have to hide.
                     var oView = this.getView();
+                    console.log("offer type valdidation trigerred");
                     var oModelControl = oView.getModel("oModelControl");
                     var oOfferType = oView
                         .getModel("oModelControl")

@@ -78,7 +78,7 @@ sap.ui.define(
                     );
                     var oView = this.getView();
                     var sExpandParam = "OfferType,CreatedByDetails";
-                
+
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/OfferSet(" + oProp + ")",
@@ -284,7 +284,7 @@ sap.ui.define(
                         "/Rbtn/AppPainter",
                         oData["PainterSelection"]
                     );
-                   
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -296,11 +296,11 @@ sap.ui.define(
                     var oData = oView.getModel();
 
                     var sPath = "/MasterOfferTypeSet(" + oFFerTypeId + ")";
-                
-                  
+
+
                     oData.read(sPath, {
                         success: function (data) {
-                          
+
                             oModel.setProperty("/OfferType", data);
                             oModel.refresh();
                         },
@@ -392,13 +392,13 @@ sap.ui.define(
                             );
                         }
                     }
-                    
+
                     promise.resolve(oData);
                     return promise;
                 },
                 _setViewData1: function (oData) {
                     var promise = jQuery.Deferred();
-                   
+
                     var oView = this.getView();
                     var oModelControl2 = oView.getModel("oModelControl2");
                     var aZones = [],
@@ -598,7 +598,7 @@ sap.ui.define(
                                 PainterName: x["Painter"]["Name"],
                             });
                         }
-                      
+
                     }
                     oModelControl2.setProperty("/MultiCombo/Painters", Painters);
 
@@ -708,9 +708,23 @@ sap.ui.define(
                     return promise;
                 },
                 _OfferTypeValidation2: function (oData) {
+                    var oFFerTypeId = oData["OfferTypeId"];
                     var promise = jQuery.Deferred();
-                    this.getView().byId("OfferType").fireSelectionChange();
-                 
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oData = oView.getModel();
+
+                    var sPath = "/MasterOfferTypeSet(" + oFFerTypeId + ")";
+
+
+                    oData.read(sPath, {
+                        success: function (data) {
+
+                            oModel.setProperty("/OfferType", data);
+                            oModel.refresh();
+                            this._OfferTypeFieldsSet();
+                        }.bind(this),
+                    });
                     promise.resolve(oData);
                     return promise;
                 },
@@ -751,7 +765,7 @@ sap.ui.define(
                             $expand: exPand,
                         },
                         success: function (data) {
-                          
+
                             promise.resolve(data);
                         },
                         error: function () {
@@ -767,7 +781,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelControl2 = oView.getModel("oModelControl2");
                     var oBonusValidity = [];
-                   
+
                     var oDataControl = {
                         HasTillDate: false,
                         FormTitle: "",
@@ -991,7 +1005,7 @@ sap.ui.define(
                             );
                         }
                     }
-               
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1039,8 +1053,8 @@ sap.ui.define(
 
                 _setEditViewData1: function (oData) {
                     var promise = jQuery.Deferred();
-                  
-                    
+
+
                     var oView = this.getView();
                     var oModelControl2 = oView.getModel("oModelControl");
                     var aZones = [],
@@ -1272,8 +1286,8 @@ sap.ui.define(
                         ParentOffer = oData["ParentOffer"]["Title"];
                     }
                     oModelControl2.setProperty("/Fields/ParentOfferTitle", ParentOffer);
-                   
-                    
+
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1301,7 +1315,7 @@ sap.ui.define(
                     if (sFile !== undefined) {
                         bFileFlag = true;
                     }
-                    
+
                     if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
                         return;
@@ -1368,8 +1382,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                  
-                    
+
+
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
@@ -1387,8 +1401,8 @@ sap.ui.define(
                 _UploadFile: function (mParam1, mParam2) {
                     var promise = jQuery.Deferred();
                     if (!mParam2) {
-                        
-                        
+
+
                         promise.resolve();
                         return promise;
                     }
@@ -1522,15 +1536,15 @@ sap.ui.define(
                     var oPayLoad = {
                         IsActive: false,
                     };
-              
-                    
+
+
                     oData.update(sPath, oPayLoad, {
                         success: function () {
                             othat._navToHome();
                         },
                         error: function () {
-                           
-                            
+
+
                         },
                     });
                 },
@@ -1546,8 +1560,8 @@ sap.ui.define(
                     var oPayLoad = {
                         IsActive: true,
                     };
-             
-                    
+
+
                     oData.update(sPath, oPayLoad, {
                         success: function () {
                             othat._navToHome();
