@@ -115,7 +115,7 @@ sap.ui.define(
                         ComplainId: oProp,
                         IcnTabKey: "0",
                         workFlowFlag: {
-                            Button1: true,
+                            Button1: false,
                             Button2: true,
                         }
 
