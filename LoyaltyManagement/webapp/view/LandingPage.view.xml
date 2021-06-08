@@ -66,12 +66,15 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Type" label="{i18n>tblColTypeOfAccrualRedemption}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <Input  id="idType" name="Type" placeholder="{i18n>Enter} {i18n>tblColTypeOfAccrualRedemption}" value="{oModelControl>/filterBar/Type}"></Input>
+                                 <ComboBox id="idType" placeholder="{i18n>Enter} {i18n>tblColTypeOfAccrualRedemption}" selectionChange=""  items="{/MasterPointTypeSet}" selectedKey="{path:'oModelControl>/filterBar/Type' }">
+                                        <core:Item text="{path:'Id',formatter:'.formatter.accuralType'} " key="{Id}" />
+                                </ComboBox>
+                                     <!-- <Input  id="idType" name="Type" placeholder="{i18n>Enter} {i18n>tblColTypeOfAccrualRedemption}" value="{oModelControl>/filterBar/Type}"></Input> -->
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Points" label="{i18n>Point}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <Input  id="idPoint" name="Point" placeholder="{i18n>Enter} {i18n>Point}" value="{oModelControl>/filterBar/Point}"></Input>
+                               <Input  id="idPoint" name="Point" placeholder="{i18n>Enter} {i18n>Point}" value="{oModelControl>/filterBar/Point}"></Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
