@@ -667,7 +667,7 @@ sap.ui.define([
                     aTokens.forEach(function (ele) {
                         if (xUnique.has(ele.getKey()) == false) {
                             oData.push({
-                                Name: ele.getText(),
+                                PainterName: ele.getText(),
                                 //PainterId: ele.getKey(),
                                 Id: ele.getKey()
                             });
