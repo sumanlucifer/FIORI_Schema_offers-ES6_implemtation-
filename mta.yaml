@@ -11,6 +11,7 @@ modules:
   - name: uaa_knpl-influencer-web
   - name: knpl-influencer-web_html_repo_runtime
   - name: destination-knpl-pragati
+  - name: wm_workflow
   - name: portal_resources_knpl-influencer-web
     group: destinations
     properties:
@@ -284,6 +285,12 @@ resources:
   parameters:
     service: portal
     service-plan: standard
+- name: wm_workflow
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service: workflow
+    service-plan: standard
+    service-name: wm_workflow
 parameters:
   enable-parallel-deployments: true
 build-parameters:
