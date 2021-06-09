@@ -629,7 +629,7 @@ sap.ui.define(
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh();
                 },
-                 onPressAddGenericRewards: function (oEvent) {
+                onPressAddGenericRewards: function (oEvent) {
                     var oView = this.getView();
                     var othat = this;
                     var oModel = oView.getModel("oModelControl");
@@ -659,13 +659,13 @@ sap.ui.define(
                             function (oDialog) {
                                 this._RewardsDialog1 = oDialog;
                                 oView.addDependent(this._RewardsDialog1);
-                                this._setAddRewardDialog(oBj);
+                                this._setAddGenericRewardDialog(oBj);
                                 this._RewardsDialog1.open();
                             }.bind(this)
                         );
                     } else {
                         oView.addDependent(this._RewardsDialog1);
-                        this._setAddRewardDialog(oBj);
+                        this._setAddGenericRewardDialog(oBj);
                         this._RewardsDialog1.open();
                     }
                 },
@@ -674,19 +674,17 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
-                        RewardGiftId: "",
+                        // RewardGiftId: "",
                         RewardCash: "",
                     };
                     var oBj3 = {
-                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
-                        RewardGiftId: "",
+                        // RewardGiftId: "",
                         RewardCash: "",
                     };
                     var oBjFinal;
@@ -697,14 +695,14 @@ sap.ui.define(
                             "/Dialog/Bonus1",
                             Object.assign({}, oBjFinal)
                         );
-                       
+
                     } else {
                         oBjFinal = oBj1 !== false ? oBj1 : oBj3;
                         oModelControl.setProperty(
                             "/Dialog/Bonus1",
                             Object.assign({}, oBjFinal)
                         );
-                       
+
                     }
                 },
                 onSubmitGenericRewards1: function () {
@@ -713,9 +711,9 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key1");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus1");
-                   
-                    if (oPayload["RequiredVolume"] == "") {
-                        MessageToast.show("Kindly Input Required Volume to Continue.");
+
+                    if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
+                        MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
                         return;
                     }
                     if (oPayload["RewardPoints"] == "") {
@@ -731,9 +729,9 @@ sap.ui.define(
                             .splice(parseInt(sKey), 1, oPayloadNew);
                     }
 
-                   
+
                     this._RewardsDialog1.close();
-                     oModel2.refresh(true);
+                    oModel2.refresh(true);
                 },
                 onRemovedGenericReward: function (oEvent) {
                     var oView = this.getView();
@@ -798,7 +796,7 @@ sap.ui.define(
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
-                        RewardGiftId: "",
+                        //RewardGiftId: "",
                         RewardCash: "",
                     };
                     var oBj3 = {
@@ -806,7 +804,7 @@ sap.ui.define(
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
-                        RewardGiftId: "",
+                        //RewardGiftId: "",
                         RewardCash: "",
                     };
                     var oBjFinal;
@@ -846,8 +844,8 @@ sap.ui.define(
                         }
 
                     }
-                    if (oPayload["RequiredVolume"] == "") {
-                        MessageToast.show("Kindly Input Required Volume to Continue.");
+                    if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
+                        MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
                         return;
                     }
                     if (oPayload["RewardPoints"] == "") {
@@ -922,7 +920,7 @@ sap.ui.define(
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/Table/Table2", []);
-                     oModelControl.setProperty("/Table/Table1", []);
+                    oModelControl.setProperty("/Table/Table1", []);
                     var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
@@ -2355,19 +2353,19 @@ sap.ui.define(
                             "RequiredVolume",
                             "RequiredPoints",
                             "RewardPoints",
-                            "RewardGiftId",
+                            // "RewardGiftId",
                             "RewardCash",
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
-                            if (ele["RequiredVolume"] && ele["RewardPoints"]) {
-                                for (var a in aCheckProp) {
-                                    if (ele[aCheckProp[a]] === "") {
-                                        ele[aCheckProp[a]] = null;
-                                    }
-                                }
 
-                                return ele;
+                            for (var a in aCheckProp) {
+                                if (ele[aCheckProp[a]] === "") {
+                                    ele[aCheckProp[a]] = null;
+                                }
                             }
+
+                            return ele;
+
                         });
                         oPayLoad["OfferProductRewardRatio"] = aFinalArray;
 
@@ -2389,18 +2387,18 @@ sap.ui.define(
                             "RequiredVolume",
                             "RequiredPoints",
                             "RewardPoints",
-                            "RewardGiftId",
+                            //"RewardGiftId",
                             "RewardCash",
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
-                            if (ele["RequiredVolume"] && ele["RewardPoints"]) {
-                                for (var a in aCheckProp) {
-                                    if (ele[aCheckProp[a]] === "") {
-                                        ele[aCheckProp[a]] = null;
-                                    }
+
+                            for (var a in aCheckProp) {
+                                if (ele[aCheckProp[a]] === "") {
+                                    ele[aCheckProp[a]] = null;
                                 }
-                                return ele;
                             }
+                            return ele;
+
                         });
                         oPayLoad["OfferProductRewardRatio"] = aFinalArray;
 
@@ -2418,18 +2416,18 @@ sap.ui.define(
                             "RequiredVolume",
                             "RequiredPoints",
                             "RewardPoints",
-                            "RewardGiftId",
+                            //"RewardGiftId",
                             "RewardCash",
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
-                            if (ele["RequiredVolume"] && ele["RewardPoints"]) {
-                                for (var a in aCheckProp) {
-                                    if (ele[aCheckProp[a]] === "") {
-                                        ele[aCheckProp[a]] = null;
-                                    }
+
+                            for (var a in aCheckProp) {
+                                if (ele[aCheckProp[a]] === "") {
+                                    ele[aCheckProp[a]] = null;
                                 }
-                                return ele;
                             }
+                            return ele;
+
                         });
                         oPayLoad["OfferPackRewardRatio"] = aFinalArray;
 

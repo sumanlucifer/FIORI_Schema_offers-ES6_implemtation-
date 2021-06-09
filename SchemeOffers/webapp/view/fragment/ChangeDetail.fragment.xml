@@ -189,17 +189,17 @@
 
             <columns>
                 <Column>
-                    <Label text="{i18n>RequiredVolume}" required="true" />
+                    <Label text="{i18n>RequiredVolume}" required="false" />
                 </Column>
                 <Column>
                     <Text text="{i18n>RequiredPoints}"  />
                 </Column>
                  <Column>
-                    <Label text="{i18n>Table1Label4}" required="true"/>
+                    <Label text="{i18n>Table1Label4}" required="false"/>
                 </Column>
-                 <Column>
+                 <!-- <Column>
                     <Text text="{i18n>Table1Label5}" />
-                </Column>
+                </Column> -->
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -216,9 +216,9 @@
                             <Label   text="{path:'oModelControl>RequiredVolume'}" />
                            <Label   text="{path:'oModelControl>RequiredPoints'}" />
                            <Label   text="{path:'oModelControl>RewardPoints'}" />
-                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                           <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
-                           </ComboBox>
+                           </ComboBox> -->
                              <Label   text="{path:'oModelControl>RewardCash'}" />
                              <HBox>
                                 <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericRewards"></Button>
@@ -252,9 +252,9 @@
                  <Column>
                     <Label text="{i18n>Table1Label4}" required="false" />
                 </Column>
-                 <Column>
+                 <!-- <Column>
                     <Text text="{i18n>Table1Label5}" />
-                </Column>
+                </Column> -->
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -274,9 +274,9 @@
                            <Label   text="{path:'oModelControl>RequiredVolume'}" />
                            <Label   text="{path:'oModelControl>RequiredPoints'}" />
                            <Label   text="{path:'oModelControl>RewardPoints'}" />
-                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                           <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
-                           </ComboBox>
+                           </ComboBox> -->
                              <Label   text="{path:'oModelControl>RewardCash'}" />
                              <HBox>
                                 <Button  icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
