@@ -659,13 +659,13 @@ sap.ui.define(
                             function (oDialog) {
                                 this._RewardsDialog1 = oDialog;
                                 oView.addDependent(this._RewardsDialog1);
-                                this._setAddRewardDialog(oBj);
+                                this._setAddGenericRewardDialog(oBj);
                                 this._RewardsDialog1.open();
                             }.bind(this)
                         );
                     } else {
                         oView.addDependent(this._RewardsDialog1);
-                        this._setAddRewardDialog(oBj);
+                        this._setAddGenericRewardDialog(oBj);
                         this._RewardsDialog1.open();
                     }
                 },
@@ -674,7 +674,6 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -682,7 +681,6 @@ sap.ui.define(
                         RewardCash: "",
                     };
                     var oBj3 = {
-                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
