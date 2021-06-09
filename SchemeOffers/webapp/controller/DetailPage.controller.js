@@ -1549,6 +1549,50 @@ sap.ui.define(
                         },
                     });
                 },
+                onIcnTbarChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    if (sKey == "1") {
+                        oView.byId("PainteTable1").rebindTable();
+                    } else if (sKey == "2") {
+                        oView.byId("PainteTable2").rebindTable();
+                    }
+                },
+
+                onBeforeBindPainterTable1: function (oEvent) {
+                    var oView = this.getView();
+                    var aFilter = [];
+                    var aFiler1 = new Filter("ProgressStatus", FilterOperator.EQ, "STARTED");
+                    aFilter.push(aFiler1)
+
+                    // var oPainterId = oView
+                    //     .getModel("oModelControl2")
+                    //     .getProperty("/PainterId");
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "Painter";
+                    // var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
+                    oBindingParams.filters.push(aFilter);
+
+
+                },
+                onBeforeBindPainterTable2: function (oEvent) {
+                    var oView = this.getView();
+                    var aFilter = [];
+                    var aFiler1 = new Filter("ProgressStatus", FilterOperator.EQ, "COMPLETED");
+                    aFilter.push(aFiler1)
+
+                    // var oPainterId = oView
+                    //     .getModel("oModelControl2")
+                    //     .getProperty("/PainterId");
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "Painter";
+                    // var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
+                     oBindingParams.filters.push(aFilter);
+
+
+                },
                 onActivate: function (oEvent) {
                     var oView = this.getView();
                     var oBject = {};
