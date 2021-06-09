@@ -85,9 +85,9 @@
 								<Column>
 									<Text text="{i18n>colEmail}"/>
 								</Column>
-								<Column>
+								<!-- <Column>
 									<Text text="{i18n>colRole}"/>
-								</Column>
+								</Column> -->
 							</columns>
 							<items>
 								<ColumnListItem>
@@ -104,7 +104,7 @@
                                     <Text text="{objectView>Admin/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
-                                    <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <!-- <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/> -->
 									</cells>
 								</ColumnListItem>
 							</items>
