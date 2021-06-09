@@ -42,7 +42,7 @@
                  	<l:GridData linebreak="true"/>
             </layoutData>
         </VBox>
-        <VBox  visible="{= ${oModelView>/ResolutionType} === 1 }" >
+        <VBox  visible="{=  ${oModelView>/ResolutionType} === 1 }" >
            <Label  text="{i18n>TokenCode}"  />
          <HBox renderType="Bare" >
            <Input  value="{oModelView>/TokenCode}" 
@@ -56,7 +56,7 @@
                  	<l:GridData linebreak="true"/>
             </layoutData>
        </VBox>
-        <VBox visible="{= ${oModelView>/ResolutionType} === 0 }"  >
+        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }"  >
             <Label  text="{i18n>LblCategory}" required="true" />
             <Select id="idCategory" width="100%" change="filterProducts" forceSelection="false"
             editable="{= !${oModelControl>/ComplainResolved} }"
@@ -70,7 +70,7 @@
                  	<l:GridData linebreak="true"/>
             </layoutData> 
         </VBox>
-        <VBox visible="{= ${oModelView>/ResolutionType} === 0 }" >
+        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }" >
             <Label  text="{i18n>LblClassification}" required="true" />
             <Select   id="idClassification" change="filterProducts"
             editable="{= !${oModelControl>/ComplainResolved} }"
