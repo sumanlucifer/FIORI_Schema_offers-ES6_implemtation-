@@ -36,7 +36,7 @@
 							</f:FormElement>
 							<f:FormElement label="{i18n>RequiredVolume}">
 								<f:fields>
-										<Input type="Number" required="true" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+										<Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table1Label2}">
@@ -49,13 +49,13 @@
 										<Input  type="Number"  required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
 								</f:fields>
 							</f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label5}">
+                            <!-- <f:FormElement label="{i18n>Table1Label5}">
 								<f:fields>
 										<ComboBox placeholder="{i18n>placeHolder1}" width="100%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox>
 								</f:fields>
-							</f:FormElement>
+							</f:FormElement> -->
                             <f:FormElement label="{i18n>Table1Label6}">
 								<f:fields>
 										 <Input   type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
