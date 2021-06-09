@@ -114,8 +114,10 @@ sap.ui.define(
                         workFlowFlag: {
                             Button1: false,
                             Button2: true,
-                        }
-
+                        },
+                        //data for Product fields
+                        ClassificationId : "",
+                        CategoryId: ""
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -230,6 +232,7 @@ sap.ui.define(
                         return;
                     }
                 },
+
 
                 _setDisplayData: function (oProp) {
                     var promise = jQuery.Deferred();
@@ -361,7 +364,31 @@ sap.ui.define(
                     }
                 },
 
-                _CheckImage: function (oProp) {
+                   filterProducts : function() {
+                    
+                    var oProductCtrl = this.getView().byId("idProduct"),
+                        oModel = this.getView().getModel("oModelControl"),
+                        aFilters = [];
+
+                    if(oModel.getProperty("/ClassificationId").length > 0) 
+                             aFilters.push(new Filter("ClassificationCode", FilterOperator.EQ, oModel.getProperty("/ClassificationId") ));
+                    if(oModel.getProperty("/CategoryId").length > 0)
+                             aFilters.push(new Filter("CategoryCode", FilterOperator.EQ, oModel.getProperty("/CategoryId") ));
+                        
+                             
+                    oProductCtrl.getBinding("items").filter(aFilters); 
+                       this.getView().getModel("oModelView").setProperty("/SkuCode", "");
+                        }, 
+                        
+                        
+                 onProductChange: function(){
+
+                   var sSelectedProductPoints = this.getView().byId("idProduct").getSelectedItem().getBindingContext().getProperty("Points");
+
+                    this.getView().getModel("oModelView").setProperty("/RewardPoints", sSelectedProductPoints);
+
+                },
+                  _CheckImage: function (oProp) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = this.getView().getModel("oModelControl");
@@ -519,28 +546,62 @@ sap.ui.define(
                         );
                     }
 
-                    if ((oModel.getProperty("/ComplaintSubtypeId") === 3
-                        || oModel.getProperty("/ComplaintSubtypeId") === 2) &&
-                        oModel.getProperty("/TokenCode").length > 0 && oModel.getProperty("/RewardPoints") == "") {
+                    if(oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED"  )
+                    {
+                    if ( oModel.getProperty("/ResolutionType") === 1 &&
+                        !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") 
+                    {
                         MessageToast.show("Please verify token first");
                         return;
                     }
+
+                    if(  oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))  )
+                    {
+                        MessageToast.show("Please enter Product details");
+                        return;
+                    }
+                }
 
                     if (bValidation) {
                         oModel.setProperty("/InitiateForceTat", false);
                         this._postDataToSave();
                     }
                 },
+               
+
                 onChangeResolution: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
                     var sKey = oEvent.getSource().getSelectedKey();
-                    if (sKey !== 90) {
+                    if (+sKey !== 90) {
                         oModel.setProperty("/ResolutionOthers", "");
                     }
                  
-                    
+                    //Set ResolutionType
+                    if(+sKey === 1)
+                    {
+                       oModel.setProperty("/ResolutionType", 0); 
+                    }else{
+                        oModel.setProperty("/ResolutionType", null);
+                        oModel.setProperty("/TokenCode", "");
+                        oModel.setProperty("/RewardPoints", null);
+                        oModel.setProperty("/SkuCode", null);
+                    }
+
+                    //console.log(oModel);
                 },
+
+                onPointsVia: function(){
+                      var oModel = this.getModel("oModelView");
+                     oModel.setProperty("/TokenCode", "");
+                     oModel.setProperty("/RewardPoints", "");
+                     oModel.setProperty("/SkuCode", "");
+                     this.getModel("oModelControl").setProperty("/ClassificationId", "");
+                     this.getModel("oModelControl").setProperty("/CategoryId", "");
+
+                },
+
+
                 onScenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
@@ -587,6 +648,8 @@ sap.ui.define(
                             oPayload[a] = null;
                         }
                     }
+
+                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints ;
                     var othat = this;
                     console.log(oPayload);
 
@@ -598,9 +661,11 @@ sap.ui.define(
                     oData.update(sPath, oPayload, {
                         success: function () {
                             debugger;
+                          /*  
+                          //Handled by backend
                             if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
                                 othat._postQRCode.call(othat, oPayload);
-
+                            */
                             MessageToast.show("Complain Sucessfully Updated.");
                             oData.refresh(true);
                             othat.onNavBack();
@@ -708,12 +773,12 @@ sap.ui.define(
                         UTC: true,
                         strictParsing: true,
                     });
-                    return oDateFormat.format(date);
+                   oDateFormat.format(date);
                 },
                 fmtProbingSteps: function (mParam) {
                     if (mParam === null) {
                         return "NA";
-                    }
+                   }
                     return mParam;
                 },
             }

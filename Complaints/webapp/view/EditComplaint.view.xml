@@ -48,6 +48,8 @@
                     <IconTabFilter  text="{i18n>Overview}" key="0" >
                         <VBox id="idVbx" width="100%">
                           </VBox>
+                          <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ResolutionDetails" type="XML"/>
+
                         </IconTabFilter>
                          <IconTabFilter  text="{i18n>History}" key="1" >
                             <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
@@ -67,7 +69,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
-                     <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
+                 <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
                 <Button visible="{oModelControl>/workFlowFlag/Button2}" id="save" text="Save" type="Emphasized" press="handleSavePress"/>
 
             </Toolbar>

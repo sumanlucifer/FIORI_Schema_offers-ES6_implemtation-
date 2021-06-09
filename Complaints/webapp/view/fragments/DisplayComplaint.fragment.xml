@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
     <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
@@ -14,7 +14,7 @@
 
             <Label text="{i18n>GiftDetails}" visible="{= ${ComplaintTypeId} === 13}" />
             <Text text="{RewardGiftId}" visible="{= ${ComplaintTypeId} === 13}" />
-             
+
 
             <Label text="{i18n>DateAndTime}" />
             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
@@ -24,11 +24,11 @@
                 <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }"></Text>
             </VBox>
 
-           
-           
+
+
             <Label text="{i18n>ProbingSteps}"/>
-            	<FormattedText  id="FormattedText" htmlText="{path:'ProbingSteps',formatter:'.fmtProbingSteps'}"/>
-           
+            	<FormattedText  id="FormattedText" htmlText="{ path:'ProbingSteps' ,formatter:'.fmtProbingSteps' }"/>
+
             <core:Title text="{i18n>PainterDetails}" />
             <Label text="{i18n>PainterName}" />
             <Text text="{Painter/Name}" />
@@ -36,47 +36,7 @@
             <Text text="{Painter/MembershipCard}" />
             <Label text="{i18n>PrimaryMobileNo}" />
             <Text text="{Painter/Mobile}" />
-             <Label text="{i18n>ComplaintStatus}" required="true" />
-            <Select change="onChangeStatus" editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
-                <core:Item text="Registered" key="REGISTERED" />
-                <core:Item text="In Review" key="INREVIEW" />
-                <core:Item text="Resolved" key="RESOLVED" />
-                <core:Item text="Withdrawn" key="WITHDRAWN" />
-            </Select>
-            <Label text="{i18n>AddResolution}" />
-            <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
-                <items>
-                    <core:Item text="{Resolution}" key="{Id}" />
-                </items>
-            </ComboBox>
-            <Label />
-            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
-
-            <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>TokenCode}" />
-            <Input  visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" value="{oModelView>/TokenCode}" editable="{=  ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp; ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   >
-                <layoutData>
-                    <l:GridData span="XL8 L8 M8 S12" />
-                </layoutData>
-            </Input>
-            <Button  visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" >
-             <layoutData>
-                    <l:GridData span="XL1 L1 M1 S6" />
-                </layoutData>
-            </Button>
-            <Button visible="{= ( ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' ) &amp;&amp; ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>btnValidate}" press="onPressTokenCode" >
-              <layoutData>
-                    <l:GridData span="XL3 L3 M3 S12" />
-                </layoutData>
-            </Button>
-            <Label visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" text="{i18n>Points}" />
-            <Input visible="{= ${oModelView>/ComplaintSubtypeId} === 2 || ${oModelView>/ComplaintSubtypeId} === 3 }" editable="false" value="{path:'oModelView>/RewardPoints'}" />
-           
-           
-            <Label text="{i18n>Remark}"/>
-            <TextArea value="{oModelView>/Remark}" />
-            
-          
-
+         
         </f:content>
     </f:SimpleForm>
 

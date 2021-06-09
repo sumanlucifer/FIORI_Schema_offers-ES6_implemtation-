@@ -209,7 +209,7 @@ sap.ui.define(
                     var othat = this;
                     oData.create("/PainterComplainsSet", oPayLoad, {
                         success: function (oData) {
-                            MessageToast.show("Complain Sucessfully Created");
+                            MessageToast.show("Complain Successfully Created");
                             promise.resolve(oData);
                             //othat.navPressBack();
                         },
