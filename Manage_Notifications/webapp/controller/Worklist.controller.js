@@ -79,8 +79,14 @@ sap.ui.define([
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
 
+                    this.getRouter().getRoute("worklist").attachPatternMatched(this._onObjectMatched, this);
 
-		},
+
+        },
+        _onObjectMatched: function (oEvent) {
+           // this.getModel().refresh(true);
+           this.onRefresh();
+        },
 
 		/* =========================================================== */
 		/* event handlers                                              */
