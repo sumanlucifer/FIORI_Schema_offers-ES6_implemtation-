@@ -27,7 +27,7 @@
         
         <VBox renderType="Bare">
              <Label text="{i18n>Remark}"/>
-            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{oModelView>/Remark}" />
+            <TextArea maxLength="300" editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{oModelView>/Remark}" />
         </VBox>
 </l:Grid>
 <l:Grid visible="{= ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp;  ${oModelView>/ResolutionId} === 1}"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
