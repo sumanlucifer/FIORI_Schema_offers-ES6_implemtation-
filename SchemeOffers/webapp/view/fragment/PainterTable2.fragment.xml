@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable id="PainteTable2"  initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterOfferSet" beforeRebindTable="onBeforeBindPainterTable2" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true"  enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="Painter1SmartTableKey" ignoreFromPersonalisation="OfferId,PainterId,UUID,ProgressStatus,ProgressColor,RedemptionStatus,OfferDuration,IsSelected,IsArchived,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy">
+        <Table growing="true" growingThreshold="15" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}" >
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 0 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
+                    </customData>
+                    <Text text="{i18n>PainterName}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Mobile", "leadingProperty": "Painter/Mobile", "columnIndex": 1 ,"sortProperty": "Painter/Mobile","filterProperty": "Painter/Mobile"}'/>
+                    </customData>
+                    <Text text="{i18n>Mobile}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "RedemeptionIndex", "leadingProperty": "RedemeptionIndex", "columnIndex": 2 ,"sortProperty": "RedemeptionIndex","filterProperty": "RedemeptionIndex"}'/>
+                    </customData>
+                    <Text text="{i18n>RedemptionIndex}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "RedemptionMax", "leadingProperty": "RedemptionMax", "columnIndex": 3 ,"sortProperty": "RedemptionMax","filterProperty": "RedemptionMax"}'/>
+                    </customData>
+                    <Text text="{i18n>RedemptionCycle}"/>
+                </Column>
+               
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{Painter/Name}"/>
+                         <Text text="{Painter/Mobile}"/>
+                          <Text text="{RedemeptionIndex}"/>
+                            <Text text="{RedemptionMax}"/>
+
+
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

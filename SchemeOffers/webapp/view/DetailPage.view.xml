@@ -53,17 +53,17 @@
         </f:header>
 
         <f:content>
-            <IconTabBar selectedKey="{oModelControl3>/selectedKey}" id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
+            <IconTabBar select="onIcnTbarChange" selectedKey="{oModelControl3>/selectedKey}" id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="0">
                         <VBox id="idVbProfile"></VBox>
 
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>EligiblePainter}" key="1">
-                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML"/>
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable1" type="XML"/>
                     </IconTabFilter>
                        <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
-                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.HistoryTable" type="XML"/>
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable2" type="XML"/>
                     </IconTabFilter>
                 </items>
             </IconTabBar>

@@ -168,9 +168,9 @@
                  <Column>
                     <Label text="{i18n>Table1Label4}" />
                 </Column>
-                 <Column>
+                 <!-- <Column>
                     <Text text="{i18n>Table1Label5}" />
-                </Column>
+                </Column> -->
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -184,9 +184,9 @@
                              <Label  width="80%" text="{oModelControl2>RequiredVolume}" />
                               <Label width="80%" text="{oModelControl2>RequiredPoints}" />
                                <Label width="80%" text="{oModelControl2>RewardPoints}" />
-                                 <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId',type:'.cmbxDtype2'}">
+                                 <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId',type:'.cmbxDtype2'}">
                                     <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
-                                </ComboBox>
+                                </ComboBox> -->
                                 <Label  width="80%" text="{oModelControl2>RewardCash}" />
                                 
                             
@@ -215,9 +215,9 @@
                  <Column>
                     <Label text="{i18n>Table1Label4}" />
                 </Column>
-                 <Column>
+                 <!-- <Column>
                     <Text text="{i18n>Table1Label5}" />
-                </Column>
+                </Column> -->
                   <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -231,9 +231,9 @@
                            <Label  text="{oModelControl2>RequiredVolume}" />
                            <Label  text="{oModelControl2>RequiredPoints}" />
                            <Label text="{oModelControl2>RewardPoints}" />
-                           <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId'}">
+                           <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId'}">
                                 <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
-                           </ComboBox>
+                           </ComboBox> -->
                             <Label  text="{oModelControl2>RewardCash}" />
                             
                     </cells>
