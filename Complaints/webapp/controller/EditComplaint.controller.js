@@ -87,18 +87,7 @@ sap.ui.define(
                         "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
                     this._initData(oProp);
                 },
-                _getExecLogData: function (sWorkFlowInstanceId) {
-                    //for Test case scenerios delete as needed
-                    if (!sWorkFlowInstanceId)
-                        sWorkFlowInstanceId = "41d8a91e-af04-11eb-a0a8-eeee0a81ec84";
 
-                    var sUrl =
-                        "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
-                        sWorkFlowInstanceId +
-                        "/execution-logs";
-
-                    this.oWorkflowModel.loadData(sUrl);
-                },
                 _initData: function (oProp) {
                     var oData = {
                         modeEdit: false,
@@ -116,7 +105,7 @@ sap.ui.define(
                             Button2: true,
                         },
                         //data for Product fields
-                        ClassificationId : "",
+                        ClassificationId: "",
                         CategoryId: ""
                     };
                     var oDataModel;
@@ -128,9 +117,9 @@ sap.ui.define(
                         .getResourceBundle()
                         .getText("errorText");
                     var oBindProp = oData["bindProp"];
-                    var c1, c2, c2A, c3, c4, c5;
+                    var c1, c2, c2A, c3, c4, c5, c6;
                     c1 = othat._loadEditProfile("Display");
-                    this._getExecLogData();
+
                     c1.then(function () {
                         //Himank: TODO: Load Workflow data, will have to pass workflow instanceId in future
                         c2A = othat._CheckLoginData();
@@ -142,6 +131,9 @@ sap.ui.define(
                                     c4 = othat._CheckImage(oBindProp);
                                     c4.then(function () {
                                         c5 = othat._setWorkFlowFlag();
+                                        c5.then(function () {
+                                            c6 = othat._getExecLogData();
+                                        })
                                     })
                                 });
                             });
@@ -149,14 +141,32 @@ sap.ui.define(
 
                     });
                 },
+                _getExecLogData: function () {
+                    var promise = jQuery.Deferred();
+                    //for Test case scenerios delete as needed
+                    var oView = this.getView();
+                    var oData = oView.getModel("oModelView").getData();
+                    var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    if (sWorkFlowInstanceId) {
+                        var sUrl =
+                            "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
+                            sWorkFlowInstanceId +
+                            "/execution-logs";
+
+                        this.oWorkflowModel.loadData(sUrl);
+                    }
+
+                    promise.resolve();
+                    return promise;
+                },
                 _CheckLoginData: function () {
                     var promise = jQuery.Deferred();
                     var oData = this.getModel();
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     var oLoginData = oLoginModel.getData()
-                  
+
                     if (Object.keys(oLoginData).length === 0) {
-                    
+
                         return new Promise((resolve, reject) => {
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
@@ -178,7 +188,7 @@ sap.ui.define(
                         })
 
                     } else {
-                      
+
                         promise.resolve();
                         return promise;
                     }
@@ -190,13 +200,13 @@ sap.ui.define(
                 _setWorkFlowFlag: function () {
                     var oView = this.getView();
                     var oLoginInfo = oView.getModel("LoginInfo").getData();
-                
+
 
                     var oData = oView.getModel("oModelView").getData();
                     var oModelControl = oView.getModel("oModelControl");
                     if (oData["ComplaintTypeId"] === 1 || oData["ComplaintTypeId"] === 2 || oData["ComplaintTypeId"] === 3) {
                         this._SetEscalationFlag();
-                      
+
                     }
 
 
@@ -273,7 +283,7 @@ sap.ui.define(
                             },
                             success: function (data) {
                                 var oViewModel = new JSONModel(data);
-                              
+
                                 oView.setModel(oViewModel, "oModelView");
                                 othat._setInitData();
                                 resolve();
@@ -364,31 +374,31 @@ sap.ui.define(
                     }
                 },
 
-                   filterProducts : function() {
-                    
+                filterProducts: function () {
+
                     var oProductCtrl = this.getView().byId("idProduct"),
                         oModel = this.getView().getModel("oModelControl"),
                         aFilters = [];
 
-                    if(oModel.getProperty("/ClassificationId").length > 0) 
-                             aFilters.push(new Filter("ClassificationCode", FilterOperator.EQ, oModel.getProperty("/ClassificationId") ));
-                    if(oModel.getProperty("/CategoryId").length > 0)
-                             aFilters.push(new Filter("CategoryCode", FilterOperator.EQ, oModel.getProperty("/CategoryId") ));
-                        
-                             
-                    oProductCtrl.getBinding("items").filter(aFilters); 
-                       this.getView().getModel("oModelView").setProperty("/SkuCode", "");
-                        }, 
-                        
-                        
-                 onProductChange: function(){
+                    if (oModel.getProperty("/ClassificationId").length > 0)
+                        aFilters.push(new Filter("ClassificationCode", FilterOperator.EQ, oModel.getProperty("/ClassificationId")));
+                    if (oModel.getProperty("/CategoryId").length > 0)
+                        aFilters.push(new Filter("CategoryCode", FilterOperator.EQ, oModel.getProperty("/CategoryId")));
 
-                   var sSelectedProductPoints = this.getView().byId("idProduct").getSelectedItem().getBindingContext().getProperty("Points");
+
+                    oProductCtrl.getBinding("items").filter(aFilters);
+                    this.getView().getModel("oModelView").setProperty("/SkuCode", "");
+                },
+
+
+                onProductChange: function () {
+
+                    var sSelectedProductPoints = this.getView().byId("idProduct").getSelectedItem().getBindingContext().getProperty("Points");
 
                     this.getView().getModel("oModelView").setProperty("/RewardPoints", sSelectedProductPoints);
 
                 },
-                  _CheckImage: function (oProp) {
+                _CheckImage: function (oProp) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = this.getView().getModel("oModelControl");
@@ -397,11 +407,11 @@ sap.ui.define(
                     jQuery.get(sImageUrl)
                         .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
-                          
+
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
-                           
+
                         });
                     promise.resolve();
                     return promise;
@@ -546,28 +556,25 @@ sap.ui.define(
                         );
                     }
 
-                    if(oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED"  )
-                    {
-                    if ( oModel.getProperty("/ResolutionType") === 1 &&
-                        !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") 
-                    {
-                        MessageToast.show("Please verify token first");
-                        return;
-                    }
+                    if (oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED") {
+                        if (oModel.getProperty("/ResolutionType") === 1 &&
+                            !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") {
+                            MessageToast.show("Please verify token first");
+                            return;
+                        }
 
-                    if(  oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))  )
-                    {
-                        MessageToast.show("Please enter Product details");
-                        return;
+                        if (oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))) {
+                            MessageToast.show("Please enter Product details");
+                            return;
+                        }
                     }
-                }
 
                     if (bValidation) {
                         oModel.setProperty("/InitiateForceTat", false);
                         this._postDataToSave();
                     }
                 },
-               
+
 
                 onChangeResolution: function (oEvent) {
                     var oView = this.getView();
@@ -576,12 +583,11 @@ sap.ui.define(
                     if (+sKey !== 90) {
                         oModel.setProperty("/ResolutionOthers", "");
                     }
-                 
+
                     //Set ResolutionType
-                    if(+sKey === 1)
-                    {
-                       oModel.setProperty("/ResolutionType", 0); 
-                    }else{
+                    if (+sKey === 1) {
+                        oModel.setProperty("/ResolutionType", 0);
+                    } else {
                         oModel.setProperty("/ResolutionType", null);
                         oModel.setProperty("/TokenCode", "");
                         oModel.setProperty("/RewardPoints", null);
@@ -591,13 +597,13 @@ sap.ui.define(
                     //console.log(oModel);
                 },
 
-                onPointsVia: function(){
-                      var oModel = this.getModel("oModelView");
-                     oModel.setProperty("/TokenCode", "");
-                     oModel.setProperty("/RewardPoints", "");
-                     oModel.setProperty("/SkuCode", "");
-                     this.getModel("oModelControl").setProperty("/ClassificationId", "");
-                     this.getModel("oModelControl").setProperty("/CategoryId", "");
+                onPointsVia: function () {
+                    var oModel = this.getModel("oModelView");
+                    oModel.setProperty("/TokenCode", "");
+                    oModel.setProperty("/RewardPoints", "");
+                    oModel.setProperty("/SkuCode", "");
+                    this.getModel("oModelControl").setProperty("/ClassificationId", "");
+                    this.getModel("oModelControl").setProperty("/CategoryId", "");
 
                 },
 
@@ -649,7 +655,7 @@ sap.ui.define(
                         }
                     }
 
-                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints ;
+                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints;
                     var othat = this;
                     console.log(oPayload);
 
@@ -661,12 +667,12 @@ sap.ui.define(
                     oData.update(sPath, oPayload, {
                         success: function () {
                             debugger;
-                          /*  
-                          //Handled by backend
-                            if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
-                                othat._postQRCode.call(othat, oPayload);
-                            */
-                            MessageToast.show("Complain Sucessfully Updated.");
+                            /*  
+                            //Handled by backend
+                              if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
+                                  othat._postQRCode.call(othat, oPayload);
+                              */
+                            MessageToast.show("Complain Successfully Updated.");
                             oData.refresh(true);
                             othat.onNavBack();
                         },
@@ -773,12 +779,12 @@ sap.ui.define(
                         UTC: true,
                         strictParsing: true,
                     });
-                   oDateFormat.format(date);
+                    oDateFormat.format(date);
                 },
                 fmtProbingSteps: function (mParam) {
                     if (mParam === null) {
                         return "NA";
-                   }
+                    }
                     return mParam;
                 },
             }
