@@ -1,0 +1,100 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" >
+<l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
+        <Label  text="{i18n>TtlResolutionDetails}" design="Bold" />
+        <VBox renderType="Bare" >
+            <Label text="{i18n>ComplaintStatus}" required="true" />
+            <Select change="onChangeStatus" editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
+                <core:Item text="Registered" key="REGISTERED" />
+                <core:Item text="In Review" key="INREVIEW" />
+                <core:Item text="Resolved" key="RESOLVED" />
+                <core:Item text="Withdrawn" key="WITHDRAWN" />
+            </Select>
+            <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData>
+        </VBox>
+        <VBox renderType="Bare" >
+         <Label text="{i18n>AddResolution}" />
+            <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+                <items>
+                    <core:Item text="{Resolution}" key="{Id}" />
+                </items>
+            </ComboBox>
+            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
+           
+         </VBox>
+          
+        
+        <VBox renderType="Bare">
+             <Label text="{i18n>Remark}"/>
+            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{oModelView>/Remark}" />
+        </VBox>
+</l:Grid>
+<l:Grid visible="{= ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp;  ${oModelView>/ResolutionId} === 1}"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
+            <Label  text="{i18n>TtlRewardPointDetails}" design="Bold" />
+            <VBox >
+            <Label text="{i18n>LblPointsVia}" />
+            <RadioButtonGroup editable="{= !${oModelControl>/ComplainResolved} }" width="100%" select="onPointsVia"  columns="2" selectedIndex="{oModelView>/ResolutionType}" >
+                <RadioButton text="{i18n>LblProduct}"  />
+                <RadioButton text="{i18n>TokenCode}" />
+            </RadioButtonGroup>
+                <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData>
+        </VBox>
+        <VBox  visible="{=  ${oModelView>/ResolutionType} === 1 }" >
+           <Label  text="{i18n>TokenCode}"  />
+         <HBox renderType="Bare" >
+           <Input  value="{oModelView>/TokenCode}" 
+            editable="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />  
+            <Button class="sapUiTinyMarginBeginEnd" visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' }" 
+              icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" />
+            <Button  class="sapUiTinyMarginBeginEnd"  visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW'  }" 
+                       text="{i18n>btnValidate}" press="onPressTokenCode" />
+        </HBox>
+         <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData>
+       </VBox>
+        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }"  >
+            <Label  text="{i18n>LblCategory}" required="true" />
+            <Select id="idCategory" width="100%" change="filterProducts" forceSelection="false"
+            editable="{= !${oModelControl>/ComplainResolved} }"
+                    selectedKey="{oModelControl>/CategoryId}"
+                    items="{     path: '/MasterProductCategorySet',
+                                 sorter: { path: 'Category' }
+                           }">
+                    <core:Item key="{Id}" text="{Category}" />
+            </Select>
+              <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData> 
+        </VBox>
+        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }" >
+            <Label  text="{i18n>LblClassification}" required="true" />
+            <Select   id="idClassification" change="filterProducts"
+            editable="{= !${oModelControl>/ComplainResolved} }"
+                     forceSelection="false" width="100%" selectedKey="{oModelControl>/ClassificationId}"
+                     items="{ path: '/MasterProductClassificationSet', sorter: { path: 'Classification' } }">
+                    <core:Item key="{Id}" text="{Classification}" />
+            </Select>  
+        </VBox>
+        <VBox visible="{=  ${oModelView>/ResolutionType} === 0 }" >
+            <Label   text="{i18n>LblProduct}" required="true" />
+            <!-- filters : CategoryCode, ClassificationCode -->
+            <Select change="onProductChange" id="idProduct" editable="{= !${oModelControl>/ComplainResolved} }" forceSelection="false" width="100%" selectedKey="{oModelView>/SkuCode}"
+                    items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
+                    <core:Item key="{SkuCode}" text="{ProductDetails/ProductName}" />
+            </Select> 
+        </VBox>
+        <VBox>
+            <Label  text="{i18n>Points}" />
+            <Input   editable="false" value="{= +${oModelView>/RewardPoints} }" />
+             <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData>
+        </VBox>
+
+</l:Grid>
+
+</core:FragmentDefinition>
