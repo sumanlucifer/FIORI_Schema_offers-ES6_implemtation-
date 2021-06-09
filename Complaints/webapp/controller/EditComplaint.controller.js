@@ -608,6 +608,8 @@ sap.ui.define(
                             oPayload[a] = null;
                         }
                     }
+
+                    oPayload.RewardPoints = +oPayload.RewardPoints;
                     var othat = this;
                     console.log(oPayload);
 
