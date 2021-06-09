@@ -147,6 +147,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oData = oView.getModel("oModelView").getData();
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    console.log(sWorkFlowInstanceId);
                     if (sWorkFlowInstanceId) {
                         var sUrl =
                             "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
@@ -154,6 +155,8 @@ sap.ui.define(
                             "/execution-logs";
 
                         this.oWorkflowModel.loadData(sUrl);
+                    }else {
+                          this.oWorkflowModel.setData([]);
                     }
 
                     promise.resolve();
@@ -198,6 +201,7 @@ sap.ui.define(
 
                 },
                 _setWorkFlowFlag: function () {
+                   var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oLoginInfo = oView.getModel("LoginInfo").getData();
 
@@ -209,7 +213,8 @@ sap.ui.define(
 
                     }
 
-
+                    promise.resolve();
+                    return promise;
                 },
                 _SetEscalationFlag: function () {
                     var oView = this.getView();
