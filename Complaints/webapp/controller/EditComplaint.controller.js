@@ -609,7 +609,7 @@ sap.ui.define(
                         }
                     }
 
-                    oPayload.RewardPoints = +oPayload.RewardPoints;
+                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints ;
                     var othat = this;
                     console.log(oPayload);
 
