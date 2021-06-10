@@ -417,7 +417,6 @@ sap.ui.define(
 
                 onCloseStatus: function () {
                     this.byId("ChangeStatus").close();
-
                 },
 
                 onChangeStatus: function () {
@@ -452,7 +451,7 @@ sap.ui.define(
                         this.byId("ChangeStatus").open();
                     }
                 },
-
+               
                 onConfirmStatus: function () {
                     var oPayload = this.getView().getModel("oModelControl2").getProperty("/oChangeStatus/oPayload");
 
