@@ -8,7 +8,7 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<f:Form binding="{oModelControl>/Dialog/Bonus2}"  editable="false" >
+			<f:Form id="FormAddProdPacks2" binding="{oModelControl>/Dialog/Bonus2}"  editable="false" >
 				<f:layout>
 					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
 						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
@@ -34,19 +34,25 @@
                                  
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="{i18n>formBonusValidaityFrom}">
+							<f:FormElement>
+                            <f:label>
+                                <Label text="{i18n>formBonusValidaityFrom}" required="true"/>
+                            </f:label>
 								<f:fields>
-										<DatePicker  required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
+										<DatePicker  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
 								</f:fields>
 							</f:FormElement>
-                            <f:FormElement label="{i18n>formBonusValidaityTo}">
+                            <f:FormElement>
+                            <f:label>
+                                <Label text="{i18n>formBonusValidaityTo}" required="true"/>
+                            </f:label>
 								<f:fields>
-									 <DatePicker  required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+									 <DatePicker  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table3Label1}">
 								<f:fields>
-										<Input  required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'.cmbxDtype2'}" />
+										<Input  required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'',minLength:1,maxLength:4}}" />
 								</f:fields>
 							</f:FormElement>
 							

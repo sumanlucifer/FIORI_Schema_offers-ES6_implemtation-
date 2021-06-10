@@ -76,8 +76,10 @@
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat1}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                          <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -91,8 +93,10 @@
                          <f:FormElement label="{i18n>formApplicableLbl8}" >
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass1}">
-                                    <RadioButton text="{i18n>All}"/>
+                                        <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -106,8 +110,10 @@
                          <f:FormElement label="{i18n>formApplicableProducts2}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd1}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                          <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -126,8 +132,10 @@
                          <f:FormElement label="{i18n>formApplicableLbl9}" >
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks1}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                          <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -150,9 +158,10 @@
                     <f:FormElement label="{i18n>ApplyParentOffer}">
                             <f:fields>
                                  <RadioButtonGroup enabled="{= ${oModelView>/ParentOfferId}===0?false:true}" select="onRbPrntOffer"  columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}" >
-                                    <RadioButton text="{i18n>No}"/>
+                                    <buttons>
+                                          <RadioButton text="{i18n>No}"/>
                                     <RadioButton text="{i18n>Yes}" />
-                                   
+                                    </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -171,8 +180,11 @@
                       <f:FormElement label="{i18n>formApplicableLbl10}">
                             <f:fields>
                                  <RadioButtonGroup select="onRbRewardRatio"  columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}" >
-                                    <RadioButton text="{i18n>All}" />
+                                    
+                                 <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -371,8 +383,10 @@
                          <f:FormElement  label="{i18n>formRegionLbl1}">
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Zones}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                            <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -387,8 +401,10 @@
                          <f:FormElement  label="{i18n>formRegionLbl2}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Divisions}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                              <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -402,8 +418,10 @@
                          <f:FormElement   label="{i18n>formRegionLbl3}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/Depots}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                              <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -443,8 +461,10 @@
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat2}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                            <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -459,8 +479,10 @@
                           <f:FormElement label="Buyer {i18n>formApplicableLbl8}" >
                             <f:fields>
                                <RadioButtonGroup  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass2}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                              <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -474,8 +496,10 @@
                          <f:FormElement label="{i18n>formBuyerProducts}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd2}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                           <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -491,8 +515,10 @@
                          <f:FormElement label="{i18n>formBuyerPacks}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks2}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                             <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -508,8 +534,10 @@
                        <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl7}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat3}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                             <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -524,8 +552,10 @@
                         <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl8}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }"  columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass3}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                            <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -540,8 +570,10 @@
                          <f:FormElement label="{i18n>formNon} {i18n>formBuyerProducts}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd3}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                              <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -557,8 +589,10 @@
                          <f:FormElement label="{i18n>formNon} {i18n>formBuyerPacks}" >
                             <f:fields>
                                <RadioButtonGroup enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks3}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                             <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -589,8 +623,10 @@
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                              <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -606,8 +642,10 @@
                         <f:FormElement label="{i18n>formApplicableLbl8}" >
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                            <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -622,8 +660,10 @@
                     <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                             <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -639,8 +679,10 @@
                          <f:FormElement label="{i18n>formApplicableLbl9}" >
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks4}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                <buttons>
+                                 <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -656,8 +698,10 @@
                          <f:FormElement label="{i18n>formBonusRewardRatio}">
                             <f:fields>
                                  <RadioButtonGroup select="onBRRbChange" columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}" >
-                                    <RadioButton text="{i18n>All}"/>
+                                    <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -779,8 +823,11 @@
                         <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
                                 <RadioButtonGroup select="onRbTopApp" selectedIndex="{oModelControl>/Rbtn/TopAll}"  columns="2">
-                                    <RadioButton text="{i18n>All}"/>
+                                     <buttons>
+                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
+                                     </buttons>
+                                    
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -801,12 +848,12 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                               <DatePicker displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                               <DatePicker displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy"  dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         
