@@ -40,11 +40,11 @@
                     <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
-                <Label text="{i18n>Status}" visible="{= ${PainterBankDetails} === null? false: true }" />
+                <!-- <Label text="{i18n>Status}" visible="{= ${PainterBankDetails} === null? false: true }" />
                 <RadioButtonGroup visible="{= ${PainterBankDetails} === null? false: true }" select="onRbBankStatus" selectedIndex="{path:'oModelView>/PainterBankDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
                     <RadioButton text="{i18n>Approved}"/>
                     <RadioButton text="{i18n>Reject}"/>
-                </RadioButtonGroup>
+                </RadioButtonGroup> -->
                 <!-- <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <ComboBox editable="false" change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
@@ -67,5 +67,13 @@
                
             </f:content>
         </f:SimpleForm>
+         <!--Aditya changes start-->
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Approve" press="onRbBankStatus" type="Accept"/>
+				<Button text="Reject" press="onRbBankStatus" type="Reject"/>
+
+			</Toolbar>
+		<!--Aditya changes end-->
     </VBox>
 </core:FragmentDefinition>

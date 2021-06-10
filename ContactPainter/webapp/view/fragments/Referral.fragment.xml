@@ -5,7 +5,7 @@
                 <Toolbar>
                     <ToolbarSpacer/>
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
-                    <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Ghost" press="onPressAddReferral" />
+                    <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Emphasized" press="onPressAddReferral" />
                 </Toolbar>
             </headerToolbar>
 
@@ -39,7 +39,6 @@
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <Text text="{path:'ReferralStatus',formatter:'.fmtLowerCase'}"/>
                         <Text text="{= ${ReferralStatus}==='PENDING'? '-' : ${RewardPoints} }"/>
-
                     </cells>
                 </ColumnListItem>
             </items>

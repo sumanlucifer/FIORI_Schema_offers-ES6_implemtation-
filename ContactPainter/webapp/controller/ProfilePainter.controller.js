@@ -129,7 +129,7 @@ sap.ui.define(
                     var oModel = new JSONModel(oData);
 
                     oView.setModel(oModel, "oModelControl2");
-                    var c1,c2,c3,c4;
+                    var c1, c2, c3, c4;
 
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
@@ -138,21 +138,39 @@ sap.ui.define(
 
 
                     //rebind Loyalty table
-                    oView.byId("smrtLoyalty").rebindTable();
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
+                    oView.byId("smrtLoyalty").rebindTable();
+
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
-                    
+
                 },
+                onSectionChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oSection = oEvent.getParameter("section");
+                    var sId = oSection.getId();
+                    if (sId.match("loyaltysection")) {
+                        console.log("loyalty")
+                        oView.byId("smrtLoyalty").rebindTable();
+                    } else if (sId.match("learnSection")) {
+                        console.log("learnSection")
+                        oView.byId("smrtLiveTraining").rebindTable();
+                        oView.byId("smrtOfflineTraining").rebindTable();
+                        oView.byId("smrtVideoTraining").rebindTable();
+                    }
+
+
+                },
+
                 handleEditPress: function () {
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl2");
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
-                    var c1, c2, c3,c4;
+                    var c1, c2, c3, c4;
                     var othat = this;
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
@@ -160,7 +178,7 @@ sap.ui.define(
                         c2.then(function () {
                             c3 = othat._loadEditKyc("Edit"); //Aditya Changes
                             c3.then(function () {
-                               c3.then(function () {
+                                c3.then(function () {
                                     c4 = othat._initEditData();
                                     c4.then(function () {
                                         othat.getView().getModel("oModelView").refresh(true);
@@ -399,6 +417,7 @@ sap.ui.define(
 
                 onCloseStatus: function () {
                     this.byId("ChangeStatus").close();
+
                 },
 
                 onChangeStatus: function () {
@@ -456,28 +475,26 @@ sap.ui.define(
                 },
 
                 onCrossNavigate: function (sAction) {
+                    console.log("Cross Navigate Trigerred");
+                    var sPainterId = this.getView().getModel("oModelControl2").getProperty("/PainterId") + "";
+                    console.log(sPainterId);
                     this.Navigate({
                         target: {
                             semanticObject: "Manage",
-                            action: sAction
+                            action: sAction,
+                            params: { PainterId: sPainterId }
                         }
                     });
                 },
 
                 Navigate: function (oSemAct) {
-                    var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
-
-                    oCrossAppNav.isNavigationSupported([{
-                        target: {
-                            shellHash: oSemAct.target.semanticObject.concat("-", oSemAct.target.action)
-                        }
-                    }]).done(function (aResponse) {
-                        if (!(aResponse[0].supported)) return;
-
-                        oCrossAppNav.toExternal(oSemAct);
-
-                    });
-
+                    if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
+                        var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
+                        oCrossAppNav.toExternal({
+                            target: { semanticObject: oSemAct.target.semanticObject, action: oSemAct.target.action },
+                            params: oSemAct.target.params
+                        })
+                    }
                 },
 
                 onPressSave: function () {
@@ -535,6 +552,7 @@ sap.ui.define(
                             delete prop["editable"];
                         }
                     }
+
                     // setting up contact number data
                     var aPainterSecContact = [];
                     var SMobile1 = JSON.parse(
@@ -582,6 +600,16 @@ sap.ui.define(
                             oPayload["PainterSegmentation"][c] = null;
                         }
                     }
+                    var aFlagSeg = ["TeamSizeId", "PainterExperience", "SitePerMonthId", "PotentialId"];
+                    var bSegFalg = false;
+                    bSegFalg = aFlagSeg.every(function (a) {
+                        return oPayload["PainterSegmentation"][a] === null;
+                    });
+                    if (bSegFalg) {
+                        oPayload["PainterSegmentation"] = null;
+                    }
+
+
                     for (var d in oPayload["PainterAddress"]) {
                         if (oPayload["PainterAddress"][d] === "") {
                             oPayload["PainterAddress"][d] = null;
@@ -696,6 +724,7 @@ sap.ui.define(
                         .getModel("oModelControl")
                         .setProperty("/AnotherMobField", true);
                 },
+
                 onPrimaryNoChang: function (oEvent) {
                     var oSource = oEvent.getSource();
                     if (oSource.getValueState() == "Error") {
@@ -1166,26 +1195,52 @@ sap.ui.define(
                     }
                 },
                 onRbBankStatus: function (oEvent) {
-                    var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var oView = this.getView();
+                    // var oModelView = oView.getModel("oModelView");
+
+                    // if (iIndex == 0) {
+                    //     oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+                    // } else if (iIndex == 1) {
+                    //     oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
+                    // }
+                    /*Aditya changes start*/
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-
-                    if (iIndex == 0) {
+                    var statusText = oEvent.getSource().getProperty('text');
+                    if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                    } else if (iIndex == 1) {
+                    } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
                     }
+                    function onYes() {
+                               this.handleSavePress();
+                            }
+                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+                    /*Aditya changes end*/
                 },
                 onRbKycStatus: function (oEvent) {
-                    var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var iIndex = oEvent.getSource().getSelectedIndex();
+                    // if (iIndex == 0) {
+                    //     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
+                    // } else if (iIndex == 1) {
+                    //     oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
+                    // }
+                    /*Aditya changes start*/
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-
-                    if (iIndex == 0) {
+                    var statusText = oEvent.getSource().getProperty('text');
+                    if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                    } else if (iIndex == 1) {
+                    } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
                     }
+                    function onYes() {
+                               this.handleSavePress();
+                            }
+                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+
+                    /*Aditya changes end*/
                 },
                 onKycView: function (oEvent) {
                     var oButton = oEvent.getSource();

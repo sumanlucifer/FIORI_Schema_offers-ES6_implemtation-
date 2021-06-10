@@ -13,10 +13,10 @@
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} === null? false: true }"/>
                 <Input editable="false" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null? false: true }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
                 <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" />
-                <RadioButtonGroup visible="{= ${PainterKycDetails} === null? false: true }" select="onRbKycStatus" selectedIndex="{path:'oModelView>/PainterKycDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
+                <!-- <RadioButtonGroup visible="{= ${PainterKycDetails} === null? false: true }" select="onRbKycStatus" selectedIndex="{path:'oModelView>/PainterKycDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
                     <RadioButton text="{i18n>Approved}"/>
                     <RadioButton text="{i18n>Reject}"/>
-                </RadioButtonGroup>
+                </RadioButtonGroup> -->
                 <Label text="KYC Documents" visible="{= ${PainterKycDetails} === null? false: true }" />
                 <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView"/>
                 <!-- <HBox justifyContent="End" visible="{= ${PainterKycDetails} === null? false: true }" >
@@ -26,5 +26,13 @@
                
             </f:content>
         </f:SimpleForm>
+            <!--Aditya changes start-->
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Approve" press="onRbKycStatus" type="Accept"/>
+				<Button text="Reject" press="onRbKycStatus" type="Reject"/>
+
+			</Toolbar>
+		<!--Aditya changes end-->
     </VBox>
 </core:FragmentDefinition>
