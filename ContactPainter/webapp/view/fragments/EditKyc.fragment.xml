@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox width="100%">
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+              
+                <core:Title text="{i18n>KYCDetails}"/>
+                <Label text="{i18n>SelectedKYCDocument}"/>
+                <ComboBox editable="false" change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                    <items>
+                        <core:Item text="{KycType}" key="{Id}"></core:Item>
+                    </items>
+                </ComboBox>
+                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} === null? false: true }"/>
+                <Input editable="false" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null? false: true }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
+                <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" />
+                <RadioButtonGroup visible="{= ${PainterKycDetails} === null? false: true }" select="onRbKycStatus" selectedIndex="{path:'oModelView>/PainterKycDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
+                    <RadioButton text="{i18n>Approved}"/>
+                    <RadioButton text="{i18n>Reject}"/>
+                </RadioButtonGroup>
+                <Label text="KYC Documents" visible="{= ${PainterKycDetails} === null? false: true }" />
+                <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView"/>
+                <!-- <HBox justifyContent="End" visible="{= ${PainterKycDetails} === null? false: true }" >
+                    <Link text="View KYC Documents" press="onKycView" />
+                </HBox> -->
+                
+               
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

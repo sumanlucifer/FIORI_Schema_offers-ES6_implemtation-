@@ -133,6 +133,7 @@ sap.ui.define(
 
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
+                    this._loadEditKyc("Display");/*Aditya chnages*/
                     this._toggleButtonsAndView(false);
 
 
@@ -151,16 +152,21 @@ sap.ui.define(
                     var oCtrl2Model = oView.getModel("oModelControl2");
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
-                    var c1, c2, c3;
+                    var c1, c2, c3,c4;
                     var othat = this;
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
                         c2 = othat._loadEditBanking("Edit");
                         c2.then(function () {
-                            c3 = othat._initEditData();
+                            c3 = othat._loadEditKyc("Edit"); //Aditya Changes
                             c3.then(function () {
-                                othat.getView().getModel("oModelView").refresh(true);
-                                othat._setCopyForFragment();
+                               c3.then(function () {
+                                    c4 = othat._initEditData();
+                                    c4.then(function () {
+                                        othat.getView().getModel("oModelView").refresh(true);
+                                        othat._setCopyForFragment();
+                                    });
+                                });
                             });
                         });
                     });
@@ -1688,6 +1694,26 @@ sap.ui.define(
                         return promise;
                     });
                 },
+                /*Aditya changes start*/
+                _loadEditKyc: function (mParam) {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var othat = this;
+                    var oVboxProfile = oView.byId("idVbKyc");
+                    var sFragName = mParam == "Edit" ? "EditKyc" : "Kyc";
+                    oVboxProfile.destroyItems();
+                    return Fragment.load({
+                        id: oView.getId(),
+                        controller: othat,
+                        name: "com.knpl.pragati.ContactPainter.view.fragments." + sFragName,
+                    }).then(function (oControlProfile) {
+                        oView.addDependent(oControlProfile);
+                        oVboxProfile.addItem(oControlProfile);
+                        promise.resolve();
+                        return promise;
+                    });
+                },
+                /*Aditya changes end*/
 
                 handleCancelPress: function () {
                     this._toggleButtonsAndView(false);
@@ -1697,6 +1723,7 @@ sap.ui.define(
                     oCtrlModel2.setProperty("/iCtbar", true);
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
+                    this._loadEditKyc("Display");/*Aditya chnages*/
                     oView.getModel().refresh(true);
                 },
 

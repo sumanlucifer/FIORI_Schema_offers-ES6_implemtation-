@@ -45,7 +45,7 @@
                     <RadioButton text="{i18n>Approved}"/>
                     <RadioButton text="{i18n>Reject}"/>
                 </RadioButtonGroup>
-                <core:Title text="{i18n>KYCDetails}"/>
+                <!-- <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <ComboBox editable="false" change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
                     <items>
@@ -62,7 +62,7 @@
                 <Label text="" visible="{= ${PainterKycDetails} === null? false: true }" />
                 <HBox justifyContent="End" visible="{= ${PainterKycDetails} === null? false: true }" >
                     <Link text="View KYC Documents" press="onKycView" />
-                </HBox>
+                </HBox> -->
                 
                
             </f:content>

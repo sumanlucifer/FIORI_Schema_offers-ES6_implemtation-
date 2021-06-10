@@ -56,6 +56,8 @@ sap.ui.define(
                             DivisionId: "",
                             PreferredLanguage: "",
                             SourceRegistration: "",
+                            BankDetailsStatus:"",/*Aditya changes*/
+                            KycStatus:""/*Aditya changes*/
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -146,7 +148,28 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            } else if (prop === "ZoneId") {
+                            } /*Aditya changes start*/
+                            else if (prop === "KycStatus") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "PainterKycDetails/Status",
+                                        FilterOperator.EQ,
+                                        oViewFilter[prop]
+                                    )
+                                );
+                            }
+                            else if (prop === "BankDetailsStatus") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "PainterBankDetails/Status",
+                                        FilterOperator.EQ,
+                                        oViewFilter[prop]
+                                    )
+                                );
+                            }/*Aditya changes end*/
+                            else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("ZoneId", FilterOperator.EQ, oViewFilter[prop])
@@ -181,7 +204,9 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            } else if (prop === "SourceRegistration") {
+                            } 
+                            
+                                else if (prop === "SourceRegistration") {
                                 aFlaEmpty = false;
                                 if (oViewFilter[prop] == "MOBILE") {
                                     aCurrentFilterValues.push(
@@ -197,6 +222,7 @@ sap.ui.define(
                                         new Filter("IsMigrated", FilterOperator.EQ, true)
                                     );
                                 }
+                               
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -273,6 +299,8 @@ sap.ui.define(
                         DivisionId: "",
                         PreferredLanguage: "",
                         PainterType: "",
+                        BankDetailsStatus:"",/*Aditya changes*/
+                        KycStatus:""/*Aditya changes*/
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
