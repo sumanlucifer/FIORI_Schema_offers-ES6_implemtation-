@@ -276,7 +276,7 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelView");
                     if (sKey === 0) {
                         oModel.setProperty("/Fields/ParentOfferTitle", "");
-                        oModel2.setProperty("/ParentOfferId", null);
+                        oModel2.setProperty("/ParentOfferId", 0);
                     }
                 },
 
