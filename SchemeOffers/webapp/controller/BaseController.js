@@ -10,6 +10,7 @@ sap.ui.define(
         "sap/ui/core/Fragment",
         "sap/m/MessageBox",
         "sap/m/MessageToast",
+        "com/knpl/pragati/SchemeOffers/controller/Validator"
     ],
     function (
         Controller,
@@ -20,7 +21,8 @@ sap.ui.define(
         JSONModel,
         Fragment,
         MessageBox,
-        MessageToast
+        MessageToast,
+        Validator
     ) {
         "use strict";
 
@@ -102,6 +104,7 @@ sap.ui.define(
 
                 onPostSchemeData: function (oPayload, fileFlag) { },
                 onStartDateChange: function (oEvent) {
+                   
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oModelView = oView.getModel("oModelView");
@@ -653,6 +656,7 @@ sap.ui.define(
 
                     if (!this._RewardsDialog1) {
                         Fragment.load({
+                            id: oView.getId(),
                             name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks",
                             controller: othat,
                         }).then(
@@ -711,13 +715,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key1");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus1");
-
+                    var oValidate = new Validator();
+                    var oForm = oView.byId("FormAddProdPacks");
+                    var bFlagValidate = oValidate.validate(oForm, true);
                     if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
                         MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
                         return;
                     }
                     if (oPayload["RewardPoints"] == "") {
                         MessageToast.show("Kindly Input Reward Points to Continue.");
+                        return;
+                    }
+                    if (!bFlagValidate) {
+                        MessageToast.show("Kindly enter the fields in proper format.");
                         return;
                     }
                     var oPayloadNew = Object.assign({}, oPayload);
@@ -771,6 +781,7 @@ sap.ui.define(
 
                     if (!this._RewardsDialog1) {
                         Fragment.load({
+                            id:oView.getId(),
                             name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks",
                             controller: othat,
                         }).then(
@@ -831,6 +842,10 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key1");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus1");
+                    var oValidate = new Validator();
+                    var oForm = oView.byId("FormAddProdPacks");
+                    var bFlagValidate = oValidate.validate(oForm, true);
+
                     if (oPayload.hasOwnProperty("SkuCode")) {
                         if (oPayload["SkuCode"] === "") {
                             MessageToast.show("kindly Select a Pack To Continue.");
@@ -850,6 +865,10 @@ sap.ui.define(
                     }
                     if (oPayload["RewardPoints"] == "") {
                         MessageToast.show("Kindly Input Reward Points to Continue.");
+                        return;
+                    }
+                    if (!bFlagValidate) {
+                        MessageToast.show("Kindly enter the fields in proper format.");
                         return;
                     }
                     var oPayloadNew = Object.assign({}, oPayload);
@@ -2361,6 +2380,9 @@ sap.ui.define(
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
                                     ele[aCheckProp[a]] = null;
+
+                                } else {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
                                 }
                             }
 
@@ -2395,6 +2417,8 @@ sap.ui.define(
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
                                     ele[aCheckProp[a]] = null;
+                                }else {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
                                 }
                             }
                             return ele;
@@ -2419,11 +2443,14 @@ sap.ui.define(
                             //"RewardGiftId",
                             "RewardCash",
                         ];
+                        
                         aFinalArray = oDataTbl.filter(function (ele) {
 
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
                                     ele[aCheckProp[a]] = null;
+                                }else {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
                                 }
                             }
                             return ele;

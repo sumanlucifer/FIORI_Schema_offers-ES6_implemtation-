@@ -125,26 +125,26 @@ sap.ui.define(
                                                     if (oInternalValue.length > 0) {
                                                         oControlBinding.getType().validateValue(oInternalValue);
                                                     } else {
-                                                        oControlBinding.getModel().setProperty(oControlBinding.getPath(),[]);
+                                                        oControlBinding.getModel().setProperty(oControlBinding.getPath(), []);
                                                     }
-                                                }else {
-                                                     oControlBinding.getType().validateValue(oInternalValue);
+                                                } else {
+                                                    oControlBinding.getType().validateValue(oInternalValue);
                                                 }
-                                                
+
 
                                                 //debugger;
                                             } // Non Manditory fields remove the value property
                                             else {
                                                 var sPathB = oControlBinding.getPath();
                                                 var oModel = oControlBinding.getModel();
+                                                if (oControlBinding.getContext()) {
+                                                    oModel.setProperty(oControlBinding.getContext().getPath()+"/"+oControlBinding.getPath(), "");
+                                                } else {
+                                                    oModel.setProperty(sPathB, "");
+                                                }
+                                                //oModel.setProperty(sPathB, "");
                                                 //oModel.setProperty(sPathB, "");
 
-                                                if (oControl.getBindingContext("oModelView") === undefined) {
-                                                    oModel.setProperty(sPathB, "");
-                                                } else {
-                                                    var oBindCtxtPath = oControl.getBindingContext("oModelView").getPath() + "/" + sPathB;
-                                                    oControlBinding.getModel("oModelView").setProperty(oBindCtxtPath, "");
-                                                }
                                             }
                                         }
                                     }
