@@ -46,6 +46,7 @@ sap.ui.define(
                         ProbingSteps: "",
                         ComplainCode: "",
                         ComplainId: oProp,
+                        bBusy: false
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -82,10 +83,10 @@ sap.ui.define(
                             },
                             events: {
                                 dataRequested: function (oEvent) {
-                                    oView.setBusy(true);
+                                  //  oView.setBusy(true);
                                 },
                                 dataReceived: function (oEvent) {
-                                    oView.setBusy(false);
+                                  //  oView.setBusy(false);
                                 },
                             },
                         });
@@ -99,6 +100,7 @@ sap.ui.define(
                     var oDataValue = "";
                     var othat = this;
                     var exPand = "PainterComplainProducts/ProductPackDetails/ProductDetails/ProductCategory,PainterComplainProducts/ProductPackDetails/ProductCategoryDetails";
+                    oView.getModel("oModelControl").setProperty("/bBusy", true);
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
                             $expand: exPand,
@@ -106,11 +108,14 @@ sap.ui.define(
                         },
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
-                            console.log(data);
+                            oView.getModel("oModelControl").setProperty("/bBusy", false);
                             oView.setModel(oViewModel, "oModelView");
                           
                         },
-                        error: function () { },
+                        error: function () {
+                            oView.getModel("oModelControl").setProperty("/bBusy", false);
+
+                         },
                     });
                     promise.resolve();
                     return promise;
