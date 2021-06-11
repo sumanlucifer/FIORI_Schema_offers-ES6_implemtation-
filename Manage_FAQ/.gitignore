@@ -1,70 +1,9 @@
 /mta_archives/
 /node_modules/
 /resources/
-
+/dist/
  
 
 *.env1
 *.zip
 .vscode/
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-# auto generated wildcard
-knpl-influencer-web/OrganizationSetup/.env2
-# auto generated wildcard
-knpl-influencer-web/CompanySettings/.env3
-# auto generated wildcard
-knpl-influencer-web/DealerManagement/.env5
-# auto generated wildcard
-knpl-influencer-web/DealerManagement/.env6
-# auto generated wildcard
-knpl-influencer-web/OrganizationSetup/.env3
-# auto generated wildcard
-knpl-influencer-web/CompanySettings/.env4
-# auto generated wildcard
-knpl-influencer-web/Catelogue/.env2
-# auto generated wildcard
-knpl-influencer-web/DealerManagement/.env7
-# auto generated wildcard
-knpl-cp/ContactPainter/.env16
-# auto generated wildcard
-knpl-cp/ContactPainter/.env2
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env2
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env3
-# auto generated wildcard
-complaint/Complaints/.env2
-# auto generated wildcard
-knpl-influencer-web/ContactPainter/.env4
-# auto generated wildcard
-<<<<<<< HEAD
-knpl/ContactPainter/.env2
->>>>>>> aditya
-=======
-debasisa_web/Manage_FAQ/.env
-# auto generated wildcard
-debasisa_web/Manage_Notifications/.env2
->>>>>>> debasisa
-=======
-# auto generated wildcard
-debasisa_web/Manage_FAQ/.env
-# auto generated wildcard
-debasisa_web/Manage_Notifications/.env2
-# auto generated wildcard
-training/Training_Learning/.env9
-# auto generated wildcard
-training/Training_Learning/.env10
-# auto generated wildcard
-Training/Training_Learning/.env11
-# auto generated wildcard
-FAQ/Manage_FAQ/.env3
->>>>>>> ProdFaq
-=======
-
-# auto generated wildcard
-knpl-influencer-web/condonation/.env3
->>>>>>> origin/condonation
