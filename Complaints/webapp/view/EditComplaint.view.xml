@@ -66,13 +66,22 @@
          
         </f:content>
         <f:footer>
-            <Toolbar>
+            <!-- <Toolbar>
                 <ToolbarSpacer/>
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
-                 <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
+                <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
                 <Button visible="{oModelControl>/workFlowFlag/Button2}" id="save" text="Save" type="Emphasized" press="handleSavePress"/>
 
-            </Toolbar>
+            </Toolbar> -->
+            <OverflowToolbar>
+              <ToolbarSpacer/>
+              <Button press="handleCancelPress"  text="{i18n>Cancel}"  />
+              <Button press="onWithdraw"         text="{i18n>btnWithdraw}" type="Negative"  />
+              <Button press="onPressEscalate"    text="{i18n>Escalate}" type="Critical" />
+              <Button press=".onApproval(true)"  text="{i18n>btnApprove}" type="Accept"  />
+              <Button press=".onApproval(false)" text="{i18n>btnReject}"  type="Reject"  />
+              <Button press="handleSavePress"    text="{i18n>btnResolve}" type="Emphasized" />
+            </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
 </mvc:View>
