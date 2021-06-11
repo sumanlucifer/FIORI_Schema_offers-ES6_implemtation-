@@ -56,17 +56,17 @@ sap.ui.define([
 
                 this._property = "MasterCompanySettingsSet(1)";
 
-                this.showPdfList();
+               // this.showPdfList();
 
 
                 // this.oRouter.getRoute("RouteHome").attachPatternMatched(this.onRoteMatched, this);
             },
             _onObjectMatched: function () {
+                this.showPdfList();
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
                 var oModel = this.getView().getModel();
                 oModel.refresh(true);
-
             },
             handleEditPress: function () {
                 this.getView().getModel("local").setProperty("/bEdit", true);
