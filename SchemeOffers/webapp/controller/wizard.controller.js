@@ -44,7 +44,7 @@ sap.ui.define([
             }
         },
         onInit: function () {
-           
+
             sap.ui.getCore().attachValidationError(function (oEvent) {
                 if (oEvent.getParameter("element").getRequired()) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -59,7 +59,16 @@ sap.ui.define([
         },
         onAfterRendering: function () {
             console.log("onAfter Rendering");
-            console.log(this.getView().getModel("oModelControl"));
+
+            this._setWizardlayout2();
+
+        },
+        _setWizardlayout1: function () {
+            var aStep = this.getView().byId("ProductTypeStep")
+            this.getView().byId("CreateProductWizard").setCurrentStep(aStep);
+            this.getView().byId("CreateProductWizard").setShowNextButton(true);
+        },
+        _setWizardlayout2: function () {
             var aStep = this.getView().byId("ProductTypeStep")
             this.getView().byId("CreateProductWizard").goToStep(aStep);
             this.getView().byId("CreateProductWizard").setShowNextButton(false);
