@@ -52,7 +52,7 @@
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table3Label1}">
 								<f:fields>
-										<Input  required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'',minLength:1,maxLength:4}}" />
+										<Input  required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
 								</f:fields>
 							</f:FormElement>
 							

@@ -35,12 +35,20 @@
                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>statusFilterLabel}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Active" label="{i18n>Active}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Status}">
-                                        <core:Item text="Active" key="true"/>
-                                         <core:Item text="Inactive" key="false"/>
+                                   <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Active}">
+                                        <core:Item text="Yes" key="true"/>
+                                         <core:Item text="No" key="false"/>
                                         
+                                    </ComboBox>
+
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>tblColStatus}" visibleInFilterBar="true">
+                                <fb:control>
+                                   <ComboBox placeholder="{i18n>placeHolder1}"  selectedKey="{oModelControl>/filterBar/Status}">
+                                        <core:Item text="Pending" key="PENDING"/>
                                     </ComboBox>
 
                                 </fb:control>
@@ -78,7 +86,7 @@
             <Table
                 id="idOffersTable"
                 width="auto"
-               items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive' }}"
+               items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus' }}"
                 noDataText="{i18n>tableNoDataText}"
                 growing="true"
                 growingScrollToLoad="false"
@@ -101,9 +109,7 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>offerTypeFilterLabel}"/>
                     </Column>
-                    <!-- <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="{i18n>tblColReward}"/>
-                    </Column> -->
+               
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColStartDate}"/>
                     </Column>
@@ -115,7 +121,10 @@
                     </Column>
                 
                     <Column>
-                        <Text text="{i18n>tolColActiveStatus}"/>
+                        <Text text="{i18n>Active}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>tolColActiveStatus}2"/>
                     </Column>
                   <Column width="8%">
                         <Text text="{i18n>tblColAction}"/>
@@ -133,7 +142,8 @@
                              <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
-                            <ObjectStatus text="{= ${IsActive} === true ? 'Active' : 'Inactive' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
+                            <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
+                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}"  state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                              <HBox justifyContent="Start">
                                 <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
