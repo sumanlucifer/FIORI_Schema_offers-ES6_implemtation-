@@ -56,6 +56,7 @@ sap.ui.define([
 
             var oDataControl = {
                 bBusy: false,
+                bPayloadSent: false,
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
                     MembershipId: "",
@@ -138,13 +139,15 @@ sap.ui.define([
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
 
-            if( oView.getModel("oModelControl").getProperty("/bBusy") )
+            if( oView.getModel("oModelControl").getProperty("/bPayloadSent") )
             {
                 return;
             }
 
             //console.log(oPayLoad);
             oView.getModel("oModelControl").setProperty("/bBusy", true);
+            oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
+
             //Double click issue solution
             
            oData.create("/PainterComplainsSet", oPayLoad, {
@@ -154,6 +157,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                 },
                 error: function (a) {
+                    oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
                         "Unable to create Condonation request due to the server issues",
