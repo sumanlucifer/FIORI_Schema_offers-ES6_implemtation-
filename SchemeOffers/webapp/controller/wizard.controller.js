@@ -1,54 +1,71 @@
 sap.ui.define([
-	'sap/ui/core/mvc/Controller',
-	'sap/ui/core/library'
-], function (Controller, coreLibrary) {
-	"use strict";
+    'sap/ui/core/mvc/Controller',
+    'sap/ui/core/library',
+    "sap/ui/core/ValueState",
+    "com/knpl/pragati/SchemeOffers/controller/BaseController",
+    "com/knpl/pragati/SchemeOffers/model/customInt",
+    "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
+], function (Controller, coreLibrary, ValueState, BaseController, customInt, cmbxDtype2) {
+    "use strict";
 
-	// shortcut for sap.ui.core.ValueState
-	var ValueState = coreLibrary.ValueState;
+    // shortcut for sap.ui.core.ValueState
 
-	return Controller.extend("com.knpl.pragati.SchemeOffers.controller.wizard", {
-		_syncSelect: function (sStepId) {
-			var oModel = this.getView().getModel();
-			oModel.setProperty('/linearWizardSelectedStep', sStepId);
-		},
 
-		validateProdInfoStep: function (abc) {
-			var oModel = this.getView().getModel(),
-				oProdInfoStep = this.getView().byId(abc);
-				var aStep = this.getView().byId("ProductTypeStep")
-                var aWizard = this.getView().byId("CreateProductWizard")
+    return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.wizard", {
+        customInt: customInt,
+        cmbxDtype2: cmbxDtype2,
+        _syncSelect: function (sStepId) {
+            var oModel = this.getView().getModel();
+            oModel.setProperty('/linearWizardSelectedStep', sStepId);
+        },
+
+        validateProdInfoStep: function (abc) {
+            var oModel = this.getView().getModel(),
+                oProdInfoStep = this.getView().byId(abc);
+            var aStep = this.getView().byId("ProductTypeStep")
+            var aWizard = this.getView().byId("CreateProductWizard")
             oProdInfoStep.setValidated();
             console.log(aWizard)
             console.log(aStep)
             //this.getView().byId("CreateProductWizard").goToStep()
             //aWizard.previouStep()
-		},
+        },
 
-		onActivate: function (oEvent) {
-			var sCurrentStepId = oEvent.getParameter("id");
+        onActivate: function (oEvent) {
+            var sCurrentStepId = oEvent.getParameter("id");
             sCurrentStepId = sCurrentStepId.split('-').pop();
             var oView = this.getView()
 
-			this._syncSelect(sCurrentStepId);
-            console.log("Step Activated",sCurrentStepId)
-			if (sCurrentStepId === 'PricingStep') {
+            this._syncSelect(sCurrentStepId);
+            console.log("Step Activated", sCurrentStepId)
+            if (sCurrentStepId === 'PricingStep') {
                 //this.validateProdInfoStep(sCurrentStepId);
-               
-			}
+
+            }
         },
-        onInit:function(){
+        onInit: function () {
             console.log("onInit");
             console.log(this.getView().getModel("oModelView"));
+            sap.ui.getCore().attachValidationError(function (oEvent) {
+                if (oEvent.getParameter("element").getRequired()) {
+                    oEvent.getParameter("element").setValueState(ValueState.Error);
+                } else {
+                    oEvent.getParameter("element").setValueState(ValueState.None);
+                }
+            });
+            sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                oEvent.getParameter("element").setValueState(ValueState.None);
+            });
+
         },
-        onAfterRendering:function(){
+        onAfterRendering: function () {
             console.log("onAfter Rendering");
             var aStep = this.getView().byId("ProductTypeStep")
             this.getView().byId("CreateProductWizard").goToStep(aStep);
             this.getView().byId("CreateProductWizard").setShowNextButton(false);
         },
-        onExit:function(){
+        onExit: function () {
             console.log("on Exit");
         }
-	});
+    });
 });

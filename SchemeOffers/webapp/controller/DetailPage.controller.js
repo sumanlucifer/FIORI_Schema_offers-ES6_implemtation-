@@ -1285,7 +1285,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oWizard= this.getView().byId("wizardViewBranching");
                     console.log(oWizard.byId("CreateProductWizard"))
-                    //this._ValidateSaveData();
+                    this._ValidateSaveData();
                 },
                 _ValidateSaveData: function () {
                     var oView = this.getView();
