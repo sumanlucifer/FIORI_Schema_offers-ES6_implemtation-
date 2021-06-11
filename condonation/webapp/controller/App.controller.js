@@ -29,7 +29,9 @@ sap.ui.define([
 
             // apply content density mode to root view
             this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
+          
+            /*
+            //No need
             this.getOwnerComponent()
                 .getModel()
                 .attachRequestSent(function () {
@@ -40,6 +42,7 @@ sap.ui.define([
                 .attachRequestCompleted(function () {
                     oViewModel.setProperty("/busy", false);
                 });
+            */
 
         }
     });

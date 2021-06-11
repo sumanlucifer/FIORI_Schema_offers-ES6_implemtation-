@@ -55,6 +55,7 @@ sap.ui.define([
             var oView = this.getView();
 
             var oDataControl = {
+                bBusy: false,
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
                     MembershipId: "",
@@ -104,6 +105,7 @@ sap.ui.define([
             var oView = this.getView()
             var oData = oView.getModel()
             var sPath = "/PainterSet(" + mParam1 + ")";
+
             oData.read(sPath, {
                 success: function () {
 
@@ -135,13 +137,19 @@ sap.ui.define([
             var oModelView = oView.getModel("oModelView");
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
-            console.log(oPayLoad);
-            oData.create("/PainterComplainsSet", oPayLoad, {
+            //console.log(oPayLoad);
+            oView.getModel("oModelControl").setProperty("/bBusy", true);
+            
+          var createM =  oData.create("/PainterComplainsSet", oPayLoad, {
                 success: function () {
+                    
+
                     MessageToast.show("Condonation request Sucessfully Submitted.")
+                    oView.getModel("oModelControl").setProperty("/bBusy", false);
                     othat.onNavBack();
                 },
                 error: function (a) {
+                    oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
                         "Unable to create Condonation request due to the server issues",
                         {
@@ -151,7 +159,7 @@ sap.ui.define([
 
                 }
             })
-
+        
         },
         onCategoryChange: function (oEvent) {
             this._ClearProdPack()
@@ -251,14 +259,19 @@ sap.ui.define([
             var oData = oView.getModel();
             var oViewModel = oView.getModel("oModelView");
             var sPath = "/PainterSet(" + mParam + ")";
+
+            //Added Busy
+            oView.getModel("oModelControl").setProperty("/bBusy", true);
+
             oData.read(sPath, {
                 urlParameters: {
                     $expand: 'Depot,PrimaryDealerDetails',
                     $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName'
                 },
                 success: function (obj) {
-                    console.log(obj)
-                    oViewModel.setProperty(
+                 oView.getModel("oModelControl").setProperty("/bBusy", false);
+                 
+                 oViewModel.setProperty(
                         "/AddFields/MembershipCard",
                         obj["MembershipCard"]
                     );
@@ -276,7 +289,7 @@ sap.ui.define([
                     }
                 },
                 error: function () {
-
+                        oView.getModel("oModelControl").setProperty("/bBusy", false);
                 }
             })
         },
@@ -355,11 +368,11 @@ sap.ui.define([
                             // otherwise there may be two busy indications next to each other on the
                             // screen. This happens because route matched handler already calls '_bindView'
                             // while metadata is loaded.
-                            oViewModel.setProperty("/busy", true);
+                            oViewModel.setProperty("/bBusy", true);
                         });
                     },
                     dataReceived: function () {
-                        oViewModel.setProperty("/busy", false);
+                        oViewModel.setProperty("/bBusy", false);
                     }
                 }
             });
