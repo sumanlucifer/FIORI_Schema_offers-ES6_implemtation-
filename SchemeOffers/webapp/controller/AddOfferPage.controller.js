@@ -275,8 +275,11 @@ sap.ui.define(
                     this._getProductsData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
+                    //this._SampleFunction();
                 },
-
+                _SampleFunction:function(){
+                    this.getView().byId("wizardViewBranching");
+                },
                 _showFormFragment: function (sFragmentName) {
                     var objSection = this.getView().byId("oVbxSmtTbl");
                     var oView = this.getView();
@@ -349,10 +352,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oValidate = new Validator();
                     var oForm = oView.byId("vBoxForms");
+                     var oWizardView = oView.byId("wizardViewBranching");
+                    var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
+                    var bFlagValidate = oValidate.validate(oSteps, true);
 
-                    var bFlagValidate = oValidate.validate(oForm, true);
-
-                    var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
+                    var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
                     var aTableValidation = this._CheckTableValidation()
 

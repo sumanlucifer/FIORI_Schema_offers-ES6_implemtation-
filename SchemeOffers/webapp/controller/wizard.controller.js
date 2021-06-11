@@ -44,8 +44,7 @@ sap.ui.define([
             }
         },
         onInit: function () {
-            console.log("onInit");
-            console.log(this.getView().getModel("oModelView"));
+           
             sap.ui.getCore().attachValidationError(function (oEvent) {
                 if (oEvent.getParameter("element").getRequired()) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -60,6 +59,7 @@ sap.ui.define([
         },
         onAfterRendering: function () {
             console.log("onAfter Rendering");
+            console.log(this.getView().getModel("oModelControl"));
             var aStep = this.getView().byId("ProductTypeStep")
             this.getView().byId("CreateProductWizard").goToStep(aStep);
             this.getView().byId("CreateProductWizard").setShowNextButton(false);

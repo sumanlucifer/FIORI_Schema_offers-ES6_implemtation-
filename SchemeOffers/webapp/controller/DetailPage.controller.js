@@ -37,8 +37,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.SchemeOffers.controller.DetailPage",
-            {
+            "com.knpl.pragati.SchemeOffers.controller.DetailPage", {
                 formatter: Formatter,
                 customInt: customInt,
                 cmbxDtype2: cmbxDtype2,
@@ -217,15 +216,23 @@ sap.ui.define(
                         oData: {
                             Products: [],
                             Packs: [],
-                            PerGrowth: [
-                                { Name: "1" },
-                                { Name: "2" },
-                                { Name: "3" },
-                                { Name: "4" },
-                                { Name: "5" },
-                            ],
-                            Rewards: [
+                            PerGrowth: [{
+                                    Name: "1"
+                                },
                                 {
+                                    Name: "2"
+                                },
+                                {
+                                    Name: "3"
+                                },
+                                {
+                                    Name: "4"
+                                },
+                                {
+                                    Name: "5"
+                                },
+                            ],
+                            Rewards: [{
                                     key: 1,
                                     Name: "TV",
                                 },
@@ -443,7 +450,9 @@ sap.ui.define(
 
                     if (oData["OfferDepot"]["results"].length > 0) {
                         for (var x of oData["OfferDepot"]["results"]) {
-                            aDepots.push({ DepotId: x["DepotId"] });
+                            aDepots.push({
+                                DepotId: x["DepotId"]
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/Depots", aDepots);
@@ -459,8 +468,8 @@ sap.ui.define(
                         oData["OfferApplicableProductClassification"]["results"].length > 0
                     ) {
                         for (var x of oData["OfferApplicableProductClassification"][
-                            "results"
-                        ]) {
+                                "results"
+                            ]) {
                             PClass1.push(x["ProductClassificationCode"]);
                         }
                     }
@@ -540,8 +549,8 @@ sap.ui.define(
                         oData["OfferNonBuyerProductClassification"]["results"].length > 0
                     ) {
                         for (var x of oData["OfferNonBuyerProductClassification"][
-                            "results"
-                        ]) {
+                                "results"
+                            ]) {
                             PClass3.push(x["ProductClassificationCode"]);
                         }
                     }
@@ -906,15 +915,23 @@ sap.ui.define(
                         oData: {
                             Products: [],
                             Packs: [],
-                            PerGrowth: [
-                                { Name: "1" },
-                                { Name: "2" },
-                                { Name: "3" },
-                                { Name: "4" },
-                                { Name: "5" },
-                            ],
-                            Rewards: [
+                            PerGrowth: [{
+                                    Name: "1"
+                                },
                                 {
+                                    Name: "2"
+                                },
+                                {
+                                    Name: "3"
+                                },
+                                {
+                                    Name: "4"
+                                },
+                                {
+                                    Name: "5"
+                                },
+                            ],
+                            Rewards: [{
                                     key: 1,
                                     Name: "TV",
                                 },
@@ -1092,7 +1109,9 @@ sap.ui.define(
 
                     if (oData["OfferDepot"]["results"].length > 0) {
                         for (var x of oData["OfferDepot"]["results"]) {
-                            aDepots.push({ DepotId: x["DepotId"] });
+                            aDepots.push({
+                                DepotId: x["DepotId"]
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/Depots", aDepots);
@@ -1108,8 +1127,8 @@ sap.ui.define(
                         oData["OfferApplicableProductClassification"]["results"].length > 0
                     ) {
                         for (var x of oData["OfferApplicableProductClassification"][
-                            "results"
-                        ]) {
+                                "results"
+                            ]) {
                             PClass1.push(x["ProductClassificationCode"]);
                         }
                     }
@@ -1201,8 +1220,8 @@ sap.ui.define(
                         oData["OfferNonBuyerProductClassification"]["results"].length > 0
                     ) {
                         for (var x of oData["OfferNonBuyerProductClassification"][
-                            "results"
-                        ]) {
+                                "results"
+                            ]) {
                             PClass3.push(x["ProductClassificationCode"]);
                         }
                     }
@@ -1283,7 +1302,7 @@ sap.ui.define(
 
                 handleSavePress: function () {
                     var oView = this.getView();
-                    var oWizard= this.getView().byId("wizardViewBranching");
+                    var oWizard = this.getView().byId("wizardViewBranching");
                     console.log(oWizard.byId("CreateProductWizard"))
                     this._ValidateSaveData();
                 },
@@ -1291,11 +1310,12 @@ sap.ui.define(
                     var oView = this.getView();
                     var oValidate = new Validator();
                     var oForm = oView.byId("vBoxForms");
-
-                    var bFlagValidate = oValidate.validate(oForm, true);
+                    var oWizardView = this.getView().byId("wizardViewBranching");
+                    var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
+                    var bFlagValidate = oValidate.validate(oSteps, true);
                     var aTableValidation = this._CheckTableValidation();
 
-                    var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
+                    var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
 
                     if (bFlagValidate == false) {
@@ -1436,7 +1456,7 @@ sap.ui.define(
                     return obj;
                 },
 
-                _reLoadInitData: function () { },
+                _reLoadInitData: function () {},
 
                 _loadEditProfile: function (mParam) {
                     var oView = this.getView();
@@ -1476,7 +1496,7 @@ sap.ui.define(
                     promise.resolve();
                     return promise;
                 },
-               
+
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -1515,7 +1535,7 @@ sap.ui.define(
                         success: function () {
                             othat._navToHome();
                         },
-                        error: function () { },
+                        error: function () {},
                     });
                 },
                 onIcnTbarChange: function (oEvent) {
@@ -1600,7 +1620,7 @@ sap.ui.define(
                         success: function () {
                             othat._navToHome();
                         },
-                        error: function () { },
+                        error: function () {},
                     });
                 },
             }

@@ -27,7 +27,7 @@
 							id="wizardViewBranching"
 							async="true"
 						
-							viewName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail2" />
+							viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
         </layout:VerticalLayout>
           
 
