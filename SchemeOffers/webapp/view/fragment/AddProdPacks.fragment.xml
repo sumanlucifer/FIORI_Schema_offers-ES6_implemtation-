@@ -8,7 +8,7 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<f:Form binding="{oModelControl>/Dialog/Bonus1}"  editable="false" >
+			<f:Form id="FormAddProdPacks" binding="{oModelControl>/Dialog/Bonus1}"  editable="false" >
 				<f:layout>
 					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
 						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
@@ -36,17 +36,17 @@
 							</f:FormElement>
 							<f:FormElement label="{i18n>RequiredVolume}">
 								<f:fields>
-										<Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type:'.cmbxDtype2'}" />
+										<Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:4} }" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table1Label2}">
 								<f:fields>
-									 <Input placeholder="{i18n>placeHolder3}" type="Number"  width="100%" value="{path:'oModelControl>RequiredPoints',type:'.cmbxDtype2'}" />
+									 <Input placeholder="{i18n>placeHolder3}" type="Number"  width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:4} }" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table1Label4}">
 								<f:fields>
-										<Input  type="Number"  required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type:'.cmbxDtype2'}" />
+										<Input  type="Number"  required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:4} }" />
 								</f:fields>
 							</f:FormElement>
                             <!-- <f:FormElement label="{i18n>Table1Label5}">
@@ -58,7 +58,7 @@
 							</f:FormElement> -->
                             <f:FormElement label="{i18n>Table1Label6}">
 								<f:fields>
-										 <Input   type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type:'.cmbxDtype2'}" />
+										 <Input   type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:4} }" />
 								</f:fields>
 							</f:FormElement>
 							
