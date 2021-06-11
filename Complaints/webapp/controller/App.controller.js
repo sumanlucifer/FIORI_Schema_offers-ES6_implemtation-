@@ -22,11 +22,26 @@ sap.ui.define(
             oViewModel.setProperty("/delay", iOriginalBusyDelay);
           };
 
+         function fnLoadLoginData (){
+                 this.getOwnerComponent().getModel()
+                     .callFunction("/GetLoggedInAdmin",{
+                                    method: "GET",
+                                    urlParameters: {
+                                    $expand: "UserType"
+                                        },
+                                    success: function(data){
+                                            oViewModel.setProperty("/loginData", data["results"].length > 0 ? data["results"][0] : null);
+                                            fnSetAppNotBusy();
+                                    }.bind(this)
+                                    });
+                }
+
           // disable busy indication when the metadata is loaded and in case of errors
           this.getOwnerComponent()
             .getModel()
             .metadataLoaded()
-            .then(fnSetAppNotBusy);
+            .then( fnLoadLoginData.bind(this) );
+
           this.getOwnerComponent()
             .getModel()
             .attachMetadataFailed(fnSetAppNotBusy);
