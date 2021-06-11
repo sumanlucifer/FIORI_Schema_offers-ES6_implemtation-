@@ -2056,18 +2056,32 @@ sap.ui.define(
                     var oEndDate = oModelControl.getProperty(sPath + "/EndDate")
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
-                            MessageToast.show("Kinldy select a date less than to date.");
+                            MessageToast.show("Kinldy select a date less than Bonus Validtiy To date.");
                             oModelControl.setProperty(sPath + "/StartDate", null);
                         }
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show(
-                            "Kindly enter a date greater than or equal to bonus validity to date"
+                            "Kindly enter a date greater than current date"
                         );
 
                         oModelControl.setProperty(sPath + "/StartDate", null);
                     }
                 },
+                onEndDateBRRChange: function (oEvent) {
+                    var oView = this.getView();
+
+                    var oModelControl = oView.getModel("oModelView");
+                    var oEndDate = oEvent.getSource().getDateValue();
+                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = oContext.getPath();
+                    var oStartDate = oModelControl.getProperty(sPath + "/StartDate")
+                    if (oStartDate >= oEndDate) {
+                        MessageToast.show("Kinldy select a date more than Bonus Validtiy From date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                    }
+                },
+
                 _propertyToBlank: function (aArray, aModel2) {
                     var aProp = aArray;
                     var oView = this.getView();

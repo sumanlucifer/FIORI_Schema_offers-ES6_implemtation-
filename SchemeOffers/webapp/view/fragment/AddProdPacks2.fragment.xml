@@ -47,7 +47,7 @@
                                 <Label text="{i18n>formBonusValidaityTo}" required="true"/>
                             </f:label>
 								<f:fields>
-									 <DatePicker  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+									 <DatePicker  change=".onEndDateBRRChange"   displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table3Label1}">
