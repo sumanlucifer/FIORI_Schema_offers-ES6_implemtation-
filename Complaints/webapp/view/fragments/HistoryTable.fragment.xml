@@ -14,7 +14,7 @@
                             placeToolbarInTable="true"
                             persistencyKey="HistoryPersistenceKey"
                              initialNoDataText="{i18n>tableNoDataText}"
-                            ignoreFromPersonalisation="Id,SkuCode,TokenCode,UpdatedBy,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,Remark,AssigneUserType">
+                            ignoreFromPersonalisation="Id,SkuCode,TokenCode,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,AssigneUserType,EscalatedAt,InitiateForceTat,EscalationType,InitiateForceTat,UpdatedBy,ComplaintDescription">
 
         <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
             <columns>
