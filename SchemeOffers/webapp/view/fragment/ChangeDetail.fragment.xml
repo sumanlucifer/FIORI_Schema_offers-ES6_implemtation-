@@ -657,7 +657,7 @@
                             </f:fields>
                         </f:FormElement>
                         
-                    <f:FormElement label="{i18n>formApplicableProducts}">
+                    <f:FormElement label="{i18n>Products}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}" >
                                              <buttons>
