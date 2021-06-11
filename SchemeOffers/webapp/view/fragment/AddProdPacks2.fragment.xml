@@ -39,7 +39,7 @@
                                 <Label text="{i18n>formBonusValidaityFrom}" required="true"/>
                             </f:label>
 								<f:fields>
-										<DatePicker  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
+										<DatePicker change=".onStartDateBRRChange"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement>

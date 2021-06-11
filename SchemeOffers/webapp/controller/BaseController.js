@@ -2047,6 +2047,27 @@ sap.ui.define(
                         oModelView.setProperty("/PerformanceEndDate", null);
                     }
                 },
+                onStartDateBRRChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oStartDate = oEvent.getSource().getDateValue();
+                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = oContext.getPath();
+                    var oEndDate = oModelControl.getProperty(sPath + "/EndDate")
+                    if (oEndDate) {
+                        if (oStartDate > oEndDate) {
+                            MessageToast.show("Kinldy select a date less than to date.");
+                            oModelControl.setProperty(sPath + "/StartDate", null);
+                        }
+                    }
+                    if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
+                        MessageToast.show(
+                            "Kindly enter a date greater than or equal to bonus validity to date"
+                        );
+
+                        oModelControl.setProperty(sPath + "/StartDate", null);
+                    }
+                },
                 _propertyToBlank: function (aArray, aModel2) {
                     var aProp = aArray;
                     var oView = this.getView();
