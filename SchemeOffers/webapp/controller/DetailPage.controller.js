@@ -1283,7 +1283,9 @@ sap.ui.define(
 
                 handleSavePress: function () {
                     var oView = this.getView();
-                    this._ValidateSaveData();
+                    var oWizard= this.getView().byId("wizardViewBranching");
+                    console.log(oWizard.byId("CreateProductWizard"))
+                    //this._ValidateSaveData();
                 },
                 _ValidateSaveData: function () {
                     var oView = this.getView();
@@ -1474,26 +1476,7 @@ sap.ui.define(
                     promise.resolve();
                     return promise;
                 },
-                onViewAttachment: function (oEvent) {
-                    var oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    if (!this._pKycDialog) {
-                        Fragment.load({
-                            name:
-                                "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
-                            controller: this,
-                        }).then(
-                            function (oDialog) {
-                                this._pKycDialog = oDialog;
-                                oView.addDependent(this._pKycDialog);
-                                this._pKycDialog.open();
-                            }.bind(this)
-                        );
-                    } else {
-                        oView.addDependent(this._pKycDialog);
-                        this._pKycDialog.open();
-                    }
-                },
+               
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },

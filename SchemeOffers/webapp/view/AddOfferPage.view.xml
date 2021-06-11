@@ -22,7 +22,12 @@
                     <Title level="H1" text="{i18n>AddTitle}" />
                     
                 </Toolbar>
-                 <VBox width="100%" id="oVbxSmtTbl" />
+                 <!-- <VBox width="100%" id="oVbxSmtTbl" /> -->
+                 	<mvc:XMLView
+							id="wizardViewBranching"
+							async="true"
+						
+							viewName="com.knpl.pragati.SchemeOffers.view.fragment.ChangeDetail2" />
         </layout:VerticalLayout>
           
 

@@ -2637,6 +2637,26 @@ sap.ui.define(
                         return promise;
                     }
                 },
+                 onViewAttachment: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    if (!this._pKycDialog) {
+                        Fragment.load({
+                            name:
+                                "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._pKycDialog = oDialog;
+                                oView.addDependent(this._pKycDialog);
+                                this._pKycDialog.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        oView.addDependent(this._pKycDialog);
+                        this._pKycDialog.open();
+                    }
+                },
                 onUploadMisMatch: function () {
                     MessageToast.show("Kindly upload a file of type .png, .jpg, .jpeg");
                 },
