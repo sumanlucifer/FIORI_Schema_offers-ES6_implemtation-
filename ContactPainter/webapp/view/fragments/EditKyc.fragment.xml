@@ -29,8 +29,8 @@
             <!--Aditya changes start-->
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button text="Approve" press="onRbKycStatus" type="Accept"/>
-				<Button text="Reject" press="onRbKycStatus" type="Reject"/>
+				<Button text="Approve" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails} !== null}"/>
+				<Button text="Reject" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails} !== null}"/>
 
 			</Toolbar>
 		<!--Aditya changes end-->

@@ -212,6 +212,9 @@ sap.ui.define(
                             Image1: "",
                             Image2: "",
                         },
+                        BankImage: {
+                            Image1: ""
+                        },
                         PainterAddBanDetails: {
                             AccountHolderName: "",
                             AccountTypeId: "",
@@ -328,6 +331,27 @@ sap.ui.define(
                             oControlModel.setProperty("/KycImage/Image2", sKycImageUrl2);
                         }
                     }
+                    /*Aditya changes start*/
+                    if (oDataValue.hasOwnProperty("PainterBankDetails")) {
+                        var oKycData = oDataValue["PainterBankDetails"];
+                        if (oKycData.hasOwnProperty("Id")) {
+                            if(oKycData["DocumentType"]==1){
+                                var sBankImageUrl1 =
+                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                oKycData["Id"] +
+                                ")/$value?image_type=cheque";
+                            }
+                            else if(oKycData["DocumentType"]==1){
+                                    var sBankImageUrl1 =
+                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                oKycData["Id"] +
+                                ")/$value?image_type=passbook";
+                            }
+                            oControlModel.setProperty("/BankImage/Image1", sBankImageUrl1);
+                            //oControlModel.setProperty("/KycImage/Image2", sBankImageUrl2);
+                        }
+                    }
+                    /*Aditya changes end*/
 
                     // setting up model to the view
                     var oNewData = Object.assign({}, oDataValue);
@@ -417,6 +441,7 @@ sap.ui.define(
 
                 onCloseStatus: function () {
                     this.byId("ChangeStatus").close();
+                    
                 },
 
                 onChangeStatus: function () {
@@ -1260,6 +1285,27 @@ sap.ui.define(
                         this._pKycDialog.open();
                     }
                 },
+                /*Aditya changes start*/
+                onBankView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    if (!this._pKycDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.BankDialog",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._pKycDialog = oDialog;
+                                oView.addDependent(this._pKycDialog);
+                                this._pKycDialog.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        oView.addDependent(this._pKycDialog);
+                        this._pKycDialog.open();
+                    }
+                },
+                 /*Aditya changes end*/
                 onPressCloseDialog: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
