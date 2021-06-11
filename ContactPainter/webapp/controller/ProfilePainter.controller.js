@@ -133,6 +133,7 @@ sap.ui.define(
 
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
+                    this._loadEditKyc("Display");/*Aditya chnages*/
                     this._toggleButtonsAndView(false);
 
 
@@ -140,7 +141,7 @@ sap.ui.define(
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
-                     oView.byId("smrtLoyalty").rebindTable();
+                    oView.byId("smrtLoyalty").rebindTable();
 
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
@@ -169,16 +170,21 @@ sap.ui.define(
                     var oCtrl2Model = oView.getModel("oModelControl2");
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
-                    var c1, c2, c3;
+                    var c1, c2, c3, c4;
                     var othat = this;
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
                         c2 = othat._loadEditBanking("Edit");
                         c2.then(function () {
-                            c3 = othat._initEditData();
+                            c3 = othat._loadEditKyc("Edit"); //Aditya Changes
                             c3.then(function () {
-                                othat.getView().getModel("oModelView").refresh(true);
-                                othat._setCopyForFragment();
+                                c3.then(function () {
+                                    c4 = othat._initEditData();
+                                    c4.then(function () {
+                                        othat.getView().getModel("oModelView").refresh(true);
+                                        othat._setCopyForFragment();
+                                    });
+                                });
                             });
                         });
                     });
@@ -205,6 +211,9 @@ sap.ui.define(
                         KycImage: {
                             Image1: "",
                             Image2: "",
+                        },
+                        BankImage: {
+                            Image1: ""
                         },
                         PainterAddBanDetails: {
                             AccountHolderName: "",
@@ -322,6 +331,27 @@ sap.ui.define(
                             oControlModel.setProperty("/KycImage/Image2", sKycImageUrl2);
                         }
                     }
+                    /*Aditya changes start*/
+                    if (oDataValue.hasOwnProperty("PainterBankDetails")) {
+                        var oKycData = oDataValue["PainterBankDetails"];
+                        if (oKycData.hasOwnProperty("Id")) {
+                            if(oKycData["DocumentType"]==1){
+                                var sBankImageUrl1 =
+                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                oKycData["Id"] +
+                                ")/$value?image_type=cheque";
+                            }
+                            else if(oKycData["DocumentType"]==1){
+                                    var sBankImageUrl1 =
+                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                oKycData["Id"] +
+                                ")/$value?image_type=passbook";
+                            }
+                            oControlModel.setProperty("/BankImage/Image1", sBankImageUrl1);
+                            //oControlModel.setProperty("/KycImage/Image2", sBankImageUrl2);
+                        }
+                    }
+                    /*Aditya changes end*/
 
                     // setting up model to the view
                     var oNewData = Object.assign({}, oDataValue);
@@ -1189,26 +1219,52 @@ sap.ui.define(
                     }
                 },
                 onRbBankStatus: function (oEvent) {
-                    var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var oView = this.getView();
+                    // var oModelView = oView.getModel("oModelView");
+
+                    // if (iIndex == 0) {
+                    //     oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+                    // } else if (iIndex == 1) {
+                    //     oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
+                    // }
+                    /*Aditya changes start*/
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-
-                    if (iIndex == 0) {
+                    var statusText = oEvent.getSource().getProperty('text');
+                    if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                    } else if (iIndex == 1) {
+                    } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
                     }
+                    function onYes() {
+                               this.handleSavePress();
+                            }
+                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+                    /*Aditya changes end*/
                 },
                 onRbKycStatus: function (oEvent) {
-                    var iIndex = oEvent.getSource().getSelectedIndex();
+                    // var iIndex = oEvent.getSource().getSelectedIndex();
+                    // if (iIndex == 0) {
+                    //     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
+                    // } else if (iIndex == 1) {
+                    //     oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
+                    // }
+                    /*Aditya changes start*/
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-
-                    if (iIndex == 0) {
+                    var statusText = oEvent.getSource().getProperty('text');
+                    if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                    } else if (iIndex == 1) {
+                    } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
                     }
+                    function onYes() {
+                               this.handleSavePress();
+                            }
+                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+
+                    /*Aditya changes end*/
                 },
                 onKycView: function (oEvent) {
                     var oButton = oEvent.getSource();
@@ -1229,6 +1285,27 @@ sap.ui.define(
                         this._pKycDialog.open();
                     }
                 },
+                /*Aditya changes start*/
+                onBankView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    if (!this._pKycDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.BankDialog",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._pKycDialog = oDialog;
+                                oView.addDependent(this._pKycDialog);
+                                this._pKycDialog.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        oView.addDependent(this._pKycDialog);
+                        this._pKycDialog.open();
+                    }
+                },
+                 /*Aditya changes end*/
                 onPressCloseDialog: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -1717,6 +1794,26 @@ sap.ui.define(
                         return promise;
                     });
                 },
+                /*Aditya changes start*/
+                _loadEditKyc: function (mParam) {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var othat = this;
+                    var oVboxProfile = oView.byId("idVbKyc");
+                    var sFragName = mParam == "Edit" ? "EditKyc" : "Kyc";
+                    oVboxProfile.destroyItems();
+                    return Fragment.load({
+                        id: oView.getId(),
+                        controller: othat,
+                        name: "com.knpl.pragati.ContactPainter.view.fragments." + sFragName,
+                    }).then(function (oControlProfile) {
+                        oView.addDependent(oControlProfile);
+                        oVboxProfile.addItem(oControlProfile);
+                        promise.resolve();
+                        return promise;
+                    });
+                },
+                /*Aditya changes end*/
 
                 handleCancelPress: function () {
                     this._toggleButtonsAndView(false);
@@ -1726,6 +1823,7 @@ sap.ui.define(
                     oCtrlModel2.setProperty("/iCtbar", true);
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
+                    this._loadEditKyc("Display");/*Aditya chnages*/
                     oView.getModel().refresh(true);
                 },
 

@@ -7,6 +7,7 @@
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:vm="sap.ui.comp.variants"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
         <!-- <f:title>
@@ -104,6 +105,25 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="KycStatus" label="{i18n>KycStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>KycStatus}" selectedKey="{oModelControl>/filterBar/KycStatus}">
+                                        <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="In Progress" key="INPROGRESS"/>
+                                      </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="BankDetailsStatus" label="{i18n>BankDetailsStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>BankDetailsStatus}" selectedKey="{oModelControl>/filterBar/BankDetailsStatus}">
+                                        <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                      </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
@@ -172,8 +192,25 @@
                             <Text text="{Mobile}"/>
                             <Text text="{PrimaryDealerDetails/DealerName}"/>
                             <Text text="{path:'Preference/Language/Language'}"/>
-                            <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/>
-                            <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/>
+                            <!-- <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/> -->
+                            <!-- <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/> -->
+                            <!-- Aditya changes start-->
+                            <FlexBox >
+                            <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
+                            <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                            </FlexBox>
+                            <FlexBox >
+                             <ObjectStatus visible="{= ${PainterBankDetails} === null}" text="Not Submitted" state="Error"/>
+                             <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                            </FlexBox>
+                            
+                             <!-- <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
+                            <!-- <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
+                            <!-- Aditya changes end-->
                             <Text text="{= ${ProfileCompleted}===true?'Yes':'No'}"/>
                             <!-- <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/> -->
                             <HBox justifyContent="End">

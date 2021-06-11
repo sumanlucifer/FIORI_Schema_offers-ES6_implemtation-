@@ -1,7 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    'sap/ui/core/BusyIndicator'
-], function (Controller, BusyIndicator) {
+    'sap/ui/core/BusyIndicator',
+    "sap/m/MessageToast",
+	"sap/m/MessageBox"
+
+], function (Controller, BusyIndicator,MessageToast,MessageBox) {
     "use strict";
 
     return Controller.extend("com.knpl.pragati.ContactPainter.controller.BaseController", {
@@ -70,6 +73,18 @@ sap.ui.define([
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },
+        showWarning: function (sMsgTxt, _fnYes) {
+			var that = this;
+			MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+				actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+				onClose: function (sAction) {
+					if (sAction === "YES") {
+						_fnYes && _fnYes.apply(that);
+					}
+				}
+			});
+        },
+
         fnCheckProfileCompleted: function(oData){
             console.log("Function Called");
           //check if aleady completed

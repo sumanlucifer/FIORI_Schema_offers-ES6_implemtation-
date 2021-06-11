@@ -1,31 +1,44 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
+    <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{i18n>BankingDetails}"/>
+                 <ObjectStatus visible="{= ${PainterBankDetails} === null}" text="Not Submitted" state="Error"/>
+                <ObjectStatus visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status', formatter: '.fmtStatus'}" state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
-                <core:Title text="{i18n>BankingDetails}"/>
+                <core:Title text=""/>
                 <Label text="{i18n>RegistrationDate}"/>
                 <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>IFSCCode}"/>
                 <Text text="{PainterBankDetails/IfscCode}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankName}"/>
                 <Text text="{PainterBankDetails/BankNameDetails/BankName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <core:Title text=""/>
                 <Label text="{i18n>AccountType}"/>
                 <Text text="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountNumber}"/>
                 <Text text="{PainterBankDetails/AccountNumber}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>AccountHolderName}"/>
                 <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
+                <core:Title text=""/>
                 <Label text="{i18n>BankDetailsStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
-                <core:Title text="{i18n>KYCDetails}"/>
+                <!-- <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
                 <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Label text="{i18n>Status}"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
-                <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/> -->
                 
             </f:content>
         </f:SimpleForm>
+    </content>
+	</Panel>
     </VBox>
 </core:FragmentDefinition>
