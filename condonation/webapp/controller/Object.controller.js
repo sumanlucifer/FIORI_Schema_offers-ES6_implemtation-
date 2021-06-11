@@ -137,16 +137,21 @@ sap.ui.define([
             var oModelView = oView.getModel("oModelView");
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
+
+            if( oView.getModel("oModelControl").getProperty("/bBusy") )
+            {
+                return;
+            }
+
             //console.log(oPayLoad);
             oView.getModel("oModelControl").setProperty("/bBusy", true);
+            //Double click issue solution
             
-          var createM =  oData.create("/PainterComplainsSet", oPayLoad, {
-                success: function () {
-                    
-
+           oData.create("/PainterComplainsSet", oPayLoad, {
+                success: function () {      
                     MessageToast.show("Condonation request Sucessfully Submitted.")
-                    oView.getModel("oModelControl").setProperty("/bBusy", false);
                     othat.onNavBack();
+                    oView.getModel("oModelControl").setProperty("/bBusy", false);
                 },
                 error: function (a) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
