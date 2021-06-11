@@ -4,7 +4,7 @@
     xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Wizard id="CreateProductWizard" finishButtonText="Finish" currentStep="PricingStep" class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
+    <Wizard id="CreateProductWizard" finishButtonText="Finish" currentStep="wzdStep6" class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
         <steps>
             <WizardStep id="ProductTypeStep" title="{i18n>BasicInformation}" activate="onActivate">
                 <content>
@@ -31,21 +31,10 @@
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatioBonus" type="XML"/>
                 </content>
             </WizardStep>
-            <WizardStep id="PricingStep" title="Pricing" activate="onActivate">
-                <MessageStrip class="sapUiSmallMarginBottom" text="You can use the wizard previousStep() and nextStep() methods to navigate from step to step without validation. Also you can use the GoToStep(step) method to scroll programmatically to previously visited steps." showIcon="true"/>
-                <form:SimpleForm editable="true">
-                    <Label text="Price"/>
-                    <Input value="{/productPrice}"/>
-                    <Label text="Discoung group"/>
-                    <MultiComboBox>
-                        <core:Item key="Children" text="Kids"/>
-                        <core:Item key="Children" text="Teens"/>
-                        <core:Item key="Children" text="Adults"/>
-                        <core:Item key="Children" text="Old people"/>
-                    </MultiComboBox>
-                    <Label text=" VAT is included"/>
-                    <CheckBox selected="{/productVAT}"/>
-                </form:SimpleForm>
+              <WizardStep id="wzdStep6" title="{i18n>AdditionalInformation}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.AddInformation" type="XML"/>
+                </content>
             </WizardStep>
         </steps>
     </Wizard>
