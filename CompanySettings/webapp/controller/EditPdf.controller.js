@@ -129,7 +129,7 @@ sap.ui.define([
 
                                 setTimeout(() => {
                                     oRouter.navTo("RouteHome");
-                                }, 1000);
+                                }, 100);
 
                             },
                             error: function () { },
@@ -166,6 +166,7 @@ sap.ui.define([
                 var delItems = [];
                 var property = this._property;
                 var sServiceUri = this.sServiceURI;
+                var http = "https://" + location.host + "/";
                 var oModel = this.getView().getModel("local");
                 var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
 
@@ -178,7 +179,7 @@ sap.ui.define([
                         if (delItems.file !== null) {
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                                url: http + sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
                                 cache: false,
                                 contentType: false,
                                 processData: false,

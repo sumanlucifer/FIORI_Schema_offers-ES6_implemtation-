@@ -23,7 +23,7 @@
                                                     <Text text="{i18n>selectLanguage}" />
                                                 </Column>
                                                 <Column >
-                                                    <Text text="{i18n>selectCatalogue}" />
+                                                    <Text text="{i18n>selectMedia}" />
                                                 </Column>
                                                 <Column >
                                                     <Text text="Media Name" />
@@ -51,8 +51,8 @@
                                                         
                                                         </VBox>
                                                 
-                                                        <VBox >
-                                                            <FlexBox>
+                                                        <VBox class="sapUiMediumMarginTop">
+                                                            <FlexBox >
                                                                 <VBox>
                                                                 <u:FileUploader
                                                                     id="idFormToolPdfUploader"
@@ -63,12 +63,12 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
-                                                                    maximumFileSize="10.1"
+                                                                    maximumFileSize="2.1"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
                                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text=".pdf"/>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
                                                                 </HBox>
                                                                 </VBox>
                                                             </FlexBox>
