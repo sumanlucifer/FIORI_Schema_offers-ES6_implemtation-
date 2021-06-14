@@ -16,7 +16,7 @@
                                 <RadioButtonGroup select="onRbRewardRatio" columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}">
                                     <buttons>
                                         <RadioButton text="{i18n>All}"/>
-                                        <RadioButton text="{i18n>Specific}"/>
+                                        <RadioButton text="{i18n>Specific}" enabled="{oModelControl>/OfferType/RewardRatio}" />
                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
@@ -83,14 +83,14 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
-                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
+                    <Button  icon="sap-icon://add" text="{i18n>Add}"  tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
             <columns>
-                <Column>
+                <!-- <Column>
                     <Text text="{i18n>ProductsPacks}" />
-                </Column>
+                </Column> -->
                 <Column>
                     <Label text="{i18n>RequiredVolume}" required="false"/>
                 </Column>
@@ -115,10 +115,10 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
 
-                        <VBox>
+                        <!-- <VBox>
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
-                        </VBox>
+                        </VBox> -->
                         <Label text="{path:'oModelControl>RequiredVolume'}" />
                         <Label text="{path:'oModelControl>RequiredPoints'}" />
                         <Label text="{path:'oModelControl>RewardPoints'}" />

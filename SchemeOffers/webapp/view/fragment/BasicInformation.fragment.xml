@@ -8,6 +8,7 @@
         <f:layout>
             <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
         </f:layout>
+       
         <f:formContainers>
             <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>BasicInformation}">
                 <f:formElements>
@@ -19,11 +20,12 @@
                             </ComboBox>
                         </f:fields>
                     </f:FormElement>
-                    <f:FormElement label="{i18n>formBasicInfoLbl4}">
-                        <f:fields>
-                            <DatePicker change=".onEndDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
-                        </f:fields>
-                    </f:FormElement>
+                     <f:FormElement label="{i18n>formBasicInfoLbl3}">
+                    <f:fields>
+                        <DatePicker change=".onStartDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="true"/>
+                    </f:fields>
+                </f:FormElement>
+                   
                     <f:FormElement >
                         <f:label>
                             <Label text="{i18n>OfferImage}" required="true"/>
@@ -55,20 +57,21 @@
                         <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                     </f:fields>
                 </f:FormElement>
-
-                <f:FormElement label="{i18n>formBasicInfoLbl5}">
+                 <f:FormElement label="{i18n>formBasicInfoLbl4}">
+                        <f:fields>
+                            <DatePicker change=".onEndDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
+                        </f:fields>
+                    </f:FormElement>
+             
+            </f:FormContainer>
+            <f:FormContainer title="   ">
+               <f:FormElement label="{i18n>formBasicInfoLbl5}">
                     <f:fields>
                         <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                     </f:fields>
                 </f:FormElement>
 
-            </f:FormContainer>
-            <f:FormContainer title="   ">
-                <f:FormElement label="{i18n>formBasicInfoLbl3}">
-                    <f:fields>
-                        <DatePicker change=".onStartDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="true"/>
-                    </f:fields>
-                </f:FormElement>
+               
             </f:FormContainer>
             <f:FormContainer title="{i18n>ParentChildOffer}">
                 <f:formElements>

@@ -5,7 +5,9 @@ sap.ui.define([
     "com/knpl/pragati/SchemeOffers/controller/BaseController",
     "com/knpl/pragati/SchemeOffers/model/customInt",
     "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
-], function (Controller, coreLibrary, ValueState, BaseController, customInt, cmbxDtype2) {
+      "com/knpl/pragati/SchemeOffers/model/ArrayDType1"
+
+], function (Controller, coreLibrary, ValueState, BaseController, customInt, cmbxDtype2,ArrayDType1) {
     "use strict";
 
     // shortcut for sap.ui.core.ValueState
@@ -14,6 +16,7 @@ sap.ui.define([
     return BaseController.extend("com.knpl.pragati.SchemeOffers.controller.wizard", {
         customInt: customInt,
         cmbxDtype2: cmbxDtype2,
+        ArrayDType1:ArrayDType1,
         _syncSelect: function (sStepId) {
             var oModel = this.getView().getModel();
             oModel.setProperty('/linearWizardSelectedStep', sStepId);
