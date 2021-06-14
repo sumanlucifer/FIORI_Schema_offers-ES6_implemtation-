@@ -124,7 +124,7 @@
                         <Text text="{i18n>Active}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>tolColActiveStatus}2"/>
+                        <Text text="{i18n>tolColActiveStatus}"/>
                     </Column>
                   <Column width="8%">
                         <Text text="{i18n>tblColAction}"/>
