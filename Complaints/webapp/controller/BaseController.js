@@ -38,7 +38,22 @@ sap.ui.define([
 		 */
 		setModel : function (oModel, sName) {
 			return this.getView().setModel(oModel, sName);
-		},
+        },
+        
+          fmtStatus: function (sStatus) {
+                    var newStatus = "";
+                    if (sStatus === "REGISTERED") {
+                        newStatus = "Registered";
+                    } else if (sStatus === "INREVIEW") {
+                        newStatus = "In Review";
+                    } else if (sStatus === "RESOLVED") {
+                        newStatus = "Resolved";
+                    } else if (sStatus === "WITHDRAWN") {
+                        newStatus = "Withdrawn";
+                    }
+
+                    return newStatus;
+                },
 
 		/**
 		 * Getter for the resource bundle.
@@ -60,6 +75,20 @@ sap.ui.define([
 
 
         },
+         _getRoleLevel: function (sRole) {
+                    switch (sRole) {
+                        case "AGENT":
+                            return 1;
+                        case "TL":
+                            return 2;
+                        case "CC_PROJECT_MANAGER":
+                            return 3;
+                        case "HO_MARKETING":
+                            return 4;
+                        default:
+                            return 1;
+                    }
+         },
 
 		/**
 		 * Event handler when the share by E-Mail button has been clicked

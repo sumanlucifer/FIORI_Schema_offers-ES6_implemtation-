@@ -58,26 +58,36 @@ sap.ui.define(
                 formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter(this);
-                    sap.ui.getCore().attachValidationError(function (oEvent) {
-                        if (oEvent.getParameter("element").getRequired()) {
-                            oEvent.getParameter("element").setValueState(ValueState.Error);
-                        } else {
-                            oEvent.getParameter("element").setValueState(ValueState.None);
-                        }
-                    });
-                    sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-                        oEvent.getParameter("element").setValueState(ValueState.None);
-                    });
+                    /*
+                     sap.ui.getCore().attachValidationError(function (oEvent) {
+                         if (oEvent.getParameter("element").getRequired()) {
+                             oEvent.getParameter("element").setValueState(ValueState.Error);
+                         } else {
+                             oEvent.getParameter("element").setValueState(ValueState.None);
+                         }
+                     });
+                     sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+                         oEvent.getParameter("element").setValueState(ValueState.None);
+                     });
+                     */
 
                     //Himank: Workflow interaction model
                     this.oWorkflowModel = new JSONModel();
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
+
+                    var oModelView  =  new JSONModel();
+                        this.getView().setModel(oModelView, "oModelView");
                     //End
 
                     oRouter
                         .getRoute("RouteEditCmp")
                         .attachMatched(this._onRouteMatched, this);
                 },
+                onAfterRendering: function () {
+                    //Init Validation framework
+                   this._initMessage();
+                },
+
                 _onRouteMatched: function (oEvent) {
                     var oProp = window.decodeURIComponent(
                         oEvent.getParameter("arguments").prop
@@ -86,12 +96,19 @@ sap.ui.define(
                     var sExpandParam =
                         "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
                     this._initData(oProp);
+
                 },
 
                 _initData: function (oProp) {
+                    this._oMessageManager.removeAllMessages();
+
                     var oData = {
                         modeEdit: false,
+                        aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                         bindProp: "PainterComplainsSet(" + oProp + ")",
+                        ResolutionData: {
+                            PointsThrough: 0 //
+                        },
                         TokenCode: "",
                         // tokenCodeValue: "",
                         ImageLoaded: false,
@@ -104,10 +121,21 @@ sap.ui.define(
                             Button1: false,
                             Button2: true,
                         },
+                        //Resolution 
+                        PointsThrough: 0,
                         //data for Product fields
-                        ClassificationId: "",
-                        CategoryId: ""
+                        ProductCode: "",
+                        CategoryCode: ""
                     };
+
+                    /* Fields required for Post with PainterComplainProducts array index 0
+                        PainterId: 182
+                        Points: 35
+                        ProductQuantity: 6
+                        ProductSKUCode: "D9"
+                        So,maintaining     CategoryCode, ProductCode in oModelControl 
+                    */
+
                     var oDataModel;
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl");
@@ -155,8 +183,8 @@ sap.ui.define(
                             "/execution-logs";
 
                         this.oWorkflowModel.loadData(sUrl);
-                    }else {
-                          this.oWorkflowModel.setData([]);
+                    } else {
+                        this.oWorkflowModel.setData([]);
                     }
 
                     promise.resolve();
@@ -186,8 +214,6 @@ sap.ui.define(
                                     resolve();
                                 },
                             });
-
-
                         })
 
                     } else {
@@ -201,7 +227,7 @@ sap.ui.define(
 
                 },
                 _setWorkFlowFlag: function () {
-                   var promise = jQuery.Deferred();
+                    var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oLoginInfo = oView.getModel("LoginInfo").getData();
 
@@ -280,13 +306,33 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataValue = "";
                     var othat = this;
-                    var exPand = "PainterComplainsHistory";
+                    var exPand = "PainterComplainProducts,PainterComplainProducts/ProductPackDetails,AssigneUserTypeDetails";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + oProp, {
                             urlParameters: {
-                                //$expand: exPand,
+                                $expand: exPand,
                             },
                             success: function (data) {
+
+                                //Modding Product data for UI, Should have been a object from backend
+                                if (data.PainterComplainProducts.results.length > 0) {
+                                    data.PainterComplainProducts = data.PainterComplainProducts.results[0]
+                                    oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
+                                    oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
+
+                                } else {
+                                    data.PainterComplainProducts = {
+                                        PainterId: data.PainterId,
+                                        Points: "",
+                                        ProductQuantity: "",
+                                        ProductSKUCode: ""
+                                    };
+                                }
+
+                                
+
+                                
+
                                 var oViewModel = new JSONModel(data);
 
                                 oView.setModel(oViewModel, "oModelView");
@@ -310,7 +356,13 @@ sap.ui.define(
                     ) {
                         oModelControl.setProperty("/ComplainResolved", true);
                         oModelControl.setProperty("/TokenCode", "");
+                    }else{
+                        //Complaint not resolved then empty remark
+                        oModelView.setProperty("/Remark", "");
                     }
+
+                    //Setting remark
+                
                     //setting the filtering for the scenario and Type Id
                     var sComplainSubType = oModelView.getProperty("/ComplaintSubtypeId");
                     var sComplaintStatus = oModelView.getProperty("/ComplaintStatus");
@@ -364,10 +416,16 @@ sap.ui.define(
                     if (oHistoryTable) {
                         oHistoryTable.rebindTable();
                     }
+
+                    //set Complain level
+                 oModelControl.setProperty("/iComplaintLevel", this._getRoleLevel(oModelView.getProperty("/AssigneUserType")));
                     // promise.resolve();
                     // return promise;
                 },
 
+                
+
+                /*
                 onChangeStatus: function () {
                     var currObject = this.getView().getBindingContext().getObject();
                     if (currObject.ComplaintStatus == "INREVIEW" || currObject.ComplaintStatus == "REGISTERED") {
@@ -378,31 +436,49 @@ sap.ui.define(
 
                     }
                 },
+                */
 
                 filterProducts: function () {
+                    var oModelControl = this.getModel("oModelControl");
+                    oModelControl.setProperty("/ProductCode", "");
 
-                    var oProductCtrl = this.getView().byId("idProduct"),
-                        oModel = this.getView().getModel("oModelControl"),
-                        aFilters = [];
+                    this._resetAndfilter("idProduct", "CategoryCode", "ProductCategory/Id");
+                },
 
-                    if (oModel.getProperty("/ClassificationId").length > 0)
-                        aFilters.push(new Filter("ClassificationCode", FilterOperator.EQ, oModel.getProperty("/ClassificationId")));
-                    if (oModel.getProperty("/CategoryId").length > 0)
-                        aFilters.push(new Filter("CategoryCode", FilterOperator.EQ, oModel.getProperty("/CategoryId")));
+                filterPacks: function () {
+                    this._resetAndfilter("idPacks", "ProductCode", "ProductCode");
 
+                },
 
-                    oProductCtrl.getBinding("items").filter(aFilters);
-                    this.getView().getModel("oModelView").setProperty("/SkuCode", "");
+                _resetAndfilter: function (sCtrlId, sPropertyKey, sFilterKey) {
+                    var oModelControl = this.getModel("oModelControl"),
+                        oModelView = this.getModel("oModelView");
+
+                    //Reset data fields
+                    oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
+                    oModelView.setProperty("/PainterComplainProducts/Points", "");
+                    oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
+
+                    //if arguments not passed then return without filtering
+                    if (!sCtrlId)
+                        return;
+
+                    var oCtrl = this.getView().byId(sCtrlId),
+                        sKey = oModelControl.getProperty("/" + sPropertyKey);
+
+                    oCtrl.getBinding("items").filter([new Filter(sFilterKey, FilterOperator.EQ, sKey)]);
+
+                },
+
+                onPackChange: function (oEvent) {
+                    var oSelectedItem = oEvent.getSource().getSelectedItem().getBindingContext().getObject(),
+                        oModelView = this.getModel("oModelView");
+
+                    oModelView.setProperty("/PainterComplainProducts/Points", oSelectedItem.Points);
+
                 },
 
 
-                onProductChange: function () {
-
-                    var sSelectedProductPoints = this.getView().byId("idProduct").getSelectedItem().getBindingContext().getProperty("Points");
-
-                    this.getView().getModel("oModelView").setProperty("/RewardPoints", sSelectedProductPoints);
-
-                },
                 _CheckImage: function (oProp) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -462,8 +538,7 @@ sap.ui.define(
                                 if (oData !== null) {
                                     if (oData.hasOwnProperty("Status")) {
                                         if (oData["Status"] == true) {
-                                            oModelView.setProperty(
-                                                "/RewardPoints",
+                                            oModelView.setProperty("/RewardPoints",
                                                 oData["RewardPoints"]
                                             );
                                             oModelView.setProperty(
@@ -492,9 +567,8 @@ sap.ui.define(
 
 
                 showQRCodedetails: function (data) {
-
-                    var oModelView = this.getView().getModel("oModelView");
-                    oModelView.setProperty("/QRCodeData", data);
+                    var oModel = this.getView().getModel("oModelControl");
+                    oModel.setProperty("/QRCodeData", data);
 
                     if (!this.oQRCodeDialog) {
                         Fragment.load({ type: "XML", controller: this, name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails" }).then(function (oDialog) {
@@ -512,8 +586,6 @@ sap.ui.define(
                 onTokenDlgClose: function () {
                     this.oQRCodeDialog.close();
                 },
-
-
 
                 onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();
@@ -550,8 +622,122 @@ sap.ui.define(
                     oModelView.setProperty("/TokenCode", "");
                     oModelControl.setProperty("/TokenCode", "");
                 },
+
+
+                onWithdraw: function () {
+                    var oModelView = this.getModel("oModelView"),
+                        bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;;
+                    //Min Validations
+                    var validation = this._minValidation(oModelView.getData());
+                    if (validation.length > 0 ) {
+                        MessageToast.show(validation);
+                        return;
+                    }
+                   
+                    MessageBox.confirm(
+                        this.getResourceBundle().getText("MSG_WITHDRAW_CONFIRMATION",
+                            [oModelView.getProperty("/ComplaintCode")]),
+                        {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            styleClass: bCompact ? "sapUiSizeCompact" : "",
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    oModelView.setProperty("/ComplaintStatus", "WITHDRAWN");
+                                    this._postDataToSave();
+                                }
+                            }.bind(this),
+                        }
+                    );
+                },
+
+                _minValidation: function(data){
+                    var sMsg = "",
+                        aCtrlMessage = [];
+                    
+                    if(!(data.Remark))
+                    {
+                         sMsg= this.getResourceBundle().getText("MSG_REQUIRED")  
+                         aCtrlMessage.push({
+                            message: "MSG_CTRL_REMARK",
+                            target: "/Remark"
+                        });
+                    }
+
+                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
+
+                    return sMsg;
+                },
+
+                _validation: function (data, oCtrlData) {
+                      this._oMessageManager.removeAllMessages();
+                     var aCtrlMessage = [],
+                         sMsg="";
+                    
+                    //Required Field Validations
+                    if(!(data.ResolutionId)){
+                        sMsg= this.getResourceBundle().getText("MSG_REQUIRED")  
+                         aCtrlMessage.push({
+                            message: "MSG_CTRL_RESOLUTION",
+                            target: "/ResolutionId"
+                        });
+                    }
+
+                    if(!(data.Remark))
+                    {
+                         sMsg= this.getResourceBundle().getText("MSG_REQUIRED")  
+                         aCtrlMessage.push({
+                            message: "MSG_CTRL_REMARK",
+                            target: "/Remark"
+                        });
+                    }
+
+                    //Bussiness Logic 
+                    if(data.ResolutionType == 1  )
+                    {
+                        if(!(data.TokenCode)){
+                             sMsg= this.getResourceBundle().getText("MSG_REQUIRED")  
+                             aCtrlMessage.push({
+                              message: "MSG_CTRL_TOKEN",
+                              target: "/TokenCode"
+                        });
+                        }else
+                        {   if(data.RewardPoints == "")
+                            {
+                                sMsg=this.getResourceBundle().getText("MSG_TOKEN_VERIFY");
+                            }
+                        }
+                    }
+
+                    if(data.ResolutionType == 2)
+                    {
+                        if(!(data.PainterComplainProducts.ProductSKUCode)){
+                             sMsg= this.getResourceBundle().getText("MSG_REQUIRED");
+                             aCtrlMessage.push({
+                              message: "MSG_CTRL_PRODUCT",
+                              target: "/PainterComplainProducts/ProductSKUCode"
+                        });
+                            //TODO: Product and Category required
+                        }
+
+                        if(!(data.PainterComplainProducts.ProductQuantity)){
+                             sMsg= this.getResourceBundle().getText("MSG_REQUIRED");
+                             aCtrlMessage.push({
+                              message: "MSG_CTRL_QUANTITY",
+                              target: "/PainterComplainProducts/ProductQuantity"
+                        });
+                        }
+                    }          
+                   
+                    if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
+                   
+                    return sMsg;
+                },
+
                 handleSavePress: function () {
-                    var oModel = this.getView().getModel("oModelView");
+                    var oModel = this.getView().getModel("oModelView"),
+                        oModelControl = this.getView().getModel("oModelControl");
+                    /*
                     var oValidator = new Validator();
                     var oVbox = this.getView().byId("idVbx");
                     var bValidation = oValidator.validate(oVbox, true);
@@ -560,60 +746,156 @@ sap.ui.define(
                             "Kindly input the fields in proper format to continue. "
                         );
                     }
+                    */
+                    //Validations
+                    var validation = this._validation(oModel.getData(), oModelControl.getData());
 
-                    if (oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED") {
-                        if (oModel.getProperty("/ResolutionType") === 1 &&
-                            !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") {
-                            MessageToast.show("Please verify token first");
-                            return;
-                        }
-
-                        if (oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))) {
-                            MessageToast.show("Please enter Product details");
-                            return;
-                        }
+                    if (validation.length > 0 ) {
+                        MessageToast.show(validation);
+                        return;
                     }
 
-                    if (bValidation) {
-                        oModel.setProperty("/InitiateForceTat", false);
-                        this._postDataToSave();
+                    //Taken care off in validations
+                    // if (oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED") {
+                    //     if (oModel.getProperty("/ResolutionType") === 1 &&
+                    //         !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") {
+                    //         MessageToast.show("Please verify token first");
+                    //         return;
+                    //     }
+
+                    //     if (oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))) {
+                    //         MessageToast.show("Please enter Product details");
+                    //         return;
+                    //     }
+                    // }
+                    if(oModel.getProperty("/ResolutionType") == 2){
+                        oModel.setProperty("/ComplaintStatus",  "INREVIEW" );
+                        oModel.setProperty("/ApprovalStatus",  "PENDING" ) ;
+                    }else{
+                        oModel.setProperty("/ComplaintStatus",  "RESOLVED" )
                     }
+
+                  
+                     this._postDataToSave();
                 },
 
+                _postDataToSave: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelControl = oView.getModel("oModelControl");
+
+                    var oData = oView.getModel();
+                    var sPath = oView.getElementBinding().getPath();
+                    var oViewData = oView.getModel("oModelView").getData();
+                    var oPayload = {};
+                    jQuery.extend(true, oPayload, oViewData);
+
+                    
+                    //Mod payload
+                    this._modPayload(oPayload);
+
+                   // return;
+
+
+                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints;
+                    var othat = this;
+                    console.log(oPayload);
+
+                    delete oPayload.QRCodeData;
+                    //delete oPayload.InitiateForceTat;
+
+                    //      oPayload = this._payloadHardCleaning(oPayload);
+
+                    oData.update(sPath, oPayload, {
+                        success: function () {
+                            //debugger;
+                            /*  
+                            //Handled by backend
+                              if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
+                                  othat._postQRCode.call(othat, oPayload);
+                              */
+                            MessageToast.show("Complain Successfully Updated.");
+                            oData.refresh(true);
+                            othat.onNavBack();
+                        },
+                        error: function (a) {
+                            MessageBox.error(othat._sErrorText, {
+                                title: "Error Code: " + a.statusCode,
+                            });
+                        },
+                    });
+
+                    //var oProp =
+                },
+                _modPayload: function(data){
+                    
+                    for (var a in data) {
+                        if (data[a] === "") {
+                            data[a] = null;
+                        }
+                    }
+
+                   //mod Products data into array format
+                    if(data.ResolutionType == 2)
+                    {
+                        data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
+                        data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
+                    }
+                   data.PainterComplainProducts = data.ResolutionType == 2 ? [data.PainterComplainProducts] : null;
+                   //Parse RewardPoints
+                   data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null; 
+                },
+                _postQRCode: function (oData) {
+                    this.getView().getModel().callFunction("/QRCodeValidationAdmin", {
+                        urlParameters: {
+                            qrcode: oData.TokenCode,
+                            painterid: oData.PainterId,
+                            channel: "Complains",
+                        }
+                    });
+                },
+
+                onApproval: function(bAccept){
+                    
+                    var oModelView = this.getModel("oModelView"),
+                        validation = this._minValidation(oModelView.getData());
+                    
+                    if (validation.length > 0 ) {
+                        MessageToast.show(validation);
+                        return;
+                    }
+                    
+                    oModelView.setProperty("/ApprovalStatus", bAccept ? "APPROVED" : "REJECTED" );
+                    oModelView.setProperty("/ComplaintStatus", "RESOLVED");
+
+                    this._postDataToSave();
+
+                },
 
                 onChangeResolution: function (oEvent) {
                     var oView = this.getView();
-                    var oModel = oView.getModel("oModelView");
+                    var oModel = oView.getModel("oModelView"),
+                        oModelControl = this.getModel("oModelControl");
                     var sKey = oEvent.getSource().getSelectedKey();
                     if (+sKey !== 90) {
                         oModel.setProperty("/ResolutionOthers", "");
                     }
 
-                    //Set ResolutionType
-                    if (+sKey === 1) {
-                        oModel.setProperty("/ResolutionType", 0);
-                    } else {
-                        oModel.setProperty("/ResolutionType", null);
-                        oModel.setProperty("/TokenCode", "");
-                        oModel.setProperty("/RewardPoints", null);
-                        oModel.setProperty("/SkuCode", null);
-                    }
+                    var oSelectedItem = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
 
-                    //console.log(oModel);
-                },
+                    oModel.setProperty("/ResolutionType", oSelectedItem.PointsThrough);
+                    
 
-                onPointsVia: function () {
-                    var oModel = this.getModel("oModelView");
-                    oModel.setProperty("/TokenCode", "");
-                    oModel.setProperty("/RewardPoints", "");
-                    oModel.setProperty("/SkuCode", "");
-                    this.getModel("oModelControl").setProperty("/ClassificationId", "");
-                    this.getModel("oModelControl").setProperty("/CategoryId", "");
+                    this._resetAndfilter();
+
+                    oModelControl.setProperty("/ProductCode", "");
+                    oModelControl.setProperty("/CategoryCode", "");
+                    
 
                 },
 
-
-                onScenarioChange: function (oEvent) {
+                /*
+                 onScenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     var sSuTypeId = oView
@@ -633,63 +915,9 @@ sap.ui.define(
 
                     oResolution.getBinding("items").filter(aFilter);
                 },
-
-                _postQRCode: function (oData) {
-                    this.getView().getModel().callFunction("/QRCodeValidationAdmin", {
-                        urlParameters: {
-                            qrcode: oData.TokenCode,
-                            painterid: oData.PainterId,
-                            channel: "Complains",
-                        }
-                    });
-                },
+                */
 
 
-                _postDataToSave: function () {
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-                    var oModelControl = oView.getModel("oModelControl");
-
-                    var oData = oView.getModel();
-                    var sPath = oView.getElementBinding().getPath();
-                    var oViewData = oView.getModel("oModelView").getData();
-                    var oPayload = Object.assign({}, oViewData);
-                    for (var a in oPayload) {
-                        if (oPayload[a] === "") {
-                            oPayload[a] = null;
-                        }
-                    }
-
-                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints;
-                    var othat = this;
-                    console.log(oPayload);
-
-                    delete oPayload.QRCodeData;
-                    //delete oPayload.InitiateForceTat;
-
-                    //      oPayload = this._payloadHardCleaning(oPayload);
-
-                    oData.update(sPath, oPayload, {
-                        success: function () {
-                            debugger;
-                            /*  
-                            //Handled by backend
-                              if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
-                                  othat._postQRCode.call(othat, oPayload);
-                              */
-                            MessageToast.show("Complain Successfully Updated.");
-                            oData.refresh(true);
-                            othat.onNavBack();
-                        },
-                        error: function (a) {
-                            MessageBox.error(othat._sErrorText, {
-                                title: "Error Code: " + a.statusCode,
-                            });
-                        },
-                    });
-
-                    //var oProp =
-                },
 
                 handleCancelPress: function () {
                     this.onNavBack();
@@ -724,14 +952,22 @@ sap.ui.define(
                 onPressEscalate: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
+                    var validation = this._minValidation(oModel.getData());
+                    
+                    if (validation.length > 0 ) {
+                        MessageToast.show(validation);
+                        return;
+                    }
+
                     var oBject = oModel.getData();
                     var oData = oView.getModel();
                     var othat = this;
                     var sPath = oView.getElementBinding().getPath();
+                    var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                     MessageBox.confirm(
                         "Kindly confirm to escalate the complain - " +
                         oBject["ComplaintCode"],
-                        {
+                        {   styleClass: bCompact ? "sapUiSizeCompact" : "",
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
@@ -792,6 +1028,30 @@ sap.ui.define(
                     }
                     return mParam;
                 },
+
+                _genCtrlMessages: function (aCtrlMsgs) {
+                    var that = this,
+                        oViewModel = that.getModel("oModelView");
+                    aCtrlMsgs.forEach(function (ele) {
+                        that._oMessageManager.addMessages(
+                            new sap.ui.core.message.Message({
+                                message: that.getResourceBundle().getText(ele.message),
+                                type: sap.ui.core.MessageType.Error,
+                                target: ele.target,
+                                processor: oViewModel,
+                                persistent: true
+                            }));
+                    });
+                },
+
+                _initMessage: function () {
+                    //MessageProcessor could be of two type, Model binding based and Control based
+                    //we are using Model-binding based here
+                    var oMessageProcessor = this.getModel("oModelView");
+                    this._oMessageManager = sap.ui.getCore().getMessageManager();
+                    this._oMessageManager.registerMessageProcessor(oMessageProcessor);
+                }
+
             }
         );
     }
