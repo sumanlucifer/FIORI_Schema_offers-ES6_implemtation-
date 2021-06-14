@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Wizard id="CreateProductWizard" finishButtonText="Finish"  class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
+        <steps>
+            <WizardStep id="ProductTypeStep" title="{i18n>BasicInformation}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.BasicInformation" type="XML"/>
+                </content>
+            </WizardStep>
+            <WizardStep id="ProductInfoStep" title="{i18n>ApplicableProducts}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicableProducts" type="XML"/>
+                </content>
+            </WizardStep>
+            <WizardStep id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
+                </content>
+            </WizardStep>
+            <WizardStep id="wzdStep4" title="{i18n>ApplicablePainters}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML"/>
+                </content>
+            </WizardStep>
+            <WizardStep id="wzdStep5" title="{i18n>formBonusReward}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatioBonus" type="XML"/>
+                </content>
+            </WizardStep>
+            <WizardStep id="wzdStep6" title="{i18n>AdditionalInformation}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.AddInformation" type="XML"/>
+                </content>
+            </WizardStep>
+        </steps>
+    </Wizard>
+
+</core:FragmentDefinition>

@@ -1,52 +1,71 @@
-<core:FragmentDefinition   xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-	<Dialog beforeOpen="onRewardBeforeOpen" afterClose="onValueHelpAfterClose" showHeader="false" contentWidth="500px">
-		<customHeader>
-			<Bar >
-				<contentMiddle>
-					<Title text="{i18n>formApplicableLbl10}" />
-				</contentMiddle>
-			</Bar>
-		</customHeader>
-		<content>
-			<f:Form id="FormAddProdPacks" binding="{oModelControl>/Dialog/Bonus1}"  editable="false" >
-				<f:layout>
-					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
-						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
-				</f:layout>
-			
-				<f:formContainers>
-					<f:FormContainer title=" ">
-						<f:formElements>
-							<f:FormElement  visible="{= ${oModelControl>/Rbtn/Rewards}===1 }">
+<core:FragmentDefinition xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:m="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog beforeOpen="onRewardBeforeOpen" afterClose="onValueHelpAfterClose" showHeader="false" contentWidth="500px">
+        <customHeader>
+            <Bar >
+                <contentMiddle>
+                    <Title text="{i18n>formApplicableLbl10}" />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <content>
+            <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{= ${oModelControl>RequiredPoints} ? 1:0 }">
+                <buttons>
+                    <RadioButton text="{i18n>RequiredVolume}"/>
+                    <RadioButton text="{i18n>Table1Label2}"/>
+                </buttons>
+            </RadioButtonGroup>
+            <f:Form id="FormAddProdPacks" binding="{oModelControl>/Dialog/Bonus1}" editable="false">
+                <f:layout>
+                    <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                </f:layout>
+                <!-- <f:toolbar>
+                    <Toolbar >
+                        <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{= ${oModelControl>RequiredPoints} ? 1:0 }">
+                            <buttons>
+                                <RadioButton text="{i18n>RequiredVolume}"/>
+                                <RadioButton text="{i18n>Table1Label2}"/>
+                            </buttons>
+                        </RadioButtonGroup>
+                    </Toolbar>
+                </f:toolbar> -->
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <!-- <f:FormElement visible="{= ${oModelControl>/Rbtn/Rewards}===1 }">
 								<f:label>
 									<Label required="true" text="{= ${oModelControl>/Rbtn/AppPacks1} === 0 ? 'Products' : 'Packs' }"/>
 								</f:label>
 								<f:fields>
                                     
-									<ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" items="{oModelControl>/MultiCombo/Reward}" >
+									<ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" items="{oModelControl>/MultiCombo/Reward}">
                                         <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </ComboBox>
-                                    <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" items="{oModelControl>/MultiCombo/Reward}" >
+                                    <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" items="{oModelControl>/MultiCombo/Reward}">
                                         <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </ComboBox>
                                  
 								</f:fields>
-							</f:FormElement>
-							<f:FormElement label="{i18n>RequiredVolume}">
-								<f:fields>
-										<Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
-								</f:fields>
-							</f:FormElement>
+							</f:FormElement> -->
+                            <f:FormElement label="{i18n>RequiredVolume}">
+                                <f:fields>
+                                    <Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                </f:fields>
+                            </f:FormElement>
                             <f:FormElement label="{i18n>Table1Label2}">
-								<f:fields>
-									 <Input placeholder="{i18n>placeHolder3}" type="Number"  width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
-								</f:fields>
-							</f:FormElement>
+                                <f:fields>
+                                    <Input placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                </f:fields>
+                            </f:FormElement>
                             <f:FormElement label="{i18n>Table1Label4}">
-								<f:fields>
-										<Input  type="Number"  required="true"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
-								</f:fields>
-							</f:FormElement>
+                                <f:fields>
+                                    <Input type="Number" required="true" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                </f:fields>
+                            </f:FormElement>
                             <!-- <f:FormElement label="{i18n>Table1Label5}">
 								<f:fields>
 										<ComboBox placeholder="{i18n>placeHolder1}" width="100%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
@@ -55,20 +74,20 @@
 								</f:fields>
 							</f:FormElement> -->
                             <f:FormElement label="{i18n>Table1Label6}">
-								<f:fields>
-										 <Input   type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
-								</f:fields>
-							</f:FormElement>
-							
-						</f:formElements>
-					</f:FormContainer>
-				</f:formContainers>
-			</f:Form>
-		</content>
-		<buttons>
-			<Button text="Cancel" type="Ghost" press="onValueHelpClose" />
-            <Button  visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards1"/>
-             <Button  visible="{= ${oModelControl>/Rbtn/Rewards}===0 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitGenericRewards1"/>
-		</buttons>
-	</Dialog>
+                                <f:fields>
+                                    <Input type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                </f:fields>
+                            </f:FormElement>
+
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+        </content>
+        <buttons>
+            <Button text="Cancel" type="Ghost" press="onValueHelpClose" />
+            <Button visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitRewards1"/>
+            <Button visible="{= ${oModelControl>/Rbtn/Rewards}===0 }" type="Emphasized" text="Save" app:mode="{oModelControl>/Dialog1/Key}" press="onSubmitGenericRewards1"/>
+        </buttons>
+    </Dialog>
 </core:FragmentDefinition>

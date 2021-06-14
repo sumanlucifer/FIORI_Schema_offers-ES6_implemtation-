@@ -88,9 +88,9 @@
             </headerToolbar>
 
             <columns>
-                <Column>
+                <!-- <Column>
                     <Text text="{i18n>ProductsPacks}" />
-                </Column>
+                </Column> -->
                 <Column>
                     <Label text="{i18n>RequiredVolume}" required="false"/>
                 </Column>
@@ -115,10 +115,10 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
 
-                        <VBox>
+                        <!-- <VBox>
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
-                        </VBox>
+                        </VBox> -->
                         <Label text="{path:'oModelControl>RequiredVolume'}" />
                         <Label text="{path:'oModelControl>RequiredPoints'}" />
                         <Label text="{path:'oModelControl>RewardPoints'}" />

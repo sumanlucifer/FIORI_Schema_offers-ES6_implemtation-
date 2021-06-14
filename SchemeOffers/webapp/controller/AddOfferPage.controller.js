@@ -14,6 +14,7 @@ sap.ui.define(
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "com/knpl/pragati/SchemeOffers/model/customInt",
         "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
+         "com/knpl/pragati/SchemeOffers/model/ArrayDType1",
     ],
 
     function (
@@ -29,7 +30,8 @@ sap.ui.define(
         ValueState,
         Validator,
         customInt,
-        cmbxDtype2
+        cmbxDtype2,
+        ArrayDType1
     ) {
         "use strict";
 
@@ -38,6 +40,7 @@ sap.ui.define(
             {
                 customInt: customInt,
                 cmbxDtype2: cmbxDtype2,
+                ArrayDType1:ArrayDType1,
 
                 onInit: function () {
                     //Router Object
@@ -257,8 +260,9 @@ sap.ui.define(
                         PerformanceStartDate: null,
                         PerformanceEndDate: null,
                         RedemptionCycle: 1,
-                        OfferProductRewardRatio: [],
-                        OfferPackRewardRatio: [],
+                        // OfferProductRewardRatio: [],
+                        // OfferPackRewardRatio: [],
+                        OfferRewardRatio:[],
                         OfferBonusProductRewardRatio: [],
                         OfferBonusPackRewardRatio: [],
                         PainterSelection: 0,
@@ -444,7 +448,7 @@ sap.ui.define(
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Sucessfully Created.");
-                                othat._navToHome();
+                                //othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {

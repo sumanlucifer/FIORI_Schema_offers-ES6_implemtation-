@@ -78,7 +78,7 @@ sap.ui.define(
                 aControlAggregation = null,
                 oControlBinding = null,
                 oBindigPath,
-                aValidateProperties = ["value", "selectedKey", "selectedKeys"], // yes, I want to validate Select and Text controls too
+                aValidateProperties = ["value", "selectedKey","tokens", "selectedKeys"], // yes, I want to validate Select and Text controls too
                 isValidatedControl = false,
                 oExternalValue,
                 oInternalValue,

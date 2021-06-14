@@ -212,6 +212,7 @@ sap.ui.define(
                                         "MultiCombo/AppProd4",
                                         "MultiCombo/AppPacks4",
                                         "Table/Table4",
+                                        "Table/Table3"
                                     ],
                                     true
                                 );
@@ -220,14 +221,9 @@ sap.ui.define(
                                     "Rbtn/PClass4",
                                     "Rbtn/AppProd4",
                                     "Rbtn/AppPacks4",
+                                    
                                 ]);
-                                oModelControl.setProperty("/Table/Table3", [
-                                    {
-                                        StartDate: null,
-                                        EndDate: null,
-                                        BonusPoints: "",
-                                    },
-                                ]);
+                                
                             }
                         }
                     }
@@ -822,7 +818,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-                        ProductCode: "",
+                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -830,7 +826,7 @@ sap.ui.define(
                         RewardCash: "",
                     };
                     var oBj3 = {
-                        SkuCode: "",
+                       
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -865,19 +861,19 @@ sap.ui.define(
                     var oForm = oView.byId("FormAddProdPacks");
                     var bFlagValidate = oValidate.validate(oForm, true);
 
-                    if (oPayload.hasOwnProperty("SkuCode")) {
-                        if (oPayload["SkuCode"] === "") {
-                            MessageToast.show("kindly Select a Pack To Continue.");
-                            return;
-                        }
-                    }
-                    if (oPayload.hasOwnProperty("ProductCode")) {
-                        if (oPayload["ProductCode"] === "") {
-                            MessageToast.show("Kindly Select a Product To Continue.");
-                            return;
-                        }
+                    // if (oPayload.hasOwnProperty("SkuCode")) {
+                    //     if (oPayload["SkuCode"] === "") {
+                    //         MessageToast.show("kindly Select a Pack To Continue.");
+                    //         return;
+                    //     }
+                    // }
+                    // if (oPayload.hasOwnProperty("ProductCode")) {
+                    //     if (oPayload["ProductCode"] === "") {
+                    //         MessageToast.show("Kindly Select a Product To Continue.");
+                    //         return;
+                    //     }
 
-                    }
+                    // }
                     if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
                         MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
                         return;
@@ -2476,7 +2472,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;
@@ -2511,7 +2507,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferProductRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;
@@ -2543,7 +2539,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferPackRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;

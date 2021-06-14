@@ -8,6 +8,7 @@
         <f:layout>
             <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
         </f:layout>
+       
         <f:formContainers>
             <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>BasicInformation}">
                 <f:formElements>
