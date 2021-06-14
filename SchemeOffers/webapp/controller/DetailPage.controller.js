@@ -570,8 +570,8 @@ sap.ui.define(
                     }
                     oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);
 
-                    if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
-                        for (var x of oData["OfferNonBuyerProductCategory"]["results"]) {
+                    if (oData["OfferBonusProductCategory"]["results"].length > 0) {
+                        for (var x of oData["OfferBonusProductCategory"]["results"]) {
                             PCat4.push(x["ProductCategoryCode"]);
                         }
                     }
@@ -1247,8 +1247,8 @@ sap.ui.define(
                     }
                     oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);
 
-                    if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
-                        for (var x of oData["OfferNonBuyerProductCategory"]["results"]) {
+                    if (oData["OfferBonusProductCategory"]["results"].length > 0) {
+                        for (var x of oData["OfferBonusProductCategory"]["results"]) {
                             PCat4.push(x["ProductCategoryCode"]);
                         }
                     }
