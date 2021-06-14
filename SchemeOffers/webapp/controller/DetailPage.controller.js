@@ -328,11 +328,11 @@ sap.ui.define(
                     var sPath = oModelControl2.getProperty("/bindProp");
                     var othat = this;
                     var exPand =
-                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferProductRewardRatio/Product,OfferPackRewardRatio/Pack," +
+                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct,OfferApplicablePack,OfferRewardRatio," +
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
-                        "OfferBonusProductRewardRatio/Product,OfferBonusPackRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
+                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
@@ -354,17 +354,17 @@ sap.ui.define(
                     var Table1 = [],
                         Table2 = [];
 
-                    if (oData["OfferProductRewardRatio"]["results"].length > 0) {
+                    if (oData["OfferRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table1",
-                            oData["OfferProductRewardRatio"]["results"]
+                            oData["OfferRewardRatio"]["results"]
                         );
                     }
                     if (oData["IsSpecificApplicablePack"] === false) {
-                        if (oData["OfferProductRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table2",
-                                oData["OfferProductRewardRatio"]["results"]
+                                oData["OfferRewardRatio"]["results"]
                             );
                         }
                     } else {
@@ -376,17 +376,17 @@ sap.ui.define(
                         }
                     }
 
-                    if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+                    if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table3",
-                            oData["OfferBonusProductRewardRatio"]["results"]
+                            oData["OfferBonusRewardRatio"]["results"]
                         );
                     }
                     if (oData["IsSpecificBonusPack"] === false) {
-                        if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table4",
-                                oData["OfferBonusProductRewardRatio"]["results"]
+                                oData["OfferBonusRewardRatio"]["results"]
                             );
                         }
                     } else {
@@ -758,11 +758,11 @@ sap.ui.define(
                     var sPath = oModelControl2.getProperty("/bindProp");
                     var othat = this;
                     var exPand =
-                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferProductRewardRatio,OfferPackRewardRatio," +
+                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusProductRewardRatio,OfferBonusPackRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
+                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
@@ -970,17 +970,17 @@ sap.ui.define(
                     var Table1 = [],
                         Table2 = [];
 
-                    if (oData["OfferProductRewardRatio"]["results"].length > 0) {
+                    if (oData["OfferRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table1",
-                            oData["OfferProductRewardRatio"]["results"]
+                            oData["OfferRewardRatio"]["results"]
                         );
                     }
                     if (oData["IsSpecificApplicablePack"] === false) {
-                        if (oData["OfferProductRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table2",
-                                oData["OfferProductRewardRatio"]["results"]
+                                oData["OfferRewardRatio"]["results"]
                             );
                         }
                     } else {
@@ -992,17 +992,17 @@ sap.ui.define(
                         }
                     }
 
-                    if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+                    if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table3",
-                            oData["OfferBonusProductRewardRatio"]["results"]
+                            oData["OfferBonusRewardRatio"]["results"]
                         );
                     }
                     if (oData["IsSpecificBonusPack"] === false) {
-                        if (oData["OfferBonusProductRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table4",
-                                oData["OfferBonusProductRewardRatio"]["results"]
+                                oData["OfferBonusRewardRatio"]["results"]
                             );
                         }
                     } else {

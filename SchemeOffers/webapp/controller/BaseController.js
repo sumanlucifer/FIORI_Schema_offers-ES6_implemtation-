@@ -227,7 +227,6 @@ sap.ui.define(
                                 othat._propertyToBlank(
                                     [
                                         "Table/Table2",
-                                        "Table/Table1"
                                     ],
                                     true
                                 );
@@ -442,11 +441,13 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
+                        RewardRatioType: 0,
                         StartDate: null,
                         EndDate: null,
                         BonusPoints: "",
                     };
                     var oBj3 = {
+                        RewardRatioType: 0,
                         StartDate: null,
                         EndDate: null,
                         BonusPoints: "",
@@ -567,7 +568,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-                        RewardRatioType: 0,
+                        RewardRatioType: 1,
                         SkuCode: null,
                         ProductCode: "",
                         StartDate: null,
@@ -575,7 +576,7 @@ sap.ui.define(
                         BonusPoints: "",
                     };
                     var oBj3 = {
-                        RewardRatioType: 1,
+                        RewardRatioType: 2,
                         SkuCode: "",
                         ProductCode: null,
                         StartDate: null,

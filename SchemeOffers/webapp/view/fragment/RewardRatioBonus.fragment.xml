@@ -138,7 +138,6 @@
                     <Text text="{i18n>tblColAction}"/>
                 </Column>
             </columns>
-
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>

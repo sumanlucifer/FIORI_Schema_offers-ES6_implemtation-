@@ -13,12 +13,12 @@
             </Bar>
         </customHeader>
         <content>
-            <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelControl>/Rbtn/BrReqVol}">
+            <!-- <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelControl>/Rbtn/BrReqVol}">
                 <buttons>
                     <RadioButton text="{i18n>RequiredVolume}"/>
                     <RadioButton text="{i18n>Table1Label2}"/>
                 </buttons>
-            </RadioButtonGroup>
+            </RadioButtonGroup> -->
             <f:Form id="FormAddProdPacks" binding="{oModelControl>/Dialog/Bonus1}" editable="false">
                 <f:layout>
                     <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
