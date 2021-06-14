@@ -223,9 +223,22 @@ sap.ui.define(
 
                                 ]);
 
+                            } else if (a === "RewardRatio") {
+                                othat._propertyToBlank(
+                                    [
+                                        "Table/Table2",
+                                        "Table/Table1"
+                                    ],
+                                    true
+                                );
+                                othat._RbtnReset([
+                                    "Rbtn/Rewards"
+                                ]);
+
                             }
                         }
                     }
+                    //oModelControl.refresh(true)
                 },
                 onMultyZoneChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
@@ -599,13 +612,13 @@ sap.ui.define(
                     var bFlagValidate = oValidate.validate(oForm, true);
 
 
-                    if (bHasPack===1) {
+                    if (bHasPack === 1) {
                         if (oPayload["SkuCode"] === "") {
                             MessageToast.show("Kindly Select a Pack To Continue.");
                             return;
                         }
                     }
-                    if (bHasPack===0) {
+                    if (bHasPack === 0) {
                         if (oPayload["ProductCode"] === "") {
                             MessageToast.show("Kindly Select a Product To Continue.");
                             return;
