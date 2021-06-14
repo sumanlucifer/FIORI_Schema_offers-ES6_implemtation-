@@ -554,13 +554,17 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
+                        RewardRatioType: 0,
+                        SkuCode: null,
                         ProductCode: "",
                         StartDate: null,
                         EndDate: null,
                         BonusPoints: "",
                     };
                     var oBj3 = {
+                        RewardRatioType: 1,
                         SkuCode: "",
+                        ProductCode: null,
                         StartDate: null,
                         EndDate: null,
                         BonusPoints: "",
@@ -589,18 +593,19 @@ sap.ui.define(
                     var oModel2 = oView.getModel("oModelControl");
                     var sKey = oModel2.getProperty("/Dialog/Key2");
                     var oPayload = oModel2.getProperty("/Dialog/Bonus2");
+                    var bHasPack = oModel2.getProperty("/Rbtn/AppPacks4");
                     var oValidate = new Validator();
                     var oForm = oView.byId("FormAddProdPacks2");
                     var bFlagValidate = oValidate.validate(oForm, true);
 
 
-                    if (oPayload.hasOwnProperty("SkuCode")) {
+                    if (bHasPack===1) {
                         if (oPayload["SkuCode"] === "") {
                             MessageToast.show("Kindly Select a Pack To Continue.");
                             return;
                         }
                     }
-                    if (oPayload.hasOwnProperty("ProductCode")) {
+                    if (bHasPack===0) {
                         if (oPayload["ProductCode"] === "") {
                             MessageToast.show("Kindly Select a Product To Continue.");
                             return;
@@ -2617,7 +2622,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;
@@ -2645,7 +2650,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferBonusProductRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;
@@ -2671,7 +2676,7 @@ sap.ui.define(
                             return ele;
 
                         });
-                        oPayLoad["OfferBonusPackRewardRatio"] = aFinalArray;
+                        oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
 
                         promise.resolve(oPayLoad);
                         return promise;

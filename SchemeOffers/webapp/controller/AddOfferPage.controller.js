@@ -14,7 +14,7 @@ sap.ui.define(
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "com/knpl/pragati/SchemeOffers/model/customInt",
         "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
-         "com/knpl/pragati/SchemeOffers/model/ArrayDType1",
+        "com/knpl/pragati/SchemeOffers/model/ArrayDType1",
     ],
 
     function (
@@ -36,11 +36,10 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.SchemeOffers.controller.AddOfferPage",
-            {
+            "com.knpl.pragati.SchemeOffers.controller.AddOfferPage", {
                 customInt: customInt,
                 cmbxDtype2: cmbxDtype2,
-                ArrayDType1:ArrayDType1,
+                ArrayDType1: ArrayDType1,
 
                 onInit: function () {
                     //Router Object
@@ -73,7 +72,9 @@ sap.ui.define(
                     var oBonusValidity = [];
 
                     for (var i = 0; i <= 12; i++) {
-                        oBonusValidity.push({ key: i });
+                        oBonusValidity.push({
+                            key: i
+                        });
                     }
                     var oDataControl = {
                         FormTitle: "Add Offer Details",
@@ -172,7 +173,7 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
-                            BrReqVol:0
+                            BrReqVol: 0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -208,15 +209,23 @@ sap.ui.define(
                         oData: {
                             Products: [],
                             Packs: [],
-                            PerGrowth: [
-                                { Name: "1" },
-                                { Name: "2" },
-                                { Name: "3" },
-                                { Name: "4" },
-                                { Name: "5" },
-                            ],
-                            Rewards: [
+                            PerGrowth: [{
+                                    Name: "1"
+                                },
                                 {
+                                    Name: "2"
+                                },
+                                {
+                                    Name: "3"
+                                },
+                                {
+                                    Name: "4"
+                                },
+                                {
+                                    Name: "5"
+                                },
+                            ],
+                            Rewards: [{
                                     key: 1,
                                     Name: "TV",
                                 },
@@ -261,11 +270,8 @@ sap.ui.define(
                         PerformanceStartDate: null,
                         PerformanceEndDate: null,
                         RedemptionCycle: 1,
-                        // OfferProductRewardRatio: [],
-                        // OfferPackRewardRatio: [],
-                        OfferRewardRatio:[],
-                        OfferBonusProductRewardRatio: [],
-                        OfferBonusPackRewardRatio: [],
+                        OfferRewardRatio: [],
+                        OfferBonusRewardRatio: [],
                         PainterSelection: 0,
                         OfferSpecificPainter: [],
                         ParentOfferId: 0
@@ -282,7 +288,7 @@ sap.ui.define(
                     this._destroyDialogs();
                     //this._SampleFunction();
                 },
-                _SampleFunction:function(){
+                _SampleFunction: function () {
                     this.getView().byId("wizardViewBranching");
                 },
                 _showFormFragment: function (sFragmentName) {
@@ -307,22 +313,22 @@ sap.ui.define(
                 },
                 additionalInfoValidation: function () {
                     var oWizard = this.getView().byId('CreateProductWizard');
-                    var name =[];
+                    var name = [];
                     console.log("step validation trigerred")
-                  
-                        oWizard.validateStep(this.byId("ProductInfoStep"));
-                    
+
+                    oWizard.validateStep(this.byId("ProductInfoStep"));
+
                 },
                 _enableSteps: function () {
                     var cView = this.getView()
                     var oWizard = cView.byId('CreateProductWizard');
                     var oStepsL = oWizard.getSteps().length;
                     var oStep = this.getView().byId("ProductTypeStep");
-                    
+
                     //oWizard.setCurrentStep(this.getView().byId("idStep1"));
                     //oWizard.setShowNextButton(true)
-                     oWizard.goToStep(oStep);
-                     console.log("enable step1")
+                    oWizard.goToStep(oStep);
+                    console.log("enable step1")
                     oWizard.setShowNextButton(false)
                     //oSteps.goToStep(cView.byId("idStep1"));
                     //oSteps.setShowNextButton(false);
@@ -334,8 +340,7 @@ sap.ui.define(
                     // if (!this._formFragments) {
                     this._formFragments = Fragment.load({
                         id: oView.getId(),
-                        name:
-                            "com.knpl.pragati.SchemeOffers.view.fragment." + sFragmentName,
+                        name: "com.knpl.pragati.SchemeOffers.view.fragment." + sFragmentName,
                         controller: othat,
                     }).then(function (oFragament) {
                         return oFragament;
@@ -357,7 +362,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oValidate = new Validator();
                     var oForm = oView.byId("vBoxForms");
-                     var oWizardView = oView.byId("wizardViewBranching");
+                    var oWizardView = oView.byId("wizardViewBranching");
                     var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                     var bFlagValidate = oValidate.validate(oSteps, true);
 
@@ -467,7 +472,8 @@ sap.ui.define(
                         return promise;
                     }
                     var oView = this.getView();
-                    var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
+                    var oWizardView = oView.byId("wizardViewBranching");
+                    var oFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var sServiceUrl = this.getOwnerComponent(this)
                         .getManifestObject()
                         .getEntry("/sap.app").dataSources.mainService.uri;
@@ -491,19 +497,17 @@ sap.ui.define(
                         });
                     });
                 },
-                _NavBack: function () { },
+                _NavBack: function () {},
 
                 _RemoveEmptyValue: function (mParam) {
                     var obj = Object.assign({}, mParam);
                     // remove string values
                     var oNew = Object.entries(obj).reduce(
-                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
-                        {}
+                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
                     );
                     // remove the null values
                     var oNew2 = Object.entries(oNew).reduce(
-                        (a, [k, v]) => (v === null ? a : ((a[k] = v), a)),
-                        {}
+                        (a, [k, v]) => (v === null ? a : ((a[k] = v), a)), {}
                     );
 
                     return oNew2;
