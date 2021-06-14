@@ -385,20 +385,7 @@ sap.ui.define(
                     //     }.bind(this)
                     //   );
                 },
-                fmtStatus: function (sStatus) {
-                    var newStatus = "";
-                    if (sStatus === "REGISTERED") {
-                        newStatus = "Registered";
-                    } else if (sStatus === "INREVIEW") {
-                        newStatus = "In Review";
-                    } else if (sStatus === "RESOLVED") {
-                        newStatus = "Resolved";
-                    } else if (sStatus === "WITHDRAWN") {
-                        newStatus = "Withdrawn";
-                    }
-
-                    return newStatus;
-                },
+              
                 fmtDate: function (mDate) {
                     var date = new Date(mDate);
                     var oDateFormat = DateFormat.getDateTimeInstance({

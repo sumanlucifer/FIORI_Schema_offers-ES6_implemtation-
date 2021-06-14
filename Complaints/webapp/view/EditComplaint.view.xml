@@ -28,7 +28,6 @@
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
-
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
@@ -49,7 +48,9 @@
                         <VBox id="idVbx" width="100%">
                           </VBox>
                           <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ResolutionDetails" type="XML"/>
-
+                          <VBox id="idProducts">
+                            
+                          </VBox>
                         </IconTabFilter>
                          <IconTabFilter  text="{i18n>History}" key="1" >
                             <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
@@ -71,16 +72,15 @@
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="handleCancelPress"/>
                 <Button visible="{oModelControl>/workFlowFlag/Button1}" text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
                 <Button visible="{oModelControl>/workFlowFlag/Button2}" id="save" text="Save" type="Emphasized" press="handleSavePress"/>
-
             </Toolbar> -->
             <OverflowToolbar>
               <ToolbarSpacer/>
               <Button press="handleCancelPress"  text="{i18n>Cancel}"  />
-              <Button press="onWithdraw"         text="{i18n>btnWithdraw}" type="Negative"  />
-              <Button press="onPressEscalate"    text="{i18n>Escalate}" type="Critical" />
-              <Button press=".onApproval(true)"  text="{i18n>btnApprove}" type="Accept"  />
-              <Button press=".onApproval(false)" text="{i18n>btnReject}"  type="Reject"  />
-              <Button press="handleSavePress"    text="{i18n>btnResolve}" type="Emphasized" />
+              <Button press="onWithdraw"        visible="{= !${oModelControl>/ComplainResolved} }"  text="{i18n>btnWithdraw}" type="Negative"  />
+              <Button press="onPressEscalate"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} }"   text="{i18n>Escalate}" type="Critical" />
+              <Button press=".onApproval(true)"  visible="{= ${oModelControl>/iComplaintLevel} &lt;= ${appView>/iUserLevel} &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
+              <Button press=".onApproval(false)"   visible="{= ${oModelControl>/iComplaintLevel} &lt;= ${appView>/iUserLevel} &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
+              <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{i18n>btnResolve}" type="Emphasized" />
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

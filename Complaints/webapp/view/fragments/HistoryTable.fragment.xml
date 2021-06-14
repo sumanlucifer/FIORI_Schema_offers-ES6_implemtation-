@@ -44,7 +44,7 @@
                 </Column>
                   <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Remark", "leadingProperty": "Remark", "columnIndex": 4 ,"sortProperty": "Remark","filterProperty": "Remark"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedBy", "leadingProperty": "UpdatedBy", "columnIndex": 4 ,"sortProperty": "UpdatedBy","filterProperty": "UpdatedBy"}'/>
                     </customData>
                     <Text text="{i18n>UpdatedBy}"/>
                 </Column>

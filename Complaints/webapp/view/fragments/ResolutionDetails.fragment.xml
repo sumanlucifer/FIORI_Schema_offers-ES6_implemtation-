@@ -11,31 +11,34 @@
                 <core:Item text="Withdrawn" key="WITHDRAWN" />
             </Select>
         </VBox> -->
+
         <VBox renderType="Bare" >
-         <Label text="{i18n>AddResolution}" />
-            <ComboBox id="resolution" editable="{= ${ComplaintStatus} == 'INREVIEW' &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+         <Label text="{i18n>AddResolution}" required="true" />
+       
+            <ComboBox id="resolution" editable="{= ${ComplaintStatus} === 'INREVIEW' &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}"
+             items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true"  >
                 <items>
                     <core:Item text="{Resolution}" key="{Id}" />
                 </items>
             </ComboBox>
-            <TextArea editable="{= !${oModelControl>/ComplainResolved} }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
+            <TextArea editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
              <layoutData>
                  	<l:GridData linebreak="true"/>
             </layoutData>
          </VBox>        
         <VBox renderType="Bare">
-             <Label text="{i18n>Remark}"/>
-            <TextArea maxLength="300" editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{oModelView>/Remark}" />
+             <Label text="{i18n>Remark}"  required="true" />
+            <TextArea  maxLength="300" editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{oModelView>/Remark}" required="false" />
         </VBox>
 </l:Grid>
 <!-- Token code scenerio -->
-<Label  text="{i18n>TtlRewardPointDetails}" design="Bold" />
-<l:Grid visible="{= ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp;  ${oModelView>/ResolutionId} === 1}"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >        
-    <VBox  visible="{=  ${oModelView>/ResolutionType} === 1 }" >
+<Label visible="{= ${oModelView>/ResolutionType} === 1  }" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+<l:Grid visible="{= ${oModelView>/ResolutionType} === 1  }"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >        
+    <VBox >
            <Label  text="{i18n>TokenCode}"  />
            <HBox renderType="Bare" >
            <Input  value="{oModelView>/TokenCode}" 
-            editable="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />  
+            editable="{= ${ComplaintStatus} === 'INREVIEW' &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />  
             <Button class="sapUiTinyMarginBeginEnd" visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' }" 
               icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" />
             <Button  class="sapUiTinyMarginBeginEnd"  visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW'  }" 
@@ -45,72 +48,56 @@
 </l:Grid>
 
 <!-- Product code scenerio -->
-<Label  text="{i18n>TtlRewardPointDetails}" design="Bold" />
-<l:Grid visible="{= ${oModelView>/ComplaintStatus} === 'RESOLVED' &amp;&amp;  ${oModelView>/ResolutionId} === 1}"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
-            <VBox >
-            <Label text="{i18n>LblPointsVia}" />
-            <RadioButtonGroup editable="{= !${oModelControl>/ComplainResolved} }" width="100%" select="onPointsVia"  columns="2" selectedIndex="{oModelView>/ResolutionType}" >
-                <RadioButton text="{i18n>LblProduct}"  />
-                <RadioButton text="{i18n>TokenCode}" />
-            </RadioButtonGroup>
-                <layoutData>
-                 	<l:GridData linebreak="true"/>
-                </layoutData>
-        </VBox>
-        <VBox  visible="{=  ${oModelView>/ResolutionType} === 1 }" >
-           <Label  text="{i18n>TokenCode}"  />
-           <HBox renderType="Bare" >
-           <Input  value="{oModelView>/TokenCode}" 
-            editable="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />  
-            <Button class="sapUiTinyMarginBeginEnd" visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' }" 
-              icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" />
-            <Button  class="sapUiTinyMarginBeginEnd"  visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW'  }" 
-                       text="{i18n>btnValidate}" press="onPressTokenCode" />
-        </HBox>
-         <layoutData>
-                 	<l:GridData linebreak="true"/>
-            </layoutData>
-       </VBox>
-        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }"  >
+<Label  visible="{= ${oModelView>/ResolutionType} === 2  }" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+<l:Grid visible="{= ${oModelView>/ResolutionType} === 2  }"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
+       <!-- Below fields are editable if Resolution ID is null -->
+        <VBox>
             <Label  text="{i18n>LblCategory}" required="true" />
-            <Select id="idCategory" width="100%" change="filterProducts" forceSelection="false"
-            editable="{= !${oModelControl>/ComplainResolved} }"
-                    selectedKey="{oModelControl>/CategoryId}"
-                    items="{     path: '/MasterProductCategorySet',
-                                 sorter: { path: 'Category' }
-                           }">
+             <!-- Binded name property to display validation error  -->
+            <ComboBox width="100%" change="filterProducts"   editable="{=  ${ResolutionId} === null }"
+                   selectedKey="{oModelControl>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
                     <core:Item key="{Id}" text="{Category}" />
-            </Select>
+            </ComboBox>
               <layoutData>
                  	<l:GridData linebreak="true"/>
             </layoutData> 
         </VBox>
-        <VBox visible="{= !${oModelControl>/ComplainResolved}  &amp;&amp; ${oModelView>/ResolutionType} === 0 }" >
-            <Label  text="{i18n>LblClassification}" required="true" />
-            <Select   id="idClassification" change="filterProducts"
-            editable="{= !${oModelControl>/ComplainResolved} }"
-                     forceSelection="false" width="100%" selectedKey="{oModelControl>/ClassificationId}"
-                     items="{ path: '/MasterProductClassificationSet', sorter: { path: 'Classification' } }">
-                    <core:Item key="{Id}" text="{Classification}" />
-            </Select>  
+        <VBox >
+              <Label   text="{i18n>LblProduct}" required="true" />
+              <ComboBox id="idProduct" width="100%" change="filterPacks"  editable="{= ${oModelControl>/CategoryCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"  
+                    selectedKey="{oModelControl>/ProductCode}"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}" 
+                    items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                    <core:Item key="{Id}" text="{ProductName}" />
+            </ComboBox>
         </VBox>
-        <VBox visible="{=  ${oModelView>/ResolutionType} === 0 }" >
-            <Label   text="{i18n>LblProduct}" required="true" />
-            <!-- filters : CategoryCode, ClassificationCode -->
-            <Select change="onProductChange" id="idProduct" editable="{= !${oModelControl>/ComplainResolved} }" forceSelection="false" width="100%" selectedKey="{oModelView>/SkuCode}"
+
+        <VBox>
+            <Label text="{i18n>LblPack}" />
+            <ComboBox change="onPackChange" id="idPacks" editable="{= ${oModelControl>/ProductCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" width="100%"
+                      selectedKey="{oModelView>/PainterComplainProducts/ProductSKUCode}"
                     items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
-                    <core:Item key="{SkuCode}" text="{ProductDetails/ProductName}" />
-            </Select> 
+                    <core:Item key="{SkuCode}" text="{Description}" />
+            </ComboBox> 
         </VBox>
+      <VBox>
+            <Label  text="{i18n>LblQuantity}" />
+            <ComboBox change="onPointsChange"
+            editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"
+            selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}" >
+                 <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
+            </ComboBox>
+             <layoutData>
+                 	<l:GridData linebreak="true"/>
+            </layoutData>
+        </VBox>
+
         <VBox>
             <Label  text="{i18n>Points}" />
-            <Input   editable="false" value="{= +${oModelView>/RewardPoints} }" />
+            <Input   editable="false" value="{= (+${oModelView>/PainterComplainProducts/Points})*(+${oModelView>/PainterComplainProducts/ProductQuantity}) }" />
              <layoutData>
                  	<l:GridData linebreak="true"/>
             </layoutData>
         </VBox>
 
 </l:Grid>
-
-
 </core:FragmentDefinition>
