@@ -2047,6 +2047,41 @@ sap.ui.define(
                         oModelView.setProperty("/PerformanceEndDate", null);
                     }
                 },
+                onStartDateBRRChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oStartDate = oEvent.getSource().getDateValue();
+                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = oContext.getPath();
+                    var oEndDate = oModelControl.getProperty(sPath + "/EndDate")
+                    if (oEndDate) {
+                        if (oStartDate > oEndDate) {
+                            MessageToast.show("Kinldy select a date less than Bonus Validtiy To date.");
+                            oModelControl.setProperty(sPath + "/StartDate", null);
+                        }
+                    }
+                    if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
+                        MessageToast.show(
+                            "Kindly enter a date greater than current date"
+                        );
+
+                        oModelControl.setProperty(sPath + "/StartDate", null);
+                    }
+                },
+                onEndDateBRRChange: function (oEvent) {
+                    var oView = this.getView();
+
+                    var oModelControl = oView.getModel("oModelView");
+                    var oEndDate = oEvent.getSource().getDateValue();
+                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = oContext.getPath();
+                    var oStartDate = oModelControl.getProperty(sPath + "/StartDate")
+                    if (oStartDate >= oEndDate) {
+                        MessageToast.show("Kinldy select a date more than Bonus Validtiy From date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                    }
+                },
+
                 _propertyToBlank: function (aArray, aModel2) {
                     var aProp = aArray;
                     var oView = this.getView();
@@ -2600,6 +2635,26 @@ sap.ui.define(
 
                         promise.resolve(oPayLoad);
                         return promise;
+                    }
+                },
+                 onViewAttachment: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    if (!this._pKycDialog) {
+                        Fragment.load({
+                            name:
+                                "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._pKycDialog = oDialog;
+                                oView.addDependent(this._pKycDialog);
+                                this._pKycDialog.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        oView.addDependent(this._pKycDialog);
+                        this._pKycDialog.open();
                     }
                 },
                 onUploadMisMatch: function () {

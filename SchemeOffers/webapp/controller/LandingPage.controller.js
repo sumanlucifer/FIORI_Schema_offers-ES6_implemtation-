@@ -14,6 +14,7 @@ sap.ui.define(
         "sap/m/Label",
         "sap/m/Token",
         "sap/ui/core/format/DateFormat",
+        "com/knpl/pragati/SchemeOffers/model/formatter"
     ],
     function (
         BaseController,
@@ -28,13 +29,15 @@ sap.ui.define(
         ColumnListItem,
         Label,
         Token,
-        DateFormat
+        DateFormat,
+        Formatter
     ) {
         "use strict";
 
         return BaseController.extend(
             "com.knpl.pragati.SchemeOffers.controller.LandingPage",
             {
+                formatter:Formatter,
                 onInit: function () {
                     // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
                     this._mViewSettingsDialogs = {};
@@ -57,6 +60,7 @@ sap.ui.define(
                             TrainingZone: "",
                             TrainingDivision: "",
                             TrainingDepot: "",
+                            Active:""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -220,10 +224,16 @@ sap.ui.define(
                                     new Filter("EndDate", FilterOperator.LT, oDate)
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
-                            } else if (prop === "Status") {
+                            } else if (prop === "Active") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("IsActive", FilterOperator.EQ, JSON.parse(oViewFilter[prop]))
+                                    //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                                );
+                            } else if (prop === "Status") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("OfferStatus", FilterOperator.EQ, oViewFilter[prop])
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
                             } else if (prop === "TrainingZone") {
@@ -444,6 +454,7 @@ sap.ui.define(
                         TrainingZone: "",
                         TrainingDivision: "",
                         TrainingDepot: "",
+                        Active:""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);

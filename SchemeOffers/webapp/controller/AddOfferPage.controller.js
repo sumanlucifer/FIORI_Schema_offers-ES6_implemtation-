@@ -63,6 +63,7 @@ sap.ui.define(
                 _onObjectMatched: function (oEvent) {
                     this._initData();
                 },
+
                 _initData: function () {
                     var oView = this.getView();
 
@@ -269,13 +270,16 @@ sap.ui.define(
                     oView.setModel(oConrtrolModel, "oModelControl");
 
                     // adding the fragment
-                    this._showFormFragment("ChangeDetail");
+                    //this._showFormFragment("ChangeDetail2");
                     //get products data
                     this._getProductsData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
+                    //this._SampleFunction();
                 },
-
+                _SampleFunction:function(){
+                    this.getView().byId("wizardViewBranching");
+                },
                 _showFormFragment: function (sFragmentName) {
                     var objSection = this.getView().byId("oVbxSmtTbl");
                     var oView = this.getView();
@@ -284,10 +288,41 @@ sap.ui.define(
                     this._getFormFragment(sFragmentName).then(function (oVBox) {
                         oView.addDependent(oVBox);
                         objSection.addItem(oVBox);
+                        othat._enableSteps();
                         //othat._setDataValue.call(othat);
                         //othat._setUploadCollectionMethod.call(othat);
                     });
                 },
+
+                wizardCompletedHandler: function () {
+
+                },
+                onActivate: function () {
+
+                },
+                additionalInfoValidation: function () {
+                    var oWizard = this.getView().byId('CreateProductWizard');
+                    var name =[];
+                    console.log("step validation trigerred")
+                  
+                        oWizard.validateStep(this.byId("ProductInfoStep"));
+                    
+                },
+                _enableSteps: function () {
+                    var cView = this.getView()
+                    var oWizard = cView.byId('CreateProductWizard');
+                    var oStepsL = oWizard.getSteps().length;
+                    var oStep = this.getView().byId("ProductTypeStep");
+                    
+                    //oWizard.setCurrentStep(this.getView().byId("idStep1"));
+                    //oWizard.setShowNextButton(true)
+                     oWizard.goToStep(oStep);
+                     console.log("enable step1")
+                    oWizard.setShowNextButton(false)
+                    //oSteps.goToStep(cView.byId("idStep1"));
+                    //oSteps.setShowNextButton(false);
+                },
+
                 _getFormFragment: function (sFragmentName) {
                     var oView = this.getView();
                     var othat = this;
@@ -317,10 +352,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oValidate = new Validator();
                     var oForm = oView.byId("vBoxForms");
+                     var oWizardView = oView.byId("wizardViewBranching");
+                    var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
+                    var bFlagValidate = oValidate.validate(oSteps, true);
 
-                    var bFlagValidate = oValidate.validate(oForm, true);
-
-                    var sFile = this.getView().byId("idFileUpload").oFileUpload.files[0];
+                    var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
                     var aTableValidation = this._CheckTableValidation()
 
@@ -366,6 +402,7 @@ sap.ui.define(
                 },
                 onAfterRendering: function () {
                     // this.getView().byId("startDate").setMinDate(new Date());
+                    console.log("enable step2")
                 },
                 _postDataToSave: function (bFileFlag) {
                     var c1, c2, c3, c4, c5, c6, c7;

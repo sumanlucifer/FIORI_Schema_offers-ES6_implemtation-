@@ -1,0 +1,141 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <l:VerticalLayout>
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>formApplicableLbl10}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>formApplicableLbl10}">
+                            <f:fields>
+                                <RadioButtonGroup select="onRbRewardRatio" columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <Table id="Table1" visible="{= ${oModelControl>/Rbtn/Rewards}===0}" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formApplicableLbl10}" />
+                    <ToolbarSpacer />
+                    <Button enabled="{= ${oModelControl>/Table/Table1}.length &lt; 1 }" icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericRewards('add')"/>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Label text="{i18n>RequiredVolume}" required="false" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>RequiredPoints}" />
+                </Column>
+                <Column>
+                    <Label text="{i18n>Table1Label4}" required="false"/>
+                </Column>
+                <!-- <Column>
+                    <Text text="{i18n>Table1Label5}" />
+                </Column> -->
+                <Column>
+                    <Text text="{i18n>Table1Label6}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+
+
+                        <Label text="{path:'oModelControl>RequiredVolume'}" />
+                        <Label text="{path:'oModelControl>RequiredPoints'}" />
+                        <Label text="{path:'oModelControl>RewardPoints'}" />
+                        <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                           </ComboBox> -->
+                        <Label text="{path:'oModelControl>RewardCash'}" />
+                        <HBox>
+                            <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericRewards"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward"></Button>
+                        </HBox>
+
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formApplicableLbl10}" />
+                    <ToolbarSpacer />
+                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>ProductsPacks}" />
+                </Column>
+                <Column>
+                    <Label text="{i18n>RequiredVolume}" required="false"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>Table1Label2}" />
+                </Column>
+                <Column>
+                    <Label text="{i18n>Table1Label4}" required="false" />
+                </Column>
+                <!-- <Column>
+                    <Text text="{i18n>Table1Label5}" />
+                </Column> -->
+                <Column>
+                    <Text text="{i18n>Table1Label6}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+
+                        <VBox>
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
+                        </VBox>
+                        <Label text="{path:'oModelControl>RequiredVolume'}" />
+                        <Label text="{path:'oModelControl>RequiredPoints'}" />
+                        <Label text="{path:'oModelControl>RewardPoints'}" />
+                        <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
+                                <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
+                           </ComboBox> -->
+                        <Label text="{path:'oModelControl>RewardCash'}" />
+                        <HBox>
+                            <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward"></Button>
+                        </HBox>
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </l:VerticalLayout>
+
+
+</core:FragmentDefinition>

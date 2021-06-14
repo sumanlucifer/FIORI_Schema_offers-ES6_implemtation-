@@ -57,7 +57,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                 <f:FormContainer title="{i18n>formApplicableProducts2}"  visible="{oModelControl2>/OfferType/ApplicableProducts}" >
+                 <f:FormContainer title="{i18n>Products}"  visible="{oModelControl2>/OfferType/ApplicableProducts}" >
                     <f:formElements>
                       <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>

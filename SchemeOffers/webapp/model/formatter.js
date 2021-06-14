@@ -52,6 +52,16 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
       return sStatus;
     },
+    fmtOfferStateColor:function(mParam){
+        // if(mParam==="PENDING"){
+        //     return ""
+        // }
+        if(mParam==="APPROVED"){
+            return "Success"
+        }
+        return "Error"
+
+    },
     fmtVldtyDuration: function (mParam1, mParam2, mParam3) {
       var aArray = [];
       if (mParam1) {

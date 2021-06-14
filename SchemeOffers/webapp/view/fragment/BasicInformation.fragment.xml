@@ -1,0 +1,99 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <f:Form editable="true">
+        <f:layout>
+            <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
+        </f:layout>
+        <f:formContainers>
+            <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>BasicInformation}">
+                <f:formElements>
+
+                    <f:FormElement label="{i18n>formBasicInfoLbl1}">
+                        <f:fields>
+                            <ComboBox id="OfferType" selectionChange="onOfferTypeChanged" required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
+                                <core:Item text="{OfferType}" key="{Id}"/>
+                            </ComboBox>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="{i18n>formBasicInfoLbl4}">
+                        <f:fields>
+                            <DatePicker change=".onEndDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/YYYY" required="true"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement >
+                        <f:label>
+                            <Label text="{i18n>OfferImage}" required="true"/>
+                        </f:label>
+                        <f:fields>
+                            <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement>
+                        <f:fields>
+                            <Text text="{i18n>FileUploadMessage}"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
+                        <f:fields>
+                            <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
+                        </f:fields>
+                    </f:FormElement>
+
+
+
+                </f:formElements>
+            </f:FormContainer>
+
+            <f:FormContainer title="   ">
+
+                <f:FormElement label="{i18n>formBasicInfoLbl2}">
+                    <f:fields>
+                        <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                    </f:fields>
+                </f:FormElement>
+
+                <f:FormElement label="{i18n>formBasicInfoLbl5}">
+                    <f:fields>
+                        <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                    </f:fields>
+                </f:FormElement>
+
+            </f:FormContainer>
+            <f:FormContainer title="   ">
+                <f:FormElement label="{i18n>formBasicInfoLbl3}">
+                    <f:fields>
+                        <DatePicker change=".onStartDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',UTC:false,strictParsing:false },constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/YYYY" required="true"/>
+                    </f:fields>
+                </f:FormElement>
+            </f:FormContainer>
+            <f:FormContainer title="{i18n>ParentChildOffer}">
+                <f:formElements>
+                    <f:FormElement label="{i18n>ApplyParentOffer}">
+                        <f:fields>
+                            <RadioButtonGroup enabled="{= ${oModelView>/ParentOfferId}===0?false:true}" select="onRbPrntOffer" columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}">
+                                <buttons>
+                                    <RadioButton text="{i18n>No}"/>
+                                    <RadioButton text="{i18n>Yes}" />
+                                </buttons>
+                            </RadioButtonGroup>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="{i18n>SelectParentOffer}">
+
+                        <f:fields>
+                            <Input enabled="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
+
+                        </f:fields>
+                    </f:FormElement>
+
+                </f:formElements>
+            </f:FormContainer>
+
+        </f:formContainers>
+    </f:Form>
+
+</core:FragmentDefinition>

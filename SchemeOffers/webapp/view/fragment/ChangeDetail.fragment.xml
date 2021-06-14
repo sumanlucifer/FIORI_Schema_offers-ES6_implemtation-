@@ -372,12 +372,12 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl12}">
                             <f:fields>
-                              <Input type="Number" value="{path:'oModelView>/PointSlabLowerLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:4}}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
+                              <Input type="Number" value="{path:'oModelView>/PointSlabLowerLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                             </f:fields>
                         </f:FormElement>
                           <f:FormElement label="{i18n>formApplicableLbl13}">
                             <f:fields>
-                              <Input type="Number" value="{path:'oModelView>/PointSlabUpperLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:4}}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
+                              <Input type="Number" value="{path:'oModelView>/PointSlabUpperLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                             </f:fields>
                         </f:FormElement>
                          <f:FormElement  label="{i18n>formRegionLbl1}">
@@ -657,7 +657,7 @@
                             </f:fields>
                         </f:FormElement>
                         
-                    <f:FormElement label="{i18n>formApplicableProducts}">
+                    <f:FormElement label="{i18n>Products}">
                             <f:fields>
                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}" >
                                              <buttons>
@@ -833,7 +833,7 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <Input valueStateText="Kindly valid digits. Max 4" enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" required="true" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:4}}"/>
+                                <Input valueStateText="Kindly valid digits. Max 4" enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" required="true" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}"/>
                             </f:fields>
                         </f:FormElement>
                       
@@ -843,7 +843,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
-                             <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits. Max 5" type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{search :'^[0-9]', minLength:1,maxLength:5} }" />
+                             <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits. Max 5" type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{search :'^[0-9]', minLength:1,maxLength:6} }" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">

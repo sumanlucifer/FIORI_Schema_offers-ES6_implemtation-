@@ -56,8 +56,14 @@
             <IconTabBar select="onIcnTbarChange" selectedKey="{oModelControl3>/selectedKey}" id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="0">
-                        <VBox id="idVbProfile"></VBox>
-
+                        <VBox id="idVbProfile" visible="{= ${oModelControl3>/mode}=== 'display'}">
+                        
+                        </VBox>
+                        	<mvc:XMLView
+							id="wizardViewBranching"
+							async="true"
+                            visible="{= ${oModelControl3>/mode}=== 'edit'}"
+							viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>EligiblePainter}" key="1">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable1" type="XML"/>

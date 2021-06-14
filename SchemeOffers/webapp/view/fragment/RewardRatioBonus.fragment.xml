@@ -1,0 +1,205 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <l:VerticalLayout>
+
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
+
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>formBonusReward}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>formApplicableLbl7}">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiComboBox selectionFinish="onPAppDropChange" required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                    <core:Item text="{Category}" key="{Id}"/>
+                                </MultiComboBox>
+
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formApplicableLbl8}">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement >
+                            <f:fields>
+                                <MultiComboBox selectionFinish="onPAppDropChange" enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                    <core:Item text="{Classification}" key="{Id}"/>
+                                </MultiComboBox>
+                            </f:fields>
+                        </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="   ">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>Products}">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd4}">
+                                    <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formApplicableLbl9}">
+                            <f:fields>
+                                <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppPacks4}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks4}">
+                                    <tokens>
+                                        <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+                            <f:fields>
+                                <RadioButtonGroup select="onBRRbChange" columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
+
+
+
+
+
+
+                    </f:formElements>
+                </f:FormContainer>
+
+
+            </f:formContainers>
+        </f:Form>
+        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                    <ToolbarSpacer ></ToolbarSpacer>
+                    <Button enabled="{= ${oModelControl>/Table/Table3}.length===0 }" icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericReward2('add')"/>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                </Column>
+
+                <Column>
+                    <Label required="true" text="{i18n>Table3Label1}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+
+                        <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                        <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                        <Text width="60%" text="{path:'oModelControl>BonusPoints'}" />
+                        <HBox>
+                            <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward2"></Button>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>formBonusRewardRatio}" />
+                    <ToolbarSpacer ></ToolbarSpacer>
+                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2('add')"/>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>ProductsPacks}" />
+                </Column>
+                <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                </Column>
+                <Column>
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                </Column>
+
+                <Column>
+                    <Label required="true" text="{i18n>Table3Label1}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column>
+
+            </columns>
+
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                        <VBox>
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
+                        </VBox>
+                        <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                        <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                        <Text text="{oModelControl>BonusPoints}" />
+                        <HBox>
+                            <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards2"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward2"></Button>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </l:VerticalLayout>
+</core:FragmentDefinition>
