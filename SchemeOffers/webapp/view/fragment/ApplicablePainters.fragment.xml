@@ -20,7 +20,7 @@
                             </RadioButtonGroup>
                         </f:fields>
                     </f:FormElement>
-                    <f:FormElement label="{i18n>Painters}">
+                    <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                         <f:fields>
                             <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
                                 <tokens>
@@ -31,7 +31,7 @@
 
                         </f:fields>
                     </f:FormElement>
-                    <f:FormElement label="{i18n>formApplicableLbl15}">
+                    <f:FormElement label="{i18n>formApplicableLbl15}"  visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                         <f:fields>
                             <MultiComboBox id="PainterType" selectedKeys="{oModelControl>/MultiCombo/PainterType}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
                                 <core:Item text="{PainterType}" key="{Id}"/>
@@ -40,7 +40,7 @@
                         </f:fields>
                     </f:FormElement>
 
-                    <f:FormElement label="{i18n>formApplicableLbl3}">
+                    <f:FormElement label="{i18n>formApplicableLbl3}"  visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                         <f:fields>
                             <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/ArcheTypes}" id="ArcheTypes" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
                                 <core:Item text="{ArcheType}" key="{Id}"/>
@@ -51,7 +51,7 @@
                 </f:formElements>
             </f:FormContainer>
 
-            <f:FormContainer title=" " visible="{oModelControl>/OfferType/ApplicablePainters}">
+            <f:FormContainer title=" " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                 <f:formElements>
                     <!-- <f:FormElement label=" ">
                         <f:fields>
@@ -79,7 +79,7 @@
                     </f:FormElement>
                 </f:formElements>
             </f:FormContainer>
-            <f:FormContainer title=" " visible="{oModelControl>/OfferType/ApplicablePainters}">
+            <f:FormContainer title=" " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                 <f:formElements>
                     <f:FormElement label="{i18n>formRegionLbl1}">
                         <f:fields>
@@ -139,7 +139,7 @@
                     </f:FormElement>
                 </f:formElements>
             </f:FormContainer>
-            <f:FormContainer title="{i18n>formApplicableProducts}" visible="{oModelControl>/OfferType/ApplicablePainterProducts}">
+            <f:FormContainer title="{i18n>formApplicableProducts}" visible="{= ${oModelControl>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }" >
 
                 <f:formElements >
                     <f:FormElement label="{i18n>From}">
@@ -182,7 +182,7 @@
                 </f:formElements>
 
             </f:FormContainer>
-            <f:FormContainer title="  " visible="{oModelControl>/OfferType/ApplicablePainterProducts}">
+            <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
 
                 <f:formElements >
 
@@ -265,7 +265,7 @@
 
 
             </f:FormContainer>
-            <f:FormContainer title="   " visible="{oModelControl>/OfferType/ApplicablePainterProducts}">
+            <f:FormContainer title="   " visible="{= ${oModelControl>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                 <f:formElements>
                     <f:FormElement label="{i18n>formNon} {i18n>formBuyerProducts}">
                         <f:fields>
