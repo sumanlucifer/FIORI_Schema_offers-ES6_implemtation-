@@ -27,8 +27,7 @@ sap.ui.define(
         "use strict";
 
         return Controller.extend(
-            "com.knpl.pragati.SchemeOffers.controller.BaseController",
-            {
+            "com.knpl.pragati.SchemeOffers.controller.BaseController", {
                 /**
                  * Convenience method for accessing the router.
                  * @public
@@ -102,7 +101,7 @@ sap.ui.define(
 
                 },
 
-                onPostSchemeData: function (oPayload, fileFlag) { },
+                onPostSchemeData: function (oPayload, fileFlag) {},
                 onStartDateChange: function (oEvent) {
 
                     var oView = this.getView();
@@ -221,9 +220,9 @@ sap.ui.define(
                                     "Rbtn/PClass4",
                                     "Rbtn/AppProd4",
                                     "Rbtn/AppPacks4",
-                                    
+
                                 ]);
-                                
+
                             }
                         }
                     }
@@ -251,7 +250,8 @@ sap.ui.define(
                     for (var j of oDivisionItems) {
                         oDivObj = j.getBindingContext().getObject();
                         if (sZoneKey.indexOf(oDivObj["Zone"]) < 0) {
-                            oDivision.removeSelectedItem(j); f
+                            oDivision.removeSelectedItem(j);
+                            f
                         }
                     }
                     // check for the depot tokens
@@ -291,7 +291,9 @@ sap.ui.define(
                     oPacks.getBinding("items").filter(aPackFilter);
 
                     this._fnChangeProdPacks({
-                        src: { path: "/MultiCombo/AppProd1" },
+                        src: {
+                            path: "/MultiCombo/AppProd1"
+                        },
                         target: {
                             localPath: "/MultiCombo/AppPacks1",
                             oDataPath: "/MasterRepProductSkuSet",
@@ -724,6 +726,15 @@ sap.ui.define(
 
                     }
                 },
+                onRbRRDialogVolume: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = "/Dialog/Bonus1"
+                    oModel.setProperty(sPath + "/RequiredVolume", "");
+                    oModel.setProperty(sPath + "/RequiredPoints", "");
+                    oModel.refresh();
+
+                },
                 onSubmitGenericRewards1: function () {
                     var oView = this.getView();
 
@@ -818,7 +829,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-                       
+
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -826,7 +837,7 @@ sap.ui.define(
                         RewardCash: "",
                     };
                     var oBj3 = {
-                       
+
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -936,7 +947,7 @@ sap.ui.define(
                     }
                 },
 
-                onRbBonusRewardChange: function (oEvent) { },
+                onRbBonusRewardChange: function (oEvent) {},
                 _CreateBonusRewardTable: function () {
                     var oView = this.getView();
                     var othat = this;
@@ -1073,7 +1084,7 @@ sap.ui.define(
                         success: function (mParam1) {
                             oModelControl.setProperty("/oData/Packs", mParam1["results"]);
                         },
-                        error: function (mParam1) { },
+                        error: function (mParam1) {},
                     });
                     promise.resolve();
                     return promise;
@@ -1082,8 +1093,7 @@ sap.ui.define(
                     this._PainterMulti = this.getView().byId("Painters");
 
                     this.oColModel = new JSONModel({
-                        cols: [
-                            {
+                        cols: [{
                                 label: "Membership ID",
                                 template: "MembershipCard",
                             },
@@ -1150,7 +1160,10 @@ sap.ui.define(
                                 if (oTable.bindRows) {
                                     oTable.bindAggregation("rows", {
                                         path: "/PainterSet",
-                                        parameters: { expand: "Depot,PainterType,ArcheType", select: "Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType" },
+                                        parameters: {
+                                            expand: "Depot,PainterType,ArcheType",
+                                            select: "Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType"
+                                        },
                                         events: {
                                             dataReceived: function () {
                                                 this._PainterValueHelp.update();
@@ -1262,27 +1275,49 @@ sap.ui.define(
                             } else if (prop === "PainterType") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter({ path: "PainterTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                    new Filter({
+                                        path: "PainterTypeId",
+                                        operator: FilterOperator.EQ,
+                                        value1: oViewFilter[prop]
+                                    })
                                 );
                             } else if (prop === "ArcheType") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter({ path: "ArcheTypeId", operator: FilterOperator.EQ, value1: oViewFilter[prop] })
+                                    new Filter({
+                                        path: "ArcheTypeId",
+                                        operator: FilterOperator.EQ,
+                                        value1: oViewFilter[prop]
+                                    })
                                 );
                             } else if (prop === "MembershipCard") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter({ path: "MembershipCard", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                    new Filter({
+                                        path: "MembershipCard",
+                                        operator: FilterOperator.Contains,
+                                        value1: oViewFilter[prop],
+                                        caseSensitive: false
+                                    })
                                 );
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter({ path: "Name", operator: FilterOperator.Contains, value1: oViewFilter[prop], caseSensitive: false })
+                                    new Filter({
+                                        path: "Name",
+                                        operator: FilterOperator.Contains,
+                                        value1: oViewFilter[prop],
+                                        caseSensitive: false
+                                    })
                                 );
                             } else if (prop === "Mobile") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter({ path: "Mobile", operator: FilterOperator.Contains, value1: oViewFilter[prop] })
+                                    new Filter({
+                                        path: "Mobile",
+                                        operator: FilterOperator.Contains,
+                                        value1: oViewFilter[prop]
+                                    })
                                 );
                             }
                         }
@@ -1338,7 +1373,8 @@ sap.ui.define(
                 },
                 onClearPainterVhSearch: function () {
                     var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl"), aCurrentFilterValues = [];
+                    var oModel = oView.getModel("oModelControl"),
+                        aCurrentFilterValues = [];
                     oModel.setProperty("/Search/PainterVh", {
                         ZoneId: "",
                         DivisionId: "",
@@ -1382,7 +1418,9 @@ sap.ui.define(
                     oDivision.getBinding("items").filter(aDivFilter);
 
                     this._fnChangeDivDepot({
-                        src: { path: "/MultiCombo/Zones" },
+                        src: {
+                            path: "/MultiCombo/Zones"
+                        },
                         target: {
                             localPath: "/MultiCombo/Divisions",
                             oDataPath: "/MasterDivisionSet",
@@ -1390,7 +1428,9 @@ sap.ui.define(
                         },
                     });
                     this._fnChangeDivDepot({
-                        src: { path: "/MultiCombo/Divisions" },
+                        src: {
+                            path: "/MultiCombo/Divisions"
+                        },
                         target: {
                             localPath: "/MultiCombo/Depots",
                             oDataPath: "/MasterDepotSet",
@@ -1402,7 +1442,9 @@ sap.ui.define(
                 onDivisionChange: function (oEvent) {
                     // Not requred to set filter for the Depots as this is a valuehelp and filter is applied in onbeforeopen event
                     this._fnChangeDivDepot({
-                        src: { path: "/MultiCombo/Divisions" },
+                        src: {
+                            path: "/MultiCombo/Divisions"
+                        },
                         target: {
                             localPath: "/MultiCombo/Depots",
                             oDataPath: "/MasterDepotSet",
@@ -1415,8 +1457,7 @@ sap.ui.define(
                 onDepotValueHelpOpen: function (oEvent) {
                     this._oMultiInput = this.getView().byId("idDepots");
                     this.oColModel = new JSONModel({
-                        cols: [
-                            {
+                        cols: [{
                                 label: "Depot Id",
                                 template: "Id",
                                 width: "10rem",
@@ -1604,8 +1645,7 @@ sap.ui.define(
                                         operator: "Contains",
                                         value1: oViewFilter[prop],
                                         caseSensitive: false
-                                    }
-                                    )
+                                    })
                                 );
                             } else if (prop === "Depot") {
                                 aFlaEmpty = false;
@@ -1650,9 +1690,9 @@ sap.ui.define(
                     var oSource = oEvent.getSource();
                     //var sKey = oSource.getSeleckedKeys();
                 },
-                onProdClassChange: function (oEvent) { },
-                onAppProdChange: function (oEvent) { },
-                onArchiTypeChange: function (oEvent) { },
+                onProdClassChange: function (oEvent) {},
+                onAppProdChange: function (oEvent) {},
+                onArchiTypeChange: function (oEvent) {},
                 onPAppDropChange: function (oEvent) {
                     var aSpath = oEvent
                         .getSource()
@@ -1710,8 +1750,7 @@ sap.ui.define(
                     if (!this._PackValueHelpDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.SchemeOffers.view.fragment.AppPackValueHelp",
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AppPackValueHelp",
                             controller: this,
                         }).then(
                             function (oValueHelpDialog) {
@@ -1768,7 +1807,10 @@ sap.ui.define(
                         oBj;
                     for (var a of oSelected) {
                         oBj = a.getBindingContext().getObject();
-                        aProds.push({ Name: oBj["Description"], Id: oBj["SkuCode"] });
+                        aProds.push({
+                            Name: oBj["Description"],
+                            Id: oBj["SkuCode"]
+                        });
                     }
                     oView
                         .getModel("oModelControl")
@@ -1815,8 +1857,7 @@ sap.ui.define(
                     if (!this._ProdValueHelpDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp",
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp",
                             controller: this,
                         }).then(
                             function (oValueHelpDialog) {
@@ -1845,7 +1886,10 @@ sap.ui.define(
                         oBj;
                     for (var a of oSelected) {
                         oBj = a.getBindingContext().getObject();
-                        aProds.push({ Name: oBj["ProductName"], Id: oBj["Id"] });
+                        aProds.push({
+                            Name: oBj["ProductName"],
+                            Id: oBj["Id"]
+                        });
                     }
 
                     oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
@@ -2182,7 +2226,7 @@ sap.ui.define(
                         success: function (mParam1) {
                             oModelControl.setProperty("/oData/Products", mParam1["results"]);
                         },
-                        error: function (mParam1) { },
+                        error: function (mParam1) {},
                     });
                 },
                 GetPackName: function (mParam1) {
@@ -2633,13 +2677,12 @@ sap.ui.define(
                         return promise;
                     }
                 },
-                 onViewAttachment: function (oEvent) {
+                onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
                     if (!this._pKycDialog) {
                         Fragment.load({
-                            name:
-                                "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AttachmentDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {

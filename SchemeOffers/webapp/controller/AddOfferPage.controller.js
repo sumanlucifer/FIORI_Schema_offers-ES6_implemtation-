@@ -172,6 +172,7 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
+                            BrReqVol:0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -448,7 +449,7 @@ sap.ui.define(
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Sucessfully Created.");
-                                //othat._navToHome();
+                                othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
