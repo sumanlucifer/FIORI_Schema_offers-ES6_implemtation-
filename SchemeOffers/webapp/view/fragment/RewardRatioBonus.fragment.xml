@@ -4,7 +4,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <l:VerticalLayout>
-        <MessageStrip width="100%" visible="{= !${oModelControl>/OfferType/AdditionalReward} }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
+        <MessageStrip visible="{= !${oModelControl>/OfferType/AdditionalReward} }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
         <f:Form editable="true">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />

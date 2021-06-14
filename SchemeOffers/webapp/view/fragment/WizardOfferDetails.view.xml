@@ -4,6 +4,7 @@
     xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
+    
     <Wizard id="CreateProductWizard" finishButtonText="Finish" currentStep="wzdStep6" class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
         <steps>
             <WizardStep id="ProductTypeStep" title="{i18n>BasicInformation}" activate="onActivate">
