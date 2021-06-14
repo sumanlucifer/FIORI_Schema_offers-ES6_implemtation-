@@ -218,9 +218,9 @@
             </headerToolbar>
 
             <columns>
-                <Column>
+                <!-- <Column>
                     <Text text="{i18n>ProductsPacks}" />
-                </Column>
+                </Column> -->
                 <Column>
                     <Label text="{i18n>RequiredVolume}"/>
                 </Column>
@@ -242,10 +242,10 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
 
-                        <VBox >
+                        <!-- <VBox >
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 0  }" text="{oModelControl2>Product/ProductName}" />
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 1  }" text="{oModelControl2>Pack/Description}" />
-                        </VBox>
+                        </VBox> -->
                         <Label text="{oModelControl2>RequiredVolume}" />
                         <Label text="{oModelControl2>RequiredPoints}" />
                         <Label text="{oModelControl2>RewardPoints}" />
@@ -259,23 +259,29 @@
             </items>
         </Table>
 
+        <Toolbar class="sapUiMediumMarginTop sapUiSmallMarginBottom">
+            <Title titleStyle="H3" text="{i18n>ApplicablePainters}"/>
+        </Toolbar>
         <f:Form editable="false">
             <f:layout>
-                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false" />
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
             </f:layout>
+            <f:toolbar>
+                <Toolbar>
+                    <RadioButtonGroup editable="false" selectedIndex="{oModelControl2>/Rbtn/AppPainter}" columns="3" select="onRbAppPainter">
+                        <RadioButton text="{i18n>formApplicableLbl1}"/>
+                        <RadioButton text="{i18n>formApplicableLbl2}"/>
+                        <RadioButton text="{i18n>formApplicableLbl16}"/>
+                    </RadioButtonGroup>
+                </Toolbar>
+            </f:toolbar>
+
             <f:formContainers>
-                <f:FormContainer title="{i18n>ApplicablePainters}" visible="{oModelControl2>/OfferType/ApplicablePainters}">
+
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===2 }">
                     <f:formElements>
-                        <f:FormElement >
-                            <f:fields>
-                                <RadioButtonGroup editable="false" selectedIndex="{oModelControl2>/Rbtn/AppPainter}" columns="3" select="onRbAppPainter">
-                                    <RadioButton text="{i18n>formApplicableLbl1}"/>
-                                    <RadioButton text="{i18n>formApplicableLbl2}"/>
-                                    <RadioButton text="{i18n>formApplicableLbl16}"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>Painters}">
+
+                        <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===2 }">
                             <f:fields>
                                 <MultiInput editable="false" tokens="{oModelControl2>/MultiCombo/Painters}">
                                     <tokens>
@@ -283,9 +289,14 @@
                                     </tokens>
                                 </MultiInput>
 
-
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                    <f:formElements>
+
                         <f:FormElement label="{i18n>formApplicableLbl15}">
                             <f:fields>
                                 <MultiComboBox editable="false" id="PainterType" selectedKeys="{oModelControl2>/MultiCombo/PainterType}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
@@ -303,6 +314,12 @@
 
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                    <f:formElements>
+
                         <f:FormElement label="{i18n>formApplicableLbl4}">
                             <f:fields>
                                 <MultiComboBox editable="false" selectedKeys="{oModelControl2>/MultiCombo/Potential}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet'}">
@@ -321,6 +338,11 @@
                                 <Text text="{PointSlabUpperLimit}" />
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/Zones}">
@@ -371,9 +393,10 @@
                                 </MultiInput>
                             </f:fields>
                         </f:FormElement>
+
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>formApplicableProducts}" visible="{oModelControl2>/OfferType/ApplicablePainterProducts}">
+                <f:FormContainer title="{i18n>formApplicableProducts}" visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
@@ -417,6 +440,10 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title=" " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formBuyerProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd2}">
@@ -479,6 +506,10 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title=" " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formNon} {i18n>formBuyerProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd3}">
@@ -513,7 +544,13 @@
 
                     </f:formElements>
                 </f:FormContainer>
-
+            </f:formContainers>
+        </f:Form>
+        <f:Form editable="false">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
                 <f:FormContainer title="{i18n>formBonusReward}" visible="{oModelControl2>/OfferType/AdditionalReward}">
                     <f:formElements>
                         <f:FormElement label="{i18n>formApplicableLbl7}">
@@ -548,7 +585,10 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer  title="  " visible="{oModelControl2>/OfferType/AdditionalReward}">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd4}">
@@ -664,9 +704,9 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <f:Form editable="false">
+        <f:Form editable="false" title="{i18n>AdditionalInformation}">
             <f:layout>
-                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false" />
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
             </f:layout>
             <f:formContainers>
 

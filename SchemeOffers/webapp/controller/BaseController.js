@@ -880,6 +880,7 @@ sap.ui.define(
                         );
                         this._setPacksData();
                     }
+                    oModelControl.refresh(true);
                 },
                 onSubmitRewards1: function () {
                     var oView = this.getView();
@@ -1568,6 +1569,7 @@ sap.ui.define(
                     //     delete this._PainterValueHelp;
                     //   }
                     if (this._RewardsDialog1) {
+                        console.log("close reward dialog 1")
                         this._RewardsDialog1.destroy();
                         delete this._RewardsDialog1;
                     } //_RewardsDialog2

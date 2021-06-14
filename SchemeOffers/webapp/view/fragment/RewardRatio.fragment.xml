@@ -16,7 +16,7 @@
                                 <RadioButtonGroup select="onRbRewardRatio" columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}">
                                     <buttons>
                                         <RadioButton text="{i18n>All}"/>
-                                        <RadioButton text="{i18n>Specific}" enabled="{oModelControl>/OfferType/RewardRatio}"/>
+                                        <RadioButton text="{i18n>Specific}" enabled="{oModelControl>/OfferType/RewardRatio}" />
                                     </buttons>
                                 </RadioButtonGroup>
                             </f:fields>
@@ -83,7 +83,7 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
-                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
+                    <Button  icon="sap-icon://add" text="{i18n>Add}"  tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
