@@ -125,14 +125,14 @@
 
             <columns>
                 <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                    <Label required="false" text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                    <Label required="false" text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
                 <Column>
-                    <Label required="true" text="{i18n>Table3Label1}" />
+                    <Label required="false" text="{i18n>Table3Label1}" />
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>
@@ -167,14 +167,14 @@
                     <Text text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
+                    <Label required="false" text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
+                    <Label required="false" text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
                 <Column>
-                    <Label required="true" text="{i18n>Table3Label1}" />
+                    <Label required="false" text="{i18n>Table3Label1}" />
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>
