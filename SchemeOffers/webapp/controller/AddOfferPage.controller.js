@@ -81,6 +81,7 @@ sap.ui.define(
                         HasTillDate: false,
                         ImageLoaded: false,
                         BonusValidity: oBonusValidity,
+                        RedemptionCycle:[],
                         modeEdit: false,
                         mode: "add",
                         StartDate: "",

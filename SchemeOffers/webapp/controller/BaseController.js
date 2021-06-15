@@ -237,7 +237,26 @@ sap.ui.define(
                             }
                         }
                     }
-                    //oModelControl.refresh(true)
+                    //oModelControl.refresh(true);
+
+                    // setting up redemption cycle data based on offer type
+                    this._SetRedemptionCycle();
+                },
+                _SetRedemptionCycle: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oOfferType = oModel.getProperty("/OfferType");
+                    var aMaxValue = parseInt(oOfferType["RedemptionCycle"]);
+                    var aArray = [];
+                    for (var a = 1; a <= aMaxValue; a++) {
+                        aArray.push({
+                            Name: a
+                        })
+                    }
+                    oModel.setProperty("/oData/PerGrowth",aArray);
+                    
+
+
                 },
                 onMultyZoneChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
@@ -886,7 +905,7 @@ sap.ui.define(
                         );
                         this._setPacksData();
                     }
-                   
+
 
                     if (oBjFinal["RequiredVolume"]) {
                         oModelControl.setProperty("/Rbtn/BrReqVol", 0)
@@ -939,7 +958,7 @@ sap.ui.define(
                             .splice(parseInt(sKey), 1, oPayloadNew);
                     }
 
-                    oModel2.refresh();
+                    oModel2.refresh(true);
                     this._RewardsDialog1.close();
                 },
                 onRemovedReward: function (oEvent) {
@@ -954,7 +973,7 @@ sap.ui.define(
                     var oTable = oModel.getProperty("/Table/Table2");
 
                     oTable.splice(sPath[sPath.length - 1], 1);
-                    oModel.refresh();
+                    oModel.refresh(true);
                 },
                 onRbChnageMain: function (oEvent) {
                     var oView = this.getView();
