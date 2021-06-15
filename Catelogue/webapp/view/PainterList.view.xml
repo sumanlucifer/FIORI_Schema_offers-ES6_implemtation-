@@ -39,7 +39,9 @@
             </f:DynamicPageHeader>
         </f:header>   -->
          <f:content>
-                 <Table id="idPaintersTable"
+                 <!-- <Table id="idPaintersTable"
+                        growing="true" growingThreshold="30"
+
                         items="{
                         path: '/ProductCatalogueViewerSet',
                         parameters:{
@@ -116,7 +118,30 @@
                                     </cells>
                                 </ColumnListItem>
                             </items>
-	             </Table>
+	             </Table> -->
+    <!-- requestAtLeastFields="Id,Status,PdfViewerCount,PdfDownloadCount,TotalPdfViewerCount,TotalPdfDownloadCount" -->
+                 <smartTable:SmartTable
+                 
+                    id="idPainterTable"
+                    editable="false"
+                    beforeRebindTable="fnrebindTable"                    
+                    entitySet="ProductCatalogueViewerSet"
+                    tableType="ResponsiveTable"
+                     showRowCount="true"
+                     useExportToExcel="true"
+                    
+                     useVariantManagement="false"
+                      useTablePersonalisation="true"
+                            ignoredFields="IsArchived,IsSelected,Id"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            
+                            persistencyKey="PainterListSmartTableKey"
+
+                  >
+
+                 </smartTable:SmartTable>
         </f:content>
     </f:DynamicPage>
 

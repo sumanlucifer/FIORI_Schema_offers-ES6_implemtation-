@@ -71,13 +71,11 @@ sap.ui.define([
             },
             _bindView: function (sObjectId) {
 
-                var binding = this.getView().byId("idPaintersTable").getBinding("items");
+              //  var binding = this.getView().byId("idPaintersTable").getBinding("items");
 
-                var filters = [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
+                this.filters = [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
                 (new sap.ui.model.Filter("IsViewed", sap.ui.model.FilterOperator.EQ, true))];
-
-                binding.filter(filters);
-
+                this.getView().byId("idPainterTable").rebindTable();
             },
             // onSearch: function (oEvent) {
             // var aFilterControls = oEvent.getParameter("selectionSet");
@@ -114,6 +112,16 @@ sap.ui.define([
             onPressBreadcrumbLink: function () {
                  this._navToHome();
             },
+
+            fnrebindTable: function (oEvent) {
+
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "Painter,Painter/Division,Painter/Depot";
+
+ oBindingParams.parameters["expand"] =this.filters;            
+        },
+
             onExportCSV: function () {
                
                     
