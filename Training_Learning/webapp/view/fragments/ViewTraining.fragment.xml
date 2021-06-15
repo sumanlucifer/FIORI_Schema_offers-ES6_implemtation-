@@ -60,9 +60,14 @@
 				</MultiComboBox>
 
                 <Label text="{i18n>colDepot}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
-                <MultiComboBox selectedKeys="{oModelView>/displayDepots}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false" items="{ path : '/MasterDepotSet'}">
+                <!-- <MultiComboBox selectedKeys="{oModelView>/displayDepots}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false" items="{ path : '/MasterDepotSet'}">
 					<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
-				</MultiComboBox>
+				</MultiComboBox> -->
+                <MultiInput visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false" tokens="{oModelView>/TrainingDetails/TrainingDepot}" >
+	                <tokens>
+                        <Token editable="false" text="{oModelView>DepotId}" key="{oModelView>DepotId}"/>
+                    </tokens>
+	            </MultiInput>
 
                 <Label text="{i18n>colPainterType}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
                 <MultiComboBox selectedKeys="{oModelView>/TrainingDetails/TrainingPainterTypeDetails}" visible="{= ${appView>/trainingType} !== 'OFFLINE' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
