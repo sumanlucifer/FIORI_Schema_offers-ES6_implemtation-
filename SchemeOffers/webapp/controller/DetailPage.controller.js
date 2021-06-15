@@ -390,10 +390,10 @@ sap.ui.define(
                             );
                         }
                     } else {
-                        if (oData["OfferBonusPackRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table4",
-                                oData["OfferBonusPackRewardRatio"]["results"]
+                                oData["OfferBonusRewardRatio"]["results"]
                             );
                         }
                     }
@@ -660,35 +660,34 @@ sap.ui.define(
                     var c1, c2, c3, c4, c5, c6, c7, c8, c9;
                     var othat = this;
 
-                    c1 = othat._loadEditProfile("Edit");
-                    c1.then(function () {
-                        c2 = othat._GetInitEditData();
-                        c2.then(function (data) {
-                            c3 = othat._setEditControlModel(data);
-                            c3.then(function (data) {
-                                c4 = othat._SetEditRbtnData(data);
-                                c4.then(function (data) {
-                                    c5 = othat._setEditViewData1(data);
-                                    c5.then(function (data) {
-                                        c6 = othat._setEditViewData2(data);
-                                        c6.then(function (data) {
-                                            c6 = othat._setAdditionalData2(data);
-                                            c6.then(function (oData) {
-                                                c7 = othat._OfferTypeValidation2(data);
-                                                c7.then(function (data) {
-                                                    c8 = othat._CheckEditImage(data);
-                                                    c8.then(function () {
-                                                        c9 = othat._destroyDialogs();
-                                                    });
+
+                    c2 = othat._GetInitEditData();
+                    c2.then(function (data) {
+                        c3 = othat._setEditControlModel(data);
+                        c3.then(function (data) {
+                            c4 = othat._SetEditRbtnData(data);
+                            c4.then(function (data) {
+                                c5 = othat._setEditViewData1(data);
+                                c5.then(function (data) {
+                                    c6 = othat._setEditViewData2(data);
+                                    c6.then(function (data) {
+                                        c6 = othat._setAdditionalData2(data);
+                                        c6.then(function (oData) {
+                                            c7 = othat._OfferTypeValidation2(data);
+                                            c7.then(function (data) {
+                                                c8 = othat._CheckEditImage(data);
+                                                c8.then(function () {
+                                                    c9 = othat._destroyDialogs();
                                                 });
                                             });
                                         });
                                     });
                                 });
                             });
-                            //othat.getView().getModel("oModelView").refresh(true);
                         });
+                        //othat.getView().getModel("oModelView").refresh(true);
                     });
+
 
                     // this._initSaveModel();
                 },
@@ -1007,10 +1006,10 @@ sap.ui.define(
                             );
                         }
                     } else {
-                        if (oData["OfferBonusPackRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table4",
-                                oData["OfferBonusPackRewardRatio"]["results"]
+                                oData["OfferBonusRewardRatio"]["results"]
                             );
                         }
                     }
