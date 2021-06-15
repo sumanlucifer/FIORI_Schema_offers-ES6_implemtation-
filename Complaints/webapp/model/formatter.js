@@ -13,8 +13,8 @@ sap.ui.define([], function () {
         USERTASK_CREATED: "sap-icon://activity-individual",
         USERTASK_CLAIMED: "sap-icon://activity-individual",
         USERTASK_RELEASED: "sap-icon://activity-individual",
-        USERTASK_CANCELED_BY_BOUNDARY_EVENT: "sap-icon://activity-individual",
-        USERTASK_COMPLETED: "sap-icon://activity-individual",
+        USERTASK_CANCELED_BY_BOUNDARY_EVENT: "sap-icon://lateness",
+        USERTASK_COMPLETED: "sap-icon://activity-2",
         USERTASK_FAILED: "sap-icon://activity-individual",
         USERTASK_PATCHED_BY_ADMIN: "sap-icon://activity-individual",
         SERVICETASK_CREATED: "sap-icon://settings",
@@ -69,14 +69,24 @@ sap.ui.define([], function () {
             return wfIcons[sStatus];
         },
 
-        formatExecutionLogTitle: function(e, r) {
+        ExecutionLogTitle: function(sSubject, sType) {
          //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
+            if("FORCETAT" == sSubject) return "Manual Escalation";
+
+            switch(sType)
+            {
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT" : return "TAT Triggered" ;
+                case "WORKFLOW_STARTED" : return "Workflow started" ;
+                case "WORKFLOW_COMPLETED" : return "Workflow completed" ;
+            }
+            
+            return sSubject;
+        },
+
+        ExecutionLogUserName: function(aEmails){
+            return  !!(aEmails) ? aEmails.join(" ") : " ";
         }
-
-
-
-
-
+    
 	};
 
 });
