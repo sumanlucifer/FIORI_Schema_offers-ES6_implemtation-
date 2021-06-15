@@ -335,17 +335,17 @@ sap.ui.define(
                     if (oDataValue.hasOwnProperty("PainterBankDetails")) {
                         var oKycData = oDataValue["PainterBankDetails"];
                         if (oKycData.hasOwnProperty("Id")) {
-                            if(oKycData["DocumentType"]==1){
+                            if(oKycData["DocumentType"]==0){
                                 var sBankImageUrl1 =
                                 "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
                                 oKycData["Id"] +
-                                ")/$value?image_type=cheque";
+                                ")/$value?image_type=passbook";
                             }
                             else if(oKycData["DocumentType"]==1){
                                     var sBankImageUrl1 =
                                 "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
                                 oKycData["Id"] +
-                                ")/$value?image_type=passbook";
+                                ")/$value?image_type=cheque";
                             }
                             oControlModel.setProperty("/BankImage/Image1", sBankImageUrl1);
                             //oControlModel.setProperty("/KycImage/Image2", sBankImageUrl2);
@@ -1289,20 +1289,20 @@ sap.ui.define(
                 onBankView: function (oEvent) {
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
-                    if (!this._pKycDialog) {
+                    if (!this._pBankDialog) {
                         Fragment.load({
                             name: "com.knpl.pragati.ContactPainter.view.fragments.BankDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {
-                                this._pKycDialog = oDialog;
-                                oView.addDependent(this._pKycDialog);
-                                this._pKycDialog.open();
+                                this._pBankDialog = oDialog;
+                                oView.addDependent(this._pBankDialog);
+                                this._pBankDialog.open();
                             }.bind(this)
                         );
                     } else {
-                        oView.addDependent(this._pKycDialog);
-                        this._pKycDialog.open();
+                        oView.addDependent(this._pBankDialog);
+                        this._pBankDialog.open();
                     }
                 },
                  /*Aditya changes end*/
@@ -2178,6 +2178,13 @@ sap.ui.define(
                                 operator: FilterOperator.BT,
                                 value1: oFinancialYear.startYear,
                                 value2: oFinancialYear.endYear,
+                            })
+                        );
+                         aFilters.push(
+                            new Filter({
+                                path: "IsArchived",
+                                operator: FilterOperator.EQ,
+                                value1: false
                             })
                         );
 
