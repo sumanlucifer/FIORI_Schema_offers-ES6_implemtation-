@@ -683,9 +683,9 @@ sap.ui.define(
                     );
                     oView.byId("Referral").getBinding("items").filter(oFilerByRId);
                     var oFilComplaints = new Filter(
-                        "Painter/Id",
+                        "PainterId",
                         FilterOperator.EQ,
-                        oPainterId
+                        parseInt(oPainterId)
                     );
                     oView
                         .byId("IdTblComplaints")
