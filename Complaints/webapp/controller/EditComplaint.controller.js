@@ -73,6 +73,7 @@ sap.ui.define(
 
                     //Himank: Workflow interaction model
                     this.oWorkflowModel = new JSONModel();
+                    this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
 
                     var oModelView  =  new JSONModel();
@@ -190,6 +191,24 @@ sap.ui.define(
                     promise.resolve();
                     return promise;
                 },
+
+                _setWfData: function(){
+                    //TODO: format subject FORCETAT
+                    var aWfData = this.oWorkflowModel.getData(),
+                        taskSet = new Set([
+                            "WORKFLOW_STARTED",
+                            "WORKFLOW_COMPLETED",
+                            "USERTASK_CREATED",
+                            "USERTASK_COMPLETED",
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT",//TODO: Change text to TAT triggered
+                        ]);
+
+                   aWfData = aWfData.filter(ele => taskSet.has(ele.type));
+
+                    this.oWorkflowModel.setData(aWfData);    
+
+                },
+
                 _CheckLoginData: function () {
                     var promise = jQuery.Deferred();
                     var oData = this.getModel();

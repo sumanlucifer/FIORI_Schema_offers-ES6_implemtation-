@@ -18,9 +18,8 @@
 		<content>
            <!-- formatter required datetime, title icon -->
 			<TimelineItem	dateTime="{wfmodel>timestamp}"
-					title="{wfmodel>subject}"
-					text="{wfmodel>text}"
-					userName="{wfmodel>userid}"
+					title="{ parts :['wfmodel>subject' , 'wfmodel>type' ], formatter : '.formatter.ExecutionLogTitle'}"
+					text="{ path : 'wfmodel>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
                     filterValue="{type}"
 					icon="{path : 'wfmodel>type' , formatter : '.formatter.formatLogIcon'}">
 			</TimelineItem>
