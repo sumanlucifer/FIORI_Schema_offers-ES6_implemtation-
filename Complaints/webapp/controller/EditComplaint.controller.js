@@ -355,7 +355,7 @@ sap.ui.define(
                         oModelView.getProperty("/ComplaintStatus") === "WITHDRAWN"
                     ) {
                         oModelControl.setProperty("/ComplainResolved", true);
-                        oModelControl.setProperty("/TokenCode", "");
+                        // oModelControl.setProperty("/TokenCode", "");
                     }else{
                         //Complaint not resolved then empty remark
                         oModelView.setProperty("/Remark", "");
@@ -834,7 +834,7 @@ sap.ui.define(
                             data[a] = null;
                         }
                     }
-
+                    data.ResolutionType = +data.ResolutionType;
                    //mod Products data into array format
                     if(data.ResolutionType == 2)
                     {
