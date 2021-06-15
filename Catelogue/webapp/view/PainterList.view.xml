@@ -39,86 +39,25 @@
             </f:DynamicPageHeader>
         </f:header>   -->
          <f:content>
-                 <Table id="idPaintersTable"
-                        growing="true" growingThreshold="30"
-                        items="{
-                        path: '/ProductCatalogueViewerSet',
-                        parameters:{
-                            expand:'Painter,Painter/Division,Painter/Depot'
-                        },
-                        sorter: {
-                            path: 'Painter/Name'
-                        }
-                    }">
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <content>
-                                <Title text="Painters" level="H2"/>
-                                <ToolbarSpacer />
-                                 <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onExportCSV"/>
-                            
-                            </content>
-                        </OverflowToolbar>
-                    </headerToolbar>
-		
-                            <columns>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Name" />
-                                </Column>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Mobile Number" />
-                                </Column>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Membership Id" />
-                                </Column>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Zone" />
-                                </Column>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Division" />
-                                </Column>
-                                <Column
-                                    minScreenWidth="Tablet"
-                                    demandPopin="true">
-                                    <Text text="Depot" />
-                                </Column>
-                                
-                                
-                                
-                            </columns>
-                            <items>
-                                <ColumnListItem>
-                                    <cells>
-                                        <ObjectIdentifier
-                                            title="{Painter/Name}"/>
-                                        <Text
-                                            text="{Painter/Mobile}" />
-                                        <Text
-                                            text="{Painter/MembershipCard}" />
-                                            <Text
-                                            text="{Painter/Division/Zone}" />
-                                            <Text
-                                            text="{Painter/Depot/Division}" />
-                                            <Text
-                                            text="{Painter/Depot/Depot}" />
-                                        
-                                        
-                                        
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-	             </Table>
+           <smartTable:SmartTable
+                    id="idPainterTable"
+                    editable="false"
+                    beforeRebindTable="fnrebindTable"                    
+                    entitySet="ProductCatalogueViewerSet"
+                    tableType="ResponsiveTable"
+                    showRowCount="true"
+                    useExportToExcel="true"
+                    useVariantManagement="false"
+                    useTablePersonalisation="true"
+                            ignoredFields="IsArchived,IsSelected,Id"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true" 
+                            persistencyKey="PainterListSmartTableKey"
+
+                  >
+                 </smartTable:SmartTable>
         </f:content>
     </f:DynamicPage>
-
+ <!-- initialise="onSmartInitialise" -->
 </mvc:View>
