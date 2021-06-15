@@ -831,7 +831,7 @@ sap.ui.define(
                             data[a] = null;
                         }
                     }
-                    data.ResolutionId = +data.ResolutionId;
+                    data.ResolutionId = !!(data.ResolutionId) ? +data.ResolutionId : data.ResolutionId ;
                    //mod Products data into array format
                     if(data.ResolutionType == 2)
                     {
