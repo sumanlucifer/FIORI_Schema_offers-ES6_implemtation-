@@ -969,6 +969,7 @@ sap.ui.define(
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
+                                    oModel.setProperty("/ResolutionId", "");
                                     oModel.setProperty("/InitiateForceTat", true);
                                     othat._postDataToSave();
                                 }
