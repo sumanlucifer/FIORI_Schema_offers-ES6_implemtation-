@@ -73,9 +73,22 @@ sap.ui.define([
 
               //  var binding = this.getView().byId("idPaintersTable").getBinding("items");
 
-                this.filters = [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
+                var aFilters =  [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
                 (new sap.ui.model.Filter("IsViewed", sap.ui.model.FilterOperator.EQ, true))];
-                this.getView().byId("idPainterTable").rebindTable();
+
+                 this.oFilter = new Filter({
+                    filters: aFilters,
+                    and: true,
+                });
+                var smartTable = this.getView().byId("idPainterTable");
+
+                if(smartTable.isInitialised())
+                         smartTable.rebindTable();
+                else    
+                        smartTable.attachInitialise(function(){
+                                smartTable.rebindTable()
+                        }, this);
+
             },
             // onSearch: function (oEvent) {
             // var aFilterControls = oEvent.getParameter("selectionSet");
@@ -118,11 +131,11 @@ sap.ui.define([
             var oBindingParams = oEvent.getParameter("bindingParams");
             oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
             oBindingParams.parameters["expand"] = "Painter,Painter/Division,Painter/Depot";
-
- oBindingParams.parameters["expand"] =this.filters;            
+            if(this.oFilter)
+                oBindingParams.filters.push(this.oFilter);            
         },
 
-            onExportCSV: function () {
+        onExportCSV: function () {
                
                     
                     var that = this;
