@@ -881,6 +881,7 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
+                            BrReqVol: 0
                         },
                         MultiEnabled: {
                             PCat1: false,

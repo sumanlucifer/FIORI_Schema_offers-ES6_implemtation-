@@ -729,6 +729,7 @@ sap.ui.define(
                     };
                     var oBjFinal;
                     var iRtnSelected = oModelControl.getProperty("/Rbtn/AppPacks1");
+
                     if (iRtnSelected === 0) {
                         oBjFinal = oBj1 !== false ? oBj1 : oBj2;
                         oModelControl.setProperty(
@@ -744,6 +745,11 @@ sap.ui.define(
                         );
 
                     }
+                    if (oBjFinal["RequiredVolume"]) {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 1)
+                    }
                 },
                 onRbRRDialogVolume: function (oEvent) {
                     var oView = this.getView();
@@ -751,7 +757,7 @@ sap.ui.define(
                     var sPath = "/Dialog/Bonus1"
                     oModel.setProperty(sPath + "/RequiredVolume", "");
                     oModel.setProperty(sPath + "/RequiredPoints", "");
-                    oModel.refresh();
+
 
                 },
                 onSubmitGenericRewards1: function () {
@@ -879,6 +885,13 @@ sap.ui.define(
                             Object.assign({}, oBjFinal)
                         );
                         this._setPacksData();
+                    }
+                   
+
+                    if (oBjFinal["RequiredVolume"]) {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 1)
                     }
                     oModelControl.refresh(true);
                 },
