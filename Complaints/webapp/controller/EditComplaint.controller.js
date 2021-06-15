@@ -355,7 +355,7 @@ sap.ui.define(
                         oModelView.getProperty("/ComplaintStatus") === "WITHDRAWN"
                     ) {
                         oModelControl.setProperty("/ComplainResolved", true);
-                        oModelControl.setProperty("/TokenCode", "");
+                        // oModelControl.setProperty("/TokenCode", "");
                     }else{
                         //Complaint not resolved then empty remark
                         oModelView.setProperty("/Remark", "");
@@ -669,7 +669,7 @@ sap.ui.define(
                     return sMsg;
                 },
 
-                _validation: function (data, oCtrlData) {
+                _validation: function (data) {
                       this._oMessageManager.removeAllMessages();
                      var aCtrlMessage = [],
                          sMsg="";
@@ -717,7 +717,7 @@ sap.ui.define(
                               message: "MSG_CTRL_PRODUCT",
                               target: "/PainterComplainProducts/ProductSKUCode"
                         });
-                            //TODO: Product and Category required
+
                         }
 
                         if(!(data.PainterComplainProducts.ProductQuantity)){
@@ -735,9 +735,7 @@ sap.ui.define(
                 },
 
                 handleSavePress: function () {
-                    var oModel = this.getView().getModel("oModelView"),
-                        oModelControl = this.getView().getModel("oModelControl");
-                    /*
+                   /*
                     var oValidator = new Validator();
                     var oVbox = this.getView().byId("idVbx");
                     var bValidation = oValidator.validate(oVbox, true);
@@ -747,27 +745,40 @@ sap.ui.define(
                         );
                     }
                     */
-                    //Validations
-                    var validation = this._validation(oModel.getData(), oModelControl.getData());
-
+                  
+                    var oModelView = this.getView().getModel("oModelView"),
+                        validation = this._validation(oModelView.getData());
+                      //Validations
                     if (validation.length > 0 ) {
                         MessageToast.show(validation);
                         return;
                     }
+                   
+                    //Sending for approval message
+                     if(oModelView.getProperty("/ResolutionType") == 2)
+                     {
+                    var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+                    MessageBox.confirm(
+                        this.getResourceBundle().getText("MSG_APPROVAL_CONFIRMATION",[oModelView.getProperty("/ComplaintCode")]) ,
+                        {   styleClass: bCompact ? "sapUiSizeCompact" : "",
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    this._modStatus();
+                                }
+                            }.bind(this) 
+                        });
+                     return;
+                     }   
+                       
+                    
+                    this._modStatus();
+                     
+                },
 
-                    //Taken care off in validations
-                    // if (oModel.getProperty("/ResolutionId") === 1 && oModel.getProperty("/ComplaintStatus") == "RESOLVED") {
-                    //     if (oModel.getProperty("/ResolutionType") === 1 &&
-                    //         !(oModel.getProperty("/TokenCode")) && oModel.getProperty("/RewardPoints") == "") {
-                    //         MessageToast.show("Please verify token first");
-                    //         return;
-                    //     }
-
-                    //     if (oModel.getProperty("/ResolutionType") === 0 && !(oModel.getProperty("/SkuCode"))) {
-                    //         MessageToast.show("Please enter Product details");
-                    //         return;
-                    //     }
-                    // }
+                _modStatus : function(){
+                    var oModel = this.getView().getModel("oModelView");
                     if(oModel.getProperty("/ResolutionType") == 2){
                         oModel.setProperty("/ComplaintStatus",  "INREVIEW" );
                         oModel.setProperty("/ApprovalStatus",  "PENDING" ) ;
@@ -775,8 +786,7 @@ sap.ui.define(
                         oModel.setProperty("/ComplaintStatus",  "RESOLVED" )
                     }
 
-                  
-                     this._postDataToSave();
+                    this._postDataToSave();
                 },
 
                 _postDataToSave: function () {
@@ -788,27 +798,14 @@ sap.ui.define(
                     var sPath = oView.getElementBinding().getPath();
                     var oViewData = oView.getModel("oModelView").getData();
                     var oPayload = {};
+                    //cloning
                     jQuery.extend(true, oPayload, oViewData);
-
-                    
-                    //Mod payload
-                    this._modPayload(oPayload);
-
-                   // return;
-
-
-                    oPayload.RewardPoints = !!(oPayload.RewardPoints) ? +oPayload.RewardPoints : oPayload.RewardPoints;
+                    //Modify payload
+                    this._modPayload(oPayload);                 
                     var othat = this;
-                    console.log(oPayload);
-
-                    delete oPayload.QRCodeData;
-                    //delete oPayload.InitiateForceTat;
-
-                    //      oPayload = this._payloadHardCleaning(oPayload);
 
                     oData.update(sPath, oPayload, {
                         success: function () {
-                            //debugger;
                             /*  
                             //Handled by backend
                               if (+(oPayload.RewardPoints) > 0 && (oPayload.ComplaintSubtypeId === 2 || oPayload.ComplaintSubtypeId === 3))
@@ -825,7 +822,7 @@ sap.ui.define(
                         },
                     });
 
-                    //var oProp =
+                   
                 },
                 _modPayload: function(data){
                     
@@ -834,14 +831,14 @@ sap.ui.define(
                             data[a] = null;
                         }
                     }
-
+                    data.ResolutionType = +data.ResolutionType;
                    //mod Products data into array format
                     if(data.ResolutionType == 2)
                     {
                         data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
                         data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
                     }
-                   data.PainterComplainProducts = data.ResolutionType == 2 ? [data.PainterComplainProducts] : null;
+                   data.PainterComplainProducts = data.ResolutionType == 2 ? [data.PainterComplainProducts] : [];
                    //Parse RewardPoints
                    data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null; 
                 },
@@ -850,7 +847,7 @@ sap.ui.define(
                         urlParameters: {
                             qrcode: oData.TokenCode,
                             painterid: oData.PainterId,
-                            channel: "Complains",
+                            channel: "Complains"
                         }
                     });
                 },
@@ -860,7 +857,7 @@ sap.ui.define(
                     var oModelView = this.getModel("oModelView"),
                         validation = this._minValidation(oModelView.getData());
                     
-                    if (validation.length > 0 ) {
+                    if(validation.length > 0 ) {
                         MessageToast.show(validation);
                         return;
                     }
