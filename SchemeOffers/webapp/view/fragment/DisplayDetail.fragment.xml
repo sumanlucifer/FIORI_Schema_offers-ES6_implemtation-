@@ -3,6 +3,9 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
+        <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+            <Title titleStyle="H3" text="1. {i18n>BasicInformation}"/>
+        </Toolbar>
         <f:Form id="FormDisplay" editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
@@ -70,6 +73,9 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
+        <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+            <Title titleStyle="H3" text="2. {i18n>ApplicableProducts}"/>
+        </Toolbar>
         <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
@@ -146,6 +152,9 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
+        <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+            <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}"/>
+        </Toolbar>
         <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
@@ -259,8 +268,8 @@
             </items>
         </Table>
 
-        <Toolbar class="sapUiMediumMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H3" text="{i18n>ApplicablePainters}"/>
+        <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
+            <Title titleStyle="H3" text="4. {i18n>ApplicablePainters}"/>
         </Toolbar>
         <f:Form editable="false">
             <f:layout>
@@ -546,6 +555,10 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
+        <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+            <Title titleStyle="H3" text="5. {i18n>formBonusReward}"/>
+        </Toolbar>
+        <MessageStrip visible="{= !${oModelControl2>/OfferType/AdditionalReward} }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
         <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
@@ -587,7 +600,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer  title="  " visible="{oModelControl2>/OfferType/AdditionalReward}">
+                <f:FormContainer title="  " visible="{oModelControl2>/OfferType/AdditionalReward}">
                     <f:formElements>
                         <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
@@ -704,7 +717,10 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <f:Form editable="false" title="{i18n>AdditionalInformation}">
+        <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
+            <Title titleStyle="H3" text="6. {i18n>AdditionalInformation}"/>
+        </Toolbar>
+        <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
             </f:layout>

@@ -19,9 +19,9 @@
             </Toolbar>
         </f:toolbar>
         <f:formContainers >
-        <f:FormContainer title="  "  visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
+            <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                 <f:formElements>
-                  
+
                     <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                         <f:fields>
                             <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
@@ -33,12 +33,12 @@
 
                         </f:fields>
                     </f:FormElement>
-                    
+
                 </f:formElements>
             </f:FormContainer>
-            <f:FormContainer title="  "  visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
+            <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
                 <f:formElements>
-                  
+
                     <!-- <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                         <f:fields>
                             <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
@@ -179,6 +179,14 @@
                                     <RadioButton text="{i18n>Specific}"/>
                                 </buttons>
                             </RadioButtonGroup>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement >
+                        <f:fields>
+                            <MultiComboBox selectionFinish="onPAppDropChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
+                                <core:Item text="{Category}" key="{Id}"/>
+                            </MultiComboBox>
+
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="Buyer {i18n>formApplicableLbl8}">
