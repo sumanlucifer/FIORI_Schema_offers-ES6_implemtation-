@@ -22,24 +22,8 @@
                 </f:breadcrumbs>
             </f:DynamicPageTitle>
         </f:title>
-             <!-- <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <f:content>
-                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
-                        <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                               <fb:control>
-                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            
-                        </fb:filterGroupItems>
-                    </fb:FilterBar>
-                </f:content>
-            </f:DynamicPageHeader>
-        </f:header>   -->
          <f:content>
-                 <Table id="idPaintersTable"
+                 <Table id="idPaintersTable" growing="true" growingThreshold="20"
                         items="{
                         path: '/ProductCatalogueViewerSet',
                         parameters:{
