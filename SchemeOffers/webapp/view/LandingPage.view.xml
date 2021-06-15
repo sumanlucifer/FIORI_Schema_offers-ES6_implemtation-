@@ -49,6 +49,10 @@
                                 <fb:control>
                                    <ComboBox placeholder="{i18n>placeHolder1}"  selectedKey="{oModelControl>/filterBar/Status}">
                                         <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Expired" key="EXPIRED"/>
+                                        <core:Item text="Published" key="PUBLISHED"/>
                                     </ComboBox>
 
                                 </fb:control>
@@ -124,7 +128,7 @@
                         <Text text="{i18n>Active}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>tolColActiveStatus}2"/>
+                        <Text text="{i18n>tolColActiveStatus}"/>
                     </Column>
                   <Column width="8%">
                         <Text text="{i18n>tblColAction}"/>
