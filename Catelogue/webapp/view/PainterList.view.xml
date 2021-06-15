@@ -40,6 +40,7 @@
         </f:header>   -->
          <f:content>
                  <Table id="idPaintersTable"
+                        growing="true" growingThreshold="30"
                         items="{
                         path: '/ProductCatalogueViewerSet',
                         parameters:{
