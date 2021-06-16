@@ -1571,16 +1571,8 @@ sap.ui.define(
                     var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
                     aFilter.push(aFilter1);
                     aFilter.push(aFilter2);
-                  
-
-                    // var oPainterId = oView
-                    //     .getModel("oModelControl2")
-                    //     .getProperty("/PainterId");
-
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     oBindingParams.parameters["expand"] = "Painter";
-                    // var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
-
                     oBindingParams.filters.push(
                         new Filter({
                             filters: aFilter,

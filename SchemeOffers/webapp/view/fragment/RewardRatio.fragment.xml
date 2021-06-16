@@ -15,7 +15,7 @@
                             <f:fields>
                                 <RadioButtonGroup select="onRbRewardRatio" columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}">
                                     <buttons>
-                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>All}" enabled="{= !${oModelControl>/OfferType/RewardRatio} }"/>
                                         <RadioButton text="{i18n>Specific}" enabled="{oModelControl>/OfferType/RewardRatio}" />
                                     </buttons>
                                 </RadioButtonGroup>
