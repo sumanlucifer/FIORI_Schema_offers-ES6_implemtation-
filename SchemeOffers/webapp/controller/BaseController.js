@@ -706,7 +706,8 @@ sap.ui.define(
                         oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
                     } else {
                         oBj = false;
-                        oModel.setProperty("/Dialog/Key1", "add");
+                        oModel.setPro
+                        perty("/Dialog/Key1", "add");
                     }
 
                     if (!this._RewardsDialog1) {
@@ -764,10 +765,10 @@ sap.ui.define(
                         );
 
                     }
-                    if (oBjFinal["RequiredVolume"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
-                    } else {
+                    if (oBjFinal["RequiredPoints"]) {
                         oModelControl.setProperty("/Rbtn/BrReqVol", 1)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
                     }
                 },
                 onRbRRDialogVolume: function (oEvent) {
@@ -907,10 +908,10 @@ sap.ui.define(
                     }
 
 
-                    if (oBjFinal["RequiredVolume"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
-                    } else {
+                    if (oBjFinal["RequiredPoints"]) {
                         oModelControl.setProperty("/Rbtn/BrReqVol", 1)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
                     }
                     oModelControl.refresh(true);
                 },
