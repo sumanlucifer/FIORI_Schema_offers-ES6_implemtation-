@@ -706,8 +706,7 @@ sap.ui.define(
                         oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
                     } else {
                         oBj = false;
-                        oModel.setPro
-                        perty("/Dialog/Key1", "add");
+                        oModel.setProperty("/Dialog/Key1", "add");
                     }
 
                     if (!this._RewardsDialog1) {
