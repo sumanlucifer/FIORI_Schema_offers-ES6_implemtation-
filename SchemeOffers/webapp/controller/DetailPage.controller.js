@@ -1553,13 +1553,25 @@ sap.ui.define(
                     var sOfferId = oView.getModel("oModelControl3").getProperty("/SchemeId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
-                        "ProgressStatus",
-                        FilterOperator.EQ,
-                        "STARTED"
-                    );
+                        [
+                            new Filter(
+                                "ProgressStatus",
+                                FilterOperator.EQ,
+                                "STARTED"
+                            ),
+                            new Filter(
+                                "ProgressStatus",
+                                FilterOperator.EQ,
+                                "COMPLETED"
+                            )
+                        ],
+                        false
+                    )
+                   
                     var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
                     aFilter.push(aFilter1);
                     aFilter.push(aFilter2);
+                  
 
                     // var oPainterId = oView
                     //     .getModel("oModelControl2")
@@ -1577,13 +1589,14 @@ sap.ui.define(
                     );
                 },
                 onBeforeBindPainterTable2: function (oEvent) {
+                    //qualified
                     var oView = this.getView();
                     var sOfferId = oView.getModel("oModelControl3").getProperty("/SchemeId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
-                        "ProgressStatus",
+                        "RedemptionStatus",
                         FilterOperator.EQ,
-                        "COMPLETED"
+                        "REDEEMED"
                     );
                     var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
                     aFilter.push(aFilter1);
