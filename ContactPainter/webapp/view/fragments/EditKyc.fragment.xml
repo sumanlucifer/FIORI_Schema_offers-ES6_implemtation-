@@ -59,10 +59,10 @@
 		</content>
 	</Panel>
             <!--Aditya changes start-->
-			<Toolbar>
+			<Toolbar visible="{= ${PainterKycDetails} !== null}">
 				<ToolbarSpacer/>
-                <Button text="Reject" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails} !== null}"/>
-				<Button text="Approve" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails} !== null}"/>
+                <Button text="Reject" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+				<Button text="Approve" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
 				
 
 			</Toolbar>

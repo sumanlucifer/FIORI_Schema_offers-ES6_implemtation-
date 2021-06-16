@@ -137,10 +137,10 @@
             <!-- </f:content>
         </f:SimpleForm> -->
          <!--Aditya changes start-->
-			<Toolbar id="idToolbarBanking">
+			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
 				<ToolbarSpacer/>
-                <Button text="Reject" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails} !== null}"/>
-				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails} !== null}"/>
+                <Button text="Reject" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
+				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
 				
 
 			</Toolbar>
