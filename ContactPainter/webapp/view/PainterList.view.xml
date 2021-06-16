@@ -190,7 +190,11 @@
                             </VBox>
                             <Text text="{path:'CreatedAt',formatter:'.fmtDate' }"/>
                             <Text text="{Mobile}"/>
+                            <FlexBox >
+                            <Text visible="{= ${PrimaryDealerDetails}===null}" text="Not Linked"/>
                             <Text text="{PrimaryDealerDetails/DealerName}"/>
+                            </FlexBox>
+                            
                             <Text text="{path:'Preference/Language/Language'}"/>
                             <!-- <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/> -->
                             <!-- <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/> -->

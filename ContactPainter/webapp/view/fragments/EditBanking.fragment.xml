@@ -52,7 +52,7 @@
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
                 <!--Aditya changes start-->
-                <Label text="Bank Documents" visible="{= ${PainterBankDetails} === null? false: true }" />
+                <Label text="Bank Passbook/Cheque leaf" visible="{= ${PainterBankDetails} === null? false: true }" />
                 <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View" press="onBankView" width="30%"/>
                 <!--Aditya changes end-->
                 
