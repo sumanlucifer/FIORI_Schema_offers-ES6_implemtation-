@@ -368,10 +368,10 @@ sap.ui.define(
                             );
                         }
                     } else {
-                        if (oData["OfferPackRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table2",
-                                oData["OfferPackRewardRatio"]["results"]
+                                oData["OfferRewardRatio"]["results"]
                             );
                         }
                     }
@@ -984,10 +984,10 @@ sap.ui.define(
                             );
                         }
                     } else {
-                        if (oData["OfferPackRewardRatio"]["results"].length > 0) {
+                        if (oData["OfferRewardRatio"]["results"].length > 0) {
                             oModelControl2.setProperty(
                                 "/Table/Table2",
-                                oData["OfferPackRewardRatio"]["results"]
+                                oData["OfferRewardRatio"]["results"]
                             );
                         }
                     }

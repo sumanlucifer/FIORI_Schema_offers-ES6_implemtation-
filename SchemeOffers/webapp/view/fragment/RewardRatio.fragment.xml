@@ -83,7 +83,7 @@
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
                     <ToolbarSpacer />
-                    <Button   icon="sap-icon://add" text="{i18n>Add}"  tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
+                    <Button enabled="{= ${oModelControl>/Table/Table2}.length &lt; 3 }"  icon="sap-icon://add" text="{i18n>Add}"  tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards('add')"/>
                 </Toolbar>
             </headerToolbar>
 
