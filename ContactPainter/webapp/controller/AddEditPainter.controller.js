@@ -175,7 +175,7 @@ sap.ui.define(
                     });
                     var oControlData = {
                         AddNewBank: false,
-                        DocumentType: [{ Name: "passbook", Id: 0 }, { Name: "cheque", Id: 1 }]
+                        DocumentType: [{ Name: "Passbook", Id: 0 }, { Name: "Cheque", Id: 1 }]
                     };
                     var oContrModel = new JSONModel(oControlData);
 
@@ -575,18 +575,18 @@ sap.ui.define(
                         this.sServiceURI +
                         "PainterBankDetailsSet(" +
                         oKycData["Id"] +
-                        ")/$value";
+                        ")/$value?image_type=";
 
                     var sUrl2 = "";
                     var async_request = [];
-
+                    var docType=oKycData["DocumentType"];
                     for (var x = 0; x < oItems.length; x++) {
                         var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader()).oFileUpload.files[0];
-                        // sUrl2 = x == 0 ? "passbook" : "cheque";
+                         sUrl2 = docType == 0 ? "passbook" : "cheque";
                         async_request.push(
                             jQuery.ajax({
                                 method: "PUT",
-                                url: sUrl,
+                                url: sUrl+sUrl2,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
