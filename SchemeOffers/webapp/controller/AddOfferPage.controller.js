@@ -275,7 +275,8 @@ sap.ui.define(
                         OfferBonusRewardRatio: [],
                         PainterSelection: 0,
                         OfferSpecificPainter: [],
-                        ParentOfferId: 0
+                        ParentOfferId: 0,
+                        BonusDescription:""
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");

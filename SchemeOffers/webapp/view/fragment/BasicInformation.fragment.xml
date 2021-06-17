@@ -89,7 +89,7 @@
                 <f:formElements>
                     <f:FormElement label="{i18n>ApplyParentOffer}">
                         <f:fields>
-                            <RadioButtonGroup enabled="{= ${oModelView>/ParentOfferId}===0?false:true}" select="onRbPrntOffer" columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}">
+                            <RadioButtonGroup  select="onRbPrntOffer" columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}">
                                 <buttons>
                                     <RadioButton text="{i18n>No}"/>
                                     <RadioButton text="{i18n>Yes}" />

@@ -55,7 +55,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
                             <f:fields>
-                                <Text text="{i18n>Description}"/>
+                                <Text text="{Description}"/>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -640,8 +640,15 @@
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-
-
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer  title="  " visible="{oModelControl2>/OfferType/AdditionalReward}" >
+                    <f:formElements>
+                        <f:FormElement label="{i18n>Description}">
+                            <f:fields>
+                                <Text text="{BonusDescription}"/>
+                            </f:fields>
+                        </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
 

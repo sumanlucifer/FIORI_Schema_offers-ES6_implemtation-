@@ -215,6 +215,11 @@ sap.ui.define(
                                     ],
                                     true
                                 );
+                                othat._propertyToBlank(
+                                    [
+                                       "BonusDescription"
+                                    ]
+                                );
                                 othat._RbtnReset([
                                     "Rbtn/PCat4",
                                     "Rbtn/PClass4",
