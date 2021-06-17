@@ -349,7 +349,8 @@ sap.ui.define(
                                     };
                                 }
 
-                                
+                                 //Put previous escalate flag to false
+                                    data.InitiateForceTat = false;          
 
                                 
 
