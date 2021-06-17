@@ -61,8 +61,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.ContactPainter.controller.ProfilePainter",
-            {
+            "com.knpl.pragati.ContactPainter.controller.ProfilePainter", {
                 formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter(this);
@@ -106,8 +105,7 @@ sap.ui.define(
                         iCtbar: true,
                         PainterId: oProp, //.replace(/[^0-9]/g, ""),
                         //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
-                        ProfilePic:
-                            "/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(" +
+                        ProfilePic: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(" +
                             oProp +
                             ")/$value",
                         Search: {
@@ -133,7 +131,7 @@ sap.ui.define(
 
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
-                    this._loadEditKyc("Display");/*Aditya chnages*/
+                    this._loadEditKyc("Display"); /*Aditya chnages*/
                     this._toggleButtonsAndView(false);
 
 
@@ -178,12 +176,10 @@ sap.ui.define(
                         c2.then(function () {
                             c3 = othat._loadEditKyc("Edit"); //Aditya Changes
                             c3.then(function () {
-                                c3.then(function () {
-                                    c4 = othat._initEditData();
-                                    c4.then(function () {
-                                        othat.getView().getModel("oModelView").refresh(true);
-                                        othat._setCopyForFragment();
-                                    });
+                                c4 = othat._initEditData();
+                                c4.then(function () {
+                                    othat.getView().getModel("oModelView").refresh(true);
+                                    othat._setCopyForFragment();
                                 });
                             });
                         });
@@ -241,8 +237,7 @@ sap.ui.define(
                     oView.setModel(oControlModel, "oModelControl");
 
                     var oDataValue = oView.getModel().getObject("/" + sPath, {
-                        expand:
-                            "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers",
+                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers",
                     });
                     // setting the value property for the date this will help in resolving the date validation
                     // at the time of calling the validation function
@@ -299,8 +294,7 @@ sap.ui.define(
                     if (oDataValue["DealerId"]) {
                         oView.byId("idMinpPDealers").addToken(
                             new Token({
-                                text:
-                                    "{PrimaryDealerDetails/DealerName} - " +
+                                text: "{PrimaryDealerDetails/DealerName} - " +
                                     oDataValue["DealerId"],
                             })
                         );
@@ -333,19 +327,18 @@ sap.ui.define(
                     }
                     /*Aditya changes start*/
                     if (oDataValue.hasOwnProperty("PainterBankDetails")) {
-                        var oKycData = oDataValue["PainterBankDetails"];
-                        if (oKycData.hasOwnProperty("Id")) {
-                            if(oKycData["DocumentType"]==0){
+                        var oBankData = oDataValue["PainterBankDetails"];
+                        if (oBankData.hasOwnProperty("Id")) {
+                            if (oBankData["DocumentType"] == 0) {
                                 var sBankImageUrl1 =
-                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
-                                oKycData["Id"] +
-                                ")/$value?image_type=passbook";
-                            }
-                            else if(oKycData["DocumentType"]==1){
-                                    var sBankImageUrl1 =
-                                "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
-                                oKycData["Id"] +
-                                ")/$value?image_type=cheque";
+                                    "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                    oBankData["Id"] +
+                                    ")/$value?image_type=passbook";
+                            } else if (oBankData["DocumentType"] == 1) {
+                                var sBankImageUrl1 =
+                                    "/KNPL_PAINTER_API/api/v2/odata.svc/PainterBankDetailsSet(" +
+                                    oBankData["Id"] +
+                                    ")/$value?image_type=cheque";
                             }
                             oControlModel.setProperty("/BankImage/Image1", sBankImageUrl1);
                             //oControlModel.setProperty("/KycImage/Image2", sBankImageUrl2);
@@ -423,7 +416,7 @@ sap.ui.define(
                     }
                     return true;
                 },
-                _setCopyForFragment: function () { },
+                _setCopyForFragment: function () {},
                 handleSavePress: function () {
                     // this._toggleButtonsAndView(false);
                     var oView = this.getView();
@@ -441,13 +434,19 @@ sap.ui.define(
 
                 onCloseStatus: function () {
                     this.byId("ChangeStatus").close();
-                    
+
                 },
 
                 onChangeStatus: function () {
 
                     var oView = this.getView(),
-                        aStatus = [{ key: "ACTIVATED" }, { key: "DEACTIVATED" }, { key: "NOT_CONTACTABLE" }],
+                        aStatus = [{
+                            key: "ACTIVATED"
+                        }, {
+                            key: "DEACTIVATED"
+                        }, {
+                            key: "NOT_CONTACTABLE"
+                        }],
                         oModelControl = oView.getModel("oModelControl2"),
                         sCurrentStatus = oView.getBindingContext().getProperty("ActivationStatus"),
                         oChangeStatus = {
@@ -476,7 +475,7 @@ sap.ui.define(
                         this.byId("ChangeStatus").open();
                     }
                 },
-               
+
                 onConfirmStatus: function () {
                     var oPayload = this.getView().getModel("oModelControl2").getProperty("/oChangeStatus/oPayload");
 
@@ -487,13 +486,13 @@ sap.ui.define(
                         return;
 
                     var sPath = this.getView().getBindingContext().getPath();
-                    this.getView().getModel().update(sPath
-                        + "/ActivationStatus", oPayload, {
-                        success: function () {
-                            MessageToast.show(`Status has been changed to ${oPayload.ActivationStatus}`);
-                            this.onCloseStatus();
-                        }.bind(this)
-                    })
+                    this.getView().getModel().update(sPath +
+                        "/ActivationStatus", oPayload, {
+                            success: function () {
+                                MessageToast.show(`Status has been changed to ${oPayload.ActivationStatus}`);
+                                this.onCloseStatus();
+                            }.bind(this)
+                        })
 
 
                 },
@@ -506,7 +505,9 @@ sap.ui.define(
                         target: {
                             semanticObject: "Manage",
                             action: sAction,
-                            params: { PainterId: sPainterId }
+                            params: {
+                                PainterId: sPainterId
+                            }
                         }
                     });
                 },
@@ -515,7 +516,10 @@ sap.ui.define(
                     if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
                         var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
                         oCrossAppNav.toExternal({
-                            target: { semanticObject: oSemAct.target.semanticObject, action: oSemAct.target.action },
+                            target: {
+                                semanticObject: oSemAct.target.semanticObject,
+                                action: oSemAct.target.action
+                            },
                             params: oSemAct.target.params
                         })
                     }
@@ -587,10 +591,14 @@ sap.ui.define(
                     );
                     var aPainterSecContact = [];
                     if (SMobile1.trim() !== "") {
-                        aPainterSecContact.push({ Mobile: SMobile1 });
+                        aPainterSecContact.push({
+                            Mobile: SMobile1
+                        });
                     }
                     if (SMobile2.trim() !== "") {
-                        aPainterSecContact.push({ Mobile: SMobile2 });
+                        aPainterSecContact.push({
+                            Mobile: SMobile2
+                        });
                     }
                     oPayload["PainterContact"] = aPainterSecContact;
 
@@ -601,7 +609,9 @@ sap.ui.define(
 
                     var oDealers = [];
                     for (var i of oSecondryDealer) {
-                        oDealers.push({ Id: i["Id"].toString() });
+                        oDealers.push({
+                            Id: i["Id"].toString()
+                        });
                     }
 
                     oPayload["Dealers"] = oDealers;
@@ -665,8 +675,7 @@ sap.ui.define(
                 _ReturnObjects: function (mParam) {
                     var obj = Object.assign({}, mParam);
                     var oNew = Object.entries(obj).reduce(
-                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
-                        {}
+                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
                     );
                     return oNew;
                 },
@@ -709,9 +718,7 @@ sap.ui.define(
                 },
                 onLoyaltySelChange: function (oEvent) {
                     var sKey = oEvent.getParameter("item").getKey();
-                    if (sKey == "0") {
-                    } else {
-                    }
+                    if (sKey == "0") {} else {}
                 },
                 fmtAddress: function (mParam1, mParam2, mParam3) {
                     if (mParam1) {
@@ -1237,10 +1244,11 @@ sap.ui.define(
                     } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
                     }
+
                     function onYes() {
-                               this.handleSavePress();
-                            }
-                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+                        this.handleSavePress();
+                    }
+                    this.showWarning("Do you want to " + " " + statusText + "?", onYes);
                     /*Aditya changes end*/
                 },
                 onRbKycStatus: function (oEvent) {
@@ -1259,10 +1267,11 @@ sap.ui.define(
                     } else if (statusText == 'Reject') {
                         oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
                     }
+
                     function onYes() {
-                               this.handleSavePress();
-                            }
-                            this.showWarning("Do you want to "+" "+statusText+"?", onYes);
+                        this.handleSavePress();
+                    }
+                    this.showWarning("Do you want to " + " " + statusText + "?", onYes);
 
                     /*Aditya changes end*/
                 },
@@ -1305,7 +1314,7 @@ sap.ui.define(
                         this._pBankDialog.open();
                     }
                 },
-                 /*Aditya changes end*/
+                /*Aditya changes end*/
                 onPressCloseDialog: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -1677,7 +1686,7 @@ sap.ui.define(
                                 }
                             }
                         },
-                        error: function () { },
+                        error: function () {},
                     });
                 },
                 onPressAddReferral: function (oEvent) {
@@ -1686,8 +1695,7 @@ sap.ui.define(
                     if (!this._DialogAddREferal) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.ContactPainter.view.fragments.AddReferralDialog",
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.AddReferralDialog",
                             controller: this,
                         }).then(
                             function (oValueHelpDialog) {
@@ -1823,7 +1831,7 @@ sap.ui.define(
                     oCtrlModel2.setProperty("/iCtbar", true);
                     this._loadEditProfile("Display");
                     this._loadEditBanking("Display");
-                    this._loadEditKyc("Display");/*Aditya chnages*/
+                    this._loadEditKyc("Display"); /*Aditya chnages*/
                     oView.getModel().refresh(true);
                 },
 
@@ -1864,8 +1872,7 @@ sap.ui.define(
                     if (!this._PvalueHelpDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
                             controller: this,
                         }).then(
                             function (oValueHelpDialog) {
@@ -1958,8 +1965,7 @@ sap.ui.define(
                 onValueHelpRequested: function () {
                     this._oMultiInput = this.getView().byId("multiInput");
                     this.oColModel = new JSONModel({
-                        cols: [
-                            {
+                        cols: [{
                                 label: "SAP Code",
                                 template: "Id",
                                 width: "10rem",
@@ -2133,8 +2139,7 @@ sap.ui.define(
                     if (!pFormFragment) {
                         pFormFragment = Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "sap.ui.layout.sample.SimpleForm354wideDual." + sFragmentName,
+                            name: "sap.ui.layout.sample.SimpleForm354wideDual." + sFragmentName,
                         });
                         this._formFragments[sFragmentName] = pFormFragment;
                     }
@@ -2180,13 +2185,13 @@ sap.ui.define(
                                 value2: oFinancialYear.endYear,
                             })
                         );
-                         aFilters.push(
-                            new Filter({
-                                path: "IsArchived",
-                                operator: FilterOperator.EQ,
-                                value1: false
-                            })
-                        );
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false
+                        })
+                    );
 
                     oBindingParams.filters.push(
                         new Filter({
@@ -2211,7 +2216,10 @@ sap.ui.define(
                     startYear = new Date(startYear, 3, 1);
                     endYear = new Date(endYear, 2, 31, 23, 59, 59);
 
-                    return { endYear: endYear, startYear: startYear };
+                    return {
+                        endYear: endYear,
+                        startYear: startYear
+                    };
                 },
                 // himank loyalty hanges end
 
@@ -2272,8 +2280,7 @@ sap.ui.define(
                     if (!this._pQuestionaireDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.ContactPainter.view.fragments.TrainingQuestionnaireDialog",
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.TrainingQuestionnaireDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {
@@ -2373,8 +2380,7 @@ sap.ui.define(
                     if (!this._pQuestionaireDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.ContactPainter.view.fragments.LearningQuestionDialog",
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.LearningQuestionDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {
