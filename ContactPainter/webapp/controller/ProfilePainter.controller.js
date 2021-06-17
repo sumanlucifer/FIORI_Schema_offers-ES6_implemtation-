@@ -307,7 +307,7 @@ sap.ui.define(
                         oSecTokens
                     );
 
-                    console.log(oSecTokens);
+                    
                     // setting up kyc data
                     //var oKycData = oDataValue["PainterBankDetails"];
                     if (oDataValue.hasOwnProperty("PainterKycDetails")) {
