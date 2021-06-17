@@ -79,6 +79,8 @@ sap.ui.define([], function () {
                 case "WORKFLOW_STARTED" : return "Complaint raised" ;
                 case "WORKFLOW_COMPLETED" : return "Complaint closed" ;
                 case "WORKFLOW_CANCELED" : return "Complaint withdrawn" ;
+                case "USERTASK_COMPLETED" : return "Complaint resolved" ;
+
             }
             
             return sSubject;
