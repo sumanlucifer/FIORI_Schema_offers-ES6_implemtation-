@@ -128,18 +128,25 @@ sap.ui.define(
 
                     oView.setModel(oModel, "oModelControl2");
                     var c1, c2, c3, c4;
+                    var othat = this;
+                    c1 = othat._loadEditProfile("Display");
+                    c1.then(function () {
+                        c2 = othat._loadEditBanking("Display");
+                        c2.then(function () {
+                            c3 = othat._loadEditKyc("Display");
+                            c3.then(function () {
+                                c4 = othat._toggleButtonsAndView(false);
+                            })
+                        })
+                    })
 
-                    this._loadEditProfile("Display");
-                    this._loadEditBanking("Display");
-                    this._loadEditKyc("Display"); /*Aditya chnages*/
-                    this._toggleButtonsAndView(false);
+                    // this._loadEditProfile("Display");
+                    // this._loadEditBanking("Display");
+                    // this._loadEditKyc("Display"); 
+                    // 
 
 
                     //rebind Loyalty table
-                    oView.byId("smrtLiveTraining").rebindTable();
-                    oView.byId("smrtOfflineTraining").rebindTable();
-                    oView.byId("smrtVideoTraining").rebindTable();
-                    oView.byId("smrtLoyalty").rebindTable();
 
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
@@ -150,7 +157,7 @@ sap.ui.define(
                     var oSection = oEvent.getParameter("section");
                     var sId = oSection.getId();
                     if (sId.match("loyaltysection")) {
-                        console.log("loyalty")
+                       
                         oView.byId("smrtLoyalty").rebindTable();
                     } else if (sId.match("learnSection")) {
                         console.log("learnSection")
@@ -179,13 +186,20 @@ sap.ui.define(
                                 c4 = othat._initEditData();
                                 c4.then(function () {
                                     othat.getView().getModel("oModelView").refresh(true);
-                                    othat._setCopyForFragment();
+                                    othat._RefreshSmartables();
                                 });
                             });
                         });
                     });
 
                     // this._initSaveModel();
+                },
+                _RefreshSmartables: function () {
+                    var oView = this.getView();
+                    oView.byId("smrtLoyalty").rebindTable();
+                    oView.byId("smrtLiveTraining").rebindTable();
+                    oView.byId("smrtOfflineTraining").rebindTable();
+                    oView.byId("smrtVideoTraining").rebindTable();
                 },
                 _initEditData: function () {
                     var promise = jQuery.Deferred();
@@ -307,7 +321,7 @@ sap.ui.define(
                         oSecTokens
                     );
 
-                    
+
                     // setting up kyc data
                     //var oKycData = oDataValue["PainterBankDetails"];
                     if (oDataValue.hasOwnProperty("PainterKycDetails")) {
@@ -1824,14 +1838,24 @@ sap.ui.define(
                 /*Aditya changes end*/
 
                 handleCancelPress: function () {
-                    this._toggleButtonsAndView(false);
+
                     var oView = this.getView();
                     var oCtrlModel2 = oView.getModel("oModelControl2");
                     oCtrlModel2.setProperty("/modeEdit", false);
                     oCtrlModel2.setProperty("/iCtbar", true);
-                    this._loadEditProfile("Display");
-                    this._loadEditBanking("Display");
-                    this._loadEditKyc("Display"); /*Aditya chnages*/
+
+                    var c1, c2, c3, c4;
+                    var othat = this;
+                    c1 = othat._loadEditProfile("Display");
+                    c1.then(function () {
+                        c2 = othat._loadEditBanking("Display");
+                        c2.then(function () {
+                            c3 = othat._loadEditKyc("Display");
+                            c3.then(function () {
+                                c4 = othat._toggleButtonsAndView(false);
+                            })
+                        })
+                    })
                     oView.getModel().refresh(true);
                 },
 

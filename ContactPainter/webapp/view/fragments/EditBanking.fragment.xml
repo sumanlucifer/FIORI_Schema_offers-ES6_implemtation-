@@ -5,7 +5,7 @@
 			<OverflowToolbar>
 				<Title text="{i18n>BankingDetails}"/>
                 <ObjectStatus visible="{= ${PainterBankDetails} === null}" text="Not Submitted" state="Error"/>
-                <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status', formatter: '.fmtStatus'}" state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status'}" state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
 			</OverflowToolbar>
 		</headerToolbar>
 		<content>
