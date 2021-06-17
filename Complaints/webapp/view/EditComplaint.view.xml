@@ -77,9 +77,9 @@
               <ToolbarSpacer/>
               <Button press="handleCancelPress"  text="{i18n>Cancel}"  />
               <Button press="onWithdraw"        visible="{= !${oModelControl>/ComplainResolved} }"  text="{i18n>btnWithdraw}" type="Negative"  />
-              <Button press="onPressEscalate"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} }"   text="{i18n>Escalate}" type="Critical" />
-              <Button press=".onApproval(true)"  visible="{= ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
+              <Button press="onPressEscalate"   visible="{= ${ComplaintTypeId} &lt; 4 &amp;&amp;  !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} }"   text="{i18n>Escalate}" type="Critical" />
               <Button press=".onApproval(false)"   visible="{= ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
+              <Button press=".onApproval(true)"  visible="{= ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
              <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{i18n>btnResolve}" type="Emphasized" />
             </OverflowToolbar>
         </f:footer>

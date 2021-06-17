@@ -4,7 +4,7 @@ sap.ui.define([], function () {
   var wfIcons = {
         WORKFLOW_STARTED: "sap-icon://initiative",
         WORKFLOW_COMPLETED: "sap-icon://stop",
-        WORKFLOW_CANCELED: "sap-icon://sys-cancel",
+        WORKFLOW_CANCELED: "sap-icon://sys-cancel-2",
         WORKFLOW_SUSPENDED: "sap-icon://media-pause",
         WORKFLOW_CONTINUED: "sap-icon://redo",
         WORKFLOW_RESUMED: "sap-icon://media-play",
@@ -75,9 +75,10 @@ sap.ui.define([], function () {
 
             switch(sType)
             {
-                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT" : return "TAT Triggered" ;
-                case "WORKFLOW_STARTED" : return "Workflow started" ;
-                case "WORKFLOW_COMPLETED" : return "Workflow completed" ;
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT" : return "TAT triggered" ;
+                case "WORKFLOW_STARTED" : return "Complaint raised" ;
+                case "WORKFLOW_COMPLETED" : return "Complaint closed" ;
+                case "WORKFLOW_CANCELED" : return "Complaint withdrawn" ;
             }
             
             return sSubject;
