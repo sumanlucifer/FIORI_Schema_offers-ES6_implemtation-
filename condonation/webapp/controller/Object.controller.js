@@ -81,6 +81,7 @@ sap.ui.define([
                 Remark: "",
                 ComplaintStatus: "RESOLVED",
                 ApprovalStatus: "APPROVED",
+                ResolutionType:2,
                 ComplaintSubtypeId: 1,
                 ComplaintTypeId: 1,
                 PainterComplainProducts: [{
