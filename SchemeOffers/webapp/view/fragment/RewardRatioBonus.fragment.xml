@@ -13,6 +13,7 @@
 
                 <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>formBonusReward}">
                     <f:formElements>
+
                         <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}">
@@ -103,11 +104,15 @@
                             </f:fields>
                         </f:FormElement>
 
-
-
-
-
-
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="   ">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>Description}">
+                            <f:fields>
+                                <TextArea required="false" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/BonusDescription', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                            </f:fields>
+                        </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
 
