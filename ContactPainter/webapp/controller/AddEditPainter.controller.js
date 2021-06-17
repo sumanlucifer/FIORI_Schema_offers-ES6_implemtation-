@@ -558,9 +558,9 @@ sap.ui.define(
                     var othat = this;
                     var bFlag = false;
                     if (oData.hasOwnProperty("PainterBankDetails")) {
-                        var oKycData = oData["PainterBankDetails"];
-                        if (oKycData !== null) {
-                            if (oKycData.hasOwnProperty("Id")) {
+                        var oBankData = oData["PainterBankDetails"];
+                        if (oBankData !== null) {
+                            if (oBankData.hasOwnProperty("Id")) {
                                 if (oItems.length > 0) {
                                     bFlag = true;
                                 }
@@ -574,12 +574,12 @@ sap.ui.define(
                     var sUrl =
                         this.sServiceURI +
                         "PainterBankDetailsSet(" +
-                        oKycData["Id"] +
+                        oBankData["Id"] +
                         ")/$value?image_type=";
 
                     var sUrl2 = "";
                     var async_request = [];
-                    var docType=oKycData["DocumentType"];
+                    var docType=oBankData["DocumentType"];
                     for (var x = 0; x < oItems.length; x++) {
                         var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader()).oFileUpload.files[0];
                          sUrl2 = docType == 0 ? "passbook" : "cheque";

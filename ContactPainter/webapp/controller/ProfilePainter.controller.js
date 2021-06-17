@@ -217,6 +217,9 @@ sap.ui.define(
                         AnotherMobField: false,
                         BankExistStatus: "",
                         AddNewBank: false,
+                        EditBank:false,//Aditya Chnage
+                        EditBankButton:false,//Aditya Chnage
+                        DocumentType: [{ Name: "Passbook", Id: 0 }, { Name: "Cheque", Id: 1 }],//Aditya Chnage
                         KycImage: {
                             Image1: "",
                             Image2: "",
@@ -390,9 +393,9 @@ sap.ui.define(
                         "PainterSegmentation/PainterExperience",
                         "PainterSegmentation/SitePerMonthId",
                         "PainterSegmentation/PotentialId",
-                        // "PainterBankDetails/IfscCode",
-                        // "PainterBankDetails/BankNameId",
-                        // "PainterBankDetails/AccountTypeId",
+                         "PainterBankDetails/IfscCode",
+                         "PainterBankDetails/BankNameId",
+                         "PainterBankDetails/AccountTypeId",
                         // "PainterBankDetails/AccountNumber",
                         // "PainterBankDetails/AccountHolderName",
                         // "PainterKycDetails/KycTypeId",
@@ -549,7 +552,10 @@ sap.ui.define(
                     var cValidation = true; // oValidator.validate(oVbox2);
                     var dTbleFamily = !oModelControl.getProperty("/EditTb1FDL");
                     var eTbleAssets = !oModelControl.getProperty("/EditTb2AST");
-
+                   // var eValidateBank = this._CheckTheBank();//Aditya chnages
+                     this.sServiceURI = this.getOwnerComponent(this)
+                        .getManifestObject()
+                        .getEntry("/sap.app").dataSources.mainService.uri;
                     if (dTbleFamily == false) {
                         MessageToast.show(
                             "Kindly save the details in the 'Family Details' table to continue."
@@ -662,6 +668,12 @@ sap.ui.define(
                             oPayload["PainterAddress"][d] = null;
                         }
                     }
+                   var editBank= oCtrlModel.getProperty("/EditBank")
+                   if(editBank){
+                        this._checkBankFileUpload(oPayload);
+                        oPayload["PainterBankDetails"]["Status"]="PENDING";
+                    }
+                    
                     console.log(oPayload, sPath);
                     oData.update(sPath, oPayload, {
                         success: function (oData) {
@@ -1326,6 +1338,96 @@ sap.ui.define(
                         oView.addDependent(this._pBankDialog);
                         this._pBankDialog.open();
                     }
+                },
+                onEditBankingFields: function (){
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/EditBank", true);
+                    oModelCtrl.setProperty("/EditBankButton", true);
+                    oModelCtrl.setProperty("/AddNewBank", false);
+
+                },
+                onEditCancelBankingFields: function (){
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/EditBank", false);
+                     oModelCtrl.setProperty("/EditBankButton", false);
+
+                },
+                onUploadFileTypeMis: function () {
+                    MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
+                },
+                // _CheckTheBank: function () {
+                //     var oView = this.getView();
+                //     var oModel = oView.getModel("oModelControl");
+                //     var sBankId = oModel.getProperty("/EditBank");
+                //     var oUpload = oView.byId("idUploadCollectionBank");
+                //     var iItems = oUpload.getItems().length;
+                //     if (sBankId == true) {
+
+                //         if (iItems == 0) {
+                //             return [false, "Kindly upload the image of the selected Bank Details."];
+                //         }
+                //     }
+                //     return [true, ""];
+                // },
+                _checkBankFileUpload: function (oData) {
+                    var promise = jQuery.Deferred();
+                    var UploadCollection = this.getView().byId("idUploadCollectionBank");
+                    var oItems = UploadCollection.getItems();
+                    var othat = this;
+                    var bFlag = false;
+                    if (oData.hasOwnProperty("PainterBankDetails")) {
+                        var oKycData = oData["PainterBankDetails"];
+                        if (oKycData !== null) {
+                            if (oKycData.hasOwnProperty("Id")) {
+                                if (oItems.length > 0) {
+                                    bFlag = true;
+                                }
+                            }
+                        }
+                    }
+                    if (!bFlag) {
+                        promise.resolve(oData);
+                        return promise;
+                    }
+                    var sUrl =
+                        this.sServiceURI +
+                        "PainterBankDetailsSet(" +
+                        oKycData["Id"] +
+                        ")/$value?image_type=";
+
+                    var sUrl2 = "";
+                    var async_request = [];
+                    var docType=oKycData["DocumentType"];
+                    for (var x = 0; x < oItems.length; x++) {
+                        var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader()).oFileUpload.files[0];
+                         sUrl2 = docType == 0 ? "passbook" : "cheque";
+                        async_request.push(
+                            jQuery.ajax({
+                                method: "PUT",
+                                url: sUrl+sUrl2,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                data: sFile,
+                                success: function (data) {
+                                    console.log("image succcess")
+                                 },
+                                error: function () { },
+                            })
+                        );
+                    }
+                    if (oItems.length > 0) {
+                        jQuery.when.apply(null, async_request).then(
+                            function () {
+                                //promise.resolve("FileUpdated");
+                            },
+                            function () {
+                                //promise.resolve("FileNot Uplaoded");
+                            }
+                        );
+                    }
+                    promise.resolve(oData);
+                    return promise;
                 },
                 /*Aditya changes end*/
                 onPressCloseDialog: function (oEvent) {

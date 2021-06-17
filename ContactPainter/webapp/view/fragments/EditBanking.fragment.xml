@@ -5,8 +5,14 @@
 			<OverflowToolbar>
 				<Title text="{i18n>BankingDetails}"/>
                 <ObjectStatus visible="{= ${PainterBankDetails} === null}" text="Not Submitted" state="Error"/>
-                <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status'}" state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
-			</OverflowToolbar>
+                <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status'}" 
+                state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+			<ToolbarSpacer/>
+            <FlexBox visible="{=${PainterBankDetails/Status} !== 'PENDING'}">
+                <Button visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
+                <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
+            </FlexBox>
+            </OverflowToolbar>
 		</headerToolbar>
 		<content>
             <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
@@ -14,12 +20,18 @@
                 <core:Title text=""/>
                 <Label text="{i18n>IFSCCode}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="false" value="{PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input editable="{=${oModelControl>/EditBank} }" value="{oModelView>/PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String' }"/>
                 </VBox>
                 <Label text="{i18n>BankName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="false" value="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <!-- <Input editable="false" value="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/> -->
+                    <ComboBox id="IdPrAbBankNameEdit" editable="{=${oModelControl>/EditBank} }" width="100%" visible="{= !${oModelControl>/AddNewBank} }" required="true" 
+                    items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterBankDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                        <items>
+                            <core:Item text="{BankName}" key="{Id}"></core:Item>
+                        </items>
+                    </ComboBox>
                     <ComboBox id="IdPrAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{BankName}" key="{Id}"></core:Item>
@@ -29,7 +41,13 @@
                 <core:Title text=""/>
                 <Label text="{i18n>AccountType}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <!-- <Input editable="false" value="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= !${oModelControl>/AddNewBank} }"/> -->
+                    <ComboBox id="IdPrAbAccountTypeEdit" editable="{=${oModelControl>/EditBank} }" width="100%"
+                     visible="{= !${oModelControl>/AddNewBank} }" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelView>/PainterBankDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                        <items>
+                            <core:Item text="{AccountType}" key="{Id}"/>
+                        </items>
+                    </ComboBox>
                     <ComboBox id="IdPrAbAccountTypeId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelControl>/PainterAddBanDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{AccountType}" key="{Id}"/>
@@ -39,7 +57,7 @@
 
                 <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountNumber}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input editable="{=${oModelControl>/EditBank} }" change="onPrimaryAcChange" value="{oModelView>/PainterBankDetails/AccountNumber}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountNumber" change="onPrimaryAcChange" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" 
                     value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
                     <Label text="{i18n>ConfirmAccNumber}" visible="{oModelControl>/AddNewBank}" required="true"/>
@@ -48,14 +66,27 @@
                  <core:Title text=""/>
                 <Label text="{i18n>AccountHolderName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input  editable="{=${oModelControl>/EditBank} }" value="{oModelView>/PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
                 <!--Aditya changes start-->
                 <Label text="Bank Passbook/Cheque leaf" visible="{= ${PainterBankDetails} === null? false: true }" />
                 <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View" press="onBankView" width="30%"/>
                 <!--Aditya changes end-->
-                
+                <core:Title text=""/>
+                <Label text="{i18n>SelectBankDocument}" visible="{=${oModelControl>/EditBank} }" />
+                <ComboBox id="IdDocumentType" visible="{=${oModelControl>/EditBank} }"  items="{oModelControl>/DocumentType}" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
+    
+                    </items>
+                </ComboBox>
+                <core:Title text=""/>
+                <Label text="" visible="{=${oModelControl>/EditBank} }" />
+                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollectionBank"  visible="{=${oModelControl>/EditBank} }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <Label text=""  visible="{=${oModelControl>/EditBank} }"/>
+                <Text  text="{i18n>FileUploadMessage}" visible="{=${oModelControl>/EditBank} }"/>
+               
         
                 
                
@@ -63,79 +94,6 @@
         </f:SimpleForm>
 		</content>
 	</Panel>
-        <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
-            <f:content>
-                <core:Title text="{i18n>BankingDetails}"/>
-                <Label text="{i18n>IFSCCode}" required="{= ${oModelControl>/AddNewBank} }"/>
-                <VBox>
-                    <Input editable="false" value="{PainterBankDetails/IfscCode}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdPrAbIfscCode" valueStateText="IFSC Code should have letters followed by numbers." required="true" visible="{= ${oModelControl>/AddNewBank} }" value="{path:'oModelControl>/PainterAddBanDetails/IfscCode',type : 'sap.ui.model.type.String' }"/>
-                </VBox>
-                <Label text="{i18n>BankName}" required="{= ${oModelControl>/AddNewBank} }"/>
-                <VBox>
-                    <Input editable="false" value="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <ComboBox id="IdPrAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
-                        <items>
-                            <core:Item text="{BankName}" key="{Id}"></core:Item>
-                        </items>
-                    </ComboBox>
-                </VBox>
-                <core:Title text=""/>
-                <Label text="{i18n>AccountType}" required="{= ${oModelControl>/AddNewBank} }"/>
-                <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountTypeDetails/AccountType}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <ComboBox id="IdPrAbAccountTypeId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" items="{path:'/MasterBankAccountTypeSet',sorter:{path:'AccountType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true" selectedKey="{path:'oModelControl>/PainterAddBanDetails/AccountTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
-                        <items>
-                            <core:Item text="{AccountType}" key="{Id}"/>
-                        </items>
-                    </ComboBox>
-                </VBox>
-
-                <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
-                <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountNumber}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdPrAbAccountNumber" change="onPrimaryAcChange" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
-                    <Label text="{i18n>ConfirmAccNumber}" visible="{oModelControl>/AddNewBank}" required="true"/>
-                    <Input required="true" visible="{oModelControl>/AddNewBank}" id="IdPrAbCnfAccNo"  change="onConfAccChng" type="Number" value="{path:'oModelControl>/PainterAddDet/ConfrmAccNum',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }"/>
-                </VBox>
-                 <core:Title text=""/>
-                <Label text="{i18n>AccountHolderName}" required="{= ${oModelControl>/AddNewBank} }"/>
-                <VBox>
-                    <Input editable="false" value="{PainterBankDetails/AccountHolderName}" visible="{= !${oModelControl>/AddNewBank} }"/>
-                    <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
-                </VBox> -->
-                <!--Aditya changes start-->
-                <!-- <Label text="Bank Documents" visible="{= ${PainterBankDetails} === null? false: true }" />
-                <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View" press="onBankView" width="50%"/> -->
-                <!--Aditya changes end-->
-                <!-- <Label text="{i18n>Status}" visible="{= ${PainterBankDetails} === null? false: true }" />
-                <RadioButtonGroup visible="{= ${PainterBankDetails} === null? false: true }" select="onRbBankStatus" selectedIndex="{path:'oModelView>/PainterBankDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
-                    <RadioButton text="{i18n>Approved}"/>
-                    <RadioButton text="{i18n>Reject}"/>
-                </RadioButtonGroup> -->
-                <!-- <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>SelectedKYCDocument}"/>
-                <ComboBox editable="false" change="onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
-                    <items>
-                        <core:Item text="{KycType}" key="{Id}"></core:Item>
-                    </items>
-                </ComboBox>
-                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} === null? false: true }"/>
-                <Input editable="false" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null? false: true }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }"/>
-                <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" />
-                <RadioButtonGroup visible="{= ${PainterKycDetails} === null? false: true }" select="onRbKycStatus" selectedIndex="{path:'oModelView>/PainterKycDetails/Status',formatter:'.fmtBankStatus'}"  columns="2" width="100%">
-                    <RadioButton text="{i18n>Approved}"/>
-                    <RadioButton text="{i18n>Reject}"/>
-                </RadioButtonGroup>
-                <Label text="" visible="{= ${PainterKycDetails} === null? false: true }" />
-                <HBox justifyContent="End" visible="{= ${PainterKycDetails} === null? false: true }" >
-                    <Link text="View KYC Documents" press="onKycView" />
-                </HBox> -->
-        
-                
-               
-            <!-- </f:content>
-        </f:SimpleForm> -->
          <!--Aditya changes start-->
 			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
 				<ToolbarSpacer/>
