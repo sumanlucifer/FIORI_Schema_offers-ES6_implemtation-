@@ -3,12 +3,12 @@ sap.ui.define([], function () {
 
     return {
 
-		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
+        /**
+         * Rounds the number unit value to 2 digits
+         * @public
+         * @param {string} sValue the number string to be rounded
+         * @returns {string} sValue with 2 digits rounded
+         */
         numberUnit: function (sValue) {
             if (!sValue) {
                 return "";
@@ -44,43 +44,35 @@ sap.ui.define([], function () {
 
         },
         ProductProperty: function (sPath, sProperty) {
-            var oProduct = this.getView().getModel().getData("/" + sPath),
-                oPackDetails = this.getView().getModel().getData("/" + oProduct.ProductPackDetails.__ref)
-          
-            
-            switch(sProperty){
+            var oProduct = this.getView().getModel().getData("/" + sPath);
+            if (sProperty && oProduct) {
+                var oPackDetails = this.getView().getModel().getData("/" + oProduct.ProductPackDetails.__ref);
+            } else {
+                return "NA"
+            }
+            switch (sProperty) {
 
-                case "Product Name" :
+                case "Product Name":
                     return oPackDetails.Description;
 
-                case "Total Points" :   
-                    return oProduct.ProductQuantity*oProduct.Points;
-                case "Category" : 
-                     var cat = this.getView().getModel().getData("/"+ oPackDetails.ProductCategoryDetails.__ref);    
+                case "Total Points":
+                    return oProduct.ProductQuantity * oProduct.Points;
+                case "Category":
+                    var cat = this.getView().getModel().getData("/" + oPackDetails.ProductCategoryDetails.__ref);
                     return cat.Category;
-
-
-            }
-
-
-            if (sProperty == "Product Name") {
-                return oPackDetails.Description;
-            }
-
-            if (sProperty == "Total Points") {
+                case "Quantity":
+                    return oProduct.ProductQuantity;
+                case "Reward Points":
+                    return oProduct.Points;
 
             }
 
 
-
-
-            return oProduct[sProperty];
-
-            //   
+            return "NA"
         },
         PackDetails: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath)
-          
+
         }
 
     };
