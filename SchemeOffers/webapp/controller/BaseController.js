@@ -235,6 +235,17 @@ sap.ui.define(
                                 ]);
 
                             }
+                        } else if (oOfferType[a]) {
+                            // in this case the generic reward ratio will be non editable
+                            if (a === "RewardRatio") {
+                                othat._propertyToBlank(
+                                    [
+                                        "Table/Table1",
+                                    ],
+                                    true
+                                );
+                                oModelControl.setProperty("/Rbtn/Rewards", 1);
+                            }
                         }
                     }
                     //oModelControl.refresh(true);
@@ -253,8 +264,8 @@ sap.ui.define(
                             Name: a
                         })
                     }
-                    oModel.setProperty("/oData/PerGrowth",aArray);
-                    
+                    oModel.setProperty("/oData/PerGrowth", aArray);
+
 
 
                 },
