@@ -37,8 +37,8 @@
                     <cells>
                         <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colCategory'} ], formatter : '.formatter.ProductProperty'  }" />
                         <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colProductName'} ], formatter : '.formatter.ProductProperty'  }" />
-                        <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>ProductQuantity'} ], formatter : '.formatter.ProductProperty'  }" />
-                        <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>Points'} ], formatter : '.formatter.ProductProperty'  }" />               
+                        <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colQuantity'} ], formatter : '.formatter.ProductProperty'  }" />
+                        <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colRewardPoints'} ], formatter : '.formatter.ProductProperty'  }" />               
                         <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>TotalPoints'} ], formatter : '.formatter.ProductProperty'  }" />
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
 
