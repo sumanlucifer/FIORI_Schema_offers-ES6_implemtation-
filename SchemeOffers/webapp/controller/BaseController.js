@@ -2087,6 +2087,32 @@ sap.ui.define(
                     } //
                     // making the fields blank
                 },
+                onAppPainterPointsUppChg:function(oEvent){
+                    var oView = this.getView();
+                    var sUvalue = oEvent.getSource().getValue().trim();
+                    var oModel = oView.getModel("oModelView");
+                    var sLvalue = oView.byId("PSlabLowLimit").getValue()
+                    if (sLvalue && sUvalue){
+                        if(sUvalue<sLvalue){
+                            MessageToast.show("Points Upper Limit Should be greater than Lower limit");
+                            oModel.setProperty("/PointSlabUpperLimit","")
+                        }
+                    }
+
+                },
+                onAppPainterPointsLowChg:function(oEvent){
+                    var oView = this.getView();
+                    var sLvalue = oEvent.getSource().getValue();
+                    var oModel = oView.getModel("oModelView");
+                    var sUvalue = oView.byId("PSlabULimit").getValue()
+                    if (sLvalue && sUvalue){
+                        if(sUvalue<sLvalue){
+                            MessageToast.show("Points Upper Limit Should be greater than Lower limit");
+                            oModel.setProperty("/PointSlabLowerLimit","")
+                        }
+                    }
+
+                },
                 onRbTopApp: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedIndex();
                     this._propertyToBlank(["BonusApplicableTopPainter"]);

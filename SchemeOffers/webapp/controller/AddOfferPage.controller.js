@@ -405,7 +405,7 @@ sap.ui.define(
                     }
                     if (oModelData["Rbtn"]["Rewards"] == 1) {
                         if (oModelData["Table"]["Table2"].length == 0) {
-                            return [false, "Kinldy Enter the data in the Reward Ratio Table2 to Continue"]
+                            return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue"]
                         }
                     }
 

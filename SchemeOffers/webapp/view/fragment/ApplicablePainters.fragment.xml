@@ -88,12 +88,12 @@
                     </f:FormElement>
                     <f:FormElement label="{i18n>formApplicableLbl12}">
                         <f:fields>
-                            <Input type="Number" value="{path:'oModelView>/PointSlabLowerLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
+                            <Input id="PSlabULimit" change="onAppPainterPointsUppChg" type="Number" value="{path:'oModelView>/PointSlabUpperLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="{i18n>formApplicableLbl13}">
                         <f:fields>
-                            <Input type="Number" value="{path:'oModelView>/PointSlabUpperLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
+                            <Input id="PSlabLowLimit" change="onAppPainterPointsLowChg" type="Number" value="{path:'oModelView>/PointSlabLowerLimit',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}" placeholder="{i18n>placeHolder3}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" />
                         </f:fields>
                     </f:FormElement>
                 </f:formElements>

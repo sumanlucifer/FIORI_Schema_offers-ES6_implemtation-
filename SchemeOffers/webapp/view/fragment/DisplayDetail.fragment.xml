@@ -339,18 +339,18 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl12}">
                             <f:fields>
-                                <Text text="{PointSlabLowerLimit}" />
+                                <Text text="{PointSlabUpperLimit}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl13}">
                             <f:fields>
-                                <Text text="{PointSlabUpperLimit}" />
+                                <Text text="{PointSlabLowerLimit}" />
                             </f:fields>
                         </f:FormElement>
 
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
@@ -405,7 +405,7 @@
 
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>formApplicableProducts}" visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                <f:FormContainer title="{i18n>formApplicableProducts}" visible="{= ${oModelControl2>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
@@ -451,7 +451,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title=" " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                <f:FormContainer title=" " visible="{= ${oModelControl2>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>formBuyerProducts}">
                             <f:fields>
