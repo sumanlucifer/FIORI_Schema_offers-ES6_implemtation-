@@ -198,6 +198,7 @@ sap.ui.define(
                         taskSet = new Set([
                             "WORKFLOW_STARTED",
                             "WORKFLOW_COMPLETED",
+                             "WORKFLOW_CANCELED",
                             "USERTASK_CREATED",
                             "USERTASK_COMPLETED",
                             "USERTASK_CANCELED_BY_BOUNDARY_EVENT",//TODO: Change text to TAT triggered

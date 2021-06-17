@@ -13,7 +13,7 @@
         </VBox> -->
 
         <VBox renderType="Bare" >
-         <Label text="{i18n>AddResolution}" required="true" />
+         <Label text="{i18n>ResolutionType}" required="true" />
                 <!-- ,type:'com.knpl.pragati.Complaints.model.cmbxDtype2' -->
             <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}"
              items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true"  >
