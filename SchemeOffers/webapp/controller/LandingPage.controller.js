@@ -145,7 +145,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var sPath = oEvent.getSource().getBindingContext().getPath();
                     var oModel = this.getComponentModel();
-                    n;
+                    
                     var oViewModel = this.getView().getModel("ViewModel");
                     var oResourceBundle = this.getOwnerComponent()
                         .getModel("i18n")

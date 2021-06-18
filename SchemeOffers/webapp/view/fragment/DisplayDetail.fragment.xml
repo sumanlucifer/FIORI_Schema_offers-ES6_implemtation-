@@ -155,7 +155,7 @@
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}"/>
         </Toolbar>
-        <f:Form editable="false">
+        <!-- <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
             </f:layout>
@@ -174,7 +174,7 @@
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
-        </f:Form>
+        </f:Form> -->
         <Table id="Table1" visible="{= ${oModelControl2>/Rbtn/Rewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>

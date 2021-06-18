@@ -2366,8 +2366,30 @@ sap.ui.define(
                 // 1. Display Offers
 
 
-                //Edit Offers
+                //2. Edit Offers
 
+                // create payload for edit and add
+                onChangeOfferStatus: function (mParam1) {
+                    console.log(mParam1);
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oModelView = oView.getModel("oModelView");
+                    var sPath = "/" + oModelView.getProperty("/bindProp");
+                    var oPayLoad = {
+                        OfferStatus: mParam1
+                    }
+                    oData.update(sPath + "/OfferStatus", {
+                        success: function () {
+                            MessageToast.show("Offer Sucessfully Published.");
+                            oData.refresh();
+                        },
+                        error: function (data) {
+                            var oRespText = JSON.parse(data.responseText);
+                            MessageBox.error(oRespText["error"]["message"]["value"]);
+                        }
+                    })
+
+                },
                 _CreatePayloadPart1(bFileFlag) {
                     var promise = jQuery.Deferred();
                     //creating the payload
