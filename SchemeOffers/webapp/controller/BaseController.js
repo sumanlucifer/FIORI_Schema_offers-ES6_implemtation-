@@ -217,7 +217,11 @@ sap.ui.define(
                                 );
                                 othat._propertyToBlank(
                                     [
-                                        "BonusDescription"
+                                        "BonusDescription",
+                                        "PainterGrowth",
+                                        "PerformanceStartDate",
+                                        "PerformanceEndDate",
+                                        "BonusApplicableTopPainter"
                                     ]
                                 );
                                 othat._RbtnReset([
@@ -225,6 +229,7 @@ sap.ui.define(
                                     "Rbtn/PClass4",
                                     "Rbtn/AppProd4",
                                     "Rbtn/AppPacks4",
+                                    "Rbtn/TopAll"
 
                                 ]);
 

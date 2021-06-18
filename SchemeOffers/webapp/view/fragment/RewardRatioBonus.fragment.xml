@@ -13,7 +13,21 @@
 
                 <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>formBonusReward}">
                     <f:formElements>
-
+                        <f:FormElement label="{i18n>Description}">
+                            <f:fields>
+                                <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/BonusDescription', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+                            <f:fields>
+                                <RadioButtonGroup select="onBRRbChange" columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}">
+                                    <buttons>
+                                        <RadioButton text="{i18n>All}"/>
+                                        <RadioButton text="{i18n>Specific}"/>
+                                    </buttons>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}">
@@ -27,12 +41,17 @@
 
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox  selectionFinish="onPAppDropChange" required="false" id="PCat4" visible="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                <MultiComboBox selectionFinish="onPAppDropChange" required="false" id="PCat4" visible="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
 
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="   ">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PClass4}">
@@ -51,10 +70,6 @@
                             </f:fields>
                         </f:FormElement>
 
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="   ">
-                    <f:formElements>
                         <f:FormElement label="{i18n>Products}">
                             <f:fields>
                                 <RadioButtonGroup columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/AppProd4}">
@@ -93,26 +108,48 @@
                                 </MultiInput>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusAppPainter}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
-                                <RadioButtonGroup select="onBRRbChange" columns="2" selectedIndex="{oModelControl>/Rbtn/BRewards}">
+                                <RadioButtonGroup select="onRbTopApp" selectedIndex="{oModelControl>/Rbtn/TopAll}" columns="2">
                                     <buttons>
                                         <RadioButton text="{i18n>All}"/>
                                         <RadioButton text="{i18n>Specific}"/>
                                     </buttons>
+
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="   ">
-                    <f:formElements>
-                        <f:FormElement label="{i18n>Description}">
+                        <f:FormElement>
                             <f:fields>
-                                <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/BonusDescription', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                                <Input valueStateText="Kindly valid digits. Max 4" enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" required="true" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter',type:'sap.ui.model.type.String',constraints:{ search :'^[0-9]+$',minLength:1,maxLength:6}}"/>
                             </f:fields>
                         </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusValidity}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>PainterGrowth}">
+                            <f:fields>
+                                <Input placeholder="{i18n>placeHolder3}" valueStateText="Kindly valid digits. Max 5" type="Number" value="{path:'oModelView>/PainterGrowth',type : 'sap.ui.model.type.String', constraints:{search :'^[0-9]', minLength:1,maxLength:6} }" />
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeFrom}">
+                            <f:fields>
+                                <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeTo}">
+                            <f:fields>
+                                <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                            </f:fields>
+                        </f:FormElement>
+
                     </f:formElements>
                 </f:FormContainer>
 
