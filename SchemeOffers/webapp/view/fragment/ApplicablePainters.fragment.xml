@@ -24,7 +24,7 @@
 
                     <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                         <f:fields>
-                            <MultiInput enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
+                            <MultiInput placeholder="{i18n>placeHolder1}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
                                 <tokens>
                                     <Token editable="false" text="{oModelControl>PainterName}" key="{oModelControl>PainterId}"/>
                                 </tokens>
