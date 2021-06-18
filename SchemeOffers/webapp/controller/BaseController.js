@@ -2370,7 +2370,7 @@ sap.ui.define(
 
                 // create payload for edit and add
                 onChangeOfferStatus: function (mParam1) {
-                    console.log(mParam1);
+                  
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oModelView = oView.getModel("oModelView");
@@ -2378,7 +2378,7 @@ sap.ui.define(
                     var oPayLoad = {
                         OfferStatus: mParam1
                     }
-                    oData.update(sPath + "/OfferStatus", {
+                    oData.update(sPath + "/OfferStatus",oPayLoad, {
                         success: function () {
                             MessageToast.show("Offer Sucessfully Published.");
                             oData.refresh();

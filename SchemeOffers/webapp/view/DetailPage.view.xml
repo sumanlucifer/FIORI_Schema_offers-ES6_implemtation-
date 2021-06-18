@@ -83,7 +83,7 @@
                 <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
                 <Button press="onActivate"  text="{i18n>Activate}" type="Accept" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
                 <Button press="onDeactivate"  text="{i18n>Deactivate}" type="Reject"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
-                 <Button press=".onChangeOfferStatus('PUBLISHED')"  text="{i18n>Published}" type="Accept"  visible="{= ${oModelControl3>/mode}=== 'display'}" />
+                 <Button press=".onChangeOfferStatus1('PUBLISHED')"  text="{i18n>Published}" type="Accept"  visible="{= ${oModelControl3>/mode}=== 'display'}" />
              
             </OverflowToolbar>
            
