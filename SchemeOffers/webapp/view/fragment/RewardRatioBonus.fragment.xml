@@ -27,7 +27,7 @@
 
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" required="false" id="PCat4" enabled="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                                <MultiComboBox  selectionFinish="onPAppDropChange" required="false" id="PCat4" visible="{oModelControl>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat4' }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                                     <core:Item text="{Category}" key="{Id}"/>
                                 </MultiComboBox>
 
@@ -45,7 +45,7 @@
                         </f:FormElement>
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox selectionFinish="onPAppDropChange" enabled="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                                <MultiComboBox selectionFinish="onPAppDropChange" visible="{oModelControl>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl>/MultiCombo/PClass4}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
                                     <core:Item text="{Classification}" key="{Id}"/>
                                 </MultiComboBox>
                             </f:fields>
@@ -67,7 +67,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd4}">
+                                <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd4}">
                                     <tokens>
                                         <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </tokens>
@@ -86,7 +86,7 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks4}">
+                                <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks4}">
                                     <tokens>
                                         <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                     </tokens>

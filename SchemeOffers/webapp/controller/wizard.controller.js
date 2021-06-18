@@ -5,9 +5,10 @@ sap.ui.define([
     "com/knpl/pragati/SchemeOffers/controller/BaseController",
     "com/knpl/pragati/SchemeOffers/model/customInt",
     "com/knpl/pragati/SchemeOffers/model/cmbxDtype2",
-      "com/knpl/pragati/SchemeOffers/model/ArrayDType1"
+      "com/knpl/pragati/SchemeOffers/model/ArrayDType1",
+      "com/knpl/pragati/SchemeOffers/model/formatter",
 
-], function (Controller, coreLibrary, ValueState, BaseController, customInt, cmbxDtype2,ArrayDType1) {
+], function (Controller, coreLibrary, ValueState, BaseController, customInt, cmbxDtype2,ArrayDType1,formatter) {
     "use strict";
 
     // shortcut for sap.ui.core.ValueState
@@ -17,6 +18,7 @@ sap.ui.define([
         customInt: customInt,
         cmbxDtype2: cmbxDtype2,
         ArrayDType1:ArrayDType1,
+        formatter:formatter,
         _syncSelect: function (sStepId) {
             var oModel = this.getView().getModel();
             oModel.setProperty('/linearWizardSelectedStep', sStepId);
@@ -28,8 +30,7 @@ sap.ui.define([
             var aStep = this.getView().byId("ProductTypeStep")
             var aWizard = this.getView().byId("CreateProductWizard")
             oProdInfoStep.setValidated();
-            console.log(aWizard)
-            console.log(aStep)
+           
             //this.getView().byId("CreateProductWizard").goToStep()
             //aWizard.previouStep()
         },

@@ -764,7 +764,7 @@ sap.ui.define(
                         "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
-                            $expand: exPand,
+                            $expand: exPand
                         },
                         success: function (data) {
                             promise.resolve(data);
@@ -956,7 +956,10 @@ sap.ui.define(
                     oView.setModel(oConrtrolModel, "oModelControl");
 
                     var oModelView = new JSONModel(oData);
+
                     oView.setModel(oModelView, "oModelView");
+                    console.log(oData);
+                    //oModelView.refresh()
 
                     this._getProductsData();
                     promise.resolve(data);

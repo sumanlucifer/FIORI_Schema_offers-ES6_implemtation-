@@ -23,7 +23,7 @@
                 </f:FormElement>
                 <f:FormElement label="">
                     <f:fields>
-                        <MultiComboBox required="false" id="PCat1" enabled="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                        <MultiComboBox required="false" id="PCat1" visible="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
                             <core:Item text="{Category}" key="{Id}"/>
                         </MultiComboBox>
                     </f:fields>
@@ -40,7 +40,7 @@
                 </f:FormElement>
                 <f:FormElement label="">
                     <f:fields>
-                        <MultiComboBox selectionFinish="onPAppDropChange" enabled="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{path:'oModelControl>/MultiCombo/PClass1'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                        <MultiComboBox selectionFinish="onPAppDropChange" visible="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{path:'oModelControl>/MultiCombo/PClass1'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
                             <core:Item text="{Classification}" key="{Id}"/>
                         </MultiComboBox>
                     </f:fields>
@@ -63,7 +63,7 @@
                         <!-- <MultiComboBox selectionFinish="onProd1Change" id="AppProd1" enabled="{oModelControl>/MultiEnabled/AppProd1}" selectedKeys="{oModelControl>/MultiCombo/AppProd1}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox> -->
-                        <MultiInput  tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd1}===1}" valueHelpOnly="true" id="AppProd1" valueHelpRequest="handleProdValueHelp" tokens="{path:'oModelControl>/MultiCombo/AppProd1'}">
+                        <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppProd1}===1}" valueHelpOnly="true" id="AppProd1" valueHelpRequest="handleProdValueHelp" tokens="{path:'oModelControl>/MultiCombo/AppProd1'}">
                             <tokens>
                                 <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </tokens>
@@ -85,7 +85,7 @@
                         <!-- <MultiComboBox id="AppPacks1" enabled="{= ${oModelControl>/Rbtn/AppPacks1} === 1 }" selectedKeys="{oModelControl>/MultiCombo/AppPacks1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox> -->
-                        <MultiInput  tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks1}===1}" valueHelpOnly="true" id="AppPacks1" valueHelpRequest="handlePackValueHelp" tokens="{path:'oModelControl>/MultiCombo/AppPacks1'}">
+                        <MultiInput placeholder="{i18n>placeHolder1}"  tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppPacks1}===1}" valueHelpOnly="true" id="AppPacks1" valueHelpRequest="handlePackValueHelp" tokens="{path:'oModelControl>/MultiCombo/AppPacks1'}">
                             <tokens>
                                 <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </tokens>

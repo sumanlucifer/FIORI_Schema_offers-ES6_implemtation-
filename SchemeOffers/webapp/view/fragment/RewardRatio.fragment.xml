@@ -61,13 +61,13 @@
                     <cells>
 
 
-                        <Label text="{path:'oModelControl>RequiredVolume'}" />
-                        <Label text="{path:'oModelControl>RequiredPoints'}" />
-                        <Label text="{path:'oModelControl>RewardPoints'}" />
+                        <Label text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
                         <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox> -->
-                        <Label text="{path:'oModelControl>RewardCash'}" />
+                        <Label text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
                         <HBox>
                             <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericRewards"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward"></Button>
@@ -119,13 +119,13 @@
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
                         </VBox> -->
-                        <Label text="{path:'oModelControl>RequiredVolume'}" />
-                        <Label text="{path:'oModelControl>RequiredPoints'}" />
-                        <Label text="{path:'oModelControl>RewardPoints'}" />
+                        <Label text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
                         <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox> -->
-                        <Label text="{path:'oModelControl>RewardCash'}" />
+                        <Label text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
                         <HBox>
                             <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward"></Button>

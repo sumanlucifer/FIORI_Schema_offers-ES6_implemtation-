@@ -217,7 +217,7 @@ sap.ui.define(
                                 );
                                 othat._propertyToBlank(
                                     [
-                                       "BonusDescription"
+                                        "BonusDescription"
                                     ]
                                 );
                                 othat._RbtnReset([
@@ -785,6 +785,11 @@ sap.ui.define(
                     } else {
                         oModelControl.setProperty("/Rbtn/BrReqVol", 0)
                     }
+                    if (oBjFinal["RewardCash"]) {
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 1)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 0)
+                    }
                 },
                 onRbRRDialogVolume: function (oEvent) {
                     var oView = this.getView();
@@ -794,6 +799,14 @@ sap.ui.define(
                     oModel.setProperty(sPath + "/RequiredPoints", "");
 
 
+                },
+                onRbVolRewardCash: function (oEvent) {
+                    //1 is for Yes; 0 is for No;
+                    var sKey = oEvent.getSource().getSelectedIndex();
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = "/Dialog/Bonus1"
+                    oModel.setProperty(sPath + "/RewardCash", "");
                 },
                 onSubmitGenericRewards1: function () {
                     var oView = this.getView();
@@ -927,6 +940,11 @@ sap.ui.define(
                         oModelControl.setProperty("/Rbtn/BrReqVol", 1)
                     } else {
                         oModelControl.setProperty("/Rbtn/BrReqVol", 0)
+                    }
+                    if (oBjFinal["RewardCash"]) {
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 1)
+                    } else {
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 0)
                     }
                     oModelControl.refresh(true);
                 },
@@ -2087,28 +2105,28 @@ sap.ui.define(
                     } //
                     // making the fields blank
                 },
-                onAppPainterPointsUppChg:function(oEvent){
+                onAppPainterPointsUppChg: function (oEvent) {
                     var oView = this.getView();
                     var sUvalue = oEvent.getSource().getValue().trim();
                     var oModel = oView.getModel("oModelView");
                     var sLvalue = oView.byId("PSlabLowLimit").getValue()
-                    if (sLvalue && sUvalue){
-                        if(sUvalue<sLvalue){
+                    if (sLvalue && sUvalue) {
+                        if (sUvalue < sLvalue) {
                             MessageToast.show("Points Upper Limit Should be greater than Lower limit");
-                            oModel.setProperty("/PointSlabUpperLimit","")
+                            oModel.setProperty("/PointSlabUpperLimit", "")
                         }
                     }
 
                 },
-                onAppPainterPointsLowChg:function(oEvent){
+                onAppPainterPointsLowChg: function (oEvent) {
                     var oView = this.getView();
                     var sLvalue = oEvent.getSource().getValue();
                     var oModel = oView.getModel("oModelView");
                     var sUvalue = oView.byId("PSlabULimit").getValue()
-                    if (sLvalue && sUvalue){
-                        if(sUvalue<sLvalue){
+                    if (sLvalue && sUvalue) {
+                        if (sUvalue < sLvalue) {
                             MessageToast.show("Points Upper Limit Should be greater than Lower limit");
-                            oModel.setProperty("/PointSlabLowerLimit","")
+                            oModel.setProperty("/PointSlabLowerLimit", "")
                         }
                     }
 
@@ -2338,6 +2356,13 @@ sap.ui.define(
                         return oData["ProductName"];
                     }
                 },
+
+                /// Methods Specific to Display and Edit Offers
+                // 1. Display Offers
+
+
+                //Edit Offers
+
                 _CreatePayloadPart1(bFileFlag) {
                     var promise = jQuery.Deferred();
                     //creating the payload

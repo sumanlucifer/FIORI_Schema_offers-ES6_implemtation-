@@ -183,7 +183,7 @@
                     </f:FormElement>
                     <f:FormElement >
                         <f:fields>
-                            <MultiComboBox selectionFinish="onPAppDropChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange" visible="{= ${oModelControl>/Rbtn/PCat2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat2'}">
                                 <core:Item text="{Category}" key="{Id}"/>
                             </MultiComboBox>
 
@@ -201,7 +201,7 @@
                     </f:FormElement>
                     <f:FormElement >
                         <f:fields>
-                            <MultiComboBox selectionFinish="onPAppDropChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PClass2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange"  visible="{= ${oModelControl>/Rbtn/PClass2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
                                 <core:Item text="{Classification}" key="{Id}"/>
                             </MultiComboBox>
                         </f:fields>
@@ -225,7 +225,7 @@
                     </f:FormElement>
                     <f:FormElement >
                         <f:fields>
-                            <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd2}===1}" valueHelpOnly="true" id="AppProd2" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd2}">
+                            <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppProd2}===1}" valueHelpOnly="true" id="AppProd2" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd2}">
                                 <tokens>
                                     <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </tokens>
@@ -244,7 +244,7 @@
                     </f:FormElement>
                     <f:FormElement>
                         <f:fields>
-                            <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks2}===1}" valueHelpOnly="true" id="AppPacks2" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks2}">
+                            <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppPacks2}===1}" valueHelpOnly="true" id="AppPacks2" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks2}">
                                 <tokens>
                                     <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </tokens>
@@ -263,7 +263,7 @@
                     </f:FormElement>
                     <f:FormElement >
                         <f:fields>
-                            <MultiComboBox selectionFinish="onPAppDropChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PCat3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat3'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange" visible="{= ${oModelControl>/Rbtn/PCat3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PCat3'}">
                                 <core:Item text="{Category}" key="{Id}"/>
                             </MultiComboBox>
 
@@ -282,7 +282,7 @@
                     <f:FormElement >
                         <f:fields>
 
-                            <MultiComboBox selectionFinish="onPAppDropChange" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" editable="{= ${oModelControl>/Rbtn/PClass3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange"  visible="{= ${oModelControl>/Rbtn/PClass3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}">
                                 <core:Item text="{Classification}" key="{Id}"/>
                             </MultiComboBox>
                         </f:fields>
@@ -306,7 +306,7 @@
                     </f:FormElement>
                     <f:FormElement>
                         <f:fields>
-                            <MultiInput tokenUpdate="onProdTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppProd3}===1}" valueHelpOnly="true" id="AppProd3" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd3}">
+                            <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppProd3}===1}" valueHelpOnly="true" id="AppProd3" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl>/MultiCombo/AppProd3}">
                                 <tokens>
                                     <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </tokens>
@@ -325,7 +325,7 @@
                     </f:FormElement>
                     <f:FormElement>
                         <f:fields>
-                            <MultiInput tokenUpdate="onPackTokenUpdate" enabled="{= ${oModelControl>/Rbtn/AppPacks3}===1}" valueHelpOnly="true" id="AppPacks3" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks3}">
+                            <MultiInput placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl>/Rbtn/AppPacks3}===1}" valueHelpOnly="true" id="AppPacks3" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl>/MultiCombo/AppPacks3}">
                                 <tokens>
                                     <Token text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                                 </tokens>
