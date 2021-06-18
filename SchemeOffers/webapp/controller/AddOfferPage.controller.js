@@ -81,7 +81,7 @@ sap.ui.define(
                         HasTillDate: false,
                         ImageLoaded: false,
                         BonusValidity: oBonusValidity,
-                        RedemptionCycle:[],
+                        RedemptionCycle: [],
                         modeEdit: false,
                         mode: "add",
                         StartDate: "",
@@ -174,7 +174,8 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
-                            BrReqVol: 0
+                            BrReqVol: 0,
+                            BrReqCash:0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -276,7 +277,7 @@ sap.ui.define(
                         PainterSelection: 0,
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
-                        BonusDescription:""
+                        BonusDescription: ""
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -288,8 +289,15 @@ sap.ui.define(
                     this._getProductsData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
+                    this._onClearMgsClass();
                     //this._SampleFunction();
                 },
+                _onClearMgsClass: function () {
+                    // does not remove the manually set ValueStateText we set in onValueStatePress():
+                    //this._clearPress;
+                    sap.ui.getCore().getMessageManager().removeAllMessages();
+                },
+
                 _SampleFunction: function () {
                     this.getView().byId("wizardViewBranching");
                 },

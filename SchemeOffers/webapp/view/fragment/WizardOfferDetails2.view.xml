@@ -1,0 +1,61 @@
+<mvc:View xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout" height="100%">
+    <f:DynamicPage 	stickySubheaderProvider="CreateProductWizard" id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
+        <!-- DynamicPage Title -->
+       
+        <!-- DynamicPage Header -->
+        <f:header>
+           
+        </f:header>
+        <f:content>
+            <Wizard id="CreateProductWizard" finishButtonText="Finish" currentStep="wzdStep6" width="100%">
+                <steps>
+                    <WizardStep id="ProductTypeStep" title="{i18n>BasicInformation}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.BasicInformation" type="XML"/>
+                        </content>
+                    </WizardStep>
+                    <WizardStep id="ProductInfoStep" title="{i18n>ApplicableProducts}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicableProducts" type="XML"/>
+                        </content>
+                    </WizardStep>
+                    <WizardStep id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
+                        </content>
+                    </WizardStep>
+                    <WizardStep id="wzdStep4" title="{i18n>ApplicablePainters}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML"/>
+                        </content>
+                    </WizardStep>
+                    <WizardStep id="wzdStep5" title="{i18n>formBonusReward}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatioBonus" type="XML"/>
+                        </content>
+                    </WizardStep>
+                    <WizardStep id="wzdStep6" title="{i18n>AdditionalInformation}" activate="onActivate">
+                        <content>
+                            <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.AddInformation" type="XML"/>
+                        </content>
+                    </WizardStep>
+                </steps>
+            </Wizard>
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar>
+                <Button icon="sap-icon://message-popup" text="{/messagesLength}" type="Emphasized" press="onMessageButtonPress" visible="{= !!${/messagesLength}}"/>
+                <ToolbarSpacer/>
+                <Button type="Accept" text="Accept"/>
+                <Button type="Reject" text="Reject"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

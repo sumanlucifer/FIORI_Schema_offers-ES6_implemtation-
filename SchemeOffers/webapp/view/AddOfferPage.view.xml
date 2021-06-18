@@ -17,7 +17,7 @@
         </headerContent>
 
         <content>
-        <layout:VerticalLayout>
+        <layout:VerticalLayout width="100%">
                 <Toolbar>
                     <Title level="H1" text="{i18n>AddTitle}" />
                     

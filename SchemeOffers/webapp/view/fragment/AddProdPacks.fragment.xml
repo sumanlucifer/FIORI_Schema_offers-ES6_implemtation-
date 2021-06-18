@@ -45,14 +45,14 @@
                                  
 								</f:fields>
 							</f:FormElement> -->
-                            <f:FormElement label="{i18n>RequiredVolume}">
+                            <f:FormElement label="{i18n>RequiredVolume}" visible="{= ${oModelControl>/Rbtn/BrReqVol}===0 }">
                                 <f:fields>
-                                    <Input enabled="{= ${oModelControl>/Rbtn/BrReqVol}===0 }" type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                    <Input type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                                 </f:fields>
                             </f:FormElement>
-                            <f:FormElement label="{i18n>Table1Label2}">
+                            <f:FormElement label="{i18n>Table1Label2}" visible="{= ${oModelControl>/Rbtn/BrReqVol}===1 }">
                                 <f:fields>
-                                    <Input enabled="{= ${oModelControl>/Rbtn/BrReqVol}===1 }" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                                    <Input placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                                 </f:fields>
                             </f:FormElement>
                             <f:FormElement label="{i18n>Table1Label4}">
@@ -69,7 +69,17 @@
 							</f:FormElement> -->
                             <f:FormElement label="{i18n>Table1Label6}">
                                 <f:fields>
-                                    <Input type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]',minLength:1,maxLength:6} }" />
+                                    <RadioButtonGroup columns="2" select=".onRbVolRewardCash" selectedIndex="{oModelControl>/Rbtn/BrReqCash}">
+                                        <buttons>
+                                            <RadioButton text="{i18n>No}"/>
+                                            <RadioButton text="{i18n>Yes}"/>
+                                        </buttons>
+                                    </RadioButtonGroup>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement visible="{= ${oModelControl>/Rbtn/BrReqCash}===1 }">
+                                <f:fields>
+                                    <Input type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>/Dialog/Bonus1/RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]',minLength:1,maxLength:6} }" />
                                 </f:fields>
                             </f:FormElement>
 

@@ -180,6 +180,8 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
+                            BrReqVol: 0,
+                            BrReqCash: 0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -764,7 +766,7 @@ sap.ui.define(
                         "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
-                            $expand: exPand,
+                            $expand: exPand
                         },
                         success: function (data) {
                             promise.resolve(data);
@@ -880,7 +882,8 @@ sap.ui.define(
                             Depots: 0,
                             AppPainter: 0,
                             ParentOffer: 0,
-                            BrReqVol: 0
+                            BrReqVol: 0,
+                            BrReqCash: 0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -956,7 +959,10 @@ sap.ui.define(
                     oView.setModel(oConrtrolModel, "oModelControl");
 
                     var oModelView = new JSONModel(oData);
+
                     oView.setModel(oModelView, "oModelView");
+                    console.log(oData);
+                    //oModelView.refresh()
 
                     this._getProductsData();
                     promise.resolve(data);
@@ -1567,7 +1573,7 @@ sap.ui.define(
                         ],
                         false
                     )
-                   
+
                     var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
                     aFilter.push(aFilter1);
                     aFilter.push(aFilter2);

@@ -65,6 +65,7 @@
                 <f:FormElement label="{i18n>tblColStatus}" visible="{= ${oModelControl>/mode}==='edit'}">
 
                     <f:fields>
+                        <!-- <ObjectStatus  text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" /> -->
                         <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/OfferStatus}">
                             <core:Item text="Pending" key="PENDING"/>
                             <core:Item text="Approved" key="APPROVED"/>
@@ -89,7 +90,7 @@
                 <f:formElements>
                     <f:FormElement label="{i18n>ApplyParentOffer}">
                         <f:fields>
-                            <RadioButtonGroup  select="onRbPrntOffer" columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}">
+                            <RadioButtonGroup select="onRbPrntOffer" columns="2" selectedIndex="{oModelControl>/Rbtn/ParentOffer}">
                                 <buttons>
                                     <RadioButton text="{i18n>No}"/>
                                     <RadioButton text="{i18n>Yes}" />
@@ -97,10 +98,10 @@
                             </RadioButtonGroup>
                         </f:fields>
                     </f:FormElement>
-                    <f:FormElement label="{i18n>SelectParentOffer}">
+                    <f:FormElement label="{i18n>SelectParentOffer}" visible="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }">
 
                         <f:fields>
-                            <Input enabled="{= ${oModelControl>/Rbtn/ParentOffer}=== 1 }" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
+                            <Input  valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpParentOffer" value="{path:'oModelControl>/Fields/ParentOfferTitle'}" />
 
                         </f:fields>
                     </f:FormElement>

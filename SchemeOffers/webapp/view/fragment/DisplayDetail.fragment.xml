@@ -155,7 +155,7 @@
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}"/>
         </Toolbar>
-        <f:Form editable="false">
+        <!-- <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
             </f:layout>
@@ -174,7 +174,7 @@
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
-        </f:Form>
+        </f:Form> -->
         <Table id="Table1" visible="{= ${oModelControl2>/Rbtn/Rewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
@@ -205,13 +205,13 @@
                     <cells>
 
 
-                        <Label width="80%" text="{oModelControl2>RequiredVolume}" />
-                        <Label width="80%" text="{oModelControl2>RequiredPoints}" />
-                        <Label width="80%" text="{oModelControl2>RewardPoints}" />
+                        <Label width="80%" text="{path:'oModelControl2>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label width="80%" text="{path:'oModelControl2>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label width="80%" text="{path:'oModelControl2>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
                         <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId',type:'.cmbxDtype2'}">
                                     <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
                                 </ComboBox> -->
-                        <Label width="80%" text="{oModelControl2>RewardCash}" />
+                        <Label width="80%" text="{path:'oModelControl2>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
 
 
                     </cells>
@@ -255,13 +255,13 @@
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 0  }" text="{oModelControl2>Product/ProductName}" />
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks1} === 1  }" text="{oModelControl2>Pack/Description}" />
                         </VBox> -->
-                        <Label text="{oModelControl2>RequiredVolume}" />
-                        <Label text="{oModelControl2>RequiredPoints}" />
-                        <Label text="{oModelControl2>RewardPoints}" />
+                        <Label text="{path:'oModelControl2>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl2>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl2>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
                         <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId'}">
                                 <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
                            </ComboBox> -->
-                        <Label text="{oModelControl2>RewardCash}" />
+                        <Label text="{path:'oModelControl2>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
 
                     </cells>
                 </ColumnListItem>
