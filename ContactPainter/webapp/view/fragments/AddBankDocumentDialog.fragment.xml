@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{i18n>BankDocuments}" titleAlignment="Center" afterClose="onDocDialogClose">
+        <content>
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+           <Label text="{i18n>SelectBankDocument}" visible="{=${oModelControl>/EditBank} }" />
+                <ComboBox id="IdDocumentType" visible="{=${oModelControl>/EditBank} }" required="true" items="{oModelControl>/DocumentType}" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
+    
+                    </items>
+                </ComboBox>
+                <Label text="" visible="{=${oModelControl>/EditBank} }" />
+                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollectionBank"  visible="{=${oModelControl>/EditBank} }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <Label text=""  visible="{=${oModelControl>/EditBank} }"/>
+                <Text  text="{i18n>FileUploadMessage}" visible="{=${oModelControl>/EditBank} }"/>
+                </f:content>
+                </f:SimpleForm>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseDocDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
