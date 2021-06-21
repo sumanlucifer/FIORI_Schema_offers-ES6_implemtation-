@@ -19,17 +19,11 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("RouteLandingPage").attachPatternMatched(this._onObjectMatched, this);
 
-                // var oModel = new JSONModel({
-                //     TotalCount: 0,
-                //     busy: true,
-                //     filterBar: {
-                //         search: "",
-                //         createdAt: ""
-                //     }
-                // });
-                // this.getView().setModel(oModel, "ViewModel");
 
                  var oDataControl = {
+                     allRequestIconTabarTitle:"",
+                     accrualRequestIconTabarTitle:"",
+                     redemptionRequestIconTabarTitle:"",
                         filterBar: {
                             AgeGroupId: "",
                             StartDate: null,
@@ -92,64 +86,49 @@ sap.ui.define([
                 //     ]
                 // }));
             },
+            onUpdateFinished: function (oEvent) {
+            // update the worklist's object counter after the table update
+            var sTitle,
+                oTable = this.getView().byId("idAllRequestTable"),
+                iTotalItems = oEvent.getParameter("total");
+            // only update the counter if the length is final and
+            // the table is not empty
+            if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                sTitle = this.getResourceBundle().getText("allRequestIconTabarTitle", [iTotalItems]);
+            } else {
+                sTitle = this.getResourceBundle().getText("allRequestIconTabarTitle",[0]);
+            }
+            this.getView().getModel("oModelControl").setProperty("/allRequestIconTabarTitle", sTitle);
+        },
+        onUpdateFinished1: function (oEvent) {
+            // update the worklist's object counter after the table update
+            var sTitle,
+                oTable = this.getView().byId("idAccrualRequestTable"),
+                iTotalItems = oEvent.getParameter("total");
+            // only update the counter if the length is final and
+            // the table is not empty
+            if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                sTitle = this.getResourceBundle().getText("accrualRequestIconTabarTitle", [iTotalItems]);
+            } else {
+                sTitle = this.getResourceBundle().getText("accrualRequestIconTabarTitle",[0]);
+            }
+            this.getView().getModel("oModelControl").setProperty("/accrualRequestIconTabarTitle", sTitle);
+        },
+        onUpdateFinished2: function (oEvent) {
+            // update the worklist's object counter after the table update
+            var sTitle,
+                oTable = this.getView().byId("idRedemptionRequestTable"),
+                iTotalItems = oEvent.getParameter("total");
+            // only update the counter if the length is final and
+            // the table is not empty
+            if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                sTitle = this.getResourceBundle().getText("redemptionRequestIconTabarTitle", [iTotalItems]);
+            } else {
+                sTitle = this.getResourceBundle().getText("redemptionRequestIconTabarTitle",[0]);
+            }
+            this.getView().getModel("oModelControl").setProperty("/redemptionRequestIconTabarTitle", sTitle);
+        },
 
-            // onSearch: function (oEvent) {
-            //     var aFilterControls = oEvent.getParameter("selectionSet");
-            //     var aFilters = [], sValue;
-            //     for (var i = 0; i < aFilterControls.length; i++) {
-            //         var oControl = aFilterControls[i];
-            //         console.log(oControl);
-            //         var sControlName = oControl.getCustomData("filterName")[0].getValue();
-            //         switch (sControlName) {
-            //             case "Search":
-            //                 sValue = oControl.getValue();
-            //                 if (sValue && sValue !== "") {
-            //                     aFilters.push(new Filter([
-            //                         new Filter({ path: "Painter/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
-            //                         new Filter({ path: "Painter/Mobile", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
-            //                         new Filter({ path: "PointTransactionType", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
-            //                     ], false));
-            //                 }
-            //                 break;
-            //             case "Creation Date":
-            //                 sValue = oControl.getValue();
-            //                 if (sValue && sValue !== "") {
-                                
-            //                     aFilters.push(new Filter({
-            //                         path: "CreatedAt",
-            //                         operator: FilterOperator.BT,
-            //                         value1: sValue + "T00:00:00",
-            //                         value2: sValue + "T23:59:59"
-            //                     }));
-            //                 }
-            //                 break;
-            //             // case "Request Type":
-            //             //     sValue = oControl.getSelectedKey();
-            //             //     if (sValue && sValue !== "") {
-            //             //         aFilters.push(new Filter({ path: "PointTransactionType", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
-            //             //     }
-            //             //     break;
-            //             // case "Created By":
-            //             //     sValue = oControl.getValue();
-            //             //     if (sValue && sValue !== "") {
-            //             //         aFilters.push(new Filter({ path: "CreatedByDetails/Name", operator: FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
-            //             //     }
-            //             //     break;
-            //         }
-            //     }
-
-            //     var oTable = this.getView().byId("idAllRequestTable");
-            //     var oBinding = oTable.getBinding("items");
-            //     if (aFilters.length > 0) {
-            //         var oFilter = new Filter({
-            //             filters: aFilters,
-            //             and: true,
-            //         });
-            //         oBinding.filter(oFilter);
-            //     } else {
-            //         oBinding.filter([]);
-            //     }
-            // },
             onReset: function (oEvent) {
 
                 this.oFilter = null;
