@@ -27,6 +27,8 @@
                 <Label text="{i18n>AccountHolderName}"/>
                 <Text text="{PainterBankDetails/AccountHolderName}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <core:Title text=""/>
+                <Label text="{i18n>DocumentType}"/>
+                <Text text="{path:'PainterBankDetails/DocumentType',formatter:'.fmtDocumentType'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankDetailsStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
                 <!-- <core:Title text="{i18n>KYCDetails}"/>

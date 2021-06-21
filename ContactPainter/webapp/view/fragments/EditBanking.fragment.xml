@@ -38,8 +38,8 @@
                         </items>
                     </ComboBox>
                 </VBox>
-                <Label text="{i18n>SelectBankDocument}" visible="{=${oModelControl>/AddBankDoc} }"/>
-                    <ComboBox id="IdDocumentType"  required="true" items="{oModelControl>/DocumentType}" visible="{=${oModelControl>/AddBankDoc} }" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                <Label text="{i18n>DocumentType}"/>
+                    <ComboBox id="IdDocumentType"  required="true" items="{oModelControl>/DocumentType}" editable="{=${oModelControl>/AddBankDoc} }" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
         
@@ -64,7 +64,7 @@
 
                 <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="{=${oModelControl>/EditBank} }" change="onPrimaryAcChange" required="true" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:4,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' }}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input editable="{=${oModelControl>/EditBank} }" change="onPrimaryAcChange" required="true" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:8,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' }}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountNumber" change="onPrimaryAcChange" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" 
                     value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
                     <Label text="{i18n>ConfirmAccNumber}" visible="{oModelControl>/AddNewBank}" required="true"/>
@@ -90,35 +90,7 @@
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" />
                 </FlexBox>
-                <!-- <Label text=""/> -->
                 
-                <!-- <core:Title text=""/>
-                <Label text="" visible="{=${oModelControl>/EditBank} }" />
-                <FlexBox >
-                <Button visible="{=${oModelControl>/EditBank} }" type="Emphasized" text="Add " press="onAddBankDoc" />
-                <Button class="sapUiMediumMarginBegin" visible="{=${oModelControl>/AddBankDoc} }" type="Emphasized" text="Cancel " press="onCancelBankDoc" />
-                </FlexBox>
-                <core:Title text=""/>
-                 <Label text="{i18n>SelectBankDocument}" visible="{=${oModelControl>/AddBankDoc} }" />
-                <ComboBox id="IdDocumentType" visible="{=${oModelControl>/AddBankDoc} }" required="true" items="{oModelControl>/DocumentType}" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
-                    <items>
-                        <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
-    
-                    </items>
-                </ComboBox>
-                <core:Title text=""/>
-                <Label text="" visible="{=${oModelControl>/AddBankDoc} }" />
-                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollectionBank"  visible="{=${oModelControl>/AddBankDoc} }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
-                <Label text=""  visible="{=${oModelControl>/EditBank} }"/>
-                <Text  text="{i18n>FileUploadMessage}" visible="{=${oModelControl>/AddBankDoc} }"/> -->
-                <!--Aditya changes end-->
-                <!-- <VBox id="idVbBank" renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.BankDocument" type="XML"/>
-                </VBox> -->
-                      
-               <!-- <VBox id="idVbBank" renderType="Bare" visible="{=${oModelControl>/AddBankDoc} }">
-                    <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.BankDocument" type="XML"/>
-            </VBox> -->
             </f:content>
         </f:SimpleForm>
 		</content>
