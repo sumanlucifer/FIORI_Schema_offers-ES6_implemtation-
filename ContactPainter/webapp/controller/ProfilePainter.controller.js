@@ -1490,8 +1490,11 @@ sap.ui.define(
             },
             onCancelBankDoc: function (){
                 var oModelCtrl = this.getView().getModel("oModelControl");
+                var oModelView = this.getView().getModel("oModelView");
                 oModelCtrl.setProperty("/AddBankDoc", false);
                 oModelCtrl.setProperty("/AddBankDocButton", true);
+                var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
+                oModelView.setProperty("/PainterBankDetails/DocumentType", InitialDocType);
             },
             onPressCloseDocDialog: function (oEvent) {
                 var oModelCtrl = this.getView().getModel("oModelControl");
