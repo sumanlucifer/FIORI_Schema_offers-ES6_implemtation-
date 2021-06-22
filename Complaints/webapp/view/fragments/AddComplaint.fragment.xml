@@ -10,14 +10,18 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>ComplaintDetails}" />
-                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }">
+                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" >
                     <items>
                         <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
                 </ComboBox>
                 
-                <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  />
-                <TextArea required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1}}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"/>
+                <Label  text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  />
+                <VBox renderType="Bare" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}" >
+                <TextArea maxLength="300" required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1, maxLength: 300}}" />
+                 <Label  text="{i18n>TxtMaxLength}" />
+                </VBox>
+                 <!-- <Text visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  /> -->
               <!-- Token Apply flow change 28/05/2021 -              -->
             <!--     <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
                 <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
@@ -32,7 +36,7 @@
                 <Label text="{i18n>Status}" />
                 <Text text="{i18n>Open}" />
                 <Label text="{i18n>Images}" />
-                <UploadCollection  typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <UploadCollection numberOfAttachmentsText="{i18n>TxtAttachment}" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
                 <Label text=""/>
                 <Text text="{i18n>FileUploadMessage}"/>
                 <core:Title text="{i18n>PainterDetails}" />
