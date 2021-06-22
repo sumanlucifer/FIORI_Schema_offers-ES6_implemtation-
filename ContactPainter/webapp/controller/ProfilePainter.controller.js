@@ -1511,7 +1511,7 @@ sap.ui.define(
                 var oModelCtrl = this.getView().getModel("oModelControl");
                 var oModelView = this.getView().getModel("oModelView");
                 oModelCtrl.setProperty("/AddBankDoc", false);
-                oModelCtrl.setProperty("/AddBankDocButton", true);
+                oModelCtrl.setProperty("/AddBankDocButton", false);
                 oModelCtrl.setProperty("/EditBank", false);
                 oModelCtrl.setProperty("/EditBankButton", false);
                 var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
