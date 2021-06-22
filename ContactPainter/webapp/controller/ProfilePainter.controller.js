@@ -1511,9 +1511,9 @@ sap.ui.define(
                 var oModelCtrl = this.getView().getModel("oModelControl");
                 var oModelView = this.getView().getModel("oModelView");
                 oModelCtrl.setProperty("/AddBankDoc", false);
-                oModelCtrl.setProperty("/AddBankDocButton", false);
-                oModelCtrl.setProperty("/EditBank", false);
-                oModelCtrl.setProperty("/EditBankButton", false);
+                oModelCtrl.setProperty("/AddBankDocButton", true);
+                //oModelCtrl.setProperty("/EditBank", false);
+                oModelCtrl.setProperty("/EditBankButton", true);
                 var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
                 oModelView.setProperty("/PainterBankDetails/DocumentType", InitialDocType);
             },
