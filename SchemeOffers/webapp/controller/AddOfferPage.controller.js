@@ -446,7 +446,7 @@ sap.ui.define(
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Sucessfully Created.");
-                                //othat._navToHome();
+                                othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {

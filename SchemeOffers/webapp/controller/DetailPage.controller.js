@@ -1399,7 +1399,7 @@ sap.ui.define(
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Sucessfully Updated.");
-                                //othat._navToHome();
+                                othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
