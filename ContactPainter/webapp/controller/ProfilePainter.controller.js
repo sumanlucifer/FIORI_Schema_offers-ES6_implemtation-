@@ -222,6 +222,7 @@ sap.ui.define(
                     AddBankDocButton: false,//Aditya Chnage
                     InitialDocType: "",//Aditya Chnage
                     AddBankDoc: false,//Aditya Chnage
+                    EditField:false,
                     DocumentType: [{ Name: "Passbook", Id: 0 }, { Name: "Cheque", Id: 1 }],//Aditya Chnage
                     KycImage: {
                         Image1: "",
@@ -693,15 +694,18 @@ sap.ui.define(
                 }
                 /*Aditya changes start*/
                 var editBank = oCtrlModel.getProperty("/EditBank");
+                var editField = oCtrlModel.getProperty("/EditField");
                 var addBankDoc = oCtrlModel.getProperty("/AddBankDoc");
                 var InitialDocType = oCtrlModel.getProperty("/InitialDocType");
                 if (editBank) {
                     if(addBankDoc){
                         this._checkBankFileUpload(oPayload);
                     }
-                    
-                    oPayload["PainterBankDetails"]["Status"] = "PENDING";
+                    // oPayload["PainterBankDetails"]["Status"] = "PENDING";
                 }
+                if(editField){
+                         oPayload["PainterBankDetails"]["Status"] = "PENDING";
+                    }
                 /*Aditya changes end*/
                 console.log(oPayload, sPath);
                 oData.update(sPath, oPayload, {
@@ -1447,6 +1451,7 @@ sap.ui.define(
                 var sUrl2 = "";
                 var async_request = [];
                 var docType = oBankData["DocumentType"];
+                var oCtrlModel= this.getView().getModel("oModelControl");
                 for (var x = 0; x < oItems.length; x++) {
                     var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader()).oFileUpload.files[0];
                     sUrl2 = docType == 0 ? "passbook" : "cheque";
@@ -1458,7 +1463,10 @@ sap.ui.define(
                             contentType: false,
                             processData: false,
                             data: sFile,
-                            success: function (data) { },
+                            success: function (data) { 
+                               
+                                var editField = oCtrlModel.setProperty("/EditField",true);
+                            },
                             error: function () { },
                         })
                     );
@@ -1522,6 +1530,10 @@ sap.ui.define(
                 
                 this._addDocDialog.destroy();
                 delete this._addDocDialog;
+            },
+            onEditField:function (oEvent){
+                  var oModelCtrl = this.getView().getModel("oModelControl");
+                  oModelCtrl.setProperty("/EditField", true);
             },
             
             /*Aditya changes end*/
