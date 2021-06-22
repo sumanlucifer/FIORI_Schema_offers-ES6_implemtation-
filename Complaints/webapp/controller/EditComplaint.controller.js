@@ -788,7 +788,7 @@ sap.ui.define(
                     }
                    
                     //Sending for approval message
-                     if(oModelView.getProperty("/ResolutionType") == 2)
+                     if(oModelView.getProperty("/ResolutionType") == 2 && this.getModel("appView").getProperty("/iUserLevel") < 2 )
                      {
                     var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                     MessageBox.confirm(
@@ -817,10 +817,10 @@ sap.ui.define(
 
                     if(oModel.getProperty("/ResolutionType") == 2){
                         oModel.setProperty("/ComplaintStatus", 
-                        appViewModel.getProperty("iUserLevel") > 1 ?  "RESOLVED"  : "INREVIEW" );
+                        appViewModel.getProperty("/iUserLevel") > 1 ?  "RESOLVED"  : "INREVIEW" );
 
                         oModel.setProperty("/ApprovalStatus", 
-                        appViewModel.getProperty("iUserLevel") > 1 ?  "APPROVED"  : "PENDING" );
+                        appViewModel.getProperty("/iUserLevel") > 1 ?  "APPROVED"  : "PENDING" );
 
                     }else{
                         oModel.setProperty("/ComplaintStatus",  "RESOLVED" )
