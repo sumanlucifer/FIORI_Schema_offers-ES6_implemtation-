@@ -7,7 +7,7 @@
             <uxap:ObjectPageHeader >
              <uxap:breadcrumbs>
                      <Breadcrumbs currentLocationText="{objectView>/TtlNotification}">
-                        <Link press="onPressBreadcrumbLink" text="Schedule Notifications"/>
+                        <Link press="onPressBreadcrumbLink" text="Notifications"/>
                     </Breadcrumbs>
                      </uxap:breadcrumbs>
                     </uxap:ObjectPageHeader>
@@ -88,7 +88,7 @@
 							<VBox >
 								<Label required="true" text="{i18n>colScheduledDate}"/>
 								<DatePicker width="100%" valueFormat="dd MMM yyyy" displayFormat="dd MMM yyyy" value="{objectView>ScheduledDate}"
-									editable="{= ${objectView>/sMode} !== 'V'}"/>
+									editable="{= ${objectView>/sMode} !== 'V'}" minDate="{objectView>/currDate}"/>
 							</VBox>
 							<VBox>
 								<Label required="true" text="{i18n>colScheduledTime}"/>

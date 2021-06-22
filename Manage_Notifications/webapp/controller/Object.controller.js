@@ -5,6 +5,7 @@ sap.ui.define([
     "sap/ui/core/SeparatorItem",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    
 
 ], function (BaseController, JSONModel, formatter, SeparatorItem,Filter,FilterOperator) {
 	"use strict";
@@ -29,7 +30,8 @@ sap.ui.define([
 				oViewModel = new JSONModel({
 					busy: true,
 					IsLater: true,
-                    delay: 0
+                    delay: 0,
+                    currDate:new Date()
 
 				});
                
