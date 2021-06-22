@@ -84,7 +84,7 @@
                 "settings": {
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "None",
-                    "defaultUpdateMethod": "Put",
+                    "defaultUpdateMethod": "PUT",
                     "useBatch" : false,
                     "defaultOperationMode": "Auto"
                 }

@@ -43,7 +43,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().metadataLoaded().then(function () {
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
-			});
+            });
+            this._initData();
 		},
 
 		onExit: function () {
