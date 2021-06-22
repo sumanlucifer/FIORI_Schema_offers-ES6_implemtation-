@@ -357,6 +357,9 @@ sap.ui.define([
 		 * 
 		 */
 		_fnValidation: function (data) {
+            var oViewModel = this.getModel("objectView");
+            var groupComboBox = this.getView().byId("idGroupCombo");
+            var groupId=groupComboBox.getSelectedItem();
 			var oReturn = {
 					IsNotValid: false,
 					sMsg: []
@@ -428,13 +431,23 @@ sap.ui.define([
 					message: "MSG_VALDTN_ERR_STIME",
 					target: "/oDetails/ScheduledTime"
 				});
-			}
+			}else
+            if (data.GroupId && !groupId) {
+                oReturn.IsNotValid = true;
+                oReturn.sMsg.push("MSG_VALDTN_ERR_GROUPID");
+                aCtrlMessage.push({
+                    message: "MSG_VALDTN_ERR_GROUPID",
+                    target: "/oDetails/GroupId"
+                });
+
+            }
 
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
 		},
 
 		_fnValidationView: function (data) {
+            
 			var oReturn = {
 					IsNotValid: false,
 					sMsg: []
@@ -462,7 +475,8 @@ sap.ui.define([
 					message: "MSG_VALDTN_ERR_STIME",
 					target: "/oDetails/ScheduledTime"
 				});
-			}
+            }
+
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
 		},
