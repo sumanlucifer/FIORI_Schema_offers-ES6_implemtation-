@@ -922,7 +922,7 @@ sap.ui.define(
                     oModel.setProperty("/ResolutionType", oSelectedItem.PointsThrough);
                     
                     // Demo - MOM : 20210618: Add default remark for Product/Token scenerios
-                    oModel.setProperty("/Remark", +(oSelectedItem.PointsThrough) > 0 ? oSelectedItem.Resolution : "");
+                    oModel.setProperty("/Remark", +(oSelectedItem.PointsThrough) !== 2 ? oSelectedItem.Resolution : "");
                     
                     this._resetAndfilter();
 
