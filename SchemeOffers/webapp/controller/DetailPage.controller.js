@@ -252,6 +252,7 @@ sap.ui.define(
                             Date1: null,
                             Date2: null,
                             ParentOfferTitle: "",
+                            RewardRationCount: 1
                         },
                     };
                     var oModel = new JSONModel(oData);
@@ -952,6 +953,7 @@ sap.ui.define(
                             Date1: null,
                             Date2: null,
                             ParentOfferTitle: "",
+                            RewardRationCount: 1
                         },
                     };
 
@@ -1340,30 +1342,18 @@ sap.ui.define(
 
                     this._postDataToSave(bFileFlag);
                 },
-                _CheckTableValidation: function () {
-                    // check if the table 1 or 2 is visible
-                    var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl");
-                    var oModelData = oModel.getData();
-                    if (oModelData["Rbtn"]["Rewards"] == 0) {
-                        if (oModelData["Table"]["Table1"].length == 0) {
-                            return [
-                                false,
-                                "Kinldy Enter the data in the Reward Ratio to Continue",
-                            ];
-                        }
-                    }
-                    if (oModelData["Rbtn"]["Rewards"] == 1) {
-                        if (oModelData["Table"]["Table2"].length == 0) {
-                            return [
-                                false,
-                                "Kinldy Enter the data in the Reward Ratio Table2 to Continue",
-                            ];
-                        }
-                    }
+                // _CheckTableValidation: function () {
+                //     // check if the table 1 or 2 is visible
+                //     var oView = this.getView();
+                //     var oModel = oView.getModel("oModelControl");
+                //     var oModelData = oModel.getData();
+                //     if (oModelData["Table"]["Table2"].length == 0) {
+                //         return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue"]
+                //     }
 
-                    return [true, ""];
-                },
+
+                //     return [true, ""]
+                // },
                 _postDataToSave: function (bFileFlag) {
                     var c1, c2, c3, c4, c5, c6, c7;
                     var othat = this;

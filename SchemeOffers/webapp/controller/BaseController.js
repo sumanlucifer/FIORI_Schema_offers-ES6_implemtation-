@@ -939,7 +939,7 @@ sap.ui.define(
                         }
                         if (oRewardDtl.length >= sLength) {
                             MessageToast.show(
-                                "For the current Offer type we can add " + sLength + " item(s)."
+                                "For the current Offer type we can add only " + sLength + " item(s)."
                             );
                             bFlag = false;
                             return;
@@ -2563,6 +2563,30 @@ sap.ui.define(
                             MessageBox.error(oRespText["error"]["message"]["value"]);
                         }
                     })
+
+                },
+                _CheckTableValidation: function () {
+                    // check if the table 1 or 2 is visible
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table2"];
+                    if (oModelData["Table"]["Table2"].length == 0) {
+                        return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue."]
+                    }
+                    var bFlag = true
+                    oModelData["Table"]["Table2"].forEach(function (a) {
+                        if (a.hasOwnProperty("editable")) {
+                            if (a["editable"]) {
+                                bFlag = false
+                            }
+                        }
+                    })
+                    if (bFlag) {
+                        return [true, ""]
+                    } else {
+                        return [false, "Kinldy Save the data in the Reward Ratio Table to Continue."]
+                    }
 
                 },
                 _CreatePayloadPart1(bFileFlag) {

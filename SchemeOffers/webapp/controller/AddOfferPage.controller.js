@@ -401,19 +401,7 @@ sap.ui.define(
 
                     this._postDataToSave(bFileFlag);
                 },
-                _CheckTableValidation: function () {
-                    // check if the table 1 or 2 is visible
-                    var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl");
-                    var oModelData = oModel.getData();
-                    if (oModelData["Table"]["Table2"].length == 0) {
-                        return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue"]
-                    }
-
-
-                    return [true, ""]
-
-                },
+                
                 onAfterRendering: function () {
                     // this.getView().byId("startDate").setMinDate(new Date());
                     console.log("enable step2")
@@ -458,7 +446,7 @@ sap.ui.define(
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Sucessfully Created.");
-                                othat._navToHome();
+                                //othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
