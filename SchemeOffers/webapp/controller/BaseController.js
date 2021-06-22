@@ -2578,7 +2578,7 @@ sap.ui.define(
                     oModelData["Table"]["Table2"].forEach(function (a) {
                         if (a.hasOwnProperty("editable")) {
                             if (a["editable"]) {
-                                bFlag = false
+                                bFlag = false;
                             }
                         }
                     })
