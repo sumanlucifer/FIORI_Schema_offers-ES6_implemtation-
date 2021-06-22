@@ -786,6 +786,17 @@ sap.ui.define(
                     return mParam1 + " years";
                 }
             },
+            /*Aditya changes start*/
+            fmtDocumentType: function (mParam){
+            if(mParam==0){
+                return "Passbook"
+            }else if(mParam==1){
+                return "Cheque"
+
+            }
+
+            },
+            /*Aditya changes end*/
             onPressDealerLink: function (oEvent) {
                 var oSource = oEvent.getSource();
                 var oView = this.getView();
