@@ -40,7 +40,7 @@
                         <fb:filterGroupItems>
                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <SearchField id="idSearchInput"  value="{oModelControl>/filterBar/Name}" placeholder="{i18n>searchFilterPlaceholder}" />
+                                    <SearchField id="idSearchInput"  value="{oModelControl>/filterBar/Name}" showSearchButton="false" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
@@ -107,7 +107,7 @@
                 class="sapUiResponsiveContentPadding">
                 <items>
                     <IconTabFilter
-                        text="{i18n>allRequestIconTabarTitle}"
+                        text="{oModelControl>/allRequestIconTabarTitle}"
                         key="all">
                         <Table id="idAllRequestTable" width="auto" 
                         items="{path: '/PainterPointsHistorySet' ,
@@ -176,7 +176,7 @@
                         </Table>
                     </IconTabFilter>
                     <IconTabFilter
-                        text="{i18n>accrualRequestIconTabarTitle}"
+                        text="{oModelControl>/accrualRequestIconTabarTitle}"
                         key="accrual" 
                        >
                         <Table id="idAccrualRequestTable" width="auto" 
@@ -184,7 +184,7 @@
                         parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
                         sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
-                        updateFinished="onUpdateFinished">
+                        updateFinished="onUpdateFinished1">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
@@ -252,7 +252,7 @@
                     <Table id="idRedemptionRequestTable" width="auto" 
                         items="" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
-                        updateFinished="onUpdateFinished">
+                        updateFinished="onUpdateFinished2">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
