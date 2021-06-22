@@ -175,7 +175,7 @@ sap.ui.define(
                             AppPainter: 0,
                             ParentOffer: 0,
                             BrReqVol: 0,
-                            BrReqCash:0
+                            BrReqCash: 0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -245,6 +245,7 @@ sap.ui.define(
                             Date1: null,
                             Date2: null,
                             ParentOfferTitle: "",
+                            RewardRationCount: 1
                         },
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
@@ -400,26 +401,7 @@ sap.ui.define(
 
                     this._postDataToSave(bFileFlag);
                 },
-                _CheckTableValidation: function () {
-                    // check if the table 1 or 2 is visible
-                    var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl");
-                    var oModelData = oModel.getData();
-                    if (oModelData["Rbtn"]["Rewards"] == 0) {
-                        if (oModelData["Table"]["Table1"].length == 0) {
-                            return [false, "Kinldy Enter the data in the Reward Ratio to Continue"]
-                        }
-
-                    }
-                    if (oModelData["Rbtn"]["Rewards"] == 1) {
-                        if (oModelData["Table"]["Table2"].length == 0) {
-                            return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue"]
-                        }
-                    }
-
-                    return [true, ""]
-
-                },
+                
                 onAfterRendering: function () {
                     // this.getView().byId("startDate").setMinDate(new Date());
                     console.log("enable step2")

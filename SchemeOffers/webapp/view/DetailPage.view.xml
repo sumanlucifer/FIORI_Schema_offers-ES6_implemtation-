@@ -1,5 +1,11 @@
-<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.DetailPage" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <f:DynamicPage busyIndicatorDelay="0" headerExpanded="true" stickySubheaderProvider="idIconTabBar" showFooter="true" class="sapUiNoContentPadding" >
+<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.DetailPage" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <f:DynamicPage busyIndicatorDelay="0" headerExpanded="true" stickySubheaderProvider="idIconTabBar" showFooter="true" class="sapUiNoContentPadding">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -45,7 +51,7 @@
                     <layout:VerticalLayout>
                         <layout:VerticalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
-                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}"  state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                         </layout:VerticalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -57,18 +63,14 @@
                 <items>
                     <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="0">
                         <VBox id="idVbProfile" visible="{= ${oModelControl3>/mode}=== 'display'}">
-                        
+
                         </VBox>
-                        	<mvc:XMLView
-							id="wizardViewBranching"
-							async="true"
-                            visible="{= ${oModelControl3>/mode}=== 'edit'}"
-							viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
+                        <mvc:XMLView id="wizardViewBranching" async="true" visible="{= ${oModelControl3>/mode}=== 'edit'}" viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>EligiblePainter}" key="1">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable1" type="XML"/>
                     </IconTabFilter>
-                       <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
+                    <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable2" type="XML"/>
                     </IconTabFilter>
                 </items>
@@ -76,17 +78,24 @@
         </f:content>
         <f:footer>
             <OverflowToolbar >
-             <ToolbarSpacer/>
-           
-              <Button id="edit" text="Edit" type="Emphasized"  enabled="true" press="handleEditPress"/>
-                <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
-                <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
-                <Button press="onActivate"  text="{i18n>Activate}" type="Accept" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
-                <Button press="onDeactivate"  text="{i18n>Deactivate}" type="Reject"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
-                 <Button press=".onChangeOfferStatus1('PUBLISHED')"  text="{i18n>Published}" type="Accept"  visible="{= ${oModelControl3>/mode}=== 'display'}" />
-             
+                <ToolbarSpacer/>
+
+                <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }" >
+                    <Button  class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button  class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button  class="sapUiTinyMarginEnd" id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                </HBox>
+
+                <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
+                    <Button  text="Cancel" type="Ghost"  press="handleCancelPress" class="sapUiTinyMarginEnd"/>
+                    <Button press="onActivate" text="{i18n>Activate}" type="Accept"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
+                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
+                    <Button press=".onChangeOfferStatus1('PUBLISHED')" text="{i18n>Published}" type="Accept"  class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display'}" />
+                </HBox>
+
+
             </OverflowToolbar>
-           
+
         </f:footer>
     </f:DynamicPage>
 </mvc:View>

@@ -189,6 +189,7 @@ sap.ui.define(
                                         "MultiCombo/PClass3",
                                         "MultiCombo/AppProd3",
                                         "MultiCombo/AppPacks3",
+
                                     ],
                                     true
                                 );
@@ -211,7 +212,8 @@ sap.ui.define(
                                         "MultiCombo/AppProd4",
                                         "MultiCombo/AppPacks4",
                                         "Table/Table4",
-                                        "Table/Table3"
+                                        "Table/Table3",
+
                                     ],
                                     true
                                 );
@@ -234,34 +236,36 @@ sap.ui.define(
                                 ]);
 
                             } else if (a === "RewardRatio") {
-                                othat._propertyToBlank(
-                                    [
-                                        "Table/Table2",
-                                    ],
-                                    true
-                                );
+                                // sending the reward ration value as all
+                                // reward ratio is false means this is not a slab offer hense we have set max value as 1
                                 othat._RbtnReset([
                                     "Rbtn/Rewards"
                                 ]);
+                                oModelControl.setProperty("/Fields/RewardRationCount", 1);
 
                             }
                         } else if (oOfferType[a]) {
-                            // in this case the generic reward ratio will be non editable
                             if (a === "RewardRatio") {
-                                othat._propertyToBlank(
-                                    [
-                                        "Table/Table1",
-                                    ],
-                                    true
-                                );
                                 oModelControl.setProperty("/Rbtn/Rewards", 1);
+                                oModelControl.setProperty("/Fields/RewardRationCount", 15);
                             }
+
+                            // sending the reward ratio value as 1 that is generic
+                            // reward ratio is true means this is not a slab offer hense we have set max value as 1
+
+
                         }
                     }
                     //oModelControl.refresh(true);
 
                     // setting up redemption cycle data based on offer type
                     this._SetRedemptionCycle();
+
+                },
+                _setTable2Count: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+
                 },
                 _SetRedemptionCycle: function () {
                     var oView = this.getView();
@@ -435,6 +439,7 @@ sap.ui.define(
                 onBRRbChange: function () {
                     this._CreateBonusRewardTable();
                 },
+
                 onPressAddGenericReward2: function (oEvent) {
                     var oView = this.getView();
                     var othat = this;
@@ -708,6 +713,54 @@ sap.ui.define(
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh();
                 },
+                onPressAddGenericRewardsV1: function (oEvent) {
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table1");
+                    if (oEvent !== "add") {
+
+
+
+                    } else {
+
+                        var bFlag = true;
+                        if (oRewardDtl.length > 0) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data."
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+                        // if (oRewardDtl.length >= 15) {
+                        //     MessageToast.show(
+                        //         "We can only add 15 family members. Kinldy remove any existing data to add a new family member."
+                        //     );
+                        //     bFlag = false;
+                        //     return;
+                        // }
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                RequiredVolume: "",
+                                RequiredPoints: "",
+                                RewardPoints: "",
+                                RewardCash: "",
+                                editable: true,
+                            });
+                            oModel.refresh();
+
+                            //relvalue and editable properties are added here and will be removed in the postsave function
+                        }
+                        // oBj = false;
+                        // oModel.setProperty("/Dialog/Key1", "add");
+                    }
+
+
+
+                },
                 onPressAddGenericRewards: function (oEvent) {
                     var oView = this.getView();
                     var othat = this;
@@ -796,15 +849,7 @@ sap.ui.define(
                         oModelControl.setProperty("/Rbtn/BrReqCash", 0)
                     }
                 },
-                onRbRRDialogVolume: function (oEvent) {
-                    var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl");
-                    var sPath = "/Dialog/Bonus1"
-                    oModel.setProperty(sPath + "/RequiredVolume", "");
-                    oModel.setProperty(sPath + "/RequiredPoints", "");
 
-
-                },
                 onRbVolRewardCash: function (oEvent) {
                     //1 is for Yes; 0 is for No;
                     var sKey = oEvent.getSource().getSelectedIndex();
@@ -861,46 +906,176 @@ sap.ui.define(
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh(true);
                 },
-                onPressAddRewards: function (oEvent) {
+                onPressAddRewardsV1: function (oEvent) {
                     var oView = this.getView();
-                    var othat = this;
-                    var oModel = oView.getModel("oModelControl");
-                    var oBj = {},
-                        sPath = "";
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table2");
                     if (oEvent !== "add") {
-                        oBj = oEvent
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
                             .getObject();
-                        sPath = oEvent
-                            .getSource()
-                            .getBindingContext("oModelControl")
-                            .getPath()
-                            .split("/");
-                        oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
+                        oObject["editable"] = true;
+
+                        oModel.refresh();
+
                     } else {
-                        oBj = false;
-                        oModel.setProperty("/Dialog/Key1", "add");
+
+                        var bFlag = true;
+                        var sLength = oModel.getProperty("/Fields/RewardRationCount")
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the current Offer type we can add only " + sLength + " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                RequiredVolume: "",
+                                RequiredPoints: "",
+                                RewardPoints: "",
+                                RewardCash: "",
+                                editable: true
+                            });
+
+                            //relvalue and editable properties are added here and will be removed in the postsave function
+                        }
+                        oModel.refresh();
                     }
 
-                    if (!this._RewardsDialog1) {
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks",
-                            controller: othat,
-                        }).then(
-                            function (oDialog) {
-                                this._RewardsDialog1 = oDialog;
-                                oView.addDependent(this._RewardsDialog1);
-                                this._setAddRewardDialog(oBj);
-                                this._RewardsDialog1.open();
-                            }.bind(this)
-                        );
+                },
+                onPressSaveReward: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+                    var cFlag = true //oValidator.validate(oCells);
+
+                    var bFlag = true;
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
                     } else {
-                        oView.addDependent(this._RewardsDialog1);
-                        this._setAddRewardDialog(oBj);
-                        this._RewardsDialog1.open();
+                        MessageToast.show(
+                            "Kindly input details value in a proper format to continue"
+                        );
                     }
+                    //oModel.refresh(true);
+
+
+                },
+                onRbRRDialogVolume: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    oModel.setProperty("/Table/Table2", []);
+                },
+                onPressAddRewards: function (oEvent) {
+                    // var oView = this.getView();
+                    // var othat = this;
+                    // var oModel = oView.getModel("oModelControl");
+                    // var oBj = {},
+                    //     sPath = "";
+                    if (oEvent !== "add") {
+
+
+                        // oBj = oEvent
+                        //     .getSource()
+                        //     .getBindingContext("oModelControl")
+                        //     .getObject();
+                        // sPath = oEvent
+                        //     .getSource()
+                        //     .getBindingContext("oModelControl")
+                        //     .getPath()
+                        //     .split("/");
+                        // oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
+
+                    } else {
+                        var oModel = this.getView().getModel("oModelControl");
+                        var oFamiDtlMdl = oModel.getProperty("/Table/Table2");
+                        var bFlag = true;
+                        if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length < 15) {
+                            for (var prop of oFamiDtlMdl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data."
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+                        if (oFamiDtlMdl.length >= 15) {
+                            MessageToast.show(
+                                "We can only add 15 items"
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (bFlag == true) {
+                            oFamiDtlMdl.push({
+                                RequiredVolume: "",
+                                RequiredPoints: "",
+                                RewardPoints: "",
+                                RewardCash: "",
+                                editable: true
+                            });
+
+                            //relvalue and editable properties are added here and will be removed in the postsave function
+                        }
+                        oModel.refresh();
+                        // oBj = false;
+                        // oModel.setProperty("/Dialog/Key1", "add");
+                    }
+
+                    // if (!this._RewardsDialog1) {
+                    //     Fragment.load({
+                    //         id: oView.getId(),
+                    //         name: "com.knpl.pragati.SchemeOffers.view.fragment.AddProdPacks",
+                    //         controller: othat,
+                    //     }).then(
+                    //         function (oDialog) {
+                    //             this._RewardsDialog1 = oDialog;
+                    //             oView.addDependent(this._RewardsDialog1);
+                    //             this._setAddRewardDialog(oBj);
+                    //             this._RewardsDialog1.open();
+                    //         }.bind(this)
+                    //     );
+                    // } else {
+                    //     oView.addDependent(this._RewardsDialog1);
+                    //     this._setAddRewardDialog(oBj);
+                    //     this._RewardsDialog1.open();
+                    // }
                 },
                 _setAddRewardDialog: function (oBj) {
                     var oView = this.getView();
@@ -2370,7 +2545,7 @@ sap.ui.define(
 
                 // create payload for edit and add
                 onChangeOfferStatus: function (mParam1) {
-                  
+
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oModelView = oView.getModel("oModelView");
@@ -2378,7 +2553,7 @@ sap.ui.define(
                     var oPayLoad = {
                         OfferStatus: mParam1
                     }
-                    oData.update(sPath + "/OfferStatus",oPayLoad, {
+                    oData.update(sPath + "/OfferStatus", oPayLoad, {
                         success: function () {
                             MessageToast.show("Offer Sucessfully Published.");
                             oData.refresh();
@@ -2388,6 +2563,30 @@ sap.ui.define(
                             MessageBox.error(oRespText["error"]["message"]["value"]);
                         }
                     })
+
+                },
+                _CheckTableValidation: function () {
+                    // check if the table 1 or 2 is visible
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table2"];
+                    if (oModelData["Table"]["Table2"].length == 0) {
+                        return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue."]
+                    }
+                    var bFlag = true
+                    oModelData["Table"]["Table2"].forEach(function (a) {
+                        if (a.hasOwnProperty("editable")) {
+                            if (a["editable"]) {
+                                bFlag = false;
+                            }
+                        }
+                    })
+                    if (bFlag) {
+                        return [true, ""]
+                    } else {
+                        return [false, "Kinldy Save the data in the Reward Ratio Table to Continue."]
+                    }
 
                 },
                 _CreatePayloadPart1(bFileFlag) {
@@ -2635,106 +2834,108 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
                     var aFinalArray = [];
-                    if (bRewardSelected === 0) {
-                        var oDataTbl = oModel
-                            .getProperty("/Table/Table1")
-                            .map(function (a) {
-                                return Object.assign({}, a);
-                            });
-
-                        var aCheckProp = [
-                            "RequiredVolume",
-                            "RequiredPoints",
-                            "RewardPoints",
-                            // "RewardGiftId",
-                            "RewardCash",
-                        ];
-                        aFinalArray = oDataTbl.filter(function (ele) {
-
-                            for (var a in aCheckProp) {
-                                if (ele[aCheckProp[a]] === "") {
-                                    ele[aCheckProp[a]] = null;
-
-                                } else {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                                }
-                            }
-
-                            return ele;
-
+                    //if (bRewardSelected === 0) {
+                    var oDataTbl = oModel
+                        .getProperty("/Table/Table2")
+                        .map(function (a) {
+                            return Object.assign({}, a);
                         });
-                        oPayLoad["OfferRewardRatio"] = aFinalArray;
 
-                        promise.resolve(oPayLoad);
-                        return promise;
-                    }
+                    var aCheckProp = [
+                        "RequiredVolume",
+                        "RequiredPoints",
+                        "RewardPoints",
+                        // "RewardGiftId",
+                        "RewardCash",
+                    ];
+                    aFinalArray = oDataTbl.filter(function (ele) {
+
+                        for (var a in aCheckProp) {
+                            if (ele[aCheckProp[a]] === "") {
+                                ele[aCheckProp[a]] = null;
+
+                            } else {
+                                ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                            }
+                        }
+                        delete ele["editable"]
+                        return ele;
+
+                    });
+                    oPayLoad["OfferRewardRatio"] = aFinalArray;
+
+                    promise.resolve(oPayLoad);
+                    return promise;
+                    //}
                     // this menas that specific is selected we will check first
                     // if packs all is selected and products data will be displayed
 
                     var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
-                    if (bAllProdSelected === 0) {
-                        var oDataTbl = oModel
-                            .getProperty("/Table/Table2")
-                            .map(function (a) {
-                                return Object.assign({}, a);
-                            });
+                    // if (bAllProdSelected === 0) {
+                    //     var oDataTbl = oModel
+                    //         .getProperty("/Table/Table2")
+                    //         .map(function (a) {
+                    //             return Object.assign({}, a);
+                    //         });
 
-                        var aCheckProp = [
-                            "RequiredVolume",
-                            "RequiredPoints",
-                            "RewardPoints",
-                            //"RewardGiftId",
-                            "RewardCash",
-                        ];
-                        aFinalArray = oDataTbl.filter(function (ele) {
+                    //     var aCheckProp = [
+                    //         "RequiredVolume",
+                    //         "RequiredPoints",
+                    //         "RewardPoints",
+                    //         //"RewardGiftId",
+                    //         "RewardCash",
+                    //     ];
+                    //     aFinalArray = oDataTbl.filter(function (ele) {
 
-                            for (var a in aCheckProp) {
-                                if (ele[aCheckProp[a]] === "") {
-                                    ele[aCheckProp[a]] = null;
-                                } else {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                                }
-                            }
-                            return ele;
+                    //         for (var a in aCheckProp) {
+                    //             if (ele[aCheckProp[a]] === "") {
+                    //                 ele[aCheckProp[a]] = null;
+                    //             } else {
+                    //                 ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                    //             }
+                    //         }
+                    //         delete ele["editable"]
+                    //         return ele;
 
-                        });
-                        oPayLoad["OfferRewardRatio"] = aFinalArray;
+                    //     });
+                    //     oPayLoad["OfferRewardRatio"] = aFinalArray;
 
-                        promise.resolve(oPayLoad);
-                        return promise;
-                    }
-                    if (bAllProdSelected === 1) {
-                        var oDataTbl = oModel
-                            .getProperty("/Table/Table2")
-                            .map(function (a) {
-                                return Object.assign({}, a);
-                            });
+                    //     promise.resolve(oPayLoad);
+                    //     return promise;
+                    // }
+                    // if (bAllProdSelected === 1) {
+                    //     var oDataTbl = oModel
+                    //         .getProperty("/Table/Table2")
+                    //         .map(function (a) {
+                    //             return Object.assign({}, a);
+                    //         });
 
-                        var aCheckProp = [
-                            "RequiredVolume",
-                            "RequiredPoints",
-                            "RewardPoints",
-                            //"RewardGiftId",
-                            "RewardCash",
-                        ];
+                    //     var aCheckProp = [
+                    //         "RequiredVolume",
+                    //         "RequiredPoints",
+                    //         "RewardPoints",
+                    //         //"RewardGiftId",
+                    //         "RewardCash",
+                    //     ];
 
-                        aFinalArray = oDataTbl.filter(function (ele) {
+                    //     aFinalArray = oDataTbl.filter(function (ele) {
 
-                            for (var a in aCheckProp) {
-                                if (ele[aCheckProp[a]] === "") {
-                                    ele[aCheckProp[a]] = null;
-                                } else {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                                }
-                            }
-                            return ele;
+                    //         for (var a in aCheckProp) {
+                    //             if (ele[aCheckProp[a]] === "") {
+                    //                 ele[aCheckProp[a]] = null;
+                    //             } else {
+                    //                 ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                    //             }
+                    //         }
+                    //         delete ele["editable"]
+                    //         return ele;
 
-                        });
-                        oPayLoad["OfferRewardRatio"] = aFinalArray;
+                    //     });
+                    //     oPayLoad["OfferRewardRatio"] = aFinalArray;
 
-                        promise.resolve(oPayLoad);
-                        return promise;
-                    }
+                    //     promise.resolve(oPayLoad);
+                    //     return promise;
+                    // }
                 },
                 _CreatePayLoadPart5: function (oPayLoad) {
                     var promise = jQuery.Deferred();
