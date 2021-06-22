@@ -234,12 +234,12 @@ sap.ui.define(
                                 ]);
 
                             } else if (a === "RewardRatio") {
-                                othat._propertyToBlank(
-                                    [
-                                        "Table/Table2",
-                                    ],
-                                    true
-                                );
+                                // othat._propertyToBlank(
+                                //     [
+                                //         "Table/Table2",
+                                //     ],
+                                //     true
+                                // );
                                 othat._RbtnReset([
                                     "Rbtn/Rewards"
                                 ]);
@@ -248,12 +248,12 @@ sap.ui.define(
                         } else if (oOfferType[a]) {
                             // in this case the generic reward ratio will be non editable
                             if (a === "RewardRatio") {
-                                othat._propertyToBlank(
-                                    [
-                                        "Table/Table1",
-                                    ],
-                                    true
-                                );
+                                // othat._propertyToBlank(
+                                //     [
+                                //         "Table/Table1",
+                                //     ],
+                                //     true
+                                // );
                                 oModelControl.setProperty("/Rbtn/Rewards", 1);
                             }
                         }
