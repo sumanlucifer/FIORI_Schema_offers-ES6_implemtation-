@@ -479,6 +479,9 @@ sap.ui.define(
                     oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
                     oModelView.setProperty("/PainterComplainProducts/Points", "");
                     oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
+                    oModelView.setProperty("/TokenCode", "");
+                    oModelView.setProperty("/RewardPoints", "");
+
 
                     //if arguments not passed then return without filtering
                     if (!sCtrlId)
@@ -664,6 +667,10 @@ sap.ui.define(
                             styleClass: bCompact ? "sapUiSizeCompact" : "",
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
+                                    //TODO: Property wise update required  
+                                    oModelView.setProperty("/ResolutionId", "");
+                                    this._resetAndfilter();
+                                    
                                     oModelView.setProperty("/ComplaintStatus", "WITHDRAWN");
                                     this._postDataToSave();
                                 }
@@ -799,10 +806,17 @@ sap.ui.define(
                 },
 
                 _modStatus : function(){
-                    var oModel = this.getView().getModel("oModelView");
+                    var oModel = this.getView().getModel("oModelView"),
+                        //For Roles
+                        appViewModel = this.getView().getModel("appView");
+
                     if(oModel.getProperty("/ResolutionType") == 2){
-                        oModel.setProperty("/ComplaintStatus",  "INREVIEW" );
-                        oModel.setProperty("/ApprovalStatus",  "PENDING" ) ;
+                        oModel.setProperty("/ComplaintStatus", 
+                        appViewModel.getProperty("iUserLevel") > 1 ?  "RESOLVED"  : "INREVIEW" );
+
+                        oModel.setProperty("/ApprovalStatus", 
+                        appViewModel.getProperty("iUserLevel") > 1 ?  "APPROVED"  : "PENDING" );
+
                     }else{
                         oModel.setProperty("/ComplaintStatus",  "RESOLVED" )
                     }
@@ -903,7 +917,9 @@ sap.ui.define(
 
                     oModel.setProperty("/ResolutionType", oSelectedItem.PointsThrough);
                     
-
+                    // Demo - MOM : 20210618: Add default remark for Product/Token scenerios
+                    oModel.setProperty("/Remark", +(oSelectedItem.PointsThrough) > 0 ? oSelectedItem.Resolution : "");
+                    
                     this._resetAndfilter();
 
                     oModelControl.setProperty("/ProductCode", "");
@@ -990,14 +1006,18 @@ sap.ui.define(
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
-                                    oModel.setProperty("/ResolutionId", "");
-                                    oModel.setProperty("/InitiateForceTat", true);
-                                    othat._postDataToSave();
+                                   //flush Resolution related fields  
+                                   oModel.setProperty("/ResolutionId", this.getView().getBindingContext().getProperty("ResolutionId") );
+                                   this._resetAndfilter();
+                                   
+                                   oModel.setProperty("/InitiateForceTat", true);
+                                   this._postDataToSave();
                                 }
-                            },
+                            }.bind(this),
                         }
                     );
                 },
+                
                 _Deactivate: function (oData, sPath, oBject) {
                     var oPayload = {
                         InitiateForceTat: true,
