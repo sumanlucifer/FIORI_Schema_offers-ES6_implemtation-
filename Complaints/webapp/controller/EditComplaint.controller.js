@@ -241,11 +241,9 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     }
-
-
-
-
                 },
+
+
                 _setWorkFlowFlag: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -350,9 +348,11 @@ sap.ui.define(
                                 }
 
                                  //Put previous escalate flag to false
-                                    data.InitiateForceTat = false;          
+                                data.InitiateForceTat = false;          
 
-                                
+                                //Caution: Cloning to save initial state of payload for withdraw and escalate scenerios
+                                othat.oClonePayload = {};
+                                jQuery.extend(true, othat.oClonePayload, data);
 
                                 var oViewModel = new JSONModel(data);
 
@@ -667,11 +667,16 @@ sap.ui.define(
                             styleClass: bCompact ? "sapUiSizeCompact" : "",
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
-                                    //TODO: Property wise update required  
-                                    oModelView.setProperty("/ResolutionId", "");
-                                    this._resetAndfilter();
+                                    //TODO: Property wise update required 
+
+
+                                  var oPayload = this.oClonePayload;
+                                      oPayload.Remark = oModelView.getProperty("/Remark");
+                                      oPayload.ComplaintStatus = "WITHDRAWN";
+
+                                    oModelView.setData(oPayload);
                                     
-                                    oModelView.setProperty("/ComplaintStatus", "WITHDRAWN");
+                                   
                                     this._postDataToSave();
                                 }
                             }.bind(this),
@@ -888,7 +893,6 @@ sap.ui.define(
                 },
 
                 onApproval: function(bAccept){
-                    
                     var oModelView = this.getModel("oModelView"),
                         validation = this._minValidation(oModelView.getData());
                     
@@ -1007,15 +1011,35 @@ sap.ui.define(
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
                                    //flush Resolution related fields  
-                                   oModel.setProperty("/ResolutionId", this.getView().getBindingContext().getProperty("ResolutionId") );
-                                   this._resetAndfilter();
+                                   //  oModel.setProperty("/ResolutionId", this.getView().getBindingContext().getProperty("ResolutionId") );
+                                   // this._resetAndfilter();
                                    
-                                   oModel.setProperty("/InitiateForceTat", true);
-                                   this._postDataToSave();
+                                  // oModel.setProperty("/InitiateForceTat", true);
+                                  //var sPath = this.getView().getBindingContext().getPath();
+                                  var oPayload = this.oClonePayload;
+                                      oPayload.Remark = oModel.getProperty("/Remark");
+                                      oPayload.InitiateForceTat = true;
+
+                                 oModel.setData(oPayload);
+                                      
+                                 this._postDataToSave();
+                               //  this._postdataWithPayload(sPath, oPayload);
                                 }
                             }.bind(this),
                         }
                     );
+                },
+
+                _postdataWithPayload: function(sPath, data){
+                  //  var sPath = this.getView().getBindingContext().getPath() + "/InitiateForceTat",
+                    var othat = this;
+                    this.getModel().update(sPath, data, {
+                        success: function () {
+                            MessageToast.show("Complain Successfully Updated.");
+                            othat.getModel().refresh(true);
+                            othat.onNavBack();
+                        }
+                    })
                 },
                 
                 _Deactivate: function (oData, sPath, oBject) {
