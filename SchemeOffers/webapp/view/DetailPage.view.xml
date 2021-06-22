@@ -80,16 +80,17 @@
             <OverflowToolbar >
                 <ToolbarSpacer/>
 
-                <HBox >
-                    <Button id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
-                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }" >
+                    <Button  class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button  class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button  class="sapUiTinyMarginEnd" id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
                 </HBox>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
-                    <Button press="onActivate" text="{i18n>Activate}" type="Accept" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
-                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
-                    <Button press=".onChangeOfferStatus1('PUBLISHED')" text="{i18n>Published}" type="Accept" visible="{= ${oModelControl3>/mode}=== 'display'}" />
+                    <Button  text="Cancel" type="Ghost"  press="handleCancelPress" class="sapUiTinyMarginEnd"/>
+                    <Button press="onActivate" text="{i18n>Activate}" type="Accept"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
+                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
+                    <Button press=".onChangeOfferStatus1('PUBLISHED')" text="{i18n>Published}" type="Accept"  class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display'}" />
                 </HBox>
 
 
