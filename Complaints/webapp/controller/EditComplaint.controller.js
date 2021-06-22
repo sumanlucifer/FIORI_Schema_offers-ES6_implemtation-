@@ -241,11 +241,9 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     }
-
-
-
-
                 },
+
+
                 _setWorkFlowFlag: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -350,9 +348,11 @@ sap.ui.define(
                                 }
 
                                  //Put previous escalate flag to false
-                                    data.InitiateForceTat = false;          
+                                data.InitiateForceTat = false;          
 
-                                
+                                //Caution: Cloning to save initial state of payload for withdraw and escalate scenerios
+                                othat.oClonePayload = {};
+                                jQuery.extend(true, othat.oClonePayload, data);
 
                                 var oViewModel = new JSONModel(data);
 
@@ -479,6 +479,9 @@ sap.ui.define(
                     oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
                     oModelView.setProperty("/PainterComplainProducts/Points", "");
                     oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
+                    oModelView.setProperty("/TokenCode", "");
+                    oModelView.setProperty("/RewardPoints", "");
+
 
                     //if arguments not passed then return without filtering
                     if (!sCtrlId)
@@ -664,7 +667,16 @@ sap.ui.define(
                             styleClass: bCompact ? "sapUiSizeCompact" : "",
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
-                                    oModelView.setProperty("/ComplaintStatus", "WITHDRAWN");
+                                    //TODO: Property wise update required 
+
+
+                                  var oPayload = this.oClonePayload;
+                                      oPayload.Remark = oModelView.getProperty("/Remark");
+                                      oPayload.ComplaintStatus = "WITHDRAWN";
+
+                                    oModelView.setData(oPayload);
+                                    
+                                   
                                     this._postDataToSave();
                                 }
                             }.bind(this),
@@ -799,10 +811,17 @@ sap.ui.define(
                 },
 
                 _modStatus : function(){
-                    var oModel = this.getView().getModel("oModelView");
+                    var oModel = this.getView().getModel("oModelView"),
+                        //For Roles
+                        appViewModel = this.getView().getModel("appView");
+
                     if(oModel.getProperty("/ResolutionType") == 2){
-                        oModel.setProperty("/ComplaintStatus",  "INREVIEW" );
-                        oModel.setProperty("/ApprovalStatus",  "PENDING" ) ;
+                        oModel.setProperty("/ComplaintStatus", 
+                        appViewModel.getProperty("iUserLevel") > 1 ?  "RESOLVED"  : "INREVIEW" );
+
+                        oModel.setProperty("/ApprovalStatus", 
+                        appViewModel.getProperty("iUserLevel") > 1 ?  "APPROVED"  : "PENDING" );
+
                     }else{
                         oModel.setProperty("/ComplaintStatus",  "RESOLVED" )
                     }
@@ -874,7 +893,6 @@ sap.ui.define(
                 },
 
                 onApproval: function(bAccept){
-                    
                     var oModelView = this.getModel("oModelView"),
                         validation = this._minValidation(oModelView.getData());
                     
@@ -903,7 +921,9 @@ sap.ui.define(
 
                     oModel.setProperty("/ResolutionType", oSelectedItem.PointsThrough);
                     
-
+                    // Demo - MOM : 20210618: Add default remark for Product/Token scenerios
+                    oModel.setProperty("/Remark", +(oSelectedItem.PointsThrough) > 0 ? oSelectedItem.Resolution : "");
+                    
                     this._resetAndfilter();
 
                     oModelControl.setProperty("/ProductCode", "");
@@ -990,14 +1010,38 @@ sap.ui.define(
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
                                 if (sAction == "OK") {
-                                    oModel.setProperty("/ResolutionId", "");
-                                    oModel.setProperty("/InitiateForceTat", true);
-                                    othat._postDataToSave();
+                                   //flush Resolution related fields  
+                                   //  oModel.setProperty("/ResolutionId", this.getView().getBindingContext().getProperty("ResolutionId") );
+                                   // this._resetAndfilter();
+                                   
+                                  // oModel.setProperty("/InitiateForceTat", true);
+                                  //var sPath = this.getView().getBindingContext().getPath();
+                                  var oPayload = this.oClonePayload;
+                                      oPayload.Remark = oModel.getProperty("/Remark");
+                                      oPayload.InitiateForceTat = true;
+
+                                 oModel.setData(oPayload);
+                                      
+                                 this._postDataToSave();
+                               //  this._postdataWithPayload(sPath, oPayload);
                                 }
-                            },
+                            }.bind(this),
                         }
                     );
                 },
+
+                _postdataWithPayload: function(sPath, data){
+                  //  var sPath = this.getView().getBindingContext().getPath() + "/InitiateForceTat",
+                    var othat = this;
+                    this.getModel().update(sPath, data, {
+                        success: function () {
+                            MessageToast.show("Complain Successfully Updated.");
+                            othat.getModel().refresh(true);
+                            othat.onNavBack();
+                        }
+                    })
+                },
+                
                 _Deactivate: function (oData, sPath, oBject) {
                     var oPayload = {
                         InitiateForceTat: true,
