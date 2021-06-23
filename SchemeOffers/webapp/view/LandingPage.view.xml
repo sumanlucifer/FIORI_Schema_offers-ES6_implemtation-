@@ -11,7 +11,7 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" showRestoreOnFB="true"  reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" showRestoreOnFB="true" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true">
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
@@ -20,34 +20,35 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Offer Type" label="{i18n>offerTypeFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelControl>/filterBar/OfferType' }">
-                                     <core:Item text="{OfferType}" key="{Id}" />
-                             </ComboBox>
+                                    <ComboBox placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelControl>/filterBar/OfferType' }">
+                                        <core:Item text="{OfferType}" key="{Id}" />
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>tblColStartDate}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>formBasicInfoLbl4}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>formBasicInfoLbl4}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Active" label="{i18n>Active}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Active}">
+                                    <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Active}">
                                         <core:Item text="Yes" key="true"/>
-                                         <core:Item text="No" key="false"/>
-                                        
+                                        <core:Item text="No" key="false"/>
+
                                     </ComboBox>
 
                                 </fb:control>
                             </fb:FilterGroupItem>
-                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>tblColStatus}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>tblColStatus}" visibleInFilterBar="true">
                                 <fb:control>
-                                   <ComboBox placeholder="{i18n>placeHolder1}"  selectedKey="{oModelControl>/filterBar/Status}">
+                                    <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelControl>/filterBar/Status}">
+                                        <core:Item text="Draft" key="DRAFT"/>
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Approved" key="APPROVED"/>
                                         <core:Item text="Rejected" key="REJECTED"/>
@@ -57,27 +58,27 @@
 
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
-								<fb:control>
-									<ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange"  selectedKey="{oModelControl>/filterBar/TrainingZone}">
-										<core:Item key="{Id}" text="{Id}"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterGroupItem>
+                            <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
+                                <fb:control>
+                                    <ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange" selectedKey="{oModelControl>/filterBar/TrainingZone}">
+                                        <core:Item key="{Id}" text="{Id}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>formRegionLbl2}">
-								<fb:control>
-									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingZone}.length>1}"  id="idDivision"  selectionChange="onDivisionChange"  placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
-										<core:Item key="{Id}" text="{Id}"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterGroupItem>
+                                <fb:control>
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/TrainingZone}.length>1}" id="idDivision" selectionChange="onDivisionChange" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
+                                        <core:Item key="{Id}" text="{Id}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>formRegionLbl3}">
-								<fb:control>
-									<ComboBox  enabled="{= ${oModelControl>/filterBar/TrainingDivision}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
-										<core:Item key="{Id}" text="{Depot} ( {Id} )"/>
-									</ComboBox>
-								</fb:control>
-							</fb:FilterGroupItem>
+                                <fb:control>
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/TrainingDivision}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
+                                        <core:Item key="{Id}" text="{Depot} ( {Id} )"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
 
                         </fb:filterGroupItems>
                     </fb:FilterBar>
@@ -87,21 +88,13 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table
-                id="idOffersTable"
-                width="auto"
-               items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus' }}"
-                noDataText="{i18n>tableNoDataText}"
-                growing="true"
-                growingScrollToLoad="false"
-                growingThreshold="15"
-                updateFinished="onUpdateFinished">
+            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="15" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
-                        <Button  icon="sap-icon://add" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
+                        <Button icon="sap-icon://add" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />
                     </OverflowToolbar>
                 </headerToolbar>
@@ -113,7 +106,7 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>offerTypeFilterLabel}"/>
                     </Column>
-               
+
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColStartDate}"/>
                     </Column>
@@ -123,14 +116,14 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
-                
+
                     <Column>
                         <Text text="{i18n>Active}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>tolColActiveStatus}"/>
                     </Column>
-                  <Column width="8%">
+                    <Column width="8%" hAlign="Center">
                         <Text text="{i18n>tblColAction}"/>
                     </Column>
 
@@ -142,14 +135,15 @@
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
                             <Text text="{OfferType/OfferType}"/>
                             <!-- <Text text="{RewardGiftId}"/> -->
-                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
-                             <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
-                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}"  state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
-                             <HBox justifyContent="Start">
-                                <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
+                            <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                            <HBox justifyContent="End">
+                               
+                                <Button visible="{IsUpdateApplicable}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
 

@@ -13,7 +13,7 @@
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelControl>/Rbtn/BrReqVol}">
+                                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelView>/InputType}">
                                     <buttons>
                                         <RadioButton text="{i18n>RequiredVolume}"/>
                                         <RadioButton text="{i18n>Table1Label2}"/>
@@ -117,10 +117,10 @@
                 <!-- <Column>
                     <Label text="{i18n>Type}" required="false"/>
                 </Column> -->
-                <Column visible="{= ${oModelControl>/Rbtn/BrReqVol}===0 }">
+                <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="false"/>
                 </Column>
-                <Column visible="{= ${oModelControl>/Rbtn/BrReqVol}===1 }">
+                <Column visible="{= ${oModelView>/InputType}===1 }">
                     <Text text="{i18n>Table1Label2}" />
                 </Column>
                 <Column>
