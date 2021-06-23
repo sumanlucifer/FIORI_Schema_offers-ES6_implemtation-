@@ -43,7 +43,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().metadataLoaded().then(function () {
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
-			});
+            });
+            this._initData();
 		},
 
 		onExit: function () {
@@ -281,7 +282,7 @@ sap.ui.define([
 					delete oMembers.Specialities;
 					delete oMembers.Manager;
 					delete oMembers.EmergencyRelationship;
-					delete oMembers.Manager;
+					delete oMembers.Painter;//Aditya chnages
 				}
 			}
 
@@ -315,7 +316,7 @@ sap.ui.define([
 						},
 						error: function () {
 							oViewModel.setProperty("/busy", false);
-							rej();
+							//rej();
 						}
 					});
 				}

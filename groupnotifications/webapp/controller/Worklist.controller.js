@@ -207,12 +207,10 @@ sap.ui.define([
 
 			function onYes() {
                 var data = this.getModel().getData(sPath);
+                delete data.__metadata;
+                data.IsArchived=true;
                 var that=this;
-				this.getModel().update(sPath, {
-					GroupName: data.GroupName,
-					Members: data.Members.results,
-					IsArchived: true
-				}, {
+				this.getModel().update(sPath,data, {
 					 success: function () {
                         that.showToast(that.getResourceBundle().getText("MSG_SUCCESS_ADM_REMOVE"));
                     },
