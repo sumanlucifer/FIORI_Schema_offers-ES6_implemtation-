@@ -2651,7 +2651,13 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oPropRbtn = oModelControl.getProperty("/Rbtn");
                     for (var key in aBoleanProps) {
-                        oPayLoad[key] = oPropRbtn[aBoleanProps[key]] == 0 ? false : true;
+                        if (oPropRbtn[aBoleanProps[key]] === 0) {
+                            oPayLoad[key] = false;
+                        } else {
+                            oPayLoad[key] = true;
+                        }
+
+                        //oPayLoad[key] = oPropRbtn[aBoleanProps[key]] == 0 ? false : true;
                     }
 
                     promise.resolve(oPayLoad);

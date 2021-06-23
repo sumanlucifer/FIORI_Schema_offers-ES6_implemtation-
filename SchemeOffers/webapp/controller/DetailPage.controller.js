@@ -652,6 +652,7 @@ sap.ui.define(
                             oRbtn[aBoleanProps[a]] = 0;
                         }
                     }
+                    console.log(oModel)
                     promise.resolve(oData);
                     return promise;
                 },
