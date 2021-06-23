@@ -367,9 +367,13 @@ sap.ui.define([
 					sMsg: []
 				},
 				aCtrlMessage = [],
-				url = data.RedirectionTo,
+                url = data.RedirectionTo,
+                regexHttp=/https/,
 				regex =/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-
+                if(!url.match(regexHttp)){
+                    url="https://"+url;
+                    data.RedirectionTo=url
+                }
 			if (!data.Subject) {
 				oReturn.IsNotValid = true;
 				oReturn.sMsg.push("MSG_VALDTN_ERR_SUBJECT");
