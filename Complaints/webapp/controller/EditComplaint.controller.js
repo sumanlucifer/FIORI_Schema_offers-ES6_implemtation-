@@ -298,7 +298,7 @@ sap.ui.define(
                     var oView = this.getView();
 
                     var sExpandParam =
-                        "ComplaintType,Painter,ComplaintSubtype,PainterComplainsHistory";
+                        "ComplaintType,Painter,Painter/Depot,ComplaintSubtype,PainterComplainsHistory";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({

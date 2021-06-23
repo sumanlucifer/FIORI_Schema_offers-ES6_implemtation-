@@ -98,7 +98,8 @@
                     "defaultCountMode": "Inline",
                     "refreshAfterChange": true,
                     "defaultUpdateMethod": "Put",
-                    "useBatch": false
+                    "useBatch": false,
+                    "preliminaryContext" : true
                 }
             }
         },

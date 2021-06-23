@@ -36,6 +36,12 @@
             <Text text="{Painter/MembershipCard}" />
             <Label text="{i18n>PrimaryMobileNo}" />
             <Text text="{Painter/Mobile}" />
+            <Label text="{i18n>Zone}" />
+            <Text text="{Painter/ZoneId}" />
+            <Label text="{i18n>Division}" />
+            <Text text="{Painter/DivisionId}" />
+            <Label text="{i18n>Depot}" />
+            <Text text="{Painter/Depot/Depot}" />
          
         </f:content>
     </f:SimpleForm>
