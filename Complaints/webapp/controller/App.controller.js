@@ -23,7 +23,7 @@ sap.ui.define(
                     };
 
                     function fnLoadLoginData() {
-                        this.getOwnerComponent().getModel().setSizeLimit(200);
+                        this.getOwnerComponent().getModel().setSizeLimit(400);
                         this.getOwnerComponent().getModel()
                             .callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
