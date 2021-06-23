@@ -22,7 +22,7 @@
                 <core:Item text="{Resolution}" key="{Id}" />
             </items>
         </ComboBox>
-        <TextArea maxLength="300" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null }" visible="{= ${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:300,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
+        <TextArea maxLength="300" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null }" visible="{= +${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:300,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea>
         <Text visible="{= ${oModelView>/ResolutionId} === 90  }" text="{i18n>TxtMaxLength}" />
         <layoutData>
           	<l:GridData linebreak="true"/>
