@@ -63,17 +63,11 @@
                     </f:fields>
                 </f:FormElement>
 
-                <f:FormElement label="{i18n>tblColStatus}" visible="{= ${oModelControl>/mode}==='edit'}" >
+                <f:FormElement label="{i18n>tblColStatus}" visible="{= ${oModelControl>/mode}==='edit'}">
 
                     <f:fields>
                         <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
-                        <!-- <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/OfferStatus}">
-                            <core:Item text="Pending" key="PENDING"/>
-                            <core:Item text="Approved" key="APPROVED"/>
-                            <core:Item text="Rejected" key="REJECTED"/>
-                            <core:Item text="Expired" key="EXPIRED"/>
-                            <core:Item text="Published" key="PUBLISHED"/>
-                        </ComboBox> -->
+
                     </f:fields>
                 </f:FormElement>
 
@@ -89,6 +83,7 @@
                     <f:fields>
                         <!-- <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" /> -->
                         <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/OfferStatus}">
+                            <core:Item text="Draft" key="DRAFT"/>
                             <core:Item text="Pending" key="PENDING"/>
                             <core:Item text="Approved" key="APPROVED"/>
                             <core:Item text="Rejected" key="REJECTED"/>

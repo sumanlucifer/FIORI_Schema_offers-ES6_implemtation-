@@ -234,7 +234,7 @@
                     <Label text="{i18n>RequiredVolume}"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>Table1Label2}" />
+                    <Text text="{i18n>Table1Label2}"  />
                 </Column>
                 <Column>
                     <Label text="{i18n>Table1Label4}" />
