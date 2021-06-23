@@ -94,6 +94,20 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return mParam1
             }
             return "NA"
+        },
+        // all formatters for the button in the display
+        btnRedeemCheck:function(m1,m2,m3){
+            console.log(m1,m2,m3);
+            //m1 offer id // m2 IsPublished //m3 Offer Type Slab
+
+            if(m1===6){
+                if(m2==="EXPIRED"){
+                    if(m3===false){
+                        return true
+                    }
+                }
+            }
+            return false
         }
 
     };

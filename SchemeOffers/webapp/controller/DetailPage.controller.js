@@ -95,7 +95,7 @@ sap.ui.define(
                         ImageUploaded: "", // Have to check again,
                         bindProp: "OfferSet(" + oProp + ")",
                         mode: "display",
-                        SchemeId: oProp,
+                        OfferId: oProp,
                         selectedKey: 0
                     };
                     var oModel = new JSONModel(oData);
@@ -114,7 +114,7 @@ sap.ui.define(
                         HasTillDate: true,
                         ImageLoaded: false,
                         mode: "display",
-                        SchemeId: oProp, //.replace(/[^0-9]/g, ""),
+                        OfferId: oProp, //.replace(/[^0-9]/g, ""),
                         //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
                         tableDealay: 0,
                         Dialog: {
@@ -359,25 +359,25 @@ sap.ui.define(
 
                     if (oData["OfferRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
-                            "/Table/Table1",
+                            "/Table/Table2",
                             oData["OfferRewardRatio"]["results"]
                         );
                     }
-                    if (oData["IsSpecificApplicablePack"] === false) {
-                        if (oData["OfferRewardRatio"]["results"].length > 0) {
-                            oModelControl2.setProperty(
-                                "/Table/Table2",
-                                oData["OfferRewardRatio"]["results"]
-                            );
-                        }
-                    } else {
-                        if (oData["OfferRewardRatio"]["results"].length > 0) {
-                            oModelControl2.setProperty(
-                                "/Table/Table2",
-                                oData["OfferRewardRatio"]["results"]
-                            );
-                        }
-                    }
+                    // if (oData["IsSpecificApplicablePack"] === false) {
+                    //     if (oData["OfferRewardRatio"]["results"].length > 0) {
+                    //         oModelControl2.setProperty(
+                    //             "/Table/Table2",
+                    //             oData["OfferRewardRatio"]["results"]
+                    //         );
+                    //     }
+                    // } else {
+                    //     if (oData["OfferRewardRatio"]["results"].length > 0) {
+                    //         oModelControl2.setProperty(
+                    //             "/Table/Table2",
+                    //             oData["OfferRewardRatio"]["results"]
+                    //         );
+                    //     }
+                    // }
 
                     if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
@@ -981,25 +981,25 @@ sap.ui.define(
 
                     if (oData["OfferRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
-                            "/Table/Table1",
+                            "/Table/Table2",
                             oData["OfferRewardRatio"]["results"]
                         );
                     }
-                    if (oData["IsSpecificApplicablePack"] === false) {
-                        if (oData["OfferRewardRatio"]["results"].length > 0) {
-                            oModelControl2.setProperty(
-                                "/Table/Table2",
-                                oData["OfferRewardRatio"]["results"]
-                            );
-                        }
-                    } else {
-                        if (oData["OfferRewardRatio"]["results"].length > 0) {
-                            oModelControl2.setProperty(
-                                "/Table/Table2",
-                                oData["OfferRewardRatio"]["results"]
-                            );
-                        }
-                    }
+                    // if (oData["IsSpecificApplicablePack"] === false) {
+                    //     if (oData["OfferRewardRatio"]["results"].length > 0) {
+                    //         oModelControl2.setProperty(
+                    //             "/Table/Table2",
+                    //             oData["OfferRewardRatio"]["results"]
+                    //         );
+                    //     }
+                    // } else {
+                    //     if (oData["OfferRewardRatio"]["results"].length > 0) {
+                    //         oModelControl2.setProperty(
+                    //             "/Table/Table2",
+                    //             oData["OfferRewardRatio"]["results"]
+                    //         );
+                    //     }
+                    // }
 
                     if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                         oModelControl2.setProperty(
@@ -1510,7 +1510,7 @@ sap.ui.define(
                 handleCancelPress: function () {
                     var oView = this.getView();
                     var othat = this;
-                    var oProp = oView.getModel("oModelControl3").getProperty("/SchemeId");
+                    var oProp = oView.getModel("oModelControl3").getProperty("/OfferId");
                     this._navToHome();
                     var c1, c2, c3, c4;
                     //this._initData(oProp);
@@ -1547,7 +1547,7 @@ sap.ui.define(
 
                 onBeforeBindPainterTable1: function (oEvent) {
                     var oView = this.getView();
-                    var sOfferId = oView.getModel("oModelControl3").getProperty("/SchemeId");
+                    var sOfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
                         [
@@ -1580,7 +1580,7 @@ sap.ui.define(
                 onBeforeBindPainterTable2: function (oEvent) {
                     //qualified
                     var oView = this.getView();
-                    var sOfferId = oView.getModel("oModelControl3").getProperty("/SchemeId");
+                    var sOfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
                         "RedemptionStatus",
@@ -1604,6 +1604,44 @@ sap.ui.define(
                             and: true,
                         })
                     );
+                },
+                onApplyRedemption: function () {
+                    var othat = this;
+                    MessageBox.information(
+                        "Are you sure you want to redeem the offer", {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    othat._onOfferRedeem();
+                                }
+                            },
+                        }
+                    );
+
+
+
+                },
+                _onOfferRedeem: function () {
+                    var oView = this.getView();
+                    var othat = this;
+                    var sOfferId = oView.getModel("oModelControl2").getProperty("/OfferId");
+                    var oData = oView.getModel();
+
+                    oData.read("/RedeemOfferRewardForAllPainter", {
+                        urlParameters: {
+                            OfferId: sOfferId
+                            // painterid: oModelControl.getProperty("/PainterId"),
+                            // channel: "'Painter Profile'",
+                        },
+                        success: function (oData) {
+                            console.log("success");
+                            MessageToast.show("Offer Successfully Redeemed.")
+                        },
+                        error: function () {
+                            MessageBox.error("Unable to redeem to the offer because of server error.")
+                        },
+                    });
                 },
                 onActivate: function (oEvent) {
                     var oView = this.getView();
