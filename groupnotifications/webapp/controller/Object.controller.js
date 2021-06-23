@@ -282,7 +282,7 @@ sap.ui.define([
 					delete oMembers.Specialities;
 					delete oMembers.Manager;
 					delete oMembers.EmergencyRelationship;
-					delete oMembers.Manager;
+					delete oMembers.Painter;//Aditya chnages
 				}
 			}
 
@@ -316,7 +316,7 @@ sap.ui.define([
 						},
 						error: function () {
 							oViewModel.setProperty("/busy", false);
-							rej();
+							//rej();
 						}
 					});
 				}
