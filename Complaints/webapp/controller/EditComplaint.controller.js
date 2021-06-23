@@ -714,7 +714,16 @@ sap.ui.define(
                             message: "MSG_CTRL_RESOLUTION",
                             target: "/ResolutionId"
                         });
+                    }else if( +(data.ResolutionId) == 90 && !(data.ResolutionOthers) )
+                    {
+                         sMsg= this.getResourceBundle().getText("MSG_REQUIRED")  
+                         aCtrlMessage.push({
+                            message: "MSG_CTRL_RESOLUTIONOTHERS",
+                            target: "/ResolutionOthers"
+                        });
+                        
                     }
+
 
                     if(!(data.Remark))
                     {
