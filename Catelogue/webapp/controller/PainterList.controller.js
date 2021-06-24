@@ -8,8 +8,7 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "sap/ui/core/util/Export",
-    "sap/ui/core/util/ExportTypeCSV",
-
+    "sap/ui/core/util/ExportTypeCSV"
 
 
 
@@ -19,7 +18,7 @@ sap.ui.define([
  * @param {typeof sap.ui.model.Filter} Filter 
  * @param {typeof sap.ui.model.FilterOperator} FilterOperator 
  */
-    function (BaseController, JSONModel, History, formatter,Filter,FilterOperator,MessageBox,MessageToast,Export,ExportTypeCSV) {
+    function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, MessageBox, MessageToast, Export, ExportTypeCSV) {
         "use strict";
 
 
@@ -39,12 +38,12 @@ sap.ui.define([
                 this.getRouter().getRoute("PainterList").attachPatternMatched(this._onObjectMatched, this);
 
                 var oModel = new JSONModel({
-                busy: true,
-                filterBar: {
-                    search: ""
-                }
-            });
-            this.getView().setModel(oModel, "ViewModel");
+                    busy: true,
+                    filterBar: {
+                        search: ""
+                    }
+                });
+                this.getView().setModel(oModel, "ViewModel");
 
             },
 
@@ -70,26 +69,32 @@ sap.ui.define([
 
             },
             _bindView: function (sObjectId) {
-
-              //  var binding = this.getView().byId("idPaintersTable").getBinding("items");
-
-                var aFilters =  [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
+                var aFilters = [(new sap.ui.model.Filter("ProductCatalogueId", sap.ui.model.FilterOperator.EQ, sObjectId)),
                 (new sap.ui.model.Filter("IsViewed", sap.ui.model.FilterOperator.EQ, true))];
 
-                 this.oFilter = new Filter({
+                this.oFilter = new Filter({
                     filters: aFilters,
                     and: true,
                 });
                 var smartTable = this.getView().byId("idPainterTable");
 
-                if(smartTable.isInitialised())
-                         smartTable.rebindTable();
-                else    
-                        smartTable.attachInitialise(function(){
-                                smartTable.rebindTable()
-                        }, this);
+                if (smartTable.isInitialised())
+                    smartTable.rebindTable();
+                else
+                    smartTable.attachInitialise(function () {
+                        smartTable.rebindTable()
+                    }, this);
 
             },
+
+             fnrebindTable: function (oEvent) {
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "Painter,Painter/Division,Painter/Depot";
+            if(this.oFilter)
+                oBindingParams.filters.push(this.oFilter);            
+        },
+
             // onSearch: function (oEvent) {
             // var aFilterControls = oEvent.getParameter("selectionSet");
             // var aFilters = [], sValue;
@@ -123,96 +128,86 @@ sap.ui.define([
             //                 binding.filter(this.oFilter);
             //     },
             onPressBreadcrumbLink: function () {
-                 this._navToHome();
+                this._navToHome();
             },
+            onExportCSV: function () {
 
-            fnrebindTable: function (oEvent) {
 
-            var oBindingParams = oEvent.getParameter("bindingParams");
-            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
-            oBindingParams.parameters["expand"] = "Painter,Painter/Division,Painter/Depot";
-            if(this.oFilter)
-                oBindingParams.filters.push(this.oFilter);            
-        },
+                var that = this;
+                // var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
+                var aFilters = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter('ProductCatalogueId', sap.ui.model.FilterOperator.EQ, this.sObjectId),
+                        new sap.ui.model.Filter('IsViewed', sap.ui.model.FilterOperator.EQ, true)
+                    ],
+                    and: true
+                });
+                that.getModel().read("/ProductCatalogueViewerSet", {
+                    urlParameters: {
+                        "$expand": "Painter,Painter/Division,Painter/Depot"
+                    },
+                    filters: [aFilters],
+                    success: function (data) {
+                        that.getModel("ViewModel").setProperty("/PainterList", data.results);
 
-        onExportCSV: function () {
-               
-                    
-                    var that = this;
-                    // var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
-                    var aFilters = new sap.ui.model.Filter({
-                        filters: [
-                            new sap.ui.model.Filter('ProductCatalogueId', sap.ui.model.FilterOperator.EQ, this.sObjectId),
-                            new sap.ui.model.Filter('IsViewed', sap.ui.model.FilterOperator.EQ, true)
-                        ],
-                        and: true
-                    });
-                    that.getModel().read("/ProductCatalogueViewerSet", {
-                        urlParameters: {
-                            "$expand": "Painter,Painter/Division,Painter/Depot"
-                        },
-                        filters: [aFilters],
-                        success: function (data) {
-                             that.getModel("ViewModel").setProperty("/PainterList", data.results);
+                        var oExport = new Export({
+                            // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                            exportType: new ExportTypeCSV({
+                                separatorChar: ";"
+                            }),
+                            // Pass in the model created above
+                            models: that.getView().getModel("ViewModel"),
 
-                            var oExport = new Export({
-                                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
-                                exportType: new ExportTypeCSV({
-                                    separatorChar: ";"
-                                }),
-                                // Pass in the model created above
-                                models: that.getView().getModel("ViewModel"),
+                            // binding information for the rows aggregation
+                            rows: {
+                                path: "/PainterList"
+                            },
 
-                                // binding information for the rows aggregation
-                                rows: {
-                                    path: "/PainterList"
-                                },
+                            // column definitions with column name and binding info for the content
 
-                                // column definitions with column name and binding info for the content
-
-                                columns: [{
-                                    name: "Name",
-                                    template: {
-                                        content: "{Painter/Name}"
-                                    }
-                                }, {
-                                    name: "Membership Id",
-                                    template: {
-                                        content: "{Painter/MembershipCard}"
-                                    }
-                                }, {
-                                    name: "Mobile Number",
-                                    template: {
-                                        content: "{Painter/Mobile}"
-                                    }
-                                }, {
-                                    name: "Zone",
-                                    template: {
-                                        content: "{Painter/Division/Zone}"
-                                    }
-                                }, {
-                                    name: "Division",
-                                    template: {
-                                        content: "{Painter/Depot/Division}"
-                                    }
-                                }, {
-                                    name: "Depot",
-                                    template: {
-                                        content: "{Painter/Depot/Depot}"
-                                    }
+                            columns: [{
+                                name: "Name",
+                                template: {
+                                    content: "{Painter/Name}"
                                 }
-                                ]
-                            });
+                            }, {
+                                name: "Membership Id",
+                                template: {
+                                    content: "{Painter/MembershipCard}"
+                                }
+                            }, {
+                                name: "Mobile Number",
+                                template: {
+                                    content: "{Painter/Mobile}"
+                                }
+                            }, {
+                                name: "Zone",
+                                template: {
+                                    content: "{Painter/Division/Zone}"
+                                }
+                            }, {
+                                name: "Division",
+                                template: {
+                                    content: "{Painter/Depot/Division}"
+                                }
+                            }, {
+                                name: "Depot",
+                                template: {
+                                    content: "{Painter/Depot/Depot}"
+                                }
+                            }
+                            ]
+                        });
 
-                            // download exported file
-                            oExport.saveFile().catch(function (oError) {
-                                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
-                            }).then(function () {
-                                oExport.destroy();
-                            });
-                        }
-                    });
-                }
+                        // download exported file
+                        oExport.saveFile().catch(function (oError) {
+                            MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                        }).then(function () {
+                            oExport.destroy();
+                        });
+                    }
+                });
+            }
 
 
         });
