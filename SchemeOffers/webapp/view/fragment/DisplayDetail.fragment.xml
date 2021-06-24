@@ -175,7 +175,7 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form> -->
-        <Table id="Table1" visible="{= ${oModelControl2>/Rbtn/Rewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
+        <!-- <Table id="Table1" visible="{= ${oModelControl2>/Rbtn/Rewards}===0 }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
@@ -192,9 +192,7 @@
                 <Column>
                     <Label text="{i18n>Table1Label4}" />
                 </Column>
-                <!-- <Column>
-                    <Text text="{i18n>Table1Label5}" />
-                </Column> -->
+               
                 <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -208,17 +206,15 @@
                         <Label width="80%" text="{path:'oModelControl2>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
                         <Label width="80%" text="{path:'oModelControl2>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
                         <Label width="80%" text="{path:'oModelControl2>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
-                        <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl2>/oData/Rewards', templateShareable:false}" selectedKey="{path:'oModelControl2>RewardGiftId',type:'.cmbxDtype2'}">
-                                    <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
-                                </ComboBox> -->
+                      
                         <Label width="80%" text="{path:'oModelControl2>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
 
 
                     </cells>
                 </ColumnListItem>
             </items>
-        </Table>
-        <Table id="Table2" items="{path: 'oModelControl2>/Table/Table2',  templateShareable:false}" visible="{= ${oModelControl2>/Rbtn/Rewards}===1 }" class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
+        </Table> -->
+        <Table id="Table2" items="{path: 'oModelControl2>/Table/Table2',  templateShareable:false}"  class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
@@ -230,11 +226,11 @@
                 <!-- <Column>
                     <Text text="{i18n>ProductsPacks}" />
                 </Column> -->
-                <Column>
-                    <Label text="{i18n>RequiredVolume}"/>
+                <Column visible="{= ${InputType}===0 }">
+                    <Label text="{i18n>RequiredVolume}" />
                 </Column>
-                <Column>
-                    <Text text="{i18n>Table1Label2}"  />
+                <Column visible="{= ${InputType}===1 }">
+                    <Text text="{i18n>Table1Label2}" />
                 </Column>
                 <Column>
                     <Label text="{i18n>Table1Label4}" />
@@ -350,7 +346,7 @@
 
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
+                <f:FormContainer title="  " visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
@@ -566,6 +562,19 @@
             <f:formContainers>
                 <f:FormContainer title="{i18n>formBonusReward}" visible="{oModelControl2>/OfferType/AdditionalReward}">
                     <f:formElements>
+                        <f:FormElement label="{i18n>Description}">
+                            <f:fields>
+                                <Text text="{BonusDescription}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+                            <f:fields>
+                                <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl2>/Rbtn/BRewards}">
+                                    <RadioButton text="{i18n>All}"/>
+                                    <RadioButton text="{i18n>Specific}"/>
+                                </RadioButtonGroup>
+                            </f:fields>
+                        </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}">
@@ -583,6 +592,11 @@
 
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="  " visible="{oModelControl2>/OfferType/AdditionalReward}">
+                    <f:formElements>
                         <f:FormElement label="{i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass4}">
@@ -598,10 +612,6 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer title="  " visible="{oModelControl2>/OfferType/AdditionalReward}">
-                    <f:formElements>
                         <f:FormElement label="{i18n>formApplicableProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd4}">
@@ -632,23 +642,49 @@
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+
+                    </f:formElements>
+                </f:FormContainer>
+              
+                <f:FormContainer title="{i18n>BonusAppPainter}" visible="{oModelControl2>/OfferType/AdditionalReward}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
-                                <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl2>/Rbtn/BRewards}">
+                                <RadioButtonGroup editable="false" select="onRbTopApp" selectedIndex="{= ${BonusApplicableTopPainter}===null? 0:1}" columns="2">
                                     <RadioButton text="{i18n>All}"/>
                                     <RadioButton text="{i18n>Specific}"/>
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer  title="  " visible="{oModelControl2>/OfferType/AdditionalReward}" >
-                    <f:formElements>
-                        <f:FormElement label="{i18n>Description}">
+                        <f:FormElement>
                             <f:fields>
-                                <Text text="{BonusDescription}"/>
+                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/> -->
+                                <Text text="{BonusApplicableTopPainter}"/>
                             </f:fields>
                         </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer title="{i18n>BonusValidity}" visible="{oModelControl2>/OfferType/AdditionalReward}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>PainterGrowth}">
+                            <f:fields>
+                                <Text text="{PainterGrowth}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeFrom}">
+                            <f:fields>
+
+                                <Text text="{path:'PerformanceStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formDateRangeTo}">
+                            <f:fields>
+
+                                <Text text="{path:'PerformanceEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                            </f:fields>
+                        </f:FormElement>
+
                     </f:formElements>
                 </f:FormContainer>
 
@@ -733,47 +769,8 @@
             </f:layout>
             <f:formContainers>
 
-                <f:FormContainer title="{i18n>BonusAppPainter}">
-                    <f:formElements>
-                        <f:FormElement label="{i18n>TopAll50}">
-                            <f:fields>
-                                <RadioButtonGroup editable="false" select="onRbTopApp" selectedIndex="{= ${BonusApplicableTopPainter}===null? 0:1}" columns="2">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement>
-                            <f:fields>
-                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/> -->
-                                <Text text="{BonusApplicableTopPainter}"/>
-                            </f:fields>
-                        </f:FormElement>
 
-                    </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer title="{i18n>BonusValidity}">
-                    <f:formElements>
-                        <f:FormElement label="{i18n>PainterGrowth}">
-                            <f:fields>
-                                <Text text="{PainterGrowth}"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formDateRangeFrom}">
-                            <f:fields>
 
-                                <Text text="{path:'PerformanceStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            </f:fields>
-                        </f:FormElement>
-                        <f:FormElement label="{i18n>formDateRangeTo}">
-                            <f:fields>
-
-                                <Text text="{path:'PerformanceEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            </f:fields>
-                        </f:FormElement>
-
-                    </f:formElements>
-                </f:FormContainer>
                 <f:FormContainer title="{i18n>RedemtionCycle}">
                     <f:formElements>
                         <f:FormElement label="{i18n>NoOfRedemptionAllowed}">

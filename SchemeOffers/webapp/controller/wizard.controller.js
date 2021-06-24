@@ -41,7 +41,7 @@ sap.ui.define([
             var oView = this.getView()
 
             this._syncSelect(sCurrentStepId);
-            console.log("Step Activated", sCurrentStepId)
+           // console.log("Step Activated", sCurrentStepId)
             if (sCurrentStepId === 'PricingStep') {
                 //this.validateProdInfoStep(sCurrentStepId);
 
@@ -62,7 +62,7 @@ sap.ui.define([
 
         },
         onAfterRendering: function () {
-            console.log("onAfter Rendering");
+            //console.log("onAfter Rendering");
 
             this._setWizardlayout2();
 
@@ -78,7 +78,7 @@ sap.ui.define([
             this.getView().byId("CreateProductWizard").setShowNextButton(false);
         },
         onExit: function () {
-            console.log("on Exit");
+            //console.log("on Exit");
         }
     });
 });

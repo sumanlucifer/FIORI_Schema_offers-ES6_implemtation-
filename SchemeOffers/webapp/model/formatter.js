@@ -53,7 +53,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return sStatus;
         },
         fmtOfferStateColor: function (mParam) {
-            
+
             if (mParam === "APPROVED") {
                 return "Success"
             }
@@ -94,6 +94,22 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return mParam1
             }
             return "NA"
+        },
+        // all formatters for the button in the display
+        btnRedeemCheck: function (m1, m2, m3, m4) {
+
+            //m1 offer id 6-slab based offer// m3 IsPublished true //m2 Offer Status //m4 button already redeem check
+            if (m1 === 6) {
+                if (m2 === "EXPIRED") {
+                    if (m3 === true) {
+                        return true
+                        // if (m4) {
+                        //     return true
+                        // }
+                    }
+                }
+            }
+            return false
         }
 
     };
