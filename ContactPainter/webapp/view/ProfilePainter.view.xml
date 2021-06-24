@@ -1,5 +1,11 @@
-<mvc:View xmlns:vbm="sap.ui.vbm" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:m="sap.m" controllerName="com.knpl.pragati.ContactPainter.controller.ProfilePainter" height="100%">
-    <uxap:ObjectPageLayout  navigate="onSectionChange" enableLazyLoading="true" useIconTabBar="{oModelControl2>/iCtbar}" showFooter="{=  ${ActivationStatus} !== 'DEACTIVATED' ? true : false }" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
+<mvc:View xmlns:vbm="sap.ui.vbm"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:m="sap.m" controllerName="com.knpl.pragati.ContactPainter.controller.ProfilePainter" height="100%">
+    <uxap:ObjectPageLayout navigate="onSectionChange" enableLazyLoading="true" useIconTabBar="{oModelControl2>/iCtbar}" showFooter="{=  ${ActivationStatus} !== 'DEACTIVATED' ? true : false }" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
         <uxap:headerTitle>
             <uxap:ObjectPageDynamicHeaderTitle>
                 <uxap:breadcrumbs>
@@ -88,7 +94,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-               <uxap:ObjectPageSection id="tokenSection" titleUppercase="false" title="{i18n>Tokens}">
+            <uxap:ObjectPageSection id="tokenSection" titleUppercase="false" title="{i18n>Tokens}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -97,27 +103,27 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection id="learnSection" titleUppercase="false" title="{i18n>MyLearning}">
+            <uxap:ObjectPageSection id="learnSection" titleUppercase="false" title="{i18n>MyLearning}">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection title="{i18n>LiveTraining}" >
-                       
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.TrainingLive" type="XML"/>
-                       
+                    <uxap:ObjectPageSubSection title="{i18n>LiveTraining}">
+
+                        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.TrainingLive" type="XML"/>
+
                     </uxap:ObjectPageSubSection>
-                     <uxap:ObjectPageSubSection title="{i18n>OfflineTraining}" >
+                    <uxap:ObjectPageSubSection title="{i18n>OfflineTraining}">
                         <VBox renderType="Bare">
                             <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.TrainingOffline" type="XML"/>
                         </VBox>
                     </uxap:ObjectPageSubSection>
-                     <uxap:ObjectPageSubSection title="{i18n>VideoTraining}" >
+                    <uxap:ObjectPageSubSection title="{i18n>VideoTraining}">
                         <VBox renderType="Bare">
                             <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.TrainingVideo" type="XML"/>
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-           
-             <uxap:ObjectPageSection id="loyaltysection" titleUppercase="false" title="{i18n>LoyaltyPoints}">
+
+            <uxap:ObjectPageSection id="loyaltysection" titleUppercase="false" title="{i18n>LoyaltyPoints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection >
                         <VBox renderType="Bare">
@@ -126,7 +132,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Complaints}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Complaints}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -135,11 +141,20 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TtlCondonation}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TtlCondonation}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
                             <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Condonations" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>CallbackRequest}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.CallbackRequests" type="XML"/>
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
