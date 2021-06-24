@@ -36,8 +36,12 @@
                     <layout:VerticalLayout>
                         <Label text="{i18n>Status}:"/>
                         <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
-
+                       
                     </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                     <ObjectAttribute class="sapMObjectStatusLarge" visible="{= ${AssigneUserType} !== 'AGENT'  }" title="{i18n>LblEscalationLevel}" text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }" />
+                    </layout:VerticalLayout>
+
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
