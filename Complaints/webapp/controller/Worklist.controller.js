@@ -214,14 +214,18 @@ sap.ui.define(
                                         new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "Escalate") {
                                 aFlaEmpty = false;
-                                if (oViewFilter[prop] === "YES") {
-                                    aCurrentFilterValues.push(
-                                        new Filter("EscalationType", FilterOperator.EQ,"TAT"));
-                                } else {
-                                    aCurrentFilterValues.push(
-                                        new Filter("EscalationType", FilterOperator.EQ,null));
-                                }
-                               
+                                // if (oViewFilter[prop] === "YES") {
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("EscalationType", FilterOperator.EQ,"TAT"));
+                                // } else {
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("EscalationType", FilterOperator.EQ,null));
+                                // }
+                                //AssigneUserType
+                                aCurrentFilterValues.push(
+                                         new Filter("AssigneUserType", FilterOperator.EQ,  oViewFilter[prop] ));
+                            
+
                             } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(

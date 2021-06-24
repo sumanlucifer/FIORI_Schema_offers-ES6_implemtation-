@@ -90,6 +90,10 @@ sap.ui.define([], function () {
             return sSubject;
         },
 
+        AssigneUser: function(sAssignUser){
+           return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sAssignUser);
+        },
+
         ExecutionLogUserName: function(aEmails){
             return  !!(aEmails) ? aEmails.join(" ") : " ";
         }

@@ -46,11 +46,12 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Escalate" label="{i18n>Escalate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Escalate" label="{i18n>LblEscalationLevel}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>Escalate}" selectedKey="{oModelControl>/filterBar/Escalate}">
-                                        <core:Item text="Yes" key="YES"/>
-                                        <core:Item text="No" key="NO"/>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>LblEscalationLevel}" selectedKey="{oModelControl>/filterBar/Escalate}">
+                                        <core:Item text="{i18n>TL}" key="TL"/>
+                                        <core:Item text="{i18n>CC_PROJECT_MANAGER}" key="CC_PROJECT_MANAGER"/>
+                                        <core:Item text="{i18n>HO_MARKETING}" key="HO_MARKETING"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
