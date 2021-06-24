@@ -457,7 +457,7 @@ sap.ui.define(
                     var othat = this;
                     oData.create("/PainterSet", oPayload, {
                         success: function (Data) {
-                            MessageToast.show("Painter Sucessfully Created", {
+                            MessageToast.show("Painter Successfully Created", {
                                 duration: 5000,
                             });
 
@@ -1685,7 +1685,7 @@ sap.ui.define(
                     oDataModel.update(sEntityPath, oPayload, {
                         success: function (data) {
                             oModelView.setProperty("/busy", false);
-                            MessageToast.show("Painter Sucessfully updated.");
+                            MessageToast.show("Painter Successfully updated.");
                         },
                         error: function (data) {
                             oModelView.setProperty("/busy", false);

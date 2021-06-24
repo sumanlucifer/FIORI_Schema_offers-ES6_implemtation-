@@ -711,7 +711,7 @@ sap.ui.define(
                 oData.update(sPath, oPayload, {
                     success: function (oData) {
                         MessageToast.show(
-                            "Painter " + oPayload["Name"] + " Sucessfully Updated"
+                            "Painter " + oPayload["Name"] + " Successfully Updated"
                         );
                         othat.fnCheckProfileCompleted.call(othat, oPayload);
                         othat.handleCancelPress();
@@ -1963,7 +1963,7 @@ sap.ui.define(
 
                 oData.create("/PainterReferralHistorySet", oSentPayoad, {
                     success: function () {
-                        MessageToast.show("Referral Sucessfuly Added");
+                        MessageToast.show("Referral Successfuly Added");
                         othat._DialogAddREferal.close();
                         othat.getView().getModel().refresh(true);
                     },
