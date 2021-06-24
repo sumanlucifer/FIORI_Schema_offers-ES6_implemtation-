@@ -102,12 +102,17 @@
             "MockData": {
                 "type": "sap.ui.model.json.JSONModel",
                 "dataSource": "mockData_alias"
+            },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
             }
         },
         "resources": {
-            "css": [{
-                "uri": "css/style.css"
-            }]
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
         },
         "routing": {
             "config": {
@@ -118,20 +123,27 @@
                 "controlAggregation": "pages",
                 "controlId": "app"
             },
-            "routes": [{
+            "routes": [
+                {
                     "name": "RouteLandingPage",
                     "pattern": "",
-                    "target": ["TargetLandingPage"]
+                    "target": [
+                        "TargetLandingPage"
+                    ]
                 },
                 {
                     "name": "DetailPage",
                     "pattern": "Details/{prop}/{mode}",
-                    "target": ["TargetDetailPage"]
+                    "target": [
+                        "TargetDetailPage"
+                    ]
                 },
                 {
                     "name": "AddOfferPage",
                     "pattern": "Add",
-                    "target": ["TargetAddOfferPage"]
+                    "target": [
+                        "TargetAddOfferPage"
+                    ]
                 }
             ],
             "targets": {
