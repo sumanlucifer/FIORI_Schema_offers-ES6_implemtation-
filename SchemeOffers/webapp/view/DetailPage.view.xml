@@ -91,7 +91,7 @@
                     <Button press="onActivate" text="{i18n>Activate}" type="Accept"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
                     <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
                     <Button press=".onChangeOfferStatus1('PUBLISHED')" text="{i18n>Published}" type="Accept"  class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display'}" />
-                     <Button press=".onApplyRedemption" text="{i18n>Redeem}"  type="Ghost"  class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished'],formatter:'.formatter.btnRedeemCheck'}" />
+                     <Button press=".onApplyRedemption" text="{i18n>Redeem}"  type="Ghost"  class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                 </HBox>
 
 

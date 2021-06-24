@@ -96,7 +96,10 @@ sap.ui.define(
                         bindProp: "OfferSet(" + oProp + ")",
                         mode: "display",
                         OfferId: oProp,
-                        selectedKey: 0
+                        selectedKey: 0,
+                        Buttons:{
+                            Redeem:true// check if its already redeemed
+                        }
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
@@ -1607,7 +1610,7 @@ sap.ui.define(
                 },
                 onApplyRedemption: function () {
                     var othat = this;
-                    MessageBox.information(
+                    MessageBox.confirm(
                         "Are you sure you want to redeem the offer", {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
@@ -1625,17 +1628,18 @@ sap.ui.define(
                 _onOfferRedeem: function () {
                     var oView = this.getView();
                     var othat = this;
-                    var sOfferId = oView.getModel("oModelControl2").getProperty("/OfferId");
+                    var oModelControl= oView.getModel("oModelControl3")
+                    var sOfferId =oModelControl.getProperty("/OfferId");
                     var oData = oView.getModel();
 
                     oData.read("/RedeemOfferRewardForAllPainter", {
                         urlParameters: {
                             OfferId: sOfferId
-                            // painterid: oModelControl.getProperty("/PainterId"),
-                            // channel: "'Painter Profile'",
                         },
                         success: function (oData) {
-                            console.log("success");
+                           
+                           // oModelControl.setProperty("/Buttons/Redeem",false)
+                           // oModelControl.refresh(true);
                             MessageToast.show("Offer Successfully Redeemed.")
                         },
                         error: function () {
