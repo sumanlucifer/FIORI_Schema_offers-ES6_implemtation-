@@ -165,8 +165,9 @@ sap.ui.define(
                         oView.byId("smrtLiveTraining").rebindTable();
                         oView.byId("smrtOfflineTraining").rebindTable();
                         oView.byId("smrtVideoTraining").rebindTable();
+                    } else if (sId.match("callbacksection")) {
+                        oView.byId("smrtCallback").rebindTable();
                     }
-
 
                 },
 
@@ -201,6 +202,7 @@ sap.ui.define(
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
+                    oView.byId("smrtCallback").rebindTable();
                 },
                 _initEditData: function () {
                     var promise = jQuery.Deferred();
@@ -2471,22 +2473,34 @@ sap.ui.define(
                     return false;
                 },
                 onBeforeRebindCallbackRequest: function (oEvent) {
-
+                    var oView = this.getView();
+                    var oPainterId = oView
+                        .getModel("oModelControl2")
+                        .getProperty("/PainterId");
                     var oBindingParams = oEvent.getParameter("bindingParams");
-
+                    var aFilter = [];
+                    var aFilter1 = new Filter({
+                        filters: [
+                            new Filter("Status", FilterOperator.EQ, "REGISTERED"),
+                            new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
+                            new Filter("Status", FilterOperator.EQ, "RESOLVED"),
+                            new Filter("Status", FilterOperator.EQ, "REJECTED"),
+                        ],
+                        and: false,
+                    })
+                    var aFilter2 = new Filter("PainterId", FilterOperator.EQ, oPainterId)
+                    var aFilter3 = new Filter("IsArchived", FilterOperator.EQ, false);
+                    aFilter.push(aFilter1);
+                    aFilter.push(aFilter2);
+                    aFilter.push(aFilter3);
                     oBindingParams.filters.push(
                         new Filter({
-                            filters: [
-                                new Filter("Status", FilterOperator.EQ, "REGISTERED"),
-                                new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
-                                new Filter("Status", FilterOperator.EQ, "RESOLVED"),
-                                new Filter("Status", FilterOperator.EQ, "REJECTED"),
-                            ],
-                            and: false,
+                            filters: aFilter,
+                            and: true,
                         })
                     );
 
-                    oBindingParams.filters.push(new Filter("IsArchived", FilterOperator.EQ, false));
+
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
 
 

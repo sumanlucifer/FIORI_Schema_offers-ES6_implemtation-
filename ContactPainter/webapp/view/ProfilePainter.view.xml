@@ -150,7 +150,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>CallbackRequest}">
+            <uxap:ObjectPageSection id="callbacksection" titleUppercase="false" title="{i18n>CallbackRequest}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">

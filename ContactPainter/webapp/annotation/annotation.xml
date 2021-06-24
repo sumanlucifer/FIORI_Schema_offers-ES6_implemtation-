@@ -47,14 +47,6 @@
                             <PropertyValue Property="Value" Path="Id"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Painter Name"/>
-                            <PropertyValue Property="Value" Path="PainterDetails/Name"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Painter Mobile Number"/>
-                            <PropertyValue Property="Value" Path="PainterMobile"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Request Type"/>
                             <PropertyValue Property="Value" Path="RequestTypeDetails/RequestType"/>
                         </Record>
