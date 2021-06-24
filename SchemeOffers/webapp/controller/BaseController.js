@@ -979,7 +979,7 @@ sap.ui.define(
                     return;
                 }
                 if (!oObject["RewardPoints"] && !oObject["RewardCash"]) {
-                    MessageToast.show("Kindly Enter Either Reward Points Or Reward Cash To Continue");
+                    MessageToast.show("Kindly Enter Either Reward Points Or Reward Cash To Continue.");
                     return;
                 }
                 //var cFlag = oValidator.validate();
