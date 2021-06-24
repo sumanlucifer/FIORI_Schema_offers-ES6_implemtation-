@@ -73,6 +73,20 @@ sap.ui.define([], function () {
         PackDetails: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath)
 
+        },
+        CallbackReqTblStatus:function(mParam1){
+            if(mParam1==="REGISTERED"){
+               return "Pending"
+            }
+            if(mParam1==="INPROGRESS"){
+                return "Pending"
+            }
+            if(mParam1==="RESOLVED"){
+               return "Completed"
+            }
+            if(mParam1==="REJECTED"){
+               return "Completed"
+            }
         }
 
     };
