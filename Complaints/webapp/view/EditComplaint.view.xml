@@ -31,16 +31,16 @@
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
-                        <ObjectStatus title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                        <ObjectAttribute title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                    </layout:VerticalLayout>
+                     <layout:VerticalLayout>
+                     <ObjectAttribute  visible="{= ${AssigneUserType} !== 'AGENT'  }" title="{i18n>LblEscalationLevel}" text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <Label text="{i18n>Status}:"/>
                         <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
-                       
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
-                     <ObjectAttribute class="sapMObjectStatusLarge" visible="{= ${AssigneUserType} !== 'AGENT'  }" title="{i18n>LblEscalationLevel}" text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }" />
-                    </layout:VerticalLayout>
+                   
 
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
