@@ -223,7 +223,7 @@ sap.ui.define(
                                 // }
                                 //AssigneUserType
                                 aCurrentFilterValues.push(
-                                         new Filter("AssigneUserType", FilterOperator.EQ,  oViewFilter[prop] ));
+                                         new Filter("AssigneUserType", FilterOperator.Contains,  oViewFilter[prop] ));
                             
 
                             } else if (prop === "ZoneId") {
