@@ -31,7 +31,11 @@ sap.ui.define([
 			var iOriginalBusyDelay,
 				oViewModel = new JSONModel({
 					busy: true,
-					delay: 0
+                    delay: 0,
+                    TargetDetails:{
+
+                    }
+                    
 				});
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -106,7 +110,7 @@ sap.ui.define([
 				// this._bindView("/" + sObjectPath, sObjectId);
 				this.getModel().read(sObjectPath, {
 					urlParameters: {
-						"$expand": "Members,Members/Painter,Members/Admin,Members/Role"
+						"$expand": "Members,Members/Painter,Members/Admin,Members/Role,NotificationGroupZone,NotificationGroupDivision,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType"
 					},
 					success: this._setView.bind(this)
 				});
@@ -133,17 +137,77 @@ sap.ui.define([
 		_setView: function (data) {
 			this._oMessageManager.removeAllMessages();
 			var oViewModel = this.getModel("objectView");
-			oViewModel.setProperty("/busy", false);
+            oViewModel.setProperty("/busy", false);
+            var aArray = [];
 			if (data) {
-				oViewModel.setProperty("/oDetails", data);
-				oViewModel.setProperty("/oDetails/Members", data.Members.results);
+                oViewModel.setProperty("/oDetails", data);
+                if(data.IsTargetGroup==false){
+                oViewModel.setProperty("/oDetails/Members", data.Members.results);
+                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+                }else if(data.IsTargetGroup==true){
+                    oViewModel.setProperty("/TargetDetails/TargetFilterType", "GROUP");
+                    aArray = [];
+                            if (data.NotificationGroupZone && data.NotificationGroupZone.results) {
+                                for (var a of data["NotificationGroupZone"]["results"]) {
+                                    aArray.push(a["ZoneId"]);
+                                }
+                            }
+                            data.NotificationGroupZone = aArray;
+
+                    oViewModel.setProperty("/TargetDetails/NotificationGroupZone", data.NotificationGroupZone);
+                    aArray = [];
+                            if (data.NotificationGroupDivision && data.NotificationGroupDivision.results) {
+                                for (var a of data["NotificationGroupDivision"]["results"]) {
+                                    aArray.push(a["DivisionId"]);
+                                }
+                            }
+                            data.NotificationGroupDivision = aArray;
+
+                    oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", data.NotificationGroupDivision);
+
+                     aArray = [];
+                            if (data.NotificationGroupDepot && data.NotificationGroupDepot.results) {
+                                for (var a of data["NotificationGroupDepot"]["results"]) {
+                                    aArray.push(a["DepotId"]);
+                                }
+                            }
+                            data.NotificationGroupDepot = aArray;
+
+                    oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", data.NotificationGroupDepot);
+
+                    aArray = [];
+                            if (data.NotificationGroupPainterType && data.NotificationGroupPainterType.results) {
+                                for (var a of data["NotificationGroupPainterType"]["results"]) {
+                                    aArray.push(a["PainterTypeId"]);
+                                }
+                            }
+                            data.NotificationGroupPainterType = aArray;
+
+                    oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", data.NotificationGroupPainterType);
+
+                     aArray = [];
+                            if (data.NotificationGroupPainterArcheType && data.NotificationGroupPainterArcheType.results) {
+                                for (var a of data["NotificationGroupPainterArcheType"]["results"]) {
+                                    aArray.push(a["PainterArcheTypeId"]);
+                                }
+                            }
+                            data.NotificationGroupPainterArcheType = aArray;
+
+                    oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", data.NotificationGroupPainterArcheType);
+
+                }
 				return;
 			}
 			oViewModel.setProperty("/oDetails", {
 				GroupName: "",
 				Members: [],
 				IsArchived: false
-			});
+            });
+            oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+            // oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
+            // oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
+            // oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
+
 		},
 
 		onAfterRendering: function () {
@@ -204,16 +268,91 @@ sap.ui.define([
 		 */
 		onSave: function () {
 			this._oMessageManager.removeAllMessages();
-			var oViewModel = this.getModel("objectView");
-			var oPayload = oViewModel.getProperty("/oDetails");
-			var oValid = this._fnValidation(oPayload);
+            var oViewModel = this.getModel("objectView");
+            var GroupType=oViewModel.getProperty("/TargetDetails/TargetFilterType");
+            var oPayload;
+            if(GroupType=="PAINTER"){
+            oPayload = oViewModel.getProperty("/oDetails");
+            var oValid = this._fnValidation(oPayload);
+                    if (oValid.IsNotValid) {
+                        //this.showError(this._fnMsgConcatinator(oValid.sMsg));
+                    MessageToast.show(this.getResourceBundle().getText(oValid.sMsg));
+                        return;
+                    }
+            }
+            else if(GroupType=="GROUP"){
+                var oZoneMulti = this.getView().byId("idZone");
+                var oDivisionMulti = this.getView().byId("idDivision");
+                var oPainterTypeMulti = this.getView().byId("idPainterType");
+                var oPainterArcheTypeMulti = this.getView().byId("idPainterArcheType");
+                var oZoneData=[];
+                var oDivisionData=[];
+                var oPainterTypeData=[];
+                var oPainterArcheTypeData=[];
+                var aZones=[];
+                var aDivisions=[]
+                var aPainterTypes=[]
+                var aArcheTypes=[]
+                var xUniqueZone = new Set();
+                var xUniqueDiv = new Set();
+                var xUniquePType = new Set();
+                var xUniqueAType = new Set();
+                    
+                    aZones=oZoneMulti.getSelectedItems();
+                    aZones.forEach(function (ele) {
+                        if (xUniqueZone.has(ele.getKey()) == false) {
+                            oZoneData.push({
+                               // Zone: ele.getText(),
+                                ZoneId: ele.getKey()
+                            });
+                            xUniqueZone.add(ele.getKey());
+                        }
+                    });
+                    aDivisions=oDivisionMulti.getSelectedItems();
+                    aDivisions.forEach(function (ele) {
+                        if (xUniqueDiv.has(ele.getKey()) == false) {
+                            oDivisionData.push({
+                                DivisionId: ele.getKey()
+                            });
+                            xUniqueDiv.add(ele.getKey());
+                        }
+                    });
+                    aPainterTypes=oPainterTypeMulti.getSelectedItems();
+                    aPainterTypes.forEach(function (ele) {
+                        if (xUniquePType.has(ele.getKey()) == false) {
+                            oPainterTypeData.push({
+                                PainterTypeId: parseInt(ele.getKey())
+                            });
+                            xUniquePType.add(ele.getKey());
+                        }
+                    });
+                    aArcheTypes=oPainterArcheTypeMulti.getSelectedItems();
+                    aArcheTypes.forEach(function (ele) {
+                        if (xUniqueAType.has(ele.getKey()) == false) {
+                            oPainterArcheTypeData.push({
+                                PainterArcheTypeId: parseInt(ele.getKey())
+                            });
+                            xUniqueAType.add(ele.getKey());
+                        }
+                    });
+                var GroupName=oViewModel.getProperty("/oDetails/GroupName");
+                var Members=oViewModel.getProperty("/oDetails/Members");
+                oPayload = oViewModel.getProperty("/TargetDetails");
+                oPayload = oViewModel.getProperty("/oDetails");
+                oPayload["NotificationGroupZone"]=oZoneData;
+                oPayload["NotificationGroupDivision"]=oDivisionData;
+                oPayload["NotificationGroupPainterType"]=oPainterTypeData;
+                oPayload["NotificationGroupPainterArcheType"]=oPainterArcheTypeData;
+                oPayload["GroupName"]=GroupName;
+                oPayload["Members"]=null;
+                oPayload["IsTargetGroup"]=true;
+                 
+                 delete oPayload.TargetFilterType;
+            }
+			
 
-			if (oValid.IsNotValid) {
-                //this.showError(this._fnMsgConcatinator(oValid.sMsg));
-               MessageToast.show(this.getResourceBundle().getText(oValid.sMsg));
-				return;
-			}
-			oViewModel.setProperty("/busy", true);
+			
+            oViewModel.setProperty("/busy", true);
 			this.CUOperation(oPayload);
 		},
 
@@ -267,24 +406,26 @@ sap.ui.define([
 		},
 
 		CUOperation: function (oPayload) {
-			var oViewModel = this.getModel("objectView");
+            var oViewModel = this.getModel("objectView");
+            var GroupType=oViewModel.getProperty("/TargetDetails/TargetFilterType");
 			delete oPayload.__metadata;
 			var oClonePayload = $.extend(true, {}, oPayload),
 				that = this;
-
-			if (oClonePayload.Members !== null && oClonePayload.Members.length > 0) {
-				for (var i = 0; i < oClonePayload.Members.length; i++) {
-					var oMembers = oClonePayload.Members[i];
-					delete oMembers.__metadata;
-					delete oMembers.VolunteerAssignment;
-					delete oMembers.UserPreference;
-					delete oMembers.UserDevice;
-					delete oMembers.Specialities;
-					delete oMembers.Manager;
-					delete oMembers.EmergencyRelationship;
-					delete oMembers.Painter;//Aditya chnages
-				}
-			}
+            if(GroupType=="PAINTER"){
+                        if (oClonePayload.Members !== null && oClonePayload.Members.length > 0) {
+                            for (var i = 0; i < oClonePayload.Members.length; i++) {
+                                var oMembers = oClonePayload.Members[i];
+                                delete oMembers.__metadata;
+                                delete oMembers.VolunteerAssignment;
+                                delete oMembers.UserPreference;
+                                delete oMembers.UserDevice;
+                                delete oMembers.Specialities;
+                                delete oMembers.Manager;
+                                delete oMembers.EmergencyRelationship;
+                                delete oMembers.Painter;//Aditya chnages
+                                }
+                            }
+             }
 
 			return new Promise(function (res, rej) {
 				if (oViewModel.getProperty("/sMode") === "E") {
@@ -819,6 +960,235 @@ sap.ui.define([
                         })
                     );
                 },
+                onRadioBtnChange: function (oEvent) {
+                    var selectedIndex = oEvent.mParameters.selectedIndex;
+                    var oViewModel = this.getModel("objectView");
+
+                    switch (selectedIndex) {
+
+                        case 0:
+                            this.getModel("objectView").setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+                            
+                            break;
+                        
+                        case 1:
+                            this.getModel("objectView").setProperty("/TargetDetails/TargetFilterType", "GROUP");
+                             //oViewModel.setProperty("/TargetDetails/GroupPainters", []);
+                            // if (this._oValueHelpDialogP) {
+                            //     this._oValueHelpDialogP.destroy();
+                            //     delete this._oValueHelpDialogP;
+                            // }
+                            break;
+                        
+                    }
+                },
+                onMultyZoneChange: function (oEvent) {
+                    var sKeys = oEvent.getSource().getSelectedKeys();
+                    var oDivision = this.getView().byId("idDivision");
+                    
+                    this._fnChangeDivDepot({
+                        src: { path: "/TargetDetails/TrainingZone" },
+                        target: { localPath: "/TargetDetails/NotificationGroupDivision", oDataPath: "/MasterDivisionSet", key: "Zone" }
+                    });
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/TargetDetails/TrainingDivision" },
+                        target: { localPath: "/TargetDetails/NotificationGroupDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
+                    });
+
+                    var aDivFilter = [];
+                    for (var y of sKeys) {
+                        aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y))
+                    }
+                    oDivision.getBinding("items").filter(aDivFilter);
+                },
+
+                onMultyDivisionChange: function (oEvent) {
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/TargetDetails/TrainingDivision" },
+                        target: { localPath: "/TargetDetails/NotificationGroupDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
+                    });
+                },
+                _fnChangeDivDepot: function (oChgdetl) {
+
+                    var aTarget = this.getModel("objectView").getProperty(oChgdetl.target.localPath),
+                        aNewTarget = [];
+
+                    var aSource = this.getModel("objectView").getProperty(oChgdetl.src.path),
+                        oSourceSet = new Set(aSource);
+
+                    
+
+                    var oModel = this.getModel(), tempPath, tempdata;
+
+                    aTarget.forEach(function (ele) {
+                        if (typeof ele === "string") {
+                            tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                                Id: ele
+                            });
+                        }
+                        else {
+                            tempPath = oModel.createKey(oChgdetl.target.oDataPath, {
+                                Id: ele[oChgdetl.target.targetKey]
+                            });
+                        }
+                        tempdata = oModel.getData(tempPath);
+                        if (oSourceSet.has(tempdata[oChgdetl.target.key])) {
+                            aNewTarget.push(ele)
+                        }
+                    });
+
+                    this.getModel("objectView").setProperty(oChgdetl.target.localPath, aNewTarget);
+                },
+                onValueHelpRequestedDepot: function () {
+                    this._oMultiInput = this.getView().byId("multiInputDepotAdd");
+                    this.oColModel = new JSONModel({
+                        cols: [
+                            {
+                                label: "Depot Id",
+                                template: "Id",
+                                width: "10rem",
+                            },
+                            {
+                                label: "Depot",
+                                template: "Depot",
+                            }
+                        ],
+                    });
+
+                    var aCols = this.oColModel.getData().cols;
+
+                    this._oValueHelpDialog = sap.ui.xmlfragment(
+                        "com.knpl.pragati.groupnotifications.view.fragment.DepotValueHelp",
+                        this
+                    );
+                    var oDataFilter = {
+                        Id: "",
+                        Depot: "",
+                    }
+                    var oModel = new JSONModel(oDataFilter);
+                    this.getView().setModel(oModel, "DepotFilter");
+
+                    this.getView().addDependent(this._oValueHelpDialog);
+
+                    this._oValueHelpDialog.getTableAsync().then(
+                        function (oTable) {
+                            oTable.setModel(this.oColModel, "columns");
+
+                            if (oTable.bindRows) {
+                                oTable.bindAggregation("rows", {
+                                    path: "/MasterDepotSet", events:
+                                    {
+                                        dataReceived: function () {
+                                            this._oValueHelpDialog.update();
+                                        }.bind(this)
+                                    }
+                                });
+                            }
+
+                            if (oTable.bindItems) {
+                                oTable.bindAggregation("items", "/MasterDepotSet", function () {
+                                    return new sap.m.ColumnListItem({
+                                        cells: aCols.map(function (column) {
+                                            return new sap.m.Label({
+                                                text: "{" + column.template + "}",
+                                            });
+                                        }),
+                                    });
+                                });
+                            }
+
+                            this._oValueHelpDialog.update();
+                        }.bind(this)
+                    );
+
+                    this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+                    this._oValueHelpDialog.open();
+                },
+                onFilterBarSearch: function (oEvent) {
+                    var afilterBar = oEvent.getParameter("selectionSet"),
+                        aFilters = [];
+
+                    aFilters.push(
+                        new Filter({
+                            path: "Id",
+                            operator: FilterOperator.Contains,
+                            value1: afilterBar[0].getValue(),
+                            caseSensitive: false,
+                        })
+                    );
+                    aFilters.push(
+                        new Filter({
+                            path: "Depot",
+                            operator: FilterOperator.Contains,
+                            value1: afilterBar[1].getValue(),
+                            caseSensitive: false,
+                        })
+                    );
+
+                    this._filterTable(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+
+                onValueHelpAfterOpen: function () {
+                    var aFilter = this._getfilterforControl();
+
+                    this._filterTable(aFilter, "Control");
+                    this._oValueHelpDialog.update();
+                },
+                _getfilterforControl: function () {
+                    var sDivision = this.getView().getModel("objectView").getProperty("/TargetDetails/NotificationGroupDivision");
+                    var aFilters = [];
+                    if (sDivision) {
+                        for (var y of sDivision) {
+                            aFilters.push(new Filter("Division", FilterOperator.EQ, y));
+                        }
+                    }
+                    if (aFilters.length == 0) {
+                        return [];
+                    }
+
+                    return new Filter({
+                        filters: aFilters,
+                        and: false,
+                    });
+                },
+
+                onValueHelpCancelPress: function () {
+                    this._oValueHelpDialog.close();
+                },
+
+                onValueHelpOkPress: function (oEvent) {
+                    var oData = [];
+                    var xUnique = new Set();
+                    var aTokens = oEvent.getParameter("tokens");
+
+                    aTokens.forEach(function (ele) {
+                        if (xUnique.has(ele.getKey()) == false) {
+                            oData.push({
+                                DepotId: ele.getKey()
+                            });
+                            xUnique.add(ele.getKey());
+                        }
+                    });
+
+                    this.getView()
+                        .getModel("objectView")
+                        .setProperty("/TargetDetails/NotificationGroupDepot", oData);
+                    this._oValueHelpDialog.close();
+                },
+
+
+
+
+
+
+
 
 
 
