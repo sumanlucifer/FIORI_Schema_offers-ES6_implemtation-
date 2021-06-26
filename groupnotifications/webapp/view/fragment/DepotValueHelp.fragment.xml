@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <ValueHelpDialog
+        title="Depots"
+        ok=".onValueHelpOkPress"
+        cancel=".onValueHelpCancelPress"
+        afterClose=".onValueHelpAfterClose"
+        afterOpen=".onValueHelpAfterOpen"
+        supportRanges="false"
+        key="Id"
+        descriptionKey="Depot">
+        <filterBar>
+            <fb:FilterBar advancedMode="false" search="onFilterBarSearch" showRestoreButton="true" showRestoreOnFB="true" reset="onClearDepotSearch">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Id"
+                        label="Depot Id"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Id" placeholder="{i18n>enterDepotId}" value="{DepotFilter>/Id}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        groupName="__$INTERNAL$"
+                        name="Depot"
+                        label="Depot"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Depot" placeholder="{i18n>enterDepot}" value="{DepotFilter>/Depot}"/>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </filterBar>
+    </ValueHelpDialog>
+</core:FragmentDefinition>
+
+

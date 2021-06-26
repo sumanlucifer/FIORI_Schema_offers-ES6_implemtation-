@@ -202,24 +202,42 @@ sap.ui.define([
 			oModel.refresh(true);
 		},
 
-		onDelete: function (oEvent) {
-			var sPath = oEvent.getSource().getBindingContext().getPath();
+		// onDelete: function (oEvent) {
+		// 	var sPath = oEvent.getSource().getBindingContext().getPath();
 
-			function onYes() {
-                var data = this.getModel().getData(sPath);
-                delete data.__metadata;
-                data.IsArchived=true;
-                var that=this;
-				this.getModel().update(sPath,data, {
-					 success: function () {
-                        that.showToast(that.getResourceBundle().getText("MSG_SUCCESS_ADM_REMOVE"));
-                    },
-                    error: function (oError) {}
+		// 	function onYes() {
+        //         var data = this.getModel().getData(sPath);
+        //         delete data.__metadata;
+        //         data.IsArchived=true;
+        //         var that=this;
+		// 		this.getModel().update(sPath,data, {
+		// 			 success: function () {
+        //                 that.showToast(that.getResourceBundle().getText("MSG_SUCCESS_ADM_REMOVE"));
+        //             },
+        //             error: function (oError) {}
 
-				});
-			}
-			this.showWarning(this.getResourceBundle().getText("MSG_CONFIRM_DELETE"), onYes.bind(this));
-		},
+		// 		});
+		// 	}
+		// 	this.showWarning(this.getResourceBundle().getText("MSG_CONFIRM_DELETE"), onYes.bind(this));
+        // },
+        onDelete: function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext().getPath();
+            var that = this;
+            that.getModel().read(sPath, {
+                success: function (sData) {
+                    function onYes() {
+                        var data = sPath + "/IsArchived";
+                        that.getModel().update(data, {
+                            IsArchived: true
+                        }, {
+                            success: that.showToast(that.getResourceBundle().getText("MSG_SUCCESS_ADM_REMOVE"))
+                        });
+                    }
+                    that.showWarning("MSG_CONFIRM_DELETE", onYes);
+                }
+            })
+        },
+
 
 		/**
 		 * Internal helper method to apply both filter and search state together on the list binding
