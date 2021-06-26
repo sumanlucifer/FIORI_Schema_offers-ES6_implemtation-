@@ -168,7 +168,7 @@ sap.ui.define([
                      aArray = [];
                             if (data.NotificationGroupDepot && data.NotificationGroupDepot.results) {
                                 for (var a of data["NotificationGroupDepot"]["results"]) {
-                                    aArray.push(a["DepotId"]);
+                                    aArray.push({DepotId:a["DepotId"]});
                                 }
                             }
                             data.NotificationGroupDepot = aArray;
@@ -283,17 +283,21 @@ sap.ui.define([
             else if(GroupType=="GROUP"){
                 var oZoneMulti = this.getView().byId("idZone");
                 var oDivisionMulti = this.getView().byId("idDivision");
+                var oDepotMulti = this.getView().byId("multiInputDepotAdd");
                 var oPainterTypeMulti = this.getView().byId("idPainterType");
                 var oPainterArcheTypeMulti = this.getView().byId("idPainterArcheType");
                 var oZoneData=[];
+                var oDepotData=[];
                 var oDivisionData=[];
                 var oPainterTypeData=[];
                 var oPainterArcheTypeData=[];
                 var aZones=[];
+                var aDepot=[];
                 var aDivisions=[]
                 var aPainterTypes=[]
                 var aArcheTypes=[]
                 var xUniqueZone = new Set();
+                var xUniqueDepot = new Set();
                 var xUniqueDiv = new Set();
                 var xUniquePType = new Set();
                 var xUniqueAType = new Set();
@@ -315,6 +319,15 @@ sap.ui.define([
                                 DivisionId: ele.getKey()
                             });
                             xUniqueDiv.add(ele.getKey());
+                        }
+                    });
+                    aDepot=oDepotMulti.getTokens();
+                    aDepot.forEach(function (ele) {
+                        if (xUniqueDepot.has(ele.getKey()) == false) {
+                            oDepotData.push({
+                                DepotId: ele.getKey()
+                            });
+                            xUniqueDepot.add(ele.getKey());
                         }
                     });
                     aPainterTypes=oPainterTypeMulti.getSelectedItems();
@@ -341,6 +354,7 @@ sap.ui.define([
                 oPayload = oViewModel.getProperty("/oDetails");
                 oPayload["NotificationGroupZone"]=oZoneData;
                 oPayload["NotificationGroupDivision"]=oDivisionData;
+                oPayload["NotificationGroupDepot"]=oDepotData;
                 oPayload["NotificationGroupPainterType"]=oPainterTypeData;
                 oPayload["NotificationGroupPainterArcheType"]=oPainterArcheTypeData;
                 oPayload["GroupName"]=GroupName;
