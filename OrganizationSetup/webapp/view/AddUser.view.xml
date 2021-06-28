@@ -82,6 +82,7 @@ xmlns:f="sap.ui.layout.form">
             <Label text="Role" labelFor="role" design="Bold" required="true"/>
         	<Select
             id="role"
+            forceSelection="false"
             valueStateText="Role must not be empty."
             change="onRoleChange"
 			items="{path: 'data>/MasterAdminRoleSet',
@@ -91,6 +92,7 @@ xmlns:f="sap.ui.layout.form">
             <Label text="User Type" labelFor="UserType" design="Bold" />
             <Select
             id="iduserType"
+            forceSelection="false"
             valueStateText="UserType must not be empty."
 			items="{path: 'data>/MasterUserTypeSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
