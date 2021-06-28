@@ -120,6 +120,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false
         },
         btnSendForApprovalCheck: function (m1, m2) {
+            return true;
             if (m1 === "DRAFT") {
                 if (m2 === 5) {
                     return true
@@ -138,7 +139,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
         },
         btnPublished: function (m1, m2) {
-            return true
             if (m1 === "APPROVED") {
                 if (m2 === 6 || m2 === 7) {
                     return true

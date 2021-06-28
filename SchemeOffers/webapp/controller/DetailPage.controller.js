@@ -1743,7 +1743,7 @@ sap.ui.define(
                         }).then(
                             function (oDialog) {
                                 this._RemarksDialog2 = oDialog;
-                                 oView.addDependent(this._RemarksDialog2);
+                                oView.addDependent(this._RemarksDialog2);
                                 this._RemarksDialog2.open();
                             }.bind(this)
                         );
@@ -1763,13 +1763,23 @@ sap.ui.define(
                 },
                 onApproveReject: function () {
 
+
                     var oView = this.getView();
+                    var oForm = oView.byId("RemarkForm");
+                    var oValidate = new Validator()
+                    var bFlagValidate = oValidate.validate(oForm, true);
+                    if (!bFlagValidate) {
+                        return;
+                    }
+
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
                     var oModelC = oView.getModel("oModelControl3");
                     var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
+                    var sRemark = oModelC.getProperty("/Dialog/Remarks");
                     var oNewPayLoad = Object.assign({}, oPayload);
                     oNewPayLoad["OfferStatus"] = sOfferStatus;
+                    oNewPayLoad["Remark"] = sRemark;
 
                     if (sOfferStatus === "PUBLISHED") {
                         oNewPayLoad["IsPublished"] = true
