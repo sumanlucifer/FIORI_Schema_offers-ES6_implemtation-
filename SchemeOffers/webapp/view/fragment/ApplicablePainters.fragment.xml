@@ -24,7 +24,7 @@
 
                     <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
                         <f:fields>
-                            <MultiInput placeholder="{i18n>placeHolder1}"  enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
+                            <MultiInput placeholder="{i18n>placeHolder1}" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 2 }" id="Painters" tokens="{oModelControl>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter">
                                 <tokens>
                                     <Token editable="false" text="{oModelControl>PainterName}" key="{oModelControl>PainterId}"/>
                                 </tokens>
@@ -36,7 +36,7 @@
 
                 </f:formElements>
             </f:FormContainer>
-            <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
+            <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}!==2 }">
                 <f:formElements>
 
                     <!-- <f:FormElement label="{i18n>Painters}" visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===2 }">
@@ -65,6 +65,20 @@
                                 <core:Item text="{ArcheType}" key="{Id}"/>
                             </MultiComboBox>
 
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl>/Rbtn/AppPainter}!== 2 }" >
+                        <f:fields>
+                            <Text text ="{path:'oModelControl>/Fields/PainterCount',formatter:'.formatter.fmtCheckNull'}">
+                                <layoutData>
+                                    <l:GridData span="XL2 L2 M2 S2" />
+                                </layoutData>
+                            </Text>
+                            <Link text ="Refresh Count" press="GetPainterCount">
+                                <layoutData>
+                                    <l:GridData span="XL2 L2 M2 S2" />
+                                </layoutData>
+                            </Link>
                         </f:fields>
                     </f:FormElement>
                 </f:formElements>
@@ -158,6 +172,28 @@
                     </f:FormElement>
                 </f:formElements>
             </f:FormContainer>
+            <!-- <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter} !== 2 }">
+                <f:formElements>
+
+
+                    <f:FormElement label="{i18n>GetPainterCount}">
+                        <f:fields>
+                            <Text text ="{oModelControl>/Fields/PainterCount}">
+                                <layoutData>
+                                    <l:GridData span="XL2 L2 M2 S2" />
+                                </layoutData>
+                            </Text>
+                            <Link text ="Refresh">
+                                <layoutData>
+                                    <l:GridData span="XL2 L2 M2 S2" />
+                                </layoutData>
+                            </Link>
+                        </f:fields>
+                    </f:FormElement>
+
+
+                </f:formElements>
+            </f:FormContainer> -->
             <f:FormContainer title="{i18n>formApplicableProducts}" visible="{= ${oModelControl>/OfferType/ApplicablePainterProducts} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===1 }">
 
                 <f:formElements >
@@ -201,7 +237,7 @@
                     </f:FormElement>
                     <f:FormElement >
                         <f:fields>
-                            <MultiComboBox selectionFinish="onPAppDropChange"  visible="{= ${oModelControl>/Rbtn/PClass2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange" visible="{= ${oModelControl>/Rbtn/PClass2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass2'}">
                                 <core:Item text="{Classification}" key="{Id}"/>
                             </MultiComboBox>
                         </f:fields>
@@ -282,7 +318,7 @@
                     <f:FormElement >
                         <f:fields>
 
-                            <MultiComboBox selectionFinish="onPAppDropChange"  visible="{= ${oModelControl>/Rbtn/PClass3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}">
+                            <MultiComboBox selectionFinish="onPAppDropChange" visible="{= ${oModelControl>/Rbtn/PClass3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl>/MultiCombo/PClass3'}">
                                 <core:Item text="{Classification}" key="{Id}"/>
                             </MultiComboBox>
                         </f:fields>
