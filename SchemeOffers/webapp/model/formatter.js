@@ -95,16 +95,17 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
-         fmtCheckNull2: function (mParam1) {
+        fmtCheckNull2: function (mParam1) {
             if (mParam1) {
                 return mParam1
             }
-            if(mParam1 === 0){
+            if (mParam1 === 0) {
                 return 0;
             }
             return "NA"
         },
-        // all formatters for the button in the display
+        // all formatters for the button in the display and also for the workflow
+        // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2, m3, m4) {
 
             //m1 offer id 6-slab based offer// m3 IsPublished true //m2 Offer Status //m4 button already redeem check
@@ -112,9 +113,44 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 if (m2 === "EXPIRED") {
                     if (m3 === true) {
                         return true
-                        // if (m4) {
-                        //     return true
-                        // }
+                      
+                    }
+                }
+            }
+            return false
+        },
+        btnSendForApprovalCheck: function (m1, m2) {
+            if (m1 === "DRAFT") {
+                if (m2 === 5) {
+                    return true
+                }
+            }
+            return false;
+        },
+        //btnApproveDisplay and reject button
+        btnApproveDisplay: function (m1, m2) {
+            if (m1 === "PENDING") {
+                if (m2 === 6 || m2 === 7) {
+                    return true
+                }
+            }
+            return false
+
+        },
+        btnPublished: function (m1, m2) {
+            if (m1 === "APPROVED") {
+                if (m2 === 6 || m2 === 7) {
+                    return true
+                }
+            }
+            return false
+
+        },
+        btnEscalate: function (m1, m2, m3) {
+            if (m1 === "PENDING") {
+                if (m2 === 6) {
+                    if (m3 === "HO_MARKETING_1") {
+                        return true
                     }
                 }
             }
