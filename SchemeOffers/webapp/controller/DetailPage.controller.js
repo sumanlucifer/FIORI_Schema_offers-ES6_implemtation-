@@ -1762,8 +1762,6 @@ sap.ui.define(
 
                 },
                 onApproveReject: function () {
-
-
                     var oView = this.getView();
                     var oForm = oView.byId("RemarkForm");
                     var oValidate = new Validator()
@@ -1778,24 +1776,33 @@ sap.ui.define(
                     var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
                     var sRemark = oModelC.getProperty("/Dialog/Remarks");
                     var oNewPayLoad = Object.assign({}, oPayload);
-                    oNewPayLoad["OfferStatus"] = sOfferStatus;
                     oNewPayLoad["Remark"] = sRemark;
-
-                    if (sOfferStatus === "PUBLISHED") {
-                        oNewPayLoad["IsPublished"] = true
-                    } else {
-                        oNewPayLoad["IsPublished"] = false;
+                    // if the offer status if 
+                    if (sOfferStatus === "PUBLISHED" || sOfferStatus === "PENDING" || sOfferStatus === "APPROVED" || sOfferStatus === "REJECTED") {
+                        oNewPayLoad["OfferStatus"] = sOfferStatus;
+                        if (sOfferStatus === "PUBLISHED") {
+                            oNewPayLoad["IsPublished"] = true
+                        } else {
+                            oNewPayLoad["IsPublished"] = false;
+                        }
+                    } else if (sOfferStatus === "ESCALATE") {
+                        console.log("ESCALATE")
+                        oNewPayLoad["InitiateForceTat"] = true;
                     }
+                    console.log(oNewPayLoad);
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
                     oData.update("/" + sPath, oNewPayLoad, {
                         success: function () {
+                            this._RemarksDialog2.close();
                             MessageToast.show("Offer Successfully Updated.");
+
                             this._navToHome();
 
                         }.bind(this),
                         error: function () {
+                            this._RemarksDialog2.close();
                             MessageBox.error("Unanle to update the offer.");
-                        }
+                        }.bind(this)
                     })
 
                 },

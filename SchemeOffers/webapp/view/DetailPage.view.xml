@@ -92,13 +92,14 @@
                     <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
                     <!-- Send For Approval -->
                     <Button press="onOpenRemarksDialog('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" />
+                       <!-- Escalate -->
+                    <Button press="onOpenRemarksDialog('ESCALATE')" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
                     <!-- Approve Reject -->
+                     <Button press="onOpenRemarksDialog('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
                     <Button press="onOpenRemarksDialog('APPROVED')" text="{i18n>Approve}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
-                    <Button press="onOpenRemarksDialog('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
                     <!-- Publish -->
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
-                    <!-- Escalate -->
-                    <Button press="onEscalate" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
+                 
                     <!-- Redemption Button -->
                     <Button press=".onApplyRedemption" text="{i18n>Redeem}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                 </HBox>
