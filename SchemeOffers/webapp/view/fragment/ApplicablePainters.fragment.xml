@@ -76,7 +76,7 @@
                             </Text>
                             <Link text ="Refresh Count" press="GetPainterCount">
                                 <layoutData>
-                                    <l:GridData span="XL2 L2 M2 S2" />
+                                    <l:GridData span="XL4 L4 M4 S4" />
                                 </layoutData>
                             </Link>
                         </f:fields>
