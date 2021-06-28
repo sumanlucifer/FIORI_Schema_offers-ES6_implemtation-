@@ -1797,13 +1797,12 @@ sap.ui.define(
                         success: function () {
                             this._RemarksDialog2.close();
                             MessageToast.show("Offer Successfully Updated.");
-
                             this._navToHome();
 
                         }.bind(this),
                         error: function () {
                             this._RemarksDialog2.close();
-                            MessageBox.error("Unanle to update the offer.");
+                            MessageBox.error("Unable to update the offer.");
                         }.bind(this)
                     })
 
