@@ -78,13 +78,33 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
 
                 sap.ui.getCore().getMessageManager().removeAllMessages();
-
+                var userSet=oEvent.getParameter("arguments").userId
                 this.getView().bindElement({
-                    path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").userId),
+                    path: "/" + window.decodeURIComponent(userSet),
                     model: "data"
                 });
+                this.onUserTypeFilter(userSet);
 
-
+            },
+            onUserTypeFilter: function (userSet){
+                var oModel=this.getView().getModel("data");
+                var that=this;
+                var AdminRoleId;
+                    oModel.read("/"+userSet,{ urlParameters: {
+                        "$expand": "UserType"},
+                    success: function(oRetrievedResult) {
+                        if(oRetrievedResult.UserType!==null){
+                            AdminRoleId=oRetrievedResult.RoleId
+                            var binding = that.getView().byId("iduserType").getBinding("items");
+                    var filters = [new sap.ui.model.Filter("AdminRoleId", sap.ui.model.FilterOperator.EQ, parseInt(AdminRoleId)) ]; 
+			        var oFilter1 = new sap.ui.model.Filter({aFilters:filters}); 
+			        binding.filter(oFilter1);
+                    that.getView().byId("iduserType").getModel().updateBindings(true);
+                        }
+                     },
+                    error: function(oError) { /* do something */ }
+                    });
+                    
             },
 
             _getMessagePopover: function () {
