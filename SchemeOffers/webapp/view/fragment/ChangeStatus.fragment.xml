@@ -12,7 +12,7 @@
         </content>
         <buttons>
             <Button text="Close" press="onCloseStatus" />
-            <Button press="onApproveReject" type="Emphasized" text="{i18n>Save}" />
+            <Button press="onApproveReject" type="Emphasized" text="{i18n>saveBtnText}" />
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

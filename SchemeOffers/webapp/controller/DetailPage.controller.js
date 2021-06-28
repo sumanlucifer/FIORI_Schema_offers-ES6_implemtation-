@@ -1743,6 +1743,7 @@ sap.ui.define(
                         }).then(
                             function (oDialog) {
                                 this._RemarksDialog2 = oDialog;
+                                 oView.addDependent(this._RemarksDialog2);
                                 this._RemarksDialog2.open();
                             }.bind(this)
                         );
