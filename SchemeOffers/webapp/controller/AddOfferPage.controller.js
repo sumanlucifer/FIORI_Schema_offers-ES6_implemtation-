@@ -175,7 +175,8 @@ sap.ui.define(
                             AppPainter: 0,
                             ParentOffer: 0,
                             BrReqVol: 0,
-                            BrReqCash: 0
+                            BrReqCash: 0,
+                            BrReqPercent:0
                         },
                         MultiEnabled: {
                             PCat1: false,

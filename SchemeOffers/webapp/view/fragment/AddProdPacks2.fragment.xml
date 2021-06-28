@@ -8,7 +8,7 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<f:Form id="FormAddProdPacks2" binding="{oModelControl>/Dialog/Bonus2}"  editable="false" >
+			<f:Form id="FormAddProdPacks2"   editable="false" >
 				<f:layout>
 					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
 						emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>

@@ -1018,7 +1018,8 @@ sap.ui.define(
                             Date1: null,
                             Date2: null,
                             ParentOfferTitle: "",
-                            RewardRationCount: 1
+                            RewardRationCount: 1,
+                            PainterCount: ""
                         },
                     };
 
