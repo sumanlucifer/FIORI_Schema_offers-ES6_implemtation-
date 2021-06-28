@@ -2554,27 +2554,7 @@ sap.ui.define(
                 //2. Edit Offers
 
                 // create payload for edit and add
-                onChangeOfferStatus: function (mParam1) {
-
-                    var oView = this.getView();
-                    var oData = oView.getModel();
-                    var oModelView = oView.getModel("oModelView");
-                    var sPath = "/" + oModelView.getProperty("/bindProp");
-                    var oPayLoad = {
-                        OfferStatus: mParam1
-                    }
-                    oData.update(sPath + "/OfferStatus", oPayLoad, {
-                        success: function () {
-                            MessageToast.show("Offer Sucessfully Published.");
-                            oData.refresh();
-                        },
-                        error: function (data) {
-                            var oRespText = JSON.parse(data.responseText);
-                            MessageBox.error(oRespText["error"]["message"]["value"]);
-                        }
-                    })
-
-                },
+       
                 _CheckTableValidation: function () {
                     // check if the table 1 or 2 is visible
                     var oView = this.getView();
@@ -2778,8 +2758,6 @@ sap.ui.define(
                         } else {
                             oPayLoad[key] = true;
                         }
-
-                        //oPayLoad[key] = oPropRbtn[aBoleanProps[key]] == 0 ? false : true;
                     }
 
                     promise.resolve(oPayLoad);

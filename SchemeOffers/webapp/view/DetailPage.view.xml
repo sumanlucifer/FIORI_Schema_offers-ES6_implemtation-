@@ -80,18 +80,27 @@
             <OverflowToolbar >
                 <ToolbarSpacer/>
 
-                <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }" >
-                    <Button  class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button  class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
-                    <Button  class="sapUiTinyMarginEnd" id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">
+                    <Button class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
+                    <Button class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                    <Button class="sapUiTinyMarginEnd" id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
                 </HBox>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
-                    <Button  text="Cancel" type="Ghost"  press="handleCancelPress" class="sapUiTinyMarginEnd"/>
-                    <Button press="onActivate" text="{i18n>Activate}" type="Accept"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
-                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject"  class="sapUiTinyMarginEnd"  visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
-                    <!-- <Button press=".onChangeOfferStatus1('PUBLISHED')" text="{i18n>Published}" type="Accept"  class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display'}" /> -->
-                     <Button press=".onApplyRedemption" text="{i18n>Redeem}"  type="Ghost"  class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
+                    <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
+                    <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
+                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
+                    <!-- Send For Approval -->
+                    <Button press="onApproveReject('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" />
+                    <!-- Approve Reject -->
+                    <Button press="onApproveReject('APPROVED')" text="{i18n>Approve}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
+                    <Button press="onApproveReject('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
+                    <!-- Publish -->
+                    <Button press="onApproveReject('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
+                    <!-- Escalate -->
+                    <Button press="onEscalate" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
+                    <!-- Redemption Button -->
+                    <Button press=".onApplyRedemption" text="{i18n>Redeem}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                 </HBox>
 
 
