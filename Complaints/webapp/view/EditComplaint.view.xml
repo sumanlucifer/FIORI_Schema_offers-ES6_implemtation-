@@ -25,23 +25,25 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="false">
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                    <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
                     </layout:VerticalLayout>
 
-                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="60%">
-                        <ObjectAttribute title="{i18n>ComplaintDetails}" text="{ComplaintSubtype/ComplaintSubtype}"/>
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
+                        <Label  text="{i18n>ComplaintDetails}:"  />
+                        <ObjectAttribute  text="{ComplaintSubtype/ComplaintSubtype}"/>
                     </layout:VerticalLayout>
-                     <layout:VerticalLayout>
-                     <ObjectAttribute  visible="{= ${AssigneUserType} !== 'AGENT'  }" title="{i18n>LblEscalationLevel}" text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }" />
+               
+                 
+                    <layout:VerticalLayout  class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }" >
+                         <Label text="{i18n>LblEscalationLevel}:" />
+                         <Text  text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }"  />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <Label text="{i18n>Status}:"/>
+                        <Label  text="{i18n>Status}:"/>
                         <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
                     </layout:VerticalLayout>
-                   
-
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
