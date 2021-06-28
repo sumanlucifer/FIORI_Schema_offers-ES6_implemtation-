@@ -101,6 +101,10 @@ sap.ui.define(
                         Buttons: {
                             Redeem: true, // check if its already redeemed
                             SendForApproval: false
+                        },
+                        Dialog: {
+                            Remarks: "",
+                            OfferStatus: "",
                         }
                     };
                     var oModel = new JSONModel(oData);
@@ -1724,34 +1728,49 @@ sap.ui.define(
                         error: function () {},
                     });
                 },
-                // onSendForApproval: function () {
-                //     var oView = this.getView();
-                //     var oData = oView.getModel();
-                //     var oPayload = this.getView().getModel("oModelDisplay").getData();
-                //     var oNewPayLoad = Object.assign({}, oPayload);
-                //     oNewPayLoad["OfferStatus"] = "PENDING";
-                //     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
-                //     oData.update("/" + sPath, oNewPayLoad, {
-                //         success: function () {
-                //             MessageToast.show("Offer Successfully Updated.");
-                //             this._navToHome();
+                onOpenRemarksDialog: function (oEvent) {
+                    //open the dialog
+                    var othat = this;
+                    var oView = this.getView();
+                    var oModelC = oView.getModel("oModelControl3");
+                    oModelC.setProperty("/Dialog/OfferStatus", oEvent);
+                    oModelC.setProperty("/Dialog/Remarks", "");
+                    if (!this._RemarksDialog2) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.ChangeStatus",
+                            controller: othat,
+                        }).then(
+                            function (oDialog) {
+                                this._RemarksDialog2 = oDialog;
+                                this._RemarksDialog2.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        oView.addDependent(this._RemarksDialog2);
+                        this._RemarksDialog2.open();
+                    }
+                    //set the flag for status and empty the status 
+                    // close the dialog
+                    //move the approve sta
 
-                //         }.bind(this),
-                //         error: function () {
-                //             MessageBox.error("Unanle to update the offer.");
-                //         }
-                //     })
 
-                // },
-                onApproveReject: function (oEvent) {
-                    console.log(oEvent);
+                },
+                onCloseStatus: function () {
+                    this._RemarksDialog2.close();
+
+                },
+                onApproveReject: function () {
+
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
+                    var oModelC = oView.getModel("oModelControl3");
+                    var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
                     var oNewPayLoad = Object.assign({}, oPayload);
-                    oNewPayLoad["OfferStatus"] = oEvent;
+                    oNewPayLoad["OfferStatus"] = sOfferStatus;
 
-                    if (oEvent === "PUBLISHED") {
+                    if (sOfferStatus === "PUBLISHED") {
                         oNewPayLoad["IsPublished"] = true
                     } else {
                         oNewPayLoad["IsPublished"] = false;
