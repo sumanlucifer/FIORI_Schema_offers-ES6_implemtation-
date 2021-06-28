@@ -2394,8 +2394,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oStartDate = oEvent.getSource().getDateValue();
-                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
-                    var sPath = oContext.getPath();
+                    //var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = "/Dialog/Bonus2";
                     var oEndDate = oModelControl.getProperty(sPath + "/EndDate")
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
@@ -2414,10 +2414,10 @@ sap.ui.define(
                 onEndDateBRRChange: function (oEvent) {
                     var oView = this.getView();
 
-                    var oModelControl = oView.getModel("oModelView");
+                    var oModelControl = oView.getModel("oModelControl");
                     var oEndDate = oEvent.getSource().getDateValue();
-                    var oContext = oEvent.getSource().getBinding("dateValue").getContext();
-                    var sPath = oContext.getPath();
+                    // var oContext = oEvent.getSource().getBinding("dateValue").getContext();
+                    var sPath = "/Dialog/Bonus2";
                     var oStartDate = oModelControl.getProperty(sPath + "/StartDate")
                     if (oStartDate >= oEndDate) {
                         MessageToast.show("Kindly select a date more than Bonus Validtiy From date.");
@@ -2554,7 +2554,7 @@ sap.ui.define(
                 //2. Edit Offers
 
                 // create payload for edit and add
-       
+
                 _CheckTableValidation: function () {
                     // check if the table 1 or 2 is visible
                     var oView = this.getView();
