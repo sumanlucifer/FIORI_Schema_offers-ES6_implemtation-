@@ -113,9 +113,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 if (m2 === "EXPIRED") {
                     if (m3 === true) {
                         return true
-                        // if (m4) {
-                        //     return true
-                        // }
+                      
                     }
                 }
             }
@@ -157,7 +155,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 }
             }
             return false
-
         }
 
     };
