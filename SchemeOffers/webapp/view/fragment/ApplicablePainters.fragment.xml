@@ -69,7 +69,7 @@
                     </f:FormElement>
                     <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl>/Rbtn/AppPainter}!== 2 }" >
                         <f:fields>
-                            <Text text ="{path:'oModelControl>/Fields/PainterCount',formatter:'.formatter.fmtCheckNull'}">
+                            <Text text ="{path:'oModelControl>/Fields/PainterCount',formatter:'.formatter.fmtCheckNull2'}">
                                 <layoutData>
                                     <l:GridData span="XL2 L2 M2 S2" />
                                 </layoutData>
