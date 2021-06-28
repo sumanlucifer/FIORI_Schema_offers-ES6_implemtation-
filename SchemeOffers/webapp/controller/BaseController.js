@@ -2299,7 +2299,7 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelView");
                     var sLvalue = oView.byId("PSlabLowLimit").getValue()
                     if (sLvalue && sUvalue) {
-                        if (sUvalue < sLvalue) {
+                        if (parseInt(sUvalue) < parseInt(sLvalue)) {
                             MessageToast.show("Points Upper Limit Should be greater than Lower limit");
                             oModel.setProperty("/PointSlabUpperLimit", "")
                         }
@@ -2312,7 +2312,7 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelView");
                     var sUvalue = oView.byId("PSlabULimit").getValue()
                     if (sLvalue && sUvalue) {
-                        if (sLvalue > sUvalue) {
+                        if (parseInt(sLvalue) > parseInt(sUvalue)) {
                             MessageToast.show("Points Upper Limit Should be greater than Lower limit");
                             oModel.setProperty("/PointSlabLowerLimit", "")
                         }
@@ -2665,7 +2665,22 @@ sap.ui.define(
                             }
                         }
                     }
-                    console.log(oPayLoadNew);
+                    var aBoleanProps = {
+                        IsSpecificZone: "Zones",
+                        IsSpecificDivision: "Divisions",
+                        IsSpecificDepot: "Depots"
+                    };
+                    var oPropRbtn = oModelC.getProperty("/Rbtn");
+                    for (var key in aBoleanProps) {
+                        if (oPropRbtn[aBoleanProps[key]] === 0) {
+                            oPayLoadNew[key] = false;
+                        } else {
+                            oPayLoadNew[key] = true;
+                        }
+
+                        //oPayLoad[key] = oPropRbtn[aBoleanProps[key]] == 0 ? false : true;
+                    }
+
                     oData.create("/OfferApplicablePainterCountSet", oPayLoadNew, {
                         success: function (oData) {
                             if (oData.hasOwnProperty("PainterCount")) {
