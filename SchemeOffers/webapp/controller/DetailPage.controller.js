@@ -669,7 +669,7 @@ sap.ui.define(
                     }
                 }
                 oModelControl2.setProperty("/MultiCombo/Painters", Painters);
-
+                console.log(oModelControl2);
                 promise.resolve(oData);
                 return promise;
             },

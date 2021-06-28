@@ -95,6 +95,15 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
+         fmtCheckNull2: function (mParam1) {
+            if (mParam1) {
+                return mParam1
+            }
+            if(mParam1 === 0){
+                return 0;
+            }
+            return "NA"
+        },
         // all formatters for the button in the display
         btnRedeemCheck: function (m1, m2, m3, m4) {
 
