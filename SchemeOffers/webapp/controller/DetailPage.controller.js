@@ -1768,6 +1768,7 @@ sap.ui.define(
                     var oValidate = new Validator()
                     var bFlagValidate = oValidate.validate(oForm, true);
                     if (!bFlagValidate) {
+                        MessageToast.show("Kindly fill all the mandatory fields to continue.");
                         return;
                     }
 

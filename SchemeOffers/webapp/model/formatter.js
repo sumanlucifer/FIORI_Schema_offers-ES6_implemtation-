@@ -113,7 +113,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 if (m2 === "EXPIRED") {
                     if (m3 === true) {
                         return true
-                      
                     }
                 }
             }
@@ -122,7 +121,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         btnSendForApprovalCheck: function (m1, m2) {
             if (m1 === "DRAFT") {
                 if (m2 === 5) {
-                    return true
+                    return true;
                 }
             }
             return false;
@@ -131,11 +130,10 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         btnApproveDisplay: function (m1, m2) {
             if (m1 === "PENDING") {
                 if (m2 === 6 || m2 === 7) {
-                    return true
+                    return true;
                 }
             }
-            return false
-
+            return false;
         },
         btnPublished: function (m1, m2) {
             if (m1 === "APPROVED") {
