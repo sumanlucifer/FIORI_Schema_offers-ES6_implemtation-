@@ -2312,7 +2312,7 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelView");
                     var sUvalue = oView.byId("PSlabULimit").getValue()
                     if (sLvalue && sUvalue) {
-                        if (sUvalue < sLvalue) {
+                        if (sLvalue > sUvalue) {
                             MessageToast.show("Points Upper Limit Should be greater than Lower limit");
                             oModel.setProperty("/PointSlabLowerLimit", "")
                         }
