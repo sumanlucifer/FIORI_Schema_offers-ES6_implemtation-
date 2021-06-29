@@ -299,6 +299,12 @@ sap.ui.define(
                                                 value1: oViewFilter[prop].trim(),
                                                 caseSensitive: false
                                             }),
+                                              new Filter({
+                                                path: "OfferCode",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            })
                                         ],
                                         false
                                     )
