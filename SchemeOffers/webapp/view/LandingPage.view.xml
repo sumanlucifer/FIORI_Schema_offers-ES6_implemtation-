@@ -88,7 +88,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="15" updateFinished="onUpdateFinished">
+            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable,OfferCode' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="15" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -102,6 +102,9 @@
                 <columns>
                     <Column>
                         <Text text="{i18n>tblColOfferName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>OfferCode}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>offerTypeFilterLabel}"/>
@@ -133,6 +136,7 @@
                     <ColumnListItem type="Navigation" press="onPressListItem">
                         <cells>
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
+                             <Text text="{OfferCode}"/>
                             <Text text="{OfferType/OfferType}"/>
                             <!-- <Text text="{RewardGiftId}"/> -->
                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
@@ -142,7 +146,7 @@
                             <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="End">
-                               
+
                                 <Button visible="{IsUpdateApplicable}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>

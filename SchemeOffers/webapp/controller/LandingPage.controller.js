@@ -35,9 +35,8 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.SchemeOffers.controller.LandingPage",
-            {
-                formatter:Formatter,
+            "com.knpl.pragati.SchemeOffers.controller.LandingPage", {
+                formatter: Formatter,
                 onInit: function () {
                     // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
                     this._mViewSettingsDialogs = {};
@@ -60,7 +59,7 @@ sap.ui.define(
                             TrainingZone: "",
                             TrainingDivision: "",
                             TrainingDepot: "",
-                            Active:""
+                            Active: ""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -87,7 +86,28 @@ sap.ui.define(
                         oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                     });
                     this.getView().getModel().refresh();
+                    this._getLoggedInInfo();
+
                 },
+                _getLoggedInInfo: function () {
+                    var oData = this.getView().getModel();
+                    var oLoginData = this.getView().getModel("LoginInfo");
+                    oData.callFunction("/GetLoggedInAdmin", {
+                        method: "GET",
+                        urlParameters: {
+                            $expand: "UserType",
+                        },
+                        success: function (data) {
+                            if (data.hasOwnProperty("results")) {
+                                if (data["results"].length > 0) {
+                                    oLoginData.setData(data["results"][0]);
+                                    console.log(oLoginData)
+                                }
+                            }
+                        },
+                    });
+                },
+
 
                 onUpdateFinished: function (oEvent) {
                     var sTitle,
@@ -145,7 +165,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var sPath = oEvent.getSource().getBindingContext().getPath();
                     var oModel = this.getComponentModel();
-                    
+
                     var oViewModel = this.getView().getModel("ViewModel");
                     var oResourceBundle = this.getOwnerComponent()
                         .getModel("i18n")
@@ -154,8 +174,7 @@ sap.ui.define(
                         IsArchived: true,
                     };
                     MessageBox.confirm(
-                        oResourceBundle.getText("deleteConfirmationMessage"),
-                        {
+                        oResourceBundle.getText("deleteConfirmationMessage"), {
                             actions: [
                                 oResourceBundle.getText("messageBoxDeleteBtnText"),
                                 MessageBox.Action.CANCEL,
@@ -268,22 +287,18 @@ sap.ui.define(
                                 aCurrentFilterValues.push(
                                     new Filter(
                                         [
-                                            new Filter(
-                                                {
-                                                    path: "Title",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                              {
-                                                    path: "OfferStatus",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
+                                            new Filter({
+                                                path: "Title",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "OfferStatus",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
                                         ],
                                         false
                                     )
@@ -329,12 +344,10 @@ sap.ui.define(
 
                 onValueHelpRequested: function () {
                     var oColModel = new JSONModel({
-                        cols: [
-                            {
-                                label: "Name",
-                                template: "Name",
-                            },
-                        ],
+                        cols: [{
+                            label: "Name",
+                            template: "Name",
+                        }, ],
                     });
                     // @ts-ignore
                     this._oValueHelpDialog = sap.ui.xmlfragment(
@@ -364,7 +377,9 @@ sap.ui.define(
                                     template: function () {
                                         return new ColumnListItem({
                                             cells: aCols.map(function (column) {
-                                                return new Label({ text: "{" + column.template + "}" });
+                                                return new Label({
+                                                    text: "{" + column.template + "}"
+                                                });
                                             }),
                                         });
                                     },
@@ -454,14 +469,17 @@ sap.ui.define(
                         TrainingZone: "",
                         TrainingDivision: "",
                         TrainingDepot: "",
-                        Active:""
+                        Active: ""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
                     var oTable = this.byId("idOffersTable");
                     var oBinding = oTable.getBinding("items");
                     oBinding.filter([]);
-                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
                     this._fiterBarSort();
                 },
                 _fiterBarSort: function () {
@@ -504,8 +522,7 @@ sap.ui.define(
                     var othat = this;
                     console.log(sPath, oBject);
                     MessageBox.warning(
-                        "Are you sure you want to remove the offer- " + oBject["Title"],
-                        {
+                        "Are you sure you want to remove the offer- " + oBject["Title"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {

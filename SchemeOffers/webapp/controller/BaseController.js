@@ -151,7 +151,6 @@ sap.ui.define(
                 _OfferTypeFieldsSet: function () {
                     // disabling all the fields that we have to hide.
                     var oView = this.getView();
-                    console.log("offer type valdidation trigerred");
                     var oModelControl = oView.getModel("oModelControl");
                     var oOfferType = oView
                         .getModel("oModelControl")
@@ -196,7 +195,7 @@ sap.ui.define(
                                     true
                                 );
                                 othat._RbtnReset([
-                                   
+
                                     "Rbtn/PCat2",
                                     "Rbtn/PClass2",
                                     "Rbtn/AppProd2",
@@ -1822,7 +1821,7 @@ sap.ui.define(
                     //     delete this._PainterValueHelp;
                     //   }
                     if (this._RewardsDialog1) {
-                        console.log("close reward dialog 1")
+
                         this._RewardsDialog1.destroy();
                         delete this._RewardsDialog1;
                     } //_RewardsDialog2
@@ -1868,6 +1867,42 @@ sap.ui.define(
                 onDepotAfterOpen: function () {
                     var aFilter = this._getFilterForDepot();
                     this._FilterDepotTable(aFilter, "Control");
+                },
+                _getLoggedInUserDeatils: function (oData) {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oLoginModel = oView.getModel("LoginInfo");
+                    var oControlModel = oView.getModel("oModelControl");
+                    var oLoginData = oLoginModel.getData()
+
+                    if (Object.keys(oLoginData).length === 0) {
+
+                        return new Promise((resolve, reject) => {
+                            oData.callFunction("/GetLoggedInAdmin", {
+                                method: "GET",
+                                urlParameters: {
+                                    $expand: "UserType",
+                                },
+                                success: function (data) {
+                                    if (data.hasOwnProperty("results")) {
+                                        if (data["results"].length > 0) {
+                                            oLoginModel.setData(data["results"][0]);
+                                            oControlModel.setProperty("/LoggedInUser", data["results"][0]);
+
+
+                                        }
+                                    }
+                                    resolve(oData);
+                                },
+                            });
+                        })
+
+                    } else {
+                        oControlModel.setProperty("/LoggedInUser", oLoginData);
+                        promise.resolve(oData);
+                        return promise;
+                    }
                 },
                 _getFilterForDepot: function () {
                     var sDivisions = this.getView()
@@ -2001,11 +2036,11 @@ sap.ui.define(
                         aRemovedTokens.forEach(function (item) {
                             aRemovedKeys.push(item.getKey());
                         });
-                        console.log(aRemovedKeys);
+
                         aNewArray = aArray.filter(function (item) {
                             return aRemovedKeys.indexOf(item["Id"]) < 0;
                         });
-                        console.log(aNewArray);
+
                         oModel.setProperty(sPath, aNewArray);
                     }
                 },
@@ -2017,7 +2052,7 @@ sap.ui.define(
                         .getPath()
                         .split("/");
                     var sParam1 = aPath[aPath.length - 1];
-                    console.log(sParam1);
+
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/Dialog/PackVH", sParam1);
                     // create value help dialog
@@ -2059,7 +2094,7 @@ sap.ui.define(
                 },
                 _handlePackValueHelpSearch: function (oEvent) {
                     var sValue = oEvent.getParameter("value").trim();
-                    console.log(sValue, "Pack Valuehelp");
+
                     if (sValue.length > 0) {
                         var aFilter = new Filter({
                             path: "Description",
@@ -2107,11 +2142,11 @@ sap.ui.define(
                         aRemovedTokens.forEach(function (item) {
                             aRemovedKeys.push(item.getKey());
                         });
-                        console.log(aRemovedKeys);
+
                         aNewArray = aArray.filter(function (item) {
                             return aRemovedKeys.indexOf(item["Id"]) < 0;
                         });
-                        console.log(aNewArray);
+
                         oModel.setProperty(sPath, aNewArray);
                     }
                 },
@@ -2123,7 +2158,7 @@ sap.ui.define(
                         .getPath()
                         .split("/");
                     var sParam1 = aPath[aPath.length - 1];
-                    console.log(sParam1);
+
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/Dialog/ProdVH", sParam1);
 
@@ -2189,7 +2224,7 @@ sap.ui.define(
                     var oView = this.getView(),
                         oModel = oView.getModel("oModelControl");
                     var aNumber = mParam1.match(/\d+$/)[0];
-                    console.log(aNumber);
+
                     var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                     var aFilter1 = [];
@@ -2224,7 +2259,7 @@ sap.ui.define(
                 },
                 _handlePValueHelpSearch: function (oEvent) {
                     var sValue = oEvent.getParameter("value").trim();
-                    console.log(sValue);
+
                     if (sValue.length > 0) {
                         var aFilter = new Filter({
                             path: "ProductName",
@@ -2631,7 +2666,7 @@ sap.ui.define(
                                 PotentialId: parseInt(elem),
                             };
                         }),
-                        "PointSlabLowerLimit":oView.byId("PSlabLowLimit").getValue(),
+                        "PointSlabLowerLimit": oView.byId("PSlabLowLimit").getValue(),
                         "PointSlabUpperLimit": oView.byId("PSlabULimit").getValue()
                     }
                     var oPayLoadNew = this._RemoveEmptyValueV1(oPayLoad);
@@ -2672,7 +2707,7 @@ sap.ui.define(
 
                         },
                         error: function () {
-                            console.log("Error");
+
                         }
                     })
 
@@ -2690,6 +2725,21 @@ sap.ui.define(
                     );
 
                     return oNew2;
+                },
+                _CreateWorkFlowData: function (oPayLoad) {
+
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl")
+                    var oLoggedInInfo = oModel.getProperty("/LoggedInUser");
+                    console.log("workflow data", oLoggedInInfo)
+                    if (oLoggedInInfo["UserTypeId"] === 5) {
+                        oPayLoad["OfferStatus"] = "DRAFT";
+                    } else if (oLoggedInInfo["UserTypeId"] === 6 || oLoggedInInfo["UserTypeId"] === 7) {
+                        oPayLoad["OfferStatus"] = "APPROVED";
+                    }
+                    promise.resolve(oPayLoad);
+                    return promise;
                 },
                 _CreatePayloadPart1(bFileFlag) {
                     var promise = jQuery.Deferred();
