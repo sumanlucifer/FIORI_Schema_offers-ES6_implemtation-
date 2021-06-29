@@ -300,7 +300,8 @@ sap.ui.define([
 			});
 
 			oViewModel.setProperty("/busy", true);
-			this.CUOperation(oPayload);
+            this.CUOperation(oPayload);
+            
 		},
 
 		onPublish: function () {
@@ -308,7 +309,7 @@ sap.ui.define([
 
 			var oViewModel = this.getModel("objectView");
 			var oPayload = oViewModel.getProperty("/oDetails");
-
+            
 			if (oPayload.IsGroupNotification === false) {
 				oPayload.GroupId = null;
 			}
@@ -345,7 +346,7 @@ sap.ui.define([
 			});
 
 			oViewModel.setProperty("/busy", true);
-			this.CUOperation(oPayload);
+            this.CUOperation(oPayload);
 		},
 
 		/*
@@ -370,10 +371,12 @@ sap.ui.define([
                 url = data.RedirectionTo,
                 regexHttp=/https/,
 				regex =/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+                if(data.RedirectionType=="LINK"){
                 if(!url.match(regexHttp)){
                     url="https://"+url;
                     data.RedirectionTo=url
                 }
+            }
 			if (!data.Subject) {
 				oReturn.IsNotValid = true;
 				oReturn.sMsg.push("MSG_VALDTN_ERR_SUBJECT");
