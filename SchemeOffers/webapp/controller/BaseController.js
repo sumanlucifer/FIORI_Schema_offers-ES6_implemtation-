@@ -2614,6 +2614,9 @@ sap.ui.define(
                     }
 
                 },
+                  onAttachDialogClose: function (oEvent) {
+                    oEvent.getSource().getParent().close();
+                },
                 GetPainterCount: function () {
                     var oView = this.getView();
                     var oModelC = oView.getModel("oModelControl");

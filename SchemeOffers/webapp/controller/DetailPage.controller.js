@@ -1488,7 +1488,8 @@ sap.ui.define(
                         return promise;
                     }
                     var oView = this.getView();
-                    var oFile = oView.byId("idFileUpload").oFileUpload.files[0];
+                      var oWizardView = oView.byId("wizardViewBranching");
+                    var oFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var sServiceUrl = this.getOwnerComponent(this)
                         .getManifestObject()
                         .getEntry("/sap.app").dataSources.mainService.uri;
@@ -1565,9 +1566,7 @@ sap.ui.define(
                     return promise;
                 },
 
-                onAttachDialogClose: function (oEvent) {
-                    oEvent.getSource().getParent().close();
-                },
+              
                 onAfterAttachClose: function (oEvent) {
                     this._pKycDialog.destroy();
                     delete this._pKycDialog;
