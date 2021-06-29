@@ -196,7 +196,7 @@ sap.ui.define(
                                     true
                                 );
                                 othat._RbtnReset([
-                                    "Rbtn/Zones",
+                                   
                                     "Rbtn/PCat2",
                                     "Rbtn/PClass2",
                                     "Rbtn/AppProd2",
@@ -2631,8 +2631,8 @@ sap.ui.define(
                                 PotentialId: parseInt(elem),
                             };
                         }),
-                        "PointSlabLowerLimit": oModelV.getProperty("/PointSlabLowerLimit"),
-                        "PointSlabUpperLimit": oModelV.getProperty("/PointSlabUpperLimit")
+                        "PointSlabLowerLimit":oView.byId("PSlabLowLimit").getValue(),
+                        "PointSlabUpperLimit": oView.byId("PSlabULimit").getValue()
                     }
                     var oPayLoadNew = this._RemoveEmptyValueV1(oPayLoad);
                     var inTegerProperty = [

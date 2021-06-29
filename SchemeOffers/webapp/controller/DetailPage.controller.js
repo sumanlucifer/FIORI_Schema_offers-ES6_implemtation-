@@ -1123,12 +1123,14 @@ sap.ui.define(
                     };
                     for (var a in aBoleanProps) {
                         oMultiEnabled[aBoleanProps[a]] = oData[a];
-                        if (oData[a] == true) {
+                        if (oData[a] === true) {
                             oRbtn[aBoleanProps[a]] = 1;
                         } else {
                             oRbtn[aBoleanProps[a]] = 0;
                         }
                     }
+                    console.log(oRbtn)
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1768,6 +1770,7 @@ sap.ui.define(
                     var oValidate = new Validator()
                     var bFlagValidate = oValidate.validate(oForm, true);
                     if (!bFlagValidate) {
+                        MessageToast.show("Kindly fill all the mandatory fields to continue.");
                         return;
                     }
 
@@ -1796,13 +1799,12 @@ sap.ui.define(
                         success: function () {
                             this._RemarksDialog2.close();
                             MessageToast.show("Offer Successfully Updated.");
-
                             this._navToHome();
 
                         }.bind(this),
                         error: function () {
                             this._RemarksDialog2.close();
-                            MessageBox.error("Unanle to update the offer.");
+                            MessageBox.error("Unable to update the offer.");
                         }.bind(this)
                     })
 
