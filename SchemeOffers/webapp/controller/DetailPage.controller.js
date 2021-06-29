@@ -1123,12 +1123,14 @@ sap.ui.define(
                     };
                     for (var a in aBoleanProps) {
                         oMultiEnabled[aBoleanProps[a]] = oData[a];
-                        if (oData[a] == true) {
+                        if (oData[a] === true) {
                             oRbtn[aBoleanProps[a]] = 1;
                         } else {
                             oRbtn[aBoleanProps[a]] = 0;
                         }
                     }
+                    console.log(oRbtn)
+
                     promise.resolve(oData);
                     return promise;
                 },

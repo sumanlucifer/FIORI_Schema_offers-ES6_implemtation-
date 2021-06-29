@@ -196,7 +196,7 @@ sap.ui.define(
                                     true
                                 );
                                 othat._RbtnReset([
-                                    "Rbtn/Zones",
+                                   
                                     "Rbtn/PCat2",
                                     "Rbtn/PClass2",
                                     "Rbtn/AppProd2",

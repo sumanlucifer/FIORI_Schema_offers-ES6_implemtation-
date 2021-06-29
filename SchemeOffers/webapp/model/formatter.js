@@ -119,14 +119,14 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false
         },
         btnSendForApprovalCheck: function (m1, m2) {
-            if (m1 === "DRAFT") {
+            if (m1 === "DRAFT" || m1 === "REJECTED") {
                 if (m2 === 5) {
                     return true;
                 }
             }
             return false;
         },
-        //btnApproveDisplay and reject button
+        //btn Approve Display and reject button
         btnApproveDisplay: function (m1, m2) {
             if (m1 === "PENDING") {
                 if (m2 === 6 || m2 === 7) {
