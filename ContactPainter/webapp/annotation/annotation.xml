@@ -46,17 +46,13 @@
                             <PropertyValue Property="Label" String="Request ID"/>
                             <PropertyValue Property="Value" Path="Id"/>
                         </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField" >
                             <PropertyValue Property="Label" String="Request Type"/>
                             <PropertyValue Property="Value" Path="RequestTypeDetails/RequestType"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Created Date"/>
-                            <PropertyValue Property="Value" Path="CreatedAt"/>
-                        </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
-                            <PropertyValue Property="Label" String="Last Updated By"/>
-                            <PropertyValue Property="Value" Path="UpdatedRequestBy"/>
+                            <PropertyValue Property="Label" String="Zone"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/ZoneId"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Division"/>

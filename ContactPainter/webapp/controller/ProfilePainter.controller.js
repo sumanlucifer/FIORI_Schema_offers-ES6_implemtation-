@@ -24,6 +24,10 @@ sap.ui.define(
         "sap/m/VBox",
         "sap/m/Token",
         "sap/m/ObjectStatus",
+        "sap/m/DialogType",
+        "sap/m/ButtonType",
+        "sap/m/Text",
+        "sap/ui/core/Core",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
         "../model/formatter"
@@ -56,6 +60,10 @@ sap.ui.define(
         VBox,
         Token,
         ObjectStatus,
+        DialogType,
+        ButtonType,
+        Text,
+        Core,
         customInt1,
         customInt2,
         formatter
@@ -225,9 +233,9 @@ sap.ui.define(
                         EditBankButton: false, //Aditya Chnage
                         AddBankDocButton: false, //Aditya Chnage
                         InitialDocType: "", //Aditya Chnage
-                        InitialBankNull:false, //Aditya Chnage
+                        InitialBankNull: false, //Aditya Chnage
                         AddBankDoc: false, //Aditya Chnage
-                        EditField: false,//Aditya Chnage
+                        EditField: false, //Aditya Chnage
                         DocumentType: [{
                             Name: "Passbook",
                             Id: 0
@@ -379,8 +387,8 @@ sap.ui.define(
                             //oControlModel.setProperty("/KycImage/Image2", sBankImageUrl2);
                         }
                     }
-                    if(oDataValue["PainterBankDetails"] == null){
-                         oControlModel.setProperty("/InitialBankNull",true );
+                    if (oDataValue["PainterBankDetails"] == null) {
+                        oControlModel.setProperty("/InitialBankNull", true);
                     }
                     /*Aditya changes end*/
 
@@ -705,9 +713,9 @@ sap.ui.define(
                             oPayload["PainterAddress"][d] = null;
                         }
                     }
-                   
+
                     /*Aditya changes start*/
-                     for (var e in oPayload["PainterBankDetails"]) {
+                    for (var e in oPayload["PainterBankDetails"]) {
                         if (oPayload["PainterBankDetails"][e] === "") {
                             oPayload["PainterBankDetails"][e] = null;
                         }
@@ -716,7 +724,7 @@ sap.ui.define(
                     var editField = oCtrlModel.getProperty("/EditField");
                     var addBankDoc = oCtrlModel.getProperty("/AddBankDoc");
                     var InitialDocType = oCtrlModel.getProperty("/InitialDocType");
-                    var InitialBankNull=oCtrlModel.getProperty("/InitialBankNull");
+                    var InitialBankNull = oCtrlModel.getProperty("/InitialBankNull");
                     if (editBank) {
                         if (addBankDoc) {
                             this._checkBankFileUpload(oPayload);
@@ -725,13 +733,13 @@ sap.ui.define(
                     }
                     if (editField) {
                         oPayload["PainterBankDetails"]["Status"] = "PENDING";
-                    }else{
-                        if(InitialBankNull){
-                            oPayload["PainterBankDetails"]=null;
+                    } else {
+                        if (InitialBankNull) {
+                            oPayload["PainterBankDetails"] = null;
                         }
-                        
+
                     }
-                     
+
                     /*Aditya changes end*/
                     console.log(oPayload, sPath);
                     oData.update(sPath, oPayload, {
@@ -1558,16 +1566,15 @@ sap.ui.define(
                     delete this._addDocDialog;
                 },
                 onEditField: function (oEvent) {
-                   var length= oEvent.getParameter("value").length;
-                   var oModelCtrl = this.getView().getModel("oModelControl");
-                   if(length>1){
-                    oModelCtrl.setProperty("/EditField", true);
-                    }
-                    else{
+                    var length = oEvent.getParameter("value").length;
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    if (length > 1) {
+                        oModelCtrl.setProperty("/EditField", true);
+                    } else {
                         oModelCtrl.setProperty("/EditField", false);
                     }
-                   
-                   
+
+
                 },
 
                 /*Aditya changes end*/
@@ -2768,6 +2775,30 @@ sap.ui.define(
                         return "Success";
                     }
                 },
+                onPressRemarks: function (oEvent) {
+                    var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+                    var sRemarks = oEvent.getSource().getCustomData("remarks")[0].getValue();
+                    if (!this.oRemarksMessageDialog) {
+                        this.oRemarksMessageDialog = new Dialog({
+                            type: DialogType.Message,
+                            title: oResourceBundle.getText("remarksDialogTitle"),
+                            content: new Text("idRemarksText", {
+                                text: sRemarks
+                            }),
+                            styleClass: ['sapUiSizeCompact'],
+                            beginButton: new Button({
+                                type: ButtonType.Emphasized,
+                                text: "OK",
+                                press: function () {
+                                    this.oRemarksMessageDialog.close();
+                                }.bind(this)
+                            })
+                        });
+                    }
+                    Core.byId("idRemarksText").setText(sRemarks);
+                    this.oRemarksMessageDialog.open();
+                }
+
             }
         );
     }
