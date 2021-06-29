@@ -2631,8 +2631,8 @@ sap.ui.define(
                                 PotentialId: parseInt(elem),
                             };
                         }),
-                        "PointSlabLowerLimit": oModelV.getProperty("/PointSlabLowerLimit"),
-                        "PointSlabUpperLimit": oModelV.getProperty("/PointSlabUpperLimit")
+                        "PointSlabLowerLimit":oView.byId("PSlabLowLimit").getValue(),
+                        "PointSlabUpperLimit": oView.byId("PSlabULimit").getValue()
                     }
                     var oPayLoadNew = this._RemoveEmptyValueV1(oPayLoad);
                     var inTegerProperty = [
