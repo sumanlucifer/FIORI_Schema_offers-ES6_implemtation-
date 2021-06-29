@@ -265,14 +265,8 @@ sap.ui.define([
 
             },
             onCancelPress: function (oEvent) {
-
-                
-
-             
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
                 oRouter.navTo("RouteHome");
-
                 var oModel = this.getView().getModel("data");
                 oModel.refresh(true);
 
@@ -351,7 +345,7 @@ sap.ui.define([
                 // }
             },
             onClearInputFields: function () {
-                 var inputName=this.getView().byId("name");
+            var inputName=this.getView().byId("name");
               inputName.setValue("");
               inputName.setValueState(sap.ui.core.ValueState.None);
 
@@ -363,10 +357,13 @@ sap.ui.define([
               inputMobile.setValue("");
               inputMobile.setValueState(sap.ui.core.ValueState.None);
 
-              var inputMobile=this.getView().byId("role");
-              inputMobile.setValue("");
-              inputMobile.setValueState(sap.ui.core.ValueState.None);
+              var inputRole=this.getView().byId("role");
+              inputRole.setSelectedKey(null);
+              inputRole.setValueState(sap.ui.core.ValueState.None);
 
+              var inputUserType=this.getView().byId("iduserType");
+              inputUserType.setSelectedKey(null);
+              inputUserType.setValueState(sap.ui.core.ValueState.None);
                
             }
 
