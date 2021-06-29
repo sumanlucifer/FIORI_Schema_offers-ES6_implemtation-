@@ -328,7 +328,7 @@ sap.ui.define(
                                         if (data["results"].length > 0) {
                                             oLoginModel.setData(data["results"][0]);
                                             oControlModel.setProperty("/LoggedInUser", data["results"][0]);
-                                            console.log(oControlModel)
+
 
                                         }
                                     }
@@ -674,7 +674,7 @@ sap.ui.define(
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/Painters", Painters);
-                    console.log(oModelControl2);
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -725,7 +725,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl3");
                     oCtrl2Model.setProperty("/mode", "edit");
-                    var c1, c2, c3, c4, c5, c6, c7, c8, c9;
+                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10;
                     var othat = this;
 
 
@@ -744,8 +744,12 @@ sap.ui.define(
                                             c7 = othat._OfferTypeValidation2(data);
                                             c7.then(function (data) {
                                                 c8 = othat._CheckEditImage(data);
-                                                c8.then(function () {
-                                                    c9 = othat._destroyDialogs();
+                                                c8.then(function (data) {
+                                                    c9 = othat._getLoggedInUserDeatils(data);
+                                                    c9.then(function (data) { 
+                                                        c10=othat._destroyDialogs();
+                                                        //_destroyDialogs
+                                                    })
                                                 });
                                             });
                                         });
@@ -861,6 +865,7 @@ sap.ui.define(
                         StartDate: "",
                         EndDate: "",
                         MinDate: new Date(),
+                        LoggedInUser: {},
                         OfferType: {
                             BasicInformation: true,
                             ApplicableProducts: true,
@@ -1022,16 +1027,12 @@ sap.ui.define(
                             PainterCount: ""
                         },
                     };
-
                     var oConrtrolModel = new JSONModel(oDataControl);
                     oView.setModel(oConrtrolModel, "oModelControl");
-
                     var oModelView = new JSONModel(oData);
-
                     oView.setModel(oModelView, "oModelView");
-                    console.log(oData);
+                    console.log(oConrtrolModel);
                     //oModelView.refresh()
-
                     this._getProductsData();
                     promise.resolve(data);
                     return promise;
@@ -1129,7 +1130,7 @@ sap.ui.define(
                             oRbtn[aBoleanProps[a]] = 0;
                         }
                     }
-                    console.log(oRbtn)
+
 
                     promise.resolve(oData);
                     return promise;
@@ -1379,7 +1380,7 @@ sap.ui.define(
                 handleSavePress: function () {
                     var oView = this.getView();
                     var oWizard = this.getView().byId("wizardViewBranching");
-                    console.log(oWizard.byId("CreateProductWizard"))
+
                     this._ValidateSaveData();
                 },
                 _ValidateSaveData: function () {
@@ -1423,7 +1424,7 @@ sap.ui.define(
                 //     return [true, ""]
                 // },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c2, c3, c4, c5, c6, c7;
+                    var c1, c2, c3, c4, c5, c5A, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -1442,13 +1443,16 @@ sap.ui.define(
                                     //c5 = othat._CreateOffer(oPayLoad);
                                     c5 = othat._CreatePayLoadPart5(oPayLoad);
                                     c5.then(function (oPayLoad) {
-                                        c6 = othat._CreateOffer(oPayLoad);
-                                        c6.then(function (oPayLoad) {
-                                            c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                            c7.then(function (data) {
-                                                othat.handleCancelPress(data);
+                                        c5A = othat._CreateWorkFlowData(oPayLoad);
+                                        c5A.then(function () {
+                                            c6 = othat._CreateOffer(oPayLoad);
+                                            c6.then(function (oPayLoad) {
+                                                c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                                                c7.then(function (data) {
+                                                    othat.handleCancelPress(data);
+                                                });
                                             });
-                                        });
+                                        })
                                     });
                                 });
                             });
@@ -1790,7 +1794,7 @@ sap.ui.define(
                             oNewPayLoad["IsPublished"] = false;
                         }
                     } else if (sOfferStatus === "ESCALATE") {
-                        console.log("ESCALATE")
+
                         oNewPayLoad["InitiateForceTat"] = true;
                     }
                     console.log(oNewPayLoad);

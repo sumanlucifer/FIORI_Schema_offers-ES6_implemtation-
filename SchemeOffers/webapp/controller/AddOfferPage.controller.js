@@ -87,6 +87,7 @@ sap.ui.define(
                         StartDate: "",
                         EndDate: "",
                         MinDate: new Date(),
+                        LoggedInUser: {},
                         OfferType: {
                             BasicInformation: true,
                             ApplicableProducts: true,
@@ -176,7 +177,7 @@ sap.ui.define(
                             ParentOffer: 0,
                             BrReqVol: 0,
                             BrReqCash: 0,
-                            BrReqPercent:0
+                            BrReqPercent: 0
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -247,7 +248,7 @@ sap.ui.define(
                             Date2: null,
                             ParentOfferTitle: "",
                             RewardRationCount: 1,
-                            PainterCount:""
+                            PainterCount: ""
                         },
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
@@ -281,7 +282,7 @@ sap.ui.define(
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
                         BonusDescription: "",
-                        InputType:0
+                        InputType: 0
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -290,6 +291,7 @@ sap.ui.define(
                     // adding the fragment
                     //this._showFormFragment("ChangeDetail2");
                     //get products data
+                    this._getLoggedInUserDeatils();
                     this._getProductsData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
@@ -301,7 +303,7 @@ sap.ui.define(
                     //this._clearPress;
                     sap.ui.getCore().getMessageManager().removeAllMessages();
                 },
-
+              
                 _SampleFunction: function () {
                     this.getView().byId("wizardViewBranching");
                 },
@@ -328,7 +330,7 @@ sap.ui.define(
                 additionalInfoValidation: function () {
                     var oWizard = this.getView().byId('CreateProductWizard');
                     var name = [];
-                    console.log("step validation trigerred")
+                 
 
                     oWizard.validateStep(this.byId("ProductInfoStep"));
 
@@ -342,7 +344,7 @@ sap.ui.define(
                     //oWizard.setCurrentStep(this.getView().byId("idStep1"));
                     //oWizard.setShowNextButton(true)
                     oWizard.goToStep(oStep);
-                    console.log("enable step1")
+                 
                     oWizard.setShowNextButton(false)
                     //oSteps.goToStep(cView.byId("idStep1"));
                     //oSteps.setShowNextButton(false);
@@ -404,13 +406,13 @@ sap.ui.define(
 
                     this._postDataToSave(bFileFlag);
                 },
-                
+
                 onAfterRendering: function () {
                     // this.getView().byId("startDate").setMinDate(new Date());
-                    console.log("enable step2")
+                  
                 },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c2, c3, c4, c5, c6, c7;
+                    var c1, c2, c3, c4, c5, c5A, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -428,17 +430,20 @@ sap.ui.define(
                                 c4.then(function (oPayLoad) {
                                     c5 = othat._CreatePayLoadPart5(oPayLoad);
                                     c5.then(function (oPayLoad) {
-                                        c6 = othat._CreateOffer(oPayLoad);
-                                        c6.then(function (oData) {
-                                            c7 = othat._UploadFile(oData, bFileFlag);
-                                        });
+                                        c5A = othat._CreateWorkFlowData(oPayLoad);
+                                        c5A.then(function () {
+                                            c6 = othat._CreateOffer(oPayLoad);
+                                            c6.then(function (oData) {
+                                                c7 = othat._UploadFile(oData, bFileFlag);
+                                            });
+                                        })
+
                                     });
                                 });
                             });
                         });
                     });
                 },
-
                 _CreateOffer: function (oPayLoad) {
                     var promise = jQuery.Deferred();
                     var othat = this;
@@ -462,7 +467,7 @@ sap.ui.define(
                 _UploadFile: function (mParam1, mParam2) {
                     var promise = jQuery.Deferred();
                     if (!mParam2) {
-                        console.log("No File Found");
+                       
                         promise.resolve();
                         return promise;
                     }
@@ -511,7 +516,7 @@ sap.ui.define(
                     MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
                 },
                 onExit: function () {
-                    console.log("you have exited the view")
+                   
                 }
             }
         );
