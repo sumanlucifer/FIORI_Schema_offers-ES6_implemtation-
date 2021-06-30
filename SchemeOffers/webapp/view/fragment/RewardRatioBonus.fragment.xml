@@ -112,7 +112,7 @@
 
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusAppPainter}">
+                <!-- <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusAppPainter}">
                     <f:formElements>
                         <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
@@ -131,8 +131,8 @@
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusValidity}">
+                </f:FormContainer> -->
+                <!-- <f:FormContainer visible="{oModelControl>/OfferType/AdditionalReward}" title="{i18n>BonusValidity}">
                     <f:formElements>
                         <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
@@ -151,7 +151,7 @@
                         </f:FormElement>
 
                     </f:formElements>
-                </f:FormContainer>
+                </f:FormContainer> -->
 
 
             </f:formContainers>
