@@ -1812,10 +1812,10 @@ sap.ui.define(
                     // }
                 },
                 onValueHelpAfterClose: function () {
-                    // if (this._DepotDialog) {
-                    //     this._oDepotDialog.destroy();
-                    //     delete this._oDepotDialog;
-                    // }
+                    if (this._DepotDialog) {
+                        this._oDepotDialog.destroy();
+                        delete this._oDepotDialog;
+                    }
                     if (this._PainterValueHelp) {
                         this._PainterValueHelp.destroy();
                         delete this._PainterValueHelp;

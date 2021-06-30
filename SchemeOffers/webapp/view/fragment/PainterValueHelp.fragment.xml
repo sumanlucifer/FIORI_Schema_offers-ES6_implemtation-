@@ -94,7 +94,7 @@
                         label="Mobile Number"
                         visibleInFilterBar="true">
                         <fb:control>
-                            <m:Input value="{oModelControl>/Search/PainterVh/Mobile}"  name="Mobile" placeholder="{i18n>enterMobile}"/>
+                            <m:Input value="{oModelControl>/Search/PainterVh/Mobile}" type="Number"  name="Mobile" placeholder="{i18n>enterMobile}"/>
                         </fb:control>
                     </fb:FilterGroupItem>
 
