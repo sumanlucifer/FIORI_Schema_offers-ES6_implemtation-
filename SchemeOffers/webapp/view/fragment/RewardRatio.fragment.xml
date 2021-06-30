@@ -111,12 +111,7 @@
             </headerToolbar>
 
             <columns>
-                <!-- <Column>
-                    <Text text="{i18n>ProductsPacks}" />
-                </Column> -->
-                <!-- <Column>
-                    <Label text="{i18n>Type}" required="false"/>
-                </Column> -->
+             
                 <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="false"/>
                 </Column>

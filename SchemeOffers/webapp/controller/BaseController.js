@@ -638,6 +638,61 @@ sap.ui.define(
           oTable.splice(sPath[sPath.length - 1], 1);
           oModel.refresh(true);
         },
+        onPressAddRewards2V2: function (oEvent) {
+          var oView = this.getView();
+          var oModel = this.getView().getModel("oModelControl");
+          var oRewardDtl = oModel.getProperty("/Table/Table4");
+          if (oEvent !== "add") {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelControl");
+            var oObject = oEvent
+              .getSource()
+              .getBindingContext("oModelControl")
+              .getObject();
+            oObject["editable"] = true;
+            oModel.refresh();
+          } else {
+            var bFlag = true;
+            var sLength = 10;
+            if (oRewardDtl.length >= sLength) {
+              MessageToast.show(
+                "For the current bonus type we can add only " +
+                  sLength +
+                  " item(s)."
+              );
+              bFlag = false;
+              return;
+            }
+            if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+              for (var prop of oRewardDtl) {
+                if (prop["editable"] == true) {
+                  bFlag = false;
+                  MessageToast.show(
+                    "Save or delete the existing data in the table before adding a new data"
+                  );
+                  return;
+                  break;
+                }
+              }
+            }
+
+            if (bFlag == true) {
+              oRewardDtl.push({
+                SkuCode: "",
+                ProductCode: "",
+                StartDate: null,
+                EndDate: null,
+                BonusPoints: "",
+                BonusPercentage: "",
+                editable: true,
+              });
+            }
+            oModel.refresh(true);
+          }
+        },
+        onPressSaveReward2V2:function(oEvent){
+            console.log(oEvent.getSource().getBindingContext("oModelControl").getObject());
+        },
         onPressAddRewards2: function (oEvent) {
           var oView = this.getView();
           var othat = this;
