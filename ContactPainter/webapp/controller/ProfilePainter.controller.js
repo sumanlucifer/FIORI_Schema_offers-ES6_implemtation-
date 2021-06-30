@@ -236,6 +236,13 @@ sap.ui.define(
                         InitialBankNull: false, //Aditya Chnage
                         AddBankDoc: false, //Aditya Chnage
                         EditField: false, //Aditya Chnage
+                        EditKyc:false,//Aditya Chnage
+                        EditKycButton:false,//Aditya Chnage
+                        EditFieldKyc:false,//Aditya chnages
+                        AddKycDoc:false,//Aditya Chnage
+                        AddKycDocButton:false,//Aditya chnage
+                        InitialKycNull:false, //Aditya Chnage
+                        InitialKycDocType: "", //Aditya Chnage
                         DocumentType: [{
                             Name: "Passbook",
                             Id: 0
@@ -389,6 +396,15 @@ sap.ui.define(
                     }
                     if (oDataValue["PainterBankDetails"] == null) {
                         oControlModel.setProperty("/InitialBankNull", true);
+                    }
+                    if(oDataValue["PainterKycDetails"] == null){
+                         oControlModel.setProperty("/InitialKycNull",true );
+                         oDataValue["PainterKycDetails"]={
+                             GovtId:null,
+                             KycTypeId:null,
+                             PainterId:oDataValue["Id"],
+                             Status:"PENDING"
+                         }
                     }
                     /*Aditya changes end*/
 
@@ -584,8 +600,12 @@ sap.ui.define(
                     var eTbleAssets = !oModelControl.getProperty("/EditTb2AST");
                     var sBankId = oModelControl.getProperty("/EditBank");
                     var addBankDoc = oModelControl.getProperty("/AddBankDoc");
+                    var addKycDoc = oModelControl.getProperty("/AddKycDoc");
                     if (addBankDoc) {
                         this.eValidateBank = this._CheckTheBank(); //Aditya chnages
+                    }
+                    if (addKycDoc) {
+                        this.eValidateKyc = this._CheckTheKyc(); //Aditya chnages
                     }
 
                     this.sServiceURI = this.getOwnerComponent(this)
@@ -611,23 +631,45 @@ sap.ui.define(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
                     }
-
-                    if (addBankDoc) {
-                        if (this.eValidateBank == false) {
-                            MessageToast.show("Kindly upload the image of the selected Bank Details.");
+                    if(addBankDoc && addKycDoc){
+                            if (this.eValidateBank == false &&  this.eValidateKyc == false ) {
+                            MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.");
                         }
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
+                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc) {
                             this._postDataToSave();
                         }
-                    } else {
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation) {
+                    } else
+                    if (addBankDoc || addKycDoc ) {
+                        if (this.eValidateBank == false) {
+                            MessageToast.show("Kindly upload the image of the selected Bank Details.");
+                        }else if(this.eValidateKyc == false){
+                                MessageToast.show("Kindly upload the image of the selected Kyc Details.");
+                         }
+                        if(addBankDoc){
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
+                            this._postDataToSave();
+                        }
+                        }else
+                        if(addKycDoc){
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateKyc) {
+                            this._postDataToSave();
+                            }
+                        }
+                        
+                    }  
+                   
+                    else if(!addBankDoc && !addKycDoc){
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation) {
                             this._postDataToSave();
                         }
                     }
+                        
+                    
 
                 },
 
                 _postDataToSave: function () {
+            
                     var oView = this.getView();
                     var oCtrlModel = oView.getModel("oModelControl");
                     var oViewModel = this.getView().getModel("oModelView");
@@ -720,17 +762,26 @@ sap.ui.define(
                             oPayload["PainterBankDetails"][e] = null;
                         }
                     }
+                    for (var f in oPayload["PainterKycDetails"]) {
+                        if (oPayload["PainterKycDetails"][f] === "") {
+                            oPayload["PainterKycDetails"][f] = null;
+                        }
+                    }
                     var editBank = oCtrlModel.getProperty("/EditBank");
                     var editField = oCtrlModel.getProperty("/EditField");
                     var addBankDoc = oCtrlModel.getProperty("/AddBankDoc");
                     var InitialDocType = oCtrlModel.getProperty("/InitialDocType");
                     var InitialBankNull = oCtrlModel.getProperty("/InitialBankNull");
-                    if (editBank) {
+                    var editKyc = oCtrlModel.getProperty("/EditKyc");
+                    var editFieldKyc = oCtrlModel.getProperty("/EditFieldKyc");
+                    var addKycDoc = oCtrlModel.getProperty("/AddKycDoc");
+                    var InitialKycNull=oCtrlModel.getProperty("/InitialKycNull");
+                   // if (editBank) {
                         if (addBankDoc) {
-                            this._checkBankFileUpload(oPayload);
+                            // this._checkBankFileUpload(oPayload);
+                            oPayload["PainterBankDetails"]["Status"] = "PENDING";
                         }
-                        // oPayload["PainterBankDetails"]["Status"] = "PENDING";
-                    }
+                   // }
                     if (editField) {
                         oPayload["PainterBankDetails"]["Status"] = "PENDING";
                     } else {
@@ -739,17 +790,109 @@ sap.ui.define(
                         }
 
                     }
+                    //upload kyc doc
+                    if (addKycDoc) {
+                           oPayload["PainterKycDetails"]["Status"] = "INPROGRESS";
+                    }
+                    if (editFieldKyc) {
+                        if (addKycDoc) {
+                           oPayload["PainterKycDetails"]["Status"] = "INPROGRESS";
+                        }else{
+                            oPayload["PainterKycDetails"]["Status"] = "PENDING";
+                        }
+                        
+                    }else{
+                        if(InitialKycNull){
+                            oPayload["PainterKycDetails"]=null;
+                        }
+                        
+                    }
 
-                    /*Aditya changes end*/
+                    
                     console.log(oPayload, sPath);
-                    oData.update(sPath, oPayload, {
-                        success: function (oData) {
+                    var oModel=this.getView().getModel();
+                   
+                    var c1, c2, c3, c4;
+                    var oData = this.getView().getModel();
+                    //var othat = this;
+                    c1 = this._UpdateData(oPayload,sPath);
+                    c1.then(
+                        function (oData) {
+                            if(editBank || editKyc){
+                                if(addBankDoc && addKycDoc){
+                                                 oView.setBusy(true);
+                                                    c2 = othat._getUpdatedPainterData(oData);
+                                                    c2.then(function (oData) {
+                                                        oView.setBusy(true);
+                                                        c3 = othat._checkFileUpload(oData);
+                                                        c3.then(function (data) {
+                                                            c4 = othat._checkBankFileUpload(oData);
+                                                            c4.then(function (data) {
+                                                                //othat.navPressBack();
+                                                                oView.setBusy(false);
+                                                                othat.fnCheckProfileCompleted.call(othat, oPayload);
+                                                                othat.handleCancelPress();
+                                                                });
+                                                        })
+                                                    });
+
+                                            }else
+                                            if(addBankDoc || addKycDoc){
+                                            if(addBankDoc){
+                                                        oView.setBusy(true);
+                                                        c2 = othat._getUpdatedPainterData(oData);
+                                                        c2.then(function (oData) {
+                                                        oView.setBusy(true);
+                                                            c3 = othat._checkBankFileUpload(oData);
+                                                            c3.then(function (data) {
+                                                                oView.setBusy(false);
+                                                                othat.fnCheckProfileCompleted.call(othat, oPayload);
+                                                                othat.handleCancelPress();
+                                                                });
+                                                            });
+                                                        }else if(addKycDoc){
+                                                            oView.setBusy(true);
+                                                            c2 = othat._getUpdatedPainterData(oData);
+                                                            c2.then(function (oData) {
+                                                                oView.setBusy(true);
+                                                                c3 = othat._checkFileUpload(oData);
+                                                                c3.then(function (data) {
+                                                                    oView.setBusy(false);
+                                                                    othat.fnCheckProfileCompleted.call(othat, oPayload);
+                                                                    othat.handleCancelPress();
+                                                                            })
+                                                                        });
+                                                        }
+                                                    } else{
+                                                    oView.setBusy(false);
+                                                    othat.fnCheckProfileCompleted.call(othat, oPayload);
+                                                    othat.handleCancelPress();
+                                        }
+                                       }
+                                        else{
+                                            oView.setBusy(false);
+                                            othat.fnCheckProfileCompleted.call(othat, oPayload);
+                                            othat.handleCancelPress();
+                                        }
+                                        
+                        })
+                        
+                },
+                _UpdateData:function(oPayload,sPath) {
+                    var i=0;
+                    console.log(i+1);
+                     var promise = jQuery.Deferred();
+                     var othat = this;
+                    var oModel=this.getView().getModel();
+                    oModel.update(sPath, oPayload, {
+                        success: function (Data) {
                             MessageToast.show(
                                 "Painter " + oPayload["Name"] + " Successfully Updated"
                             );
-                            othat.fnCheckProfileCompleted.call(othat, oPayload);
-                            othat.handleCancelPress();
+                            //othat.fnCheckProfileCompleted.call(othat, oPayload);
+                            //othat.handleCancelPress();
                             //oData.refresh(true);
+                            promise.resolve(Data);
                         },
                         error: function (a) {
                             var sMessage =
@@ -761,8 +904,27 @@ sap.ui.define(
                             MessageBox.error(sMessage, {
                                 title: "Error Code: " + a.statusCode,
                             });
+                            promise.reject(a);
                         },
                     });
+                    return promise;
+                },
+                /*Aditya changes end*/
+                _getUpdatedPainterData:function (){
+                     var promise = jQuery.Deferred();
+                     var oCtrlModel = this.getView().getModel("oModelControl");
+                     var sPath = "/" + oCtrlModel.getProperty("/bindProp");
+                     var oModel=this.getView().getModel();
+                            oModel.read(sPath, {  urlParameters: {
+                                "$expand": "PainterBankDetails,PainterKycDetails"
+                            },
+                                success: function(oData) {
+                                   promise.resolve(oData);
+                                       
+                                },
+                                    error: function(oError) {  promise.reject(); }
+                            });
+                                return promise;
                 },
                 _ReturnObjects: function (mParam) {
                     var obj = Object.assign({}, mParam);
@@ -1115,6 +1277,19 @@ sap.ui.define(
                     if (oEvent.getSource().getSelectedKey() == "") {
                         oView.byId("kycIdNo").setValueState("None");
                         oModel.setProperty("/PainterKycDetails/GovtId", "");
+                    }
+                },
+                 onKycChangeEdit: function (oEvent) {
+                    var oModel = this.getView().getModel("oModelView");
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    var oView = this.getView();
+                    var kycId=oView.byId("idKycEditCombo").getSelectedKey();
+                    if (kycId == "") {
+                        oView.byId("kycIdNoEdit").setValueState("None");
+                        oModel.setProperty("/PainterKycDetails/GovtId", "");
+                    }else{
+                        //oModel.setProperty("/PainterKycDetails/KycTypeId", parseInt(kycId));
+                        oModelCtrl.setProperty("/KycLabel",kycId);
                     }
                 },
                 fmtLabel: function (mParam1) {
@@ -1575,15 +1750,141 @@ sap.ui.define(
                     }
 
 
+                },onEditFieldKyc: function (oEvent) {
+                   var length= oEvent.getParameter("value").length;
+                   var value=oEvent.getParameter("value");
+                   var oModelCtrl = this.getView().getModel("oModelControl");
+                   var oModelView = this.getView().getModel("oModelView");
+                   
+                   if(length>1){
+                    oModelCtrl.setProperty("/EditFieldKyc", true);
+                    //oModelView.setProperty("/PainterKycDetails/GovtId",value);
+                    }
+                    else{
+                        oModelCtrl.setProperty("/EditFieldKyc", false);
+                    }
+                   
+                   
                 },
+                onEditKycFields: function (){
+                     var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/EditKyc", true);
+                    oModelCtrl.setProperty("/EditKycButton", true);
+                    oModelCtrl.setProperty("/AddKycDocButton", true);
+                   // oModelCtrl.setProperty("/AddNewBank", false);
+                },
+                onEditCancelKycFields:function (){
+                     var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/EditKyc", false);
+                    oModelCtrl.setProperty("/EditKycButton", false);
+                    oModelCtrl.setProperty("/AddKycDoc", false);
+                    oModelCtrl.setProperty("/AddKycDocButton", false);
+
+                },
+                onAddKycDoc: function (){
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/AddKycDoc", true);
+                    oModelCtrl.setProperty("/AddKycDocButton", false);
+                },
+                onCancelKycDoc: function (){
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    var oModelView = this.getView().getModel("oModelView");
+                    oModelCtrl.setProperty("/AddKycDoc", false);
+                    oModelCtrl.setProperty("/AddKycDocButton", true);
+                    oModelCtrl.setProperty("/EditKycButton", true);
+                    var InitialDocType = oModelCtrl.getProperty("/InitialKycDocType");
+                    oModelView.setProperty("/PainterKycDetails/KycTypeId", InitialDocType);
+                },
+                 _CheckTheKyc: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelView");
+                    var sKYCId = oModel.getProperty("/PainterKycDetails/KycTypeId");
+                    var oUpload = oView.byId("idUploadCollection");
+                    var iItems = oUpload.getItems().length;
+                    if (sKYCId !== "") {
+                        if (sKYCId == "1") {
+                            if (iItems < 2) {
+                                return false;
+                            }
+                        }
+                        if (iItems == 0) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                _checkFileUpload: function (oData) {
+                    var promise = jQuery.Deferred();
+                    var UploadCollection = this.getView().byId("idUploadCollection");
+                    var oItems = UploadCollection.getItems();
+                    var oCtrlModel=this.getView().getModel("oModelControl");
+                    var othat = this;
+                    var bFlag = false;
+                    if (oData.hasOwnProperty("PainterKycDetails")) {
+                        var oKycData = oData["PainterKycDetails"];
+                        if (oKycData !== null) {
+                            if (oKycData.hasOwnProperty("Id")) {
+                                if (oItems.length > 0) {
+                                    bFlag = true;
+                                }
+                            }
+                        }
+                    }
+                    if (!bFlag) {
+                        promise.resolve(oData);
+                        return promise;
+                    }
+                    var sUrl =
+                        this.sServiceURI +
+                        "PainterKycDetailsSet(" +
+                        oKycData["Id"] +
+                        ")/$value?image_type=";
+
+                    var sUrl2 = "";
+                    var async_request = [];
+
+                    for (var x = 0; x < oItems.length; x++) {
+                        var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader())
+                            .oFileUpload.files[0];
+                        sUrl2 = x == 0 ? "front" : "back";
+                        async_request.push(
+                            jQuery.ajax({
+                                method: "PUT",
+                                url: sUrl + sUrl2,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                data: sFile,
+                                success: function (data) {
+                                   // var editField = oCtrlModel.setProperty("/EditFieldKyc", true);
+                                 },
+                                error: function () { },
+                            })
+                        );
+                    }
+                    if (oItems.length > 0) {
+                        jQuery.when.apply(null, async_request).then(
+                            function () {
+                                //promise.resolve("FileUpdated");
+                            },
+                            function () {
+                                //promise.resolve("FileNot Uplaoded");
+                            }
+                        );
+                    }
+                    promise.resolve(oData);
+                    return promise;
+                },
+
+
 
                 /*Aditya changes end*/
                 onPressCloseDialog: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
                 onDialogClose: function (oEvent) {
-                    this._pKycDialog.destroy();
-                    delete this._pKycDialog;
+                    // this._pKycDialog.destroy();
+                    // delete this._pKycDialog;
                 },
                 onAddNewBank: function (oEvent) {
                     var oView = this.getView();
