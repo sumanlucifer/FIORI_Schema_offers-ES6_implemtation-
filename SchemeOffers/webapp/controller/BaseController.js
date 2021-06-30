@@ -1816,12 +1816,11 @@ sap.ui.define(
                     //     this._oDepotDialog.destroy();
                     //     delete this._oDepotDialog;
                     // }
-                    //   if (this._PainterValueHelp) {
-                    //     this._PainterValueHelp.destroy();
-                    //     delete this._PainterValueHelp;
-                    //   }
+                    if (this._PainterValueHelp) {
+                        this._PainterValueHelp.destroy();
+                        delete this._PainterValueHelp;
+                    }
                     if (this._RewardsDialog1) {
-
                         this._RewardsDialog1.destroy();
                         delete this._RewardsDialog1;
                     } //_RewardsDialog2
@@ -2614,7 +2613,7 @@ sap.ui.define(
                     }
 
                 },
-                  onAttachDialogClose: function (oEvent) {
+                onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
                 GetPainterCount: function () {
