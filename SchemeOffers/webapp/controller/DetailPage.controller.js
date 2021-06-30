@@ -1396,7 +1396,7 @@ sap.ui.define(
                     var bFileFlag = false;
 
                     if (bFlagValidate == false) {
-                        MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+                        MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                         return;
                     }
                     //check if it has file
@@ -1417,7 +1417,7 @@ sap.ui.define(
                 //     var oModel = oView.getModel("oModelControl");
                 //     var oModelData = oModel.getData();
                 //     if (oModelData["Table"]["Table2"].length == 0) {
-                //         return [false, "Kinldy Enter the data in the Reward Ratio Table to Continue"]
+                //         return [false, "Kindly Enter the data in the Reward Ratio Table to Continue"]
                 //     }
 
 
@@ -1470,7 +1470,7 @@ sap.ui.define(
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
-                                MessageToast.show("Offer Sucessfully Updated.");
+                                MessageToast.show("Offer Successfully Updated.");
                                 othat._navToHome();
                                 resolve(data);
                             },
