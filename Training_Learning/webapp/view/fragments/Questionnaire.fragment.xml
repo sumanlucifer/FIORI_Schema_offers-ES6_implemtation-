@@ -2,7 +2,7 @@
     <VBox id="idVbxQView" width="100%">
         <f:SimpleForm id="ViewTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
             <f:content>
-                <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true" noDataText="No data available" items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+                <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true" growingThreshold="15" growingScrollToLoad="false" noDataText="No data available" items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
                     <CustomListItem>
                         <VBox renderType="Bare" class="sapUiTinyMargin">
                             <HBox renderType="Bare">

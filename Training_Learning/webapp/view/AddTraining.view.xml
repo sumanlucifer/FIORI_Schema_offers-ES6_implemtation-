@@ -133,7 +133,7 @@
         <f:SimpleForm id="AddQuestionnaireDetails" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
         <f:content>
                 <core:Title text="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' ? 'Questionnaire' : '' }"/>
-                <List visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" noDataText="{i18n>tableNoData}" headerText="{i18n>Questionnaire}" growing="true"
+                <List visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" id="AddTrainingListQuestionnaire" enableBusyIndicator="true" noDataText="{i18n>tableNoData}" headerText="{i18n>Questionnaire}" growingThreshold="15" growingScrollToLoad="false" growing="true"
 					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>
