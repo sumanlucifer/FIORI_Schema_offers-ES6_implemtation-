@@ -1812,16 +1812,15 @@ sap.ui.define(
                     // }
                 },
                 onValueHelpAfterClose: function () {
-                    // if (this._DepotDialog) {
-                    //     this._oDepotDialog.destroy();
-                    //     delete this._oDepotDialog;
-                    // }
-                    //   if (this._PainterValueHelp) {
-                    //     this._PainterValueHelp.destroy();
-                    //     delete this._PainterValueHelp;
-                    //   }
+                    if (this._DepotDialog) {
+                        this._oDepotDialog.destroy();
+                        delete this._oDepotDialog;
+                    }
+                    if (this._PainterValueHelp) {
+                        this._PainterValueHelp.destroy();
+                        delete this._PainterValueHelp;
+                    }
                     if (this._RewardsDialog1) {
-
                         this._RewardsDialog1.destroy();
                         delete this._RewardsDialog1;
                     } //_RewardsDialog2
@@ -2614,7 +2613,7 @@ sap.ui.define(
                     }
 
                 },
-                  onAttachDialogClose: function (oEvent) {
+                onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
                 GetPainterCount: function () {
@@ -2741,6 +2740,8 @@ sap.ui.define(
                     } else if (oLoggedInInfo["UserTypeId"] === 6 || oLoggedInInfo["UserTypeId"] === 7) {
                         oPayLoad["OfferStatus"] = "APPROVED";
                     }
+                    oPayLoad["IsWorkFlowApplicable"] = false;
+                    oPayLoad["InitiateForceTat"] = false;
                     promise.resolve(oPayLoad);
                     return promise;
                 },

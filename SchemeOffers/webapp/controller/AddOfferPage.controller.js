@@ -282,7 +282,8 @@ sap.ui.define(
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
                         BonusDescription: "",
-                        InputType: 0
+                        InputType: 0,
+                        IsWorkFlowApplicable:false
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -387,7 +388,7 @@ sap.ui.define(
                     var aTableValidation = this._CheckTableValidation()
 
                     if (bFlagValidate == false) {
-                        MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
+                        MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                         return;
                     }
                     //check if it has file
@@ -453,7 +454,7 @@ sap.ui.define(
                     return new Promise((resolve, reject) => {
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
-                                MessageToast.show("Offer Sucessfully Created.");
+                                MessageToast.show("Offer Successfully Created.");
                                 othat._navToHome();
                                 resolve(data);
                             },
