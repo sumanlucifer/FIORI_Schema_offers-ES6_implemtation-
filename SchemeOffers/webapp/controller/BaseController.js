@@ -2740,6 +2740,8 @@ sap.ui.define(
                     } else if (oLoggedInInfo["UserTypeId"] === 6 || oLoggedInInfo["UserTypeId"] === 7) {
                         oPayLoad["OfferStatus"] = "APPROVED";
                     }
+                    oPayLoad["IsWorkFlowApplicable"] = false;
+                    oPayLoad["InitiateForceTat"] = false;
                     promise.resolve(oPayLoad);
                     return promise;
                 },

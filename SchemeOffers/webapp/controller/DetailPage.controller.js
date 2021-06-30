@@ -746,8 +746,8 @@ sap.ui.define(
                                                 c8 = othat._CheckEditImage(data);
                                                 c8.then(function (data) {
                                                     c9 = othat._getLoggedInUserDeatils(data);
-                                                    c9.then(function (data) { 
-                                                        c10=othat._destroyDialogs();
+                                                    c9.then(function (data) {
+                                                        c10 = othat._destroyDialogs();
                                                         //_destroyDialogs
                                                     })
                                                 });
@@ -1488,7 +1488,7 @@ sap.ui.define(
                         return promise;
                     }
                     var oView = this.getView();
-                      var oWizardView = oView.byId("wizardViewBranching");
+                    var oWizardView = oView.byId("wizardViewBranching");
                     var oFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var sServiceUrl = this.getOwnerComponent(this)
                         .getManifestObject()
@@ -1566,7 +1566,7 @@ sap.ui.define(
                     return promise;
                 },
 
-              
+
                 onAfterAttachClose: function (oEvent) {
                     this._pKycDialog.destroy();
                     delete this._pKycDialog;
@@ -1792,10 +1792,18 @@ sap.ui.define(
                         } else {
                             oNewPayLoad["IsPublished"] = false;
                         }
+                        oNewPayLoad["InitiateForceTat"] = false;
                     } else if (sOfferStatus === "ESCALATE") {
-
                         oNewPayLoad["InitiateForceTat"] = true;
                     }
+                    // check is workflow flag
+                    var aCheck2 = ["PENDING", "APPROVED", "REJECTED", "ESCALATE"];
+                    if (aCheck2.indexOf(sOfferStatus) >= 0) {
+                        oNewPayLoad["IsWorkFlowApplicable"] = true;
+                    }else {
+                         oNewPayLoad["IsWorkFlowApplicable"] = false;
+                    }
+
                     console.log(oNewPayLoad);
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
                     oData.update("/" + sPath, oNewPayLoad, {

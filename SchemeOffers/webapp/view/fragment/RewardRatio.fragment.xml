@@ -101,7 +101,7 @@
                 </ColumnListItem>
             </items>
         </Table> -->
-        <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}"  width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />

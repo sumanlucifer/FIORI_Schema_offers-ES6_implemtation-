@@ -282,7 +282,8 @@ sap.ui.define(
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
                         BonusDescription: "",
-                        InputType: 0
+                        InputType: 0,
+                        IsWorkFlowApplicable:false
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");

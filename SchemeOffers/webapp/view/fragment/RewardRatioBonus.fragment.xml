@@ -156,7 +156,7 @@
 
             </f:formContainers>
         </f:Form>
-        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }"  width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
@@ -195,7 +195,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }"  width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
