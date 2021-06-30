@@ -83,7 +83,7 @@
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
 							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
-							noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoData}" growingThreshold="15" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished="onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -186,7 +186,7 @@
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoData}" growingThreshold="15" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>

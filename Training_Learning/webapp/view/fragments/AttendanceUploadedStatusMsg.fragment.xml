@@ -2,7 +2,7 @@
 <Dialog title="{i18n>TitleAttendanceUploadedMsg}" contentHeight="500px" contentWidth="600px">
     <VBox id="idVbxAttendanceStatusMsg" width="100%">
         <f:SimpleForm id="idFormAttendanceStatusMsg" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
-        <Table id="idTblAttendanceStatusMsg" width="auto" items="{ path: 'oModelView>/oResult'}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
+        <Table id="idTblAttendanceStatusMsg" width="auto" items="{ path: 'oModelView>/oResult'}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
             <columns>
                 <Column width="10%">
                     <Text text="{i18n>colRow}"/>
