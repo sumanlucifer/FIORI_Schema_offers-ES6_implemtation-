@@ -440,7 +440,61 @@ sap.ui.define(
                 onBRRbChange: function () {
                     this._CreateBonusRewardTable();
                 },
+                onPressAddGenericReward2V2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table3");
+                    if (oEvent !== "add") {
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
 
+                        oModel.refresh();
+
+                    } else {
+
+                        var bFlag = true;
+                        var sLength = 1;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the current bonus type we can add only " + sLength + " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                StartDate: null,
+                                EndDate: null,
+                                BonusPoints: "",
+                                BonusPercentage: "",
+                                editable: true
+                            });
+
+
+                        }
+                        oModel.refresh();
+                    }
+
+
+                },
                 onPressAddGenericReward2: function (oEvent) {
                     var oView = this.getView();
                     var othat = this;
@@ -448,16 +502,16 @@ sap.ui.define(
                     var oBj = {},
                         sPath = "";
                     if (oEvent !== "add") {
-                        oBj = oEvent
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
                             .getObject();
-                        sPath = oEvent
-                            .getSource()
-                            .getBindingContext("oModelControl")
-                            .getPath()
-                            .split("/");
-                        oModel.setProperty("/Dialog/Key2", sPath[sPath.length - 1]);
+                        oObject["editable"] = true;
+
+                        oModel.refresh();
+
                     } else {
                         oBj = false;
                         oModel.setProperty("/Dialog/Key2", "add");
@@ -2985,6 +3039,7 @@ sap.ui.define(
                             };
                         }
                     );
+                    // check for null
                     promise.resolve(oPayLoad);
                     return promise;
                 },

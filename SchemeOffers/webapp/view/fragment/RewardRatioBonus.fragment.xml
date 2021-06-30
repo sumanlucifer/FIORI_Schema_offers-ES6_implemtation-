@@ -156,25 +156,28 @@
 
             </f:formContainers>
         </f:Form>
-        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }"  width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table3" visible="{= ${oModelControl>/Rbtn/BRewards}===0 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" width="auto" items="{path: 'oModelControl>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
                     <ToolbarSpacer ></ToolbarSpacer>
-                    <Button enabled="{= ${oModelControl>/Table/Table3}.length===0 }" icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericReward2('add')"/>
+                    <Button enabled="{= ${oModelControl>/Table/Table3}.length===0 }" icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericReward2V2('add')"/>
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Label required="false" text="{i18n>formBonusValidaityFrom}" />
+                    <Label required="true" text="{i18n>formBonusValidaityFrom}" />
                 </Column>
                 <Column>
-                    <Label required="false" text="{i18n>formBonusValidaityTo}" />
+                    <Label required="true" text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
                 <Column>
-                    <Label required="false" text="{i18n>Table3Label1}" />
+                    <Label required="true" text="{i18n>Table3Label1}" />
+                </Column>
+                <Column>
+                    <Label required="true" text="{i18n>BonusPercentage}" />
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>
@@ -183,19 +186,39 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-
-                        <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                        <VBox >
+                            <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
+                        </VBox>
+                        <VBox >
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+                        </VBox>
+                        <VBox >
+                            <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                        </VBox>
+                        <VBox >
+                            <Label width="60%" text="{path:'oModelControl>BonusPercentage'}" visible="{= ${oModelControl>editable} !== true  }" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                        </VBox>
+                        <HBox>
+                            <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2V2"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onPressSaveReward"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward2"></Button>
+                        </HBox>
+                        <!-- <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
                         <Text text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                         <Text width="60%" text="{path:'oModelControl>BonusPoints'}" />
                         <HBox>
                             <Button icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward2"></Button>
-                        </HBox>
+                        </HBox> -->
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }"  width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
