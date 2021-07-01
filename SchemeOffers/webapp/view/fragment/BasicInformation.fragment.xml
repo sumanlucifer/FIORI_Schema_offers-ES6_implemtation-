@@ -78,10 +78,14 @@
                         <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                     </f:fields>
                 </f:FormElement>
+                <f:FormElement label="{i18n>Remark}" visible="{= ${oModelControl>/mode}==='edit'}">
+                    <f:fields>
+                        <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                    </f:fields>
+                </f:FormElement>
                 <f:FormElement label="{i18n>tblColStatus} (*Temporary Field)" visible="{= ${oModelControl>/mode}==='edit'}">
 
                     <f:fields>
-                        <!-- <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" /> -->
                         <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelView>/OfferStatus}">
                             <core:Item text="Draft" key="DRAFT"/>
                             <core:Item text="Pending" key="PENDING"/>
