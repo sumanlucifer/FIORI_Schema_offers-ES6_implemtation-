@@ -243,7 +243,7 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>ProductsPacks}" />
+                    <Label required="true" text="{i18n>ProductsPacks}" />
                 </Column>
                 <Column>
                     <Label required="true" text="{i18n>formBonusValidaityFrom}" />
