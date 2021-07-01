@@ -464,6 +464,7 @@ sap.ui.define(
                     this._CreateBonusRewardTable();
                 },
                 _CreateBonusRewardTable: function (mParam) {
+                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
@@ -479,6 +480,8 @@ sap.ui.define(
                     } else {
                         othat._setBRPacksData();
                     }
+                    promise.resolve();
+                    return promise;
                 },
                 onPressAddGenericReward2V2: function (oEvent) {
                     var oView = this.getView();
@@ -2052,6 +2055,7 @@ sap.ui.define(
                     }
                 },
                 _destroyDialogs: function () {
+                    var promise = jQuery.Deferred();
                     if (this._DepotDialog) {
                         this._oDepotDialog.destroy();
                         delete this._oDepotDialog;
@@ -2060,6 +2064,7 @@ sap.ui.define(
                         this._PainterValueHelp.destroy();
                         delete this._PainterValueHelp;
                     }
+
                     // if (this._RewardsDialog1) {
                     //     this._RewardsDialog1.destroy();
                     //     delete this._RewardsDialog1;
@@ -2068,6 +2073,8 @@ sap.ui.define(
                     //     this._RewardsDialog2.destroy();
                     //     delete this._RewardsDialog2;
                     // }
+                    promise.resolve();
+                    return promise;
                 },
                 onValueHelpAfterClose: function () {
                     if (this._DepotDialog) {

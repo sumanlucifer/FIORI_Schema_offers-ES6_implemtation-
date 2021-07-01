@@ -98,6 +98,7 @@ sap.ui.define(
                         OfferId: oProp,
                         selectedKey: 0,
                         LoggedInUser: {},
+                        PageBusy: true,
                         Buttons: {
                             Redeem: true, // check if its already redeemed
                             SendForApproval: false,
@@ -268,7 +269,7 @@ sap.ui.define(
                     this.getView().setModel(oModel, "oModelControl2");
 
                     var othat = this;
-                    var c1, c1b, c2, c2b, c3, c4, c5, c6, c7, c8;
+                    var c1, c1b, c2, c2b, c3, c4, c5, c6, c7, c8, c9;
                     var oView = this.getView();
 
                     c1 = this._loadEditProfile("Display");
@@ -290,6 +291,10 @@ sap.ui.define(
                                                     c7 = othat._OfferTypeValidation(data);
                                                     c7.then(function () {
                                                         c8 = othat._CheckAttachment();
+                                                        c8.then(function () {
+                                                            c9 = othat._RemovePageBusy();
+                                                        })
+
                                                     });
                                                 });
                                             });
@@ -300,6 +305,9 @@ sap.ui.define(
                         });
                     }); //c1.then
                     this._toggleButtonsAndView(false);
+                },
+                _RemovePageBusy: function () {
+                    this.getView().getModel("oModelControl3").setProperty("/PageBusy", false)
                 },
                 _setWorkflowFlags: function (oData) {
                     var promise = jQuery.Deferred();
@@ -721,7 +729,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl3");
                     oCtrl2Model.setProperty("/mode", "edit");
-                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11,c12;
+                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
                     var othat = this;
 
                     c2 = othat._GetInitEditData();
@@ -742,12 +750,19 @@ sap.ui.define(
                                                 c8.then(function (data) {
                                                     c9 = othat._getLoggedInUserDeatils(data);
                                                     c9.then(function (data) {
+                                                        // no data required from the previous steop
                                                         c10 = othat._getProductsData();
                                                         c10.then(function () {
                                                             c11 = othat._getPacksData();
                                                             c11.then(function () {
-                                                                c12=othat._CreateBonusRewardTable("Edit");
-                                                                
+                                                                c12 = othat._CreateBonusRewardTable("Edit");
+                                                                c12.then(function () {
+                                                                    c13 = othat._destroyDialogs();
+                                                                    c13.then(function () {
+                                                                        c14 = othat._RemovePageBusy();
+                                                                    })
+                                                                })
+
                                                             })
                                                         })
                                                     });
@@ -809,17 +824,20 @@ sap.ui.define(
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
-                            oModelControl.setProperty("/ImageLoaded", true);
-                        })
-                        .fail(function () {
-                            oModelControl.setProperty("/ImageLoaded", false);
-                        });
+                    return new Promise((resolve, reject) => {
+                        jQuery
+                            .get(sImageUrl)
+                            .done(function () {
+                                oModelControl.setProperty("/ImageLoaded", true);
+                                resolve();
+                            })
+                            .fail(function () {
+                                oModelControl.setProperty("/ImageLoaded", false);
+                                resolve();
+                            });
 
-                    promise.resolve(oData);
-                    return promise;
+                    })
+                  
                 },
                 _GetInitEditData: function () {
                     var promise = jQuery.Deferred();
@@ -1552,17 +1570,19 @@ sap.ui.define(
                     var oProp = oModelControl.getProperty("/bindProp");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
-                            oModelControl.setProperty("/ImageLoaded", true);
-                        })
-                        .fail(function () {
-                            oModelControl.setProperty("/ImageLoaded", false);
-                        });
+                    return new Promise((resolve, reject) => {
+                        jQuery
+                            .get(sImageUrl)
+                            .done(function () {
+                                oModelControl.setProperty("/ImageLoaded", true);
+                                resolve();
+                            })
+                            .fail(function () {
+                                oModelControl.setProperty("/ImageLoaded", false);
+                                resolve();
+                            });
 
-                    promise.resolve();
-                    return promise;
+                    })
                 },
 
                 onAfterAttachClose: function (oEvent) {

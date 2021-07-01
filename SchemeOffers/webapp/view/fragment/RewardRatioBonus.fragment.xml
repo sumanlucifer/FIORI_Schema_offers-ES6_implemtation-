@@ -224,7 +224,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
@@ -266,11 +266,11 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <ComboBox editable="{= ${oModelControl>editable} === true}" change="onBRRProductChange" placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}">
+                            <ComboBox editable="{= ${oModelControl>editable} === true}" change="onBRRProductChange" placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateShareable: false}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
                             <!-- <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 &amp;&amp;  ${oModelControl>editable} !== true }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" /> -->
-                            <ComboBox editable="{= ${oModelControl>editable} === true}"   change="onBRRPackChange" placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}" > 
+                            <ComboBox editable="{= ${oModelControl>editable} === true}"   change="onBRRPackChange" placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateShareable: false}" > 
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
                             <!-- <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 &amp;&amp;  ${oModelControl>editable} !== true}" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" /> -->
