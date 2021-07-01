@@ -30,7 +30,8 @@ sap.ui.define(
         "sap/ui/core/Core",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
-        "../model/formatter"
+        "../model/formatter",
+        "sap/m/Title",
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -66,7 +67,8 @@ sap.ui.define(
         Core,
         customInt1,
         customInt2,
-        formatter
+        formatter,
+        Title
     ) {
         "use strict";
 
@@ -358,6 +360,10 @@ sap.ui.define(
                     //var oKycData = oDataValue["PainterBankDetails"];
                     if (oDataValue.hasOwnProperty("PainterKycDetails")) {
                         var oKycData = oDataValue["PainterKycDetails"];
+
+                        var InitialKycType = oKycData["KycTypeId"];
+                        oControlModel.setProperty("/InitialKycDocType", InitialKycType);
+
                         if (oKycData.hasOwnProperty("Id")) {
                             var sKycImageUrl1 =
                                 "/KNPL_PAINTER_API/api/v2/odata.svc/PainterKycDetailsSet(" +
@@ -464,6 +470,7 @@ sap.ui.define(
                             oModel.setProperty("/" + k, "");
                         }
                     }
+                     
 
                     oModel.refresh(true);
                     oControlModel.refresh(true);
@@ -1697,22 +1704,7 @@ sap.ui.define(
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     oModelCtrl.setProperty("/AddBankDoc", true);
                     oModelCtrl.setProperty("/AddBankDocButton", false);
-                    // var oView = this.getView();
-                    // if (!this._addDocDialog) {
-                    //     Fragment.load({
-                    //         name: "com.knpl.pragati.ContactPainter.view.fragments.AddBankDocumentDialog",
-                    //         controller: this,
-                    //     }).then(
-                    //         function (oDialog) {
-                    //             this._addDocDialog = oDialog;
-                    //             oView.addDependent(this._addDocDialog);
-                    //             this._addDocDialog.open();
-                    //         }.bind(this)
-                    //     );
-                    // } else {
-                    //     oView.addDependent(this._addDocDialog);
-                    //     this._addDocDialog.open();
-                    // }
+                    
 
 
                 },
@@ -1771,6 +1763,7 @@ sap.ui.define(
                     oModelCtrl.setProperty("/EditKyc", true);
                     oModelCtrl.setProperty("/EditKycButton", true);
                     oModelCtrl.setProperty("/AddKycDocButton", true);
+                    this._setUploadCollectionMethod();
                    // oModelCtrl.setProperty("/AddNewBank", false);
                 },
                 onEditCancelKycFields:function (){
@@ -1811,6 +1804,7 @@ sap.ui.define(
                             return false;
                         }
                     }
+                   
                     return true;
                 },
                 _checkFileUpload: function (oData) {
@@ -1874,6 +1868,59 @@ sap.ui.define(
                     }
                     promise.resolve(oData);
                     return promise;
+                },
+                _setUploadCollectionMethod: function () {
+                    var oUploadCollection = this.getView().byId("idUploadCollection");
+
+                    var othat = this;
+                    oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+                        count
+                    ) {
+                        var nItems = count || 0;
+                        var sText;
+                        // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
+                        if (this._oItemToUpdate) {
+                            nItems--;
+                        }
+                        if (this.getNumberOfAttachmentsText()) {
+                            sText = this.getNumberOfAttachmentsText();
+                        } else {
+                            sText = this._oRb.getText("UPLOADCOLLECTION_ATTACHMENTS", [
+                                nItems,
+                            ]);
+                        }
+                        if (!this._oNumberOfAttachmentsTitle) {
+                            this._oNumberOfAttachmentsTitle = new Title(
+                                this.getId() + "-numberOfAttachmentsTitle",
+                                {
+                                    text: sText,
+                                }
+                            );
+                        } else {
+                            this._oNumberOfAttachmentsTitle.setText(sText);
+                        }
+
+                        othat._CheckAddBtnForUpload.call(othat, nItems);
+                    };
+                },_CheckAddBtnForUpload: function (mParam) {
+                    var oModel = this.getView().getModel("oModelView");
+                    var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
+                    var oUploadCol = this.getView().byId("idUploadCollection");
+                    if (sKycTypeId !== "") {
+                        if (sKycTypeId == "1") {
+                            if (mParam >= 2) {
+                                oUploadCol.setUploadButtonInvisible(true);
+                            } else if (mParam < 2) {
+                                oUploadCol.setUploadButtonInvisible(false);
+                            }
+                        } else {
+                            if (mParam >= 1) {
+                                oUploadCol.setUploadButtonInvisible(true);
+                            } else if (mParam < 1) {
+                                oUploadCol.setUploadButtonInvisible(false);
+                            }
+                        }
+                    }
                 },
 
 
