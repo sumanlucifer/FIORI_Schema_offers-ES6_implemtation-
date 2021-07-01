@@ -104,6 +104,18 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
+        //List View Workflow changes
+        btnEditOfferTable: function (m1, m2, m3) {
+            //m1 edit applicable; m2 login information
+            if (!m1) {
+                return m1;
+            }
+            if (m1) {
+                
+            }
+        },
+
+
         // all formatters for the button in the display and also for the workflow
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2, m3, m4) {

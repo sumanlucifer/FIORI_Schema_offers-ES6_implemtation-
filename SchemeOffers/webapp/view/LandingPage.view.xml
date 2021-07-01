@@ -129,7 +129,6 @@
                     <Column width="8%" hAlign="Center">
                         <Text text="{i18n>tblColAction}"/>
                     </Column>
-
                 </columns>
 
                 <items>
@@ -146,8 +145,7 @@
                             <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="End">
-
-                                <Button visible="{IsUpdateApplicable}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
+                                <Button visible="{path:'IsUpdateApplicable',formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
 

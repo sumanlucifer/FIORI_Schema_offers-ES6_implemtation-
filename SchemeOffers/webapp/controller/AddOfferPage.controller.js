@@ -283,7 +283,8 @@ sap.ui.define(
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
                         BonusDescription: "",
-                        InputType: 0
+                        InputType: 0,
+                        OfferStatus: null
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -332,8 +333,6 @@ sap.ui.define(
                 additionalInfoValidation: function () {
                     var oWizard = this.getView().byId('CreateProductWizard');
                     var name = [];
-
-
                     oWizard.validateStep(this.byId("ProductInfoStep"));
 
                 },

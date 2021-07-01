@@ -464,7 +464,7 @@ sap.ui.define(
                     this._CreateBonusRewardTable();
                 },
                 _CreateBonusRewardTable: function (mParam) {
-                     var promise = jQuery.Deferred();
+                    var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
@@ -2350,17 +2350,53 @@ sap.ui.define(
                         oModel = oView.getModel("oModelControl");
                     var aNumber = mParam1.match(/\d+$/)[0];
                     var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                    var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                    var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aFilter1 = [];
+                    var aFilter2 = [];
+                    var aFilter3 = [];
 
                     for (var a of aProd) {
                         aFilter1.push(
                             new Filter("ProductCode", FilterOperator.EQ, a["Id"])
                         );
                     }
+                    for (var b of aCat) {
+                        aFilter2.push(
+                            new Filter("CategoryCode", FilterOperator.EQ, b)
+                        );
+                    }
+                    for (var c of aClass) {
+                        aFilter3.push(
+                            new Filter("ClassificationCode", FilterOperator.EQ, c)
+                        );
+                    }
+                    var aFilterProd = new Filter({
+                        filters: aFilter1,
+                        and: false,
+                    });
+                    var aFilterCat = new Filter({
+                        filters: aFilter2,
+                        and: false,
+                    });
+                    var aFilterClass = new Filter({
+                        filters: aFilter3,
+                        and: false,
+                    });
+                    var aFinalFilter = [];
+                    if (aFilter1.length > 0) {
+                        aFinalFilter.push(aFilterProd);
+                    }
+                    if (aFilter2.length > 0) {
+                        aFinalFilter.push(aFilterCat);
+                    }
+                    if (aFilter3.length > 0) {
+                        aFinalFilter.push(aFilterClass);
+                    }
 
                     this._PackValueHelpDialog
                         .getBinding("items")
-                        .filter(aFilter1, "Control");
+                        .filter(aFinalFilter);
                     this._PackValueHelpDialog.open();
                 },
                 _handlePackValueHelpSearch: function (oEvent) {
@@ -3013,16 +3049,25 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oLoggedInInfo = oModel.getProperty("/LoggedInUser");
-                    console.log("workflow data", oLoggedInInfo);
+                    var sExistStatus = JSON.parse(JSON.stringify(oPayLoad["OfferStatus"])) //;
+
                     if (oLoggedInInfo["UserTypeId"] === 5) {
                         oPayLoad["OfferStatus"] = "DRAFT";
+                        oPayLoad["IsWorkFlowApplicable"] = false;
                     } else if (
                         oLoggedInInfo["UserTypeId"] === 6 ||
                         oLoggedInInfo["UserTypeId"] === 7
                     ) {
                         oPayLoad["OfferStatus"] = "APPROVED";
+                        if (sExistStatus === "APPROVED") {
+                            oPayLoad["IsWorkFlowApplicable"] = false;
+                        } else {
+                            oPayLoad["IsWorkFlowApplicable"] = true;
+                        }
+                        // if the existing status is approved then
+                        //is workflow applicable false else true
                     }
-                    oPayLoad["IsWorkFlowApplicable"] = false;
+
                     oPayLoad["InitiateForceTat"] = false;
                     promise.resolve(oPayLoad);
                     return promise;

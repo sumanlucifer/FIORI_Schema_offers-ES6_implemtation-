@@ -1466,7 +1466,7 @@ sap.ui.define(
                                             c6.then(function (oPayLoad) {
                                                 c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                 c7.then(function (data) {
-                                                    othat.handleCancelPress(data);
+                                                    //othat.handleCancelPress(data);
                                                 });
                                             });
                                         });
@@ -1488,7 +1488,7 @@ sap.ui.define(
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Successfully Updated.");
-                                othat._navToHome();
+                                //othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
