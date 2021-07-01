@@ -235,7 +235,7 @@
                         </buttons>
                     </RadioButtonGroup>
                     <ToolbarSpacer ></ToolbarSpacer>
-                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2('add')"/>
+                    <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2('add')"/> -->
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewards2V2('add')"/>
                 </Toolbar>
             </headerToolbar>
@@ -266,10 +266,10 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0 }">
+                            <ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0  }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
-                            <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }">
+                            <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}" > 
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
                         </VBox>
@@ -290,9 +290,9 @@
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>
                         <HBox>
-                            <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2V2"></Button>
-                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onPressSaveReward2V2"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward2"></Button>
+                            <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards2V2"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onSaveBonusRewardV2"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward2"></Button>
                         </HBox>
                     </cells>
                 </ColumnListItem>
