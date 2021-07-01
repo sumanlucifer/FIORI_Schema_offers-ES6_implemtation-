@@ -23,7 +23,7 @@
                 </f:FormElement>
                 <f:FormElement label="">
                     <f:fields>
-                        <MultiComboBox required="false" id="PCat1" visible="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
+                        <MultiComboBox required="false" id="PCat1" visible="{oModelControl>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet',sorter:{path:'Category'} }">
                             <core:Item text="{Category}" key="{Id}"/>
                         </MultiComboBox>
                     </f:fields>
@@ -40,7 +40,7 @@
                 </f:FormElement>
                 <f:FormElement label="">
                     <f:fields>
-                        <MultiComboBox selectionFinish="onPAppDropChange" visible="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{path:'oModelControl>/MultiCombo/PClass1'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
+                        <MultiComboBox selectionFinish="onPAppDropChange" visible="{oModelControl>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{path:'oModelControl>/MultiCombo/PClass1'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet',sorter:{path:'Classification'} }">
                             <core:Item text="{Classification}" key="{Id}"/>
                         </MultiComboBox>
                     </f:fields>

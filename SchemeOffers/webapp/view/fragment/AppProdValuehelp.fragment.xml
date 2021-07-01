@@ -4,9 +4,9 @@
 		<SelectDialog
 		title="Products"
          growing="true"
-        growingThreshold="15"
+        
 		class="sapUiPopupWithPadding"
-		items="{/MasterProductSet}"
+		items="{path:'/MasterProductSet',sorter:{path:'ProductName'}}"
 	    search="_handlePValueHelpSearch"
 		confirm="_handleProdValueHelpConfirm"
         cancel="_handleProdValueHelpClose"

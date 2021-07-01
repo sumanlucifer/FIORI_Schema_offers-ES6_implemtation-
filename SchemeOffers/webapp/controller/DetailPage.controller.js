@@ -873,19 +873,19 @@ sap.ui.define(
 
                     //Pack Data 5
                     for (var d in aDataAppPack1) {
-                        aHashAppPack1[aDataAppPack1[d]["SkuCode"]] = c;
+                        aHashAppPack1[aDataAppPack1[d]["SkuCode"]] = d;
                     }
                     oModelControl.setProperty("/Hash/AppPack1", aHashAppPack1);
                     for (var d in aDataAppPack2) {
-                        aHashAppPack2[aDataAppPack2[d]["SkuCode"]] = c;
+                        aHashAppPack2[aDataAppPack2[d]["SkuCode"]] = d;
                     }
                     oModelControl.setProperty("/Hash/AppPack2", aHashAppPack2);
                     for (var d in aDataAppPack3) {
-                        aHashAppPack3[aDataAppPack3[d]["SkuCode"]] = c;
+                        aHashAppPack3[aDataAppPack3[d]["SkuCode"]] = d;
                     }
                     oModelControl.setProperty("/Hash/AppPack3", aHashAppPack3);
                     for (var d in aDataAppPack4) {
-                        aHashAppPack4[aDataAppPack4[d]["SkuCode"]] = c;
+                        aHashAppPack4[aDataAppPack4[d]["SkuCode"]] = d;
                     }
                     oModelControl.setProperty("/Hash/AppPack4", aHashAppPack4);
 

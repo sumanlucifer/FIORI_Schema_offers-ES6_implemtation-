@@ -6,7 +6,7 @@
         growing="true"
         growingThreshold="15"
 		class="sapUiPopupWithPadding"
-		items="{/MasterRepProductSkuSet}"
+		items="{path:'/MasterRepProductSkuSet',sorter:{path:'Description'}}"
 	    search="_handlePackValueHelpSearch"
 		confirm="_handlePackValueHelpConfirm"
         cancel="_handleProdValueHelpClose"
