@@ -103,6 +103,47 @@ sap.ui.define(
                 },
 
                 onPostSchemeData: function (oPayload, fileFlag) {},
+                onBRRProductChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var oModel = oView.getModel("oModelControl");
+                    var aNumber = sPath.match(/\d+$/)[0];
+                    var oTable = oModel.getProperty("/Table/Table4");
+                    for (var ele in oTable) {
+                        if (ele == aNumber) {
+                            continue;
+                        }
+                        if (oTable[ele]["ProductCode"] === sKey) {
+                            MessageToast.show("Product Already Selected, Kindly select a different Product.");
+                            oModel.setProperty(sPath + "/ProductCode", "");
+                            oModel.refresh(true)
+                            break;
+                        }
+                    }
+
+                },
+                onBRRPackChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var oModel = oView.getModel("oModelControl");
+                    var aNumber = sPath.match(/\d+$/)[0];
+                    var oTable = oModel.getProperty("/Table/Table4");
+                    for (var ele in oTable) {
+                        if (ele == aNumber) {
+                            continue;
+                        }
+                        if (oTable[ele]["SkuCode"] === sKey) {
+                            MessageToast.show("Pack Already Selected, Kindly select a different Pack.");
+                            oModel.setProperty(sPath + "/SkuCode", "");
+                            oModel.refresh(true)
+                            break;
+                        }
+                    }
+
+                },
+
                 onStartDateChange: function (oEvent) {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
@@ -1500,7 +1541,7 @@ sap.ui.define(
                     }
 
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
-                    console.log(oModelControl);
+
                 },
                 _setBRPacksData: function () {
                     var oView = this.getView();
@@ -2672,7 +2713,10 @@ sap.ui.define(
                         .getSource()
                         .getBindingContext("oModelControl")
                         .getObject();
-                    var sPath = "/Dialog/Bonus2";
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl").getPath();
+                    console.log(sPath);
                     var oEndDate = oBject["EndDate"];
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
@@ -2693,9 +2737,15 @@ sap.ui.define(
 
                     var oModelControl = oView.getModel("oModelControl");
                     var oEndDate = oEvent.getSource().getDateValue();
+                    var oBject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
                     // var oContext = oEvent.getSource().getBinding("dateValue").getContext();
-                    var sPath = "/Dialog/Bonus2";
-                    var oStartDate = oModelControl.getProperty(sPath + "/StartDate");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl").getPath();
+                    var oStartDate = oBject["StartDate"];
                     if (oStartDate >= oEndDate) {
                         MessageToast.show(
                             "Kindly select a date more than Bonus Validtiy From date."

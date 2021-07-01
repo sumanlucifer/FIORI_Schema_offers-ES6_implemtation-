@@ -4,7 +4,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <l:VerticalLayout>
-        <f:Form editable="true">
+        <!-- <f:Form editable="true">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
             </f:layout>
@@ -13,29 +13,15 @@
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-                                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelView>/InputType}">
-                                    <buttons>
-                                        <RadioButton text="{i18n>RequiredVolume}"/>
-                                        <RadioButton text="{i18n>Table1Label2}"/>
-                                    </buttons>
-                                </RadioButtonGroup>
+
                             </f:fields>
                         </f:FormElement>
-                        <!-- <f:FormElement label="{i18n>formApplicableLbl10}">
-                            <f:fields>
-                                <RadioButtonGroup select="onRbRewardRatio" columns="2" selectedIndex="{oModelControl>/Rbtn/Rewards}">
-                                    <buttons>
-                                        <RadioButton text="{i18n>All}" enabled="{= !${oModelControl>/OfferType/RewardRatio} }"/>
-                                        <RadioButton text="{i18n>Specific}" enabled="{oModelControl>/OfferType/RewardRatio}" />
-                                    </buttons>
-                                </RadioButtonGroup>
-                            </f:fields>
-                        </f:FormElement> -->
+                    
 
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
-        </f:Form>
+        </f:Form> -->
         <!-- <Table id="Table1" visible="{= ${oModelControl>/Rbtn/Rewards}===0}" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl>/Table/Table1',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
@@ -101,17 +87,22 @@
                 </ColumnListItem>
             </items>
         </Table> -->
-        <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}"  width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                    <Title text="{i18n>formApplicableLbl10}" />
+                    <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelView>/InputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>RequiredVolume}"/>
+                            <RadioButton text="{i18n>Table1Label2}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                     <ToolbarSpacer />
-                    <Button  icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewardsV1('add')"/>
+                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewardsV1('add')"/>
                 </Toolbar>
             </headerToolbar>
 
             <columns>
-             
+
                 <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="false"/>
                 </Column>
@@ -119,7 +110,7 @@
                     <Text text="{i18n>Table1Label2}" />
                 </Column>
                 <Column>
-                    <Label text="{i18n>Table1Label4}"  />
+                    <Label text="{i18n>Table1Label4}" />
                 </Column>
                 <!-- <Column>
                     <Text text="{i18n>Table1Label5}" />
@@ -150,15 +141,15 @@
                         </VBox> -->
                         <VBox visible="{= ${oModelView>/InputType}===0 }">
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" required="true"  type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>
                         <VBox visible="{= ${oModelView>/InputType}===1 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }"  required="true"   placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
