@@ -3202,6 +3202,10 @@ sap.ui.define(
                         aDataAppProd2 = oModelViewData["OfferBuyerProduct"]["results"];
                         aDataAppProd3 = oModelViewData["OfferNonBuyerProduct"]["results"];
                         aDataAppProd4 = oModelViewData["OfferBonusProduct"]["results"];
+                         aDataAppPack1 = oModelViewData["OfferApplicablePack"]["results"];
+                          aDataAppPack2 = oModelViewData["OfferBuyerPack"]["results"];
+                           aDataAppPack3 = oModelViewData["OfferNonBuyerPack"]["results"];
+                            aDataAppPack4 = oModelViewData["OfferBonusPack"]["results"];
                     }
 
                     // setting the values of zone
@@ -3261,9 +3265,13 @@ sap.ui.define(
                     );
                     oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
                         function (elem) {
-                            return {
-                                SkuCode: elem["Id"],
-                            };
+                            if (aHashAppPack1[elem["Id"]]) {
+                                return aDataAppPack1[aHashAppPack1[elem["Id"]]];
+                            } else {
+                                return {
+                                    SkuCode: elem["Id"],
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferPainterType"] = sMultiKeys["PainterType"].map(
@@ -3325,9 +3333,13 @@ sap.ui.define(
                     oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack2[elem["Id"]]) {
+                                return aDataAppPack2[aHashAppPack2[elem["Id"]]];
+                            } else {
+                                return {
+                                    SkuCode: elem["Id"],
+                                };
+                            }
                     });
                     oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
                         function (elem) {
@@ -3367,9 +3379,13 @@ sap.ui.define(
                     oPayLoad["OfferNonBuyerPack"] = sMultiKeys["AppPacks3"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack3[elem["Id"]]) {
+                                return aDataAppPack3[aHashAppPack3[elem["Id"]]];
+                            } else {
+                                return {
+                                    SkuCode: elem["Id"],
+                                };
+                            }
                     });
                     // Bonus Reward Ratio
                     oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
@@ -3408,9 +3424,13 @@ sap.ui.define(
                     oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack4[elem["Id"]]) {
+                                return aDataAppPack4[aHashAppPack4[elem["Id"]]];
+                            } else {
+                                return {
+                                    SkuCode: elem["Id"],
+                                };
+                            }
                     });
 
                     oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(

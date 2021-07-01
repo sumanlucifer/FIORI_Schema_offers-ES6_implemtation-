@@ -263,7 +263,11 @@ sap.ui.define(
                             AppProd1: {},
                             AppProd2: {},
                             AppProd3: {},
-                            AppProd4: {}
+                            AppProd4: {},
+                            AppPack1:{},
+                            AppPack2:{},
+                            AppPack3:{},
+                            AppPack4:{}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);

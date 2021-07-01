@@ -794,10 +794,14 @@ sap.ui.define(
                     var aHashPClass2 = {};
                     var aHashPClass3 = {};
                     var aHashPClass4 = {};
-                    var aHasAppProd1 = {},
-                        aHasAppProd2 = {},
-                        aHasAppProd3 = {},
-                        aHasAppProd4 = {};
+                    var aHashAppProd1 = {},
+                        aHashAppProd2 = {},
+                        aHashAppProd3 = {},
+                        aHashAppProd4 = {};
+                    var aHashAppPack1 = {},
+                        aHashAppPack2 = {},
+                        aHashAppPack3 = {},
+                        aHashAppPack4 = {};
                     var aDataPCat1 = oData["OfferApplicableProductCategory"]["results"];
                     var aDataPCat2 = oData["OfferBuyerProductCategory"]["results"];
                     var aDataPCat3 = oData["OfferNonBuyerProductCategory"]["results"];
@@ -810,6 +814,10 @@ sap.ui.define(
                         aDataAppProd2 = oData["OfferBuyerProduct"]["results"],
                         aDataAppProd3 = oData["OfferNonBuyerProduct"]["results"],
                         aDataAppProd4 = oData["OfferBonusProduct"]["results"];
+                    var aDataAppPack1 = oData["OfferApplicablePack"]["results"],
+                        aDataAppPack2 = oData["OfferBuyerPack"]["results"],
+                        aDataAppPack3 = oData["OfferNonBuyerPack"]["results"],
+                        aDataAppPack4 = oData["OfferBonusPack"]["results"];
 
                     for (var a in aDataPCat1) {
                         aHashPCat1[aDataPCat1[a]["ProductCategoryCode"]] = a;
@@ -847,23 +855,40 @@ sap.ui.define(
 
                     //Products Data
                     for (var c in aDataAppProd1) {
-                        aHasAppProd1[aDataAppProd1[c]["ProductCode"]] = c;
+                        aHashAppProd1[aDataAppProd1[c]["ProductCode"]] = c;
                     }
-                    oModelControl.setProperty("/Hash/AppProd1", aHasAppProd1);
+                    oModelControl.setProperty("/Hash/AppProd1", aHashAppProd1);
                     for (var c in aDataAppProd2) {
-                        aHasAppProd2[aDataAppProd2[c]["ProductCode"]] = c;
+                        aHashAppProd2[aDataAppProd2[c]["ProductCode"]] = c;
                     }
-                    oModelControl.setProperty("/Hash/AppProd2", aHasAppProd2);
+                    oModelControl.setProperty("/Hash/AppProd2", aHashAppProd2);
                     for (var c in aDataAppProd3) {
-                        aHasAppProd3[aDataAppProd3[c]["ProductCode"]] = c;
+                        aHashAppProd3[aDataAppProd3[c]["ProductCode"]] = c;
                     }
-                    oModelControl.setProperty("/Hash/AppProd3", aHasAppProd3);
+                    oModelControl.setProperty("/Hash/AppProd3", aHashAppProd3);
                     for (var c in aDataAppProd4) {
-                        aHasAppProd4[aDataAppProd4[c]["ProductCode"]] = c;
+                        aHashAppProd4[aDataAppProd4[c]["ProductCode"]] = c;
                     }
-                    oModelControl.setProperty("/Hash/AppProd4", aHasAppProd4);
+                    oModelControl.setProperty("/Hash/AppProd4", aHashAppProd4);
 
                     //Pack Data 5
+                    for (var d in aDataAppPack1) {
+                        aHashAppPack1[aDataAppPack1[d]["SkuCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack1", aHashAppPack1);
+                    for (var d in aDataAppPack2) {
+                        aHashAppPack2[aDataAppPack2[d]["SkuCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack2", aHashAppPack2);
+                    for (var d in aDataAppPack3) {
+                        aHashAppPack3[aDataAppPack3[d]["SkuCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack3", aHashAppPack3);
+                    for (var d in aDataAppPack4) {
+                        aHashAppPack4[aDataAppPack4[d]["SkuCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack4", aHashAppPack4);
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1150,7 +1175,11 @@ sap.ui.define(
                             AppProd1: {},
                             AppProd2: {},
                             AppProd3: {},
-                            AppProd4: {}
+                            AppProd4: {},
+                            AppPack1: {},
+                            AppPack2: {},
+                            AppPack3: {},
+                            AppPack4: {}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
