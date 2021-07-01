@@ -91,7 +91,7 @@
                 </HBox>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
-                      <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish}" class="sapUiTinyMarginEnd" />
+                      <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish} (only used for testing)" class="sapUiTinyMarginEnd" />
                     <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
                     <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
                     <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />

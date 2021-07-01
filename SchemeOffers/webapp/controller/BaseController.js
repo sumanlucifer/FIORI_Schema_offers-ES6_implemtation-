@@ -3049,7 +3049,12 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oLoggedInInfo = oModel.getProperty("/LoggedInUser");
-                    var sExistStatus = JSON.parse(JSON.stringify(oPayLoad["OfferStatus"])) //;
+                    if (oPayLoad["OfferStatus"]) {
+                        var sExistStatus = JSON.parse(JSON.stringify(oPayLoad["OfferStatus"])) //;
+                    } else {
+                        var sExistStatus = null
+                    }
+
 
                     if (oLoggedInInfo["UserTypeId"] === 5) {
                         oPayLoad["OfferStatus"] = "DRAFT";
