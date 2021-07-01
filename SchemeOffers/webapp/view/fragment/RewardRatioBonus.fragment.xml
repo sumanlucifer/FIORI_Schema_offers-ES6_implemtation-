@@ -266,12 +266,15 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0  }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}">
+                            <ComboBox placeholder="Products" selectedKey="{oModelControl>ProductCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 0  &amp;&amp;  ${oModelControl>editable} === true  }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
-                            <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}" > 
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 0 &amp;&amp;  ${oModelControl>editable} !== true }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
+                            <ComboBox placeholder="Packs" selectedKey="{oModelControl>SkuCode}" visible="{= ${oModelControl>/Rbtn/AppPacks4} === 1 &amp;&amp;  ${oModelControl>editable} === true }" items="{path:'oModelControl>/MultiCombo/Reward2',templateSharable:true}" > 
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"/>
                             </ComboBox>
+                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks4}=== 1 &amp;&amp;  ${oModelControl>editable} !== true}" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
+
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
