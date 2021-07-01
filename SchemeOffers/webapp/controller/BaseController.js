@@ -3316,7 +3316,7 @@ sap.ui.define(
                             "EndDate",
                             "BonusPoints",
                             "BonusPercentage",
-                            "BonusPercentage",
+                            
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
@@ -3351,7 +3351,7 @@ sap.ui.define(
                             .map(function (a) {
                                 return Object.assign({}, a);
                             });
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
+                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints", "BonusPercentage","SkuCode","ProductCode"];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
