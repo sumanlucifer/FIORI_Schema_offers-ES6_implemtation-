@@ -35,7 +35,7 @@
                                     <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Active" label="{i18n>Active}" visibleInFilterBar="true">
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Active" label="{i18n>Active}" visibleInFilterBar="true">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Active}">
                                         <core:Item text="Yes" key="true"/>
@@ -44,7 +44,7 @@
                                     </ComboBox>
 
                                 </fb:control>
-                            </fb:FilterGroupItem>
+                            </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>tblColStatus}" visibleInFilterBar="true">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelControl>/filterBar/Status}">
@@ -120,9 +120,9 @@
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
 
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>Active}"/>
-                    </Column>
+                    </Column> -->
                     <Column>
                         <Text text="{i18n>tolColActiveStatus}"/>
                     </Column>
@@ -142,10 +142,10 @@
                             <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
-                            <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" />
+                            <!-- <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="End">
-                                <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
+                                <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
                             </HBox>
 

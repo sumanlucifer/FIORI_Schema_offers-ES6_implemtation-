@@ -93,8 +93,8 @@
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
                       <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish} (only used for testing)" class="sapUiTinyMarginEnd" />
                     <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
-                    <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
-                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" />
+                    <!-- <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
+                    <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" /> -->
                     <!-- Send For Approval -->
                     <Button press="onOpenRemarksDialog('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" />
                        <!-- Escalate -->
