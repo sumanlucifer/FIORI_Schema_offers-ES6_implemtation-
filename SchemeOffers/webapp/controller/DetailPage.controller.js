@@ -1844,16 +1844,17 @@ sap.ui.define(
                         }.bind(this),
                     });
                 },
-                onEscalate: function () {
+                onPublishTemporary: function () {
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
                     var oNewPayLoad = Object.assign({}, oPayload);
-                    oNewPayLoad["InitiateForceTat"] = true;
+                    oNewPayLoad["OfferStatus"] = "PUBLISHED";
+                     oNewPayLoad["IsPublished"] = true;
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
                     oData.update("/" + sPath, oNewPayLoad, {
                         success: function () {
-                            MessageToast.show("Offer Successfully Escalated.");
+                            MessageToast.show("Offer Successfully Updated.");
                             this._navToHome();
                         }.bind(this),
                         error: function () {
