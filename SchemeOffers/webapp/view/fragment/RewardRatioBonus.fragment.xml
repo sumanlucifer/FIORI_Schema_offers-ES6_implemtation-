@@ -224,6 +224,7 @@
                 </ColumnListItem>
             </items>
         </Table>
+        <MessageStrip visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }"  showIcon="true" text="{i18n>Message1}" ></MessageStrip>
         <Table id="Table4" visible="{= ${oModelControl>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl>/OfferType/AdditionalReward}===true }" width="auto" items="{path: 'oModelControl>/Table/Table4',  templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
