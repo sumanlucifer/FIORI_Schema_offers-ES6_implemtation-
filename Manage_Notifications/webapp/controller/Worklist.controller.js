@@ -106,17 +106,17 @@ sap.ui.define([
             var sTitle,sDraft,
                         oTable = this.getView().byId("table"),
                         iTotalItems = oEvent.getParameter("total");
-                    sDraft = this.getResourceBundle().getText("draftCount", [iTotalItems]);
-                    this.getModel("worklistView").setProperty("/draft", sDraft);
+                   // sDraft = this.getResourceBundle().getText("draftCount", [iTotalItems]);
+                   // this.getModel("worklistView").setProperty("/draft", sDraft);
                     
-                    // if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    //     sDraft = this.getResourceBundle().getText("draftCount", [
-                    //         iTotalItems,
-                    //     ]);
-                    // } else {
-                    //     sDraft = this.getResourceBundle().getText("draftCount", [0]);
-                    // }
-                    // this.getModel("worklistView").setProperty("/draft", sDraft);
+                    if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                        sDraft = this.getResourceBundle().getText("draftCount", [
+                            iTotalItems,
+                        ]);
+                    } else {
+                        sDraft = this.getResourceBundle().getText("draftCount", [0]);
+                    }
+                    this.getModel("worklistView").setProperty("/draft", sDraft);
 
 				
 		},
@@ -126,16 +126,14 @@ sap.ui.define([
 			 var sTitle,sSchedule,
                         oTable = this.getView().byId("table1"),
                         iTotalItems = oEvent.getParameter("total");
-                   sSchedule = this.getResourceBundle().getText("scheduledCount", [iTotalItems]);
-                   this.getModel("worklistView").setProperty("/scheduled", sSchedule);
-                    // if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    //     sDraft = this.getResourceBundle().getText("draftCount", [
-                    //         iTotalItems,
-                    //     ]);
-                    // } else {
-                    //     sDraft = this.getResourceBundle().getText("scheduledCount", [0]);
-                    // }
-                    // this.getModel("worklistView").setProperty("/scheduled", sDraft);
+                    if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                        sSchedule = this.getResourceBundle().getText("draftCount", [
+                            iTotalItems,
+                        ]);
+                    } else {
+                        sSchedule = this.getResourceBundle().getText("scheduledCount", [0]);
+                    }
+                    this.getModel("worklistView").setProperty("/scheduled", sSchedule);
 		},
    
 		onUpdateFinished2: function (oEvent) {
@@ -143,16 +141,14 @@ sap.ui.define([
 			 var sTitle,sTrigger,
                         oTable = this.getView().byId("table2"),
                         iTotalItems = oEvent.getParameter("total");
-                    sTrigger = this.getResourceBundle().getText("triggeredCount", [iTotalItems]);
+                     if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                        sTrigger = this.getResourceBundle().getText("triggeredCount", [
+                            iTotalItems,
+                        ]);
+                    } else {
+                        sTrigger = this.getResourceBundle().getText("triggeredCount", [0]);
+                    }
                     this.getModel("worklistView").setProperty("/triggered", sTrigger);
-                    //  if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    //     sDraft = this.getResourceBundle().getText("draftCount", [
-                    //         iTotalItems,
-                    //     ]);
-                    // } else {
-                    //     sDraft = this.getResourceBundle().getText("triggeredCount", [0]);
-                    // }
-                    // this.getModel("worklistView").setProperty("/triggered", sDraft);
 		},
 
 		/**
