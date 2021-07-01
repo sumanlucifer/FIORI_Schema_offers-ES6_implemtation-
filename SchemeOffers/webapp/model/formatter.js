@@ -106,8 +106,8 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
         //List View Workflow changes
         btnEditOfferTable: function (m1, m2, m3) {
-            //m1 edit applicable; m2 login information
-            console.log(m1, m2)
+            //m1 edit applicable; m2 login information; m3 offer status
+           
             if (m2 === 5) {
                 if (m3 === "DRAFT" || m3 === "REJECTED") {
                     return m1;
