@@ -3064,7 +3064,7 @@ sap.ui.define(
                         oLoggedInInfo["UserTypeId"] === 7
                     ) {
                         oPayLoad["OfferStatus"] = "APPROVED";
-                        if (sExistStatus === "APPROVED") {
+                        if (sExistStatus === "APPROVED" || sExistStatus === "PUBLISHED") {
                             oPayLoad["IsWorkFlowApplicable"] = false;
                         } else {
                             oPayLoad["IsWorkFlowApplicable"] = true;
