@@ -177,7 +177,8 @@ sap.ui.define(
                             ParentOffer: 0,
                             BrReqVol: 0,
                             BrReqCash: 0,
-                            BrReqPercent: 0
+                            BrReqPercent: 0,
+                            Bns2ReqPercent: 0,
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -282,8 +283,7 @@ sap.ui.define(
                         OfferSpecificPainter: [],
                         ParentOfferId: 0,
                         BonusDescription: "",
-                        InputType: 0,
-                        IsWorkFlowApplicable:false
+                        InputType: 0
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -294,6 +294,7 @@ sap.ui.define(
                     //get products data
                     this._getLoggedInUserDeatils();
                     this._getProductsData();
+                    this._getPacksData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
                     this._onClearMgsClass();
@@ -304,7 +305,7 @@ sap.ui.define(
                     //this._clearPress;
                     sap.ui.getCore().getMessageManager().removeAllMessages();
                 },
-              
+
                 _SampleFunction: function () {
                     this.getView().byId("wizardViewBranching");
                 },
@@ -331,7 +332,7 @@ sap.ui.define(
                 additionalInfoValidation: function () {
                     var oWizard = this.getView().byId('CreateProductWizard');
                     var name = [];
-                 
+
 
                     oWizard.validateStep(this.byId("ProductInfoStep"));
 
@@ -345,7 +346,7 @@ sap.ui.define(
                     //oWizard.setCurrentStep(this.getView().byId("idStep1"));
                     //oWizard.setShowNextButton(true)
                     oWizard.goToStep(oStep);
-                 
+
                     oWizard.setShowNextButton(false)
                     //oSteps.goToStep(cView.byId("idStep1"));
                     //oSteps.setShowNextButton(false);
@@ -410,7 +411,7 @@ sap.ui.define(
 
                 onAfterRendering: function () {
                     // this.getView().byId("startDate").setMinDate(new Date());
-                  
+
                 },
                 _postDataToSave: function (bFileFlag) {
                     var c1, c2, c3, c4, c5, c5A, c6, c7;
@@ -468,7 +469,7 @@ sap.ui.define(
                 _UploadFile: function (mParam1, mParam2) {
                     var promise = jQuery.Deferred();
                     if (!mParam2) {
-                       
+
                         promise.resolve();
                         return promise;
                     }
@@ -517,7 +518,7 @@ sap.ui.define(
                     MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
                 },
                 onExit: function () {
-                   
+
                 }
             }
         );

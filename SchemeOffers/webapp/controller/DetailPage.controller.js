@@ -98,14 +98,15 @@ sap.ui.define(
                         OfferId: oProp,
                         selectedKey: 0,
                         LoggedInUser: {},
+                        PageBusy: true,
                         Buttons: {
                             Redeem: true, // check if its already redeemed
-                            SendForApproval: false
+                            SendForApproval: false,
                         },
                         Dialog: {
                             Remarks: "",
                             OfferStatus: "",
-                        }
+                        },
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
@@ -190,7 +191,7 @@ sap.ui.define(
                             AppPainter: 0,
                             ParentOffer: 0,
                             BrReqVol: 0,
-                            BrReqCash: 0
+                            BrReqCash: 0,
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -228,19 +229,19 @@ sap.ui.define(
                             Products: [],
                             Packs: [],
                             PerGrowth: [{
-                                    Name: "1"
+                                    Name: "1",
                                 },
                                 {
-                                    Name: "2"
+                                    Name: "2",
                                 },
                                 {
-                                    Name: "3"
+                                    Name: "3",
                                 },
                                 {
-                                    Name: "4"
+                                    Name: "4",
                                 },
                                 {
-                                    Name: "5"
+                                    Name: "5",
                                 },
                             ],
                             Rewards: [{
@@ -261,14 +262,14 @@ sap.ui.define(
                             Date1: null,
                             Date2: null,
                             ParentOfferTitle: "",
-                            RewardRationCount: 1
+                            RewardRationCount: 1,
                         },
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl2");
 
                     var othat = this;
-                    var c1, c1b, c2, c2b, c3, c4, c5, c6, c7, c8;
+                    var c1, c1b, c2, c2b, c3, c4, c5, c6, c7, c8, c9;
                     var oView = this.getView();
 
                     c1 = this._loadEditProfile("Display");
@@ -290,16 +291,23 @@ sap.ui.define(
                                                     c7 = othat._OfferTypeValidation(data);
                                                     c7.then(function () {
                                                         c8 = othat._CheckAttachment();
+                                                        c8.then(function () {
+                                                            c9 = othat._RemovePageBusy();
+                                                        })
+
                                                     });
                                                 });
                                             });
                                         });
                                     });
-                                })
+                                });
                             });
-                        })
+                        });
                     }); //c1.then
                     this._toggleButtonsAndView(false);
+                },
+                _RemovePageBusy: function () {
+                    this.getView().getModel("oModelControl3").setProperty("/PageBusy", false)
                 },
                 _setWorkflowFlags: function (oData) {
                     var promise = jQuery.Deferred();
@@ -313,10 +321,9 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var oLoginModel = oView.getModel("LoginInfo");
                     var oControlModel = oView.getModel("oModelControl3");
-                    var oLoginData = oLoginModel.getData()
+                    var oLoginData = oLoginModel.getData();
 
                     if (Object.keys(oLoginData).length === 0) {
-
                         return new Promise((resolve, reject) => {
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
@@ -327,16 +334,16 @@ sap.ui.define(
                                     if (data.hasOwnProperty("results")) {
                                         if (data["results"].length > 0) {
                                             oLoginModel.setData(data["results"][0]);
-                                            oControlModel.setProperty("/LoggedInUser", data["results"][0]);
-
-
+                                            oControlModel.setProperty(
+                                                "/LoggedInUser",
+                                                data["results"][0]
+                                            );
                                         }
                                     }
                                     resolve();
                                 },
                             });
-                        })
-
+                        });
                     } else {
                         oControlModel.setProperty("/LoggedInUser", oLoginData);
                         promise.resolve();
@@ -401,17 +408,14 @@ sap.ui.define(
                             },
                             success: function (data) {
                                 var oModel = new JSONModel(data);
-                                othat.getView().setModel(oModel, "oModelDisplay")
+                                othat.getView().setModel(oModel, "oModelDisplay");
                                 resolve(data);
                             },
                             error: function () {
                                 reject();
                             },
                         });
-
-                    })
-
-
+                    });
                 },
                 _setViewData2: function (oData) {
                     var promise = jQuery.Deferred();
@@ -518,7 +522,7 @@ sap.ui.define(
                     if (oData["OfferDepot"]["results"].length > 0) {
                         for (var x of oData["OfferDepot"]["results"]) {
                             aDepots.push({
-                                DepotId: x["DepotId"]
+                                DepotId: x["DepotId"],
                             });
                         }
                     }
@@ -725,9 +729,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl3");
                     oCtrl2Model.setProperty("/mode", "edit");
-                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10;
+                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
                     var othat = this;
-
 
                     c2 = othat._GetInitEditData();
                     c2.then(function (data) {
@@ -747,9 +750,22 @@ sap.ui.define(
                                                 c8.then(function (data) {
                                                     c9 = othat._getLoggedInUserDeatils(data);
                                                     c9.then(function (data) {
-                                                        c10 = othat._destroyDialogs();
-                                                        //_destroyDialogs
-                                                    })
+                                                        // no data required from the previous steop
+                                                        c10 = othat._getProductsData();
+                                                        c10.then(function () {
+                                                            c11 = othat._getPacksData();
+                                                            c11.then(function () {
+                                                                c12 = othat._CreateBonusRewardTable("Edit");
+                                                                c12.then(function () {
+                                                                    c13 = othat._destroyDialogs();
+                                                                    c13.then(function () {
+                                                                        c14 = othat._RemovePageBusy();
+                                                                    })
+                                                                })
+
+                                                            })
+                                                        })
+                                                    });
                                                 });
                                             });
                                         });
@@ -759,8 +775,7 @@ sap.ui.define(
                         });
                         //othat.getView().getModel("oModelView").refresh(true);
                     });
-
-
+                    //_destroyDialogs
                     // this._initSaveModel();
                 },
                 _setAdditionalData2: function (oData) {
@@ -809,17 +824,20 @@ sap.ui.define(
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
-                            oModelControl.setProperty("/ImageLoaded", true);
-                        })
-                        .fail(function () {
-                            oModelControl.setProperty("/ImageLoaded", false);
-                        });
+                    return new Promise((resolve, reject) => {
+                        jQuery
+                            .get(sImageUrl)
+                            .done(function () {
+                                oModelControl.setProperty("/ImageLoaded", true);
+                                resolve();
+                            })
+                            .fail(function () {
+                                oModelControl.setProperty("/ImageLoaded", false);
+                                resolve();
+                            });
 
-                    promise.resolve(oData);
-                    return promise;
+                    })
+                  
                 },
                 _GetInitEditData: function () {
                     var promise = jQuery.Deferred();
@@ -836,7 +854,7 @@ sap.ui.define(
                         "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
-                            $expand: exPand
+                            $expand: exPand,
                         },
                         success: function (data) {
                             promise.resolve(data);
@@ -954,7 +972,8 @@ sap.ui.define(
                             AppPainter: 0,
                             ParentOffer: 0,
                             BrReqVol: 0,
-                            BrReqCash: 0
+                            BrReqCash: 0,
+                            Bns2ReqPercent: 0,
                         },
                         MultiEnabled: {
                             PCat1: false,
@@ -990,19 +1009,19 @@ sap.ui.define(
                             Products: [],
                             Packs: [],
                             PerGrowth: [{
-                                    Name: "1"
+                                    Name: "1",
                                 },
                                 {
-                                    Name: "2"
+                                    Name: "2",
                                 },
                                 {
-                                    Name: "3"
+                                    Name: "3",
                                 },
                                 {
-                                    Name: "4"
+                                    Name: "4",
                                 },
                                 {
-                                    Name: "5"
+                                    Name: "5",
                                 },
                             ],
                             Rewards: [{
@@ -1024,7 +1043,7 @@ sap.ui.define(
                             Date2: null,
                             ParentOfferTitle: "",
                             RewardRationCount: 1,
-                            PainterCount: ""
+                            PainterCount: "",
                         },
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
@@ -1131,7 +1150,6 @@ sap.ui.define(
                         }
                     }
 
-
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1187,7 +1205,7 @@ sap.ui.define(
                     if (oData["OfferDepot"]["results"].length > 0) {
                         for (var x of oData["OfferDepot"]["results"]) {
                             aDepots.push({
-                                DepotId: x["DepotId"]
+                                DepotId: x["DepotId"],
                             });
                         }
                     }
@@ -1420,7 +1438,6 @@ sap.ui.define(
                 //         return [false, "Kindly Enter the data in the Reward Ratio Table to Continue"]
                 //     }
 
-
                 //     return [true, ""]
                 // },
                 _postDataToSave: function (bFileFlag) {
@@ -1452,7 +1469,7 @@ sap.ui.define(
                                                     othat.handleCancelPress(data);
                                                 });
                                             });
-                                        })
+                                        });
                                     });
                                 });
                             });
@@ -1553,19 +1570,20 @@ sap.ui.define(
                     var oProp = oModelControl.getProperty("/bindProp");
                     var sImageUrl =
                         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
-                            oModelControl.setProperty("/ImageLoaded", true);
-                        })
-                        .fail(function () {
-                            oModelControl.setProperty("/ImageLoaded", false);
-                        });
+                    return new Promise((resolve, reject) => {
+                        jQuery
+                            .get(sImageUrl)
+                            .done(function () {
+                                oModelControl.setProperty("/ImageLoaded", true);
+                                resolve();
+                            })
+                            .fail(function () {
+                                oModelControl.setProperty("/ImageLoaded", false);
+                                resolve();
+                            });
 
-                    promise.resolve();
-                    return promise;
+                    })
                 },
-
 
                 onAfterAttachClose: function (oEvent) {
                     this._pKycDialog.destroy();
@@ -1617,25 +1635,23 @@ sap.ui.define(
 
                 onBeforeBindPainterTable1: function (oEvent) {
                     var oView = this.getView();
-                    var sOfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
+                    var sOfferId = oView
+                        .getModel("oModelControl3")
+                        .getProperty("/OfferId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
                         [
-                            new Filter(
-                                "ProgressStatus",
-                                FilterOperator.EQ,
-                                "STARTED"
-                            ),
-                            new Filter(
-                                "ProgressStatus",
-                                FilterOperator.EQ,
-                                "COMPLETED"
-                            )
+                            new Filter("ProgressStatus", FilterOperator.EQ, "STARTED"),
+                            new Filter("ProgressStatus", FilterOperator.EQ, "COMPLETED"),
                         ],
                         false
-                    )
+                    );
 
-                    var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
+                    var aFilter2 = new Filter(
+                        "OfferId",
+                        FilterOperator.EQ,
+                        parseInt(sOfferId)
+                    );
                     aFilter.push(aFilter1);
                     aFilter.push(aFilter2);
                     var oBindingParams = oEvent.getParameter("bindingParams");
@@ -1650,14 +1666,20 @@ sap.ui.define(
                 onBeforeBindPainterTable2: function (oEvent) {
                     //qualified
                     var oView = this.getView();
-                    var sOfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
+                    var sOfferId = oView
+                        .getModel("oModelControl3")
+                        .getProperty("/OfferId");
                     var aFilter = [];
                     var aFilter1 = new Filter(
                         "RedemptionStatus",
                         FilterOperator.EQ,
                         "REDEEMED"
                     );
-                    var aFilter2 = new Filter("OfferId", FilterOperator.EQ, parseInt(sOfferId));
+                    var aFilter2 = new Filter(
+                        "OfferId",
+                        FilterOperator.EQ,
+                        parseInt(sOfferId)
+                    );
                     aFilter.push(aFilter1);
                     aFilter.push(aFilter2);
                     // var oPainterId = oView
@@ -1677,40 +1699,36 @@ sap.ui.define(
                 },
                 onApplyRedemption: function () {
                     var othat = this;
-                    MessageBox.confirm(
-                        "Are you sure you want to redeem the offer", {
-                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
-                            emphasizedAction: MessageBox.Action.OK,
-                            onClose: function (sAction) {
-                                if (sAction == "OK") {
-                                    othat._onOfferRedeem();
-                                }
-                            },
-                        }
-                    );
-
-
-
+                    MessageBox.confirm("Are you sure you want to redeem the offer", {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat._onOfferRedeem();
+                            }
+                        },
+                    });
                 },
                 _onOfferRedeem: function () {
                     var oView = this.getView();
                     var othat = this;
-                    var oModelControl = oView.getModel("oModelControl3")
+                    var oModelControl = oView.getModel("oModelControl3");
                     var sOfferId = oModelControl.getProperty("/OfferId");
                     var oData = oView.getModel();
 
                     oData.read("/RedeemOfferRewardForAllPainter", {
                         urlParameters: {
-                            OfferId: sOfferId
+                            OfferId: sOfferId,
                         },
                         success: function (oData) {
-
                             // oModelControl.setProperty("/Buttons/Redeem",false)
                             // oModelControl.refresh(true);
-                            MessageToast.show("Offer Successfully Redeemed.")
+                            MessageToast.show("Offer Successfully Redeemed.");
                         },
                         error: function () {
-                            MessageBox.error("Unable to redeem to the offer because of server error.")
+                            MessageBox.error(
+                                "Unable to redeem to the offer because of server error."
+                            );
                         },
                     });
                 },
@@ -1757,23 +1775,22 @@ sap.ui.define(
                         oView.addDependent(this._RemarksDialog2);
                         this._RemarksDialog2.open();
                     }
-                    //set the flag for status and empty the status 
+                    //set the flag for status and empty the status
                     // close the dialog
                     //move the approve sta
-
-
                 },
                 onCloseStatus: function () {
                     this._RemarksDialog2.close();
-
                 },
                 onApproveReject: function () {
                     var oView = this.getView();
                     var oForm = oView.byId("RemarkForm");
-                    var oValidate = new Validator()
+                    var oValidate = new Validator();
                     var bFlagValidate = oValidate.validate(oForm, true);
                     if (!bFlagValidate) {
-                        MessageToast.show("Kindly fill all the mandatory fields to continue.");
+                        MessageToast.show(
+                            "Kindly fill all the mandatory fields to continue."
+                        );
                         return;
                     }
 
@@ -1784,11 +1801,16 @@ sap.ui.define(
                     var sRemark = oModelC.getProperty("/Dialog/Remarks");
                     var oNewPayLoad = Object.assign({}, oPayload);
                     oNewPayLoad["Remark"] = sRemark;
-                    // if the offer status if 
-                    if (sOfferStatus === "PUBLISHED" || sOfferStatus === "PENDING" || sOfferStatus === "APPROVED" || sOfferStatus === "REJECTED") {
+                    // if the offer status if
+                    if (
+                        sOfferStatus === "PUBLISHED" ||
+                        sOfferStatus === "PENDING" ||
+                        sOfferStatus === "APPROVED" ||
+                        sOfferStatus === "REJECTED"
+                    ) {
                         oNewPayLoad["OfferStatus"] = sOfferStatus;
                         if (sOfferStatus === "PUBLISHED") {
-                            oNewPayLoad["IsPublished"] = true
+                            oNewPayLoad["IsPublished"] = true;
                         } else {
                             oNewPayLoad["IsPublished"] = false;
                         }
@@ -1800,8 +1822,8 @@ sap.ui.define(
                     var aCheck2 = ["PENDING", "APPROVED", "REJECTED", "ESCALATE"];
                     if (aCheck2.indexOf(sOfferStatus) >= 0) {
                         oNewPayLoad["IsWorkFlowApplicable"] = true;
-                    }else {
-                         oNewPayLoad["IsWorkFlowApplicable"] = false;
+                    } else {
+                        oNewPayLoad["IsWorkFlowApplicable"] = false;
                     }
 
                     console.log(oNewPayLoad);
@@ -1811,14 +1833,12 @@ sap.ui.define(
                             this._RemarksDialog2.close();
                             MessageToast.show("Offer Successfully Updated.");
                             this._navToHome();
-
                         }.bind(this),
                         error: function () {
                             this._RemarksDialog2.close();
                             MessageBox.error("Unable to update the offer.");
-                        }.bind(this)
-                    })
-
+                        }.bind(this),
+                    });
                 },
                 onEscalate: function () {
                     var oView = this.getView();
@@ -1831,13 +1851,12 @@ sap.ui.define(
                         success: function () {
                             MessageToast.show("Offer Successfully Escalated.");
                             this._navToHome();
-
                         }.bind(this),
                         error: function () {
                             MessageBox.error("Unanle to update the offer.");
-                        }
-                    })
-                }
+                        },
+                    });
+                },
             }
         );
     }

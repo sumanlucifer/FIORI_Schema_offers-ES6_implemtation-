@@ -10,7 +10,7 @@ sap.ui.define(
         "sap/ui/core/Fragment",
         "sap/m/MessageBox",
         "sap/m/MessageToast",
-        "com/knpl/pragati/SchemeOffers/controller/Validator"
+        "com/knpl/pragati/SchemeOffers/controller/Validator",
     ],
     function (
         Controller,
@@ -100,12 +100,51 @@ sap.ui.define(
                     // }
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteLandingPage", {}, true);
-
                 },
 
                 onPostSchemeData: function (oPayload, fileFlag) {},
-                onStartDateChange: function (oEvent) {
+                onBRRProductChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var oModel = oView.getModel("oModelControl");
+                    var aNumber = sPath.match(/\d+$/)[0];
+                    var oTable = oModel.getProperty("/Table/Table4");
+                    for (var ele in oTable) {
+                        if (ele == aNumber) {
+                            continue;
+                        }
+                        if (oTable[ele]["ProductCode"] === sKey) {
+                            MessageToast.show("Product Already Selected, Kindly select a different Product.");
+                            oModel.setProperty(sPath + "/ProductCode", "");
+                            oModel.refresh(true)
+                            break;
+                        }
+                    }
 
+                },
+                onBRRPackChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var oModel = oView.getModel("oModelControl");
+                    var aNumber = sPath.match(/\d+$/)[0];
+                    var oTable = oModel.getProperty("/Table/Table4");
+                    for (var ele in oTable) {
+                        if (ele == aNumber) {
+                            continue;
+                        }
+                        if (oTable[ele]["SkuCode"] === sKey) {
+                            MessageToast.show("Pack Already Selected, Kindly select a different Pack.");
+                            oModel.setProperty(sPath + "/SkuCode", "");
+                            oModel.refresh(true)
+                            break;
+                        }
+                    }
+
+                },
+
+                onStartDateChange: function (oEvent) {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oModelView = oView.getModel("oModelView");
@@ -190,12 +229,10 @@ sap.ui.define(
                                         "MultiCombo/PClass3",
                                         "MultiCombo/AppProd3",
                                         "MultiCombo/AppPacks3",
-
                                     ],
                                     true
                                 );
                                 othat._RbtnReset([
-
                                     "Rbtn/PCat2",
                                     "Rbtn/PClass2",
                                     "Rbtn/AppProd2",
@@ -214,36 +251,28 @@ sap.ui.define(
                                         "MultiCombo/AppPacks4",
                                         "Table/Table4",
                                         "Table/Table3",
-
                                     ],
                                     true
                                 );
-                                othat._propertyToBlank(
-                                    [
-                                        "BonusDescription",
-                                        "PainterGrowth",
-                                        "PerformanceStartDate",
-                                        "PerformanceEndDate",
-                                        "BonusApplicableTopPainter"
-                                    ]
-                                );
+                                othat._propertyToBlank([
+                                    "BonusDescription",
+                                    "PainterGrowth",
+                                    "PerformanceStartDate",
+                                    "PerformanceEndDate",
+                                    "BonusApplicableTopPainter",
+                                ]);
                                 othat._RbtnReset([
                                     "Rbtn/PCat4",
                                     "Rbtn/PClass4",
                                     "Rbtn/AppProd4",
                                     "Rbtn/AppPacks4",
-                                    "Rbtn/TopAll"
-
+                                    "Rbtn/TopAll",
                                 ]);
-
                             } else if (a === "RewardRatio") {
                                 // sending the reward ration value as all
                                 // reward ratio is false means this is not a slab offer hense we have set max value as 1
-                                othat._RbtnReset([
-                                    "Rbtn/Rewards"
-                                ]);
+                                othat._RbtnReset(["Rbtn/Rewards"]);
                                 oModelControl.setProperty("/Fields/RewardRationCount", 1);
-
                             }
                         } else if (oOfferType[a]) {
                             if (a === "RewardRatio") {
@@ -253,20 +282,16 @@ sap.ui.define(
 
                             // sending the reward ratio value as 1 that is generic
                             // reward ratio is true means this is not a slab offer hense we have set max value as 1
-
-
                         }
                     }
                     //oModelControl.refresh(true);
 
                     // setting up redemption cycle data based on offer type
                     this._SetRedemptionCycle();
-
                 },
                 _setTable2Count: function () {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
-
                 },
                 _SetRedemptionCycle: function () {
                     var oView = this.getView();
@@ -276,13 +301,10 @@ sap.ui.define(
                     var aArray = [];
                     for (var a = 1; a <= aMaxValue; a++) {
                         aArray.push({
-                            Name: a
-                        })
+                            Name: a,
+                        });
                     }
                     oModel.setProperty("/oData/PerGrowth", aArray);
-
-
-
                 },
                 onMultyZoneChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
@@ -308,7 +330,7 @@ sap.ui.define(
                         oDivObj = j.getBindingContext().getObject();
                         if (sZoneKey.indexOf(oDivObj["Zone"]) < 0) {
                             oDivision.removeSelectedItem(j);
-                            f
+                            f;
                         }
                     }
                     // check for the depot tokens
@@ -349,7 +371,7 @@ sap.ui.define(
 
                     this._fnChangeProdPacks({
                         src: {
-                            path: "/MultiCombo/AppProd1"
+                            path: "/MultiCombo/AppProd1",
                         },
                         target: {
                             localPath: "/MultiCombo/AppPacks1",
@@ -438,9 +460,121 @@ sap.ui.define(
                     this._CreateRewardTableData();
                 },
                 onBRRbChange: function () {
+                    this.getView().getModel("oModelControl").setProperty("/Table/Table3", []);
                     this._CreateBonusRewardTable();
                 },
+                _CreateBonusRewardTable: function (mParam) {
+                     var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var othat = this;
+                    var oModelControl = oView.getModel("oModelControl");
+                    if (!mParam) {
+                        oModelControl.setProperty("/Table/Table4", []);
+                    }
 
+                    var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks4");
+                    var oDataModel = this.getView().getModel();
+                    var c1, c2, c3, c4, c5;
+                    if (sCheckPacks == 0) {
+                        othat._setBRProductsData();
+                    } else {
+                        othat._setBRPacksData();
+                    }
+                    promise.resolve();
+                    return promise;
+                },
+                onPressAddGenericReward2V2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table3");
+                    if (oEvent !== "add") {
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+
+                        oModel.refresh();
+                    } else {
+                        var bFlag = true;
+                        var sLength = 1;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the current bonus type we can add only " +
+                                sLength +
+                                " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                StartDate: null,
+                                EndDate: null,
+                                BonusPoints: "",
+                                BonusPercentage: "",
+                                editable: true,
+                            });
+                        }
+                        oModel.refresh();
+                    }
+                },
+                onSaveGenericBonusReward: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+                    var cFlag = oValidator.validate(oCells);
+
+                    var bFlag = true;
+                    if (oObject["StartDate"] == null) {
+                        MessageToast.show("Kindly Input Start Date to Continue");
+                        return;
+                    }
+                    if (oObject["EndDate"] == null) {
+                        MessageToast.show("Kindly Input End Date to Continue");
+                        return;
+                    }
+                    if (!cFlag) {
+                        MessageToast.show("Kindly enter the fields in proper format.");
+                        return;
+                    }
+
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
+                    //oModel.refresh(true);
+                },
                 onPressAddGenericReward2: function (oEvent) {
                     var oView = this.getView();
                     var othat = this;
@@ -448,16 +582,15 @@ sap.ui.define(
                     var oBj = {},
                         sPath = "";
                     if (oEvent !== "add") {
-                        oBj = oEvent
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
                             .getObject();
-                        sPath = oEvent
-                            .getSource()
-                            .getBindingContext("oModelControl")
-                            .getPath()
-                            .split("/");
-                        oModel.setProperty("/Dialog/Key2", sPath[sPath.length - 1]);
+                        oObject["editable"] = true;
+
+                        oModel.refresh();
                     } else {
                         oBj = false;
                         oModel.setProperty("/Dialog/Key2", "add");
@@ -506,14 +639,12 @@ sap.ui.define(
                             "/Dialog/Bonus2",
                             Object.assign({}, oBjFinal)
                         );
-
                     } else {
                         oBjFinal = oBj1 !== false ? oBj1 : oBj3;
                         oModelControl.setProperty(
                             "/Dialog/Bonus2",
                             Object.assign({}, oBjFinal)
                         );
-
                     }
                 },
                 onSubmitGenericRewards2: function () {
@@ -567,6 +698,114 @@ sap.ui.define(
 
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh(true);
+                },
+                onPressAddRewards2V2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table4");
+                    if (oEvent !== "add") {
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+                        oModel.refresh();
+                    } else {
+                        var bFlag = true;
+                        var sLength = 10;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the current bonus type we can add only " +
+                                sLength +
+                                " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                SkuCode: "",
+                                ProductCode: "",
+                                StartDate: null,
+                                EndDate: null,
+                                BonusPoints: "",
+                                BonusPercentage: "",
+                                editable: true,
+                            });
+                        }
+                        oModel.refresh(true);
+                    }
+                },
+                onSaveBonusRewardV2: function (oEvent) {
+                    console.log(oEvent.getSource().getBindingContext("oModelControl").getObject());
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+                    var cFlag = oValidator.validate(oCells);
+                    var bFlag = true;
+
+
+                    var bHasPack = oModel.getProperty("/Rbtn/AppPacks4");
+
+                    if (bHasPack === 1) {
+                        if (oObject["SkuCode"] === "") {
+                            MessageToast.show("Kindly Select a Pack To Continue.");
+                            return;
+                        }
+                    }
+                    if (bHasPack === 0) {
+                        if (oObject["ProductCode"] === "") {
+                            MessageToast.show("Kindly Select a Product To Continue.");
+                            return;
+                        }
+                    }
+                    if (oObject["StartDate"] == null) {
+                        MessageToast.show("Kindly Input Start Date to Continue");
+                        return;
+                    }
+                    if (oObject["EndDate"] == null) {
+                        MessageToast.show("Kindly Input End Date to Continue");
+                        return;
+                    }
+                    if (!cFlag) {
+                        MessageToast.show("Kindly enter the fields in proper format.");
+                        return;
+                    }
+
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
                 },
                 onPressAddRewards2: function (oEvent) {
                     var oView = this.getView();
@@ -658,7 +897,6 @@ sap.ui.define(
                     var oForm = oView.byId("FormAddProdPacks2");
                     var bFlagValidate = oValidate.validate(oForm, true);
 
-
                     if (bHasPack === 1) {
                         if (oPayload["SkuCode"] === "") {
                             MessageToast.show("Kindly Select a Pack To Continue.");
@@ -670,7 +908,6 @@ sap.ui.define(
                             MessageToast.show("Kindly Select a Product To Continue.");
                             return;
                         }
-
                     }
                     if (oPayload["StartDate"] == null) {
                         MessageToast.show("Kindly Input Start Date to Continue");
@@ -717,12 +954,7 @@ sap.ui.define(
                 onPressAddGenericRewardsV1: function (oEvent) {
                     var oModel = this.getView().getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table1");
-                    if (oEvent !== "add") {
-
-
-
-                    } else {
-
+                    if (oEvent !== "add") {} else {
                         var bFlag = true;
                         if (oRewardDtl.length > 0) {
                             for (var prop of oRewardDtl) {
@@ -758,9 +990,6 @@ sap.ui.define(
                         // oBj = false;
                         // oModel.setProperty("/Dialog/Key1", "add");
                     }
-
-
-
                 },
                 onPressAddGenericRewards: function (oEvent) {
                     var oView = this.getView();
@@ -830,24 +1059,22 @@ sap.ui.define(
                             "/Dialog/Bonus1",
                             Object.assign({}, oBjFinal)
                         );
-
                     } else {
                         oBjFinal = oBj1 !== false ? oBj1 : oBj3;
                         oModelControl.setProperty(
                             "/Dialog/Bonus1",
                             Object.assign({}, oBjFinal)
                         );
-
                     }
                     if (oBjFinal["RequiredPoints"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 1)
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 1);
                     } else {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0);
                     }
                     if (oBjFinal["RewardCash"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqCash", 1)
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 1);
                     } else {
-                        oModelControl.setProperty("/Rbtn/BrReqCash", 0)
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 0);
                     }
                 },
 
@@ -856,7 +1083,7 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedIndex();
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
-                    var sPath = "/Dialog/Bonus1"
+                    var sPath = "/Dialog/Bonus1";
                     oModel.setProperty(sPath + "/RewardCash", "");
                 },
                 onSubmitGenericRewards1: function () {
@@ -869,7 +1096,9 @@ sap.ui.define(
                     var oForm = oView.byId("FormAddProdPacks");
                     var bFlagValidate = oValidate.validate(oForm, true);
                     if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
-                        MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
+                        MessageToast.show(
+                            "Kindly Input atleast Required Volume or Required Points to Continue."
+                        );
                         return;
                     }
                     if (oPayload["RewardPoints"] == "") {
@@ -888,7 +1117,6 @@ sap.ui.define(
                             .getProperty("/Table/Table1")
                             .splice(parseInt(sKey), 1, oPayloadNew);
                     }
-
 
                     this._RewardsDialog1.close();
                     oModel2.refresh(true);
@@ -921,11 +1149,9 @@ sap.ui.define(
                         oObject["editable"] = true;
 
                         oModel.refresh();
-
                     } else {
-
                         var bFlag = true;
-                        var sLength = oModel.getProperty("/Fields/RewardRationCount")
+                        var sLength = oModel.getProperty("/Fields/RewardRationCount");
                         if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
                             for (var prop of oRewardDtl) {
                                 if (prop["editable"] == true) {
@@ -940,7 +1166,9 @@ sap.ui.define(
                         }
                         if (oRewardDtl.length >= sLength) {
                             MessageToast.show(
-                                "For the current Offer type we can add only " + sLength + " item(s)."
+                                "For the current Offer type we can add only " +
+                                sLength +
+                                " item(s)."
                             );
                             bFlag = false;
                             return;
@@ -951,14 +1179,13 @@ sap.ui.define(
                                 RequiredPoints: "",
                                 RewardPoints: "",
                                 RewardCash: "",
-                                editable: true
+                                editable: true,
                             });
 
                             //relvalue and editable properties are added here and will be removed in the postsave function
                         }
                         oModel.refresh();
                     }
-
                 },
                 onPressSaveReward: function (oEvent) {
                     var oView = this.getView();
@@ -968,7 +1195,6 @@ sap.ui.define(
                         .getBindingContext("oModelControl")
                         .getObject();
 
-
                     var oCells = oEvent.getSource().getParent().getParent().getCells();
                     var oValidator = new Validator();
                     var cFlag = oValidator.validate(oCells);
@@ -976,11 +1202,15 @@ sap.ui.define(
                     var bFlag = true;
 
                     if (!cFlag) {
-                        MessageToast.show("Kindly Input Mandatory Fields In Proper Format To Continue.");
+                        MessageToast.show(
+                            "Kindly Input Mandatory Fields In Proper Format To Continue."
+                        );
                         return;
                     }
                     if (!oObject["RewardPoints"] && !oObject["RewardCash"]) {
-                        MessageToast.show("Kindly Enter Either Reward Points Or Reward Cash To Continue.");
+                        MessageToast.show(
+                            "Kindly Enter Either Reward Points Or Reward Cash To Continue."
+                        );
                         return;
                     }
                     //var cFlag = oValidator.validate();
@@ -997,13 +1227,17 @@ sap.ui.define(
                         oModel.refresh(true);
                     }
                     //oModel.refresh(true);
-
-
                 },
                 onRbRRDialogVolume: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     oModel.setProperty("/Table/Table2", []);
+                },
+                onRbRRDialogVolume2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    oModel.setProperty("/Table/Table3", []);
+                    oModel.setProperty("/Table/Table4", []);
                 },
                 onPressAddRewards: function (oEvent) {
                     // var oView = this.getView();
@@ -1012,8 +1246,6 @@ sap.ui.define(
                     // var oBj = {},
                     //     sPath = "";
                     if (oEvent !== "add") {
-
-
                         // oBj = oEvent
                         //     .getSource()
                         //     .getBindingContext("oModelControl")
@@ -1024,7 +1256,6 @@ sap.ui.define(
                         //     .getPath()
                         //     .split("/");
                         // oModel.setProperty("/Dialog/Key1", sPath[sPath.length - 1]);
-
                     } else {
                         var oModel = this.getView().getModel("oModelControl");
                         var oFamiDtlMdl = oModel.getProperty("/Table/Table2");
@@ -1042,9 +1273,7 @@ sap.ui.define(
                             }
                         }
                         if (oFamiDtlMdl.length >= 15) {
-                            MessageToast.show(
-                                "We can only add 15 items"
-                            );
+                            MessageToast.show("We can only add 15 items");
                             bFlag = false;
                             return;
                         }
@@ -1054,7 +1283,7 @@ sap.ui.define(
                                 RequiredPoints: "",
                                 RewardPoints: "",
                                 RewardCash: "",
-                                editable: true
+                                editable: true,
                             });
 
                             //relvalue and editable properties are added here and will be removed in the postsave function
@@ -1088,7 +1317,6 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
-
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -1096,7 +1324,6 @@ sap.ui.define(
                         RewardCash: "",
                     };
                     var oBj3 = {
-
                         RequiredVolume: "",
                         RequiredPoints: "",
                         RewardPoints: "",
@@ -1121,16 +1348,15 @@ sap.ui.define(
                         this._setPacksData();
                     }
 
-
                     if (oBjFinal["RequiredPoints"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 1)
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 1);
                     } else {
-                        oModelControl.setProperty("/Rbtn/BrReqVol", 0)
+                        oModelControl.setProperty("/Rbtn/BrReqVol", 0);
                     }
                     if (oBjFinal["RewardCash"]) {
-                        oModelControl.setProperty("/Rbtn/BrReqCash", 1)
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 1);
                     } else {
-                        oModelControl.setProperty("/Rbtn/BrReqCash", 0)
+                        oModelControl.setProperty("/Rbtn/BrReqCash", 0);
                     }
                     oModelControl.refresh(true);
                 },
@@ -1158,7 +1384,9 @@ sap.ui.define(
 
                     // }
                     if (!oPayload["RequiredVolume"] && !oPayload["RequiredPoints"]) {
-                        MessageToast.show("Kindly Input atleast Required Volume or Required Points to Continue.");
+                        MessageToast.show(
+                            "Kindly Input atleast Required Volume or Required Points to Continue."
+                        );
                         return;
                     }
                     if (oPayload["RewardPoints"] == "") {
@@ -1215,21 +1443,12 @@ sap.ui.define(
                         //this._CreateRewardTableData();
                     }
                     if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
-                        //this._CreateBonusRewardTable();
+                        this._CreateBonusRewardTable();
                     }
                 },
 
                 onRbBonusRewardChange: function (oEvent) {},
-                _CreateBonusRewardTable: function () {
-                    var oView = this.getView();
-                    var othat = this;
-                    var oModelControl = oView.getModel("oModelControl");
-                    oModelControl.setProperty("/Table/Table4", []);
-                    oModelControl.setProperty("/Table/Table3", []);
-                    var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks4");
-                    var oDataModel = this.getView().getModel();
-                    var c1, c2, c3, c4, c5;
-                },
+
 
                 _CreateRewardTableData: function (oEvent) {
                     //check if all or specific table is there or not
@@ -1297,6 +1516,7 @@ sap.ui.define(
                         });
                     }
                     oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
+                    console.log(oModelControl);
                 },
                 _setBRProductsData: function () {
                     var oView = this.getView();
@@ -1324,8 +1544,9 @@ sap.ui.define(
                     }
 
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
+
                 },
-                _setBRPacksData: function (sKey) {
+                _setBRPacksData: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var aSelectedKeys = oModelControl.getProperty(
@@ -1342,6 +1563,24 @@ sap.ui.define(
                     }
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
                 },
+                _getProductsData: function () {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oData = oView.getModel();
+                    0
+                    return new Promise((resolve, reject) => {
+                        oData.read("/MasterProductSet", {
+                            success: function (mParam1) {
+                                oModelControl.setProperty("/oData/Products", mParam1["results"]);
+                                resolve();
+                            },
+                            error: function (mParam1) {
+                                reject();
+                            },
+                        });
+                    })
+                },
                 _getPacksData: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -1352,15 +1591,19 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     }
-                    oData.read("/MasterRepProductSkuSet", {
-                        success: function (mParam1) {
-                            oModelControl.setProperty("/oData/Packs", mParam1["results"]);
-                        },
-                        error: function (mParam1) {},
-                    });
-                    promise.resolve();
-                    return promise;
+                    return new Promise((resolve, reject) => {
+                        oData.read("/MasterRepProductSkuSet", {
+                            success: function (mParam1) {
+                                oModelControl.setProperty("/oData/Packs", mParam1["results"]);
+                                resolve()
+                            },
+                            error: function (mParam1) {
+                                reject();
+                            },
+                        });
+                    })
                 },
+
                 onValueHelpRequestedPainter: function () {
                     this._PainterMulti = this.getView().byId("Painters");
 
@@ -1415,8 +1658,8 @@ sap.ui.define(
                         ArcheType: "",
                         MembershipCard: "",
                         Name: "",
-                        Mobile: ""
-                    }
+                        Mobile: "",
+                    };
                     oModel.setProperty("/Search/PainterVh", oSearchData);
                     if (!this._PainterValueHelp) {
                         this._PainterValueHelp = sap.ui.xmlfragment(
@@ -1434,7 +1677,7 @@ sap.ui.define(
                                         path: "/PainterSet",
                                         parameters: {
                                             expand: "Depot,PainterType,ArcheType",
-                                            select: "Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType"
+                                            select: "Id,MembershipCard,Name,Mobile,ZoneId,DivisionId,Depot/Depot,PainterType/PainterType,ArcheType/ArcheType",
                                         },
                                         events: {
                                             dataReceived: function () {
@@ -1466,7 +1709,6 @@ sap.ui.define(
                         //this._PainterValueHelp.setTokens(this._PainterMulti.getTokens());
                         this._PainterValueHelp.open();
                     }
-
                 },
                 onPainterOkayPress: function (oEvent) {
                     var oData = [];
@@ -1508,7 +1750,9 @@ sap.ui.define(
 
                     oValueHelpDialog.getTableAsync().then(function (oTable) {
                         if (oTable.bindRows) {
-                            oTable.getBinding("rows").filter(oFilter, sType || "ApplicatApplication");
+                            oTable
+                                .getBinding("rows")
+                                .filter(oFilter, sType || "ApplicatApplication");
                         }
 
                         if (oTable.bindItems) {
@@ -1525,7 +1769,9 @@ sap.ui.define(
                     var afilterBar = oEvent.getParameter("selectionSet");
 
                     var aCurrentFilterValues = [];
-                    var oViewFilter = this.getView().getModel("oModelControl").getProperty("/Search/PainterVh");
+                    var oViewFilter = this.getView()
+                        .getModel("oModelControl")
+                        .getProperty("/Search/PainterVh");
                     var aFlaEmpty = true;
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
@@ -1550,7 +1796,7 @@ sap.ui.define(
                                     new Filter({
                                         path: "PainterTypeId",
                                         operator: FilterOperator.EQ,
-                                        value1: oViewFilter[prop]
+                                        value1: oViewFilter[prop],
                                     })
                                 );
                             } else if (prop === "ArcheType") {
@@ -1559,7 +1805,7 @@ sap.ui.define(
                                     new Filter({
                                         path: "ArcheTypeId",
                                         operator: FilterOperator.EQ,
-                                        value1: oViewFilter[prop]
+                                        value1: oViewFilter[prop],
                                     })
                                 );
                             } else if (prop === "MembershipCard") {
@@ -1569,7 +1815,7 @@ sap.ui.define(
                                         path: "MembershipCard",
                                         operator: FilterOperator.Contains,
                                         value1: oViewFilter[prop],
-                                        caseSensitive: false
+                                        caseSensitive: false,
                                     })
                                 );
                             } else if (prop === "Name") {
@@ -1579,7 +1825,7 @@ sap.ui.define(
                                         path: "Name",
                                         operator: FilterOperator.Contains,
                                         value1: oViewFilter[prop],
-                                        caseSensitive: false
+                                        caseSensitive: false,
                                     })
                                 );
                             } else if (prop === "Mobile") {
@@ -1588,28 +1834,34 @@ sap.ui.define(
                                     new Filter({
                                         path: "Mobile",
                                         operator: FilterOperator.Contains,
-                                        value1: oViewFilter[prop]
+                                        value1: oViewFilter[prop],
                                     })
                                 );
                             }
                         }
                     }
 
-                    aCurrentFilterValues.push(new Filter({
-                        path: "IsArchived",
-                        operator: FilterOperator.EQ,
-                        value1: false
-                    }))
-                    aCurrentFilterValues.push(new Filter({
-                        path: "RegistrationStatus",
-                        operator: FilterOperator.NotContains,
-                        value1: "DEREGISTERED"
-                    }))
-                    aCurrentFilterValues.push(new Filter({
-                        path: "ActivationStatus",
-                        operator: FilterOperator.NotContains,
-                        value1: "DEACTIVATED"
-                    }))
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false,
+                        })
+                    );
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "RegistrationStatus",
+                            operator: FilterOperator.NotContains,
+                            value1: "DEREGISTERED",
+                        })
+                    );
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "ActivationStatus",
+                            operator: FilterOperator.NotContains,
+                            value1: "DEACTIVATED",
+                        })
+                    );
 
                     this._FilterPainterValueTable(
                         new Filter({
@@ -1655,23 +1907,29 @@ sap.ui.define(
                         ArcheType: "",
                         MembershipCard: "",
                         Name: "",
-                        Mobile: ""
+                        Mobile: "",
                     });
-                    aCurrentFilterValues.push(new Filter({
-                        path: "IsArchived",
-                        operator: FilterOperator.EQ,
-                        value1: false
-                    }))
-                    aCurrentFilterValues.push(new Filter({
-                        path: "RegistrationStatus",
-                        operator: FilterOperator.NotContains,
-                        value1: "DEREGISTERED"
-                    }))
-                    aCurrentFilterValues.push(new Filter({
-                        path: "ActivationStatus",
-                        operator: FilterOperator.NotContains,
-                        value1: "DEACTIVATED"
-                    }));
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false,
+                        })
+                    );
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "RegistrationStatus",
+                            operator: FilterOperator.NotContains,
+                            value1: "DEREGISTERED",
+                        })
+                    );
+                    aCurrentFilterValues.push(
+                        new Filter({
+                            path: "ActivationStatus",
+                            operator: FilterOperator.NotContains,
+                            value1: "DEACTIVATED",
+                        })
+                    );
                     this._FilterPainterValueTable(
                         new Filter({
                             filters: aCurrentFilterValues,
@@ -1691,7 +1949,7 @@ sap.ui.define(
 
                     this._fnChangeDivDepot({
                         src: {
-                            path: "/MultiCombo/Zones"
+                            path: "/MultiCombo/Zones",
                         },
                         target: {
                             localPath: "/MultiCombo/Divisions",
@@ -1701,7 +1959,7 @@ sap.ui.define(
                     });
                     this._fnChangeDivDepot({
                         src: {
-                            path: "/MultiCombo/Divisions"
+                            path: "/MultiCombo/Divisions",
                         },
                         target: {
                             localPath: "/MultiCombo/Depots",
@@ -1715,7 +1973,7 @@ sap.ui.define(
                     // Not requred to set filter for the Depots as this is a valuehelp and filter is applied in onbeforeopen event
                     this._fnChangeDivDepot({
                         src: {
-                            path: "/MultiCombo/Divisions"
+                            path: "/MultiCombo/Divisions",
                         },
                         target: {
                             localPath: "/MultiCombo/Depots",
@@ -1745,8 +2003,8 @@ sap.ui.define(
                     var oView = this.getView();
                     oView.getModel("oModelControl").setProperty("/Search/DepotVh", {
                         DepotId: "",
-                        Depot: ""
-                    })
+                        Depot: "",
+                    });
                     if (!this._oDepotDialog) {
                         this._oDepotDialog = sap.ui.xmlfragment(
                             "com.knpl.pragati.SchemeOffers.view.fragment.DepotFragment",
@@ -1771,15 +2029,19 @@ sap.ui.define(
                                 }
 
                                 if (oTable.bindItems) {
-                                    oTable.bindAggregation("items", "/MasterDepotSet", function () {
-                                        return new sap.m.ColumnListItem({
-                                            cells: aCols.map(function (column) {
-                                                return new sap.m.Label({
-                                                    text: "{" + column.template + "}",
-                                                });
-                                            }),
-                                        });
-                                    });
+                                    oTable.bindAggregation(
+                                        "items",
+                                        "/MasterDepotSet",
+                                        function () {
+                                            return new sap.m.ColumnListItem({
+                                                cells: aCols.map(function (column) {
+                                                    return new sap.m.Label({
+                                                        text: "{" + column.template + "}",
+                                                    });
+                                                }),
+                                            });
+                                        }
+                                    );
                                 }
 
                                 this._oDepotDialog.update();
@@ -1791,9 +2053,9 @@ sap.ui.define(
                     } else {
                         this._oDepotDialog.open();
                     }
-
                 },
                 _destroyDialogs: function () {
+                    var promise = jQuery.Deferred();
                     if (this._DepotDialog) {
                         this._oDepotDialog.destroy();
                         delete this._oDepotDialog;
@@ -1802,14 +2064,17 @@ sap.ui.define(
                         this._PainterValueHelp.destroy();
                         delete this._PainterValueHelp;
                     }
+
                     // if (this._RewardsDialog1) {
                     //     this._RewardsDialog1.destroy();
                     //     delete this._RewardsDialog1;
-                    // } 
+                    // }
                     // if (this._RewardsDialog2) {
                     //     this._RewardsDialog2.destroy();
                     //     delete this._RewardsDialog2;
                     // }
+                    promise.resolve();
+                    return promise;
                 },
                 onValueHelpAfterClose: function () {
                     if (this._DepotDialog) {
@@ -1873,10 +2138,9 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var oLoginModel = oView.getModel("LoginInfo");
                     var oControlModel = oView.getModel("oModelControl");
-                    var oLoginData = oLoginModel.getData()
+                    var oLoginData = oLoginModel.getData();
 
                     if (Object.keys(oLoginData).length === 0) {
-
                         return new Promise((resolve, reject) => {
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
@@ -1887,16 +2151,16 @@ sap.ui.define(
                                     if (data.hasOwnProperty("results")) {
                                         if (data["results"].length > 0) {
                                             oLoginModel.setData(data["results"][0]);
-                                            oControlModel.setProperty("/LoggedInUser", data["results"][0]);
-
-
+                                            oControlModel.setProperty(
+                                                "/LoggedInUser",
+                                                data["results"][0]
+                                            );
                                         }
                                     }
                                     resolve(oData);
                                 },
                             });
-                        })
-
+                        });
                     } else {
                         oControlModel.setProperty("/LoggedInUser", oLoginData);
                         promise.resolve(oData);
@@ -1941,7 +2205,9 @@ sap.ui.define(
                 onDepotVhSearch: function () {
                     var oView = this.getView();
                     var aCurrentFilterValues = [];
-                    var oViewFilter = this.getView().getModel("oModelControl").getProperty("/Search/DepotVh");
+                    var oViewFilter = this.getView()
+                        .getModel("oModelControl")
+                        .getProperty("/Search/DepotVh");
                     var aFlaEmpty = true;
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
@@ -1952,7 +2218,7 @@ sap.ui.define(
                                         path: "Id",
                                         operator: "Contains",
                                         value1: oViewFilter[prop],
-                                        caseSensitive: false
+                                        caseSensitive: false,
                                     })
                                 );
                             } else if (prop === "Depot") {
@@ -1962,14 +2228,12 @@ sap.ui.define(
                                         path: "Depot",
                                         operator: "Contains",
                                         value1: oViewFilter[prop],
-                                        caseSensitive: false
+                                        caseSensitive: false,
                                     })
                                 );
                             }
                         }
                     }
-
-
 
                     this._FilterDepotTable(
                         new Filter({
@@ -1977,20 +2241,16 @@ sap.ui.define(
                             and: true,
                         })
                     );
-
                 },
                 onClearDepotFilterVh: function () {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     oModel.setProperty("/Search/DepotVh", {
                         DepotId: "",
-                        Depot: ""
+                        Depot: "",
                     });
                     var aCurrentFilterValues = [];
-                    this._FilterDepotTable(
-                        []
-                    );
-
+                    this._FilterDepotTable([]);
                 },
 
                 onProductCatChange: function (oEvent) {
@@ -2041,6 +2301,16 @@ sap.ui.define(
                         });
 
                         oModel.setProperty(sPath, aNewArray);
+                        var aSpath = sPath.split("/");
+                        var mParam1 = aSpath[aSpath.length - 1];
+                        var aNumber = mParam1.match(/\d+$/)[0];
+                        console.log(aNumber);
+                        if (aNumber == "1") {
+
+                        } else if (aNumber == "4") {
+                            this._CreateBonusRewardTable();
+                        }
+
                     }
                 },
                 handlePackValueHelp: function (oEvent) {
@@ -2088,7 +2358,9 @@ sap.ui.define(
                         );
                     }
 
-                    this._PackValueHelpDialog.getBinding("items").filter(aFilter1, "Control");
+                    this._PackValueHelpDialog
+                        .getBinding("items")
+                        .filter(aFilter1, "Control");
                     this._PackValueHelpDialog.open();
                 },
                 _handlePackValueHelpSearch: function (oEvent) {
@@ -2099,11 +2371,12 @@ sap.ui.define(
                             path: "Description",
                             operator: "Contains",
                             value1: sValue,
-                            caseSensitive: false
-                        })
-                        this._PackValueHelpDialog.getBinding("items").filter(aFilter, "Application");
+                            caseSensitive: false,
+                        });
+                        this._PackValueHelpDialog
+                            .getBinding("items")
+                            .filter(aFilter, "Application");
                     }
-
                 },
                 _handlePackValueHelpConfirm: function (oEvent) {
                     var oSelected = oEvent.getParameter("selectedItems");
@@ -2117,14 +2390,14 @@ sap.ui.define(
                         oBj = a.getBindingContext().getObject();
                         aProds.push({
                             Name: oBj["Description"],
-                            Id: oBj["SkuCode"]
+                            Id: oBj["SkuCode"],
                         });
                     }
                     oView
                         .getModel("oModelControl")
                         .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
                     if (aNumber == "1") {
-                        this._CreateRewardTableData();
+                        //this._CreateRewardTableData();
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
@@ -2147,6 +2420,16 @@ sap.ui.define(
                         });
 
                         oModel.setProperty(sPath, aNewArray);
+                        var aSpath = sPath.split("/");
+                        var mParam1 = aSpath[aSpath.length - 1];
+                        var aNumber = mParam1.match(/\d+$/)[0];
+                        console.log(aNumber);
+                        if (aNumber == "1") {
+
+                        } else if (aNumber == "4") {
+                            this._CreateBonusRewardTable();
+                        }
+
                     }
                 },
                 handleProdValueHelp: function (oEvent) {
@@ -2196,7 +2479,7 @@ sap.ui.define(
                         oBj = a.getBindingContext().getObject();
                         aProds.push({
                             Name: oBj["ProductName"],
-                            Id: oBj["Id"]
+                            Id: oBj["Id"],
                         });
                     }
 
@@ -2204,7 +2487,7 @@ sap.ui.define(
                     oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
 
                     if (aNumber == "1") {
-                        this._CreateRewardTableData();
+                        //this._CreateRewardTableData();
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
@@ -2253,7 +2536,9 @@ sap.ui.define(
                     if (aFilter2.length > 0) {
                         aFinalFilter.push(aFilterClass);
                     }
-                    this._ProdValueHelpDialog.getBinding("items").filter(aFinalFilter, "Control");
+                    this._ProdValueHelpDialog
+                        .getBinding("items")
+                        .filter(aFinalFilter, "Control");
                     this._ProdValueHelpDialog.open();
                 },
                 _handlePValueHelpSearch: function (oEvent) {
@@ -2264,11 +2549,12 @@ sap.ui.define(
                             path: "ProductName",
                             operator: "Contains",
                             value1: sValue,
-                            caseSensitive: false
-                        })
-                        this._ProdValueHelpDialog.getBinding("items").filter(aFilter, "Application");
+                            caseSensitive: false,
+                        });
+                        this._ProdValueHelpDialog
+                            .getBinding("items")
+                            .filter(aFilter, "Application");
                     }
-
                 },
                 onRbAppPainter: function (oEvent) {
                     var iIndex = oEvent.getSource().getSelectedIndex();
@@ -2325,7 +2611,6 @@ sap.ui.define(
                     } else if (iIndex == 2) {
                         oModelControl.setProperty("/MultiCombo/AppPainter", true);
                         oModelView.setProperty("/PainterSelection", 2);
-
                     } //
                     // making the fields blank
                 },
@@ -2333,27 +2618,29 @@ sap.ui.define(
                     var oView = this.getView();
                     var sUvalue = oEvent.getSource().getValue().trim();
                     var oModel = oView.getModel("oModelView");
-                    var sLvalue = oView.byId("PSlabLowLimit").getValue()
+                    var sLvalue = oView.byId("PSlabLowLimit").getValue();
                     if (sLvalue && sUvalue) {
                         if (parseInt(sUvalue) < parseInt(sLvalue)) {
-                            MessageToast.show("Points Upper Limit Should be greater than Lower limit");
-                            oModel.setProperty("/PointSlabUpperLimit", "")
+                            MessageToast.show(
+                                "Points Upper Limit Should be greater than Lower limit"
+                            );
+                            oModel.setProperty("/PointSlabUpperLimit", "");
                         }
                     }
-
                 },
                 onAppPainterPointsLowChg: function (oEvent) {
                     var oView = this.getView();
                     var sLvalue = oEvent.getSource().getValue();
                     var oModel = oView.getModel("oModelView");
-                    var sUvalue = oView.byId("PSlabULimit").getValue()
+                    var sUvalue = oView.byId("PSlabULimit").getValue();
                     if (sLvalue && sUvalue) {
                         if (parseInt(sLvalue) > parseInt(sUvalue)) {
-                            MessageToast.show("Points Upper Limit Should be greater than Lower limit");
-                            oModel.setProperty("/PointSlabLowerLimit", "")
+                            MessageToast.show(
+                                "Points Upper Limit Should be greater than Lower limit"
+                            );
+                            oModel.setProperty("/PointSlabLowerLimit", "");
                         }
                     }
-
                 },
                 onRbTopApp: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedIndex();
@@ -2392,7 +2679,6 @@ sap.ui.define(
                     } //
                 },
                 onBonusVaidityTo: function (oEvent) {
-
                     var oView = this.getView();
 
                     var oModelView = oView.getModel("oModelView");
@@ -2419,7 +2705,9 @@ sap.ui.define(
                     var oEndDate = oEvent.getSource().getDateValue();
                     var oStartDate = oModelView.getProperty("/PerformanceStartDate");
                     if (oStartDate >= oEndDate) {
-                        MessageToast.show("Kindly select a date more than bonus validity from date.");
+                        MessageToast.show(
+                            "Kindly select a date more than bonus validity from date."
+                        );
 
                         oModelView.setProperty("/PerformanceEndDate", null);
                     }
@@ -2428,19 +2716,25 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oStartDate = oEvent.getSource().getDateValue();
-                    //var oContext = oEvent.getSource().getBinding("dateValue").getContext();
-                    var sPath = "/Dialog/Bonus2";
-                    var oEndDate = oModelControl.getProperty(sPath + "/EndDate")
+                    var oBject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl").getPath();
+                    console.log(sPath);
+                    var oEndDate = oBject["EndDate"];
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
-                            MessageToast.show("Kindly select a date less than Bonus Validtiy To date.");
+                            MessageToast.show(
+                                "Kindly select a date less than Bonus Validtiy To date."
+                            );
                             oModelControl.setProperty(sPath + "/StartDate", null);
                         }
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show(
-                            "Kindly enter a date greater than current date"
-                        );
+                        MessageToast.show("Kindly enter a date greater than current date");
 
                         oModelControl.setProperty(sPath + "/StartDate", null);
                     }
@@ -2450,11 +2744,19 @@ sap.ui.define(
 
                     var oModelControl = oView.getModel("oModelControl");
                     var oEndDate = oEvent.getSource().getDateValue();
+                    var oBject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
                     // var oContext = oEvent.getSource().getBinding("dateValue").getContext();
-                    var sPath = "/Dialog/Bonus2";
-                    var oStartDate = oModelControl.getProperty(sPath + "/StartDate")
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl").getPath();
+                    var oStartDate = oBject["StartDate"];
                     if (oStartDate >= oEndDate) {
-                        MessageToast.show("Kindly select a date more than Bonus Validtiy From date.");
+                        MessageToast.show(
+                            "Kindly select a date more than Bonus Validtiy From date."
+                        );
                         oModelControl.setProperty(sPath + "/EndDate", null);
                     }
                 },
@@ -2555,17 +2857,7 @@ sap.ui.define(
 
                     oEvent.getSource().getBinding("items").filter([oFilter]);
                 },
-                _getProductsData: function () {
-                    var oView = this.getView();
-                    var oModelControl = oView.getModel("oModelControl");
-                    var oData = oView.getModel();
-                    oData.read("/MasterProductSet", {
-                        success: function (mParam1) {
-                            oModelControl.setProperty("/oData/Products", mParam1["results"]);
-                        },
-                        error: function (mParam1) {},
-                    });
-                },
+
                 GetPackName: function (mParam1) {
                     var sPath = "/MasterRepProductSkuSet('" + mParam1 + "')";
                     var oData = this.getView().getModel().getProperty(sPath);
@@ -2584,7 +2876,6 @@ sap.ui.define(
                 /// Methods Specific to Display and Edit Offers
                 // 1. Display Offers
 
-
                 //2. Edit Offers
 
                 // create payload for edit and add
@@ -2596,22 +2887,27 @@ sap.ui.define(
                     var oModelData = oModel.getData();
                     var oData = oModelData["Table"]["Table2"];
                     if (oModelData["Table"]["Table2"].length == 0) {
-                        return [false, "Kindly Enter the data in the Reward Ratio Table to Continue."]
+                        return [
+                            false,
+                            "Kindly Enter the data in the Reward Ratio Table to Continue.",
+                        ];
                     }
-                    var bFlag = true
+                    var bFlag = true;
                     oModelData["Table"]["Table2"].forEach(function (a) {
                         if (a.hasOwnProperty("editable")) {
                             if (a["editable"]) {
                                 bFlag = false;
                             }
                         }
-                    })
+                    });
                     if (bFlag) {
-                        return [true, ""]
+                        return [true, ""];
                     } else {
-                        return [false, "Kindly Save the data in the Reward Ratio Table to Continue."]
+                        return [
+                            false,
+                            "Kindly Save the data in the Reward Ratio Table to Continue.",
+                        ];
                     }
-
                 },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
@@ -2623,59 +2919,46 @@ sap.ui.define(
                     var sMultiKeys = oModelC.getProperty("/MultiCombo");
                     var oData = oView.getModel();
                     var oPayLoad = {
-                        "IsSpecificZone": true,
-                        "OfferZone": sMultiKeys["Zones"].map(function (
-                            elem
-                        ) {
+                        IsSpecificZone: true,
+                        OfferZone: sMultiKeys["Zones"].map(function (elem) {
                             return {
                                 ZoneId: elem,
                             };
                         }),
-                        "IsSpecificDivision": true,
-                        "OfferDivision": sMultiKeys["Divisions"].map(function (
-                            elem
-                        ) {
+                        IsSpecificDivision: true,
+                        OfferDivision: sMultiKeys["Divisions"].map(function (elem) {
                             return {
                                 DivisionId: elem,
                             };
                         }),
-                        "IsSpecificDepot": true,
-                        "OfferDepot": sMultiKeys["Depots"].map(function (
-                            elem
-                        ) {
+                        IsSpecificDepot: true,
+                        OfferDepot: sMultiKeys["Depots"].map(function (elem) {
                             return {
                                 DepotId: elem["DepotId"],
                             };
                         }),
-                        "OfferPainterType": sMultiKeys["PainterType"].map(function (
-                            elem
-                        ) {
+                        OfferPainterType: sMultiKeys["PainterType"].map(function (elem) {
                             return {
                                 PainterTypeId: parseInt(elem),
                             };
                         }),
-                        "OfferPainterArcheType": sMultiKeys["ArcheTypes"].map(function (
+                        OfferPainterArcheType: sMultiKeys["ArcheTypes"].map(function (
                             elem
                         ) {
                             return {
                                 ArcheTypeId: parseInt(elem),
                             };
                         }),
-                        "OfferPainterPotential": sMultiKeys["Potential"].map(function (
-                            elem
-                        ) {
+                        OfferPainterPotential: sMultiKeys["Potential"].map(function (elem) {
                             return {
                                 PotentialId: parseInt(elem),
                             };
                         }),
-                        "PointSlabLowerLimit": oView.byId("PSlabLowLimit").getValue(),
-                        "PointSlabUpperLimit": oView.byId("PSlabULimit").getValue()
-                    }
+                        PointSlabLowerLimit: oView.byId("PSlabLowLimit").getValue(),
+                        PointSlabUpperLimit: oView.byId("PSlabULimit").getValue(),
+                    };
                     var oPayLoadNew = this._RemoveEmptyValueV1(oPayLoad);
-                    var inTegerProperty = [
-                        "PointSlabUpperLimit",
-                        "PointSlabLowerLimit"
-                    ];
+                    var inTegerProperty = ["PointSlabUpperLimit", "PointSlabLowerLimit"];
 
                     for (var y of inTegerProperty) {
                         if (oPayLoadNew.hasOwnProperty(y)) {
@@ -2687,7 +2970,7 @@ sap.ui.define(
                     var aBoleanProps = {
                         IsSpecificZone: "Zones",
                         IsSpecificDivision: "Divisions",
-                        IsSpecificDepot: "Depots"
+                        IsSpecificDepot: "Depots",
                     };
                     var oPropRbtn = oModelC.getProperty("/Rbtn");
                     for (var key in aBoleanProps) {
@@ -2703,17 +2986,14 @@ sap.ui.define(
                     oData.create("/OfferApplicablePainterCountSet", oPayLoadNew, {
                         success: function (oData) {
                             if (oData.hasOwnProperty("PainterCount")) {
-                                oModelC.setProperty("/Fields/PainterCount", oData["PainterCount"]);
-
+                                oModelC.setProperty(
+                                    "/Fields/PainterCount",
+                                    oData["PainterCount"]
+                                );
                             }
-
                         },
-                        error: function () {
-
-                        }
-                    })
-
-
+                        error: function () {},
+                    });
                 },
                 _RemoveEmptyValueV1: function (mParam) {
                     var obj = Object.assign({}, mParam);
@@ -2729,15 +3009,17 @@ sap.ui.define(
                     return oNew2;
                 },
                 _CreateWorkFlowData: function (oPayLoad) {
-
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
-                    var oModel = oView.getModel("oModelControl")
+                    var oModel = oView.getModel("oModelControl");
                     var oLoggedInInfo = oModel.getProperty("/LoggedInUser");
-                    console.log("workflow data", oLoggedInInfo)
+                    console.log("workflow data", oLoggedInInfo);
                     if (oLoggedInInfo["UserTypeId"] === 5) {
                         oPayLoad["OfferStatus"] = "DRAFT";
-                    } else if (oLoggedInInfo["UserTypeId"] === 6 || oLoggedInInfo["UserTypeId"] === 7) {
+                    } else if (
+                        oLoggedInInfo["UserTypeId"] === 6 ||
+                        oLoggedInInfo["UserTypeId"] === 7
+                    ) {
                         oPayLoad["OfferStatus"] = "APPROVED";
                     }
                     oPayLoad["IsWorkFlowApplicable"] = false;
@@ -2776,11 +3058,6 @@ sap.ui.define(
                 _CreatePayloadPart2: function (oPayLoad) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
-                    //      "IsSpecificApplicableProductCategory": false,
-                    // "IsSpecificApplicableProductClassification": false,
-                    // "IsSpecificApplicableProduct": false,
-                    // "IsSpecificApplicablePack": false,
-                    // "IsSpecificRewardRatio": false,
                     var aBoleanProps = {
                         IsSpecificZone: "Zones",
                         IsSpecificDivision: "Divisions",
@@ -2985,6 +3262,7 @@ sap.ui.define(
                             };
                         }
                     );
+                    // check for null
                     promise.resolve(oPayLoad);
                     return promise;
                 },
@@ -2995,11 +3273,9 @@ sap.ui.define(
                     var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
                     var aFinalArray = [];
                     //if (bRewardSelected === 0) {
-                    var oDataTbl = oModel
-                        .getProperty("/Table/Table2")
-                        .map(function (a) {
-                            return Object.assign({}, a);
-                        });
+                    var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
+                        return Object.assign({}, a);
+                    });
 
                     var aCheckProp = [
                         "RequiredVolume",
@@ -3009,18 +3285,15 @@ sap.ui.define(
                         "RewardCash",
                     ];
                     aFinalArray = oDataTbl.filter(function (ele) {
-
                         for (var a in aCheckProp) {
                             if (ele[aCheckProp[a]] === "") {
                                 ele[aCheckProp[a]] = null;
-
                             } else {
                                 ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
                             }
                         }
-                        delete ele["editable"]
+                        delete ele["editable"];
                         return ele;
-
                     });
                     oPayLoad["OfferRewardRatio"] = aFinalArray;
 
@@ -3110,20 +3383,31 @@ sap.ui.define(
                                 return Object.assign({}, a);
                             });
 
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
-                        aFinalArray = oDataTbl.filter(function (ele) {
+                        var aCheckProp = [
+                            "StartDate",
+                            "EndDate",
+                            "BonusPoints",
+                            "BonusPercentage",
 
+                        ];
+                        aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
                                     ele[aCheckProp[a]] = null;
-
                                 }
                                 if (aCheckProp[a] === "BonusPoints") {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "BonusPercentage") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
                                 }
                             }
+                            delete ele["editable"];
                             return ele;
-
                         });
                         oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
 
@@ -3133,25 +3417,31 @@ sap.ui.define(
                     // this menas that specific is selected we will check first
                     // if packs all is selected and products data will be displayed
                     var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks4");
-                    if (bAllProdSelected === 0) {
+                    if (bRewardSelected === 1) {
                         var oDataTbl = oModel
                             .getProperty("/Table/Table4")
                             .map(function (a) {
                                 return Object.assign({}, a);
                             });
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
+                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints", "BonusPercentage", "SkuCode", "ProductCode"];
                         aFinalArray = oDataTbl.filter(function (ele) {
-
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
                                     ele[aCheckProp[a]] = null;
                                 }
                                 if (aCheckProp[a] === "BonusPoints") {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "BonusPercentage") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
                                 }
                             }
+                            delete ele["editable"];
                             return ele;
-
                         });
                         oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
 
@@ -3159,31 +3449,6 @@ sap.ui.define(
                         return promise;
                     }
                     // this means that the user has selected specific for bonus reward packs
-                    if (bAllProdSelected === 1) {
-                        var oDataTbl = oModel
-                            .getProperty("/Table/Table4")
-                            .map(function (a) {
-                                return Object.assign({}, a);
-                            });
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints"];
-                        aFinalArray = oDataTbl.filter(function (ele) {
-
-                            for (var a in aCheckProp) {
-                                if (ele[aCheckProp[a]] === "") {
-                                    ele[aCheckProp[a]] = null;
-                                }
-                                if (aCheckProp[a] === "BonusPoints") {
-                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                                }
-                            }
-                            return ele;
-
-                        });
-                        oPayLoad["OfferBonusRewardRatio"] = aFinalArray;
-
-                        promise.resolve(oPayLoad);
-                        return promise;
-                    }
                 },
                 onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();
