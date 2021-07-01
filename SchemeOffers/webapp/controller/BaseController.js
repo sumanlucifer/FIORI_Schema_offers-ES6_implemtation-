@@ -422,11 +422,14 @@ sap.ui.define(
                     this.getView().getModel("oModelControl").setProperty("/Table/Table3", []);
                     this._CreateBonusRewardTable();
                 },
-                _CreateBonusRewardTable: function () {
+                _CreateBonusRewardTable: function (mParam) {
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
-                    oModelControl.setProperty("/Table/Table4", []);
+                    if (!mParam) {
+                        oModelControl.setProperty("/Table/Table4", []);
+                    }
+
                     var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks4");
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
@@ -1516,6 +1519,24 @@ sap.ui.define(
                     }
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
                 },
+                _getProductsData: function () {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oData = oView.getModel();
+                    0
+                    return new Promise((resolve, reject) => {
+                        oData.read("/MasterProductSet", {
+                            success: function (mParam1) {
+                                oModelControl.setProperty("/oData/Products", mParam1["results"]);
+                                resolve();
+                            },
+                            error: function (mParam1) {
+                                reject();
+                            },
+                        });
+                    })
+                },
                 _getPacksData: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -1526,15 +1547,19 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     }
-                    oData.read("/MasterRepProductSkuSet", {
-                        success: function (mParam1) {
-                            oModelControl.setProperty("/oData/Packs", mParam1["results"]);
-                        },
-                        error: function (mParam1) {},
-                    });
-                    promise.resolve();
-                    return promise;
+                    return new Promise((resolve, reject) => {
+                        oData.read("/MasterRepProductSkuSet", {
+                            success: function (mParam1) {
+                                oModelControl.setProperty("/oData/Packs", mParam1["results"]);
+                                resolve()
+                            },
+                            error: function (mParam1) {
+                                reject();
+                            },
+                        });
+                    })
                 },
+
                 onValueHelpRequestedPainter: function () {
                     this._PainterMulti = this.getView().byId("Painters");
 
@@ -2775,17 +2800,7 @@ sap.ui.define(
 
                     oEvent.getSource().getBinding("items").filter([oFilter]);
                 },
-                _getProductsData: function () {
-                    var oView = this.getView();
-                    var oModelControl = oView.getModel("oModelControl");
-                    var oData = oView.getModel();
-                    oData.read("/MasterProductSet", {
-                        success: function (mParam1) {
-                            oModelControl.setProperty("/oData/Products", mParam1["results"]);
-                        },
-                        error: function (mParam1) {},
-                    });
-                },
+
                 GetPackName: function (mParam1) {
                     var sPath = "/MasterRepProductSkuSet('" + mParam1 + "')";
                     var oData = this.getView().getModel().getProperty(sPath);
@@ -3316,7 +3331,7 @@ sap.ui.define(
                             "EndDate",
                             "BonusPoints",
                             "BonusPercentage",
-                            
+
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
@@ -3351,7 +3366,7 @@ sap.ui.define(
                             .map(function (a) {
                                 return Object.assign({}, a);
                             });
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints", "BonusPercentage","SkuCode","ProductCode"];
+                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints", "BonusPercentage", "SkuCode", "ProductCode"];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {
