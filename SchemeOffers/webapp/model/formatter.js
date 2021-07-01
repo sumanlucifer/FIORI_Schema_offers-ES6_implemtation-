@@ -80,7 +80,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return aArray.join(" ");
         },
         formatURL: function (sURL) {
-            console.log("format url trigerred");
+
             if (sURL) {
                 return "https://".concat(
                     location.host,
@@ -104,6 +104,22 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
+        //List View Workflow changes
+        btnEditOfferTable: function (m1, m2, m3) {
+            //m1 edit applicable; m2 login information
+            console.log(m1, m2)
+            if (m2 === 5) {
+                if (m3 === "DRAFT" || m3 === "REJECTED") {
+                    return m1;
+                }else {
+                    return false;
+                } 
+            }
+
+            return m1
+        },
+
+
         // all formatters for the button in the display and also for the workflow
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2, m3, m4) {

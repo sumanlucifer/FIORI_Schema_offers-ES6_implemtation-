@@ -742,6 +742,7 @@ sap.ui.define(
                                 c5.then(function (data) {
                                     c6 = othat._setEditViewData2(data);
                                     c6.then(function (data) {
+                                        //workflow related data is set here
                                         c6 = othat._setAdditionalData2(data);
                                         c6.then(function (oData) {
                                             c7 = othat._OfferTypeValidation2(data);
@@ -782,6 +783,7 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
+                    var oModelView = oView.getModel("oModelView");
                     oModelControl.setProperty(
                         "/Rbtn/AppPainter",
                         oData["PainterSelection"]
@@ -795,6 +797,8 @@ sap.ui.define(
                     if (oData["BonusApplicableTopPainter"]) {
                         oModelControl.setProperty("/Rbtn/TopAll", 1);
                     }
+                    // work flow reated flags
+                    oModelView.setProperty("/Remark","")
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1488,7 +1492,7 @@ sap.ui.define(
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Successfully Updated.");
-                                othat._navToHome();
+                                //othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
