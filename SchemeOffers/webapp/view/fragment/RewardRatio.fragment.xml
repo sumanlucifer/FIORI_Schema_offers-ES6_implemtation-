@@ -90,6 +90,7 @@
         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
+                    <Title text="{i18n>Slab}"/>
                     <RadioButtonGroup columns="2" select=".onRbRRDialogVolume" selectedIndex="{oModelView>/InputType}">
                         <buttons>
                             <RadioButton text="{i18n>RequiredVolume}"/>
@@ -104,10 +105,10 @@
             <columns>
 
                 <Column visible="{= ${oModelView>/InputType}===0 }">
-                    <Label text="{i18n>RequiredVolume}" visible="true" required="false"/>
+                    <Label text="{i18n>RequiredVolume}" visible="true" required="true"/>
                 </Column>
                 <Column visible="{= ${oModelView>/InputType}===1 }">
-                    <Text text="{i18n>Table1Label2}" />
+                    <Label text="{i18n>Table1Label2}" required="true" />
                 </Column>
                 <Column>
                     <Label text="{i18n>Table1Label4}" />
