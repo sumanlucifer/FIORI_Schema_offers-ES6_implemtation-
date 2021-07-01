@@ -251,6 +251,16 @@ sap.ui.define(
                             RewardRationCount: 1,
                             PainterCount: ""
                         },
+                        Hash:{
+                            PCat1:{},
+                            PCat2:{},
+                            PCat3:{},
+                            PCat4:{},
+                            PClass1:{},
+                            PClass2:{},
+                            PClass3:{},
+                            PClass4:{}
+                        }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
 
@@ -284,7 +294,8 @@ sap.ui.define(
                         ParentOfferId: 0,
                         BonusDescription: "",
                         InputType: 0,
-                        OfferStatus: null
+                        OfferStatus: null,
+                        OfferApplicableProductCategory:[]
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");

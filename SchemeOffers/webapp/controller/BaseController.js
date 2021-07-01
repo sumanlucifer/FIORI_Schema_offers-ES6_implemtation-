@@ -1455,8 +1455,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
-                    oModelControl.setProperty("/Table/Table2", []);
-                    oModelControl.setProperty("/Table/Table1", []);
+                    //oModelControl.setProperty("/Table/Table2", []);
+                    //oModelControl.setProperty("/Table/Table1", []);
                     var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
@@ -2133,16 +2133,17 @@ sap.ui.define(
                     this._FilterDepotTable(aFilter, "Control");
                 },
                 _getLoggedInUserDeatils: function (oData) {
+                    
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
-                    var oData = oView.getModel();
+                    var oDataModel = oView.getModel();
                     var oLoginModel = oView.getModel("LoginInfo");
                     var oControlModel = oView.getModel("oModelControl");
                     var oLoginData = oLoginModel.getData();
 
                     if (Object.keys(oLoginData).length === 0) {
                         return new Promise((resolve, reject) => {
-                            oData.callFunction("/GetLoggedInAdmin", {
+                            oDataModel.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
                                 urlParameters: {
                                     $expand: "UserType",
@@ -3150,8 +3151,38 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelViewData = oModelView.getData();
                     var sMultiKeys = oModelControl.getProperty("/MultiCombo");
-
+                    var  aHashPCat1 = oModelControl.getProperty("/Hash/PCat1");
+                    var  aHashPCat2 = oModelControl.getProperty("/Hash/PCat2");
+                    var  aHashPCat3 = oModelControl.getProperty("/Hash/PCat3");
+                    var  aHashPCat4 = oModelControl.getProperty("/Hash/PCat4");
+                     var  aHashPClass1 = oModelControl.getProperty("/Hash/PClass1");
+                       var  aHashPClass2 = oModelControl.getProperty("/Hash/PClass2");
+                         var  aHashPClass3 = oModelControl.getProperty("/Hash/PClass3");
+                           var  aHashPClass4 = oModelControl.getProperty("/Hash/PClass4");
+                    var aDataPCat1,aDataPCat2,aDataPCat3,aDataPCat4,aDataPClass1,aDataPClass2,aDataPClass3,aDataPClass4;
+                    if(oModelControl.getProperty("/mode")==="edit"){
+                        aDataPCat1 = oModelViewData["OfferApplicableProductCategory"]["results"];
+                         aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
+                          aDataPCat3 = oModelViewData["OfferNonBuyerProductCategory"]["results"];
+                           aDataPCat4 = oModelViewData["OfferBonusProductCategory"]["results"];
+                           aDataPClass1 = oModelViewData["OfferApplicableProductClassification"]["results"];
+                           aDataPClass2 = oModelViewData["OfferBuyerProductClassification"]["results"];
+                           aDataPClass3 = oModelViewData["OfferNonBuyerProductClassification"]["results"];
+                           aDataPClass4 = oModelViewData["OfferBonusProductClassification"]["results"];
+                    }else {
+                          aDataPCat1 = oModelViewData["OfferApplicableProductCategory"];
+                         aDataPCat2 = oModelViewData["OfferBuyerProductCategory"];
+                          aDataPCat3 = oModelViewData["OfferNonBuyerProductCategory"];
+                           aDataPCat4 = oModelViewData["OfferBonusProductCategory"];
+                            aDataPClass1 = oModelViewData["OfferApplicableProductClassification"];
+                           aDataPClass2 = oModelViewData["OfferBuyerProductClassification"];
+                           aDataPClass3 = oModelViewData["OfferNonBuyerProductClassification"];
+                           aDataPClass4 = oModelViewData["OfferBonusProductClassification"];
+                    }
+                    
                     // setting the values of zone
                     oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
                         return {
@@ -3170,19 +3201,31 @@ sap.ui.define(
                             DepotId: elem["DepotId"],
                         };
                     });
+
                     oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                            if (aHashPCat1[elem]) {
+                                return aDataPCat1[aHashPCat1[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
+
                         }
                     );
                     oPayLoad["OfferApplicableProductClassification"] = sMultiKeys[
                         "PClass1"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                         if (aHashPClass1[elem]) {
+                                return aDataPClass1[aHashPClass1[elem]];
+                            } else {
+                                return {
+                                    ProductClassificationCode: elem,
+                                };
+                            }
+
+                        
                     });
                     oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
                         function (elem) {
@@ -3221,17 +3264,27 @@ sap.ui.define(
                     );
                     oPayLoad["OfferBuyerProductCategory"] = sMultiKeys["PCat2"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                           if (aHashPCat2[elem]) {
+                                return aDataPCat2[aHashPCat2[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferBuyerProductClassification"] = sMultiKeys[
                         "PClass2"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass2[elem]) {
+                                return aDataPClass2[aHashPClass2[elem]];
+                            } else {
+                                return {
+                                    ProductClassificationCode: elem,
+                                };
+                            }
+
+                        
                     });
                     oPayLoad["OfferBuyerProduct"] = sMultiKeys["AppProd2"].map(function (
                         elem
@@ -3249,17 +3302,27 @@ sap.ui.define(
                     });
                     oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                           if (aHashPCat3[elem]) {
+                                return aDataPCat3[aHashPCat3[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferNonBuyerProductClassification"] = sMultiKeys[
                         "PClass3"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass3[elem]) {
+                                return aDataPClass3[aHashPClass3[elem]];
+                            } else {
+                                return {
+                                    ProductClassificationCode: elem,
+                                };
+                            }
+
+                        
                     });
                     oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
                         function (elem) {
@@ -3278,17 +3341,25 @@ sap.ui.define(
                     // Bonus Reward Ratio
                     oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                           if (aHashPCat4[elem]) {
+                                return aDataPCat4[aHashPCat4[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferBonusProductClassification"] = sMultiKeys[
                         "PClass4"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass4[elem]) {
+                                return aDataPClass4[aHashPClass4[elem]];
+                            } else {
+                                return {
+                                    ProductClassificationCode: elem,
+                                };
+                            }
                     });
                     oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(function (
                         elem
