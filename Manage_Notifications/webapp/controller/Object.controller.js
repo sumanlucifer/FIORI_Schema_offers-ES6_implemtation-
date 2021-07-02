@@ -440,6 +440,34 @@ sap.ui.define([
 					message: "MSG_VALDTN_ERR_STIME",
 					target: "/oDetails/ScheduledTime"
 				});
+            }else
+            if (data.ScheduledDate && data.ScheduledTime && data.IsLater === true) {
+                var time=data.ScheduledTime;
+                var date=new Date(data.ScheduledDate);
+                var sDay=date.getDay(),sMonth=date.getMonth(),sYear=date.getUTCFullYear();
+                var currDate=new Date();
+                var cDay=currDate.getDay(),cMonth=currDate.getMonth(),cYear=currDate.getUTCFullYear();
+                var currTime=currDate.getHours()+":"+currDate.getMinutes();
+                var cDateString=cDay+"-"+cMonth+"-"+cYear;
+                var sDateString=sDay+"-"+sMonth+"-"+sYear;
+                var regex = new RegExp(':', 'g');
+                var tPicker= this.getView().byId("idTimePicker");
+                if(sDateString == cDateString){
+                                var regex = new RegExp(':', 'g');
+                            if(parseInt(time.replace(regex, ''), 10) < parseInt(currTime.replace(regex, ''), 10)){
+                              oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+                                aCtrlMessage.push({
+                                message: "MSG_VALDTN_ERR_STIME",
+                                target: "/oDetails/ScheduledTime"
+                            });
+                            tPicker.setValue(null);
+                            }
+                    
+                    console.log("date in");
+                        
+                }
+                
 			}else
             if (data.GroupId && !groupId) {
                 oReturn.IsNotValid = true;
@@ -479,12 +507,40 @@ sap.ui.define([
 			} else
 			if (!data.ScheduledTime && data.IsLater === true) {
 				oReturn.IsNotValid = true;
-				oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+				oReturn.sMsg.push("MSG_VALDTN_ERR_STIME_PAST");
 				aCtrlMessage.push({
-					message: "MSG_VALDTN_ERR_STIME",
+					message: "MSG_VALDTN_ERR_STIME_PAST",
 					target: "/oDetails/ScheduledTime"
 				});
-            }
+            }else if (data.ScheduledDate && data.ScheduledTime && data.IsLater === true) {
+                var time=data.ScheduledTime;
+                var date=new Date(data.ScheduledDate);
+                var sDay=date.getDay(),sMonth=date.getMonth(),sYear=date.getUTCFullYear();
+                var currDate=new Date();
+                var cDay=currDate.getDay(),cMonth=currDate.getMonth(),cYear=currDate.getUTCFullYear();
+                var currTime=currDate.getHours()+":"+currDate.getMinutes();
+                var cDateString=cDay+"-"+cMonth+"-"+cYear;
+                var sDateString=sDay+"-"+sMonth+"-"+sYear;
+                var regex = new RegExp(':', 'g');
+                var tPicker= this.getView().byId("idTimePicker");
+                if(sDateString == cDateString){
+                                var regex = new RegExp(':', 'g');
+                            if(parseInt(time.replace(regex, ''), 10) < parseInt(currTime.replace(regex, ''), 10)){
+                              oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+                                aCtrlMessage.push({
+                                message: "MSG_VALDTN_ERR_STIME",
+                                target: "/oDetails/ScheduledTime"
+                            });
+                            tPicker.setValue(null);
+                            }
+                    
+                    console.log("date in");
+                        
+                }
+               
+                
+			}
 
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
@@ -510,7 +566,15 @@ sap.ui.define([
 			return aMsgs.map(function (x) {
 				return that.getResourceBundle().getText(x);
 			}).join("");
-		},
+        },
+        onChangeTime: function(oEvent){
+            var tPicker= this.getView().byId("idTimePicker");
+            var sState=tPicker.getValueState();
+            if(sState=="Error"){
+                tPicker.setValueState("");
+            }
+
+        },
 
 		CUOperation: function (oPayload) {
 			delete oPayload.__metadata;
