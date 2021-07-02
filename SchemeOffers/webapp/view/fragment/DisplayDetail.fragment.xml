@@ -218,6 +218,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
+                        <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume" selectedIndex="{InputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>RequiredVolume}"/>
+                            <RadioButton text="{i18n>Table1Label2}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
@@ -694,6 +700,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>Table3Label1}"/>
+                            <RadioButton text="{i18n>BonusPercentage}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                 </Toolbar>
             </headerToolbar>
 
@@ -728,6 +740,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                       <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>Table3Label1}"/>
+                            <RadioButton text="{i18n>BonusPercentage}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                 </Toolbar>
             </headerToolbar>
 
