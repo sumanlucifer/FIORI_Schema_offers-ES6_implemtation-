@@ -246,6 +246,7 @@ sap.ui.define(
                         InitialKycNull:false, //Aditya Chnage
                         InitialKycDocType: "", //Aditya Chnage
                         InitialKycStatus:"",//Aditya Chnage
+                        InitialGovtId:"",//Aditya Chnage
                         DocumentType: [{
                             Name: "Passbook",
                             Id: 0
@@ -415,6 +416,8 @@ sap.ui.define(
                     }else{
                         var initialStatus=oDataValue["PainterKycDetails"]["Status"];
                         oControlModel.setProperty("/InitialKycStatus",initialStatus );
+                        var initialGovtId=oDataValue["PainterKycDetails"]["GovtId"];
+                        oControlModel.setProperty("/InitialGovtId",initialGovtId );
                     }
                     
                     /*Aditya changes end*/
@@ -1295,6 +1298,10 @@ sap.ui.define(
                         oModel.setProperty("/PainterKycDetails/GovtId", "");
                     }
                     oModelCtrl.setProperty("/EditFieldKyc", true);
+                    oModelCtrl.setProperty("/AddKycDocButton", false);
+                    oModel.setProperty("/PainterKycDetails/GovtId", "");
+                    oModelCtrl.setProperty("/AddKycDoc", true);
+                    
                 },
                  onKycChangeEdit: function (oEvent) {
                     var oModel = this.getView().getModel("oModelView");
@@ -1770,19 +1777,26 @@ sap.ui.define(
                    
                 },
                 onEditKycFields: function (){
-                     var oModelCtrl = this.getView().getModel("oModelControl");
+                    var oModelCtrl = this.getView().getModel("oModelControl");
+                    
                     oModelCtrl.setProperty("/EditKyc", true);
                     oModelCtrl.setProperty("/EditKycButton", true);
                     oModelCtrl.setProperty("/AddKycDocButton", true);
+                    
                     this._setUploadCollectionMethod();
                    // oModelCtrl.setProperty("/AddNewBank", false);
                 },
                 onEditCancelKycFields:function (){
                      var oModelCtrl = this.getView().getModel("oModelControl");
+                     var oModelView = this.getView().getModel("oModelView");
+                     var govtId=oModelCtrl.getProperty("/InitialGovtId");
+                     var kycTypeId=oModelCtrl.getProperty("/InitialKycDocType");
                     oModelCtrl.setProperty("/EditKyc", false);
                     oModelCtrl.setProperty("/EditKycButton", false);
                     oModelCtrl.setProperty("/AddKycDoc", false);
                     oModelCtrl.setProperty("/AddKycDocButton", false);
+                    oModelView.setProperty("/PainterKycDetails/GovtId",govtId);
+                    oModelView.setProperty("/PainterKycDetails/KycTypeId",kycTypeId);
 
                 },
                 onAddKycDoc: function (){
@@ -1797,7 +1811,12 @@ sap.ui.define(
                     oModelCtrl.setProperty("/AddKycDocButton", true);
                     oModelCtrl.setProperty("/EditKycButton", true);
                     var InitialDocType = oModelCtrl.getProperty("/InitialKycDocType");
-                    oModelView.setProperty("/PainterKycDetails/KycTypeId", InitialDocType);
+                    var govtId=oModelCtrl.getProperty("/InitialGovtId");
+                    if(InitialDocType){
+                        oModelView.setProperty("/PainterKycDetails/KycTypeId", InitialDocType);
+                        oModelView.setProperty("/PainterKycDetails/GovtId",govtId);
+                    }
+                    
                 },
                  _CheckTheKyc: function () {
                     var oView = this.getView();
