@@ -202,11 +202,11 @@
                         </VBox>
                         <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===0 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />
-                            <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                            <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===1 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPercentage'}" visible="{= ${oModelControl>editable} !== true  }" />
-                            <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
+                            <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2V2"></Button>
