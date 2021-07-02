@@ -181,10 +181,12 @@ sap.ui.define(
                 onOfferTypeChanged: function (oEvent) {
                     var oView = this.getView();
                     var oSource = oEvent.getSource().getSelectedItem();
+                    var sKey = oEvent.getSource().getSelectedKey();
                     var object = oSource.getBindingContext().getObject();
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/OfferType", object);
                     this._OfferTypeFieldsSet();
+                    this._OfferTypeFieldSet2(sKey);
                 },
 
                 _OfferTypeFieldsSet: function () {
@@ -288,6 +290,18 @@ sap.ui.define(
 
                     // setting up redemption cycle data based on offer type
                     this._SetRedemptionCycle();
+                },
+                _OfferTypeFieldSet2: function (mParam1) {
+                    //mParam1 is offer type id
+                    var oView = this.getView();
+                    console.log("offertypeid2",mParam1)
+                    var oModelView = oView.getModel("oModelView");
+                    // if offer type id is changed we are restting the value to 1
+                    oModelView.setProperty("/RedemptionCycle", 1);
+                    if(mParam1==1){
+                        oModelView.setProperty("/RedemptionCycle", "");
+                    }
+
                 },
                 _setTable2Count: function () {
                     var oView = this.getView();
@@ -3101,6 +3115,7 @@ sap.ui.define(
                         "PointSlabLowerLimit",
                         "BonusApplicableTopPainter",
                         "ParentOfferId",
+                        "RedemptionCycle"
                     ];
                     for (var y of inTegerProperty) {
                         if (oPayLoad.hasOwnProperty(y)) {
