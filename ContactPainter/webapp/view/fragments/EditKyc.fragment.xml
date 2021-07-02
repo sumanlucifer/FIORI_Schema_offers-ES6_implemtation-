@@ -31,7 +31,7 @@
 			<OverflowToolbar>
 				<Title text="{i18n>KycDetails}"/>
                 <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status'}" state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status'}" state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined }"/>
                 <ToolbarSpacer/>
                     <FlexBox visible="{=${PainterKycDetails/Status} !== 'INPROGRESS'}">
                         <Button visible="{=!${oModelControl>/EditKycButton}}" text="Edit" type="Emphasized" press="onEditKycFields"/>
@@ -60,7 +60,7 @@
                 
                
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} !== null }"/>
-                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" />
+                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" />
                 <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}"/>
                 <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null}"/>
                
