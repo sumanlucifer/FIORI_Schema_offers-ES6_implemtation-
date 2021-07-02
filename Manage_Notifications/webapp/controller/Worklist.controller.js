@@ -127,7 +127,7 @@ sap.ui.define([
                         oTable = this.getView().byId("table1"),
                         iTotalItems = oEvent.getParameter("total");
                     if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                        sSchedule = this.getResourceBundle().getText("draftCount", [
+                        sSchedule = this.getResourceBundle().getText("scheduledCount", [
                             iTotalItems,
                         ]);
                     } else {
