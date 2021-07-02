@@ -46,12 +46,12 @@
                 <core:Title text=""/>
                 <Label text="{i18n>SelectedKYCDocument}" required="{=${oModelControl>/EditKyc}}"/>
                 <FlexBox >
-                <ComboBox  editable="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} !== null }" change="onKycChange"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                <ComboBox  editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} !== null }" change="onKycChange"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                     <items>
                         <core:Item text="{KycType}" key="{Id}"></core:Item>
                     </items>
                 </ComboBox>
-                <ComboBox  id="idKycEditCombo" required="{=${oModelControl>/EditKyc}}" editable="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} === null}" change="onKycChangeEdit"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" >
+                <ComboBox  id="idKycEditCombo" required="{=${oModelControl>/EditKyc}}"  editable="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} === null}" change="onKycChangeEdit"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" >
                     <items>
                         <core:Item text="{KycType}" key="{Id}"></core:Item>
                     </items>
@@ -59,10 +59,10 @@
                 </FlexBox>
                 
                
-                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${PainterKycDetails} !== null }"/>
-                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:1,search:'^[a-zA-z0-9]'} }" />
+                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }"/>
+                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search:'^[a-zA-z0-9]'} }" />
                 <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}"/>
-                <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId'}" visible="{= ${PainterKycDetails} === null}"/>
+                <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search:'^[a-zA-z0-9]' } }" visible="{= ${PainterKycDetails} === null}"/>
                
                
                 <!-- <Input change="onEditFieldKyc" editable="{=${oModelControl>/EditKyc}}" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" /> -->
