@@ -267,7 +267,10 @@ sap.ui.define(
                             AppPack1:{},
                             AppPack2:{},
                             AppPack3:{},
-                            AppPack4:{}
+                            AppPack4:{},
+                            Potential:{},
+                            PainterType:{},
+                            ArcheType:{}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
