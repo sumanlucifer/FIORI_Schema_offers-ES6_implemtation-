@@ -99,7 +99,7 @@ sap.ui.define(
                     //     oRouter.navTo("RouteLandingPage", {}, true);
                     // }
                     var oRouter = this.getOwnerComponent().getRouter();
-                    //oRouter.navTo("RouteLandingPage", {}, true);
+                    oRouter.navTo("RouteLandingPage", {}, true);
                 },
 
                 onPostSchemeData: function (oPayload, fileFlag) {},
