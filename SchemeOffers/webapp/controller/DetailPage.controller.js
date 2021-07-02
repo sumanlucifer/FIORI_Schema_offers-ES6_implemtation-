@@ -802,6 +802,9 @@ sap.ui.define(
                         aHashAppPack2 = {},
                         aHashAppPack3 = {},
                         aHashAppPack4 = {};
+                    var aHashArcheType = {},
+                        aHashPainterType = {},
+                        aHashPotential = {};
                     var aDataPCat1 = oData["OfferApplicableProductCategory"]["results"];
                     var aDataPCat2 = oData["OfferBuyerProductCategory"]["results"];
                     var aDataPCat3 = oData["OfferNonBuyerProductCategory"]["results"];
@@ -818,6 +821,10 @@ sap.ui.define(
                         aDataAppPack2 = oData["OfferBuyerPack"]["results"],
                         aDataAppPack3 = oData["OfferNonBuyerPack"]["results"],
                         aDataAppPack4 = oData["OfferBonusPack"]["results"];
+                    var aDataArcheType = oData["OfferPainterArcheType"]["results"],
+                        aDataPainterType = oData["OfferPainterType"]["results"],
+                        aDataPotential = oData["OfferPainterPotential"]["results"];
+
 
                     for (var a in aDataPCat1) {
                         aHashPCat1[aDataPCat1[a]["ProductCategoryCode"]] = a;
@@ -888,7 +895,21 @@ sap.ui.define(
                         aHashAppPack4[aDataAppPack4[d]["SkuCode"]] = d;
                     }
                     oModelControl.setProperty("/Hash/AppPack4", aHashAppPack4);
+                    //archetype, paintertype, potential
+                    for (var e in aDataArcheType) {
+                        aHashArcheType[aDataArcheType[e]["ArcheTypeId"]] = e;
+                    }
+                    oModelControl.setProperty("/Hash/ArcheType", aHashArcheType);
 
+                    for (var e in aDataPainterType) {
+                        aHashPainterType[aDataPainterType[e]["PainterTypeId"]] = e;
+                    }
+                    oModelControl.setProperty("/Hash/PainterType", aHashPainterType);
+
+                      for (var e in aDataPotential) {
+                        aHashPotential[aDataPotential[e]["PotentialId"]] = e;
+                    }
+                    oModelControl.setProperty("/Hash/Potential", aHashPotential);
                     promise.resolve(oData);
                     return promise;
                 },
@@ -910,6 +931,8 @@ sap.ui.define(
                     if (oData["BonusApplicableTopPainter"]) {
                         oModelControl.setProperty("/Rbtn/TopAll", 1);
                     }
+
+                    //archetype.painter type,potential
                     // work flow reated flags
                     oModelView.setProperty("/Remark", "")
                     promise.resolve(oData);
@@ -1561,7 +1584,7 @@ sap.ui.define(
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
-                     if (!aTableBonusValidation[0]) {
+                    if (!aTableBonusValidation[0]) {
                         MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
