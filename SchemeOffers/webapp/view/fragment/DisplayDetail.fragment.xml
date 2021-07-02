@@ -60,7 +60,7 @@
                         </f:FormElement>
                     </f:formElements>
                 </f:FormContainer>
-                <f:FormContainer title="{i18n>ParentChildOffer}">
+                <!-- <f:FormContainer title="{i18n>ParentChildOffer}">
                     <f:formElements>
                         <f:FormElement label="{i18n>ParentOffer}">
                             <f:fields>
@@ -70,7 +70,7 @@
                         </f:FormElement>
 
                     </f:formElements>
-                </f:FormContainer>
+                </f:FormContainer> -->
             </f:formContainers>
         </f:Form>
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
@@ -214,7 +214,7 @@
                 </ColumnListItem>
             </items>
         </Table> -->
-        <Table id="Table2" items="{path: 'oModelControl2>/Table/Table2',  templateShareable:false}"  class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
+        <Table id="Table2" items="{path: 'oModelControl2>/Table/Table2',  templateShareable:false}" class="sapUiMediumMarginTop" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
@@ -645,8 +645,8 @@
 
                     </f:formElements>
                 </f:FormContainer>
-              
-                <f:FormContainer title="{i18n>BonusAppPainter}" visible="{oModelControl2>/OfferType/AdditionalReward}">
+
+                <!-- <f:FormContainer title="{i18n>BonusAppPainter}" visible="{oModelControl2>/OfferType/AdditionalReward}">
                     <f:formElements>
                         <f:FormElement label="{i18n>TopAll50}">
                             <f:fields>
@@ -658,14 +658,13 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <!-- <Input enabled="{= ${oModelControl>/Rbtn/TopAll}===1 }" type="Number" placeholder="{i18n>placeHolder3}" value="{path:'oModelView>/BonusApplicableTopPainter', type:'sap.ui.model.type.String'}"/> -->
                                 <Text text="{BonusApplicableTopPainter}"/>
                             </f:fields>
                         </f:FormElement>
 
                     </f:formElements>
-                </f:FormContainer>
-                <f:FormContainer title="{i18n>BonusValidity}" visible="{oModelControl2>/OfferType/AdditionalReward}">
+                </f:FormContainer> -->
+                <!-- <f:FormContainer title="{i18n>BonusValidity}" visible="{oModelControl2>/OfferType/AdditionalReward}">
                     <f:formElements>
                         <f:FormElement label="{i18n>PainterGrowth}">
                             <f:fields>
@@ -686,7 +685,7 @@
                         </f:FormElement>
 
                     </f:formElements>
-                </f:FormContainer>
+                </f:FormContainer> -->
 
             </f:formContainers>
 
@@ -706,8 +705,11 @@
                     <Label text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
-                <Column>
+                <Column visible="{= ${BonusInputType}===0 }">
                     <Label text="{i18n>Table3Label1}" />
+                </Column>
+                <Column visible="{= ${BonusInputType}===1 }">
+                    <Label text="{i18n>BonusPercentage}" />
                 </Column>
             </columns>
 
@@ -717,6 +719,7 @@
                         <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                         <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                         <Text text="{oModelControl2>BonusPoints}"/>
+                        <Text text="{oModelControl2>BonusPercentage}" />
                     </cells>
                 </ColumnListItem>
             </items>
@@ -739,8 +742,11 @@
                     <Label text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
-                <Column>
+                <Column visible="{= ${BonusInputType}===0 }">
                     <Label text="{i18n>Table3Label1}" />
+                </Column>
+                <Column visible="{= ${BonusInputType}===1 }">
+                    <Label text="{i18n>BonusPercentage}" />
                 </Column>
 
             </columns>
@@ -756,6 +762,7 @@
                         <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
                         <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                         <Text text="{oModelControl2>BonusPoints}" />
+                        <Text text="{oModelControl2>BonusPercentage}" />
                     </cells>
                 </ColumnListItem>
             </items>
@@ -763,6 +770,7 @@
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
             <Title titleStyle="H3" text="6. {i18n>AdditionalInformation}"/>
         </Toolbar>
+        <MessageStrip visible="{= ${OfferTypeId}!==1 }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
         <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
@@ -771,7 +779,7 @@
 
 
 
-                <f:FormContainer title="{i18n>RedemtionCycle}">
+                <f:FormContainer title="{i18n>RedemtionCycle}" visible="{= ${OfferTypeId}===1 }">
                     <f:formElements>
                         <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
                             <f:fields>

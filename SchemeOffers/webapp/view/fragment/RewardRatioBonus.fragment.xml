@@ -160,7 +160,7 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
-                    <RadioButtonGroup columns="2" select=".onRbRRDialogVolume2" selectedIndex="{oModelControl>/Rbtn/Bns2ReqPercent}">
+                    <RadioButtonGroup columns="2" select=".onRbRRDialogVolume2" selectedIndex="{oModelView>/BonusInputType}">
                         <buttons>
                             <RadioButton text="{i18n>Table3Label1}"/>
                             <RadioButton text="{i18n>BonusPercentage}"/>
@@ -179,10 +179,10 @@
                     <Label required="true" text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
-                <Column visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===0 }">
+                <Column visible="{= ${oModelView>/BonusInputType}===0 }">
                     <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
-                <Column visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===1 }">
+                <Column visible="{= ${oModelView>/BonusInputType}===1 }">
                     <Label required="true" text="{i18n>BonusPercentage}" />
                 </Column>
                 <Column>
@@ -200,11 +200,11 @@
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                             <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
-                        <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===0 }">
+                        <VBox visible="{= ${oModelView>/BonusInputType}===0 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
-                        <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===1 }">
+                        <VBox visible="{= ${oModelView>/BonusInputType}===1 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPercentage'}" visible="{= ${oModelControl>editable} !== true  }" />
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
@@ -229,7 +229,7 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
-                    <RadioButtonGroup columns="2" select=".onRbRRDialogVolume2" selectedIndex="{oModelControl>/Rbtn/Bns2ReqPercent}">
+                    <RadioButtonGroup columns="2" select=".onRbRRDialogVolume2" selectedIndex="{oModelView>/BonusInputType}">
                         <buttons>
                             <RadioButton text="{i18n>Table3Label1}"/>
                             <RadioButton text="{i18n>BonusPercentage}"/>
@@ -252,10 +252,10 @@
                     <Label required="true" text="{i18n>formBonusValidaityTo}" />
                 </Column>
 
-                <Column visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===0 }">
+                <Column visible="{= ${oModelView>/BonusInputType}===0 }">
                     <Label required="true" text="{i18n>Table3Label1}" />
                 </Column>
-                <Column visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===1 }">
+                <Column visible="{= ${oModelView>/BonusInputType}===1 }">
                     <Label required="true" text="{i18n>BonusPercentage}" />
                 </Column>
                 <Column>
@@ -285,11 +285,11 @@
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
                             <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
-                        <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===0 }">
+                        <VBox visible="{= ${oModelView>/BonusInputType}===0 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPoints',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>
-                        <VBox visible="{= ${oModelControl>/Rbtn/Bns2ReqPercent}===1 }">
+                        <VBox visible="{= ${oModelView>/BonusInputType}===1 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPercentage'}" visible="{= ${oModelControl>editable} !== true  }" />
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>BonusPercentage',type:'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
                         </VBox>

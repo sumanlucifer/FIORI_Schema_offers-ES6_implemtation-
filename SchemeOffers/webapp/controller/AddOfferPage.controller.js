@@ -303,7 +303,8 @@ sap.ui.define(
                         BonusDescription: "",
                         InputType: 0,
                         OfferStatus: null,
-                        OfferApplicableProductCategory: []
+                        OfferApplicableProductCategory: [],
+                        BonusInputType:0
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -404,7 +405,8 @@ sap.ui.define(
 
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
-                    var aTableValidation = this._CheckTableValidation()
+                    var aTableValidation = this._CheckTableValidation();
+                    var aTableBonusValidation = this._CheckTableBonusValidation()
 
                     if (bFlagValidate == false) {
                         MessageToast.show("Kindly Input All the Mandatory(*) fields.");
@@ -420,6 +422,10 @@ sap.ui.define(
                     }
                     if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
+                        return;
+                    }
+                     if (!aTableBonusValidation[0]) {
+                        MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
                     //validate the data

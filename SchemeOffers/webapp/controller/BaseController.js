@@ -294,11 +294,11 @@ sap.ui.define(
                 _OfferTypeFieldSet2: function (mParam1) {
                     //mParam1 is offer type id
                     var oView = this.getView();
-                    console.log("offertypeid2",mParam1)
+                    console.log("offertypeid2", mParam1)
                     var oModelView = oView.getModel("oModelView");
                     // if offer type id is changed we are restting the value to 1
                     oModelView.setProperty("/RedemptionCycle", 1);
-                    if(mParam1==1){
+                    if (mParam1 == 1) {
                         oModelView.setProperty("/RedemptionCycle", "");
                     }
 
@@ -538,6 +538,7 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
+                                RewardRatioType: 0,
                                 StartDate: null,
                                 EndDate: null,
                                 BonusPoints: "",
@@ -715,11 +716,12 @@ sap.ui.define(
                 },
                 onPressAddRewards2V2: function (oEvent) {
                     var oView = this.getView();
-                    var oModel = this.getView().getModel("oModelControl");
+                    var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table4");
+                    var iPackRbtn = oModel.getProperty("/Rbtn/AppPacks4");
+                    var aProdPackData = oModel.getProperty("/MultiCombo/Reward2")
                     if (oEvent !== "add") {
-                        var oView = this.getView();
-                        var oModel = oView.getModel("oModelControl");
+
                         var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
@@ -728,7 +730,7 @@ sap.ui.define(
                         oModel.refresh();
                     } else {
                         var bFlag = true;
-                        var sLength = 10;
+                        var sLength = aProdPackData.length;
                         if (oRewardDtl.length >= sLength) {
                             MessageToast.show(
                                 "For the current bonus type we can add only " +
@@ -753,6 +755,7 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
+                                RewardRatioType: iPackRbtn === 0 ? 1 : 2,
                                 SkuCode: "",
                                 ProductCode: "",
                                 StartDate: null,
@@ -867,6 +870,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
+                        //for the case of products this is one
                         RewardRatioType: 1,
                         SkuCode: null,
                         ProductCode: "",
@@ -2959,6 +2963,41 @@ sap.ui.define(
                             "Kindly Save the data in the Reward Ratio Table to Continue.",
                         ];
                     }
+                },
+                _CheckTableBonusValidation: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table3"];
+                    var bFlag = true;
+                    if (oModelData["Table"]["Table3"].length > 0) {
+                        oModelData["Table"]["Table3"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (oModelData["Table"]["Table4"].length > 0) {
+                        oModelData["Table"]["Table4"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Bonus Reward Ratio Table to Continue",
+                        ];
+                    }
+
                 },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
