@@ -3056,7 +3056,6 @@ sap.ui.define(
                         var sExistStatus = null
                     }
 
-
                     if (oLoggedInInfo["UserTypeId"] === 5) {
                         oPayLoad["OfferStatus"] = "DRAFT";
                         oPayLoad["IsWorkFlowApplicable"] = false;
@@ -3064,11 +3063,20 @@ sap.ui.define(
                         oLoggedInInfo["UserTypeId"] === 6 ||
                         oLoggedInInfo["UserTypeId"] === 7
                     ) {
-                        oPayLoad["OfferStatus"] = "APPROVED";
-                        if (sExistStatus === "APPROVED" || sExistStatus === "PUBLISHED") {
+
+                        if (sExistStatus === "APPROVED") {
+                            oPayLoad["OfferStatus"] = "APPROVED";
+                            oPayLoad["IsWorkFlowApplicable"] = false;
+                        } else if (sExistStatus === "PUBLISHED") {
+                            oPayLoad["OfferStatus"] = "PUBLISHED";
                             oPayLoad["IsWorkFlowApplicable"] = false;
                         } else {
-                            oPayLoad["IsWorkFlowApplicable"] = true;
+                            oPayLoad["OfferStatus"] = "APPROVED";
+                            if (oPayLoad["WorkflowInstanceId"]) {
+                                oPayLoad["IsWorkFlowApplicable"] = true;
+                            } else {
+                                oPayLoad["IsWorkFlowApplicable"] = false;
+                            }
                         }
                         // if the existing status is approved then
                         //is workflow applicable false else true
@@ -3202,10 +3210,10 @@ sap.ui.define(
                         aDataAppProd2 = oModelViewData["OfferBuyerProduct"]["results"];
                         aDataAppProd3 = oModelViewData["OfferNonBuyerProduct"]["results"];
                         aDataAppProd4 = oModelViewData["OfferBonusProduct"]["results"];
-                         aDataAppPack1 = oModelViewData["OfferApplicablePack"]["results"];
-                          aDataAppPack2 = oModelViewData["OfferBuyerPack"]["results"];
-                           aDataAppPack3 = oModelViewData["OfferNonBuyerPack"]["results"];
-                            aDataAppPack4 = oModelViewData["OfferBonusPack"]["results"];
+                        aDataAppPack1 = oModelViewData["OfferApplicablePack"]["results"];
+                        aDataAppPack2 = oModelViewData["OfferBuyerPack"]["results"];
+                        aDataAppPack3 = oModelViewData["OfferNonBuyerPack"]["results"];
+                        aDataAppPack4 = oModelViewData["OfferBonusPack"]["results"];
                     }
 
                     // setting the values of zone
@@ -3323,23 +3331,23 @@ sap.ui.define(
                         elem
                     ) {
                         if (aHashAppProd2[elem["Id"]]) {
-                                return aDataAppProd2[aHashAppProd2[elem["Id"]]];
-                            } else {
-                                return {
-                                    ProductCode: elem["Id"],
-                                };
-                            }
+                            return aDataAppProd2[aHashAppProd2[elem["Id"]]];
+                        } else {
+                            return {
+                                ProductCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
                         elem
                     ) {
                         if (aHashAppPack2[elem["Id"]]) {
-                                return aDataAppPack2[aHashAppPack2[elem["Id"]]];
-                            } else {
-                                return {
-                                    SkuCode: elem["Id"],
-                                };
-                            }
+                            return aDataAppPack2[aHashAppPack2[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
                         function (elem) {
@@ -3380,12 +3388,12 @@ sap.ui.define(
                         elem
                     ) {
                         if (aHashAppPack3[elem["Id"]]) {
-                                return aDataAppPack3[aHashAppPack3[elem["Id"]]];
-                            } else {
-                                return {
-                                    SkuCode: elem["Id"],
-                                };
-                            }
+                            return aDataAppPack3[aHashAppPack3[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
                     // Bonus Reward Ratio
                     oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
@@ -3413,24 +3421,24 @@ sap.ui.define(
                     oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(function (
                         elem
                     ) {
-                         if (aHashAppProd4[elem["Id"]]) {
-                                return aDataAppProd4[aHashAppProd4[elem["Id"]]];
-                            } else {
-                                return {
-                                    ProductCode: elem["Id"],
-                                };
-                            }
+                        if (aHashAppProd4[elem["Id"]]) {
+                            return aDataAppProd4[aHashAppProd4[elem["Id"]]];
+                        } else {
+                            return {
+                                ProductCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
                         elem
                     ) {
                         if (aHashAppPack4[elem["Id"]]) {
-                                return aDataAppPack4[aHashAppPack4[elem["Id"]]];
-                            } else {
-                                return {
-                                    SkuCode: elem["Id"],
-                                };
-                            }
+                            return aDataAppPack4[aHashAppPack4[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
 
                     oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(

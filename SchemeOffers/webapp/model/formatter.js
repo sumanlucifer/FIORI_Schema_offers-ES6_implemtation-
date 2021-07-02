@@ -107,13 +107,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         //List View Workflow changes
         btnEditOfferTable: function (m1, m2, m3) {
             //m1 edit applicable; m2 login information; m3 offer status
-           
+
             if (m2 === 5) {
                 if (m3 === "DRAFT" || m3 === "REJECTED") {
                     return m1;
-                }else {
+                } else {
                     return false;
-                } 
+                }
             }
 
             return m1
@@ -135,7 +135,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false
         },
         btnSendForApprovalCheck: function (m1, m2) {
-            if (m1 === "DRAFT" || m1 === "REJECTED") {
+            if (m1 === "DRAFT") {
                 if (m2 === 5) {
                     return true;
                 }
