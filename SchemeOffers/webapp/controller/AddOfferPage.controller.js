@@ -251,6 +251,24 @@ sap.ui.define(
                             RewardRationCount: 1,
                             PainterCount: ""
                         },
+                        Hash: {
+                            PCat1: {},
+                            PCat2: {},
+                            PCat3: {},
+                            PCat4: {},
+                            PClass1: {},
+                            PClass2: {},
+                            PClass3: {},
+                            PClass4: {},
+                            AppProd1: {},
+                            AppProd2: {},
+                            AppProd3: {},
+                            AppProd4: {},
+                            AppPack1:{},
+                            AppPack2:{},
+                            AppPack3:{},
+                            AppPack4:{}
+                        }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
 
@@ -284,7 +302,9 @@ sap.ui.define(
                         ParentOfferId: 0,
                         BonusDescription: "",
                         InputType: 0,
-                        OfferStatus: null
+                        OfferStatus: null,
+                        OfferApplicableProductCategory: [],
+                        BonusInputType:0
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -385,7 +405,8 @@ sap.ui.define(
 
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
-                    var aTableValidation = this._CheckTableValidation()
+                    var aTableValidation = this._CheckTableValidation();
+                    var aTableBonusValidation = this._CheckTableBonusValidation()
 
                     if (bFlagValidate == false) {
                         MessageToast.show("Kindly Input All the Mandatory(*) fields.");
@@ -401,6 +422,10 @@ sap.ui.define(
                     }
                     if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
+                        return;
+                    }
+                     if (!aTableBonusValidation[0]) {
+                        MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
                     //validate the data

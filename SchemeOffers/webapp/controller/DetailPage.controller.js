@@ -729,7 +729,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl3");
                     oCtrl2Model.setProperty("/mode", "edit");
-                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
+                    var c1, c2, c3, c4, c5, c6, c7, c8, c9, c9B, c10, c11, c12, c13, c14;
                     var othat = this;
 
                     c2 = othat._GetInitEditData();
@@ -752,20 +752,24 @@ sap.ui.define(
                                                     c9 = othat._getLoggedInUserDeatils(data);
                                                     c9.then(function (data) {
                                                         // no data required from the previous steop
-                                                        c10 = othat._getProductsData();
-                                                        c10.then(function () {
-                                                            c11 = othat._getPacksData();
-                                                            c11.then(function () {
-                                                                c12 = othat._CreateBonusRewardTable("Edit");
-                                                                c12.then(function () {
-                                                                    c13 = othat._destroyDialogs();
-                                                                    c13.then(function () {
-                                                                        c14 = othat._RemovePageBusy();
+                                                        c9B = othat._EditCreatehashData(data);
+                                                        c9B.then(function () {
+                                                            c10 = othat._getProductsData();
+                                                            c10.then(function () {
+                                                                c11 = othat._getPacksData();
+                                                                c11.then(function () {
+                                                                    c12 = othat._CreateBonusRewardTable("Edit");
+                                                                    c12.then(function () {
+                                                                        c13 = othat._destroyDialogs();
+                                                                        c13.then(function () {
+                                                                            c14 = othat._RemovePageBusy();
+                                                                        })
                                                                     })
-                                                                })
 
+                                                                })
                                                             })
                                                         })
+
                                                     });
                                                 });
                                             });
@@ -778,6 +782,115 @@ sap.ui.define(
                     });
                     //_destroyDialogs
                     // this._initSaveModel();
+                },
+                _EditCreatehashData: function (oData) {
+                    var promise = jQuery.Deferred();
+                    var oModelControl = this.getView().getModel("oModelControl");
+                    var aHashPCat1 = {};
+                    var aHashPCat2 = {};
+                    var aHashPCat3 = {};
+                    var aHashPCat4 = {};
+                    var aHashPClass1 = {};
+                    var aHashPClass2 = {};
+                    var aHashPClass3 = {};
+                    var aHashPClass4 = {};
+                    var aHashAppProd1 = {},
+                        aHashAppProd2 = {},
+                        aHashAppProd3 = {},
+                        aHashAppProd4 = {};
+                    var aHashAppPack1 = {},
+                        aHashAppPack2 = {},
+                        aHashAppPack3 = {},
+                        aHashAppPack4 = {};
+                    var aDataPCat1 = oData["OfferApplicableProductCategory"]["results"];
+                    var aDataPCat2 = oData["OfferBuyerProductCategory"]["results"];
+                    var aDataPCat3 = oData["OfferNonBuyerProductCategory"]["results"];
+                    var aDataPCat4 = oData["OfferBonusProductCategory"]["results"];
+                    var aDataPClass1 = oData["OfferApplicableProductClassification"]["results"];
+                    var aDataPClass2 = oData["OfferBuyerProductClassification"]["results"];
+                    var aDataPClass3 = oData["OfferNonBuyerProductClassification"]["results"];
+                    var aDataPClass4 = oData["OfferBonusProductClassification"]["results"];
+                    var aDataAppProd1 = oData["OfferApplicableProduct"]["results"],
+                        aDataAppProd2 = oData["OfferBuyerProduct"]["results"],
+                        aDataAppProd3 = oData["OfferNonBuyerProduct"]["results"],
+                        aDataAppProd4 = oData["OfferBonusProduct"]["results"];
+                    var aDataAppPack1 = oData["OfferApplicablePack"]["results"],
+                        aDataAppPack2 = oData["OfferBuyerPack"]["results"],
+                        aDataAppPack3 = oData["OfferNonBuyerPack"]["results"],
+                        aDataAppPack4 = oData["OfferBonusPack"]["results"];
+
+                    for (var a in aDataPCat1) {
+                        aHashPCat1[aDataPCat1[a]["ProductCategoryCode"]] = a;
+                    }
+                    oModelControl.setProperty("/Hash/PCat1", aHashPCat1);
+                    for (var a in aDataPCat2) {
+                        aHashPCat2[aDataPCat2[a]["ProductCategoryCode"]] = a;
+                    }
+                    oModelControl.setProperty("/Hash/PCat2", aHashPCat2);
+                    for (var a in aDataPCat3) {
+                        aHashPCat3[aDataPCat3[a]["ProductCategoryCode"]] = a;
+                    }
+                    oModelControl.setProperty("/Hash/PCat3", aHashPCat3);
+                    for (var a in aDataPCat4) {
+                        aHashPCat4[aDataPCat4[a]["ProductCategoryCode"]] = a;
+                    }
+                    oModelControl.setProperty("/Hash/PCat4", aHashPCat4);
+                    // Product Classification Data
+                    for (var b in aDataPClass1) {
+                        aHashPClass1[aDataPClass1[b]["ProductClassificationCode"]] = b;
+                    }
+                    oModelControl.setProperty("/Hash/PClass1", aHashPClass1);
+                    for (var b in aDataPClass2) {
+                        aHashPClass2[aDataPClass2[b]["ProductClassificationCode"]] = b;
+                    }
+                    oModelControl.setProperty("/Hash/PClass2", aHashPClass2);
+                    for (var b in aDataPClass3) {
+                        aHashPClass3[aDataPClass3[b]["ProductClassificationCode"]] = b;
+                    }
+                    oModelControl.setProperty("/Hash/PClass3", aHashPClass3);
+                    for (var b in aDataPClass4) {
+                        aHashPClass4[aDataPClass4[b]["ProductClassificationCode"]] = b;
+                    }
+                    oModelControl.setProperty("/Hash/PClass4", aHashPClass4);
+
+                    //Products Data
+                    for (var c in aDataAppProd1) {
+                        aHashAppProd1[aDataAppProd1[c]["ProductCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppProd1", aHashAppProd1);
+                    for (var c in aDataAppProd2) {
+                        aHashAppProd2[aDataAppProd2[c]["ProductCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppProd2", aHashAppProd2);
+                    for (var c in aDataAppProd3) {
+                        aHashAppProd3[aDataAppProd3[c]["ProductCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppProd3", aHashAppProd3);
+                    for (var c in aDataAppProd4) {
+                        aHashAppProd4[aDataAppProd4[c]["ProductCode"]] = c;
+                    }
+                    oModelControl.setProperty("/Hash/AppProd4", aHashAppProd4);
+
+                    //Pack Data 5
+                    for (var d in aDataAppPack1) {
+                        aHashAppPack1[aDataAppPack1[d]["SkuCode"]] = d;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack1", aHashAppPack1);
+                    for (var d in aDataAppPack2) {
+                        aHashAppPack2[aDataAppPack2[d]["SkuCode"]] = d;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack2", aHashAppPack2);
+                    for (var d in aDataAppPack3) {
+                        aHashAppPack3[aDataAppPack3[d]["SkuCode"]] = d;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack3", aHashAppPack3);
+                    for (var d in aDataAppPack4) {
+                        aHashAppPack4[aDataAppPack4[d]["SkuCode"]] = d;
+                    }
+                    oModelControl.setProperty("/Hash/AppPack4", aHashAppPack4);
+
+                    promise.resolve(oData);
+                    return promise;
                 },
                 _setAdditionalData2: function (oData) {
                     var promise = jQuery.Deferred();
@@ -798,7 +911,7 @@ sap.ui.define(
                         oModelControl.setProperty("/Rbtn/TopAll", 1);
                     }
                     // work flow reated flags
-                    oModelView.setProperty("/Remark","")
+                    oModelView.setProperty("/Remark", "")
                     promise.resolve(oData);
                     return promise;
                 },
@@ -807,11 +920,11 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
-                    var oData = oView.getModel();
+                    var oDataModel = oView.getModel();
 
                     var sPath = "/MasterOfferTypeSet(" + oFFerTypeId + ")";
 
-                    oData.read(sPath, {
+                    oDataModel.read(sPath, {
                         success: function (data) {
                             oModel.setProperty("/OfferType", data);
                             oModel.refresh();
@@ -821,7 +934,8 @@ sap.ui.define(
                     promise.resolve(oData);
                     return promise;
                 },
-                _CheckEditImage: function (oData) {
+                _CheckEditImage: function (mParam1) {
+
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = this.getView().getModel("oModelControl");
@@ -831,17 +945,17 @@ sap.ui.define(
                     return new Promise((resolve, reject) => {
                         jQuery
                             .get(sImageUrl)
-                            .done(function () {
+                            .done(function (oData) {
                                 oModelControl.setProperty("/ImageLoaded", true);
-                                resolve();
+                                resolve(mParam1);
                             })
-                            .fail(function () {
+                            .fail(function (oData) {
                                 oModelControl.setProperty("/ImageLoaded", false);
-                                resolve();
+                                resolve(mParam1);
                             });
 
                     })
-                  
+
                 },
                 _GetInitEditData: function () {
                     var promise = jQuery.Deferred();
@@ -1049,12 +1163,29 @@ sap.ui.define(
                             RewardRationCount: 1,
                             PainterCount: "",
                         },
+                        Hash: {
+                            PCat1: {},
+                            PCat2: {},
+                            PCat3: {},
+                            PCat4: {},
+                            PClass1: {},
+                            PClass2: {},
+                            PClass3: {},
+                            PClass4: {},
+                            AppProd1: {},
+                            AppProd2: {},
+                            AppProd3: {},
+                            AppProd4: {},
+                            AppPack1: {},
+                            AppPack2: {},
+                            AppPack3: {},
+                            AppPack4: {}
+                        }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
                     oView.setModel(oConrtrolModel, "oModelControl");
                     var oModelView = new JSONModel(oData);
                     oView.setModel(oModelView, "oModelView");
-                    console.log(oConrtrolModel);
                     //oModelView.refresh()
                     this._getProductsData();
                     promise.resolve(data);
@@ -1413,7 +1544,7 @@ sap.ui.define(
                     var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                     var bFlagValidate = oValidate.validate(oSteps, true);
                     var aTableValidation = this._CheckTableValidation();
-
+                    var aTableBonusValidation = this._CheckTableBonusValidation()
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
 
@@ -1430,7 +1561,10 @@ sap.ui.define(
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
-
+                     if (!aTableBonusValidation[0]) {
+                        MessageToast.show(aTableBonusValidation[1]);
+                        return;
+                    }
                     this._postDataToSave(bFileFlag);
                 },
                 // _CheckTableValidation: function () {
@@ -1850,7 +1984,7 @@ sap.ui.define(
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
                     var oNewPayLoad = Object.assign({}, oPayload);
                     oNewPayLoad["OfferStatus"] = "PUBLISHED";
-                     oNewPayLoad["IsPublished"] = true;
+                    oNewPayLoad["IsPublished"] = true;
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
                     oData.update("/" + sPath, oNewPayLoad, {
                         success: function () {

@@ -181,10 +181,12 @@ sap.ui.define(
                 onOfferTypeChanged: function (oEvent) {
                     var oView = this.getView();
                     var oSource = oEvent.getSource().getSelectedItem();
+                    var sKey = oEvent.getSource().getSelectedKey();
                     var object = oSource.getBindingContext().getObject();
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/OfferType", object);
                     this._OfferTypeFieldsSet();
+                    this._OfferTypeFieldSet2(sKey);
                 },
 
                 _OfferTypeFieldsSet: function () {
@@ -288,6 +290,18 @@ sap.ui.define(
 
                     // setting up redemption cycle data based on offer type
                     this._SetRedemptionCycle();
+                },
+                _OfferTypeFieldSet2: function (mParam1) {
+                    //mParam1 is offer type id
+                    var oView = this.getView();
+                    console.log("offertypeid2", mParam1)
+                    var oModelView = oView.getModel("oModelView");
+                    // if offer type id is changed we are restting the value to 1
+                    oModelView.setProperty("/RedemptionCycle", 1);
+                    if (mParam1 == 1) {
+                        oModelView.setProperty("/RedemptionCycle", "");
+                    }
+
                 },
                 _setTable2Count: function () {
                     var oView = this.getView();
@@ -524,6 +538,7 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
+                                RewardRatioType: 0,
                                 StartDate: null,
                                 EndDate: null,
                                 BonusPoints: "",
@@ -701,11 +716,12 @@ sap.ui.define(
                 },
                 onPressAddRewards2V2: function (oEvent) {
                     var oView = this.getView();
-                    var oModel = this.getView().getModel("oModelControl");
+                    var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table4");
+                    var iPackRbtn = oModel.getProperty("/Rbtn/AppPacks4");
+                    var aProdPackData = oModel.getProperty("/MultiCombo/Reward2")
                     if (oEvent !== "add") {
-                        var oView = this.getView();
-                        var oModel = oView.getModel("oModelControl");
+
                         var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
@@ -714,7 +730,7 @@ sap.ui.define(
                         oModel.refresh();
                     } else {
                         var bFlag = true;
-                        var sLength = 10;
+                        var sLength = aProdPackData.length;
                         if (oRewardDtl.length >= sLength) {
                             MessageToast.show(
                                 "For the current bonus type we can add only " +
@@ -739,6 +755,7 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
+                                RewardRatioType: iPackRbtn === 0 ? 1 : 2,
                                 SkuCode: "",
                                 ProductCode: "",
                                 StartDate: null,
@@ -853,6 +870,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl");
                     var oBj1 = oBj;
                     var oBj2 = {
+                        //for the case of products this is one
                         RewardRatioType: 1,
                         SkuCode: null,
                         ProductCode: "",
@@ -1455,8 +1473,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
-                    oModelControl.setProperty("/Table/Table2", []);
-                    oModelControl.setProperty("/Table/Table1", []);
+                    //oModelControl.setProperty("/Table/Table2", []);
+                    //oModelControl.setProperty("/Table/Table1", []);
                     var sCheckPacks = oModelControl.getProperty("/Rbtn/AppPacks1");
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
@@ -2133,16 +2151,17 @@ sap.ui.define(
                     this._FilterDepotTable(aFilter, "Control");
                 },
                 _getLoggedInUserDeatils: function (oData) {
+
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
-                    var oData = oView.getModel();
+                    var oDataModel = oView.getModel();
                     var oLoginModel = oView.getModel("LoginInfo");
                     var oControlModel = oView.getModel("oModelControl");
                     var oLoginData = oLoginModel.getData();
 
                     if (Object.keys(oLoginData).length === 0) {
                         return new Promise((resolve, reject) => {
-                            oData.callFunction("/GetLoggedInAdmin", {
+                            oDataModel.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
                                 urlParameters: {
                                     $expand: "UserType",
@@ -2945,6 +2964,41 @@ sap.ui.define(
                         ];
                     }
                 },
+                _CheckTableBonusValidation: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table3"];
+                    var bFlag = true;
+                    if (oModelData["Table"]["Table3"].length > 0) {
+                        oModelData["Table"]["Table3"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (oModelData["Table"]["Table4"].length > 0) {
+                        oModelData["Table"]["Table4"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Bonus Reward Ratio Table to Continue",
+                        ];
+                    }
+
+                },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -3055,7 +3109,6 @@ sap.ui.define(
                         var sExistStatus = null
                     }
 
-
                     if (oLoggedInInfo["UserTypeId"] === 5) {
                         oPayLoad["OfferStatus"] = "DRAFT";
                         oPayLoad["IsWorkFlowApplicable"] = false;
@@ -3063,11 +3116,20 @@ sap.ui.define(
                         oLoggedInInfo["UserTypeId"] === 6 ||
                         oLoggedInInfo["UserTypeId"] === 7
                     ) {
-                        oPayLoad["OfferStatus"] = "APPROVED";
-                        if (sExistStatus === "APPROVED" || sExistStatus === "PUBLISHED") {
+
+                        if (sExistStatus === "APPROVED") {
+                            oPayLoad["OfferStatus"] = "APPROVED";
+                            oPayLoad["IsWorkFlowApplicable"] = false;
+                        } else if (sExistStatus === "PUBLISHED") {
+                            oPayLoad["OfferStatus"] = "PUBLISHED";
                             oPayLoad["IsWorkFlowApplicable"] = false;
                         } else {
-                            oPayLoad["IsWorkFlowApplicable"] = true;
+                            oPayLoad["OfferStatus"] = "APPROVED";
+                            if (oPayLoad["WorkflowInstanceId"]) {
+                                oPayLoad["IsWorkFlowApplicable"] = true;
+                            } else {
+                                oPayLoad["IsWorkFlowApplicable"] = false;
+                            }
                         }
                         // if the existing status is approved then
                         //is workflow applicable false else true
@@ -3092,6 +3154,7 @@ sap.ui.define(
                         "PointSlabLowerLimit",
                         "BonusApplicableTopPainter",
                         "ParentOfferId",
+                        "RedemptionCycle"
                     ];
                     for (var y of inTegerProperty) {
                         if (oPayLoad.hasOwnProperty(y)) {
@@ -3150,7 +3213,62 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
+                    var oModelCtrlData = oModelControl.getData();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelViewData = oModelView.getData();
                     var sMultiKeys = oModelControl.getProperty("/MultiCombo");
+                    var aHashPCat1 = oModelControl.getProperty("/Hash/PCat1");
+                    var aHashPCat2 = oModelControl.getProperty("/Hash/PCat2");
+                    var aHashPCat3 = oModelControl.getProperty("/Hash/PCat3");
+                    var aHashPCat4 = oModelControl.getProperty("/Hash/PCat4");
+                    var aHashPClass1 = oModelControl.getProperty("/Hash/PClass1");
+                    var aHashPClass2 = oModelControl.getProperty("/Hash/PClass2");
+                    var aHashPClass3 = oModelControl.getProperty("/Hash/PClass3");
+                    var aHashPClass4 = oModelControl.getProperty("/Hash/PClass4");
+                    var aHashAppProd1 = oModelCtrlData["Hash"]["AppProd1"],
+                        aHashAppProd2 = oModelCtrlData["Hash"]["AppProd2"],
+                        aHashAppProd3 = oModelCtrlData["Hash"]["AppProd3"],
+                        aHashAppProd4 = oModelCtrlData["Hash"]["AppProd4"];
+                    var aHashAppPack1 = oModelCtrlData["Hash"]["AppPack1"],
+                        aHashAppPack2 = oModelCtrlData["Hash"]["AppPack2"],
+                        aHashAppPack3 = oModelCtrlData["Hash"]["AppPack3"],
+                        aHashAppPack4 = oModelCtrlData["Hash"]["AppPack4"];
+
+                    var aDataPCat1 = [],
+                        aDataPCat2 = [],
+                        aDataPCat3 = [],
+                        aDataPCat4 = [],
+                        aDataPClass1 = [],
+                        aDataPClass2 = [],
+                        aDataPClass3 = [],
+                        aDataPClass4 = [];
+                    var aDataAppProd1 = [],
+                        aDataAppProd2 = [],
+                        aDataAppProd3 = [],
+                        aDataAppProd4 = [];
+                    var aDataAppPack1 = [],
+                        aDataAppPack2 = [],
+                        aDataAppPack3 = [],
+                        aDataAppPack4 = [];
+
+                    if (oModelControl.getProperty("/mode") === "edit") {
+                        aDataPCat1 = oModelViewData["OfferApplicableProductCategory"]["results"];
+                        aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
+                        aDataPCat3 = oModelViewData["OfferNonBuyerProductCategory"]["results"];
+                        aDataPCat4 = oModelViewData["OfferBonusProductCategory"]["results"];
+                        aDataPClass1 = oModelViewData["OfferApplicableProductClassification"]["results"];
+                        aDataPClass2 = oModelViewData["OfferBuyerProductClassification"]["results"];
+                        aDataPClass3 = oModelViewData["OfferNonBuyerProductClassification"]["results"];
+                        aDataPClass4 = oModelViewData["OfferBonusProductClassification"]["results"];
+                        aDataAppProd1 = oModelViewData["OfferApplicableProduct"]["results"];
+                        aDataAppProd2 = oModelViewData["OfferBuyerProduct"]["results"];
+                        aDataAppProd3 = oModelViewData["OfferNonBuyerProduct"]["results"];
+                        aDataAppProd4 = oModelViewData["OfferBonusProduct"]["results"];
+                        aDataAppPack1 = oModelViewData["OfferApplicablePack"]["results"];
+                        aDataAppPack2 = oModelViewData["OfferBuyerPack"]["results"];
+                        aDataAppPack3 = oModelViewData["OfferNonBuyerPack"]["results"];
+                        aDataAppPack4 = oModelViewData["OfferBonusPack"]["results"];
+                    }
 
                     // setting the values of zone
                     oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
@@ -3170,32 +3288,52 @@ sap.ui.define(
                             DepotId: elem["DepotId"],
                         };
                     });
+
                     oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                            if (aHashPCat1[elem]) {
+                                return aDataPCat1[aHashPCat1[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
+
                         }
                     );
                     oPayLoad["OfferApplicableProductClassification"] = sMultiKeys[
                         "PClass1"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass1[elem]) {
+                            return aDataPClass1[aHashPClass1[elem]];
+                        } else {
+                            return {
+                                ProductClassificationCode: elem,
+                            };
+                        }
+
+
                     });
                     oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
                         function (elem) {
-                            return {
-                                ProductCode: elem["Id"],
-                            };
+                            if (aHashAppProd1[elem["Id"]]) {
+                                return aDataAppProd1[aHashAppProd1[elem["Id"]]];
+                            } else {
+                                return {
+                                    ProductCode: elem["Id"],
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferApplicablePack"] = sMultiKeys["AppPacks1"].map(
                         function (elem) {
-                            return {
-                                SkuCode: elem["Id"],
-                            };
+                            if (aHashAppPack1[elem["Id"]]) {
+                                return aDataAppPack1[aHashAppPack1[elem["Id"]]];
+                            } else {
+                                return {
+                                    SkuCode: elem["Id"],
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferPainterType"] = sMultiKeys["PainterType"].map(
@@ -3221,88 +3359,140 @@ sap.ui.define(
                     );
                     oPayLoad["OfferBuyerProductCategory"] = sMultiKeys["PCat2"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                            if (aHashPCat2[elem]) {
+                                return aDataPCat2[aHashPCat2[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferBuyerProductClassification"] = sMultiKeys[
                         "PClass2"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass2[elem]) {
+                            return aDataPClass2[aHashPClass2[elem]];
+                        } else {
+                            return {
+                                ProductClassificationCode: elem,
+                            };
+                        }
+
+
                     });
                     oPayLoad["OfferBuyerProduct"] = sMultiKeys["AppProd2"].map(function (
                         elem
                     ) {
-                        return {
-                            ProductCode: elem["Id"],
-                        };
+                        if (aHashAppProd2[elem["Id"]]) {
+                            return aDataAppProd2[aHashAppProd2[elem["Id"]]];
+                        } else {
+                            return {
+                                ProductCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferBuyerPack"] = sMultiKeys["AppPacks2"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack2[elem["Id"]]) {
+                            return aDataAppPack2[aHashAppPack2[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferNonBuyerProductCategory"] = sMultiKeys["PCat3"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                            if (aHashPCat3[elem]) {
+                                return aDataPCat3[aHashPCat3[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferNonBuyerProductClassification"] = sMultiKeys[
                         "PClass3"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass3[elem]) {
+                            return aDataPClass3[aHashPClass3[elem]];
+                        } else {
+                            return {
+                                ProductClassificationCode: elem,
+                            };
+                        }
+
+
                     });
                     oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
                         function (elem) {
-                            return {
-                                ProductCode: elem["Id"],
-                            };
+                            if (aHashAppProd3[elem["Id"]]) {
+                                return aDataAppProd3[aHashAppProd3[elem["Id"]]];
+                            } else {
+                                return {
+                                    ProductCode: elem["Id"],
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferNonBuyerPack"] = sMultiKeys["AppPacks3"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack3[elem["Id"]]) {
+                            return aDataAppPack3[aHashAppPack3[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
                     // Bonus Reward Ratio
                     oPayLoad["OfferBonusProductCategory"] = sMultiKeys["PCat4"].map(
                         function (elem) {
-                            return {
-                                ProductCategoryCode: elem,
-                            };
+                            if (aHashPCat4[elem]) {
+                                return aDataPCat4[aHashPCat4[elem]];
+                            } else {
+                                return {
+                                    ProductCategoryCode: elem,
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferBonusProductClassification"] = sMultiKeys[
                         "PClass4"
                     ].map(function (elem) {
-                        return {
-                            ProductClassificationCode: elem,
-                        };
+                        if (aHashPClass4[elem]) {
+                            return aDataPClass4[aHashPClass4[elem]];
+                        } else {
+                            return {
+                                ProductClassificationCode: elem,
+                            };
+                        }
                     });
                     oPayLoad["OfferBonusProduct"] = sMultiKeys["AppProd4"].map(function (
                         elem
                     ) {
-                        return {
-                            ProductCode: elem["Id"],
-                        };
+                        if (aHashAppProd4[elem["Id"]]) {
+                            return aDataAppProd4[aHashAppProd4[elem["Id"]]];
+                        } else {
+                            return {
+                                ProductCode: elem["Id"],
+                            };
+                        }
                     });
                     oPayLoad["OfferBonusPack"] = sMultiKeys["AppPacks4"].map(function (
                         elem
                     ) {
-                        return {
-                            SkuCode: elem["Id"],
-                        };
+                        if (aHashAppPack4[elem["Id"]]) {
+                            return aDataAppPack4[aHashAppPack4[elem["Id"]]];
+                        } else {
+                            return {
+                                SkuCode: elem["Id"],
+                            };
+                        }
                     });
 
                     oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(
