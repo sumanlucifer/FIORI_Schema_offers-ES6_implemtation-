@@ -37,3 +37,15 @@
     border: .0625rem solid #0a6ed1;
     border-radius: 50%;
 }
+
+.fileUploaderContainer .sapMFlexItem:first-child {
+    width: 100% !important;
+}
+
+.fileUploaderContainer .sapMImg {
+    margin-left: 0.5rem;
+}
+
+.fileUploaderContainer .sapMImg.sapMNoImg {
+    display: none;
+}

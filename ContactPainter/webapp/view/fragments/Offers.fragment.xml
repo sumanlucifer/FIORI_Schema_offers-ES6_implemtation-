@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%">
+        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto" items="{path: '/PainterOfferSet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter,Offer/OfferType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="Painter Id" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>OfferCode}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Title}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>OfferType}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>StartDate}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>EndDate}" />
+                </Column>
+
+
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{PainterId}" />
+                        <Text text="{Offer/OfferCode}" />
+                        <Text text="{Offer/Title}" />
+                         <Text text="{Offer/OfferType/OfferType}" />
+                        <Text text="{path:'Offer/StartDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                         <Text text="{path:'Offer/EndDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+    </VBox>
+</core:FragmentDefinition>

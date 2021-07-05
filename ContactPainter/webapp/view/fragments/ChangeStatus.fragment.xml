@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <Dialog class="sapUiContentPadding" id="ChangeStatus" title="{i18n>btnChangeStatus}" titleAlignment="Center" binding="{oModelControl2>/oChangeStatus}" >
+        <content>
+            <!-- <VBox >
+        <HBox> <Label text="{i18n>LblNewStatus}" />
+            <Select items="{oModelControl2>aApplicableStatus}" selectedKey="{oModelControl2>Payload/ActivationStatus}" >
+                <core:Item key="{oModelControl2>key}"  text="{oModelControl2>key}" />
+            </Select>
+            </HBox>
+              <HBox> 
+             <Label text="{i18n>LblNewStatus}" />
+             <TextArea value="{oModelControl2>Payload/ActivationStatusChangeReason}" />
+                         </HBox>
+
+             </VBox> -->
+
+             	<f:SimpleForm  	layout="ResponsiveGridLayout" 	columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false">	<f:content>  <Label required="true" text="{i18n>LblNewStatus}" />
+            <ComboBox items="{oModelControl2>aApplicableStatus}" selectedKey="{oModelControl2>oPayload/ActivationStatus}" >
+                <core:Item key="{oModelControl2>key}"  text="{path: 'oModelControl2>key', formatter:'.sActivationStatus'}" />
+            </ComboBox>
+              <Label required="true" text="{i18n>LblReason}" />
+             <TextArea value="{oModelControl2>oPayload/ActivationStatusChangeReason}" />
+             	</f:content>	</f:SimpleForm>
+
+
+
+        </content>
+        <buttons>
+            <Button text="Close" press="onCloseStatus" />
+            <Button press="onConfirmStatus" type="Emphasized" text="{i18n>Save}" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

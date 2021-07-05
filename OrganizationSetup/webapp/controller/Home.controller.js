@@ -18,9 +18,20 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
             onInit: function () {
+                var oRouter = this.getOwnerComponent().getRouter();
+
+                oRouter
+                    .getRoute("RouteHome")
+                    .attachMatched(this._onRouteMatched, this);
 
 
             },
+             _onRouteMatched: function (oEvent) {
+         this.getView().getModel("data").resetChanges();
+          
+          
+        },
+
 
 
             onFilterUsers: function (oEvent) {
@@ -29,7 +40,12 @@ sap.ui.define([
                 var aFilter = [];
                 var sQuery = oEvent.getParameter("query");
                 if (sQuery) {
-                    aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
+                    // aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
+                    aFilter.push(new Filter(
+                        "tolower(Name)",
+                        FilterOperator.Contains,
+                        "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                    ));
                 }
 
                 // filter binding
@@ -46,8 +62,18 @@ sap.ui.define([
 
                     filters: [
 
-                        new Filter("Role", FilterOperator.Contains, sQuery),
-                        new Filter("Description", FilterOperator.Contains, sQuery)
+                        // new Filter("Role", FilterOperator.Contains, sQuery),
+                        // new Filter("Description", FilterOperator.Contains, sQuery)
+                        new Filter(
+                            "tolower(Role)",
+                            FilterOperator.Contains,
+                            "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                        ),
+                        new Filter(
+                            "tolower(Description)",
+                            FilterOperator.Contains,
+                            "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
+                        )
 
                     ]
 
@@ -84,6 +110,7 @@ sap.ui.define([
                 // oRouter.navTo("detail", {
                 //     productId: selectedProductId
                 // });
+
                 oRouter.navTo("AddRole");
 
             },
@@ -129,27 +156,39 @@ sap.ui.define([
 
                 var oSelectedItem = oEvent.getSource().getBindingContext('data').getObject()
                 var oParam = {
-                        Name: oSelectedItem.Name,
-                        Email: oSelectedItem.Email,
-                        Mobile: oSelectedItem.Mobile,
-                        CountryCode: oSelectedItem.CountryCode,
-                        RoleId: oSelectedItem.RoleId,
-                        IsArchived: true
-                    };
+                    Name: oSelectedItem.Name,
+                    Email: oSelectedItem.Email,
+                    Mobile: oSelectedItem.Mobile,
+                    CountryCode: oSelectedItem.CountryCode,
+                    RoleId: oSelectedItem.RoleId,
+                    IsArchived: true
+                };
                 function onYes() {
                     var oModel = this.getView().getModel("data");
-                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableUsers") });
+                    var that = this;
+                    oModel.update(removeSet, oParam, {
+                        success: function () { that.onRemoveSuccess("tableUsers") }, error: function (oError) {
+                            //oError - contains additional error information.
+                            var msg = 'Error!';
+                            MessageToast.show(msg);
+
+                        }
+                    });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_USER", onYes);
 
             },
             onRemoveSuccess: function (oTable) {
-                
-                var oList = this.getView().byId(oTable);
-                oList.getBinding("items").refresh(true);
+
+
                 var msg = 'Removed Successfully!';
                 MessageToast.show(msg);
+
+
+                var oModel = this.getView().getModel("data");
+                oModel.refresh();
+
 
 
             },
@@ -174,12 +213,12 @@ sap.ui.define([
                     IsArchived: true
                 };
                 function onYes() {
-                   var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableRoles") });
+                    var oModel = this.getView().getModel("data");
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableRoles") });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_ROLE", onYes);
-                
+
 
 
             },
@@ -199,13 +238,13 @@ sap.ui.define([
                     CallCenterHelpline: oSelectedItem.callCenterNo,
                     IsArchived: true
                 };
-               function onYes() {
-                  var oModel = this.getView().getModel("data");
-                oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableCompanySettings") });
+                function onYes() {
+                    var oModel = this.getView().getModel("data");
+                    oModel.update(removeSet, oParam, { success: this.onRemoveSuccess("tableCompanySettings") });
                 }
 
                 this.showWarning("MSG_CONFIRM_DELETE_CompanySettings", onYes);
-                
+
 
             },
             showWarning: function (sMsgTxt, _fnYes) {

@@ -27,17 +27,11 @@
 			},
 			"payload": {
 				"viz": [{
-					"appId": "com.knpl.pragati.MasterDataManagement",
-					"vizId": "Manage-MDM"
-				}, {
 					"appId": "com.knpl.pragati.ContactPainter",
 					"vizId": "Manage-CP"
 				}, {
 					"appId": "com.knpl.pragati.DealerManagement",
 					"vizId": "Manage-DLR"
-				}, {
-					"appId": "com.knpl.pragati.KnowledgeManagement",
-					"vizId": "Manage-KWM"
 				}, {
 					"appId": "com.knpl.pragati.Manage_FAQ",
 					"vizId": "Manage-FAQ"
@@ -45,6 +39,38 @@
 					"id": "com.knpl.pragati.Manage_Notifications-6-1611902399399",
 					"appId": "com.knpl.pragati.Manage_Notifications",
 					"vizId": "Manage-Notifications"
+				}, {
+					"id": "com.knpl.pragati.MDM-5-1614158582160",
+					"appId": "com.knpl.pragati.MDM",
+					"vizId": "Manage-MDM"
+				}, {
+					"id": "com.knpl.pragati.Training_Learning-5-1614334447383",
+					"appId": "com.knpl.pragati.Training_Learning",
+					"vizId": "Manage-Training"
+				}, {
+					"id": "com.knpl.pragati.Tools-6-1614575221046",
+					"appId": "com.knpl.pragati.Tools",
+					"vizId": "Manage-TLS"
+				}, {
+					"id": "com.knpl.pragati.Complaints-7-1615211249037",
+					"appId": "com.knpl.pragati.Complaints",
+					"vizId": "Manage-CM"
+				}, {
+					"id": "com.knpl.pragati.CallbackRequests-8-1615527937953",
+					"appId": "com.knpl.pragati.CallbackRequests",
+					"vizId": "Manage-CBR"
+				}, {
+					"id": "com.knpl.pragati.LoyaltyManagement-9-1616563596336",
+					"appId": "com.knpl.pragati.LoyaltyManagement",
+					"vizId": "Manage-LTM"
+				}, {
+					"id": "com.knpl.pragati.Catelogue-10-1616563596336",
+					"appId": "com.knpl.pragati.Catelogue",
+					"vizId": "Manage-CTL"
+				}, {
+					"id": "com.knpl.pragati.SchemeOffers-11-1617801677345",
+					"appId": "com.knpl.pragati.SchemeOffers",
+					"vizId": "Manage-SM"
 				}]
 			}
 		}, {

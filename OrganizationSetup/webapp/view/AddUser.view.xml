@@ -29,7 +29,9 @@ xmlns:f="sap.ui.layout.form">
                                   }
                               }"
                         placeholder="Enter Name ..."
-        				valueStateText="Enter a valid Name. Maximum 25 characters." />
+        				valueStateText="Enter a valid Name. Maximum 25 characters." 
+                        
+                        />
 
 				<Label text="Email" labelFor="email" design="Bold" required="true" />
 		<Input id="email" 
@@ -37,9 +39,7 @@ xmlns:f="sap.ui.layout.form">
                             value="{ 
                                   path : '/email', 
                                   type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                  		search : '\\S+@\\S+\\.\\S+' 
-                                	}
+                                  constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' }
                               }"
         				placeholder="Enter Email ..."
         				valueStateText="Email must not be empty."/>
@@ -48,13 +48,13 @@ xmlns:f="sap.ui.layout.form">
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Tel"
+        	                type="Number"
                             
                             value="{ 
                                   path : '/mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1,
+                                      minLength : 10,
                                       maxLength : 10
                                       
                                       
@@ -80,7 +80,7 @@ xmlns:f="sap.ui.layout.form">
         				valueStateText="CountryCode must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" required="true"/>
-        	<ComboBox
+        	<Select
             id="role"
                         value="{ 
                                   path : '/role', 
@@ -90,12 +90,11 @@ xmlns:f="sap.ui.layout.form">
                                       
                                   }
                               }"
-            placeholder="Select Role ..."
             valueStateText="Role must not be empty."
 				 items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
-			</ComboBox>
+			</Select>
 		
 			</f:content>
 		</f:SimpleForm>
@@ -114,7 +113,7 @@ xmlns:f="sap.ui.layout.form">
                 
                 <Button text="Cancel"
                 
-						press="onCancelPress"
+						press="onCancelPressForAdd"
 						>
 					
 				</Button>

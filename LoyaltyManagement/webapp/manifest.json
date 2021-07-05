@@ -10,7 +10,7 @@
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
         "resources": "resources.json",
-        "ach": "ach",
+        "ach": "set-ach",
         "sourceTemplate": {
             "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
             "version": "1.40.12"
@@ -120,7 +120,7 @@
                 },
                 {
                     "name": "DetailPage",
-                    "pattern": "DetailPage",
+                    "pattern": "DetailPage/{Id}",
                     "target": [
                         "TargetDetailPage"
                     ]

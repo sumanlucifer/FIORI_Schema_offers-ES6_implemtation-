@@ -1,66 +1,64 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    <VBox width="100%">
-        <Table width="auto" items="{path: 'oModelView>/FamilyDetails'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-            <headerToolbar>
-                <Toolbar>
-                    <SegmentedButton selectedKey="Accural">
-                        <items>
-                            <SegmentedButtonItem text="Accural" key="Accural"/>
-                            <SegmentedButtonItem text="Redeemed"/>
-                        </items>
-                    </SegmentedButton>
-                    <ToolbarSpacer/>
-                        <SearchField width="20%"></SearchField>
-                        <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                    </Toolbar>
-                </headerToolbar>
-
-                <columns>
-                    <Column>
-                        <Text text="Name"/>
-                    </Column>
-                    <Column>
-                        <Text text="Painter Id"/>
-                    </Column>
-                    <Column>
-                        <Text text="Mobile Number"/>
-                    </Column>
-                    <Column>
-                        <Text text="Redeem Points"/>
-                    </Column>
-                    <Column>
-                        <Text text="Available Points"/>
-                    </Column>
-                    <Column>
-                        <Text text="Type of Accural"/>
-                    </Column>
-                    <Column>
-                        <Text text="Type of Accural"/>
-                    </Column>
-                    <Column>
-                        <Text text="Date and Time"/>
-                    </Column>
-                    <Column>
-                        <Text text="Status"/>
-                    </Column>
-
-
-                </columns>
-
-                <items>
-                    <ColumnListItem press="onListItemPress">
-                        <cells>
-                            <Input value="{oModelView>RelType}"/>
-                            <Input value="{oModelView>Name}"/>
-                            <Input value="{oModelView>ContactNumber}"/>
-                            <Button icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-
-        </VBox>
-    </core:FragmentDefinition>
+<core:FragmentDefinition     xmlns="sap.m"    xmlns:smartTable="sap.ui.comp.smarttable"   xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smrtLoyalty"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebind"                    
+                            entitySet="PainterPointsHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="LoyaltySmartTableKey"
+                            initialNoDataText="{i18n>tableNoDataText}"
+                            ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                        <Table >
+                                <columns>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType", "leadingProperty": "PointType", "columnIndex": 0 ,"sortProperty": "PointType","filterProperty": "PointType"}'/>
+                                        </customData>
+                                          <Text text="{i18n>Type}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints", "leadingProperty": "RewardPoints", "columnIndex": 1 ,"sortProperty": "RewardPoints","filterProperty": "RewardPoints"}'/>
+                                        </customData>
+                                          <Text text="{i18n>EarnedPoints}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "TotalPoints", "leadingProperty": "TotalPoints", "columnIndex": 2 ,"sortProperty": "TotalPoints","filterProperty": "TotalPoints"}'/>
+                                        </customData>
+                                          <Text text="{i18n>TotalPoints}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>DateAndTime}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointTransactionType", "leadingProperty": "PointTransactionType", "columnIndex": 4 ,"sortProperty": "PointTransactionType","filterProperty": "PointTransactionType"}'/>
+                                        </customData>
+                                         <Text text="{i18n>TransactionType}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'RewardPoints'}" />
+                                               <Text text="{path:'TotalPoints'}" />
+                                               <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                         </cells>      
+                                    </ColumnListItem>
+                                </items> 
+                            </Table> 
+                        </smartTable:SmartTable>
+</core:FragmentDefinition>

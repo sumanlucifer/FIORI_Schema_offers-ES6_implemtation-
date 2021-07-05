@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>BankDocuments}" titleAlignment="Center" afterClose="onDialogClose">
+        <content>
+            <Carousel class="sapUiContentPadding" loop="true">
+                <Image src="{oModelControl>/BankImage/Image1}" alt="No Bank Document Found"/>
+                <!-- <Image src="{oModelControl>/KycImage/Image2}" alt="No KYC Found"/> -->
+              
+            </Carousel>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

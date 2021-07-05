@@ -1,7 +1,11 @@
 {
 	"name": "Manage_FAQ",
 	"version": "0.0.1",
-	"buildTimestamp": "202102161234",
+<<<<<<< HEAD
+	"buildTimestamp": "202103290855",
+=======
+	"buildTimestamp": "202103220807",
+>>>>>>> aditya
 	"scmRevision": "",
 	"libraries": []
 }

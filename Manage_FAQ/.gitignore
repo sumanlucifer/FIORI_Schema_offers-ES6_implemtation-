@@ -7,7 +7,37 @@
 *.env1
 *.zip
 .vscode/
+<<<<<<< HEAD
+=======
+
 # auto generated wildcard
-Manage_FAQ/.env
+knpl-influencer-web/OrganizationSetup/.env2
 # auto generated wildcard
-cp/ContactPainter/.env12
+knpl-influencer-web/CompanySettings/.env3
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env5
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env6
+# auto generated wildcard
+knpl-influencer-web/OrganizationSetup/.env3
+# auto generated wildcard
+knpl-influencer-web/CompanySettings/.env4
+# auto generated wildcard
+knpl-influencer-web/Catelogue/.env2
+# auto generated wildcard
+knpl-influencer-web/DealerManagement/.env7
+# auto generated wildcard
+knpl-cp/ContactPainter/.env16
+# auto generated wildcard
+knpl-cp/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env3
+# auto generated wildcard
+complaint/Complaints/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env4
+# auto generated wildcard
+knpl/ContactPainter/.env2
+>>>>>>> aditya

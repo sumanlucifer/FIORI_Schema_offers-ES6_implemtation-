@@ -1,0 +1,9 @@
+<mvc:View controllerName="com.knpl.pragati.Complaints.controller.App" displayBlock="true" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+
+    <Shell>
+        <App busy="{appView>/busy}" busyIndicatorDelay="0" id="app">
+            <pages></pages>
+        </App>
+    </Shell>
+
+</mvc:View>

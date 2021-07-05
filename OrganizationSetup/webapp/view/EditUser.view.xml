@@ -39,24 +39,22 @@ floatingFooter="true"
                             value="{ 
                                   path : 'data>Email', 
                                   type : 'sap.ui.model.type.String', 
-                                  constraints : { 
-                                  		search : '\\S+@\\S+\\.\\S+' 
-                                	}
+                                  constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' }
                               }"
         				placeholder="Enter Email ..."
-        				valueStateText="Email must not be empty."/>
+        				valueStateText="Email must not be empty or Enter Valid Email-id"/>
 
         
 
 				<Label text="Mobile" labelFor="mobile" design="Bold" required="true" />
 		<Input id="mobile" 
-        	                type="Tel"
+        	                type="Number"
                             
                             value="{ 
                                   path : 'data>Mobile', 
                                   type : 'sap.ui.model.type.String', 
                                    constraints : { 
-                                      minLength : 1,
+                                      minLength : 10,
                                       maxLength: 10
                                       
                                   }
@@ -80,18 +78,16 @@ floatingFooter="true"
         				valueStateText="Country Code must not be empty."/>
 
             <Label text="Role" labelFor="role" design="Bold" required="true" />
-        	<ComboBox
+        	<Select
         
             id="role"
-           
             selectedKey="{data>RoleId}"
             
-        				placeholder="Select Role ..."
         				valueStateText="Role must not be empty."
 				 items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
-			</ComboBox>
+			</Select>
 		
 			</f:content>
 		</f:SimpleForm>

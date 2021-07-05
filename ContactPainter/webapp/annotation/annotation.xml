@@ -1,0 +1,154 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+
+    <edmx:Reference Uri="/KNPL_PAINTER_API/api/v2/odata.svc/$metadata">
+
+        <edmx:Include Alias="Metadata" Namespace="com.knpl.pragati.entity"/>
+
+    </edmx:Reference>
+
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity">
+            <Annotations Target="Metadata.PainterRequestModel/Id">
+                <Annotation Term="Common.Label" String="Request ID"/>
+            </Annotations>
+
+            <Annotations Target="Metadata.PainterRequestModel/PainterDetails/Name">
+                <Annotation Term="Common.Label" String="Painter Name"/>
+            </Annotations>
+
+            <Annotations Target="Metadata.PainterRequestModel/PainterMobile">
+                <Annotation Term="Common.Label" String="Painter Mobile Number"/>
+            </Annotations>
+
+            <Annotations Target="Metadata.PainterRequestModel/CreatedAt">
+                <Annotation Term="Common.Label" String="Created Date"/>
+            </Annotations>
+
+            <Annotations Target="Metadata.PainterRequestModel/RequestTypeDetails/RequestType">
+                <Annotation Term="Common.Label" String="Request Type"/>
+            </Annotations>
+
+            <Annotations Target="Metadata.PainterRequestModel/PainterDetails">
+                <Annotation Term="Common.Label" String="Painter Name"/>
+            </Annotations>
+            <Annotations Target="Metadata.PainterRequestModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Request ID"/>
+                            <PropertyValue Property="Value" Path="Id"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField" >
+                            <PropertyValue Property="Label" String="Request Type"/>
+                            <PropertyValue Property="Value" Path="RequestTypeDetails/RequestType"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Zone"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/ZoneId"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Division"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/DivisionId"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Depot"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/DepotId"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Language"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/Preference/Language/Language"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Updated By"/>
+                            <PropertyValue Property="Value" Path="AdminDetails/Name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- <Annotations Target="Metadata.PainterPointsHistoryModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Type"/>
+                            <PropertyValue Property="Value" Path="PointType"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Earned Points"/>
+                            <PropertyValue Property="Value" Path="RewardPoints"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Total Points"/>
+                            <PropertyValue Property="Value" Path="TotalPoints"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Creation Date"/>
+                            <PropertyValue Property="Value" Path="PointTransactionType"/>
+                        </Record>
+
+                    </Collection>
+                </Annotation>
+            </Annotations> -->
+            <!-- <Annotations Target="Metadata.PainterLearningPointHistoryModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Title"/>
+                            <PropertyValue Property="Value" Path="LearningDetails/Title"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                        </Record>
+                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Points Earned"/>
+                            <PropertyValue Property="Value" Path="RewardPoints"/>
+                        </Record>
+                      
+
+                    </Collection>
+                </Annotation>
+            </Annotations> -->
+            <!-- <Annotations Target="Metadata.PainterTrainingModel">
+                <Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Training Type"/>
+                            <PropertyValue Property="Value" Path="TrainingDetails/TrainingType/TrainingType"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Title"/>
+                            <PropertyValue Property="Value" Path="TrainingDetails/Title"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Date and Time"/>
+                            <PropertyValue Property="Value" Path="CreatedAt"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Points Earned"/>
+                            <PropertyValue Property="Value" Path="EarnedPoints"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Attendance"/>
+                            <PropertyValue Property="Value" Path="AttendedAt"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations> -->
+        </Schema>
+
+    </edmx:DataServices>
+
+</edmx:Edmx>

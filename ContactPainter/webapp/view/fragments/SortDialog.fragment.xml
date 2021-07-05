@@ -5,9 +5,10 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="{i18n>Name}" key="Name" />
-			<ViewSettingsItem text="{i18n>PainterId}" key="Id" />
+			<ViewSettingsItem text="{i18n>MembershipId}" key="MembershipCard" />
             <ViewSettingsItem text="{i18n>PrimaryMobile}" key="Mobile" />
-            <ViewSettingsItem text="{i18n>AgeGroup}" key="AgeGroup/AgeGroup" />
+            <!-- <ViewSettingsItem text="{i18n>AgeGroup}" key="AgeGroup/AgeGroup" /> -->
+            <ViewSettingsItem text="{i18n>PainterType}" key="PainterType/PainterType"/>
              <ViewSettingsItem text="{i18n>RegistrationDate}" key="CreatedAt" selected="true" />
             <ViewSettingsItem text="{i18n>RegistrationStatus}" key="RegistrationStatus" />
 		</sortItems>

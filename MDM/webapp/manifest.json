@@ -9,6 +9,20 @@
         "applicationVersion": {
             "version": "1.0.0"
         },
+  "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Manage",
+                    "action": "MDM",
+                    "title": "{{appTitle}}"
+                }
+            }
+        },
+
         "ach": "set-ach",
         "resources": "resources.json",
         "dataSources": {
@@ -21,8 +35,13 @@
                 "type": "OData",
                 "settings": {
                 "odataVersion": "2.0",
-                "localUri": "localService/metadata.xml"
+                "localUri": "localService/metadata.xml",
+                "annotations": ["localAnnotation"]
                 }
+            },
+            "localAnnotation" : {
+                "type": "ODataAnnotation",
+                "uri" : "annotations/annotation.xml"
             }
         }
     },
@@ -60,6 +79,7 @@
 			"id": "fcl"
 		},
 		"dependencies": {
+               "minUI5Version": "1.66.0",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
@@ -102,7 +122,6 @@
 					"name": "detailDetail",
 					"target": [
 						"master",
-						"detail",
 						"detailDetail"
 					]
 				}
@@ -118,7 +137,7 @@
 				},
 				"detailDetail": {
 					"viewName": "DetailDetail",
-					"controlAggregation": "endColumnPages"
+					"controlAggregation": "midColumnPages"
 				}
 			}
 		},

@@ -3,13 +3,15 @@ package-lock.json
 /dist/
 /.vscode/
 /*-content.zip/ 
+<<<<<<< HEAD
+=======
 
 # auto generated wildcard
 knpl1/MasterDataManagement/.env10
 # auto generated wildcard
 knpl1/ContactPainter/.env7
 # auto generated wildcard
-knpl-influencer-web/OrganizationSetup/.env1
+ZSampGWCnct/GatewaySrvTest/.env3
 # auto generated wildcard
 ZSampGWCnct/GatewaySrvTest/.env4
 # auto generated wildcard
@@ -32,19 +34,68 @@ ContactPainter/ContactPainter/.env12
 knpl-influencer-web/ContactPainter/.env10
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env14
-
 # auto generated wildcard
-knpl-influencer-web/Catelogue/.env1
+knpl-influencer-web/MasterDataManagement/.env15
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env11
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env16
 # auto generated wildcard
 knpl-influencer-web/MasterDataManagement/.env18
-
 # auto generated wildcard
-SchemeOffers/SchemeOffers/.env1
+knpl-influencer-web/ContactPainter/.env13
 # auto generated wildcard
-cp/ContactPainter/.env12
+knpl-influencer-web/ContactPainter/.env14
 # auto generated wildcard
-knpl-influencer-web/SchemeOffers/.env1
+knpl-influencer-web/ComplaintManagement/.env1
 # auto generated wildcard
-complains/Complaints/.env1
+Knpl-complaints/ComplaintManagement/.env1
+# auto generated wildcard
+Knpl-complaints/ContactPainter/.env14
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env15
+# auto generated wildcard
+Knpl-complaints/ComplaintManagement/.env2
+# auto generated wildcard
+knpl-complaints/ComplaintManagement/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env3
+# auto generated wildcard
+knpl-influencer-web/Complaints/.env1
+# auto generated wildcard
+knpl-cp/Complaints/.env1
+# auto generated wildcard
+knpl-cp/ContactPainter/.env14
+# auto generated wildcard
+knpl-complaints/ComplaintManagement/.env2
+# auto generated wildcard
+knpl-complaints/Complaints/.env3
+# auto generated wildcard
+knpl-cp/ContactPainter/.env15
+# auto generated wildcard
+knpl-cp/ContactPainter/.env16
+# auto generated wildcard
+ZSample/HTML5Module/.env1
+# auto generated wildcard
+ZSample/HTML5Module/.env2
+# auto generated wildcard
+ZSample/HTML5Module/.env3
+# auto generated wildcard
+knpl-cp/ContactPainter/.env1
+# auto generated wildcard
+complaints/Complaints/.env1
+# auto generated wildcard
+<<<<<<< HEAD
+knpl-influencer-web/OrganizationSetup/.env3
+=======
+knpl-influencer-web/ContactPainter/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env2
+# auto generated wildcard
+complaint/Complaints/.env2
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env4
+# auto generated wildcard
+knpl/ContactPainter/.env2
+>>>>>>> 8361af284e7f3caa603e3bae11caeec846689136
+>>>>>>> aditya

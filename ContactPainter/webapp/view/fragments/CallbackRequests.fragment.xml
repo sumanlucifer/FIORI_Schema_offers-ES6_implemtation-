@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:core="sap.ui.core">
+    <smartTable:SmartTable id="smrtCallback" editable="false" beforeRebindTable="onBeforeRebindCallbackRequest" entitySet="PainterRequestSet" tableType="ResponsiveTable" showRowCount="false" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="true" placeToolbarInTable="true" persistencyKey="PendingSmartTableKey" ignoredFields="AdminDetails/Name" ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+        <Table growing="true" growingThreshold="15">
+            <columns>
+                <Column >
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 4}'/>
+                    </customData>
+                    <Text text="{i18n>CreatedDate}"/>
+                </Column>
+                <Column hAlign="Center">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 9}'/>
+                    </customData>
+                    <Text text="{i18n>Status}"/>
+                </Column>
+                <Column hAlign="Center">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 10}'/>
+                    </customData>
+                    <Text text="{i18n>Remark}"/>
+                </Column>
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <!-- <Text text="{Id}"/> -->
+                        <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
+                        <Text text="{path: 'Status', formatter:'.formatter.CallbackReqTblStatus'}"/>
+                        <HBox>
+                            <!-- <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/> -->
+                            <Text text="{Remarks}" visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" />
+                            <Text text="NA" visible="{=${Remarks} === '' ||  ${Remarks} === null}"/>
+                        </HBox>
+                       
+                    </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </smartTable:SmartTable>
+
+    </core:FragmentDefinition>

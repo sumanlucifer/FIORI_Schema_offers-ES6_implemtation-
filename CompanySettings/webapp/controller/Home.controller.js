@@ -25,17 +25,20 @@ sap.ui.define([
         // shortcut for sap.ui.core.MessageType
         var MessageType = library.MessageType;
 
+        var DisclaimerVersion;
+
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.Home", {
             onInit: function () {
                 var oModel = this.getView().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/CompanySettingsSet(1)");
+                this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
-                this._formFragments = {};
 
-                // Set the initial form to be the display one
-                this._showFormFragment("Display");
+
+
+
+
 
                 // Attaches validation handlers
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -45,20 +48,28 @@ sap.ui.define([
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
 
-                var oViewModel = new JSONModel({
-                    about: "",
-                    disclaimer: "",
-                    callcenter: "",
+                // var oViewModel = new JSONModel({
+                //     AboutUs: "",
+                //     Disclaimer: "",
+                //     Callcenter: "",
+                // });
+                // this.getView().setModel(oViewModel, "oModelView");
+
+
+                var oLocaModel = new JSONModel({
+                    bEdit: false
                 });
-                this.getView().setModel(oViewModel, "oModelView");
+                this.getView().setModel(oLocaModel, "local");
+
 
 
 
             },
             handleEditPress: function () {
+                this.getView().getModel("local").setProperty("/bEdit", true);
 
                 //Clone the data
-                this._oSupplier = Object.assign({}, this.getView().bindElement("/CompanySettingsSet(1)"));
+                this._oSupplier = Object.assign({}, this.getView().bindElement("/MasterCompanySettingsSet(1)"));
                 this._toggleButtonsAndView(true);
 
 
@@ -66,36 +77,39 @@ sap.ui.define([
 
             handleCancelPress: function () {
 
+                this.getView().getModel("local").setProperty("/bEdit", false);
+
                 //Restore the data
                 var oModel = this.getView().getModel("data");
                 this.getView().setModel(oModel);
 
-                this.getView().bindElement("/CompanySettingsSet(1)");
+                this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
 
                 this._toggleButtonsAndView(false);
 
             },
             handleEmptyFields: function (oEvent) {
+                console.log("empty");
                 this.onDialogPress();
             },
 
             handleSavePress: function () {
-                // var about = this.getView().byId("aboutChange").getValue();
-                // var disclaimer = this.getView().byId("disclaimerChange").getValue();
-                // var callCenterHelpline = this.getView().byId("callCenterChange").getValue();
+
+                // console.log(DisclaimerVersion);
+
                 var oDataModel = this.getView().getModel();
                 var oView = this.getView();
-                var oModelView = oView.getModel("oModelView");
-                oModelView.setProperty("/busy", true);
+                // var oModelView = oView.getModel("oModelView");
+                // oModelView.setProperty("/busy", true);
                 var sEntityPath = oView.getElementBinding().getPath();
                 var oDataValue = oDataModel.getObject(sEntityPath);
                 //var oPrpReq = oModelView.getProperty("/prop2");
-              
-               
 
 
-                 var passedValidation = this.onValidate();
+
+
+                var passedValidation = this.onValidate();
 
                 if (passedValidation === false) {
                     //show an error message, rest of code will not execute.
@@ -103,17 +117,27 @@ sap.ui.define([
                     return false;
                 }
 
+
+
+
                 var oData = {
-                     AboutUs: oDataValue["AboutUs"],
+                    AboutUs: oDataValue["AboutUs"],
                     Disclaimer: oDataValue["Disclaimer"],
                     CallCenterHelpline: oDataValue["CallCenterHelpline"],
+                    DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
                 }
 
 
-                //console.log(oData)
-                var editSet = "/CompanySettingsSet(1)";
+                //console.log(oData);
+                var that = this;
+                var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, { success: this.onSuccessPress() });
+                oModel.update(editSet, oData, {
+                    success: function () {
+                        that.onSuccessPress()
+                    }
+                });
+
 
             },
             onSuccessPress: function (msg) {
@@ -122,6 +146,7 @@ sap.ui.define([
                 MessageToast.show(msg);
 
                 setTimeout(function () {
+                    this.getView().getModel("local").setProperty("/bEdit", false);
                     this._toggleButtonsAndView(false);
                 }.bind(this), 1000);
 
@@ -142,30 +167,7 @@ sap.ui.define([
                 this._showFormFragment(bEdit ? "Change" : "Display");
             },
 
-            _getFormFragment: function (sFragmentName) {
 
-                var pFormFragment = this._formFragments[sFragmentName],
-                    oView = this.getView();
-
-                if (!pFormFragment) {
-                    pFormFragment = Fragment.load({
-                        id: oView.getId(),
-                        name: "com.knpl.pragati.CompanySettings.view.fragment." + sFragmentName
-                    });
-                    this._formFragments[sFragmentName] = pFormFragment;
-                }
-
-                return pFormFragment;
-            },
-
-            _showFormFragment: function (sFragmentName) {
-                var oPage = this.byId("CompanySettings");
-
-                oPage.removeAllContent();
-                this._getFormFragment(sFragmentName).then(function (oVBox) {
-                    oPage.insertContent(oVBox);
-                });
-            },
 
             onValidate: function () {
                 // Create new validator instance
@@ -193,7 +195,9 @@ sap.ui.define([
                 }
 
                 this.oEscapePreventDialog.open();
-            },
+            }
+
+
 
         });
     });

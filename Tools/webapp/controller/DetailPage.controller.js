@@ -39,7 +39,7 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 error: this._onLoadError.bind(this)
             });
             this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.KNPL_TLS.uri;
-            this._setToolImageSrc(true);
+            this._setToolImageSrc();
         },
 
         _onLoadSuccess: function (oData) {
@@ -97,7 +97,9 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                 this.getView().addDependent(this._oDialog);
             }
             // @ts-ignore
-            sap.ui.getCore().byId("idToolImgUploader").setUploadUrl(this.sServiceURI + this._property + "/$value");
+            var oFileUploader = sap.ui.getCore().byId("idToolImgUploader");
+            oFileUploader.setUploadUrl(this.sServiceURI + this._property + "/$value");
+            oFileUploader.clear();
             this._oDialog.open();
         },
 
@@ -117,7 +119,6 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 				// @ts-ignore
 				oFileUploader.insertHeaderParameter(new sap.ui.unified.FileUploaderParameter({name: "slug", value: oFileUploader.getValue() }));
                 oFileUploader.setHttpRequestMethod("PUT");
-                oFileUploader.setSendXHR(true);
                 this.oViewModel.setProperty("/busy", true);
                 oFileUploader.upload();
                 this._oDialog.close();
@@ -127,16 +128,6 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
 				oFileUploader.clear();
 			});
         },
-
-        handleTypeMissmatch: function(oEvent) {
-			var aFileTypes = oEvent.getSource().getFileType();
-			// @ts-ignore
-			jQuery.each(aFileTypes, function(key, value) {aFileTypes[key] = "*." +  value;});
-			var sSupportedFileTypes = aFileTypes.join(", ");
-			MessageToast.show(this.oResourceBundle.getText("fileUploaderformatNotSupportedTxt1") + oEvent.getParameter("fileType") + " " +
-                                this.oResourceBundle.getText("fileUploaderformatNotSupportedTxt2") + " " +
-                                sSupportedFileTypes);
-		},
 
         handleUploadComplete: function (oEvent) {
             var iStatus = oEvent.getParameter("status");
@@ -150,23 +141,18 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             }
             this.oViewModel.setProperty("/busy", false);
             MessageToast.show(sMsg);
-            this._setToolImageSrc(false);
+            this._setToolImageSrc();
         },
 
-        _setToolImageSrc: function (bInitialLoad) {
-            if (bInitialLoad) {
-                var oToolImage = this.getView().byId("idToolImg");
-                oToolImage.setSrc(this.sServiceURI + this._property + "/$value");
-            } else {
-                var oToolImageContainer = this.getView().byId("idToolImgContainer");
-                oToolImageContainer.removeItem(0);
-                var oNewToolImage = new Avatar({
-                    displaySize: "L",
-                    displayShape: "Circle",
-                    src: this.sServiceURI + this._property + "/$value"
-                });
-                oToolImageContainer.insertItem(oNewToolImage);   
-            }      
+        _setToolImageSrc: function () {
+            var oToolImageContainer = this.getView().byId("idToolImgContainer");
+            oToolImageContainer.removeItem(0);
+            var oNewToolImage = new Avatar({
+                displaySize: "L",
+                displayShape: "Circle",
+                src: this.sServiceURI + this._property + "/$value"
+            });
+            oToolImageContainer.insertItem(oNewToolImage);
         }
     });
 });

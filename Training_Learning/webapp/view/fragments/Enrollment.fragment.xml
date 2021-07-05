@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <VBox width="100%">
+        <Table id="idTblEnrollment" width="auto" items="{ path: '/PainterTrainingSet', parameters : { expand : 'PainterDetails' }, sorter: { path: 'UpdatedAt', descending: true } }" noDataText="{i18n>EnrollmenttableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="20">
+            <headerToolbar>
+                <Toolbar>
+                    <ToolbarSpacer/>
+                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Enrollment}"></SearchField>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>colName}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colMembershipId}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colMobileNumber}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colEnrollmentDate}"/>
+                </Column>
+                <!-- <Column>
+                    <Text text="{i18n>colStartDate}"/>
+                </Column> -->
+                <Column>
+                    <Text text="{i18n>colEarnedPoint}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>colStatus}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{PainterDetails/Name}" titleActive="true"/>
+                        <Text text="{PainterDetails/MembershipCard}"/>
+                        <Text text="{PainterDetails/Mobile}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <!-- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/> -->
+                        <Text text="{EarnedPoints}"/>
+                        <ObjectStatus text="{path:'Status',formatter:'.fmtStatus'}" state="{= ${Status} === 'ENROLLED' ? 'Success' : 'None' }"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+    </VBox>
+</core:FragmentDefinition>

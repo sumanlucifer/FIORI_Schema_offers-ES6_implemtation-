@@ -7,6 +7,7 @@
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:vm="sap.ui.comp.variants"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:semantic="sap.f.semantic">
 
 <f:DynamicPage headerExpanded="true">
@@ -14,7 +15,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Dealers"/>
+                    <Title text="Catalogues"/>
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
@@ -22,41 +23,41 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onResetFilters" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="Search" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idNameInput" placeholder="Search" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Name}" />
-                                        </suggestionItems>
-                                    </Input>
+                               <fb:control>
+                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idEmailInput" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Email}" />
-                                        </suggestionItems>
-                                    </Input>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Creation Date" label="Creation Date" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                               <fb:control>
+                                    <DatePicker id="idCreationDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy" placeholder="{i18n>creationDateFilterPlaceholder}"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Customer Category" label="Customer Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{CustomerCategory}" />
-                                        </suggestionItems>
-                                    </Input>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Title" label="Title" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                 <fb:control>
+                                    <Input id="idTitleInput" data:filterName="Title" value="{ViewModel>/filterBar/title}" placeholder="{i18n>titleFilterPlaceholder}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Category" label="Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                 <fb:control>
+                                    <Input id="idCategory" data:filterName="Category" value="{ViewModel>/filterBar/category}" placeholder="{i18n>categoryFilterPlaceholder}" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Created By" label="Created By" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Depot}" />
-                                        </suggestionItems>
+                                    <Input
+                                        id="idCreatedByInput"
+                                        data:filterName="Created By"
+                                        value="{Viewmodel>/filterBar/createdBy}"
+                                        placeholder="{i18n>createdByFilterPlaceholder}"
+                                        showSuggestion="false"
+                                        autocomplete="false"
+                                        showValueHelp="false"
+						
+                                       >
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -68,68 +69,87 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCatlogueTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idCatlogueTable" width="auto" items="{path: '/MasterProductCatalogueSet', parameters : {expand:'CreatedByDetails,ProductCategory'},sorter:{
+                    path: 'Id', 
+                    descending: true
+                } }" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
+                        <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
                         <ToolbarSpacer />
                         <!-- <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch" placeholder="{i18n>worklistSearchTooltip}">
                             <layoutData>
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>
                         </SearchField> -->
+                        <Button text="Add Catalogue" press="onPressAdd" />
                         <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                         <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" />
-                        <!-- <Button text="Add Dealer" type="Emphasized" icon="sap-icon://add-employee" iconFirst="true"/> -->
+                        
                     </OverflowToolbar>
                 </headerToolbar>
 
                 <columns>
                     <Column>
-                        <Text text="{i18n>name}"/>
+                        <Text text="{i18n>title}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>plantCode}"/>
+                        <Text text="{i18n>creationDate}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>depot}"/>
+                        <Text text="{i18n>createdBy}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>salesGroupID}"/>
+                        <Text text="{i18n>view}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>salesGroupName}"/>
+                        <Text text="{i18n>download}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>customerName}"/>
+                        <Text text="{i18n>action}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>fiscalYear}"/>
+                    <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                        <Text text="{i18n>GenericEdit}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>customerClass}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>customerCategory}"/>
-                    </Column>
+                            
+                   
+                   
                     
                 </columns>
 
                 <items>
-                    <ColumnListItem type="Navigation" press="onListItemPress">
+                    <ColumnListItem type="Navigation" press="onPress">
                         <!-- <dependents>
                             <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" />
                         </dependents> -->
                         <cells>
-                            <ObjectIdentifier title="{DealerName}" titleActive="true"/>
-                            <Text text="{PlantCode}"/>
-                            <Text text="{Depot}"/>
-                            <Text text="{SalesGroupId}"/>
-                            <Text text="{SalesGroupName}"/>
-                            <Text text="{CustomerId}"/>
-                            <Text text="{FiscalYear}"/>
-                            <Text text="{CustomerClass}"/>
-                            <Text text="{CustomerCategory}"/>
+                            <ObjectIdentifier title="{Title}" />
+                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                            <Text text="{CreatedByDetails/Name}"/>
+                            <Text text="0"/>
+                            <Text text="0"/>
+                            <!-- <ObjectStatus xmlns="sap.m"
+                            state="{= ${Status} === true? 'Success' : undefined || ${Status} === false? 'Error' : undefined }"
+                
+                               text="{
+                                    path: 'Status',
+                                    formatter: '.formatter.status'
+                                }"
+                                
+                                /> -->
+                                <Button 
+                                type="Transparent"
+                                text="{path: 'Status',
+                                    formatter: '.formatter.status'}"
+                                data:remarks="{Status}" press="onPressStatus"/>
+                            <!-- <Text 
+                            text="{
+                                    path: 'Status',
+                                    formatter: '.formatter.status'
+                                }"/> -->
+                            
+                            <Button icon="sap-icon://edit" type="Transparent" visible="{= ${Status} === true}" press="onPressEdit" tooltip="Edit"/>
+                            
                             
                         </cells>
                     </ColumnListItem>

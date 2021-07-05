@@ -99,6 +99,17 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
             });
         },
 
+        onResetFilters: function () {
+            var oModel = this.getViewModel("ViewModel");
+            oModel.setProperty("/filterBar", {
+                search: "",
+                createdAt: "",
+                title: "",
+                createdBy: ""
+            });
+            this.getView().byId("idCreatedByInput").setValue("");
+        },
+
         onSearch: function (oEvent) {
             var aFilterControls = oEvent.getParameter("selectionSet");
             var aFilters = [], sValue;
@@ -110,28 +121,33 @@ function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, D
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
                             aFilters.push(new Filter([
-                                new Filter("Title", FilterOperator.Contains, sValue),
-                                new Filter("Description", FilterOperator.Contains, sValue),
-                                new Filter("Url", FilterOperator.Contains, sValue)
+                                new Filter({ path: "Title", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                                new Filter({ path: "Description", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }),
+                                new Filter({ path: "Url", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false })
                             ], false));
                         }
                         break;
                     case "Creation Date": 
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("CreatedAt", FilterOperator.LE, sValue + "T23:59:59"));
+                            aFilters.push(new Filter({
+                                path: "CreatedAt",
+                                operator: FilterOperator.BT,
+                                value1: sValue + "T00:00:00",
+                                value2: sValue + "T23:59:59"
+                            }));
                         }
                         break;
                     case "Title":
                         sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("Title", FilterOperator.Contains, sValue));
+                            aFilters.push(new Filter({ path: "Title", operator: sap.ui.model.FilterOperator.Contains, value1: sValue.trim(), caseSensitive: false }));
                         }
                         break;
                     case "Created By":
-                        sValue = oControl.getSelectedKey();
+                        sValue = oControl.getValue();
                         if (sValue && sValue !== "") {
-                            aFilters.push(new Filter("CreatedBy", FilterOperator.EQ, sValue));
+                            aFilters.push(new Filter("CreatedByDetails/Name", FilterOperator.Contains, sValue));
                         }
                         break;
                 }

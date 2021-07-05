@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <IconTabBar expandable="false" expanded="true" >
+        <items>
+            <IconTabFilter text="Training">
+                <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Training" type="XML"/>
+            </IconTabFilter>
+            <IconTabFilter text="Online Training">
+                <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.OnlineTraining" type="XML"/>
+            </IconTabFilter>
+        </items>
+    </IconTabBar>
+
+</core:FragmentDefinition>

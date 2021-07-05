@@ -4,8 +4,8 @@
 	<ViewSettingsDialog
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Name" key="Name" selected="true" />
-			<ViewSettingsItem text="Email" key="Email" />
+			<ViewSettingsItem text="Dealer Name" key="DealerName" selected="true" />
+			<!-- <ViewSettingsItem text="Email" key="Email" /> -->
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

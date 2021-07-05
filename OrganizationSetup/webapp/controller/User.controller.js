@@ -68,6 +68,8 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("EditUser").attachPatternMatched(this._onObjectMatched, this);
 
+                
+
             },
             onAfterRendering: function () {
                 this.onClearPress();
@@ -111,15 +113,16 @@ sap.ui.define([
 
                 this.onClearPress();
 
-                // var oMessage = new Message({
-                //     message: msg,
-                //     type: MessageType.Success,
-                //     target: "/Dummy",
-                //     processor: this.getView().getModel()
-                // });
-                // sap.ui.getCore().getMessageManager().addMessages(oMessage);
-                var msg = 'Saved Successfully!';
+                if(msg=="Successfully created!"){
+                  this.onClearInputFields();  
+                }
+
+                
+               // var msg = 'Saved Successfully!';
                 MessageToast.show(msg);
+                
+                 var oModel = this.getView().getModel("data");
+                oModel.refresh(true);
 
 
 
@@ -165,6 +168,9 @@ sap.ui.define([
             },
 
             add: function () {
+
+                
+                
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
 
@@ -238,15 +244,30 @@ sap.ui.define([
                 sap.ui.getCore().getMessageManager().removeAllMessages();
 
             },
-            onCancelPress: function () {
+            onCancelPress: function (oEvent) {
 
+                
 
+             
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter.navTo("RouteHome");
 
                 var oModel = this.getView().getModel("data");
-                oModel.refresh();
+                oModel.refresh(true);
+
+            },
+             onCancelPressForAdd: function (oEvent) {
+
+                this.onClearInputFields();
+
+             
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                oRouter.navTo("RouteHome");
+
+                var oModel = this.getView().getModel("data");
+                oModel.refresh(true);
 
             },
             onValidateEdit: function () {
@@ -294,6 +315,25 @@ sap.ui.define([
                 // else {
                 //     this.setValueState(sap.ui.core.ValueState.Success);
                 // }
+            },
+            onClearInputFields: function () {
+                 var inputName=this.getView().byId("name");
+              inputName.setValue("");
+              inputName.setValueState(sap.ui.core.ValueState.None);
+
+              var inputEmail=this.getView().byId("email");
+              inputEmail.setValue("");
+              inputEmail.setValueState(sap.ui.core.ValueState.None);
+
+              var inputMobile=this.getView().byId("mobile");
+              inputMobile.setValue("");
+              inputMobile.setValueState(sap.ui.core.ValueState.None);
+
+              var inputMobile=this.getView().byId("role");
+              inputMobile.setValue("");
+              inputMobile.setValueState(sap.ui.core.ValueState.None);
+
+               
             }
 
 

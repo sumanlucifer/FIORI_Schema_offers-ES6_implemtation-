@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form">
+	<Dialog showHeader="false" afterClose="onAddReferralClose">
+		<content>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout"
+				labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0"
+				emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<Title level="H3" titleStyle="H3" text="{i18n>ReferAPainter}"/>
+					<Label text="{i18n>PainterName}" />
+					<Input required="true"  value="{ path:'oModelControl2>/AddReferral/ReferralName' }"/>
+                    <Label   text="{i18n>PainterMobileNo}" />
+					<Input fieldGroupIds="Mobile" change="onPrimaryNoChang" valueStateText="Kindly enter a mobile no with 10 digits." required="true" type="Number" value="{path:'oModelControl2>/AddReferral/ReferralMobile' }" />
+                    <Label text="{i18n>PainterEmail} ({i18n>Optional})" />
+					<Input value="{ path : 'oModelControl2>/AddReferral/ReferralEmail' }" />
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Close" type="Ghost" press="onAddReferralClose"/>
+			
+		</beginButton>
+		<endButton>
+        <Button type="Emphasized" text="Submit" press="onPressSubmitReferral"/>
+			
+		</endButton>
+	
+	</Dialog>
+</core:FragmentDefinition>

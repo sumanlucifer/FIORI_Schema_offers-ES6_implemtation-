@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>Attachment}" titleAlignment="Center" afterClose="onDialogClose">
+        <content>
+            <Carousel class="sapUiContentPadding" loop="true">
+                <Image alt="No Data Found" src="{path:'__metadata/media_src' , formatter: '.formatter.formatURL' }"></Image>
+            </Carousel>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

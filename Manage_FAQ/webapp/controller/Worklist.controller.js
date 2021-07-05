@@ -38,17 +38,52 @@ sap.ui.define([
                 shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
                 tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
-                tableBusyDelay: 0
+                tableBusyDelay: 0,
+                filterBar: {
+                    FAQCategoryId: "",
+                    Search: ""
+                }
             });
             this.setModel(oViewModel, "worklistView");
 
             // Make sure, busy indication is showing immediately so there is no
             // break after the busy indication for loading the view's meta data is
             // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
+            var dat = this;
             oTable.attachEventOnce("updateFinished", function () {
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
+
+                //Fetch loggedIn User ID to disable delete button for loggedIn user
+                var oModel = dat.getModel();
+                oModel.callFunction("/GetLoggedInAdmin", {
+                    method: "GET",
+                    success: function (data) {
+                        oViewModel.setProperty("/loggedUserId", data.results[0].Id);
+                        oViewModel.setProperty("/loggedUserRoleId", data.results[0].RoleId);
+                    }
+                });
             });
+            this._addSearchFieldAssociationToFB();
+        },
+
+        _addSearchFieldAssociationToFB: function () {
+            let oFilterBar = this.getView().byId("filterbar");
+            let oSearchField = oFilterBar.getBasicSearch();
+            var oBasicSearch;
+            var othat = this;
+            if (!oSearchField) {
+                // @ts-ignore
+                oBasicSearch = new sap.m.SearchField({
+                    value: "{worklistView>/filterBar/Search}",
+                    showSearchButton: true,
+                    search: othat.onSearch.bind(othat),
+                });
+            } else {
+                oSearchField = null;
+            }
+
+            oFilterBar.setBasicSearch(oBasicSearch);
         },
 
         /* =========================================================== */
@@ -67,7 +102,8 @@ sap.ui.define([
         onUpdateFinished: function (oEvent) {
             // // update the worklist's object counter after the table update
             var sTitle,
-                oTable = oEvent.getSource(),
+                // oTable = oEvent.getSource(),
+                oTable = this.getView().byId("table"),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty
@@ -110,6 +146,22 @@ sap.ui.define([
             // })
         },
 
+        onReset: function () {
+            this._ResetFilterBar();
+        },
+        _ResetFilterBar: function () {
+            var aCurrentFilterValues = [];
+            var aResetProp = {
+                FAQCategoryId: "",
+                searchBar: ""
+            };
+            var oViewModel = this.getView().getModel("worklistView");
+            oViewModel.setProperty("/filterBar", aResetProp);
+            var oTable = this.byId("table");
+            var oBinding = oTable.getBinding("items");
+            oBinding.filter([]);
+        },
+
         /**
          * Event handler when a table item gets pressed
          * @param {sap.ui.base.Event} oEvent the table selectionChange event
@@ -130,44 +182,109 @@ sap.ui.define([
             history.go(-1);
         },
 
-
         onSearch: function (oEvent) {
-            // if (oEvent.getParameters().refreshButtonPressed) {
-            //     // Search field's 'refresh' button has been pressed.
-            //     // This is visible if you select any master list item.
-            //     // In this case no new search is triggered, we only
-            //     // refresh the list binding.
-            //     this.onRefresh();
-            // } else {
-            //     var aTableSearchState = [];
-            //     var sQuery = oEvent.getParameter("query");
+            var aCurrentFilterValues = [];
+            var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
+            var aFlaEmpty = true;
+            debugger;
+            for (let prop in oViewFilter) {
+                if (oViewFilter[prop]) {
+                    console.log(oViewFilter[prop]);
 
-            //     if (sQuery && sQuery.length > 0) {
-            //         aTableSearchState = [new Filter("Id", FilterOperator.Contains, sQuery)];
-            //     }
-            //     this._applySearch(aTableSearchState);
-            // }
+                    if (prop === "FAQCategoryId") {
 
-            var aFilters = this.getFiltersfromFB(),
-                oTable = this.getView().byId("table");
-            oTable.getBinding("items").filter(aFilters);
-            if (aFilters.length !== 0) {
-                if (aFilters[0].sPath === "FAQCategoryId") {
-                    this.getModel("worklistView").setProperty("/FAQCategoryId", aFilters[0].oValue1);
-                } else {
-                    this.getModel("worklistView").setProperty("/FAQCategoryId", null);
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(prop, FilterOperator.EQ, oViewFilter[prop])
+                        );
+                    } else if (prop === "Search") {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(
+                                [
+                                    new Filter(
+                                        "tolower(Question)",
+                                        FilterOperator.Contains,
+                                        "'" +
+                                        oViewFilter[prop]
+                                            .trim()
+                                            .toLowerCase()
+                                            .replace("'", "''") +
+                                        "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(Answer)",
+                                        FilterOperator.Contains,
+                                        "'" +
+                                        oViewFilter[prop]
+                                            .trim()
+                                            .toLowerCase()
+                                            .replace("'", "''") +
+                                        "'"
+                                    ),
+                                    new Filter(
+                                        "tolower(FAQCategory/FAQCategory)",
+                                        FilterOperator.Contains,
+                                        "'" +
+                                        oViewFilter[prop]
+                                            .trim()
+                                            .toLowerCase()
+                                            .replace("'", "''") +
+                                        "'"
+                                    ),
+                                ],
+                                false
+                            )
+                        );
+                    } else {
+                        aFlaEmpty = false;
+                        aCurrentFilterValues.push(
+                            new Filter(
+                                prop,
+                                FilterOperator.Contains,
+                                oViewFilter[prop].trim()
+                            )
+                        );
+                    }
                 }
+            }
 
-                this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+            var endFilter = new Filter({
+                filters: aCurrentFilterValues,
+                and: true,
+            });
+
+            var oTable = this.getView().byId("table");
+            var oBinding = oTable.getBinding("items");
+
+            if (!aFlaEmpty) {
+                oBinding.filter(endFilter);
             } else {
-                this.getModel("worklistView").setProperty("/FAQCategoryId", null);
+                oBinding.filter([]);
             }
         },
+
+        // onSearch: function (oEvent) {
+        //     var aFilters = this.getFiltersfromFB(),
+        //         oTable = this.getView().byId("table");
+        //     oTable.getBinding("items").filter(aFilters);
+        //     if (aFilters.length !== 0) {
+        //         if (aFilters[0].sPath === "FAQCategoryId") {
+        //             this.getModel("worklistView").setProperty("/FAQCategoryId", aFilters[0].oValue1);
+        //         } else {
+        //             this.getModel("worklistView").setProperty("/FAQCategoryId", null);
+        //         }
+
+        //         this.getModel("worklistView").setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+        //     } else {
+        //         this.getModel("worklistView").setProperty("/FAQCategoryId", null);
+        //     }
+        // },
 
         getFiltersfromFB: function () {
             var oFBCtrl = this.getView().byId("filterbar"),
                 aFilters = [];
-
+            debugger;
             oFBCtrl.getAllFilterItems().forEach(function (ele) {
                 if (ele.getControl().getSelectedKey()) {
                     aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, ele.getControl().getSelectedKey()));
@@ -183,10 +300,10 @@ sap.ui.define([
             this.getRouter().navTo("createObject");
         },
 
-        onRefreshView: function () {
-            var oModel = this.getModel();
-            oModel.refresh(true);
-        },
+        // onRefreshView: function () {
+        //     var oModel = this.getModel();
+        //     oModel.refresh(true);
+        // },
 
         onEdit: function (oEvent) {
             this._showObject(oEvent.getSource());
@@ -196,10 +313,8 @@ sap.ui.define([
             var sPath = oEvent.getSource().getBindingContext().getPath();
 
             function onYes() {
-                var data = this.getModel().getData(sPath);
-                this.getModel().update(sPath, {
-                    FAQQuestion: data.FAQQuestion,
-                    FAQAnswer: data.FAQAnswer,
+                var data = sPath + "/IsArchived";
+                this.getModel().update(data, {
                     IsArchived: true
                 }, {
                     success: this.showToast.bind(this, "MSG_SUCCESS_FAQ_REMOVE")

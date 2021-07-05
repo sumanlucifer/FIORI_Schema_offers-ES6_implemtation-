@@ -21,13 +21,20 @@
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
-          "localUri": "localService/metadata.xml"
+          "localUri": "localService/metadata.xml",
+           "annotations": [ 
+                        "annotation0"   ] 
         }
       },
       "uploadData": {
         "uri": "model/uploaditems.json",
         "type": "JSON"
-      }
+      },
+      "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotation/annotation.xml"
+        }
+
     },
     "crossNavigation": {
       "inbounds": {
@@ -44,6 +51,10 @@
         }
       }
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
   },
   "sap.ui": {
     "technology": "UI5",
@@ -100,10 +111,18 @@
         }
       },
       "uploadModel": {
-        "type": "sap.ui.model.json.JSONModel",
-        "dataSource": "uploadData"
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
+    "services": {
+			"ShellUIService": {
+				"factoryName": "sap.ushell.ui5service.ShellUIService",
+				"lazy": false,
+				"settings": {
+					"setTitle": "auto"
+				}
+			}
+	},
     "resources": {
       "css": [
         {
@@ -129,7 +148,7 @@
         },
         {
           "name": "RouteAddEditP",
-          "pattern": "PainterManage/{mode}/{id}",
+          "pattern": "PainterAdd",
           "target": ["TargetRouteAddEditP"]
         },
         {

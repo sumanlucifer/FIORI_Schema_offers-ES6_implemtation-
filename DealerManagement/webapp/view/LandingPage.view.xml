@@ -19,44 +19,37 @@
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true"> 
+                    <fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true" > 
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Dealer Name" label="Dealer Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="PlantCode" label="Plant Code" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idNameInput" placeholder="Dealer Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Name}" />
-                                        </suggestionItems>
-                                    </Input>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Sales Group Name" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idEmailInput" placeholder="Sales Group Name" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Email}" />
-                                        </suggestionItems>
-                                    </Input>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Customer Category" label="Customer Category" visibleInFilterBar="true" class="searchFieldLabelHidden">
-                                <fb:control>
-                                    <Input id="idMobileInput" placeholder="Customer Category" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{CustomerCategory}" />
-                                        </suggestionItems>
+                                    <Input id="idPlantCode" placeholder="" showSuggestion="false" showValueHelp="false">
+                                       
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="Depot" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <Input id="idRegistrationStatus" placeholder="Depot" showSuggestion="true" showValueHelp="true" suggestionItems="{/PainterSet}">
-                                        <suggestionItems>
-                                            <core:Item text="{Depot}" />
-                                        </suggestionItems>
+                                    <Input id="idDepot" placeholder="" showSuggestion="false" showValueHelp="false" >
+                                        
                                     </Input>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="SalesGroupName" label="Sales Group Name" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input id="idSalesGroupName" placeholder="" showSuggestion="false" showValueHelp="false" >
+                                       
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="FiscalYear" label="Fiscal Year" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <Input id="idFiscalYear" placeholder="" showSuggestion="false" showValueHelp="false"  >
+                                        
+                                    </Input>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
@@ -65,7 +58,9 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'Painter'}}" noDataText="No Data" growing="true" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'DealerSalesDetails/SalesGroup'},sorter : {
+            path : 'DealerName' 
+         }}" noDataText="No Data" growing="true" growingThreshold="15" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
@@ -85,6 +80,9 @@
                     <Column>
                         <Text text="{i18n>name}"/>
                     </Column>
+                     <Column>
+                        <Text text="{i18n>code}"/>
+                    </Column>
                     <Column>
                         <Text text="{i18n>plantCode}"/>
                     </Column>
@@ -97,15 +95,11 @@
                     <Column>
                         <Text text="{i18n>salesGroupName}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>customerName}"/>
-                    </Column>
+                    
                     <Column>
                         <Text text="{i18n>fiscalYear}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>customerClass}"/>
-                    </Column>
+                    
                     <Column>
                         <Text text="{i18n>customerCategory}"/>
                     </Column>
@@ -119,13 +113,14 @@
                         </dependents>
                         <cells>
                             <ObjectIdentifier title="{DealerName}" titleActive="true"/>
+                             <Text text="{Id}"/>
                             <Text text="{PlantCode}"/>
-                            <Text text="{Depot}"/>
-                            <Text text="{SalesGroupId}"/>
-                            <Text text="{SalesGroupName}"/>
-                            <Text text="{CustomerId}"/>
+                            <Text text="{DealerSalesDetails/Depot}"/>
+                            <Text text="{DealerSalesDetails/SalesGroup/Id}"/>
+                            <Text text="{DealerSalesDetails/SalesGroup/Description}"/>
+                            
                             <Text text="{FiscalYear}"/>
-                            <Text text="{CustomerClass}"/>
+                            
                             <Text text="{CustomerCategory}"/>
                             
                         </cells>

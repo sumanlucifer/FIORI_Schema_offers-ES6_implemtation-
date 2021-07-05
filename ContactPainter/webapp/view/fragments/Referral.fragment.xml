@@ -1,50 +1,49 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table width="auto" items="{path: 'oModelView>/FamilyDetails'}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Referral" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="15" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                  
-                   
                     <ToolbarSpacer/>
-                   <Button icon="sap-icon://sort" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://filter" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://action-settings" type="Transparent" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
+                    <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
+                    <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Emphasized" press="onPressAddReferral" />
                 </Toolbar>
             </headerToolbar>
 
             <columns>
                 <Column>
-                    <Text text="Name"/>
+                    <Text text="{i18n>Name}"/>
                 </Column>
                 <Column>
-                    <Text text="Referral Mobile Number"/>
+                    <Text text="{i18n>ReferralMobileNumber}"/>
                 </Column>
                 <Column>
-                    <Text text="Email Id"/>
+                    <Text text="{i18n>EmailId}"/>
                 </Column>
                 <Column>
-                    <Text text="Date and Time"/>
+                    <Text text="{i18n>DateAndTime}"/>
                 </Column>
                 <Column>
-                    <Text text="Onboarding Status"/>
+                    <Text text="{i18n>OnBoardingStatus}"/>
                 </Column>
                 <Column>
-                    <Text text="Points Received"/>
+                    <Text text="{i18n>PointsReceived}"/>
                 </Column>
             </columns>
 
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Input value="{oModelView>RelType}"/>
-                        <Input value="{oModelView>Name}"/>
-                        <Input value="{oModelView>ContactNumber}"/>
-                        <Button icon="sap-icon://edit" type="Transparent" press="onPressEditRel"></Button>
-                        <Button icon="sap-icon://delete" type="Transparent" press="onPressRemoveRel"></Button>
+                        <Text text="{ReferralName}"/>
+                        <Text text="{ReferralMobile}"/>
+                        <Text text="{ReferralEmail}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{path:'ReferralStatus',formatter:'.fmtLowerCase'}"/>
+                        <Text text="{= ${ReferralStatus}==='PENDING'? '-' : ${RewardPoints} }"/>
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
+
 
     </VBox>
 </core:FragmentDefinition>
