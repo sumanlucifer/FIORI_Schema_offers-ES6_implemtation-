@@ -204,9 +204,9 @@ sap.ui.define([
 				IsArchived: false
             });
             oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
-            // oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
-            // oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
-            // oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
 
 		},
 
