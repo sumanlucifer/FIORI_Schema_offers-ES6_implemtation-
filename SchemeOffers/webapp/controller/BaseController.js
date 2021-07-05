@@ -3240,6 +3240,9 @@ sap.ui.define(
                     var aHashArcheType = oModelCtrlData["Hash"]["ArcheType"],
                         aHashPainterType = oModelCtrlData["Hash"]["PainterType"],
                         aHashPotential = oModelCtrlData["Hash"]["Potential"];
+                    var aHashZone = oModelCtrlData["Hash"]["Zone"],
+                        aHashDivision = oModelCtrlData["Hash"]["Division"],
+                        aHashDepot = oModelCtrlData["Hash"]["Depot"];
 
                     var aDataPCat1 = [],
                         aDataPCat2 = [],
@@ -3260,6 +3263,9 @@ sap.ui.define(
                     var aDataArcheType = [],
                         aDataPainterType = [],
                         aDataPotential = [];
+                    var aDataZone = [],
+                        aDataDepot = [],
+                        aDataDivision = [];
                     if (oModelControl.getProperty("/mode") === "edit") {
                         aDataPCat1 =
                             oModelViewData["OfferApplicableProductCategory"]["results"];
@@ -3286,25 +3292,40 @@ sap.ui.define(
                         aDataArcheType = oModelViewData["OfferPainterArcheType"]["results"];
                         aDataPainterType = oModelViewData["OfferPainterType"]["results"];
                         aDataPotential = oModelViewData["OfferPainterPotential"]["results"];
+                        aDataZone = oModelViewData["OfferZone"]["results"];
+                        aDataDivision = oModelViewData["OfferDivision"]["results"];
+                        aDataDepot = oModelViewData["OfferDepot"]["results"];
                     }
 
                     // setting the values of zone
                     oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
-                        return {
-                            ZoneId: elem,
-                        };
+                        if (aHashZone[elem]) {
+                            return aDataZone[aHashZone[elem]];
+                        } else {
+                            return {
+                                ZoneId: elem,
+                            };
+                        }
                     });
                     oPayLoad["OfferDivision"] = sMultiKeys["Divisions"].map(function (
                         elem
                     ) {
-                        return {
-                            DivisionId: elem,
-                        };
+                        if (aHashDivision[elem]) {
+                            return aDataDivision[aHashDivision[elem]];
+                        } else {
+                            return {
+                                DivisionId: elem,
+                            };
+                        }
                     });
                     oPayLoad["OfferDepot"] = sMultiKeys["Depots"].map(function (elem) {
-                        return {
-                            DepotId: elem["DepotId"],
-                        };
+                        if (aHashDepot[elem["DepotId"]]) {
+                                return aDataDepot[aHashDepot[elem["DepotId"]]];
+                            } else {
+                                return {
+                                     DepotId: elem["DepotId"],
+                                };
+                            }
                     });
 
                     oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
@@ -3375,7 +3396,7 @@ sap.ui.define(
                     );
                     oPayLoad["OfferPainterPotential"] = sMultiKeys["Potential"].map(
                         function (elem) {
-                           
+
                             if (aHashPotential[elem]) {
                                 return aDataPotential[aHashPotential[elem]];
                             } else {

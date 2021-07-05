@@ -805,6 +805,9 @@ sap.ui.define(
                     var aHashArcheType = {},
                         aHashPainterType = {},
                         aHashPotential = {};
+                    var aHashZone = {},
+                        aHashDivision = {},
+                        aHashDepot = {};
                     var aDataPCat1 = oData["OfferApplicableProductCategory"]["results"];
                     var aDataPCat2 = oData["OfferBuyerProductCategory"]["results"];
                     var aDataPCat3 = oData["OfferNonBuyerProductCategory"]["results"];
@@ -824,6 +827,10 @@ sap.ui.define(
                     var aDataArcheType = oData["OfferPainterArcheType"]["results"],
                         aDataPainterType = oData["OfferPainterType"]["results"],
                         aDataPotential = oData["OfferPainterPotential"]["results"];
+                    var aDataZone = oData["OfferZone"]["results"],
+                        aDataDivision = oData["OfferDivision"]["results"],
+                        aDataDepot = oData["OfferDepot"]["results"];
+
 
 
                     for (var a in aDataPCat1) {
@@ -906,10 +913,26 @@ sap.ui.define(
                     }
                     oModelControl.setProperty("/Hash/PainterType", aHashPainterType);
 
-                      for (var e in aDataPotential) {
+                    for (var e in aDataPotential) {
                         aHashPotential[aDataPotential[e]["PotentialId"]] = e;
                     }
-                    oModelControl.setProperty("/Hash/Potential", aHashPotential);
+                    //zone division depot
+                    
+                    for (var f in aDataZone) {
+                        aHashZone[aDataZone[f]["ZoneId"]] = f;
+                    }
+                    oModelControl.setProperty("/Hash/Zone", aHashZone);
+
+                    for (var f in aDataDivision) {
+                        aHashDivision[aDataDivision[f]["DivisionId"]] = f;
+                    }
+                    oModelControl.setProperty("/Hash/Division", aHashDivision);
+
+                    for (var f in aDataDepot) {
+                        aHashDepot[aDataDepot[f]["DepotId"]] = f;
+                    }
+                    oModelControl.setProperty("/Hash/Depot", aHashDepot);
+                    console.log(oModelControl)
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1202,7 +1225,13 @@ sap.ui.define(
                             AppPack1: {},
                             AppPack2: {},
                             AppPack3: {},
-                            AppPack4: {}
+                            AppPack4: {},
+                            Potential: {},
+                            PainterType: {},
+                            ArcheType: {},
+                            Zone: {},
+                            Division: {},
+                            Depot: {}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
@@ -1791,7 +1820,7 @@ sap.ui.define(
                         oView.byId("PainteTable1").rebindTable();
                     } else if (sKey == "2") {
                         oView.byId("PainteTable2").rebindTable();
-                    }else if (sKey == "3") {
+                    } else if (sKey == "3") {
                         oView.byId("OfferHistory").rebindTable();
                     }
                 },
@@ -1860,7 +1889,7 @@ sap.ui.define(
                         })
                     );
                 },
-                   onBeforeBindOfferHistory: function (oEvent) {
+                onBeforeBindOfferHistory: function (oEvent) {
                     var oView = this.getView();
                     var sOfferId = oView
                         .getModel("oModelControl3")
@@ -1874,7 +1903,7 @@ sap.ui.define(
                     );
                     aFilter.push(aFilter2);
                     var oBindingParams = oEvent.getParameter("bindingParams");
-                 
+
                     oBindingParams.filters.push(
                         new Filter({
                             filters: aFilter,
