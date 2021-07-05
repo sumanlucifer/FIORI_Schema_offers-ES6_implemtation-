@@ -159,7 +159,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <!-- <uxap:ObjectPageSection id="offerssection" titleUppercase="false" title="{i18n>Offers}">
+             <uxap:ObjectPageSection id="offerssection" titleUppercase="false" title="{i18n>Offers}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -167,7 +167,7 @@
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
-            </uxap:ObjectPageSection> -->
+            </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
             <Bar>
