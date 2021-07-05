@@ -77,6 +77,9 @@
                     <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable2" type="XML"/>
                     </IconTabFilter>
+                           <IconTabFilter text="{i18n>History}" key="3">
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.OfferHistory" type="XML"/>
+                    </IconTabFilter>
                 </items>
             </IconTabBar>
         </f:content>

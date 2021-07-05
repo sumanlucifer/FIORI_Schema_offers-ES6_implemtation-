@@ -106,7 +106,10 @@ sap.ui.define(
                 onBRRProductChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
-                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
                     var oModel = oView.getModel("oModelControl");
                     var aNumber = sPath.match(/\d+$/)[0];
                     var oTable = oModel.getProperty("/Table/Table4");
@@ -115,18 +118,22 @@ sap.ui.define(
                             continue;
                         }
                         if (oTable[ele]["ProductCode"] === sKey) {
-                            MessageToast.show("Product Already Selected, Kindly select a different Product.");
+                            MessageToast.show(
+                                "Product Already Selected, Kindly select a different Product."
+                            );
                             oModel.setProperty(sPath + "/ProductCode", "");
-                            oModel.refresh(true)
+                            oModel.refresh(true);
                             break;
                         }
                     }
-
                 },
                 onBRRPackChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
-                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath();
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
                     var oModel = oView.getModel("oModelControl");
                     var aNumber = sPath.match(/\d+$/)[0];
                     var oTable = oModel.getProperty("/Table/Table4");
@@ -135,13 +142,14 @@ sap.ui.define(
                             continue;
                         }
                         if (oTable[ele]["SkuCode"] === sKey) {
-                            MessageToast.show("Pack Already Selected, Kindly select a different Pack.");
+                            MessageToast.show(
+                                "Pack Already Selected, Kindly select a different Pack."
+                            );
                             oModel.setProperty(sPath + "/SkuCode", "");
-                            oModel.refresh(true)
+                            oModel.refresh(true);
                             break;
                         }
                     }
-
                 },
 
                 onStartDateChange: function (oEvent) {
@@ -294,14 +302,13 @@ sap.ui.define(
                 _OfferTypeFieldSet2: function (mParam1) {
                     //mParam1 is offer type id
                     var oView = this.getView();
-                    console.log("offertypeid2", mParam1)
+                    console.log("offertypeid2", mParam1);
                     var oModelView = oView.getModel("oModelView");
                     // if offer type id is changed we are restting the value to 1
                     oModelView.setProperty("/RedemptionCycle", 1);
                     if (mParam1 == 1) {
                         oModelView.setProperty("/RedemptionCycle", "");
                     }
-
                 },
                 _setTable2Count: function () {
                     var oView = this.getView();
@@ -474,7 +481,9 @@ sap.ui.define(
                     this._CreateRewardTableData();
                 },
                 onBRRbChange: function () {
-                    this.getView().getModel("oModelControl").setProperty("/Table/Table3", []);
+                    this.getView()
+                        .getModel("oModelControl")
+                        .setProperty("/Table/Table3", []);
                     this._CreateBonusRewardTable();
                 },
                 _CreateBonusRewardTable: function (mParam) {
@@ -719,9 +728,8 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table4");
                     var iPackRbtn = oModel.getProperty("/Rbtn/AppPacks4");
-                    var aProdPackData = oModel.getProperty("/MultiCombo/Reward2")
+                    var aProdPackData = oModel.getProperty("/MultiCombo/Reward2");
                     if (oEvent !== "add") {
-
                         var oObject = oEvent
                             .getSource()
                             .getBindingContext("oModelControl")
@@ -769,7 +777,9 @@ sap.ui.define(
                     }
                 },
                 onSaveBonusRewardV2: function (oEvent) {
-                    console.log(oEvent.getSource().getBindingContext("oModelControl").getObject());
+                    console.log(
+                        oEvent.getSource().getBindingContext("oModelControl").getObject()
+                    );
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oObject = oEvent
@@ -781,7 +791,6 @@ sap.ui.define(
                     var oValidator = new Validator();
                     var cFlag = oValidator.validate(oCells);
                     var bFlag = true;
-
 
                     var bHasPack = oModel.getProperty("/Rbtn/AppPacks4");
 
@@ -1467,7 +1476,6 @@ sap.ui.define(
 
                 onRbBonusRewardChange: function (oEvent) {},
 
-
                 _CreateRewardTableData: function (oEvent) {
                     //check if all or specific table is there or not
                     var oView = this.getView();
@@ -1562,7 +1570,6 @@ sap.ui.define(
                     }
 
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
-
                 },
                 _setBRPacksData: function () {
                     var oView = this.getView();
@@ -1586,18 +1593,21 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oData = oView.getModel();
-                    0
+                    0;
                     return new Promise((resolve, reject) => {
                         oData.read("/MasterProductSet", {
                             success: function (mParam1) {
-                                oModelControl.setProperty("/oData/Products", mParam1["results"]);
+                                oModelControl.setProperty(
+                                    "/oData/Products",
+                                    mParam1["results"]
+                                );
                                 resolve();
                             },
                             error: function (mParam1) {
                                 reject();
                             },
                         });
-                    })
+                    });
                 },
                 _getPacksData: function () {
                     var promise = jQuery.Deferred();
@@ -1613,13 +1623,13 @@ sap.ui.define(
                         oData.read("/MasterRepProductSkuSet", {
                             success: function (mParam1) {
                                 oModelControl.setProperty("/oData/Packs", mParam1["results"]);
-                                resolve()
+                                resolve();
                             },
                             error: function (mParam1) {
                                 reject();
                             },
                         });
-                    })
+                    });
                 },
 
                 onValueHelpRequestedPainter: function () {
@@ -2151,7 +2161,6 @@ sap.ui.define(
                     this._FilterDepotTable(aFilter, "Control");
                 },
                 _getLoggedInUserDeatils: function (oData) {
-
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
@@ -2324,12 +2333,9 @@ sap.ui.define(
                         var mParam1 = aSpath[aSpath.length - 1];
                         var aNumber = mParam1.match(/\d+$/)[0];
                         console.log(aNumber);
-                        if (aNumber == "1") {
-
-                        } else if (aNumber == "4") {
+                        if (aNumber == "1") {} else if (aNumber == "4") {
                             this._CreateBonusRewardTable();
                         }
-
                     }
                 },
                 handlePackValueHelp: function (oEvent) {
@@ -2381,9 +2387,7 @@ sap.ui.define(
                         );
                     }
                     for (var b of aCat) {
-                        aFilter2.push(
-                            new Filter("CategoryCode", FilterOperator.EQ, b)
-                        );
+                        aFilter2.push(new Filter("CategoryCode", FilterOperator.EQ, b));
                     }
                     for (var c of aClass) {
                         aFilter3.push(
@@ -2413,9 +2417,7 @@ sap.ui.define(
                         aFinalFilter.push(aFilterClass);
                     }
 
-                    this._PackValueHelpDialog
-                        .getBinding("items")
-                        .filter(aFinalFilter);
+                    this._PackValueHelpDialog.getBinding("items").filter(aFinalFilter);
                     this._PackValueHelpDialog.open();
                 },
                 _handlePackValueHelpSearch: function (oEvent) {
@@ -2479,12 +2481,9 @@ sap.ui.define(
                         var mParam1 = aSpath[aSpath.length - 1];
                         var aNumber = mParam1.match(/\d+$/)[0];
                         console.log(aNumber);
-                        if (aNumber == "1") {
-
-                        } else if (aNumber == "4") {
+                        if (aNumber == "1") {} else if (aNumber == "4") {
                             this._CreateBonusRewardTable();
                         }
-
                     }
                 },
                 handleProdValueHelp: function (oEvent) {
@@ -2777,7 +2776,8 @@ sap.ui.define(
                         .getObject();
                     var sPath = oEvent
                         .getSource()
-                        .getBindingContext("oModelControl").getPath();
+                        .getBindingContext("oModelControl")
+                        .getPath();
                     console.log(sPath);
                     var oEndDate = oBject["EndDate"];
                     if (oEndDate) {
@@ -2806,7 +2806,8 @@ sap.ui.define(
                     // var oContext = oEvent.getSource().getBinding("dateValue").getContext();
                     var sPath = oEvent
                         .getSource()
-                        .getBindingContext("oModelControl").getPath();
+                        .getBindingContext("oModelControl")
+                        .getPath();
                     var oStartDate = oBject["StartDate"];
                     if (oStartDate >= oEndDate) {
                         MessageToast.show(
@@ -2997,7 +2998,6 @@ sap.ui.define(
                             "Kindly Save the data in the Bonus Reward Ratio Table to Continue",
                         ];
                     }
-
                 },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
@@ -3104,9 +3104,11 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var oLoggedInInfo = oModel.getProperty("/LoggedInUser");
                     if (oPayLoad["OfferStatus"]) {
-                        var sExistStatus = JSON.parse(JSON.stringify(oPayLoad["OfferStatus"])) //;
+                        var sExistStatus = JSON.parse(
+                            JSON.stringify(oPayLoad["OfferStatus"])
+                        ); //;
                     } else {
-                        var sExistStatus = null
+                        var sExistStatus = null;
                     }
 
                     if (oLoggedInInfo["UserTypeId"] === 5) {
@@ -3116,7 +3118,6 @@ sap.ui.define(
                         oLoggedInInfo["UserTypeId"] === 6 ||
                         oLoggedInInfo["UserTypeId"] === 7
                     ) {
-
                         if (sExistStatus === "APPROVED") {
                             oPayLoad["OfferStatus"] = "APPROVED";
                             oPayLoad["IsWorkFlowApplicable"] = false;
@@ -3154,7 +3155,7 @@ sap.ui.define(
                         "PointSlabLowerLimit",
                         "BonusApplicableTopPainter",
                         "ParentOfferId",
-                        "RedemptionCycle"
+                        "RedemptionCycle",
                     ];
                     for (var y of inTegerProperty) {
                         if (oPayLoad.hasOwnProperty(y)) {
@@ -3210,7 +3211,7 @@ sap.ui.define(
 
                 // postdata
                 _CreatePayloadPart3: function (oPayLoad) {
-                    var promise = jQuery.Deferred();
+                  var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oModelCtrlData = oModelControl.getData();
@@ -3233,7 +3234,16 @@ sap.ui.define(
                         aHashAppPack2 = oModelCtrlData["Hash"]["AppPack2"],
                         aHashAppPack3 = oModelCtrlData["Hash"]["AppPack3"],
                         aHashAppPack4 = oModelCtrlData["Hash"]["AppPack4"];
-
+                    //   ArcheTypes: [],
+                    //         PainterType: [],
+                    //         Potential: [],
+                    var aHashArcheType = oModelCtrlData["Hash"]["ArcheType"],
+                        aHashPainterType = oModelCtrlData["Hash"]["PainterType"],
+                        aHashPotential = oModelCtrlData["Hash"]["Potential"];
+                    var aHashZone = oModelCtrlData["Hash"]["Zone"],
+                        aHashDivision = oModelCtrlData["Hash"]["Division"],
+                        aHashDepot = oModelCtrlData["Hash"]["Depot"];
+                    var aHashPainter = oModelCtrlData["Hash"]["Painter"];
                     var aDataPCat1 = [],
                         aDataPCat2 = [],
                         aDataPCat3 = [],
@@ -3250,16 +3260,28 @@ sap.ui.define(
                         aDataAppPack2 = [],
                         aDataAppPack3 = [],
                         aDataAppPack4 = [];
-
+                    var aDataArcheType = [],
+                        aDataPainterType = [],
+                        aDataPotential = [];
+                    var aDataZone = [],
+                        aDataDepot = [],
+                        aDataDivision = [];
+                    var aDataPainter = [];
                     if (oModelControl.getProperty("/mode") === "edit") {
-                        aDataPCat1 = oModelViewData["OfferApplicableProductCategory"]["results"];
+                        aDataPCat1 =
+                            oModelViewData["OfferApplicableProductCategory"]["results"];
                         aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
-                        aDataPCat3 = oModelViewData["OfferNonBuyerProductCategory"]["results"];
+                        aDataPCat3 =
+                            oModelViewData["OfferNonBuyerProductCategory"]["results"];
                         aDataPCat4 = oModelViewData["OfferBonusProductCategory"]["results"];
-                        aDataPClass1 = oModelViewData["OfferApplicableProductClassification"]["results"];
-                        aDataPClass2 = oModelViewData["OfferBuyerProductClassification"]["results"];
-                        aDataPClass3 = oModelViewData["OfferNonBuyerProductClassification"]["results"];
-                        aDataPClass4 = oModelViewData["OfferBonusProductClassification"]["results"];
+                        aDataPClass1 =
+                            oModelViewData["OfferApplicableProductClassification"]["results"];
+                        aDataPClass2 =
+                            oModelViewData["OfferBuyerProductClassification"]["results"];
+                        aDataPClass3 =
+                            oModelViewData["OfferNonBuyerProductClassification"]["results"];
+                        aDataPClass4 =
+                            oModelViewData["OfferBonusProductClassification"]["results"];
                         aDataAppProd1 = oModelViewData["OfferApplicableProduct"]["results"];
                         aDataAppProd2 = oModelViewData["OfferBuyerProduct"]["results"];
                         aDataAppProd3 = oModelViewData["OfferNonBuyerProduct"]["results"];
@@ -3268,25 +3290,44 @@ sap.ui.define(
                         aDataAppPack2 = oModelViewData["OfferBuyerPack"]["results"];
                         aDataAppPack3 = oModelViewData["OfferNonBuyerPack"]["results"];
                         aDataAppPack4 = oModelViewData["OfferBonusPack"]["results"];
+                        aDataArcheType = oModelViewData["OfferPainterArcheType"]["results"];
+                        aDataPainterType = oModelViewData["OfferPainterType"]["results"];
+                        aDataPotential = oModelViewData["OfferPainterPotential"]["results"];
+                        aDataZone = oModelViewData["OfferZone"]["results"];
+                        aDataDivision = oModelViewData["OfferDivision"]["results"];
+                        aDataDepot = oModelViewData["OfferDepot"]["results"];
+                        aDataPainter = oModelViewData["OfferSpecificPainter"]["results"];
                     }
 
                     // setting the values of zone
                     oPayLoad["OfferZone"] = sMultiKeys["Zones"].map(function (elem) {
-                        return {
-                            ZoneId: elem,
-                        };
+                        if (aHashZone[elem]) {
+                            return aDataZone[aHashZone[elem]];
+                        } else {
+                            return {
+                                ZoneId: elem,
+                            };
+                        }
                     });
                     oPayLoad["OfferDivision"] = sMultiKeys["Divisions"].map(function (
                         elem
                     ) {
-                        return {
-                            DivisionId: elem,
-                        };
+                        if (aHashDivision[elem]) {
+                            return aDataDivision[aHashDivision[elem]];
+                        } else {
+                            return {
+                                DivisionId: elem,
+                            };
+                        }
                     });
                     oPayLoad["OfferDepot"] = sMultiKeys["Depots"].map(function (elem) {
-                        return {
-                            DepotId: elem["DepotId"],
-                        };
+                        if (aHashDepot[elem["DepotId"]]) {
+                            return aDataDepot[aHashDepot[elem["DepotId"]]];
+                        } else {
+                            return {
+                                DepotId: elem["DepotId"],
+                            };
+                        }
                     });
 
                     oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
@@ -3298,7 +3339,6 @@ sap.ui.define(
                                     ProductCategoryCode: elem,
                                 };
                             }
-
                         }
                     );
                     oPayLoad["OfferApplicableProductClassification"] = sMultiKeys[
@@ -3311,8 +3351,6 @@ sap.ui.define(
                                 ProductClassificationCode: elem,
                             };
                         }
-
-
                     });
                     oPayLoad["OfferApplicableProduct"] = sMultiKeys["AppProd1"].map(
                         function (elem) {
@@ -3338,23 +3376,36 @@ sap.ui.define(
                     );
                     oPayLoad["OfferPainterType"] = sMultiKeys["PainterType"].map(
                         function (elem) {
-                            return {
-                                PainterTypeId: parseInt(elem),
-                            };
+                            if (aHashPainterType[elem]) {
+                                return aDataPainterType[aHashPainterType[elem]];
+                            } else {
+                                return {
+                                    PainterTypeId: parseInt(elem),
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferPainterArcheType"] = sMultiKeys["ArcheTypes"].map(
                         function (elem) {
-                            return {
-                                ArcheTypeId: parseInt(elem),
-                            };
+                            if (aHashArcheType[elem]) {
+                                return aDataArcheType[aHashArcheType[elem]];
+                            } else {
+                                return {
+                                    ArcheTypeId: parseInt(elem),
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferPainterPotential"] = sMultiKeys["Potential"].map(
                         function (elem) {
-                            return {
-                                PotentialId: parseInt(elem),
-                            };
+
+                            if (aHashPotential[elem]) {
+                                return aDataPotential[aHashPotential[elem]];
+                            } else {
+                                return {
+                                    PotentialId: parseInt(elem),
+                                };
+                            }
                         }
                     );
                     oPayLoad["OfferBuyerProductCategory"] = sMultiKeys["PCat2"].map(
@@ -3378,8 +3429,6 @@ sap.ui.define(
                                 ProductClassificationCode: elem,
                             };
                         }
-
-
                     });
                     oPayLoad["OfferBuyerProduct"] = sMultiKeys["AppProd2"].map(function (
                         elem
@@ -3424,8 +3473,6 @@ sap.ui.define(
                                 ProductClassificationCode: elem,
                             };
                         }
-
-
                     });
                     oPayLoad["OfferNonBuyerProduct"] = sMultiKeys["AppProd3"].map(
                         function (elem) {
@@ -3497,9 +3544,13 @@ sap.ui.define(
 
                     oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(
                         function (elem) {
-                            return {
-                                PainterId: parseInt(elem["PainterId"]),
-                            };
+                            if (aHashPainter[elem["PainterId"]]) {
+                                return aDataPainter[aHashPainter[elem["PainterId"]]];
+                            } else {
+                                return {
+                                    PainterId: parseInt(elem["PainterId"]),
+                                };
+                            }
                         }
                     );
                     // check for null
@@ -3628,7 +3679,6 @@ sap.ui.define(
                             "EndDate",
                             "BonusPoints",
                             "BonusPercentage",
-
                         ];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
@@ -3663,7 +3713,14 @@ sap.ui.define(
                             .map(function (a) {
                                 return Object.assign({}, a);
                             });
-                        var aCheckProp = ["StartDate", "EndDate", "BonusPoints", "BonusPercentage", "SkuCode", "ProductCode"];
+                        var aCheckProp = [
+                            "StartDate",
+                            "EndDate",
+                            "BonusPoints",
+                            "BonusPercentage",
+                            "SkuCode",
+                            "ProductCode",
+                        ];
                         aFinalArray = oDataTbl.filter(function (ele) {
                             for (var a in aCheckProp) {
                                 if (ele[aCheckProp[a]] === "") {

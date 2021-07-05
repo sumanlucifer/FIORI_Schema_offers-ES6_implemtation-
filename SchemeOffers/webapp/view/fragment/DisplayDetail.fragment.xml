@@ -128,9 +128,15 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppProd1" visible="{oModelControl2>/MultiEnabled/AppProd1}" selectedKeys="{oModelControl2>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <!-- <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppProd1" visible="{oModelControl2>/MultiEnabled/AppProd1}" selectedKeys="{oModelControl2>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd1}===1}" valueHelpOnly="true" id="AppProd1" valueHelpRequest="handleProdValueHelp" tokens="{path:'oModelControl2>/MultiCombo/AppProd1'}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl9}">
@@ -143,9 +149,15 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppPacks1" visible="{oModelControl2>/MultiEnabled/AppPacks1}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <!-- <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppPacks1" visible="{oModelControl2>/MultiEnabled/AppPacks1}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks1}===1}" valueHelpOnly="true" id="AppPacks1" valueHelpRequest="handlePackValueHelp" tokens="{path:'oModelControl2>/MultiCombo/AppPacks1'}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -218,6 +230,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formApplicableLbl10}" />
+                    <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume" selectedIndex="{InputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>RequiredVolume}"/>
+                            <RadioButton text="{i18n>Table1Label2}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
@@ -459,9 +477,15 @@
                         </f:FormElement>
                         <f:FormElement >
                             <f:fields>
-                                <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppProd2}===1 }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppProd2'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
+                                <!-- <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppProd2}===1 }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppProd2'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd2}===1}" valueHelpOnly="true" id="AppProd2" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd2}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBuyerPacks}">
@@ -474,9 +498,15 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppPacks2'}">
+                                <!-- <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppPacks2'}">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1}" valueHelpOnly="true" id="AppPacks2" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks2}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl7}">
@@ -526,9 +556,15 @@
                         <f:FormElement>
                             <f:fields>
 
-                                <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppProd3}=== 1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppProd3'}">
+                                <!-- <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppProd3}=== 1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppProd3'}">
                                     <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                 <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd3}===1}" valueHelpOnly="true" id="AppProd3" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd3}">
+                                <tokens>
+                                    <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                </tokens>
+                            </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formNon} {i18n>formBuyerPacks}">
@@ -541,9 +577,12 @@
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppPacks3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppPacks3'}">
-                                    <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                               <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks3}===1}" valueHelpOnly="true" id="AppPacks3" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks3}">
+                                <tokens>
+                                    <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                </tokens>
+                            </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
 
@@ -622,9 +661,11 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox id="AppProd4" editable="false" visible="{oModelControl2>/MultiEnabled/AppProd4}" selectedKeys="{oModelControl2>/MultiCombo/AppProd4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
-                                    <core:Item text="{ProductName}" key="{Id}"/>
-                                </MultiComboBox>
+                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd4}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl9}">
@@ -637,9 +678,15 @@
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox editable="false" id="AppPacks4" visible="{oModelControl2>/MultiEnabled/AppPacks4}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
+                                <!-- <MultiComboBox editable="false" id="AppPacks4" visible="{oModelControl2>/MultiEnabled/AppPacks4}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
-                                </MultiComboBox>
+                                </MultiComboBox> -->
+                                 <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks4}">
+                                    <tokens>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                    </tokens>
+                                </MultiInput>
+
                             </f:fields>
                         </f:FormElement>
 
@@ -694,6 +741,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>Table3Label1}"/>
+                            <RadioButton text="{i18n>BonusPercentage}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                 </Toolbar>
             </headerToolbar>
 
@@ -728,6 +781,12 @@
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
+                    <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
+                        <buttons>
+                            <RadioButton text="{i18n>Table3Label1}"/>
+                            <RadioButton text="{i18n>BonusPercentage}"/>
+                        </buttons>
+                    </RadioButtonGroup>
                 </Toolbar>
             </headerToolbar>
 
