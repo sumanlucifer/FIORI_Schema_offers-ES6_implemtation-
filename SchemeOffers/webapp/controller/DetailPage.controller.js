@@ -399,7 +399,7 @@ sap.ui.define(
                         "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
-                        "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
+                        "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
                         "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + sPath, {
@@ -418,7 +418,7 @@ sap.ui.define(
                     });
                 },
                 _setViewData2: function (oData) {
-                    console.log(oData);
+                 
                     var promise = jQuery.Deferred();
 
                     var oView = this.getView();
@@ -680,17 +680,24 @@ sap.ui.define(
 
                     if (oData["OfferBonusProduct"]["results"].length > 0) {
                         for (var x of oData["OfferBonusProduct"]["results"]) {
-                            AppProd4.push(x["ProductCode"]);
+                            AppProd4.push({
+                                Id: x["Product"]["Id"],
+                                Name: x["Product"]["ProductName"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppProd4", AppProd4);
 
                     if (oData["OfferBonusPack"]["results"].length > 0) {
                         for (var x of oData["OfferBonusPack"]["results"]) {
-                            AppPacks4.push(x["SkuCode"]);
+                            AppPacks4.push({
+                                Id: x["Pack"]["SkuCode"],
+                                Name: x["Pack"]["Description"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppPacks4", AppPacks4);
+
 
                     if (oData["OfferSpecificPainter"]["results"].length > 0) {
                         for (var x of oData["OfferSpecificPainter"]["results"]) {
@@ -701,7 +708,7 @@ sap.ui.define(
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/Painters", Painters);
-                    console.log(oModelControl2)
+                  
                     promise.resolve(oData);
                     return promise;
                 },
