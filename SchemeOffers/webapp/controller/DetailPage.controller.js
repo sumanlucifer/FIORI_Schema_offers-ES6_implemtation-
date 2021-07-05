@@ -397,8 +397,8 @@ sap.ui.define(
                     var othat = this;
                     var exPand =
                         "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
-                        "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct,OfferBuyerPack,OfferNonBuyerProductCategory," +
-                        "OfferNonBuyerProductClassification,OfferNonBuyerProduct,OfferNonBuyerPack," +
+                        "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
+                        "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct,OfferBonusPack," +
                         "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
                     return new Promise((resolve, reject) => {
@@ -606,17 +606,24 @@ sap.ui.define(
 
                     if (oData["OfferBuyerProduct"]["results"].length > 0) {
                         for (var x of oData["OfferBuyerProduct"]["results"]) {
-                            AppProd2.push(x["ProductCode"]);
+                            AppProd2.push({
+                                Id: x["Product"]["Id"],
+                                Name: x["Product"]["ProductName"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppProd2", AppProd2);
 
                     if (oData["OfferBuyerPack"]["results"].length > 0) {
                         for (var x of oData["OfferBuyerPack"]["results"]) {
-                            AppPacks2.push(x["SkuCode"]);
+                            AppPacks2.push({
+                                Id: x["Pack"]["SkuCode"],
+                                Name: x["Pack"]["Description"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppPacks2", AppPacks2);
+
 
                     if (oData["OfferNonBuyerProductCategory"]["results"].length > 0) {
                         for (var x of oData["OfferNonBuyerProductCategory"]["results"]) {
@@ -636,19 +643,26 @@ sap.ui.define(
                     }
                     oModelControl2.setProperty("/MultiCombo/PClass3", PClass3);
 
-                    if (oData["OfferNonBuyerProduct"]["results"].length > 0) {
+                  if (oData["OfferNonBuyerProduct"]["results"].length > 0) {
                         for (var x of oData["OfferNonBuyerProduct"]["results"]) {
-                            AppProd3.push(x["ProductCode"]);
+                            AppProd3.push({
+                                Id: x["Product"]["Id"],
+                                Name: x["Product"]["ProductName"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppProd3", AppProd3);
 
                     if (oData["OfferNonBuyerPack"]["results"].length > 0) {
                         for (var x of oData["OfferNonBuyerPack"]["results"]) {
-                            AppPacks3.push(x["SkuCode"]);
+                            AppPacks3.push({
+                                Id: x["Pack"]["SkuCode"],
+                                Name: x["Pack"]["Description"],
+                            });
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/AppPacks3", AppPacks3);
+
 
                     if (oData["OfferBonusProductCategory"]["results"].length > 0) {
                         for (var x of oData["OfferBonusProductCategory"]["results"]) {
