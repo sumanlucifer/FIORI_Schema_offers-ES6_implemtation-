@@ -3214,9 +3214,31 @@ sap.ui.define(
                     }
                     Core.byId("idRemarksText").setText(sRemarks);
                     this.oRemarksMessageDialog.open();
+                },
+                //offer table and dialog box code integration
+                onOfferReedeme: function () {
+                    var oView = this.getView();
+                    // create value help dialog
+                    if (!this._DialogOfferRedeem) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.OfferRedeemDialog",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._DialogOfferRedeem = oDialog;
+                                this.getView().addDependent(this._DialogOfferRedeem);
+                                this._DialogOfferRedeem.open();
+                            }.bind(this)
+                        );
+                    } else {
+                        this._DialogOfferRedeem.open();
+                    }
+
                 }
 
             }
+
         );
     }
 );
