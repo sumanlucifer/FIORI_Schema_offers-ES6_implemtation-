@@ -1791,6 +1791,8 @@ sap.ui.define(
                         oView.byId("PainteTable1").rebindTable();
                     } else if (sKey == "2") {
                         oView.byId("PainteTable2").rebindTable();
+                    }else if (sKey == "3") {
+                        oView.byId("OfferHistory").rebindTable();
                     }
                 },
 
@@ -1851,6 +1853,28 @@ sap.ui.define(
                     oBindingParams.parameters["expand"] = "Painter";
                     // var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
 
+                    oBindingParams.filters.push(
+                        new Filter({
+                            filters: aFilter,
+                            and: true,
+                        })
+                    );
+                },
+                   onBeforeBindOfferHistory: function (oEvent) {
+                    var oView = this.getView();
+                    var sOfferId = oView
+                        .getModel("oModelControl3")
+                        .getProperty("/OfferId");
+                    var aFilter = [];
+
+                    var aFilter2 = new Filter(
+                        "OfferId",
+                        FilterOperator.EQ,
+                        parseInt(sOfferId)
+                    );
+                    aFilter.push(aFilter2);
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                 
                     oBindingParams.filters.push(
                         new Filter({
                             filters: aFilter,
