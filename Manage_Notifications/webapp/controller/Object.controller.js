@@ -441,6 +441,15 @@ sap.ui.define([
 					target: "/oDetails/ScheduledTime"
 				});
             }else
+            if (data.GroupId && !groupId) {
+                oReturn.IsNotValid = true;
+                oReturn.sMsg.push("MSG_VALDTN_ERR_GROUPID");
+                aCtrlMessage.push({
+                    message: "MSG_VALDTN_ERR_GROUPID",
+                    target: "/oDetails/GroupId"
+                });
+
+            }else
             if (data.ScheduledDate && data.ScheduledTime && data.IsLater === true) {
                 var time=data.ScheduledTime;
                 var date=new Date(data.ScheduledDate);
@@ -463,21 +472,10 @@ sap.ui.define([
                             });
                             tPicker.setValue(null);
                             }
-                    
-                    console.log("date in");
                         
                 }
                 
-			}else
-            if (data.GroupId && !groupId) {
-                oReturn.IsNotValid = true;
-                oReturn.sMsg.push("MSG_VALDTN_ERR_GROUPID");
-                aCtrlMessage.push({
-                    message: "MSG_VALDTN_ERR_GROUPID",
-                    target: "/oDetails/GroupId"
-                });
-
-            }
+			}
 
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
@@ -534,8 +532,6 @@ sap.ui.define([
                             });
                             tPicker.setValue(null);
                             }
-                    
-                    console.log("date in");
                         
                 }
                
