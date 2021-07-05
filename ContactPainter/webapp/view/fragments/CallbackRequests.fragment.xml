@@ -17,7 +17,7 @@
                     </customData>
                     <Text text="{i18n>Status}"/>
                 </Column>
-                <Column hAlign="Center">
+                <Column hAlign="Center" width="18%">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 10}'/>
                     </customData>
@@ -31,7 +31,7 @@
                         <!-- <Text text="{Id}"/> -->
                         <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
                         <Text text="{path: 'Status', formatter:'.formatter.CallbackReqTblStatus'}"/>
-                        <HBox>
+                        <HBox justifyContent="Center">
                             <!-- <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/> -->
                             <Text text="{Remarks}" visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" />
                             <Text text="NA" visible="{=${Remarks} === '' ||  ${Remarks} === null}"/>
