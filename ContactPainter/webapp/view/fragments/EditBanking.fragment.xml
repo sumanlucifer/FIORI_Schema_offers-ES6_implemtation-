@@ -26,13 +26,13 @@
                 <Label text="{i18n>BankName}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
                     <!-- <Input editable="false" value="{PainterBankDetails/BankNameDetails/BankName}" visible="{= !${oModelControl>/AddNewBank} }"/> -->
-                    <ComboBox id="IdPrAbBankNameEdit" editable="{=${oModelControl>/EditBank} }" width="100%" visible="{= !${oModelControl>/AddNewBank} }" required="{=${oModelControl>/EditField} }"
+                    <ComboBox id="IdPrAbBankNameEdit" editable="{=${oModelControl>/EditBank} }" change="onBankChange" width="100%" visible="{= !${oModelControl>/AddNewBank} }" required="{=${oModelControl>/EditField} }"
                     items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterBankDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{BankName}" key="{Id}"></core:Item>
                         </items>
                     </ComboBox>
-                    <ComboBox id="IdPrAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <ComboBox id="IdPrAbBankNameId" width="100%" visible="{= ${oModelControl>/AddNewBank} }" change="onBankChange" required="true" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelControl>/PainterAddBanDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{BankName}" key="{Id}"></core:Item>
                         </items>

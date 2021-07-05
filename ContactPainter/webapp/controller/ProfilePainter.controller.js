@@ -1289,6 +1289,12 @@ sap.ui.define(
                     // oModel.refresh(true);
                     this._setFDLTbleFlag();
                 },
+                onBankChange: function (oEvent) {
+                   var oModelCtrl = this.getView().getModel("oModelControl");
+                    oModelCtrl.setProperty("/EditField", true);
+                   
+                    
+                },
                 onKycChange: function (oEvent) {
                     var oModel = this.getView().getModel("oModelView");
                     var oModelCtrl = this.getView().getModel("oModelControl");
@@ -1810,6 +1816,7 @@ sap.ui.define(
                     oModelCtrl.setProperty("/AddKycDoc", false);
                     oModelCtrl.setProperty("/AddKycDocButton", true);
                     oModelCtrl.setProperty("/EditKycButton", true);
+                    oModelCtrl.setProperty("/EditFieldKyc", false);
                     var InitialDocType = oModelCtrl.getProperty("/InitialKycDocType");
                     var govtId=oModelCtrl.getProperty("/InitialGovtId");
                     if(InitialDocType){
