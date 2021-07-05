@@ -95,7 +95,7 @@
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
                       <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish} (only used for testing)" class="sapUiTinyMarginEnd" />
-                    <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
+                    <Button text="Cancel" type="Ghost"   press="handleCancelPress" class="sapUiTinyMarginEnd"/>
                     <!-- <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
                     <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" /> -->
                     <!-- Send For Approval -->
@@ -104,7 +104,7 @@
                     <Button press="onOpenRemarksDialog('ESCALATE')" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
                     <!-- Approve Reject -->
                      <Button press="onOpenRemarksDialog('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
-                    <Button press="onOpenRemarksDialog('APPROVED')" text="{i18n>Approve}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
+                    <Button press="onOpenRemarksDialog('APPROVED')" text="{i18n>Approve}"  type="Emphasized" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
                     <!-- Publish -->
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                     <!-- Redemption Button -->
