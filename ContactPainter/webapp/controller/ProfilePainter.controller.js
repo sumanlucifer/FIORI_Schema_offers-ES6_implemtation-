@@ -247,6 +247,11 @@ sap.ui.define(
                         InitialKycDocType: "", //Aditya Chnage
                         InitialKycStatus:"",//Aditya Chnage
                         InitialGovtId:"",//Aditya Chnage
+                        InitialIfsc:"",
+                        InitialAcTypeId:"",
+                        InitialBankHoldName:"",
+                        InitialBankId:"",
+                        InitialAccNo:"",
                         DocumentType: [{
                             Name: "Passbook",
                             Id: 0
@@ -385,6 +390,11 @@ sap.ui.define(
 
                         var InitialDocType = oBankData["DocumentType"];
                         oControlModel.setProperty("/InitialDocType", InitialDocType);
+                        oControlModel.setProperty("/InitialIfsc", oBankData["IfscCode"]);
+                        oControlModel.setProperty("/InitialAcTypeId", oBankData["AccountTypeId"]);
+                        oControlModel.setProperty("/InitialBankHoldName", oBankData["AccountHolderName"]);
+                        oControlModel.setProperty("/InitialBankId", oBankData["BankNameId"]);
+                        oControlModel.setProperty("/InitialAccNo", oBankData["AccountNumber"]);
 
                         if (oBankData.hasOwnProperty("Id")) {
                             if (oBankData["DocumentType"] == 0) {
@@ -1638,10 +1648,21 @@ sap.ui.define(
                     var oModelView = this.getView().getModel("oModelView");
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
+                    oModelCtrl.setProperty("/EditField", false);
                     oModelCtrl.setProperty("/AddBankDoc", false);
                     oModelCtrl.setProperty("/AddBankDocButton", false);
                     var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
+                    var InitialIfsc = oModelCtrl.getProperty("/InitialIfsc");
+                    var InitialAcTypeId = oModelCtrl.getProperty("/InitialAcTypeId");
+                    var InitialBankHoldName = oModelCtrl.getProperty("/InitialBankHoldName");
+                    var InitialBankId = oModelCtrl.getProperty("/InitialBankId");
+                    var InitialAccNo = oModelCtrl.getProperty("/InitialAccNo");
                     oModelView.setProperty("/PainterBankDetails/DocumentType", InitialDocType);
+                    oModelView.setProperty("/PainterBankDetails/IfscCode", InitialIfsc);
+                    oModelView.setProperty("/PainterBankDetails/AccountHolderName", InitialBankHoldName);
+                    oModelView.setProperty("/PainterBankDetails/BankNameId", InitialBankId);
+                    oModelView.setProperty("/PainterBankDetails/AccountTypeId", InitialAcTypeId);
+                    oModelView.setProperty("/PainterBankDetails/AccountNumber", InitialAccNo);
 
 
                 },
