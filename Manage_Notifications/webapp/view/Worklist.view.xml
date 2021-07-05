@@ -108,7 +108,7 @@
 											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
-										<Text text="{CreatorName}"/>
+										<Text text="{= ${CreatorName}=== null ? 'SYSTEM' : ${CreatorName} }"/>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit"/>
                                             <!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="Display"/> -->
@@ -171,7 +171,7 @@
 											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
-										<Text text="{CreatorName}"/>
+										<Text text="{= ${CreatorName}=== null ? 'SYSTEM' : ${CreatorName} }"/>
                                         <HBox>
                                             <Button icon="sap-icon://edit" press="onEdit" type="Transparent"/>
                                             <!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/> -->
@@ -234,7 +234,7 @@
 											<Text text="{path: 'UpdatedAt', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { pattern: 'dd/MM/yyyy, hh:mm a' } }"
 												visible="{= !${ScheduledDate}}"/>
 										</VBox>
-										<Text text="{CreatorName}"/>
+										<Text text="{= ${CreatorName}=== null ? 'SYSTEM' : ${CreatorName} }"/>
 										<!-- <Button icon="sap-icon://display" press="onView" type="Transparent" tooltip="View notification"/> -->
 									</cells>
 								</ColumnListItem>
