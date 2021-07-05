@@ -3211,7 +3211,7 @@ sap.ui.define(
 
                 // postdata
                 _CreatePayloadPart3: function (oPayLoad) {
-                    var promise = jQuery.Deferred();
+                  var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oModelCtrlData = oModelControl.getData();
@@ -3243,7 +3243,7 @@ sap.ui.define(
                     var aHashZone = oModelCtrlData["Hash"]["Zone"],
                         aHashDivision = oModelCtrlData["Hash"]["Division"],
                         aHashDepot = oModelCtrlData["Hash"]["Depot"];
-
+                    var aHashPainter = oModelCtrlData["Hash"]["Painter"];
                     var aDataPCat1 = [],
                         aDataPCat2 = [],
                         aDataPCat3 = [],
@@ -3266,6 +3266,7 @@ sap.ui.define(
                     var aDataZone = [],
                         aDataDepot = [],
                         aDataDivision = [];
+                    var aDataPainter = [];
                     if (oModelControl.getProperty("/mode") === "edit") {
                         aDataPCat1 =
                             oModelViewData["OfferApplicableProductCategory"]["results"];
@@ -3295,6 +3296,7 @@ sap.ui.define(
                         aDataZone = oModelViewData["OfferZone"]["results"];
                         aDataDivision = oModelViewData["OfferDivision"]["results"];
                         aDataDepot = oModelViewData["OfferDepot"]["results"];
+                        aDataPainter = oModelViewData["OfferSpecificPainter"]["results"];
                     }
 
                     // setting the values of zone
@@ -3320,12 +3322,12 @@ sap.ui.define(
                     });
                     oPayLoad["OfferDepot"] = sMultiKeys["Depots"].map(function (elem) {
                         if (aHashDepot[elem["DepotId"]]) {
-                                return aDataDepot[aHashDepot[elem["DepotId"]]];
-                            } else {
-                                return {
-                                     DepotId: elem["DepotId"],
-                                };
-                            }
+                            return aDataDepot[aHashDepot[elem["DepotId"]]];
+                        } else {
+                            return {
+                                DepotId: elem["DepotId"],
+                            };
+                        }
                     });
 
                     oPayLoad["OfferApplicableProductCategory"] = sMultiKeys["PCat1"].map(
@@ -3542,9 +3544,13 @@ sap.ui.define(
 
                     oPayLoad["OfferSpecificPainter"] = sMultiKeys["Painters"].map(
                         function (elem) {
-                            return {
-                                PainterId: parseInt(elem["PainterId"]),
-                            };
+                            if (aHashPainter[elem["PainterId"]]) {
+                                return aDataPainter[aHashPainter[elem["PainterId"]]];
+                            } else {
+                                return {
+                                    PainterId: parseInt(elem["PainterId"]),
+                                };
+                            }
                         }
                     );
                     // check for null

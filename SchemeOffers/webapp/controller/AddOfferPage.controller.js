@@ -273,7 +273,8 @@ sap.ui.define(
                             ArcheType:{},
                             Zone:{},
                             Division:{},
-                            Depot:{}
+                            Depot:{},
+                            Painter:{}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);

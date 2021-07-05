@@ -808,6 +808,7 @@ sap.ui.define(
                     var aHashZone = {},
                         aHashDivision = {},
                         aHashDepot = {};
+                    var aHashPainter = {};
                     var aDataPCat1 = oData["OfferApplicableProductCategory"]["results"];
                     var aDataPCat2 = oData["OfferBuyerProductCategory"]["results"];
                     var aDataPCat3 = oData["OfferNonBuyerProductCategory"]["results"];
@@ -830,7 +831,7 @@ sap.ui.define(
                     var aDataZone = oData["OfferZone"]["results"],
                         aDataDivision = oData["OfferDivision"]["results"],
                         aDataDepot = oData["OfferDepot"]["results"];
-
+                    var aDataPainter = oData["OfferSpecificPainter"]["results"];
 
 
                     for (var a in aDataPCat1) {
@@ -917,7 +918,7 @@ sap.ui.define(
                         aHashPotential[aDataPotential[e]["PotentialId"]] = e;
                     }
                     //zone division depot
-                    
+
                     for (var f in aDataZone) {
                         aHashZone[aDataZone[f]["ZoneId"]] = f;
                     }
@@ -932,7 +933,12 @@ sap.ui.define(
                         aHashDepot[aDataDepot[f]["DepotId"]] = f;
                     }
                     oModelControl.setProperty("/Hash/Depot", aHashDepot);
-                    console.log(oModelControl)
+                    //painter
+                    for (var g in aDataPainter) {
+                        aHashPainter[aDataPainter[g]["PainterId"]] = g;
+                    }
+                    oModelControl.setProperty("/Hash/Painter", aHashPainter);
+                  
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1231,7 +1237,8 @@ sap.ui.define(
                             ArcheType: {},
                             Zone: {},
                             Division: {},
-                            Depot: {}
+                            Depot: {},
+                            Painter: {}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
