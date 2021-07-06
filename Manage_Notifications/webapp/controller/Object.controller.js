@@ -473,6 +473,13 @@ sap.ui.define([
                             tPicker.setValue(null);
                             }
                         
+                }else if(date < currDate){
+                    oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+                                aCtrlMessage.push({
+                                message: "MSG_VALDTN_ERR_STIME",
+                                target: "/oDetails/ScheduledDate"
+                            });
                 }
                 
 			}
