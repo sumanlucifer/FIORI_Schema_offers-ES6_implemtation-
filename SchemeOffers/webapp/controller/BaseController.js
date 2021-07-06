@@ -164,6 +164,7 @@ sap.ui.define(
                             oModelControl.setProperty("/StartDate", "");
                             oModelView.setProperty("/StartDate", null);
                         }
+                        return;
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show(
@@ -171,6 +172,7 @@ sap.ui.define(
                         );
                         oModelControl.setProperty("/StartDate", "");
                         oModelView.setProperty("/StartDate", null);
+                        return;
                     }
                 },
                 onEndDateChange: function (oEvent) {
@@ -181,6 +183,14 @@ sap.ui.define(
                     var oStartDate = oModelView.getProperty("/StartDate");
                     if (oStartDate >= oEndDate) {
                         MessageToast.show("Kindly select a date more than start date.");
+                        oModelControl.setProperty("/EndDate", "");
+                        oModelView.setProperty("/EndDate", null);
+                        return;
+                    }
+                     if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
+                        MessageToast.show(
+                            "Kindly enter a date greater than current date"
+                        );
                         oModelControl.setProperty("/EndDate", "");
                         oModelView.setProperty("/EndDate", null);
                     }
@@ -2813,6 +2823,12 @@ sap.ui.define(
                         MessageToast.show(
                             "Kindly select a date more than Bonus Validtiy From date."
                         );
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+                    }
+                     if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
+                        MessageToast.show("Kindly enter a date greater than current date");
+
                         oModelControl.setProperty(sPath + "/EndDate", null);
                     }
                 },
