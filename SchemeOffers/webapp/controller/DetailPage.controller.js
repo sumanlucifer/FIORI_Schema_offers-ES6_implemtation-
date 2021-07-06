@@ -772,7 +772,22 @@ sap.ui.define(
           var oView = this.getView();
           var oCtrl2Model = oView.getModel("oModelControl3");
           oCtrl2Model.setProperty("/mode", "edit");
-          var c1, c2, c3, c4, c5, c6, c7, c8, c9, c9B, c10, c11, c12, c13, c14;
+          var c1,
+            c2,
+            c3,
+            c4,
+            c5,
+            c6,
+            c7,
+            c8,
+            c9,
+            c9B,
+            c9C,
+            c10,
+            c11,
+            c12,
+            c13,
+            c14;
           var othat = this;
 
           c2 = othat._GetInitEditData();
@@ -796,16 +811,19 @@ sap.ui.define(
                           c9.then(function (data) {
                             // no data required from the previous steop
                             c9B = othat._EditCreatehashData(data);
-                            c9B.then(function () {
-                              c10 = othat._getProductsData();
-                              c10.then(function () {
-                                c11 = othat._getPacksData();
-                                c11.then(function () {
-                                  c12 = othat._CreateBonusRewardTable("Edit");
-                                  c12.then(function () {
-                                    c13 = othat._destroyDialogs();
-                                    c13.then(function () {
-                                      c14 = othat._RemovePageBusy();
+                            c9B.then(function (data) {
+                              c9C = othat._getExecLogData(data);
+                              c9C.then(function () {
+                                c10 = othat._getProductsData();
+                                c10.then(function () {
+                                  c11 = othat._getPacksData();
+                                  c11.then(function () {
+                                    c12 = othat._CreateBonusRewardTable("Edit");
+                                    c12.then(function () {
+                                      c13 = othat._destroyDialogs();
+                                      c13.then(function () {
+                                        c14 = othat._RemovePageBusy();
+                                      });
                                     });
                                   });
                                 });
@@ -823,6 +841,12 @@ sap.ui.define(
           });
           //_destroyDialogs
           // this._initSaveModel();
+        },
+        _checkPromise: function (data) {
+          var promise = jQuery.Deferred();
+          console.log(data);
+          promise.resolve(data);
+          return promise;
         },
         _EditCreatehashData: function (oData) {
           var promise = jQuery.Deferred();
@@ -1681,7 +1705,7 @@ sap.ui.define(
         //     return [true, ""]
         // },
         _postDataToSave: function (bFileFlag) {
-          var c1, c2, c3, c4, c5, c5A, c6, c7;
+          var c1, c2, c3, c4, c5, c5A, c5B, c6, c7;
           var othat = this;
 
           c1 = othat._CreatePayloadPart1();
@@ -1702,11 +1726,14 @@ sap.ui.define(
                   c5.then(function (oPayLoad) {
                     c5A = othat._CreateWorkFlowData(oPayLoad);
                     c5A.then(function () {
-                      c6 = othat._CreateOffer(oPayLoad);
-                      c6.then(function (oPayLoad) {
-                        c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                        c7.then(function (data) {
-                          othat.handleCancelPress(data);
+                      c5B = othat._CreateSetAdditioanlFlags(oPayLoad);
+                      c5B.then(function () {
+                        c6 = othat._CreateOffer(oPayLoad);
+                        c6.then(function (oPayLoad) {
+                          c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                          c7.then(function (data) {
+                            othat.handleCancelPress(data);
+                          });
                         });
                       });
                     });
@@ -2026,7 +2053,7 @@ sap.ui.define(
           // aCheck1 is for checking if the offer status is approved or not as we we have to set the remark on that basis.
           var aCheck1 = ["APPROVED"];
           if (aCheck1.indexOf(oEvent) >= 0) {
-             oModelC.setProperty("/Dialog/Remarks", "Approved");
+            oModelC.setProperty("/Dialog/Remarks", "Approved");
           }
           console.log(oEvent);
           if (!this._RemarksDialog2) {
@@ -2096,7 +2123,20 @@ sap.ui.define(
             oNewPayLoad["IsWorkFlowApplicable"] = false;
           }
 
-          console.log(oNewPayLoad);
+         
+          // check Painter error in offer specific
+          if (oNewPayLoad.hasOwnProperty("OfferSpecificPainter")) {
+            if (oNewPayLoad["OfferSpecificPainter"].length > 0) {
+              for (var x in oNewPayLoad["OfferSpecificPainter"]) {
+                if (
+                  oNewPayLoad["OfferSpecificPainter"][x].hasOwnProperty("Painter")
+                ) {
+                  oNewPayLoad["OfferSpecificPainter"][x]["Painter"] = null;
+                }
+              }
+            }
+          }
+
           var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
           oData.update("/" + sPath, oNewPayLoad, {
             success: function () {
@@ -2130,13 +2170,12 @@ sap.ui.define(
         },
         //execution Log
         _getExecLogData: function (oData) {
-          console.log(oData);
           var promise = jQuery.Deferred();
           //for Test case scenerios delete as needed
           var oView = this.getView();
 
           var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
-          console.log(sWorkFlowInstanceId);
+
           if (sWorkFlowInstanceId) {
             var sUrl =
               "/comknplpragatiSchemeOffers/bpmworkflowruntime/v1/workflow-instances/" +
@@ -2166,7 +2205,7 @@ sap.ui.define(
             ]);
 
           aWfData = aWfData.filter((ele) => taskSet.has(ele.type));
-            console.log(aWfData)
+          console.log(aWfData);
           this.oWorkflowModel.setData(aWfData);
         },
       }

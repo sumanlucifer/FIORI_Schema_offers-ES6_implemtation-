@@ -3156,6 +3156,23 @@ sap.ui.define(
                     promise.resolve(oPayLoad);
                     return promise;
                 },
+                _CreateSetAdditioanlFlags:function(oPayload){
+                     var promise = jQuery.Deferred();
+                        if(oPayload.hasOwnProperty("OfferSpecificPainter")){
+                            
+                                if(oPayload["OfferSpecificPainter"].length>0){
+                                    for(var x in oPayload["OfferSpecificPainter"]){
+                                        if(oPayload["OfferSpecificPainter"][x].hasOwnProperty("Painter")){
+                                            oPayload["OfferSpecificPainter"][x]["Painter"]=null;
+                                        }
+                                    }
+                                }
+                            
+                        }
+                        console.log(oPayload);
+                      promise.resolve(oPayload);
+                    return promise;
+                },
                 _CreatePayloadPart1(bFileFlag) {
                     var promise = jQuery.Deferred();
                     //creating the payload
