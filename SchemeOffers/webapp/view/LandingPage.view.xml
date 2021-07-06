@@ -144,9 +144,9 @@
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <!-- <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" /> -->
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
-                            <HBox justifyContent="End">
+                            <HBox justifyContent="Center">
                                 <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
-                                <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button>
+                                <!-- <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button> -->
                             </HBox>
 
                         </cells>
