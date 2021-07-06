@@ -17,7 +17,7 @@
                     </customData>
                     <Text text="{i18n>Status}"/>
                 </Column>
-                <Column hAlign="Center" width="18%">
+                <Column hAlign="Center" width="23%">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 10}'/>
                     </customData>
