@@ -189,9 +189,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
     },
     btnPublished: function (m1, m2) {
       if (m1 === "APPROVED") {
-        if (m2 === 6 || m2 === 7) {
-          return true;
-        }
+        return true;
       }
       return false;
     },
@@ -212,21 +210,23 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       switch (sSubject) {
         case "FORCETAT":
           return "Manual Escalation";
-        case "PENDING_FOR_APPROVAL":
-          return "Pending for Approval";
+        case "APPROVED":
+          return "Offer Approved";
+        case "REJECTED":
+          return "Offer Rejected";
       }
 
       switch (sType) {
         case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
           return "Auto Escalation";
         case "WORKFLOW_STARTED":
-          return "Complaint raised";
+          return "Offer Sent for Approval.";
         case "WORKFLOW_COMPLETED":
-          return "Complaint closed";
+          return "Offer Approval Process Completed.";
         case "WORKFLOW_CANCELED":
-          return "Complaint withdrawn";
+          return "Offer Workflow Cancelled.";
         case "USERTASK_COMPLETED":
-          return "Complaint resolved";
+          return "Offer Approved.";
       }
 
       return sSubject;
