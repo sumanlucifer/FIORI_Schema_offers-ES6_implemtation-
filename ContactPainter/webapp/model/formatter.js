@@ -74,20 +74,32 @@ sap.ui.define([], function () {
             var oProduct = this.getView().getModel().getData("/" + sPath)
 
         },
-        CallbackReqTblStatus:function(mParam1){
-            if(mParam1==="REGISTERED"){
-               return "Pending"
-            }
-            if(mParam1==="INPROGRESS"){
+        CallbackReqTblStatus: function (mParam1) {
+            if (mParam1 === "REGISTERED") {
                 return "Pending"
             }
-            if(mParam1==="RESOLVED"){
-               return "Completed"
+            if (mParam1 === "INPROGRESS") {
+                return "Pending"
             }
-            if(mParam1==="REJECTED"){
-               return "Completed"
+            if (mParam1 === "RESOLVED") {
+                return "Completed"
             }
-        }
+            if (mParam1 === "REJECTED") {
+                return "Completed"
+            }
+        },
+        fmtStatus: function (mParam) {
+            var sLetter = "";
+            if (mParam) {
+                sLetter = mParam
+                    .toLowerCase()
+                    .split(" ")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ");
+            }
+
+            return sLetter;
+        },
 
     };
 

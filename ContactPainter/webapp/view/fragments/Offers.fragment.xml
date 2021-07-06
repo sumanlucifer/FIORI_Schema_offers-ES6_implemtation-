@@ -31,6 +31,12 @@
                 <Column>
                     <Text text="{i18n>EndDate}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>ProgressStatus}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>RedemptionStatus}" />
+                </Column>
 
 
             </columns>
@@ -41,10 +47,16 @@
                         <Text text="{PainterId}" />
                         <Text text="{Offer/OfferCode}" />
                         <Text text="{Offer/Title}" />
-                         <Text text="{Offer/OfferType/OfferType}" />
+                        <Text text="{Offer/OfferType/OfferType}" />
                         <Text text="{path:'Offer/StartDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
-                         <Text text="{path:'Offer/EndDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
-
+                        <Text text="{path:'Offer/EndDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                        <Text text="{path:'ProgressStatus',formatter:'.formatter.fmtStatus'}" />
+                        <HBox>
+                            <items>
+                                <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtStatus'}" />
+                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" />
+                            </items>
+                        </HBox>
                     </cells>
                 </ColumnListItem>
             </items>
