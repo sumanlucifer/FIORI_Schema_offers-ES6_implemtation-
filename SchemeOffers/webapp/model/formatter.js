@@ -180,6 +180,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
     },
     //btn Approve Display and reject button
     btnApproveDisplay: function (m1, m2) {
+        
       if (m1 === "PENDING") {
         if (m2 === 6 || m2 === 7) {
           return true;

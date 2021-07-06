@@ -2023,6 +2023,12 @@ sap.ui.define(
           var oModelC = oView.getModel("oModelControl3");
           oModelC.setProperty("/Dialog/OfferStatus", oEvent);
           oModelC.setProperty("/Dialog/Remarks", "");
+          // aCheck1 is for checking if the offer status is approved or not as we we have to set the remark on that basis.
+          var aCheck1 = ["APPROVED"];
+          if (aCheck1.indexOf(oEvent) >= 0) {
+             oModelC.setProperty("/Dialog/Remarks", "Approved");
+          }
+          console.log(oEvent);
           if (!this._RemarksDialog2) {
             Fragment.load({
               id: oView.getId(),
@@ -2148,7 +2154,7 @@ sap.ui.define(
 
         _setWfData: function () {
           //TODO: format subject FORCETAT
-          console.log(this.oWorkflowModel.getData());
+          //console.log(this.oWorkflowModel.getData());
           var aWfData = this.oWorkflowModel.getData(),
             taskSet = new Set([
               "WORKFLOW_STARTED",
