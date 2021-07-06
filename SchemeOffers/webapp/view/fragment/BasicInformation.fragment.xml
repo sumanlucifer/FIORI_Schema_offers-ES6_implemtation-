@@ -75,7 +75,13 @@
             <f:FormContainer title="   ">
                 <f:FormElement label="{i18n>formBasicInfoLbl5}">
                     <f:fields>
-                        <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                        <VBox width="100%">
+                            <items>
+                                <TextArea width="100%" required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                                <Text text="{i18n>Message2}" />
+                            </items>
+                        </VBox>
+
                     </f:fields>
                 </f:FormElement>
                 <f:FormElement label="{i18n>Remark}" visible="{= ${oModelControl>/mode}==='edit'}">
