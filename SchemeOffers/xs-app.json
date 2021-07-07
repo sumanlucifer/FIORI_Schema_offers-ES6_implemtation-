@@ -12,6 +12,7 @@
       "destination": "KNPL_PAINTER_API",
       "target": "$1"
     },
+    
     {
       "source": "^/bpmworkflowruntime/(.*)$",
       "target": "/$1",

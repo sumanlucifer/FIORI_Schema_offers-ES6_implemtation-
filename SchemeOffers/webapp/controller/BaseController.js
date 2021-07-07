@@ -187,7 +187,7 @@ sap.ui.define(
                         oModelView.setProperty("/EndDate", null);
                         return;
                     }
-                     if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
+                    if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show(
                             "Kindly enter a date greater than current date"
                         );
@@ -2826,7 +2826,7 @@ sap.ui.define(
                         oModelControl.setProperty(sPath + "/EndDate", null);
                         return;
                     }
-                     if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
+                    if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show("Kindly enter a date greater than current date");
 
                         oModelControl.setProperty(sPath + "/EndDate", null);
@@ -3156,6 +3156,35 @@ sap.ui.define(
                     promise.resolve(oPayLoad);
                     return promise;
                 },
+                _CheckExpandPainter: function (oPayload) {
+                    var promise = jQuery.Deferred();
+                    if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
+
+                        if (oPayload["OfferSpecificPainter"].hasOwnProperty("results")) {
+                            if (oPayload["OfferSpecificPainter"]["results"].length > 0) {
+                                for (var x in oPayload["OfferSpecificPainter"]["results"]) {
+                                    if (oPayload["OfferSpecificPainter"]["results"][x].hasOwnProperty("Painter")) {
+                                        oPayload["OfferSpecificPainter"]["results"][x]["Painter"] = null;
+                                    }
+                                }
+                            }
+
+                        } else if (Array.isArray(oPayload["OfferSpecificPainter"])) {
+                            // this is for update data basically in add its not required as the data wont have painter expand
+                            if (oPayload["OfferSpecificPainter"].length > 0) {
+                                for (var x in oPayload["OfferSpecificPainter"]) {
+                                    if (oPayload["OfferSpecificPainter"][x].hasOwnProperty("Painter")) {
+                                        oPayload["OfferSpecificPainter"][x]["Painter"] = null;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                
+                    promise.resolve(oPayload);
+                    return promise;
+                },
                 _CreatePayloadPart1(bFileFlag) {
                     var promise = jQuery.Deferred();
                     //creating the payload
@@ -3227,7 +3256,7 @@ sap.ui.define(
 
                 // postdata
                 _CreatePayloadPart3: function (oPayLoad) {
-                  var promise = jQuery.Deferred();
+                    var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oModelCtrlData = oModelControl.getData();
