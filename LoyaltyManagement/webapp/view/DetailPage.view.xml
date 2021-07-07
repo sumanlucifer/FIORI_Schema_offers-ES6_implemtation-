@@ -87,11 +87,11 @@
                                         <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <!-- <form:FormElement label="Requested Through">
+                                <form:FormElement label="Product Details">
                                     <form:fields>
-                                        <Text class="sapUiTinyMarginTop" text="Mobile App" />
+                                        <Text class="sapUiTinyMarginTop" text="{ProductDetails/ProductDetails}" />
                                     </form:fields>
-                                </form:FormElement> -->
+                                </form:FormElement>
                             </form:formElements>
                         </form:FormContainer>
                         <form:FormContainer title="">
@@ -111,8 +111,6 @@
                                         <Text class="sapUiTinyMarginTop" text="{Painter/Mobile}" />
                                     </form:fields>
                                 </form:FormElement>
-                                
-                            
                                 <form:FormElement label="Date">
                                     <form:fields>
                                         <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
