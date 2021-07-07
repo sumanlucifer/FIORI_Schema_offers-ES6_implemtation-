@@ -32,7 +32,7 @@
 							</VBox>
 							<VBox>
 								<Label text="{i18n>colRedirectionType}"/>
-								<ComboBox width="100%" selectedKey="{objectView>RedirectionType}" editable="{= ${objectView>/sMode} !== 'V'}">
+								<ComboBox width="100%" selectedKey="{objectView>RedirectionType}" change="onRedirectionChange" editable="{= ${objectView>/sMode} !== 'V'}">
 									<items>
 										<core:Item text="{i18n>screen}" key="SCREEN"/>
 										<core:Item text="{i18n>link}" key="LINK"/>

@@ -473,6 +473,13 @@ sap.ui.define([
                             tPicker.setValue(null);
                             }
                         
+                }else if(date < currDate){
+                    oReturn.IsNotValid = true;
+                                    oReturn.sMsg.push("MSG_VALDTN_ERR_STIME");
+                                aCtrlMessage.push({
+                                message: "MSG_VALDTN_ERR_STIME",
+                                target: "/oDetails/ScheduledDate"
+                            });
                 }
                 
 			}
@@ -926,6 +933,12 @@ sap.ui.define([
                 },
         onPressBreadcrumbLink: function(){
             this.oRouter.navTo("worklist");
+        },
+        onRedirectionChange: function (){
+             var oView = this.getView();
+             var oModel = oView.getModel("objectView")
+             oModel.setProperty("/oDetails/RedirectionTo","")
+
         }
 
 
