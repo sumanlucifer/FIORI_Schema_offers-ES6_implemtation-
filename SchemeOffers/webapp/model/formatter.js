@@ -169,6 +169,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       return false;
     },
     btnSendForApprovalCheck: function (m1, m2) {
+      return true;
       if (m1 === "DRAFT") {
         if (m2 === 5) {
           return true;
