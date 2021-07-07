@@ -550,7 +550,7 @@ sap.ui.define(
                     var othat = this;
                     console.log(sPath, oBject);
                     MessageBox.confirm(
-                        "Kindly confirm to deactivate the painter- " + oBject["Name"],
+                        "Kindly confirm to delete the painter- " + oBject["Name"],
                         {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
