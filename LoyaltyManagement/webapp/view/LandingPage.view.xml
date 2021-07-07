@@ -208,7 +208,7 @@
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
+                                    <Text text="{i18n>tblColTypeOfAccrual}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
@@ -276,7 +276,7 @@
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
+                                    <Text text="{i18n>tblColTypeOfRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>

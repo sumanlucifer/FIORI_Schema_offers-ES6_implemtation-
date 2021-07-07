@@ -75,16 +75,16 @@ sap.ui.define([
                     ]
                 }));
 
-                //  var oTableRedemption = this.getView().byId("idRedemptionRequestTable");
-                // oTableRedemption.getBinding("items").filter(new Filter({
-                //     filters: [
-                //         new Filter({
-                //             filters: [
-                //                 new Filter("PointTransactionType", sap.ui.model.FilterOperator.NE, "ACCRUED")
-                //             ], and: false
-                //         })
-                //     ]
-                // }));
+                 var oTableRedemption = this.getView().byId("idRedemptionRequestTable");
+                oTableRedemption.getBinding("items").filter(new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.NE, "ACCRUED")
+                            ], and: false
+                        })
+                    ]
+                }));
             },
             onUpdateFinished: function (oEvent) {
             // update the worklist's object counter after the table update
