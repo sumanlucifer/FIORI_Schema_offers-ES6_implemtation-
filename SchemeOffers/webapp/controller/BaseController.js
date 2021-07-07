@@ -3209,7 +3209,8 @@ sap.ui.define(
                             }
                         }
                     }
-                    // setting the zone, division, depot data.
+                    // setting the flag for increasing the end date time 
+                    oPayLoad["EndDate"]= new Date(oPayLoad["EndDate"].setHours(23,59,59,999));
 
                     promise.resolve(oPayLoad);
                     return promise;

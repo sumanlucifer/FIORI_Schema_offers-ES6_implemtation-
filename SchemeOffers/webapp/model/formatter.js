@@ -141,9 +141,21 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA";
         },
+        btnAddOffer: function (m1) {
+            //m1 is the logged in user type
+            if (m1 !== 1 && m1 !== 5 && m1 !== 6 && m1 !== 7) {
+                return false;
+            }
+            return true;
+        },
         //List View Workflow changes
         btnEditOfferTable: function (m1, m2, m3) {
             //m1 edit applicable; m2 login information; m3 offer status
+
+            //first check is only admin,HOM,HOM1,HOD, is allowed to edit or add offers
+            if (m2 !== 1 && m2 !== 5 && m2 !== 6 && m2 !== 7) {
+                return false;
+            }
             if (m2 === 5) {
                 if (m3 === "DRAFT" || m3 === "REJECTED") {
                     return m1;
@@ -178,7 +190,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         //btn Approve Display and reject button
         btnApproveDisplay: function (m1, m2) {
             if (m1 === "PENDING") {
-                if (m2 === 6 || m2 === 7) {
+                if (m2 === 6 || m2 === 7 || m2 === 1) {
                     return true;
                 }
             }
@@ -191,7 +203,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false;
         },
         btnEscalate: function (m1, m2, m3) {
-            console.log(m1, m2, m3);
+          
             if (m1 === "PENDING") {
                 if (m2 === 6) {
                     if (m3 === "HO_MARKETING_1") {

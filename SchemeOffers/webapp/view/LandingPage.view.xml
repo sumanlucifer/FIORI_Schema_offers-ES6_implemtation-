@@ -94,7 +94,7 @@
                     <OverflowToolbar>
                         <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
+                        <Button icon="sap-icon://add" visible="{parts:['LoginInfo>/UserTypeId'],formatter:'.formatter.btnAddOffer'}" text="{i18n>addToolBtnText}" tooltip="{i18n>addToolBtnTooltip}" type="Emphasized" press="onPressAdd"/>
                         <Button tooltip="{i18n>sortBtnTooltip}" icon="sap-icon://sort" press="handleSortButtonPressed" />
                     </OverflowToolbar>
                 </headerToolbar>

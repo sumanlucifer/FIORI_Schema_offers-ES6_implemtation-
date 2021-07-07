@@ -8,4 +8,6 @@
 *.env*
 */dist/
 */.gitignore
-SchemeOffers/xs-app.json
+
+*.sh
+Deploy.sh
