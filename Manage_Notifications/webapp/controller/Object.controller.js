@@ -933,6 +933,12 @@ sap.ui.define([
                 },
         onPressBreadcrumbLink: function(){
             this.oRouter.navTo("worklist");
+        },
+        onRedirectionChange: function (){
+             var oView = this.getView();
+             var oModel = oView.getModel("objectView")
+             oModel.setProperty("/oDetails/RedirectionTo","")
+
         }
 
 
