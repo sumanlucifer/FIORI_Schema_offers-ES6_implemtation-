@@ -165,7 +165,7 @@ sap.ui.define(
                             oModelView.setProperty("/StartDate", null);
                             return;
                         }
-                        
+
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show(
@@ -1213,8 +1213,8 @@ sap.ui.define(
                         }
                         if (bFlag == true) {
                             oRewardDtl.push({
-                                RewardGiftId:null,
-                                RewardGiftName:"",
+                                RewardGiftId: null,
+                                RewardGiftName: "",
                                 RequiredVolume: "",
                                 RequiredPoints: "",
                                 RewardPoints: "",
@@ -3167,7 +3167,7 @@ sap.ui.define(
                             if (oPayload["OfferSpecificPainter"]["results"].length > 0) {
                                 for (var x in oPayload["OfferSpecificPainter"]["results"]) {
                                     if (oPayload["OfferSpecificPainter"]["results"][x].hasOwnProperty("Painter")) {
-                                        oPayload["OfferSpecificPainter"]["results"][x]["Painter"] = null;
+                                        delete oPayload["OfferSpecificPainter"]["results"][x]["Painter"];
                                     }
                                 }
                             }
@@ -3177,14 +3177,14 @@ sap.ui.define(
                             if (oPayload["OfferSpecificPainter"].length > 0) {
                                 for (var x in oPayload["OfferSpecificPainter"]) {
                                     if (oPayload["OfferSpecificPainter"][x].hasOwnProperty("Painter")) {
-                                        oPayload["OfferSpecificPainter"][x]["Painter"] = null;
+                                        delete oPayload["OfferSpecificPainter"][x]["Painter"];
                                     }
                                 }
                             }
                         }
 
                     }
-                
+
                     promise.resolve(oPayload);
                     return promise;
                 },
@@ -3213,7 +3213,7 @@ sap.ui.define(
                         }
                     }
                     // setting the flag for increasing the end date time 
-                    oPayLoad["EndDate"]= new Date(oPayLoad["EndDate"].setHours(23,59,59,999));
+                    oPayLoad["EndDate"] = new Date(oPayLoad["EndDate"].setHours(23, 59, 59, 999));
                     promise.resolve(oPayLoad);
                     return promise;
                 },
