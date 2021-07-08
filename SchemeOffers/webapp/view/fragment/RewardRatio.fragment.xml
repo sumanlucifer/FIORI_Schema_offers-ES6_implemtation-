@@ -113,11 +113,11 @@
                 <Column>
                     <Label text="{i18n>Table1Label4}" />
                 </Column>
-                <!-- <Column>
-                    <Text text="{i18n>Table1Label5}" />
-                </Column> -->
                 <Column>
                     <Text text="{i18n>Table1Label6}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Table1Label5}" />
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>
@@ -142,19 +142,23 @@
                         </VBox> -->
                         <VBox visible="{= ${oModelView>/InputType}===0 }">
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"   valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox visible="{= ${oModelView>/InputType}===1 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"  valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardPoints',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"  valueStateText="Kindly Enter a Valid Number not starting with 0"  />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"  valueStateText="Kindly Enter a Valid Number not starting with 0"  />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                        </VBox>
+                        <VBox >
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>RewardGiftName','oModelControl>RewardGiftId','oModelControl>RewardGift'],formatter:'.formatter.fmtCheckRewardGift'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }"  placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardGiftName',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z]{1}[wW]*',minLength:1,maxLength:20} }" valueStateText="Kindly Enter a Valid Text" />
                         </VBox>
 
 

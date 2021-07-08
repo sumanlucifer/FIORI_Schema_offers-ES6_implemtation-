@@ -1079,7 +1079,7 @@ sap.ui.define(
                     var sPath = oModelControl2.getProperty("/bindProp");
                     var othat = this;
                     var exPand =
-                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
+                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
