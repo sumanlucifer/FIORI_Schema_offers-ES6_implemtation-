@@ -1029,6 +1029,8 @@ sap.ui.define(
                     //archetype.painter type,potential
                     // work flow reated flags
                     oModelView.setProperty("/Remark", "");
+                    // set applicable painter count
+                    oModelControl.setProperty("/Fields/PainterCount",oModelView.getProperty("/ApplicablePainterCount"))
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1079,7 +1081,7 @@ sap.ui.define(
                     var sPath = oModelControl2.getProperty("/bindProp");
                     var othat = this;
                     var exPand =
-                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
+                        "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +

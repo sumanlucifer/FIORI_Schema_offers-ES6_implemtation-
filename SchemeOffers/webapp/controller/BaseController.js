@@ -1213,6 +1213,8 @@ sap.ui.define(
                         }
                         if (bFlag == true) {
                             oRewardDtl.push({
+                                RewardGiftId:null,
+                                RewardGiftName:"",
                                 RequiredVolume: "",
                                 RequiredPoints: "",
                                 RewardPoints: "",

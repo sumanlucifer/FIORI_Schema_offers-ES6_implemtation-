@@ -141,6 +141,20 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA";
         },
+        fmtCheckRewardGift:function(m1,m2,m3){
+            console.log(m1,m2,m3);
+            if(m1){
+                return m1
+            }
+            if(m2){
+                if(m3){
+                    return m3["RewardGift"]
+                }
+            }
+
+            return "NA"
+        },
+        // List view workflow changes
         btnAddOffer: function (m1) {
             //m1 is the logged in user type
             if (m1 !== 1 && m1 !== 5 && m1 !== 6 && m1 !== 7) {
