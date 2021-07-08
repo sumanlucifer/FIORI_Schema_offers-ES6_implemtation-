@@ -163,8 +163,9 @@ sap.ui.define(
                             MessageToast.show("Kindly select a date less than end date.");
                             oModelControl.setProperty("/StartDate", "");
                             oModelView.setProperty("/StartDate", null);
+                            return;
                         }
-                        return;
+                        
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show(
@@ -3211,7 +3212,6 @@ sap.ui.define(
                     }
                     // setting the flag for increasing the end date time 
                     oPayLoad["EndDate"]= new Date(oPayLoad["EndDate"].setHours(23,59,59,999));
-
                     promise.resolve(oPayLoad);
                     return promise;
                 },
