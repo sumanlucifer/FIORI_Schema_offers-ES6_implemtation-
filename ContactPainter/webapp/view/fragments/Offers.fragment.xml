@@ -7,7 +7,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto" items="{path: '/PainterOfferSet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter,Offer/OfferType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
 
             </headerToolbar>
@@ -41,8 +41,8 @@
 
             </columns>
 
-            <items>
-                <ColumnListItem>
+            <dependents >
+                <ColumnListItem id="idTblOffersNew2Template">
                     <cells>
                         <Text text="{PainterId}" />
                         <Text text="{Offer/OfferCode}" />
@@ -59,7 +59,7 @@
                         </HBox>
                     </cells>
                 </ColumnListItem>
-            </items>
+            </dependents>
         </Table>
 
     </VBox>

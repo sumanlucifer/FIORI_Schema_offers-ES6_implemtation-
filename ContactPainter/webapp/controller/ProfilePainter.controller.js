@@ -996,7 +996,22 @@ sap.ui.define(
                     oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
                     //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
-                    //IdTblComplaints
+                    //Offers Table
+                    
+                    oView.byId("idTblOffersNew2").bindItems({
+                        path: "/PainterOfferSet",
+                        template: oView.byId("idTblOffersNew2Template"),
+                        templateShareable: true,
+                        parameters:{
+                            expand:'Painter,Offer/OfferType',
+                            custom:{
+                                PainterId:""+oPainterId+""
+                            }
+                        },
+                        filters:[new Filter("IsArchived",FilterOperator.EQ,false)],
+                        sorter:new Sorter("CreatedAt",true)
+                    })
+
                 },
                 onLoyaltySelChange: function (oEvent) {
                     var sKey = oEvent.getParameter("item").getKey();
@@ -2843,8 +2858,8 @@ sap.ui.define(
                     );
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
-                     oBindingParams.parameters["expand"] = "ProductDetails";
-                     var  oFinancialYear = this._getfinanceYear(),
+                    oBindingParams.parameters["expand"] = "ProductDetails";
+                    var oFinancialYear = this._getfinanceYear(),
                         aFilters = [],
                         //check if CreatedAt is Passed in filter or Not
                         bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
