@@ -1001,12 +1001,12 @@ sap.ui.define([
                     var oDivision = this.getView().byId("idDivision");
                     
                     this._fnChangeDivDepot({
-                        src: { path: "/TargetDetails/TrainingZone" },
+                        src: { path: "/TargetDetails/NotificationGroupZone" },
                         target: { localPath: "/TargetDetails/NotificationGroupDivision", oDataPath: "/MasterDivisionSet", key: "Zone" }
                     });
 
                     this._fnChangeDivDepot({
-                        src: { path: "/TargetDetails/TrainingDivision" },
+                        src: { path: "/TargetDetails/NotificationGroupDivision" },
                         target: { localPath: "/TargetDetails/NotificationGroupDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
                     });
 
@@ -1020,7 +1020,7 @@ sap.ui.define([
                 onMultyDivisionChange: function (oEvent) {
 
                     this._fnChangeDivDepot({
-                        src: { path: "/TargetDetails/TrainingDivision" },
+                        src: { path: "/TargetDetails/NotificationGroupDivision" },
                         target: { localPath: "/TargetDetails/NotificationGroupDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
                     });
                 },
