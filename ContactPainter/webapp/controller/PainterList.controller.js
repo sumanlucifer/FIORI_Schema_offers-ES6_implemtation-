@@ -569,7 +569,7 @@ sap.ui.define(
                     };
                     oData.update(sPath + "/IsArchived", oPayload, {
                         success: function (mData) {
-                            MessageToast.show(oBject["Name"] + " Sucessfully Deleted.");
+                            MessageToast.show(oBject["Name"] + " Successfully Deleted.");
                             oData.refresh();
                         },
                         error: function (data) {
