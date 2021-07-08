@@ -3,31 +3,29 @@
     xmlns:core="sap.ui.core">
     <Dialog class="sapUiContentPadding" title="{i18n>OfferRedeemDialogTitle}" titleAlignment="Center">
         <content>
-            <!-- <VBox >
-        <HBox> <Label text="{i18n>LblNewStatus}" />
-            <Select items="{oModelControl2>aApplicableStatus}" selectedKey="{oModelControl2>Payload/ActivationStatus}">
-                <core:Item key="{oModelControl2>key}" text="{oModelControl2>key}" />
-            </Select>
-            </HBox>
-              <HBox> 
-             <Label text="{i18n>LblNewStatus}" />
-             <TextArea value="{oModelControl2>Payload/ActivationStatusChangeReason}" />
-                         </HBox>
+            <VBox  width="100%" >
+                <RadioButtonGroup id="GroupA" width="100%" selectedIndex="{oModelControl>/RbtnRedType}">
+                    <RadioButton text="Option 1" width="100%" />
+                    <RadioButton text="Option 2"  width="100%" />
+                    <RadioButton text="Option 3"  width="100%" />
 
-             </VBox> -->
+                </RadioButtonGroup>
 
-            <f:SimpleForm layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
+            </VBox>
+
+            <!-- <f:SimpleForm layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
                 <f:content>
                     <Label text="600INR Direct Bank Transfer"></Label>
+                    
                 </f:content>
-            </f:SimpleForm>
+            </f:SimpleForm> -->
 
 
 
         </content>
         <buttons>
-            <Button text="Close" press="onCloseStatus" />
-            <Button press="onConfirmStatus" type="Emphasized" text="{i18n>Save}" />
+            <Button text="Close" press="onDialogCloseRedeme" />
+            <Button press="onConfirmRedeem" type="Emphasized" text="{i18n>Save}" />
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
