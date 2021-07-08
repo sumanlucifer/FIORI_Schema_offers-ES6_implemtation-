@@ -13,9 +13,7 @@
             </headerToolbar>
 
             <columns>
-                <Column>
-                    <Text text="Painter Id" />
-                </Column>
+            
                 <Column>
                     <Text text="{i18n>OfferCode}" />
                 </Column>
@@ -44,7 +42,7 @@
             <dependents >
                 <ColumnListItem id="idTblOffersNew2Template">
                     <cells>
-                        <Text text="{PainterId}" />
+                        
                         <Text text="{Offer/OfferCode}" />
                         <Text text="{Offer/Title}" />
                         <Text text="{Offer/OfferType/OfferType}" />
