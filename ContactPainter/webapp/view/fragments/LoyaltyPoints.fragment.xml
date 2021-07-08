@@ -15,7 +15,7 @@
                             persistencyKey="LoyaltySmartTableKey"
                             initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table >
+                        <Table>
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
@@ -47,6 +47,12 @@
                                         </customData>
                                          <Text text="{i18n>TransactionType}"/>
                                     </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "ProductDetails", "leadingProperty": "ProductDetails", "columnIndex": 5}'/>
+                                        </customData>
+                                         <Text text="{i18n>ProductDetails}"/>
+                                    </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
@@ -55,7 +61,8 @@
                                                <Text text="{path:'RewardPoints'}" />
                                                <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                                <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                                <Text text="{= ${ProductDetails}=== null ? 'NA' : ${ProductDetails/ProductDetails} } " />
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 
