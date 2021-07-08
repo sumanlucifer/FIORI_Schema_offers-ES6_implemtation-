@@ -1029,6 +1029,8 @@ sap.ui.define(
                     //archetype.painter type,potential
                     // work flow reated flags
                     oModelView.setProperty("/Remark", "");
+                    // set applicable painter count
+                    oModelControl.setProperty("/Fields/PainterCount",oModelView.getProperty("/ApplicablePainterCount"))
                     promise.resolve(oData);
                     return promise;
                 },
