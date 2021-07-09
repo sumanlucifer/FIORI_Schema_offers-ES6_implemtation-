@@ -133,7 +133,11 @@ sap.ui.define(
                         },
                         tableDealay: 0,
                         selectedSection: "referral",
-                        RbtnRedType:0
+                        OfferRedeemDlg: {
+                            RbtnRedeemType: -1,
+                            UUID: ""
+                        }
+
                     };
                     var oView = this.getView();
                     var oModel = new JSONModel(oData);
@@ -3234,7 +3238,8 @@ sap.ui.define(
                 },
                 //offer table and dialog box code integration
                 onOfferReedeme: function (oEvent) {
-                  
+                    var obj = oEvent.getSource().getBindingContext().getObject();
+                    console.log(obj);
                     var oView = this.getView();
                     // create value help dialog
                     if (!this._DialogOfferRedeem) {
@@ -3246,16 +3251,37 @@ sap.ui.define(
                             function (oDialog) {
                                 this._DialogOfferRedeem = oDialog;
                                 this.getView().addDependent(this._DialogOfferRedeem);
-                                this._BeforeRedeemOpen();
-                                this._DialogOfferRedeem.open();
+                                this._BeforeRedeemOpen(obj);
+                                //this._DialogOfferRedeem.open();
                             }.bind(this)
                         );
                     } else {
-                        this._DialogOfferRedeem.open();
+                        //this._DialogOfferRedeem.open();
+                        this._BeforeRedeemOpen(obj);
                     }
 
                 },
-                _BeforeRedeemOpen:function(){
+                _BeforeRedeemOpen: function (mParam1) {
+                    var oProgress = mParam1["PainterOfferProgress"],
+                        oSelectedProgress;
+                    var oModelC2 = this.getView().getModel("oModelControl2")
+                    if (oProgress.hasOwnProperty("__list")) {
+                        if (Array.isArray(oProgress["__list"])) {
+                            if (oProgress["__list"].length > 0) {
+                                oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
+                                var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
+                                console.log(oGetProgress)
+                                this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")",{
+                                    expand:"RewardGift"
+                                });
+                                // set rbtn default to null
+                                oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
+                                oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
+                                //OfferRedmDlg/UUId
+                                this._DialogOfferRedeem.open();
+                            }
+                        }
+                    }
 
                 },
                 onDialogCloseRedeme: function (oEvent) {
@@ -3266,13 +3292,52 @@ sap.ui.define(
                 onConfirmRedeem: function () {
                     var oView = this.getView();
                     var oModelC2 = oView.getModel("oModelControl2");
-                    var iSelctedIndex = oModelC2.getProperty("/RbtnRedType");
+                    var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
+                    console.log(iSelctedIndex)
+                    if (iSelctedIndex < 0) {
+                        MessageToast.show("Kindly Select at least one of the reward to redeem.");
+                        return;
+                    }
+
                     var oRedemptionType = {
-                        0: "POINTS_TRANSFER"
+                        0: "POINTS_TRANSFER",
+                        1: "BANK_TRANSFER",
+                        2: "GIFT_REDEMPTION"
                     }
                     var sPainterId = oModelC2.getProperty("/PainterId");
-                    var sProgressId = "";
-                    console.log(sProgressId,"'"+oRedemptionType[iSelctedIndex]+"'",sPainterId)
+                    var sProgressId = oModelC2.getProperty("/OfferRedeemDlg/UUID");
+                    console.log(sProgressId, sPainterId);
+                    var oData = oView.getModel();
+                    var othat = this;
+                    oData.read("/RedeemOffer", {
+                        urlParameters: {
+                            ProgressId: "'" + sProgressId + "'",
+                            RedemptionType: "'" + oRedemptionType[iSelctedIndex] + "'",
+                            PainterId: sPainterId,
+                        },
+                        success: function (m1) {
+                            console.log(m1);
+                            if(m1.hasOwnProperty("Message")){
+                                 MessageToast.show(m1["Message"]);
+                            }
+                           
+                            this.onDialogCloseRedeme();
+                            this.getView().getModel().refresh(true);
+                            // if (oData !== null) {
+                            //     if (oData.hasOwnProperty("Status")) {
+                            //         if (oData["Status"] == true) {
+                            //             MessageToast.show(oData["Message"]);
+
+                            //             othat.oDefaultDialog.close();
+                            //         } else if (oData["Status"] == false) {
+                            //             MessageToast.show(oData["Message"]);
+                            //         }
+                            //         othat.getView().getModel().refresh(true);
+                            //     }
+                            // }
+                        }.bind(this),
+                        error: function () {},
+                    });
                 },
 
             }
