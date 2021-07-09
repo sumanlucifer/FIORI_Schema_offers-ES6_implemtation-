@@ -80,7 +80,7 @@ sap.ui.define([
                     filters: [
                         new Filter({
                             filters: [
-                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.NE, "ACCRUED")
+                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.EQ, "REDEEMED")
                             ], and: false
                         })
                     ]
@@ -140,6 +140,15 @@ sap.ui.define([
                 var oTable = this.getView().byId("idAllRequestTable");
                 var oBinding = oTable.getBinding("items");
                 oBinding.filter([]);
+
+                var oTable1 = this.getView().byId("idAccrualRequestTable");
+                var oBinding1 = oTable.getBinding("items");
+                oBinding1.filter([]);
+
+                var oTable2 = this.getView().byId("idRedemptionRequestTable");
+                var oBinding2 = oTable.getBinding("items");
+                oBinding2.filter([]);
+
                 var oModel = this.getViewModel("ViewModel");
                 oModel.setProperty("/filterBar", {
                     search: "",
@@ -327,6 +336,7 @@ sap.ui.define([
                     oBinding1.sort(new Sorter({ path: "CreatedAt", descending: true }));
                     oBinding2.sort(new Sorter({ path: "CreatedAt", descending: true }));
                     //this._fiterBarSort();
+                     this.primaryFilter();
                 },
                  onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();
