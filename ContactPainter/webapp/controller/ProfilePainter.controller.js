@@ -132,7 +132,8 @@ sap.ui.define(
                             ReferralEmail: "",
                         },
                         tableDealay: 0,
-                        selectedSection: "referral"
+                        selectedSection: "referral",
+                        RbtnRedType:0
                     };
                     var oView = this.getView();
                     var oModel = new JSONModel(oData);
@@ -996,7 +997,22 @@ sap.ui.define(
                     oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
                     //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
 
-                    //IdTblComplaints
+                    //Offers Table
+
+                    oView.byId("idTblOffersNew2").bindItems({
+                        path: "/PainterOfferSet",
+                        template: oView.byId("idTblOffersNew2Template"),
+                        templateShareable: true,
+                        parameters: {
+                            expand: 'Painter,Offer/OfferType,PainterOfferProgress',
+                            custom: {
+                                PainterId: "" + oPainterId + ""
+                            }
+                        },
+                        filters: [new Filter("IsArchived", FilterOperator.EQ, false)],
+                        sorter: new Sorter("CreatedAt", true)
+                    })
+
                 },
                 onLoyaltySelChange: function (oEvent) {
                     var sKey = oEvent.getParameter("item").getKey();
@@ -2843,8 +2859,8 @@ sap.ui.define(
                     );
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
-                     oBindingParams.parameters["expand"] = "ProductDetails";
-                     var  oFinancialYear = this._getfinanceYear(),
+                    oBindingParams.parameters["expand"] = "ProductDetails";
+                    var oFinancialYear = this._getfinanceYear(),
                         aFilters = [],
                         //check if CreatedAt is Passed in filter or Not
                         bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
@@ -3217,7 +3233,8 @@ sap.ui.define(
                     this.oRemarksMessageDialog.open();
                 },
                 //offer table and dialog box code integration
-                onOfferReedeme: function () {
+                onOfferReedeme: function (oEvent) {
+                  
                     var oView = this.getView();
                     // create value help dialog
                     if (!this._DialogOfferRedeem) {
@@ -3229,6 +3246,7 @@ sap.ui.define(
                             function (oDialog) {
                                 this._DialogOfferRedeem = oDialog;
                                 this.getView().addDependent(this._DialogOfferRedeem);
+                                this._BeforeRedeemOpen();
                                 this._DialogOfferRedeem.open();
                             }.bind(this)
                         );
@@ -3236,7 +3254,26 @@ sap.ui.define(
                         this._DialogOfferRedeem.open();
                     }
 
-                }
+                },
+                _BeforeRedeemOpen:function(){
+
+                },
+                onDialogCloseRedeme: function (oEvent) {
+                    this._DialogOfferRedeem.close();
+                    this._DialogOfferRedeem.destroy();
+                    delete this._DialogOfferRedeem;
+                },
+                onConfirmRedeem: function () {
+                    var oView = this.getView();
+                    var oModelC2 = oView.getModel("oModelControl2");
+                    var iSelctedIndex = oModelC2.getProperty("/RbtnRedType");
+                    var oRedemptionType = {
+                        0: "POINTS_TRANSFER"
+                    }
+                    var sPainterId = oModelC2.getProperty("/PainterId");
+                    var sProgressId = "";
+                    console.log(sProgressId,"'"+oRedemptionType[iSelctedIndex]+"'",sPainterId)
+                },
 
             }
 

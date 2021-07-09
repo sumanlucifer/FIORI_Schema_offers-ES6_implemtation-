@@ -7,15 +7,13 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto" items="{path: '/PainterOfferSet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter,Offer/OfferType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
 
             </headerToolbar>
 
             <columns>
-                <Column>
-                    <Text text="Painter Id" />
-                </Column>
+            
                 <Column>
                     <Text text="{i18n>OfferCode}" />
                 </Column>
@@ -37,14 +35,11 @@
                 <Column>
                     <Text text="{i18n>RedemptionStatus}" />
                 </Column>
-
-
             </columns>
-
-            <items>
-                <ColumnListItem>
+            <dependents >
+                <ColumnListItem id="idTblOffersNew2Template">
                     <cells>
-                        <Text text="{PainterId}" />
+                        
                         <Text text="{Offer/OfferCode}" />
                         <Text text="{Offer/Title}" />
                         <Text text="{Offer/OfferType/OfferType}" />
@@ -55,11 +50,12 @@
                             <items>
                                 <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtStatus'}" />
                                 <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" />
+                                <!-- <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
                         </HBox>
                     </cells>
                 </ColumnListItem>
-            </items>
+            </dependents>
         </Table>
 
     </VBox>
