@@ -1013,7 +1013,7 @@ sap.ui.define(
                                 PainterId: "" + oPainterId + ""
                             }
                         },
-                        filters: [new Filter("IsArchived", FilterOperator.EQ, false)],
+                        filters: [new Filter("IsArchived", FilterOperator.EQ, false),new Filter("ProgressStatus", FilterOperator.NE, 'None'),new Filter("Offer/IsArchived", FilterOperator.EQ, false),new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
                     })
 
