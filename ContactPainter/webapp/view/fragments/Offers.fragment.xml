@@ -50,7 +50,7 @@
                             <items>
                                 <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtStatus'}" />
                                 <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" />
-                                <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" /> 
+                                <!-- <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
                         </HBox>
                     </cells>
