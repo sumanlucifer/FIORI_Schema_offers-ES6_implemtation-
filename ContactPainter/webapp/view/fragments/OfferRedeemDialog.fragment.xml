@@ -7,7 +7,7 @@
                 <RadioButtonGroup id="GroupA" width="100%" selectedIndex="{oModelControl2>/OfferRedeemDlg/RbtnRedeemType}">
                     <RadioButton text="Rdeeme Points- {RewardPoints}" width="100%" visible="{= ${RewardPoints}!==null }" />
                     <RadioButton text="Rdeeme Cash- Rs. {RewardCash}" width="100%" visible="{= ${RewardCash}!==null }" />
-                    <RadioButton text="Rdeeme Gift-  {RewardGiftName}" width="100%" visible="{= ${RewardGiftName}!==null }" />
+                    <RadioButton text="Rdeeme Gift-  {RewardGift/RewardGift}" width="100%" visible="{= ${RewardGiftId}!==null }" />
                 </RadioButtonGroup>
 
             </VBox>
