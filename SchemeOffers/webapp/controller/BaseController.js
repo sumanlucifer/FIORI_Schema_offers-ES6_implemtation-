@@ -3620,7 +3620,7 @@ sap.ui.define(
                         "RequiredVolume",
                         "RequiredPoints",
                         "RewardPoints",
-                        // "RewardGiftId",
+                        "RewardGiftName",
                         "RewardCash",
                     ];
                     aFinalArray = oDataTbl.filter(function (ele) {
