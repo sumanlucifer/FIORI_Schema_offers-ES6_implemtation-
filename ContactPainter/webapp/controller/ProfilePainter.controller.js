@@ -3271,8 +3271,7 @@ sap.ui.define(
                                 oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
                                 var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
                                 console.log(oGetProgress)
-                                this._DialogOfferRedeem.bindElement({
-                                    path: "/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")",
+                                this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")",{
                                     expand:"RewardGift"
                                 });
                                 // set rbtn default to null
