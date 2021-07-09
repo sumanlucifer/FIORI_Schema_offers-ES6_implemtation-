@@ -76,13 +76,13 @@ sap.ui.define([], function () {
         },
         CallbackReqTblStatus: function (mParam1) {
             if (mParam1 === "REGISTERED") {
-                return "Pending"
+                return "Pending";
             }
             if (mParam1 === "INPROGRESS") {
-                return "Pending"
+                return "Pending";
             }
             if (mParam1 === "RESOLVED") {
-                return "Completed"
+                return "Completed";
             }
             if (mParam1 === "REJECTED") {
                 return "Completed"
