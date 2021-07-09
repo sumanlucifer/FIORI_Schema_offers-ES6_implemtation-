@@ -157,7 +157,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // List view workflow changes
         btnAddOffer: function (m1) {
             //m1 is the logged in user type
-            if (m1 !== 1 && m1 !== 5 && m1 !== 6 && m1 !== 7) {
+            if (m1 !== 5 && m1 !== 6 && m1 !== 7) {
                 return false;
             }
             return true;
@@ -167,7 +167,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m1 edit applicable; m2 login information; m3 offer status
 
             //first check is only admin,HOM,HOM1,HOD, is allowed to edit or add offers
-            if (m2 !== 1 && m2 !== 5 && m2 !== 6 && m2 !== 7) {
+            if (m2 !== 5 && m2 !== 6 && m2 !== 7) {
                 return false;
             }
             if (m2 === 5) {
@@ -204,7 +204,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         //btn Approve Display and reject button
         btnApproveDisplay: function (m1, m2) {
             if (m1 === "PENDING") {
-                if (m2 === 6 || m2 === 7 || m2 === 1) {
+                if (m2 === 6 || m2 === 7) {
                     return true;
                 }
             }
