@@ -9,10 +9,10 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Accrual Requests"/>
+                    <Title text="{path:'PointTransactionType',formatter:'.formatter.requestType'} Request"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="Accrual Details">
+                    <Breadcrumbs currentLocationText="{path:'PointTransactionType',formatter:'.formatter.requestType'} Details">
                         <Link press="onPressBreadcrumbLink" text="Loyalty Management"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -28,7 +28,7 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <ObjectAttribute title="Type of Accrual"/>
+                        <ObjectAttribute title="Type of {path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
                         <ObjectStatus text="{path:'PointType',formatter:'.formatter.accuralType'}" />
                     </layout:VerticalLayout>
 
@@ -87,9 +87,14 @@
                                         <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Product Details">
-                                    <form:fields>
+                                <form:FormElement label="Product Details" visible="{= ${PointTransactionType}=== 'ACCRUED'}">
+                                    <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{ProductDetails/ProductDetails}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Offer Title" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                    <form:fields >
+                                        <Text class="sapUiTinyMarginTop" text="{Offer/Title}" />
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>

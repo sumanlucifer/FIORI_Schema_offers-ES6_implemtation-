@@ -72,6 +72,9 @@ sap.ui.define([
              else if (accuralType == "SYSTEM_MIGRATION") {
                 return "System Migration"
             }
+            else if(accuralType == "OFFER_GIFT_REDEMPTION"){
+                return "Offer Gift Redemption"
+            }
         },
         status: function (status) {
                  if (status == "PENDING") {
@@ -86,7 +89,10 @@ sap.ui.define([
         },
         requestType: function (request) {
                  if (request == "ACCRUED") {
-                return "Accrued";
+                return "Accrual";
+            }
+            else if (request == "REDEEMED") {
+                return "Redemption";
             }
             else if (request == "CLOSING_BALANCE") {
                 return "Closing Balance";
