@@ -154,7 +154,7 @@
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" />
