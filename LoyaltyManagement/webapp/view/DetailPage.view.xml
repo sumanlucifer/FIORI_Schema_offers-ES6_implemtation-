@@ -98,7 +98,7 @@
                                     </form:fields>
                                     
                                 </form:FormElement>
-                                <form:FormElement label="Offer Title" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                <form:FormElement label="Reward Gift" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
                                     </form:fields>
