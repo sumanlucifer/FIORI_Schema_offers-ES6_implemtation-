@@ -201,6 +201,7 @@ sap.ui.define([
                     oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", data.NotificationGroupPainterArcheType);
 
                 }
+                this.onMultyZoneSet();
 				return;
 			}
 			oViewModel.setProperty("/oDetails", {
@@ -288,6 +289,13 @@ sap.ui.define([
                     }
             }
             else if(GroupType=="GROUP"){
+                var oPayload = oViewModel.getProperty("/oDetails");
+                var oValid = this._fnValidationGroup(oPayload);
+                    if (oValid.IsNotValid) {
+                        //this.showError(this._fnMsgConcatinator(oValid.sMsg));
+                    MessageToast.show(this.getResourceBundle().getText(oValid.sMsg));
+                        return;
+                    }
                 var oZoneMulti = this.getView().byId("idZone");
                 var oDivisionMulti = this.getView().byId("idDivision");
                 var oDepotMulti = this.getView().byId("multiInputDepotAdd");
@@ -399,6 +407,24 @@ sap.ui.define([
 					message: "MSG_VALDTN_ERR_MEMBERS",
 					target: "/oDetails/Members"
 				});
+			}
+			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
+			return oReturn;
+        },
+        _fnValidationGroup: function (data) {
+			var oReturn = {
+					IsNotValid: false,
+					sMsg: []
+				},
+				aCtrlMessage = [];
+			if (!data.GroupName) {
+				oReturn.IsNotValid = true;
+				oReturn.sMsg.push("MSG_VALDTN_ERR_GROUP");
+				aCtrlMessage.push({
+					message: "MSG_VALDTN_ERR_GROUP",
+					target: "/oDetails/GroupName"
+                });
+                
 			}
 			if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
 			return oReturn;
@@ -1002,6 +1028,28 @@ sap.ui.define([
                             break;
                         
                     }
+                },
+                onMultyZoneSet : function (){
+                    var oViewModel = this.getModel("objectView");
+                    var sKeys = oViewModel.getProperty("/TargetDetails/NotificationGroupZone");
+                    var oDivision = this.getView().byId("idDivision");
+                    
+                    this._fnChangeDivDepot({
+                        src: { path: "/TargetDetails/NotificationGroupZone" },
+                        target: { localPath: "/TargetDetails/NotificationGroupDivision", oDataPath: "/MasterDivisionSet", key: "Zone" }
+                    });
+
+                    this._fnChangeDivDepot({
+                        src: { path: "/TargetDetails/NotificationGroupDivision" },
+                        target: { localPath: "/TargetDetails/NotificationGroupDepot", oDataPath: "/MasterDepotSet", key: "Division", targetKey: "DepotId" }
+                    });
+
+                    var aDivFilter = [];
+                    for (var y of sKeys) {
+                        aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y))
+                    }
+                    oDivision.getBinding("items").filter(aDivFilter);
+                    
                 },
                 onMultyZoneChange: function (oEvent) {
                     var sKeys = oEvent.getSource().getSelectedKeys();
