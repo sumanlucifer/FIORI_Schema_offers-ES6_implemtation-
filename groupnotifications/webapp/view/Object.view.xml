@@ -3,7 +3,14 @@
 	<uxap:ObjectPageLayout id="ObjectPageLayout" showAnchorBar="true" showFooter="true" subSectionLayout="TitleOnLeft"
 		binding="{objectView>/oDetails}" busy="{objectView>/busy}" busyIndicatorDelay="0" class="sapUiResponsiveContentPadding">
 		<uxap:headerTitle>
-			<uxap:ObjectPageHeader objectTitle="{= ${objectView>/sMode} === 'C' ? ${i18n>TtlAddGroup} : ${i18n>TtlEditGroup} }"/>
+			<uxap:ObjectPageHeader objectTitle="{= ${objectView>/sMode} === 'C' ? ${i18n>TtlAddGroup} : ${i18n>TtlEditGroup} }">
+                <uxap:breadcrumbs>
+                    <Breadcrumbs  currentLocationText="Group Details">
+                        <Link text="Notification Groups" press="onCancel"/>
+                    </Breadcrumbs>
+                </uxap:breadcrumbs>
+            </uxap:ObjectPageHeader>
+            
 		</uxap:headerTitle>
 		<uxap:sections>
 			<uxap:ObjectPageSection title="{i18n>groupName}">
