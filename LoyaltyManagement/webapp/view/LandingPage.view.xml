@@ -140,6 +140,7 @@
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                 </Column>
+                                
                                 <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
@@ -162,6 +163,7 @@
                                         <Text text="{Painter/Mobile}"/>
                                         <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                         
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         
@@ -251,7 +253,7 @@
                         >
                     <Table id="idRedemptionRequestTable" width="auto" 
                          items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,GiftRedemption'},
                         sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished2">
@@ -281,6 +283,9 @@
                                     <Text text="{i18n>tblColTypeOfRedemption}"/>
                                 </Column>
                                 <Column>
+                                    <Text text="{i18n>RewardGift}"/>
+                                </Column>
+                                <Column>
                                     <Text text="{i18n>tblColPoints}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
@@ -302,6 +307,7 @@
                                         <Text text="{Painter/Mobile}"/>
                                         <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                        <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                                         
