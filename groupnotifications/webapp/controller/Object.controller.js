@@ -113,6 +113,11 @@ sap.ui.define([
 						"$expand": "Members,Members/Painter,Members/Admin,Members/Role,NotificationGroupZone,NotificationGroupDivision,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType"
 					},
 					success: this._setView.bind(this)
+                });
+                //added fix masterdepotSet error on _fnChangeDivDepot
+                //gets the Mastedepot set in odataModel
+                this.getModel().read("/MasterDepotSet", {
+					
 				});
             }.bind(this));
             this._initData();
@@ -207,6 +212,8 @@ sap.ui.define([
              oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
 
 		},
 
