@@ -14,13 +14,13 @@
             <Column>
                 <Text text="{i18n>Mobile}" />
             </Column>
-            <Column>
+            <Column width="5%">
                 <Text text="{i18n>formRegionLbl1}" />
             </Column>
-            <Column>
+            <Column width="5%">
                 <Text text="{i18n>formRegionLbl2}" />
             </Column>
-            <Column>
+            <Column  width="10%">
                 <Text text="{i18n>formRegionLbl3}" />
             </Column>
             <Column>
@@ -41,8 +41,11 @@
             <Column>
                 <Text text="{i18n>BalanceQty}" />
             </Column>
-            <Column>
+              <Column>
                 <Text text="{i18n>EligibleForRwards}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>Rewards}" />
             </Column>
 
         </columns>
@@ -60,7 +63,8 @@
                     <Text text="{ProgressValue}"/>
                     <Text text="{ProgressMax}"/>
                     <Text text="{= ${ProgressMax} - ${ProgressValue} }"/>
-                     <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.chkEligibleForGift'}"/>
+                      <Text text="{parts:['RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
+                     <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
 
                 </cells>
             </ColumnListItem>

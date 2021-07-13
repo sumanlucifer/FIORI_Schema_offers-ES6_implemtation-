@@ -268,13 +268,27 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m3 RewardPoints
             //m4 RewardCash
             //m5 RewardGift
+            if (m1 === 'REDEEMED') {
+                return "NA";
+            }
             if (m1 === 'REDEEMABLE') {
+                return "Yes";
+            }
+            return "No";
+        },
+        checkPainterReward: function (m1, m2, m3, m4, m5) {
+            //m1 RedemptionStatus
+            //m2 RedemptionType
+            //m3 RewardPoints
+            //m4 RewardCash
+            //m5 RewardGift
+            if (m1 === 'REDEEMED') {
                 if (m2 === "POINTS_TRANSFER") {
-                    return "Points- " + m3;
+                    return "Points - " + m3;
                 } else if (m2 === "BANK_TRANSFER") {
-                    return "Cash- Rs. " + m4;
+                    return "Cash - Rs. " + m4;
                 } else if (m2 === "GIFT_REDEMPTION") {
-                    return "Gift- " + m5;
+                    return "Gift - " + m5;
                 }
             }
             return "NA";
