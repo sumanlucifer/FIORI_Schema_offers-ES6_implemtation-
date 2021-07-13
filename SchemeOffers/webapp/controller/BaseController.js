@@ -1262,7 +1262,6 @@ sap.ui.define(
                     //         break;
                     //     }
                     // }
-                    console.log(oObject);
                     if (bFlag && cFlag) {
                         oObject["editable"] = false;
                         if (!oObject["RewardGiftName"]) {
