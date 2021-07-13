@@ -38,6 +38,9 @@
                 <Column>
                     <Text text="{i18n>RedemptionStatus}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>GiftRedeemed}" />
+                </Column>
             </columns>
             <dependents >
                 <ColumnListItem id="idTblOffersNew2Template">
@@ -56,6 +59,9 @@
                                 <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost"  press="onOfferReedeme" />
                                 <!-- <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
+                        </HBox>
+                        <HBox>
+                            <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
                         </HBox>
                     </cells>
                 </ColumnListItem>
