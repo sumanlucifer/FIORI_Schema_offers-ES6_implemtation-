@@ -141,13 +141,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA";
         },
-        fmtCheckRewardGift:function(m1,m2,m3){
-            console.log(m1,m2,m3);
-            if(m1){
+        fmtCheckRewardGift: function (m1, m2, m3) {
+            console.log(m1, m2, m3);
+            if (m1) {
                 return m1
             }
-            if(m2){
-                if(m3){
+            if (m2) {
+                if (m3) {
                     return m3["RewardGift"]
                 }
             }
@@ -217,7 +217,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false;
         },
         btnEscalate: function (m1, m2, m3) {
-          
+
             if (m1 === "PENDING") {
                 if (m2 === 6) {
                     if (m3 === "HO_MARKETING_1") {
@@ -260,6 +260,24 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
         ExecutionLogIcon: function (sStatus) {
             return wfIcons[sStatus];
+        },
+        //painter offer table
+        chkEligibleForGift: function (m1, m2, m3, m4, m5) {
+            //m1 RedemptionStatus
+            //m2 RedemptionType
+            //m3 RewardPoints
+            //m4 RewardCash
+            //m5 RewardGift
+            if (m1 === 'REDEEMABLE') {
+                if (m2 === "POINTS_TRANSFER") {
+                    return "Points: " + m3;
+                } else if (m2 === "BANK_TRANSFER") {
+                    return "Cash: Rs. " + m4;
+                } else if (m2 === "GIFT_REDEMPTION") {
+                    return "Gift: " + m5;
+                }
+            }
+            return "NA";
         },
     };
 });
