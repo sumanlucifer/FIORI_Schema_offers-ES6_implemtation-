@@ -87,12 +87,12 @@
                                         <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Product Details" visible="{= ${PointTransactionType}=== 'ACCRUED'}">
+                                <form:FormElement label="Product Details" visible="{= ${ProductDetails}!==null}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{ProductDetails/ProductDetails}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Offer Title" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                <form:FormElement label="Offer Title" visible="{= ${Offer}!== null}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{Offer/Title}" />
                                     </form:fields>
