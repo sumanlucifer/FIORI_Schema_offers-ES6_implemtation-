@@ -187,8 +187,8 @@ sap.ui.define(
                         oModelView.setProperty("/EndDate", null);
                         return;
                     }
-                    if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show("Kindly enter a date greater than current date");
+                    if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
+                        MessageToast.show("Kindly enter a date greater than or equal to current date");
                         oModelControl.setProperty("/EndDate", "");
                         oModelView.setProperty("/EndDate", null);
                     }
