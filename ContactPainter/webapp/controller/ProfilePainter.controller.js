@@ -174,6 +174,7 @@ sap.ui.define(
                     var sId = oSection.getId();
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
+                        oView.byId("smrtLoyalty1").rebindTable();//redeemed table
                     } else if (sId.match("learnSection")) {
                         console.log("learnSection")
                         oView.byId("smrtLiveTraining").rebindTable();
@@ -213,6 +214,7 @@ sap.ui.define(
                 _RefreshSmartables: function () {
                     var oView = this.getView();
                     oView.byId("smrtLoyalty").rebindTable();
+                    oView.byId("smrtLoyalty1").rebindTable();//redeemed table
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
@@ -2891,6 +2893,13 @@ sap.ui.define(
                             value1: false
                         })
                     );
+                    aFilters.push(
+                        new Filter({
+                            path: "PointTransactionType",
+                            operator: FilterOperator.EQ,
+                            value1: "ACCRUED"
+                        })
+                    );
 
                     oBindingParams.filters.push(
                         new Filter({
@@ -2921,7 +2930,58 @@ sap.ui.define(
                     };
                 },
                 // himank loyalty hanges end
+                /*Aditya loyalty changes*/
+                 onBeforeRebindRdmd: function (oEvent) {
+                    console.log("Binding Trigerred for loyalty redeemed")
+                    var oPainterId = this.getViewModel("oModelControl2").getProperty(
+                        "/PainterId"
+                    );
 
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "Offer,GiftRedemption";
+                    var oFinancialYear = this._getfinanceYear(),
+                        aFilters = [],
+                        //check if CreatedAt is Passed in filter or Not
+                        bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
+                            ele
+                        ) {
+                            return ele.sPath !== "CreatedAt";
+                        });
+
+                    aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+
+                    if (bApplyCurrentFinancialYear)
+                        aFilters.push(
+                            new Filter({
+                                path: "CreatedAt",
+                                operator: FilterOperator.BT,
+                                value1: oFinancialYear.startYear,
+                                value2: oFinancialYear.endYear,
+                            })
+                        );
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false
+                        })
+                    );
+                     aFilters.push(
+                        new Filter({
+                            path: "PointTransactionType",
+                            operator: FilterOperator.EQ,
+                            value1: "REDEEMED"
+                        })
+                    );
+
+                    oBindingParams.filters.push(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+                /*Aditya loyalty chnages end */
                 // knowledge table changes
                 fmtVisible: function (mParam) {
                     console.log(mParam);
