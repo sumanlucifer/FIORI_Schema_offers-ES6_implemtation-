@@ -347,7 +347,7 @@ sap.ui.define(
                     oVbox.addItem(new XMLView({
                         viewName: "com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails",
                         id: oView.createId("wizardViewBranching")
-                    }))
+                    }));
                     // this._getFormFragment(sFragmentName).then(function (oVBox) {
                     //     oView.addDependent(oVBox);
                     //     objSection.addItem(oVBox);
