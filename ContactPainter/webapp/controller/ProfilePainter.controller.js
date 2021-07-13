@@ -1010,7 +1010,7 @@ sap.ui.define(
                         template: oView.byId("idTblOffersNew2Template"),
                         templateShareable: true,
                         parameters: {
-                            expand: 'Painter,Offer/OfferType,PainterOfferProgress',
+                            expand: 'Painter,Offer/OfferType,PainterOfferProgress,PainterOfferRedemption/GiftRedemption',
                             custom: {
                                 PainterId: "" + oPainterId + ""
                             }
@@ -3273,6 +3273,7 @@ sap.ui.define(
 
                     return sLetter;
                 },
+
                 onPressRemarks: function (oEvent) {
                     var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
                     var sRemarks = oEvent.getSource().getCustomData("remarks")[0].getValue();
