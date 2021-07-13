@@ -71,12 +71,12 @@
                         </VBox>
                         <mvc:XMLView id="wizardViewBranching" async="true" visible="{= ${oModelControl3>/mode}=== 'edit'}" viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
                     </IconTabFilter>
-                    <IconTabFilter text="{i18n>EligiblePainter}" key="1">
+                    <IconTabFilter text="{i18n>Painters}" key="1">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable1" type="XML"/>
                     </IconTabFilter>
-                    <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
+                    <!-- <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable2" type="XML"/>
-                    </IconTabFilter>
+                    </IconTabFilter> -->
                     <IconTabFilter text="{i18n>History}" key="3">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.OfferHistory" type="XML"/>
                     </IconTabFilter>

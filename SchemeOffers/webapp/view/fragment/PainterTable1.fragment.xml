@@ -1,47 +1,70 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="PainteTable1"  initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterOfferSet" beforeRebindTable="onBeforeBindPainterTable1" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="true" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true"  enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="Painter1SmartTableKey" ignoreFromPersonalisation="OfferId,PainterId,UUID,ProgressStatus,ProgressColor,RedemptionStatus,OfferDuration,IsSelected,IsArchived,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy">
-        <Table growing="true" growingThreshold="15" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}" >
-            <columns>
-                <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 0 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
-                    </customData>
-                    <Text text="{i18n>PainterName}"/>
-                </Column>
-                 <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Mobile", "leadingProperty": "Painter/Mobile", "columnIndex": 1 ,"sortProperty": "Painter/Mobile","filterProperty": "Painter/Mobile"}'/>
-                    </customData>
-                    <Text text="{i18n>Mobile}"/>
-                </Column>
-                 <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "RedemeptionIndex", "leadingProperty": "RedemeptionIndex", "columnIndex": 2 ,"sortProperty": "RedemeptionIndex","filterProperty": "RedemeptionIndex"}'/>
-                    </customData>
-                    <Text text="{i18n>RedemptionIndex}"/>
-                </Column>
-                 <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "RedemptionMax", "leadingProperty": "RedemptionMax", "columnIndex": 3 ,"sortProperty": "RedemptionMax","filterProperty": "RedemptionMax"}'/>
-                    </customData>
-                    <Text text="{i18n>RedemptionCycle}"/>
-                </Column>
-               
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core">
+    <Table id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <headerToolbar>
 
-            </columns>
-            <items>
-                <ColumnListItem>
-                    <cells>
-                        <Text text="{Painter/Name}"/>
-                         <Text text="{Painter/Mobile}"/>
-                          <Text text="{RedemeptionIndex}"/>
-                            <Text text="{RedemptionMax}"/>
+        </headerToolbar>
 
+        <columns>
 
+            <Column>
+                <Text text="{i18n>PainterName}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>Mobile}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>formRegionLbl1}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>formRegionLbl2}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>formRegionLbl3}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>DepotCode}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>Dealer}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>DealerCode}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>Achievement}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>SchemeSlab}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>BalanceQty}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>EligibleForRwards}" />
+            </Column>
 
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-    </smartTable:SmartTable>
+        </columns>
+        <dependents >
+            <ColumnListItem id="idPainterTableTemplate">
+                <cells>
+                    <Text text="{Name}" />
+                    <Text text="{Mobile}" />
+                    <Text text="{ZoneId}" />
+                    <Text text="{DivisionId}" />
+                    <Text text="{Depot}"/>
+                    <Text text="{DepotId}"/>
+                    <Text text="{DealerName}"/>
+                    <Text text="{DealerId}"/>
+                    <Text text="{ProgressValue}"/>
+                    <Text text="{ProgressMax}"/>
+                    <Text text="{= ${ProgressMax} - ${ProgressValue} }"/>
+                     <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.chkEligibleForGift'}"/>
+
+                </cells>
+            </ColumnListItem>
+        </dependents>
+    </Table>
+
 </core:FragmentDefinition>

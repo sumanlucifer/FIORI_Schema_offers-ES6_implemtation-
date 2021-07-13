@@ -182,8 +182,8 @@ sap.ui.define(
           var oModelView = oView.getModel("oModelView");
           var oEndDate = oEvent.getSource().getDateValue();
           var oStartDate = oModelView.getProperty("/StartDate");
-          if (oStartDate >= oEndDate) {
-            MessageToast.show("Kindly select a date more than start date.");
+          if (oStartDate > oEndDate) {
+            MessageToast.show("Kindly select a date more than or equal start date.");
             oModelControl.setProperty("/EndDate", "");
             oModelView.setProperty("/EndDate", null);
             return;

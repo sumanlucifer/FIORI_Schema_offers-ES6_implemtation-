@@ -115,12 +115,29 @@ sap.ui.define(
                     this.oWorkflowModel = new JSONModel();
                     this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
-
+                    this._SetPainterTableBinding(oProp);
                     if (sMode === "edit") {
                         this.handleEditPress();
                     } else {
                         this._initData(oProp);
                     }
+                },
+                _SetPainterTableBinding: function (iOfferId) {
+                    var oView = this.getView();
+                    var oTable = oView.byId("idPainterTable");
+                   
+                    oTable.bindItems({
+                        path: "/GetOfferEligibleAndQualifiedPainter",
+                        template: oView.byId("idPainterTableTemplate"),
+                        templateShareable: true,
+                        parameters: {
+                            custom: {
+                                OfferId: "" + 592 + ""
+                            }
+                        }
+                        
+                    })
+
                 },
                 _initData: function (oProp) {
                     var oData = {
@@ -1030,7 +1047,7 @@ sap.ui.define(
                     // work flow reated flags
                     oModelView.setProperty("/Remark", "");
                     // set applicable painter count
-                    oModelControl.setProperty("/Fields/PainterCount",oModelView.getProperty("/ApplicablePainterCount"))
+                    oModelControl.setProperty("/Fields/PainterCount", oModelView.getProperty("/ApplicablePainterCount"))
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1890,9 +1907,9 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     if (sKey == "1") {
-                        oView.byId("PainteTable1").rebindTable();
+                        //oView.byId("PainteTable1").rebindTable();
                     } else if (sKey == "2") {
-                        oView.byId("PainteTable2").rebindTable();
+                        //oView.byId("PainteTable2").rebindTable();
                     } else if (sKey == "3") {
                         oView.byId("OfferHistory").rebindTable();
                     }
@@ -2127,7 +2144,7 @@ sap.ui.define(
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
                     c1.then(function (oNewPayLoad) {
                         c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function(oNewPayLoad){
+                        c2.then(function (oNewPayLoad) {
                             othat._RemarksDialog2.close();
                             othat.handleCancelPress(oNewPayLoad)
                         })
