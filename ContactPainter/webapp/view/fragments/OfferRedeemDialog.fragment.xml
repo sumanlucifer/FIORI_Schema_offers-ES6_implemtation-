@@ -5,9 +5,9 @@
         <content>
             <VBox width="100%">
                 <RadioButtonGroup id="GroupA" width="100%" selectedIndex="{oModelControl2>/OfferRedeemDlg/RbtnRedeemType}">
-                    <RadioButton text="Rdeeme Points- {RewardPoints}" width="100%" visible="{= ${RewardPoints}!==null }" />
-                    <RadioButton text="Rdeeme Cash- Rs. {RewardCash}" width="100%" visible="{= ${RewardCash}!==null }" />
-                    <RadioButton text="Rdeeme Gift-  {RewardGift/RewardGift}" width="100%" visible="{= ${RewardGiftId}!==null }" />
+                    <RadioButton text="{i18n>RedeemPoints}- {RewardPoints}" width="100%" visible="{= ${RewardPoints}!==null }" />
+                    <RadioButton text="{i18n>RedeemCash}- Rs. {RewardCash}" width="100%" visible="{= ${RewardCash}!==null }" />
+                    <RadioButton text="{i18n>RedeemGift}-  {RewardGift/RewardGift}" width="100%" visible="{= ${RewardGiftId}!==null }" />
                 </RadioButtonGroup>
 
             </VBox>
