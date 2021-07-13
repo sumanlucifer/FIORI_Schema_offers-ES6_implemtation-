@@ -133,7 +133,9 @@ sap.ui.define(
                         templateShareable: true,
                         parameters: {
                             custom: {
-                                OfferId: "" + iOfferId + ""
+                                OfferId: "" + iOfferId + "",
+                                Offset:"0",
+                                Limit:"100"
                             }
                         }
                         
