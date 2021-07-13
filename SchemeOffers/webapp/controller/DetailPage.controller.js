@@ -123,6 +123,7 @@ sap.ui.define(
                     }
                 },
                 _SetPainterTableBinding: function (iOfferId) {
+                    console.log(iOfferId)
                     var oView = this.getView();
                     var oTable = oView.byId("idPainterTable");
                    
@@ -132,7 +133,7 @@ sap.ui.define(
                         templateShareable: true,
                         parameters: {
                             custom: {
-                                OfferId: "" + 592 + ""
+                                OfferId: "" + iOfferId + ""
                             }
                         }
                         
