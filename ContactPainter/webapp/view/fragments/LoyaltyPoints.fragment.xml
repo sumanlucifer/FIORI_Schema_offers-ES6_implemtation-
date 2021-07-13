@@ -101,7 +101,7 @@
                                         </customData>
                                           <Text text="{i18n>Type}"/>
                                     </Column>
-                                     <Column hAlign="Begin">
+                                     <!-- <Column hAlign="Begin">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints", "leadingProperty": "RewardPoints", "columnIndex": 1 ,"sortProperty": "RewardPoints","filterProperty": "RewardPoints"}'/>
                                         </customData>
@@ -112,32 +112,39 @@
                                             <core:CustomData key="p13nData" value='\{"columnKey": "TotalPoints", "leadingProperty": "TotalPoints", "columnIndex": 2 ,"sortProperty": "TotalPoints","filterProperty": "TotalPoints"}'/>
                                         </customData>
                                           <Text text="{i18n>TotalPoints}"/>
+                                    </Column> -->
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Offer", "type":"date", "leadingProperty": "Offer", "columnIndex": 1 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>OfferTitle}"/>
                                     </Column>
                                      <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                                         </customData>
                                           <Text text="{i18n>DateAndTime}"/>
                                     </Column>
                                      <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointTransactionType", "leadingProperty": "PointTransactionType", "columnIndex": 4 ,"sortProperty": "PointTransactionType","filterProperty": "PointTransactionType"}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointTransactionType", "leadingProperty": "PointTransactionType", "columnIndex": 3 ,"sortProperty": "PointTransactionType","filterProperty": "PointTransactionType"}'/>
                                         </customData>
                                          <Text text="{i18n>TransactionType}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption", "leadingProperty": "GiftRedemption", "columnIndex": 5}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption", "leadingProperty": "GiftRedemption", "columnIndex": 4}'/>
                                         </customData>
-                                         <Text text="{i18n>RewardGift}"/>
+                                         <Text text="{i18n>RewardGiftName}"/>
                                     </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
                                         <cells>
                                                <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
-                                               <Text text="{path:'RewardPoints'}" />
-                                               <Text text="{path:'TotalPoints'}" />
+                                               <!-- <Text text="{path:'RewardPoints'}" />
+                                               <Text text="{path:'TotalPoints'}" /> -->
+                                               <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
                                                 <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} } " />
