@@ -114,8 +114,7 @@ sap.ui.define([], function () {
                         } else
                             if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData.GiftRedemptionId) {
                                 var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                                var gift = "Gift:" + giftData.RewardGiftName;
-                                return gift;
+                                return giftData.RewardGiftName;
                             } else
                                 if (pointData.RedemptionType === "BANK_TRANSFER") {
                                     var cash = "Cash:";
