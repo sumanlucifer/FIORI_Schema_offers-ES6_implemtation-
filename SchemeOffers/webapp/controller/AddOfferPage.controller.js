@@ -10,6 +10,7 @@ sap.ui.define(
         "sap/ui/Device",
         "sap/m/MessageToast",
         "sap/m/MessageBox",
+        "sap/ui/core/mvc/XMLView",
         "sap/ui/core/ValueState",
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "com/knpl/pragati/SchemeOffers/model/customInt",
@@ -27,6 +28,7 @@ sap.ui.define(
         Device,
         MessageToast,
         MessageBox,
+        XMLView,
         ValueState,
         Validator,
         customInt,
@@ -264,17 +266,17 @@ sap.ui.define(
                             AppProd2: {},
                             AppProd3: {},
                             AppProd4: {},
-                            AppPack1:{},
-                            AppPack2:{},
-                            AppPack3:{},
-                            AppPack4:{},
-                            Potential:{},
-                            PainterType:{},
-                            ArcheType:{},
-                            Zone:{},
-                            Division:{},
-                            Depot:{},
-                            Painter:{}
+                            AppPack1: {},
+                            AppPack2: {},
+                            AppPack3: {},
+                            AppPack4: {},
+                            Potential: {},
+                            PainterType: {},
+                            ArcheType: {},
+                            Zone: {},
+                            Division: {},
+                            Depot: {},
+                            Painter: {}
                         }
                     };
                     var oConrtrolModel = new JSONModel(oDataControl);
@@ -311,14 +313,14 @@ sap.ui.define(
                         InputType: 0,
                         OfferStatus: null,
                         OfferApplicableProductCategory: [],
-                        BonusInputType:0
+                        BonusInputType: 0
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
                     oView.setModel(oConrtrolModel, "oModelControl");
 
                     // adding the fragment
-                    //this._showFormFragment("ChangeDetail2");
+                    this._showFormFragment("ChangeDetail2");
                     //get products data
                     this._getLoggedInUserDeatils();
                     this._getProductsData();
@@ -338,17 +340,22 @@ sap.ui.define(
                     this.getView().byId("wizardViewBranching");
                 },
                 _showFormFragment: function (sFragmentName) {
-                    var objSection = this.getView().byId("oVbxSmtTbl");
+                    var oVbox = this.getView().byId("oVbxSmtTbl");
                     var oView = this.getView();
-                    objSection.destroyItems();
+                    oVbox.destroyItems();
                     var othat = this;
-                    this._getFormFragment(sFragmentName).then(function (oVBox) {
-                        oView.addDependent(oVBox);
-                        objSection.addItem(oVBox);
-                        othat._enableSteps();
-                        //othat._setDataValue.call(othat);
-                        //othat._setUploadCollectionMethod.call(othat);
-                    });
+                    oVbox.addItem(new XMLView({
+                        viewName: "com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails",
+                        id: oView.createId("wizardViewBranching")
+                    }))
+                    // this._getFormFragment(sFragmentName).then(function (oVBox) {
+                    //     oView.addDependent(oVBox);
+                    //     objSection.addItem(oVBox);
+                    //     othat._enableSteps();
+                    //     //othat._setDataValue.call(othat);
+                    //     //othat._setUploadCollectionMethod.call(othat);
+                    // });
+
                 },
 
                 wizardCompletedHandler: function () {
@@ -431,7 +438,7 @@ sap.ui.define(
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
-                     if (!aTableBonusValidation[0]) {
+                    if (!aTableBonusValidation[0]) {
                         MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
