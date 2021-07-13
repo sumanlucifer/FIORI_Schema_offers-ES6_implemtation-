@@ -270,11 +270,11 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m5 RewardGift
             if (m1 === 'REDEEMABLE') {
                 if (m2 === "POINTS_TRANSFER") {
-                    return "Points: " + m3;
+                    return "Points- " + m3;
                 } else if (m2 === "BANK_TRANSFER") {
-                    return "Cash: Rs. " + m4;
+                    return "Cash- Rs. " + m4;
                 } else if (m2 === "GIFT_REDEMPTION") {
-                    return "Gift: " + m5;
+                    return "Gift- " + m5;
                 }
             }
             return "NA";
