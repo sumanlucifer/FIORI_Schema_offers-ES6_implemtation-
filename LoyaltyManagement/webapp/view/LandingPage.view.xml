@@ -144,6 +144,9 @@
                                     <Text text="{i18n>tblColDepot}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepotCode}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column>
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
@@ -170,9 +173,10 @@
                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                         <Text text="{Painter/ZoneId}"/>
+                                        <Text text="{Painter/ZoneId}"/>
                                         <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}"/>
+                                        <Text text="{Painter/Depot/Depot} "/>
+                                        <Text text="{Painter/DepotId}"/>
                                         <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                          
@@ -227,6 +231,9 @@
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDepot}"/>
                                 </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepotCode}"/>
+                                </Column>
                                 <!-- <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column> -->
@@ -255,7 +262,8 @@
                                         <Text text="{Painter/Mobile}"/>
                                          <Text text="{Painter/ZoneId}"/>
                                         <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}"/>
+                                        <Text text="{Painter/Depot/Depot} "/>
+                                        <Text text="{Painter/DepotId}"/>
                                         <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                         <Text text="{RewardPoints}"/>
@@ -309,6 +317,9 @@
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDepot}"/>
                                 </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepotCode}"/>
+                                </Column>
                                 <!-- <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
                                 </Column> -->
@@ -340,7 +351,8 @@
                                         <Text text="{Painter/Mobile}"/>
                                         <Text text="{Painter/ZoneId}"/>
                                         <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}" />
+                                        <Text text="{Painter/Depot/Depot} "/>
+                                        <Text text="{Painter/DepotId}"/>
                                         <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
                                         <!-- <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/> -->
                                         <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
