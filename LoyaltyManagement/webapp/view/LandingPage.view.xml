@@ -118,7 +118,8 @@
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Emphasized" icon="sap-icon://add" press="onPressAddPointBtn"/>
+                                    <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onAllExportPress"/>
+                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Emphasized" icon="sap-icon://add" press="onPressAddPointBtn"/> -->
                                     <!-- <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
                                 </OverflowToolbar>
@@ -206,8 +207,8 @@
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
-                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
-                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
+                                     <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onAccExportPress"/>
+                                    <!--<Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
                                 </OverflowToolbar>
                             </headerToolbar>
@@ -292,6 +293,7 @@
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <ToolbarSpacer />
+                                    <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onRdmExportPress"/>
                                     <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
                                     <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
                                     <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->

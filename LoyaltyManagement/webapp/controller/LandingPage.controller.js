@@ -7,9 +7,13 @@ sap.ui.define([
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
     'sap/ui/Device',
-    "../model/formatter"
+    "../model/formatter",
+    "sap/m/MessageBox",
+    "sap/ui/core/util/Export",
+    "sap/ui/core/util/ExportTypeCSV"
+
 ],
-    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, formatter) {
+    function (BaseController, Filter, FilterOperator, JSONModel, Sorter, Fragment, Device, formatter,MessageBox,Export, ExportTypeCSV) {
         "use strict";
 
         return BaseController.extend("com.knpl.pragati.LoyaltyManagement.controller.LandingPage", {
@@ -365,6 +369,129 @@ sap.ui.define([
                     oDepot.setValue("");
                     oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
                 },
+                onRdmExportPress(){
+                   
+                    var aFilters = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter('PointTransactionType', sap.ui.model.FilterOperator.EQ, "REDEEMED")
+                    ],
+                    and: true
+                });
+                this.onExportCSV(aFilters);
+                },
+                onAccExportPress(){
+                   
+                    var aFilters = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter('PointTransactionType', sap.ui.model.FilterOperator.EQ, "ACCRUED")
+                    ],
+                    and: true
+                });
+                this.onExportCSV(aFilters);
+                },
+                onAllExportPress(){
+                   
+                    var aFilters = null;
+                this.onExportCSV(aFilters);
+                },
+                onExportCSV: function (filters) {
+                var that = this;
+                var aFilters=filters;
+                this.getComponentModel().read("/PainterPointsHistorySet", {
+                    urlParameters: {
+                        "$expand": "Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,GiftRedemption",
+                        "$orderby":"CreatedAt desc"
+                    },
+                    filters: [aFilters],
+                    success: function (data) {
+                        that.getView().getModel("oModelControl").setProperty("/PainterList", data.results);
+
+                        var oExport = new Export({
+                            // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                            exportType: new ExportTypeCSV({
+                                separatorChar: ";"
+                            }),
+                            // Pass in the model created above
+                            models: that.getView().getModel("oModelControl"),
+
+                            // binding information for the rows aggregation
+                            rows: {
+                                path: "/PainterList"
+                            },
+
+                            // column definitions with column name and binding info for the content
+
+                            columns: [{
+                                name: "Name",
+                                template: {
+                                    content: "{Painter/Name}"
+                                }
+                            }, {
+                                name: "Membership Id",
+                                template: {
+                                    content: "{Painter/MembershipCard}"
+                                }
+                            }, {
+                                name: "Mobile Number",
+                                template: {
+                                    content: "{Painter/Mobile}"
+                                }
+                            }, {
+                                name: "Zone",
+                                template: {
+                                    content: "{Painter/ZoneId}"
+                                }
+                            }, {
+                                name: "Division",
+                                template: {
+                                    content: "{Painter/DivisionId}"
+                                }
+                            }, {
+                                name: "Depot",
+                                template: {
+                                    content: "{Painter/Depot/Depot}"
+                                }
+                            },
+                            {
+                                name: "Depot Code",
+                                template: {
+                                    content: "{Painter/DepotId}"
+                                }
+                            },
+                            {
+                                name: "Type of Request",
+                                template: {
+                                    content: "{PointTransactionType}"
+                                },
+                                
+                            },
+                             {
+                                name: "Type of Accrual / Redemption",
+                                template: {
+                                    content: "{PointType}"
+                                },
+                                
+                            },
+                            {
+                                name: "Date",
+                                template: {
+                                    content: "{CreatedAt}"
+                                },
+                                
+                            }
+                            ]
+                        });
+
+                        // download exported file
+                        oExport.saveFile().catch(function (oError) {
+                            MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                        }).then(function () {
+                            oExport.destroy();
+                        });
+                    }
+                });
+            }
+
 
 
 
