@@ -39,7 +39,7 @@
                     <Text text="{i18n>RedemptionStatus}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>GiftRedeemed}" />
+                    <Text text="{i18n>Rewards}" />
                 </Column>
             </columns>
             <dependents >
