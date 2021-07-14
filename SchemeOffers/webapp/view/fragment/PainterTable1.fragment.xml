@@ -45,7 +45,7 @@
                 <Text text="{i18n>EligibleForRwards}" />
             </Column>
             <Column>
-                <Text text="{i18n>Rewards}" />
+                <Text text="{i18n>RedeemedRewards}" />
             </Column>
 
         </columns>
