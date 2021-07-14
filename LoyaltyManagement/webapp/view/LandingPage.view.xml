@@ -111,7 +111,7 @@
                         key="all">
                         <Table id="idAllRequestTable" width="auto" 
                         items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
                         sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished">
@@ -133,6 +133,15 @@
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColZone}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDiv}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepot}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRequest}"/>
@@ -161,6 +170,9 @@
                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
+                                         <Text text="{Painter/ZoneId}"/>
+                                        <Text text="{Painter/DivisionId}"/>
+                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}"/>
                                         <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                          
@@ -183,7 +195,7 @@
                        >
                         <Table id="idAccrualRequestTable" width="auto" 
                         items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
+                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
                         sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished1">
@@ -207,8 +219,17 @@
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                    <Text text="{i18n>tblColZone}"/>
                                 </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDiv}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepot}"/>
+                                </Column>
+                                <!-- <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                </Column> -->
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfAccrual}"/>
                                 </Column>
@@ -232,7 +253,10 @@
                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
+                                         <Text text="{Painter/ZoneId}"/>
+                                        <Text text="{Painter/DivisionId}"/>
+                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}"/>
+                                        <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
                                         <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
@@ -253,7 +277,7 @@
                         >
                     <Table id="idRedemptionRequestTable" width="auto" 
                          items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,GiftRedemption'},
+                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,GiftRedemption'},
                         sorter: { path: 'Id',descending: true} }" 
                         noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
                         updateFinished="onUpdateFinished2">
@@ -277,17 +301,26 @@
                                     <Text text="{i18n>tblColPrimaryMobileNo}"/>
                                 </Column>
                                 <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                    <Text text="{i18n>tblColZone}"/>
                                 </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDiv}"/>
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColDepot}"/>
+                                </Column>
+                                <!-- <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="{i18n>tblColTypeOfRequest}"/>
+                                </Column> -->
                                 <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColTypeOfRedemption}"/>
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>RewardGift}"/>
                                 </Column>
-                                <Column>
+                                <!-- <Column>
                                     <Text text="{i18n>tblColPoints}"/>
-                                </Column>
+                                </Column> -->
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="{i18n>tblColDateTime}"/>
                                 </Column>
@@ -305,8 +338,11 @@
                                          <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
                                         <Text text="{Painter/MembershipCard}"/>
                                         <Text text="{Painter/Mobile}"/>
-                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
-                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                        <Text text="{Painter/ZoneId}"/>
+                                        <Text text="{Painter/DivisionId}"/>
+                                        <Text text="{Painter/Depot/Depot} {Painter/DepotId}" />
+                                        <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
+                                        <!-- <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/> -->
                                         <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
