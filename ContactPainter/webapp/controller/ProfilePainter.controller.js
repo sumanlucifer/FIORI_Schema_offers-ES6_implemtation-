@@ -2055,12 +2055,29 @@ sap.ui.define(
                                 aCharStatus.indexOf("_") + 1
                             ].toUpperCase();
                             aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+                           
                         }
                         aCharStatus[0] = aCharStatus[0].toUpperCase();
                         sStatus = aCharStatus.join("");
                     }
 
                     return sStatus;
+                },
+                fmtStatusType: function (mParam){
+                    var sStatus = "";
+                    if (mParam) {
+                        sStatus = mParam;
+                       var StatusStr = sStatus.toLowerCase().split('_');
+                            for (var i = 0; i < StatusStr.length; i++) {
+                                // You do not need to check if i is larger than splitStr length, as your for does that for you
+                                // Assign it back to the array
+                                StatusStr[i] = StatusStr[i].charAt(0).toUpperCase() + StatusStr[i].substring(1);     
+                            }
+                            // Directly return the joined string
+                            return StatusStr.join(' '); 
+                    }
+
+                    return StatusStr;
                 },
 
                 _save: function () {

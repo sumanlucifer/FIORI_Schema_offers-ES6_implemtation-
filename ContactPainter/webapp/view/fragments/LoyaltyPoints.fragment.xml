@@ -64,7 +64,7 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
                                                <Text text="{path:'RewardPoints'}" />
                                                <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
@@ -141,7 +141,7 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
                                                <!-- <Text text="{path:'RewardPoints'}" />
                                                <Text text="{path:'TotalPoints'}" /> -->
                                                <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
