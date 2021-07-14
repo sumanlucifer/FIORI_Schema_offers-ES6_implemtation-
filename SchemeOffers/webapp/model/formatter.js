@@ -269,7 +269,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m4 RewardCash
             //m5 RewardGift
             if (m1 === 'REDEEMED') {
-                return "NA";
+                return "Yes";
             }
             if (m1 === 'REDEEMABLE') {
                 return "Yes";
@@ -290,6 +290,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 } else if (m2 === "GIFT_REDEMPTION") {
                     return "Gift - " + m5;
                 }
+            }
+            if(m1==="REDEEMABLE"){
+                return "Not Redeemed"
             }
             return "NA";
         },
