@@ -285,7 +285,7 @@
         </Table>
 
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
-            <Title titleStyle="H3" text="4. {i18n>ApplicablePainters}"/>
+            <Title titleStyle="H3" text="4. {i18n>MarketSpecific}"/>
         </Toolbar>
         <f:Form editable="false">
             <f:layout>

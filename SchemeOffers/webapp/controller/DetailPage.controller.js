@@ -12,6 +12,8 @@ sap.ui.define(
         "sap/m/MessageToast",
         "sap/m/Avatar",
         "sap/ui/core/ValueState",
+        "sap/ui/core/util/Export",
+        "sap/ui/core/util/ExportTypeCSV",
         "com/knpl/pragati/SchemeOffers/model/formatter",
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "com/knpl/pragati/SchemeOffers/model/customInt",
@@ -29,6 +31,8 @@ sap.ui.define(
         MessageToast,
         Avatar,
         ValueState,
+        Export,
+        ExportTypeCSV,
         Formatter,
         Validator,
         customInt,
@@ -107,6 +111,9 @@ sap.ui.define(
                             Remarks: "",
                             OfferStatus: "",
                         },
+                        oData: {
+                            Painters: []
+                        }
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
@@ -115,30 +122,39 @@ sap.ui.define(
                     this.oWorkflowModel = new JSONModel();
                     this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
-                    this._SetPainterTableBinding(oProp);
+                    this._LoadPainterData(0,16);
                     if (sMode === "edit") {
                         this.handleEditPress();
                     } else {
                         this._initData(oProp);
                     }
                 },
-                _SetPainterTableBinding: function (iOfferId) {
-                    console.log(iOfferId)
+                _LoadPainterData(mSkip, mTop) {
                     var oView = this.getView();
-                    var oTable = oView.byId("idPainterTable");
-                   
-                    oTable.bindItems({
-                        path: "/GetOfferEligibleAndQualifiedPainter",
-                        template: oView.byId("idPainterTableTemplate"),
-                        templateShareable: true,
-                        parameters: {
-                            custom: {
-                                OfferId: "" + iOfferId + "",
-                                Offset:"0",
-                                Limit:"100"
+                    var oDataModel = oView.getModel();
+                    var oControlModel = oView.getModel("oModelControl3");
+                    var iOfferId = oControlModel.getProperty("/OfferId")
+                    var oDataPainter = oControlModel.getProperty("/oData/Painters");
+                    
+                    oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
+                        urlParameters: {
+                            OfferId: "" + iOfferId + "",
+                            Offset: "" + mSkip + "",
+                            Limit: "" + mTop + ""
+
+                        },
+                        success: function (data) {
+                            if (data.hasOwnProperty("results")) {
+                                if (data["results"].length > 0) {
+                                    var aNewArray = oDataPainter.concat(data["results"]);
+                                   oControlModel.setProperty("/oData/Painters",aNewArray);
+                                }
                             }
+                            
+                        },
+                        error: function () {
+                            console.log("error")
                         }
-                        
                     })
 
                 },
@@ -2023,7 +2039,6 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl3");
                     var sOfferId = oModelControl.getProperty("/OfferId");
                     var oData = oView.getModel();
-
                     oData.read("/RedeemOfferRewardForAllPainter", {
                         urlParameters: {
                             OfferId: sOfferId,
@@ -2039,6 +2054,7 @@ sap.ui.define(
                             );
                         },
                     });
+                    
                 },
                 onActivate: function (oEvent) {
                     var oView = this.getView();
@@ -2211,7 +2227,78 @@ sap.ui.define(
                     console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                 },
-            }
+                onPainterListDownload: function () {
+                    var oView = this.getView();
+                    var sServiceUrl = this.getOwnerComponent(this)
+                        .getManifestObject()
+                        .getEntry("/sap.app").dataSources.mainService.uri;
+
+                    var sOfferId = oView
+                        .getModel("oModelControl3")
+                        .getProperty("/OfferId");
+                    var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferEligibleAndQualifiedPainterSet(0)/$value?OfferId=" + sOfferId
+                    console.log(sSource)
+                    sap.m.URLHelper.redirect(sSource, true);
+
+                },
+                exportExcel: function () {
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: "\t",
+
+                            mimeType: "application/vnd.ms-excel",
+
+                            charset: "utf-8",
+
+                            fileExtension: "xls"
+                        }),
+
+                        // Pass in the model created above
+                        models: this.getView().getModel(),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/OfferSet"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [{
+                            name: "Row",
+                            template: {
+                                content: "{Title}"
+                            }
+                        }, {
+                            name: "Offer Code",
+                            template: {
+                                content: "{OfferCode}"
+                            }
+                        }]
+                    });
+
+                    // download exported file
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+
+
+                },
+               
+                onPainterUpdatedStart: function (oEvent) {
+                    if(oEvent.getParameter("reason")==="Growing"){
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl3")
+                        var aPaintLength =  oModel.getProperty("/oData/Painters").length;
+                        this._LoadPainterData(aPaintLength,aPaintLength+15)
+
+                    }
+                    //_LoadPainterData
+                }
+
+            } // end 
         );
     }
 );
