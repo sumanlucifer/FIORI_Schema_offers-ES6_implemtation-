@@ -12,6 +12,8 @@ sap.ui.define(
         "sap/m/MessageToast",
         "sap/m/Avatar",
         "sap/ui/core/ValueState",
+        "sap/ui/core/util/Export",
+        "sap/ui/core/util/ExportTypeCSV",
         "com/knpl/pragati/SchemeOffers/model/formatter",
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "com/knpl/pragati/SchemeOffers/model/customInt",
@@ -29,6 +31,8 @@ sap.ui.define(
         MessageToast,
         Avatar,
         ValueState,
+        Export,
+        ExportTypeCSV,
         Formatter,
         Validator,
         customInt,
@@ -126,7 +130,7 @@ sap.ui.define(
                     console.log(iOfferId)
                     var oView = this.getView();
                     var oTable = oView.byId("idPainterTable");
-                   
+
                     oTable.bindItems({
                         path: "/GetOfferEligibleAndQualifiedPainter",
                         template: oView.byId("idPainterTableTemplate"),
@@ -134,11 +138,11 @@ sap.ui.define(
                         parameters: {
                             custom: {
                                 OfferId: "" + iOfferId + "",
-                                Offset:"0",
-                                Limit:"100"
+                                Offset: "0",
+                                Limit: "100"
                             }
                         }
-                        
+
                     })
 
                 },
@@ -2211,7 +2215,67 @@ sap.ui.define(
                     console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                 },
-            }
+                onPainterListDownload: function () {
+                    var oView = this.getView();
+                    var sServiceUrl = this.getOwnerComponent(this)
+                        .getManifestObject()
+                        .getEntry("/sap.app").dataSources.mainService.uri;
+
+                    var sOfferId = oView
+                        .getModel("oModelControl3")
+                        .getProperty("/OfferId");
+                    var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferEligibleAndQualifiedPainterSet(0)/$value?OfferId=" + sOfferId
+                    console.log(sSource)
+                    sap.m.URLHelper.redirect(sSource, true);
+
+                },
+                exportExcel: function () {
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: "\t",
+
+                            mimeType: "application/vnd.ms-excel",
+
+                            charset: "utf-8",
+
+                            fileExtension: "xls"
+                        }),
+
+                        // Pass in the model created above
+                        models: this.getView().getModel(),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/OfferSet"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [{
+                            name: "Row",
+                            template: {
+                                content: "{Title}"
+                            }
+                        }, {
+                            name: "MobileNumber",
+                            template: {
+                                content: "{OfferCode}"
+                            }
+                        }]
+                    });
+
+                    // download exported file
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+
+
+                }
+
+            } // end 
         );
     }
 );

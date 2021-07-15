@@ -3,7 +3,11 @@
     xmlns:core="sap.ui.core">
     <Table id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
+            <Toolbar >
+                <ToolbarSpacer />
+                <Button type="Default" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
 
+            </Toolbar>
         </headerToolbar>
 
         <columns>
@@ -20,7 +24,7 @@
             <Column width="5%">
                 <Text text="{i18n>formRegionLbl2}" />
             </Column>
-            <Column  width="10%">
+            <Column width="10%">
                 <Text text="{i18n>formRegionLbl3}" />
             </Column>
             <Column>
@@ -41,7 +45,7 @@
             <Column>
                 <Text text="{i18n>BalanceQty}" />
             </Column>
-              <Column>
+            <Column>
                 <Text text="{i18n>EligibleForRwards}" />
             </Column>
             <Column>
@@ -63,8 +67,8 @@
                     <Text text="{ProgressValue}"/>
                     <Text text="{ProgressMax}"/>
                     <Text text="{= ${ProgressMax} - ${ProgressValue} }"/>
-                      <Text text="{parts:['RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
-                     <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
+                    <Text text="{parts:['RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
+                    <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
 
                 </cells>
             </ColumnListItem>
