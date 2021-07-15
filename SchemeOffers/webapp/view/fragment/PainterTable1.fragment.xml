@@ -5,7 +5,7 @@
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
-                <Button type="Default" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
+                <Button type="Emphasized" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
 
             </Toolbar>
         </headerToolbar>
