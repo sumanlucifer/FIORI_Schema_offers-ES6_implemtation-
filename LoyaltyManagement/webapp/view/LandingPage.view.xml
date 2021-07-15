@@ -120,9 +120,9 @@
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "PointType","type":"string", "leadingProperty": "PointType", "columnIndex": 7 }'/>
                                         </customData>
-                                          <Text text="{i18n>tblColTypeOfRedemption}"/>
+                                          <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
                                     </Column>
-                                 <Column hAlign="Center">
+                                 <!-- <Column hAlign="Center">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints","type":"string", "leadingProperty": "RewardPoints", "columnIndex": 8 }'/>
                                         </customData>
@@ -133,10 +133,10 @@
                                             <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption/RewardGiftName","type":"string", "leadingProperty": "GiftRedemption/RewardGiftName", "columnIndex": 9 }'/>
                                         </customData>
                                           <Text text="{i18n>RewardGift}"/>
-                                    </Column>
+                                    </Column> -->
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 10 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 10 }'/>
                                         </customData>
                                           <Text text="{i18n>tblColDateTime}"/>
                                     </Column>
@@ -145,8 +145,8 @@
                                     <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                            <Text text="{path:'RewardPoints'}"/>
-                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
+                                            <!-- <Text text="{path:'RewardPoints'}"/>
+                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/> -->
                                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                         
                                             
@@ -189,7 +189,7 @@
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "PointType","type":"string", "leadingProperty": "PointType", "columnIndex": 7 }'/>
                                         </customData>
-                                          <Text text="{i18n>tblColTypeOfRedemption}"/>
+                                          <Text text="{i18n>tblColTypeOfAccrual}"/>
                                     </Column>
                                  <Column hAlign="Center">
                                         <customData>
@@ -200,7 +200,7 @@
                                     
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
                                         </customData>
                                           <Text text="{i18n>tblColDateTime}"/>
                                     </Column>
@@ -258,9 +258,9 @@
                                     </Column>
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
                                         </customData>
-                                          <Text text="{i18n>tblColDateTime}"/>
+                                          <Text text="{i18n>tblColDateTimeRdm}"/>
                                     </Column>
                                     </columns>
                                     <items>
