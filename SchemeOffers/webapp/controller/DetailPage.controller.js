@@ -2286,10 +2286,8 @@ sap.ui.define(
 
 
                 },
-                onUpdate2: function (oEvent) {
-                    console.log("2")
-                },
-                onUpdate1: function (oEvent) {
+               
+                onPainterUpdatedStart: function (oEvent) {
                     if(oEvent.getParameter("reason")==="Growing"){
                         var oView = this.getView();
                         var oModel = oView.getModel("oModelControl3")
