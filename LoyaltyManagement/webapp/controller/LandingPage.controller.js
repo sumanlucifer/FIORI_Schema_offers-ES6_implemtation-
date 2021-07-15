@@ -49,7 +49,9 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-                this.primaryFilter();
+                //this.primaryFilter();
+                var smartTable = this.getView().byId("idPainterTable");
+
 
             },
 
@@ -290,27 +292,43 @@ sap.ui.define([
                         }
                     }
 
-                    var endFilter = new Filter({
-                        filters: aCurrentFilterValues,
-                        and: true,
-                    });
-                    var oTable = this.getView().byId("idAllRequestTable");
-                    var oTable1 = this.getView().byId("idAccrualRequestTable");
-                    var oTable2 = this.getView().byId("idRedemptionRequestTable");
-                    var oBinding = oTable.getBinding("items");
-                    var oBinding1 = oTable1.getBinding("items");
-                    var oBinding2 = oTable2.getBinding("items");
-                    if (!aFlaEmpty) {
-                        oBinding.filter(endFilter);
-                        oBinding1.filter(endFilter);
-                        oBinding2.filter(endFilter);
-                    } else {
-                        oBinding.filter([]);
-                        oBinding1.filter([]);
-                        oBinding2.filter([]);
-                    }
+                    // var endFilter = new Filter({
+                    //     filters: aCurrentFilterValues,
+                    //     and: true,
+                    // });
+                    // var oTable = this.getView().byId("idAllRequestTable");
+                    // var oTable1 = this.getView().byId("idAccrualRequestTable");
+                    // var oTable2 = this.getView().byId("idRedemptionRequestTable");
+                    // var oBinding = oTable.getBinding("items");
+                    // var oBinding1 = oTable1.getBinding("items");
+                    // var oBinding2 = oTable2.getBinding("items");
+                    // if (!aFlaEmpty) {
+                    //     oBinding.filter(endFilter);
+                    //     oBinding1.filter(endFilter);
+                    //     oBinding2.filter(endFilter);
+                    // } else {
+                    //     oBinding.filter([]);
+                    //     oBinding1.filter([]);
+                    //     oBinding2.filter([]);
+                    // }
+
+                    if (aCurrentFilterValues.length > 0) {
+                this.oFilter = new Filter({
+                    filters: aCurrentFilterValues,
+                    and: true,
+                });
+                //oBinding.filter(oFilter);
+            } else {
+                // oBinding.filter([]);
+                this.oFilter = null;
+            }
+            this.getView().byId("idAllTable").rebindTable();
+            this.getView().byId("idAccTable").rebindTable();
+            this.getView().byId("idRdmTable").rebindTable();
+
+                    
                 },
-                _ResetFilterBar: function () {
+                _ResetFilterBar: function (oEvent) {
                     var aCurrentFilterValues = [];
                     var aResetProp = {
                         StartDate: null,
@@ -325,22 +343,38 @@ sap.ui.define([
                         PreferredLanguage: "",
                         PainterType: "",
                     };
-                    var oViewModel = this.getView().getModel("oModelControl");
-                    oViewModel.setProperty("/filterBar", aResetProp);
-                    var oTable = this.byId("idAllRequestTable");
-                    var oTable1 = this.byId("idAccrualRequestTable");
-                    var oTable2 = this.byId("idRedemptionRequestTable");
-                    var oBinding = oTable.getBinding("items");
-                    var oBinding1 = oTable1.getBinding("items");
-                    var oBinding2 = oTable2.getBinding("items");
-                    oBinding.filter([]);
-                    oBinding1.filter([]);
-                    oBinding2.filter([]);
-                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
-                    oBinding1.sort(new Sorter({ path: "CreatedAt", descending: true }));
-                    oBinding2.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                     var oViewModel = this.getView().getModel("oModelControl");
+                     oViewModel.setProperty("/filterBar", aResetProp);
+                    // var oTable = this.byId("idAllRequestTable");
+                    // var oTable1 = this.byId("idAccrualRequestTable");
+                    // var oTable2 = this.byId("idRedemptionRequestTable");
+                    // var oBinding = oTable.getBinding("items");
+                    // var oBinding1 = oTable1.getBinding("items");
+                    // var oBinding2 = oTable2.getBinding("items");
+                    // oBinding.filter([]);
+                    // oBinding1.filter([]);
+                    // oBinding2.filter([]);
+                    // oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    // oBinding1.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    // oBinding2.sort(new Sorter({ path: "CreatedAt", descending: true }));
                     //this._fiterBarSort();
-                     this.primaryFilter();
+                     //this.primaryFilter();
+                     this.oCustom = null;
+            this.oFilter = null;
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
+            }
+            if (this.oCustom) {
+                oBindingParams.parameters.search = this.oCustom.search;
+            }
+            var oTable = this.byId("idAllTable");
+            oTable.rebindTable();
+            var oTable = this.byId("idAccTable");
+            oTable.rebindTable();
+            var oTable1 = this.byId("idRdmTable");
+            oTable1.rebindTable();
+
                 },
                  onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();
@@ -358,7 +392,7 @@ sap.ui.define([
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                    this._dealerReset();
+                    //this._dealerReset();
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -490,7 +524,91 @@ sap.ui.define([
                         });
                     }
                 });
+            },
+        //     fnrebindTable: function (oEvent) {
+        //     var oBindingParams = oEvent.getParameter("bindingParams");
+        //     oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+        //     oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption";
+        //     if(this.oFilter)
+        //         oBindingParams.filters.push(this.oFilter);            
+        // },
+        fnrebindTableAll: function (oEvent) {
+
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption";
+            // var filter=new Filter({
+            //         filters: [
+            //             new Filter({
+            //                 filters: [
+            //                     new Filter("PointTransactionType", sap.ui.model.FilterOperator.EQ, "ACCRUED")
+            //                 ], and: false
+            //             })
+            //         ]
+            //     });
+            //     oBindingParams.filters.push(filter);
+            if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
             }
+            if (this.oCustom) {
+                oBindingParams.parameters.custom = this.oCustom;
+            }
+
+           
+
+        },
+        fnrebindTableAcc: function (oEvent) {
+
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption";
+            var filter=new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.EQ, "ACCRUED")
+                            ], and: false
+                        })
+                    ]
+                });
+                oBindingParams.filters.push(filter);
+            if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
+            }
+            if (this.oCustom) {
+                oBindingParams.parameters.custom = this.oCustom;
+            }
+
+           
+
+        },
+        fnrebindTableRdm: function (oEvent) {
+
+            var oBindingParams = oEvent.getParameter("bindingParams");
+            oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+            oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption";
+            var filter=new Filter({
+                    filters: [
+                        new Filter({
+                            filters: [
+                                new Filter("PointTransactionType", sap.ui.model.FilterOperator.EQ, "REDEEMED")
+                            ], and: false
+                        })
+                    ]
+                });
+                oBindingParams.filters.push(filter);
+           if (this.oFilter) {
+                oBindingParams.filters.push(this.oFilter);
+            }
+            if (this.oCustom) {
+                oBindingParams.parameters.custom = this.oCustom;
+            }
+
+           
+
+        },
+
+
 
 
 

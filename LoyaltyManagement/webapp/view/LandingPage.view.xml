@@ -6,7 +6,8 @@
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    xmlns:vm="sap.ui.comp.variants">
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:smartTable="sap.ui.comp.smarttable">
     <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
         <f:title>
@@ -21,22 +22,7 @@
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
                     <fb:FilterBar id="filterbar" reset="_ResetFilterBar" search="onFilter" useToolbar="false" showGoOnFB="true" showRestoreOnFB="true"> 
-                        <!-- <fb:filterGroupItems>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <SearchField id="idSearchInput" data:filterName="Search" value="{ViewModel>/filterBar/search}" placeholder="{i18n>searchFilterPlaceholder}" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            
-                            
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Date" label="{i18n>dateFilterLabel}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <DatePicker id="idDateInput" data:filterName="Creation Date" value="{ViewModel>/filterBar/createdAt}" placeholder="{i18n>dateFilterPlaceholder}"/>
-                                </fb:control>
-                                 
-
-                            </fb:FilterGroupItem>
-                        </fb:filterGroupItems> -->
+                        
                         <fb:filterGroupItems>
                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="Search" label="{i18n>searchFilterLabel}" visibleInFilterBar="true">
                                 <fb:control>
@@ -106,267 +92,192 @@
                 expanded="{device>/isNoPhone}"
                 class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter
-                        text="{oModelControl>/allRequestIconTabarTitle}"
+
+                    <IconTabFilter text="{i18n>allRwds}"
                         key="all">
-                        <Table id="idAllRequestTable" width="auto" 
-                        items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
-                        sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
-                        updateFinished="onUpdateFinished">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                    <ToolbarSpacer />
-                                    <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onAllExportPress"/>
-                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Emphasized" icon="sap-icon://add" press="onPressAddPointBtn"/> -->
-                                    <!-- <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
-                                </OverflowToolbar>
-                            </headerToolbar>
+                    <smartTable:SmartTable
+                    id="idAllTable"
+                    editable="false"
+                    header="{i18n>allRwds}"
+                    beforeRebindTable="fnrebindTableAll"                    
+                    entitySet="PainterPointsHistorySet"
+                    tableType="ResponsiveTable"
+                    showRowCount="true"
+                    useExportToExcel="true"
+                    useVariantManagement="false"
+                    useTablePersonalisation="true"
+                    ignoredFields="IsArchived,IsSelected,Id"
+                    demandPopin="true"
+                    requestAtLeastFields="Id,PointType,Painter/Name"
+                    enableAutoBinding="true"
+                    placeToolbarInTable="true" 
+                    persistencyKey="PainterListSmartTableKey"
+                  >
+                  <Table>
+                    
+                                <columns>
+                                <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType","type":"string", "leadingProperty": "PointType", "columnIndex": 7 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColTypeOfRedemption}"/>
+                                    </Column>
+                                 <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints","type":"string", "leadingProperty": "RewardPoints", "columnIndex": 8 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColPoints}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption/RewardGiftName","type":"string", "leadingProperty": "GiftRedemption/RewardGiftName", "columnIndex": 9 }'/>
+                                        </customData>
+                                          <Text text="{i18n>RewardGift}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 10 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColDateTime}"/>
+                                    </Column>
+                                    </columns>
+                                    <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                            <Text text="{path:'RewardPoints'}"/>
+                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
+                                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                        
+                                            
+                                        </cells>      
+                                    </ColumnListItem>
+                                </items> 
 
-                            <columns>
-                                <Column>
-                                    <Text text="{i18n>tblColName}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColMembershipId}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColZone}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDiv}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepot}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepotCode}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRequest}"/>
-                                </Column>
-                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfAccrualRedemption}"/>
-                                </Column>
-                                
-                                <Column>
-                                    <Text text="{i18n>tblColPoints}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDateTime}"/>
-                                </Column>
-                                <!-- <Column>
-                                    <Text text="{i18n>tblColStatus}"/>
-                                </Column> -->
-                            </columns>
-
-                            <items>
-                                <ColumnListItem type="Navigation" press="onListItemPress">
-                                    <dependents>
-                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
-                                    </dependents>
-                                    <cells>
-                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
-                                        <Text text="{Painter/MembershipCard}"/>
-                                        <Text text="{Painter/Mobile}"/>
-                                        <Text text="{Painter/ZoneId}"/>
-                                        <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} "/>
-                                        <Text text="{Painter/DepotId}"/>
-                                        <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
-                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                         
-                                        <Text text="{RewardPoints}"/>
-                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        
-                                        <!-- <HBox>
-                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
-                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
-                                        </HBox> -->
-                                        
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
                         </Table>
+                 </smartTable:SmartTable>
+                
                     </IconTabFilter>
-                    <IconTabFilter
-                        text="{oModelControl>/accrualRequestIconTabarTitle}"
-                        key="accrual" 
-                       >
-                        <Table id="idAccrualRequestTable" width="auto" 
-                        items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory'},
-                        sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
-                        updateFinished="onUpdateFinished1">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                    <ToolbarSpacer />
-                                     <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onAccExportPress"/>
-                                    <!--<Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
-                                </OverflowToolbar>
-                            </headerToolbar>
+                   
 
-                            <columns>
-                                <Column>
-                                    <Text text="{i18n>tblColName}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColMembershipId}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColZone}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDiv}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepot}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepotCode}"/>
-                                </Column>
-                                <!-- <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRequest}"/>
-                                </Column> -->
-                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfAccrual}"/>
-                                </Column>
-                                <Column>
-                                    <Text text="{i18n>tblColPoints}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDateTime}"/>
-                                </Column>
-                                <!-- <Column>
-                                    <Text text="{i18n>tblColStatus}"/>
-                                </Column> -->
-                            </columns>
+                    
+                    
+                    <IconTabFilter text="{i18n>accuralPoints}"
+                        key="acc">
+                    <smartTable:SmartTable
+                    id="idAccTable"
+                    editable="false"
+                    header="{i18n>accuralPoints}"
+                    beforeRebindTable="fnrebindTableAcc"                    
+                    entitySet="PainterPointsHistorySet"
+                    tableType="ResponsiveTable"
+                    showRowCount="true"
+                    useExportToExcel="true"
+                    useVariantManagement="false"
+                    useTablePersonalisation="true"
+                    ignoredFields="IsArchived,IsSelected,Id"
+                    demandPopin="true"
+                    requestAtLeastFields="Id,PointType,Painter/Name"
+                    enableAutoBinding="true"
+                    placeToolbarInTable="true" 
+                    persistencyKey="PainterListSmartTableKey"
+                  >
+                  <Table>
+                    
+                                <columns>
+                                <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType","type":"string", "leadingProperty": "PointType", "columnIndex": 7 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColTypeOfRedemption}"/>
+                                    </Column>
+                                 <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints","type":"string", "leadingProperty": "RewardPoints", "columnIndex": 8 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColPoints}"/>
+                                    </Column>
+                                    
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColDateTime}"/>
+                                    </Column>
+                                    </columns>
+                                    <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                            <Text text="{path:'RewardPoints'}"/>
+                                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                        
+                                            
+                                        </cells>      
+                                    </ColumnListItem>
+                                </items> 
 
-                            <items>
-                                <ColumnListItem type="Navigation" press="onListItemPress">
-                                    <dependents>
-                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
-                                    </dependents>
-                                    <cells>
-                                        <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
-                                        <Text text="{Painter/MembershipCard}"/>
-                                        <Text text="{Painter/Mobile}"/>
-                                         <Text text="{Painter/ZoneId}"/>
-                                        <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} "/>
-                                        <Text text="{Painter/DepotId}"/>
-                                        <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
-                                        <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                        <Text text="{RewardPoints}"/>
-                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        
-                                        <!-- <HBox>
-                                        <Text text="{path:'PainterReferralHistory/ReferralStatus',formatter:'.formatter.status'}" visible="{=${PainterReferralHistory} !== null }"/>
-                                        <Text text="{path:'PainterTokenScanHistory/ScanStatus',formatter:'.formatter.status'}" visible="{=${PainterTokenScanHistory} !== null }"/>
-                                        </HBox> -->
-                                        
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
                         </Table>
+                 </smartTable:SmartTable>
+                
                     </IconTabFilter>
-                    <IconTabFilter
-                        text="{oModelControl>/redemptionRequestIconTabarTitle}"
-                        key="redemption"
-                        >
-                    <Table id="idRedemptionRequestTable" width="auto" 
-                         items="{path: '/PainterPointsHistorySet' ,
-                        parameters : {expand:'Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,GiftRedemption'},
-                        sorter: { path: 'Id',descending: true} }" 
-                        noDataText="No Data Available" growing="true" growingScrollToLoad="false" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" 
-                        updateFinished="onUpdateFinished2">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                    <ToolbarSpacer />
-                                    <Button  text="{i18n>btnDownloadCSV}" icon="sap-icon://download" type="Emphasized" press="onRdmExportPress"/>
-                                    <!-- <Button text="{i18n>addPointBtnText}" tooltip="{i18n>addPointBtnTooltip}" type="Transparent" press="onPressAddPointBtn"/>
-                                    <Button tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed" />
-                                    <Button tooltip="Filter" icon="sap-icon://filter" press="handleFilterButtonPressed" /> -->
-                                </OverflowToolbar>
-                            </headerToolbar>
+                    <IconTabFilter text="{i18n>redemptionRwds}"
+                        key="redemption">
+                    <smartTable:SmartTable
+                    id="idRdmTable"
+                    editable="false"
+                    header="{i18n>redemptionRwds}"
+                    beforeRebindTable="fnrebindTableRdm"                    
+                    entitySet="PainterPointsHistorySet"
+                    tableType="ResponsiveTable"
+                    showRowCount="true"
+                    useExportToExcel="true"
+                    useVariantManagement="false"
+                    useTablePersonalisation="true"
+                    ignoredFields="IsArchived,IsSelected,Id"
+                    demandPopin="true"
+                    requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName"
+                    enableAutoBinding="true"
+                    placeToolbarInTable="true" 
+                    persistencyKey="PainterListSmartTableKey"
+                  >
+                   <Table>
+                    
+                                <columns>
+                                <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType","type":"string", "leadingProperty": "PointType", "columnIndex": 7 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColTypeOfRedemption}"/>
+                                    </Column>
+                                 <Column hAlign="Center" visible="{GiftRedemption!==null}">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption/RewardGiftName","type":"string", "leadingProperty": "GiftRedemption/RewardGiftName", "columnIndex": 8 }'/>
+                                        </customData>
+                                          <Text text="{i18n>RewardGift}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"string", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
+                                        </customData>
+                                          <Text text="{i18n>tblColDateTime}"/>
+                                    </Column>
+                                    </columns>
+                                    <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
+                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
+                                            <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                        
+                                            
+                                        </cells>      
+                                    </ColumnListItem>
+                                </items> 
 
-                            <columns>
-                                <Column>
-                                    <Text text="{i18n>tblColName}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColMembershipId}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColPrimaryMobileNo}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColZone}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDiv}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepot}"/>
-                                </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDepotCode}"/>
-                                </Column>
-                                <!-- <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRequest}"/>
-                                </Column> -->
-                                <Column width="15%" minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColTypeOfRedemption}"/>
-                                </Column>
-                                <Column>
-                                    <Text text="{i18n>RewardGift}"/>
-                                </Column>
-                                <!-- <Column>
-                                    <Text text="{i18n>tblColPoints}"/>
-                                </Column> -->
-                                <Column minScreenWidth="Tablet" demandPopin="true">
-                                    <Text text="{i18n>tblColDateTime}"/>
-                                </Column>
-                                <!-- <Column>
-                                    <Text text="{i18n>tblColStatus}"/>
-                                </Column> -->
-                            </columns>
-
-                            <items>
-                                <ColumnListItem type="Navigation" press="onListItemPress">
-                                    <dependents>
-                                        <!-- <core:Fragment fragmentName="com.knpl.pragati.DealerManagement.view.fragments.worklistFragments.ActionSheet" type="XML" /> -->
-                                    </dependents>
-                                    <cells>
-                                         <ObjectIdentifier title="{Painter/Name}" titleActive="true"/>
-                                        <Text text="{Painter/MembershipCard}"/>
-                                        <Text text="{Painter/Mobile}"/>
-                                        <Text text="{Painter/ZoneId}"/>
-                                        <Text text="{Painter/DivisionId}"/>
-                                        <Text text="{Painter/Depot/Depot} "/>
-                                        <Text text="{Painter/DepotId}"/>
-                                        <!-- <Text text="{path:'PointTransactionType',formatter:'.formatter.requestType'}"/> -->
-                                        <!-- <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/> -->
-                                        <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
-                                        <Text text="{RewardPoints}"/>
-                                        <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
-                                        
-                                        
-                                        
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
                         </Table>
+                 </smartTable:SmartTable>
+                
                     </IconTabFilter>
                 </items>
             </IconTabBar>
