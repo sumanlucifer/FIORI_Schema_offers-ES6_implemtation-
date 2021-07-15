@@ -82,7 +82,7 @@
                                         <Text class="sapUiTinyMarginTop" text="{Id}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Point">
+                                <form:FormElement label="Point" visible="{= ${PointTransactionType} !== 'REDEEMED'}">
                                     <form:fields>
                                         <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
@@ -101,6 +101,11 @@
                                 <form:FormElement label="Reward Gift" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Date">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
@@ -122,11 +127,22 @@
                                         <Text class="sapUiTinyMarginTop" text="{Painter/Mobile}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Date">
+                                <form:FormElement label="Zone">
                                     <form:fields>
-                                        <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/ZoneId}" />
                                     </form:fields>
-                                </form:FormElement>
+                                 </form:FormElement>
+                                 <form:FormElement label="Division">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/DivisionId}" />
+                                    </form:fields>
+                                 </form:FormElement>
+                                 <form:FormElement label="Depot">
+                                    <form:fields>
+                                        <Text class="sapUiTinyMarginTop" text="{Painter/Depot/Depot} {Painter/DepotId}" />
+                                    </form:fields>
+                                 </form:FormElement>
+                                
                             </form:formElements>
                         </form:FormContainer>
                     </form:formContainers>
