@@ -2039,7 +2039,6 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl3");
                     var sOfferId = oModelControl.getProperty("/OfferId");
                     var oData = oView.getModel();
-
                     oData.read("/RedeemOfferRewardForAllPainter", {
                         urlParameters: {
                             OfferId: sOfferId,
@@ -2055,6 +2054,7 @@ sap.ui.define(
                             );
                         },
                     });
+                    
                 },
                 onActivate: function (oEvent) {
                     var oView = this.getView();

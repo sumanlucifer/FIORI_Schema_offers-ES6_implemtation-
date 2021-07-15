@@ -184,13 +184,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2, m3, m4) {
             //m1 offer id 6-slab based offer// m3 IsPublished true //m2 Offer Status //m4 button already redeem check
-            if (m1 === 6) {
-                if (m2 === "EXPIRED") {
-                    if (m3 === true) {
-                        return true;
-                    }
+
+            if (m2 === "EXPIRED") {
+                if (m3 === true) {
+                    return true;
                 }
             }
+
             return false;
         },
         btnSendForApprovalCheck: function (m1, m2) {
@@ -291,7 +291,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                     return "Gift - " + m5;
                 }
             }
-            if(m1==="REDEEMABLE"){
+            if (m1 === "REDEEMABLE") {
                 return "Not Redeemed"
             }
             return "NA";
