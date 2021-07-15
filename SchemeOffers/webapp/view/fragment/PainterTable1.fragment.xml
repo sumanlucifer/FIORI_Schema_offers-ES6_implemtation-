@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <Table id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table  items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onUpdate1" id="idPainterTable" growing="true" growingThreshold="2" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
-                <Button type="Emphasized" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
+                <Button  type="Emphasized" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
 
             </Toolbar>
         </headerToolbar>
@@ -53,7 +53,7 @@
             </Column>
 
         </columns>
-        <dependents >
+        <items >
             <ColumnListItem id="idPainterTableTemplate">
                 <cells>
                     <Text text="{Name}" />
@@ -72,7 +72,7 @@
 
                 </cells>
             </ColumnListItem>
-        </dependents>
+        </items>
     </Table>
 
 </core:FragmentDefinition>

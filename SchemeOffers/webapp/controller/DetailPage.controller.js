@@ -111,6 +111,9 @@ sap.ui.define(
                             Remarks: "",
                             OfferStatus: "",
                         },
+                        OData: {
+                            Painters: []
+                        }
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
@@ -127,22 +130,28 @@ sap.ui.define(
                     }
                 },
                 _SetPainterTableBinding: function (iOfferId) {
-                    console.log(iOfferId)
+                    this._LoadPainterData();
+
+                },
+                _LoadPainterData(mSkip, mTop) {
                     var oView = this.getView();
-                    var oTable = oView.byId("idPainterTable");
+                    var oDataModel = oView.getModel();
+                    var oControlModel = oView.getModel("oModelControl3");
+                    var iOfferId = oControlModel.getProperty("/OfferId")
+                    var oDataPainter = oControlModel.getProperty("/oData/Painter");
+                    oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
+                        urlParamters: {
+                            OfferId: "" + iOfferId + "",
+                            Offset: "" + mTop + "",
+                            Limit: "" + mTop + ""
 
-                    oTable.bindItems({
-                        path: "/GetOfferEligibleAndQualifiedPainter",
-                        template: oView.byId("idPainterTableTemplate"),
-                        templateShareable: true,
-                        parameters: {
-                            custom: {
-                                OfferId: "" + iOfferId + "",
-                                Offset: "0",
-                                Limit: "100"
-                            }
+                        },
+                        success: function (data) {
+                            console.log(data)
+                        },
+                        error: function () {
+                            console.log("error")
                         }
-
                     })
 
                 },
@@ -2258,7 +2267,7 @@ sap.ui.define(
                                 content: "{Title}"
                             }
                         }, {
-                            name: "MobileNumber",
+                            name: "Offer Code",
                             template: {
                                 content: "{OfferCode}"
                             }
@@ -2273,6 +2282,12 @@ sap.ui.define(
                     });
 
 
+                },
+                onUpdate2: function (oEvent) {
+                    console.log("2")
+                },
+                onUpdate1: function (oEvent) {
+                    console.log("1")
                 }
 
             } // end 
