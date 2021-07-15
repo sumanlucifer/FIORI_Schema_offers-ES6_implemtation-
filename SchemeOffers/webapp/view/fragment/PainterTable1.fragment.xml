@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <Table  items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onUpdate1" id="idPainterTable" growing="true" growingThreshold="2" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table  items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onUpdate1" id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
@@ -56,19 +56,19 @@
         <items >
             <ColumnListItem id="idPainterTableTemplate">
                 <cells>
-                    <Text text="{Name}" />
-                    <Text text="{Mobile}" />
-                    <Text text="{ZoneId}" />
-                    <Text text="{DivisionId}" />
-                    <Text text="{Depot}"/>
-                    <Text text="{DepotId}"/>
-                    <Text text="{DealerName}"/>
-                    <Text text="{DealerId}"/>
-                    <Text text="{ProgressValue}"/>
-                    <Text text="{ProgressMax}"/>
-                    <Text text="{= ${ProgressMax} - ${ProgressValue} }"/>
-                    <Text text="{parts:['RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
-                    <Text text="{parts:['RedemptionStatus','RedemptionType','RewardPoints','RewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
+                    <Text text="{oModelControl3>Name}" />
+                    <Text text="{oModelControl3>Mobile}" />
+                    <Text text="{oModelControl3>ZoneId}" />
+                    <Text text="{oModelControl3>DivisionId}" />
+                    <Text text="{oModelControl3>Depot}"/>
+                    <Text text="{oModelControl3>DepotId}"/>
+                    <Text text="{oModelControl3>DealerName}"/>
+                    <Text text="{oModelControl3>DealerId}"/>
+                    <Text text="{oModelControl3>ProgressValue}"/>
+                    <Text text="{oModelControl3>ProgressMax}"/>
+                    <Text text="{= ${oModelControl3>ProgressMax} - ${oModelControl3>ProgressValue} }"/>
+                    <Text text="{parts:['oModelControl3>RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
+                    <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionType','oModelControl3>RewardPoints','oModelControl3>RewardCash','oModelControl3>RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
 
                 </cells>
             </ColumnListItem>
