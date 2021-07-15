@@ -142,7 +142,7 @@
                                     </Column>
                                     </columns>
                                     <items>
-                                    <ColumnListItem>
+                                    <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{path:'RewardPoints'}"/>
@@ -206,7 +206,7 @@
                                     </Column>
                                     </columns>
                                     <items>
-                                    <ColumnListItem>
+                                    <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{path:'RewardPoints'}"/>
@@ -264,7 +264,7 @@
                                     </Column>
                                     </columns>
                                     <items>
-                                    <ColumnListItem>
+                                    <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
