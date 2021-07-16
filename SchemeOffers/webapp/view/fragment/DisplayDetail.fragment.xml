@@ -342,9 +342,9 @@
                         <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl2>/Rbtn/AppPainter}!== 2 }">
                             <f:fields>
                                 <Text text ="{path:'ApplicablePainterCount',formatter:'.formatter.fmtCheckNull2'}">
-                                  
+
                                 </Text>
-                               
+
                             </f:fields>
                         </f:FormElement>
 
@@ -616,7 +616,7 @@
                                 <Text text="{BonusDescription}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBonusRewardRatio}">
+                        <f:FormElement label="{i18n>formBonusRewardRatio}" visible="{= ${OfferTypeId}=== 4}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl2>/Rbtn/BRewards}">
                                     <RadioButton text="{i18n>All}"/>

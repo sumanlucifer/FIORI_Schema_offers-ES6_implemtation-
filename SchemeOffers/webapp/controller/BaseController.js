@@ -285,6 +285,7 @@ sap.ui.define(
                                     "Rbtn/AppProd4",
                                     "Rbtn/AppPacks4",
                                     "Rbtn/TopAll",
+                                    "Rbtn/BRewards",
                                 ]);
                             } else if (a === "RewardRatio") {
                                 // sending the reward ration value as all
@@ -310,12 +311,22 @@ sap.ui.define(
                 _OfferTypeFieldSet2: function (mParam1) {
                     //mParam1 is offer type id
                     var oView = this.getView();
-                    console.log("offertypeid2", mParam1);
                     var oModelView = oView.getModel("oModelView");
                     // if offer type id is changed we are restting the value to 1
                     oModelView.setProperty("/RedemptionCycle", 1);
                     if (mParam1 == 1) {
                         oModelView.setProperty("/RedemptionCycle", "");
+                    }
+                    // if the Bonus type is slab then we can have table 4 is not visible
+                    // Bonus Reward Ratio is one
+                    if (mParam1 == 3) {
+                        this._propertyToBlank(
+                            ["Table/Table4"],
+                            true
+                        );
+                        this._RbtnReset([
+                            "Rbtn/BRewards"
+                        ]);
                     }
                 },
                 _setTable2Count: function () {
