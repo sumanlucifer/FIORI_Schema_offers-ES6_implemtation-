@@ -66,7 +66,7 @@
                 <f:FormElement label="{i18n>tblColStatus}" visible="{= ${oModelControl>/mode}==='edit'}">
 
                     <f:fields>
-                        <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                        <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
 
                     </f:fields>
                 </f:FormElement>

@@ -55,7 +55,7 @@
                     <layout:VerticalLayout>
                         <layout:VerticalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
-                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                         </layout:VerticalLayout>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
