@@ -2,6 +2,7 @@
 	<IconTabBar
 		id="idIconTabBarNoIcons"
 		expanded="{device>/isNoPhone}"
+        selectedKey="{oModelControl2>/IctabBarLoyalty}"
 		class="sapUiResponsiveContentPadding">
 		<items>
 			<IconTabFilter text="Accrued" key="accrued">
