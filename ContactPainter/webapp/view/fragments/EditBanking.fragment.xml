@@ -100,10 +100,11 @@
 	
          <!--Aditya changes start-->
 			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
+            <Text text="Pending for SCB Penny Drop Validation" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
 				<ToolbarSpacer/>
-                <Button text="Reject" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
+                <Button text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'||${PainterBankDetails/Status} === 'PENDING'}"/>
 				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
-				<Text text="Pending for SCB Penny Drop Validation" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
+				
 
 			</Toolbar>
 		<!--Aditya changes end-->

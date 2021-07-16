@@ -123,7 +123,7 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
 
-            <uxap:ObjectPageSection id="loyaltysection" titleUppercase="false" title="{i18n>LoyaltyPoints}">
+            <uxap:ObjectPageSection id="loyaltysection" titleUppercase="false" title="{i18n>Rewards}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection >
                         <VBox renderType="Bare">

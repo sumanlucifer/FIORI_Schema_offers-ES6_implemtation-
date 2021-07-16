@@ -1581,7 +1581,7 @@ sap.ui.define(
                     var statusText = oEvent.getSource().getProperty('text');
                     if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                    } else if (statusText == 'Reject') {
+                    } else if (statusText == 'Reject' ||statusText == 'Reject Forcefully') {
                         oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
                     }
 
@@ -2988,6 +2988,71 @@ sap.ui.define(
                             path: "PointTransactionType",
                             operator: FilterOperator.EQ,
                             value1: "REDEEMED"
+                        })
+                    );
+                     aFilters.push(
+                        new Filter({
+                            path: "PointType",
+                            operator: FilterOperator.Contains,
+                            value1: "OFFER_GIFT_REDEMPTION"
+                        })
+                    );
+
+                    oBindingParams.filters.push(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+                 onBeforeRebindRdmdCash: function (oEvent) {
+                    console.log("Binding Trigerred for loyalty redeemed cash")
+                    var oPainterId = this.getViewModel("oModelControl2").getProperty(
+                        "/PainterId"
+                    );
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "Offer,GiftRedemption,PaymentTransaction";
+                    var oFinancialYear = this._getfinanceYear(),
+                        aFilters = [],
+                        //check if CreatedAt is Passed in filter or Not
+                        bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
+                            ele
+                        ) {
+                            return ele.sPath !== "CreatedAt";
+                        });
+
+                    aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+
+                    if (bApplyCurrentFinancialYear)
+                        aFilters.push(
+                            new Filter({
+                                path: "CreatedAt",
+                                operator: FilterOperator.BT,
+                                value1: oFinancialYear.startYear,
+                                value2: oFinancialYear.endYear,
+                            })
+                        );
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false
+                        })
+                    );
+                     aFilters.push(
+                        new Filter({
+                            path: "PointTransactionType",
+                            operator: FilterOperator.EQ,
+                            value1: "REDEEMED"
+                        })
+                    );
+
+                    aFilters.push(
+                        new Filter({
+                            path: "PointType",
+                            operator: FilterOperator.Contains,
+                            value1: "OFFER_BANK_TRANSFER"
                         })
                     );
 
