@@ -176,6 +176,7 @@ sap.ui.define(
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
                         oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
+                        oView.byId("smrtLoyalty2").rebindTable(); //redeemed cash table
                         oView.getModel("oModelControl2").setProperty("/IctabBarLoyalty", "accrued");
                     } else if (sId.match("learnSection")) {
                         console.log("learnSection")
@@ -217,6 +218,7 @@ sap.ui.define(
                     var oView = this.getView();
                     oView.byId("smrtLoyalty").rebindTable();
                     oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
+                    oView.byId("smrtLoyalty2").rebindTable(); //redeemed cash table
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
