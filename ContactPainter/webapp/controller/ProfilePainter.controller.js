@@ -137,7 +137,8 @@ sap.ui.define(
                             RbtnRedeemType: -1,
                             UUID: ""
                         },
-                        IctabBarLoyalty: "accrued"
+                        IctabBarLoyalty: "accrued",
+                        ProfilePageBuzy: true
 
                     };
                     var oView = this.getView();
@@ -153,6 +154,7 @@ sap.ui.define(
                             c3 = othat._loadEditKyc("Display");
                             c3.then(function () {
                                 c4 = othat._toggleButtonsAndView(false);
+                                oModel.setProperty("/ProfilePageBuzy", false);
                             })
                         })
                     })
@@ -193,6 +195,7 @@ sap.ui.define(
                     this._toggleButtonsAndView(true);
                     var oView = this.getView();
                     var oCtrl2Model = oView.getModel("oModelControl2");
+                    oCtrl2Model.setProperty("/ProfilePageBuzy", true);
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
                     var c1, c2, c3, c4;
@@ -207,6 +210,7 @@ sap.ui.define(
                                 c4.then(function () {
                                     othat.getView().getModel("oModelView").refresh(true);
                                     othat._RefreshSmartables();
+                                    oCtrl2Model.setProperty("/ProfilePageBuzy", false);
                                 });
                             });
                         });
