@@ -113,7 +113,7 @@
                     <!-- Publish -->
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                     <!-- Redemption Button -->
-                    <Button press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['OfferTypeId','OfferStatus','IsPublished','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
+                    <Button press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus'],formatter:'.formatter.btnRedeemCheck'}" />
                 </HBox>
 
 
