@@ -120,15 +120,15 @@ sap.ui.define([], function () {
                     if (mParam2.length > 0) {
                         var pointData = this.getView().getModel().getData("/" + mParam2[0]);
                         console.log(pointData);
-                        if (pointData.RedemptionType === "POINTS_TRANSFER") {
+                        if (pointData.RedemptionType === "POINTS_TRANSFER" && pointData["RewardPoints"]) {
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData.GiftRedemptionId) {
+                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
                             var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
                             return "Gift - " + giftData.RewardGiftName;
                         } else
-                        if (pointData.RedemptionType === "BANK_TRANSFER") {
+                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
                             var cash = "Cash - Rs. " + pointData["RewardCash"];
                             return cash;
                         }
