@@ -100,6 +100,18 @@ sap.ui.define([], function () {
 
             return sLetter;
         },
+        fmtLowerCase2: function (mParam1) {
+            if (mParam1) {
+                var aReplce = mParam1.replace(/_/gi, " ");
+
+                var sResult = aReplce.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+
+                return sResult
+
+            }
+            return mParam1
+
+        },
 
         // Added by Debasisa Pradhan for GiftRedeemed column with offers table
         fmtOfferGiftRedeemed: function (mParam1, mParam2) {
@@ -117,7 +129,7 @@ sap.ui.define([], function () {
                             return "Gift - " + giftData.RewardGiftName;
                         } else
                         if (pointData.RedemptionType === "BANK_TRANSFER") {
-                            var cash = "Cash - ";
+                            var cash = "Cash - Rs. " + pointData["RewardCash"];
                             return cash;
                         }
                     }

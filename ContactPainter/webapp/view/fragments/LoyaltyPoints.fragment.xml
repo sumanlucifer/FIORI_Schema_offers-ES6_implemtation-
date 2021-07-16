@@ -2,9 +2,10 @@
 	<IconTabBar
 		id="idIconTabBarNoIcons"
 		expanded="{device>/isNoPhone}"
+        selectedKey="{oModelControl2>/IctabBarLoyalty}"
 		class="sapUiResponsiveContentPadding">
 		<items>
-			<IconTabFilter text="Accured" key="accured">
+			<IconTabFilter text="Accrued" key="accrued">
 			
                     <smartTable:SmartTable
                             id="smrtLoyalty"
@@ -22,7 +23,7 @@
                             persistencyKey="LoyaltySmartTableKey"
                             initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table>
+                        <Table  growing="true" growingThreshold="15" growingScrollToLoad="false" >
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
@@ -64,7 +65,7 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
                                                <Text text="{path:'RewardPoints'}" />
                                                <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
@@ -76,7 +77,7 @@
                             </Table> 
                         </smartTable:SmartTable>
                  </IconTabFilter>
-			<IconTabFilter text="Redeemed" key="redeemed">
+			<IconTabFilter text="Redeemed Gifts" key="redeemed">
 				<smartTable:SmartTable
                             id="smrtLoyalty1"
                             editable="false"
@@ -93,7 +94,7 @@
                             persistencyKey="LoyaltySmartTableKey"
                             initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-                        <Table>
+                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false"  >
                                 <columns>
                                     <Column hAlign="Begin">
                                         <customData>
@@ -141,13 +142,80 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                               <Text text="{path:'PointType',formatter:'.fmtLowerCase'}" />
+                                               <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
                                                <!-- <Text text="{path:'RewardPoints'}" />
                                                <Text text="{path:'TotalPoints'}" /> -->
                                                <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
                                                 <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} } " />
+                                         </cells>      
+                                    </ColumnListItem>
+                                </items> 
+                            </Table> 
+                        </smartTable:SmartTable>
+			</IconTabFilter>
+            	<IconTabFilter text="Redeemed Cash" key="redeemedCash">
+				<smartTable:SmartTable
+                            id="smrtLoyalty2"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebindRdmdCash"                    
+                            entitySet="PainterPointsHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="LoyaltySmartTableKey"
+                            initialNoDataText="{i18n>tableNoDataText}"
+                            ignoreFromPersonalisation="Id,IsSelected,TransactionAt,PainterTransactionHistoryId,PainterId,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
+                        <Table growing="true" growingThreshold="15" growingScrollToLoad="false" >
+                                <columns>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointType", "leadingProperty": "PointType", "columnIndex": 0 ,"sortProperty": "PointType","filterProperty": "PointType"}'/>
+                                        </customData>
+                                          <Text text="{i18n>Type}"/>
+                                    </Column>
+                                     
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Offer", "type":"date", "leadingProperty": "Offer", "columnIndex": 1 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>OfferTitle}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                                        </customData>
+                                          <Text text="{i18n>DateAndTime}"/>
+                                    </Column>
+                                     <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PointTransactionType", "leadingProperty": "PointTransactionType", "columnIndex": 3 ,"sortProperty": "PointTransactionType","filterProperty": "PointTransactionType"}'/>
+                                        </customData>
+                                         <Text text="{i18n>TransactionType}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption", "leadingProperty": "GiftRedemption", "columnIndex": 4}'/>
+                                        </customData>
+                                         <Text text="{i18n>RedeemCash}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                               <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
+                                               <!-- <Text text="{path:'RewardPoints'}" />
+                                               <Text text="{path:'TotalPoints'}" /> -->
+                                               <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
+                                               <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                                <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                                <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/Anount} } " />
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 

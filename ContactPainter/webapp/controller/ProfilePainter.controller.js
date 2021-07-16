@@ -136,7 +136,8 @@ sap.ui.define(
                         OfferRedeemDlg: {
                             RbtnRedeemType: -1,
                             UUID: ""
-                        }
+                        },
+                        IctabBarLoyalty: "accrued"
 
                     };
                     var oView = this.getView();
@@ -174,7 +175,8 @@ sap.ui.define(
                     var sId = oSection.getId();
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
-                        oView.byId("smrtLoyalty1").rebindTable();//redeemed table
+                        oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
+                        oView.getModel("oModelControl2").setProperty("/IctabBarLoyalty", "accrued");
                     } else if (sId.match("learnSection")) {
                         console.log("learnSection")
                         oView.byId("smrtLiveTraining").rebindTable();
@@ -214,7 +216,7 @@ sap.ui.define(
                 _RefreshSmartables: function () {
                     var oView = this.getView();
                     oView.byId("smrtLoyalty").rebindTable();
-                    oView.byId("smrtLoyalty1").rebindTable();//redeemed table
+                    oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
                     oView.byId("smrtLiveTraining").rebindTable();
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
@@ -1015,7 +1017,7 @@ sap.ui.define(
                                 PainterId: "" + oPainterId + ""
                             }
                         },
-                        filters: [new Filter("IsArchived", FilterOperator.EQ, false),new Filter("ProgressStatus", FilterOperator.NE, 'None'),new Filter("Offer/IsArchived", FilterOperator.EQ, false),new Filter("Offer/IsActive", FilterOperator.EQ, true)],
+                        filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
                     })
 
@@ -1581,7 +1583,7 @@ sap.ui.define(
                     var statusText = oEvent.getSource().getProperty('text');
                     if (statusText == 'Approve') {
                         oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                    } else if (statusText == 'Reject') {
+                    } else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
                         oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
                     }
 
@@ -2055,12 +2057,29 @@ sap.ui.define(
                                 aCharStatus.indexOf("_") + 1
                             ].toUpperCase();
                             aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+
                         }
                         aCharStatus[0] = aCharStatus[0].toUpperCase();
                         sStatus = aCharStatus.join("");
                     }
 
                     return sStatus;
+                },
+                fmtStatusType: function (mParam) {
+                    var sStatus = "";
+                    if (mParam) {
+                        sStatus = mParam;
+                        var StatusStr = sStatus.toLowerCase().split('_');
+                        for (var i = 0; i < StatusStr.length; i++) {
+                            // You do not need to check if i is larger than splitStr length, as your for does that for you
+                            // Assign it back to the array
+                            StatusStr[i] = StatusStr[i].charAt(0).toUpperCase() + StatusStr[i].substring(1);
+                        }
+                        // Directly return the joined string
+                        return StatusStr.join(' ');
+                    }
+
+                    return StatusStr;
                 },
 
                 _save: function () {
@@ -2931,7 +2950,7 @@ sap.ui.define(
                 },
                 // himank loyalty hanges end
                 /*Aditya loyalty changes*/
-                 onBeforeRebindRdmd: function (oEvent) {
+                onBeforeRebindRdmd: function (oEvent) {
                     console.log("Binding Trigerred for loyalty redeemed")
                     var oPainterId = this.getViewModel("oModelControl2").getProperty(
                         "/PainterId"
@@ -2966,11 +2985,76 @@ sap.ui.define(
                             value1: false
                         })
                     );
-                     aFilters.push(
+                    aFilters.push(
                         new Filter({
                             path: "PointTransactionType",
                             operator: FilterOperator.EQ,
                             value1: "REDEEMED"
+                        })
+                    );
+                    aFilters.push(
+                        new Filter({
+                            path: "PointType",
+                            operator: FilterOperator.Contains,
+                            value1: "OFFER_GIFT_REDEMPTION"
+                        })
+                    );
+
+                    oBindingParams.filters.push(
+                        new Filter({
+                            filters: aFilters,
+                            and: true,
+                        })
+                    );
+                },
+                onBeforeRebindRdmdCash: function (oEvent) {
+                    console.log("Binding Trigerred for loyalty redeemed cash")
+                    var oPainterId = this.getViewModel("oModelControl2").getProperty(
+                        "/PainterId"
+                    );
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "Offer,GiftRedemption,PaymentTransaction";
+                    var oFinancialYear = this._getfinanceYear(),
+                        aFilters = [],
+                        //check if CreatedAt is Passed in filter or Not
+                        bApplyCurrentFinancialYear = oBindingParams.filters.every(function (
+                            ele
+                        ) {
+                            return ele.sPath !== "CreatedAt";
+                        });
+
+                    aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+
+                    if (bApplyCurrentFinancialYear)
+                        aFilters.push(
+                            new Filter({
+                                path: "CreatedAt",
+                                operator: FilterOperator.BT,
+                                value1: oFinancialYear.startYear,
+                                value2: oFinancialYear.endYear,
+                            })
+                        );
+                    aFilters.push(
+                        new Filter({
+                            path: "IsArchived",
+                            operator: FilterOperator.EQ,
+                            value1: false
+                        })
+                    );
+                    aFilters.push(
+                        new Filter({
+                            path: "PointTransactionType",
+                            operator: FilterOperator.EQ,
+                            value1: "REDEEMED"
+                        })
+                    );
+
+                    aFilters.push(
+                        new Filter({
+                            path: "PointType",
+                            operator: FilterOperator.Contains,
+                            value1: "OFFER_BANK_TRANSFER"
                         })
                     );
 
@@ -3332,8 +3416,8 @@ sap.ui.define(
                                 oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
                                 var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
                                 console.log(oGetProgress)
-                                this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")",{
-                                    expand:"RewardGift"
+                                this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
+                                    expand: "RewardGift"
                                 });
                                 // set rbtn default to null
                                 oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
@@ -3378,10 +3462,10 @@ sap.ui.define(
                         },
                         success: function (m1) {
                             console.log(m1);
-                            if(m1.hasOwnProperty("Message")){
-                                 MessageToast.show(m1["Message"]);
+                            if (m1.hasOwnProperty("Message")) {
+                                MessageToast.show(m1["Message"]);
                             }
-                           
+
                             this.onDialogCloseRedeme();
                             this.getView().getModel().refresh(true);
                             // if (oData !== null) {

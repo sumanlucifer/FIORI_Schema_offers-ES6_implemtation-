@@ -121,6 +121,7 @@
                                         <core:Item text="Approved" key="APPROVED"/>
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="In Progress" key="INPROGRESS"/>
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>

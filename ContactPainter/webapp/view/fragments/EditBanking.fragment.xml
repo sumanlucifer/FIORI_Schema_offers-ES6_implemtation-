@@ -85,7 +85,7 @@
                 </VBox>
                 <Label text="Actions" visible="{= ${PainterBankDetails} === null? false: true }" />
                 
-                <FlexBox >
+                <FlexBox>
                 <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View Document" press="onBankView" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" />
@@ -100,8 +100,9 @@
 	
          <!--Aditya changes start-->
 			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
+            <Text text="Pending for SCB Penny Drop Validation" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
 				<ToolbarSpacer/>
-                <Button text="Reject" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
+                <Button text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'||${PainterBankDetails/Status} === 'PENDING'}"/>
 				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
 				
 
