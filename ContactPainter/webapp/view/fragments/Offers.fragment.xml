@@ -51,11 +51,11 @@
                         <Text text="{Offer/OfferType/OfferType}" />
                         <Text text="{path:'Offer/StartDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
                         <Text text="{path:'Offer/EndDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
-                        <Text text="{path:'ProgressStatus',formatter:'.formatter.fmtStatus'}" />
+                        <Text text="{path:'ProgressStatus',formatter:'.formatter.fmtLowerCase2'}" />
                         <Text text="{RedemeptionIndex} / {RedemptionMax}" />
                         <HBox>
                             <items>
-                                <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtStatus'}" />
+                                <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtLowerCase2'}" />
                                 <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost"  press="onOfferReedeme" />
                                 <!-- <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
