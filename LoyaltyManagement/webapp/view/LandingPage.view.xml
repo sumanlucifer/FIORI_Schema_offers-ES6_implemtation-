@@ -250,7 +250,7 @@
                                         </customData>
                                           <Text text="{i18n>tblColTypeOfRedemption}"/>
                                     </Column>
-                                 <Column hAlign="Center" visible="{GiftRedemption!==null}">
+                                 <Column hAlign="Center">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption/RewardGiftName","type":"string", "leadingProperty": "GiftRedemption/RewardGiftName", "columnIndex": 8 }'/>
                                         </customData>
