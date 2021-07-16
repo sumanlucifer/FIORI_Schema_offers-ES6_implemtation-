@@ -201,9 +201,15 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption", "leadingProperty": "GiftRedemption", "columnIndex": 4}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction", "leadingProperty": "PaymentTransaction", "columnIndex": 4}'/>
                                         </customData>
                                          <Text text="{i18n>RedeemCash}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction", "leadingProperty": "PaymentTransaction", "columnIndex": 5}'/>
+                                        </customData>
+                                         <Text text="{i18n>RedeemStatus}"/>
                                     </Column>
                                 </columns>
                                 <items>
@@ -215,7 +221,8 @@
                                                <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
-                                                <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/Anount} } " />
+                                                <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionAmount} }" />
+                                                <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionStatus} }" />
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 
