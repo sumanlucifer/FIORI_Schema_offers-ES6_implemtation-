@@ -129,7 +129,7 @@ sap.ui.define([], function () {
                             return "Gift - " + giftData.RewardGiftName;
                         } else
                         if (pointData.RedemptionType === "BANK_TRANSFER") {
-                            var cash = "Cash - ";
+                            var cash = "Cash - Rs. " + pointData["RewardCash"];
                             return cash;
                         }
                     }
