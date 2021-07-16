@@ -92,6 +92,30 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
             return sStatus;
         },
+        fmtOfferStatus: function (mParam1) {
+            if (mParam1 === "DRAFT") {
+                return "Draft"
+            }
+            if (mParam1 === "PENDING") {
+                return "Pending"
+            }
+            if (mParam1 === "APPROVED") {
+                return "Approved"
+            }
+            if (mParam1 === "REJECTED") {
+                return "Rejected"
+            }
+            if (mParam1 === "EXPIRED") {
+                return "Offer Ended"
+            }
+            if (mParam1 === "PUBLISHED") {
+                return "Published"
+            }
+
+            return mParam1;
+
+
+        },
         fmtOfferStateColor: function (mParam) {
             if (mParam === "APPROVED") {
                 return "Success";

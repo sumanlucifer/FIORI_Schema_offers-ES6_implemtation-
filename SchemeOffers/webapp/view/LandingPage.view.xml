@@ -51,9 +51,9 @@
                                         <core:Item text="Draft" key="DRAFT"/>
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Approved" key="APPROVED"/>
-                                        <core:Item text="Rejected" key="REJECTED"/>
-                                        <core:Item text="Expired" key="EXPIRED"/>
                                         <core:Item text="Published" key="PUBLISHED"/>
+                                        <core:Item text="Offer Ended" key="EXPIRED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
                                     </ComboBox>
 
                                 </fb:control>
@@ -135,7 +135,7 @@
                     <ColumnListItem type="Navigation" press="onPressListItem">
                         <cells>
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
-                             <Text text="{OfferCode}"/>
+                            <Text text="{OfferCode}"/>
                             <Text text="{OfferType/OfferType}"/>
                             <!-- <Text text="{RewardGiftId}"/> -->
                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
@@ -143,7 +143,7 @@
                             <Text text="{CreatedByDetails/Name}"/>
                             <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
                             <!-- <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" /> -->
-                            <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                            <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="Center">
                                 <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
                                 <!-- <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button> -->
