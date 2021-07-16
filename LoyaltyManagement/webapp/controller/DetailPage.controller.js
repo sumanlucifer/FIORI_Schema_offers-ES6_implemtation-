@@ -35,7 +35,7 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sObjectPath,
                      parameters: {
-                            expand: "Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,ProductDetails,Offer,GiftRedemption"
+                            expand: "Painter,Painter/Depot,PainterTokenScanHistory,PainterTrainingPointHistory,PainterLearningPointHistory,PainterReferralHistory,ProductDetails,Offer,GiftRedemption,PaymentTransaction"
                             },
 
 
