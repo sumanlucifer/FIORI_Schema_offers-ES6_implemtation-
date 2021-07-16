@@ -122,7 +122,7 @@ sap.ui.define(
                     this.oWorkflowModel = new JSONModel();
                     this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
-                    this._LoadPainterData(0,16);
+                    this._LoadPainterData(0, 16);
                     if (sMode === "edit") {
                         this.handleEditPress();
                     } else {
@@ -135,7 +135,7 @@ sap.ui.define(
                     var oControlModel = oView.getModel("oModelControl3");
                     var iOfferId = oControlModel.getProperty("/OfferId")
                     var oDataPainter = oControlModel.getProperty("/oData/Painters");
-                    
+
                     oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
                         urlParameters: {
                             OfferId: "" + iOfferId + "",
@@ -147,10 +147,10 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     var aNewArray = oDataPainter.concat(data["results"]);
-                                   oControlModel.setProperty("/oData/Painters",aNewArray);
+                                    oControlModel.setProperty("/oData/Painters", aNewArray);
                                 }
                             }
-                            
+
                         },
                         error: function () {
                             console.log("error")
@@ -2039,6 +2039,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl3");
                     var sOfferId = oModelControl.getProperty("/OfferId");
                     var oData = oView.getModel();
+
                     oData.read("/RedeemOfferRewardForAllPainter", {
                         urlParameters: {
                             OfferId: sOfferId,
@@ -2047,6 +2048,8 @@ sap.ui.define(
                             // oModelControl.setProperty("/Buttons/Redeem",false)
                             // oModelControl.refresh(true);
                             MessageToast.show("Offer Successfully Redeemed.");
+                            othat.getView().getModel().refresh(true);
+
                         },
                         error: function () {
                             MessageBox.error(
@@ -2054,7 +2057,7 @@ sap.ui.define(
                             );
                         },
                     });
-                    
+
                 },
                 onActivate: function (oEvent) {
                     var oView = this.getView();
@@ -2286,13 +2289,13 @@ sap.ui.define(
 
 
                 },
-               
+
                 onPainterUpdatedStart: function (oEvent) {
-                    if(oEvent.getParameter("reason")==="Growing"){
+                    if (oEvent.getParameter("reason") === "Growing") {
                         var oView = this.getView();
                         var oModel = oView.getModel("oModelControl3")
-                        var aPaintLength =  oModel.getProperty("/oData/Painters").length;
-                        this._LoadPainterData(aPaintLength,aPaintLength+15)
+                        var aPaintLength = oModel.getProperty("/oData/Painters").length;
+                        this._LoadPainterData(aPaintLength, aPaintLength + 15)
 
                     }
                     //_LoadPainterData

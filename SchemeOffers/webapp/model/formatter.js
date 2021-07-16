@@ -206,13 +206,11 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
         // all formatters for the button in the display and also for the workflow
         // user id HOM-5, HOM1-6, HOD- 7
-        btnRedeemCheck: function (m1, m2, m3, m4) {
-            //m1 offer id 6-slab based offer// m3 IsPublished true //m2 Offer Status //m4 button already redeem check
+        btnRedeemCheck: function (m1) {
+            //m1 Redemption Status
 
-            if (m2 === "EXPIRED") {
-                if (m3 === true) {
-                    return true;
-                }
+            if (m1 === "REDEEMABLE") {
+                return true;
             }
 
             return false;
