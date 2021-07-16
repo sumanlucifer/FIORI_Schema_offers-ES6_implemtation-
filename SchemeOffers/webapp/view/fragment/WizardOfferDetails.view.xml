@@ -24,7 +24,7 @@
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
                 </content>
             </WizardStep>
-            <WizardStep id="wzdStep4" title="{i18n>MarketSpecific}" activate="onActivate">
+            <WizardStep id="wzdStep4" title="{i18n>formApplicablepainter}" activate="onActivate">
                 <content>
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML"/>
                 </content>
