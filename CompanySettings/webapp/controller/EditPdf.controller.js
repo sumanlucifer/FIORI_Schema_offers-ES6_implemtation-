@@ -33,7 +33,8 @@ sap.ui.define([
 
                 var oLocaModel = new JSONModel({
                     bEdit: false,
-                    Catalogue: []
+                    Catalogue: [],
+                    bBusy:false
                 });
                 this.getView().setModel(oLocaModel, "local");
 
@@ -64,6 +65,7 @@ sap.ui.define([
 
 
                         that.getView().getModel("local").setProperty("/Catalogue", Catalogue);
+                        that.getView().getModel("local").setProperty("/bBusy", false);
                         that.getView().getModel("local").refresh(true);
 
 
@@ -79,6 +81,9 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("RouteHome");
 
+            },
+            onFileSizeExceed: function (){
+                    MessageToast.show("Maximum File Size Exceded.")
             },
 
             // openPdf: function (oEvent) {
@@ -111,6 +116,7 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 var success = false;
+                oModel.setProperty("/bBusy", true);
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {
                         var that = this;
@@ -121,15 +127,13 @@ sap.ui.define([
                             contentType: false,
                             processData: false,
                             data: ele.file,
-
                             success: function (data) {
-
                                 var msg = 'Saved Successfully!';
                                 MessageToast.show(msg);
-
-                                setTimeout(() => {
-                                    oRouter.navTo("RouteHome");
-                                }, 100);
+                                oRouter.navTo("RouteHome");
+                                // setTimeout(() => {
+                                //     oRouter.navTo("RouteHome");
+                                // }, 50);
 
                             },
                             error: function () { },

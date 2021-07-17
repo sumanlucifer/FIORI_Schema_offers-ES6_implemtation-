@@ -6,7 +6,7 @@
     xmlns:u="sap.ui.unified"
     xmlns:f="sap.f"
 	xmlns:mvc="sap.ui.core.mvc">
-    <f:DynamicPage showFooter="true">
+    <f:DynamicPage busyIndicatorDelay="0" busy="{local>/bBusy}" showFooter="true" >
     <f:content>
 	<VBox class="sapUiSmallMargin">
 		<VBox class="sapUiMediumMargin">
@@ -63,12 +63,12 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
-                                                                    maximumFileSize="2.1"
+                                                                    maximumFileSize="5.1"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
                                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text=".pdf"/>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="2 MB"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="5 MB"/>
                                                                 </HBox>
                                                                 </VBox>
                                                             </FlexBox>
