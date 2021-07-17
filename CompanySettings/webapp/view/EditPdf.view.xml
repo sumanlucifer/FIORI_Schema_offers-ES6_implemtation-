@@ -6,7 +6,7 @@
     xmlns:u="sap.ui.unified"
     xmlns:f="sap.f"
 	xmlns:mvc="sap.ui.core.mvc">
-    <f:DynamicPage showFooter="true">
+    <f:DynamicPage busyIndicatorDelay="0" busy="{local>/bBusy}" showFooter="true" >
     <f:content>
 	<VBox class="sapUiSmallMargin">
 		<VBox class="sapUiMediumMargin">
