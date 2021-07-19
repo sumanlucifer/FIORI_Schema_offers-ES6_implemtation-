@@ -60,9 +60,9 @@
                 
                
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }"/>
-                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search:'^[a-zA-z0-9]'} }" />
+                <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]'} }" />
                 <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}"/>
-                <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search:'^[a-zA-z0-9]' } }" visible="{= ${PainterKycDetails} === null}"/>
+                <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]' } }" visible="{= ${PainterKycDetails} === null}"/>
                
                
                 <!-- <Input change="onEditFieldKyc" editable="{=${oModelControl>/EditKyc}}" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" /> -->
