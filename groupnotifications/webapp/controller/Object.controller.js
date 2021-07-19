@@ -772,6 +772,8 @@ sap.ui.define([
                     );
                     this.getView().addDependent(this._oValueHelpDialog);
 
+                    this._oValueHelpDialog.setBusy(true);
+
                     this._oValueHelpDialog.getTableAsync().then(
                         function (oTable) {
                             oTable.setModel(this.oColModel, "columns");
@@ -781,7 +783,18 @@ sap.ui.define([
                                     path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter,Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
                                     {
                                         dataReceived: function () {
+                                            this._oValueHelpDialog.setBusy(false);
                                             this._oValueHelpDialog.update();
+                                            
+                                            // var update=this._oValueHelpDialog.update();
+                                            // update.then(
+                                            //     function(){
+                                            //         debugger;
+                                            //         this._oValueHelpDialog.setBusy(false)
+                                            //     }
+                                                
+                                            // );
+                                            
                                         }.bind(this)
                                     }
                                 });
