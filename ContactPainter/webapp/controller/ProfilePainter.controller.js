@@ -1021,7 +1021,9 @@ sap.ui.define(
                             expand: 'Painter,Offer/OfferType,PainterOfferProgress,PainterOfferRedemption/GiftRedemption',
                             custom: {
                                 PainterId: "" + oPainterId + ""
-                            }
+                            },
+                            select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,"+
+                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
@@ -3415,24 +3417,43 @@ sap.ui.define(
                 _BeforeRedeemOpen: function (mParam1) {
                     var oProgress = mParam1["PainterOfferProgress"],
                         oSelectedProgress;
-                    var oModelC2 = this.getView().getModel("oModelControl2")
+                    console.log(mParam1);
+                    var oModelC2 = this.getView().getModel("oModelControl2");
+                    // if Offer Type is not slab
                     if (oProgress.hasOwnProperty("__list")) {
                         if (Array.isArray(oProgress["__list"])) {
                             if (oProgress["__list"].length > 0) {
-                                oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
-                                var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
-                                console.log(oGetProgress)
-                                this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
-                                    expand: "RewardGift"
-                                });
-                                // set rbtn default to null
-                                oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
-                                oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
-                                //OfferRedmDlg/UUId
-                                this._DialogOfferRedeem.open();
+
+                                for (var i = oProgress["__list"].length; i--;) {
+                                    oSelectedProgress = oProgress["__list"][i];
+                                    var oGetProgress = this.getView().getModel().getProperty("/" + oSelectedProgress);
+                                    if (oGetProgress["ProgressStatus"] === "COMPLETED") {
+                                        this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
+                                            expand: "RewardGift"
+                                        });
+                                        oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
+                                        oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
+                                        this._DialogOfferRedeem.open();
+                                        break;
+                                    }
+
+                                }
+                                // oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
+                                // var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
+
+                                // this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
+                                //     expand: "RewardGift"
+                                // });
+                                // // set rbtn default to null
+                                // oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
+                                // oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
+                                // //OfferRedmDlg/UUId
+
                             }
                         }
                     }
+
+                    // if offer type is slab
 
                 },
                 onDialogCloseRedeme: function (oEvent) {
