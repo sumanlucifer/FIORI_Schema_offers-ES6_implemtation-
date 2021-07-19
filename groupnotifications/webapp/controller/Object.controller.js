@@ -149,7 +149,14 @@ sap.ui.define([
                 if(data.IsTargetGroup==false){
                 oViewModel.setProperty("/oDetails/Members", data.Members.results);
                 oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+             oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", []);
+             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
                 }else if(data.IsTargetGroup==true){
+                    oViewModel.setProperty("/oDetails/Members",[]);
                     oViewModel.setProperty("/TargetDetails/TargetFilterType", "GROUP");
                     aArray = [];
                             if (data.NotificationGroupZone && data.NotificationGroupZone.results) {
@@ -281,6 +288,12 @@ sap.ui.define([
             var oPayload;
             if(GroupType=="PAINTER"){
             oPayload = oViewModel.getProperty("/oDetails");
+            oPayload["IsTargetGroup"]=false;
+            oPayload["NotificationGroupZone"]=null;
+            oPayload["NotificationGroupDivision"]=null;
+            oPayload["NotificationGroupDepot"]=null;
+            oPayload["NotificationGroupPainterType"]=null;
+            oPayload["NotificationGroupPainterArcheType"]=null;
             var oValid = this._fnValidation(oPayload);
                     if (oValid.IsNotValid) {
                         //this.showError(this._fnMsgConcatinator(oValid.sMsg));
@@ -829,7 +842,7 @@ sap.ui.define([
                     var oData = [];
                     var xUnique = new Set();
                     var oViewModel = this.getModel("objectView"),
-				aData = oViewModel.getProperty("/oDetails/Members");
+                aData = oViewModel.getProperty("/oDetails/Members");
                     var aTokens = oEvent.getParameter("tokens");
                     if (aTokens && aTokens.length) {
 				for (var i = 0; i < aTokens.length; i++) {
