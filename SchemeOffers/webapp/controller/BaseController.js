@@ -2812,7 +2812,7 @@ sap.ui.define(
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
                             MessageToast.show(
-                                "Kindly select a date less than Bonus Validtiy To date."
+                                "Kindly select a date less than Bonus Validity To date."
                             );
                             oModelControl.setProperty(sPath + "/StartDate", null);
                             return;
@@ -2842,7 +2842,7 @@ sap.ui.define(
                     var oStartDate = oBject["StartDate"];
                     if (oStartDate > oEndDate) {
                         MessageToast.show(
-                            "Kindly select a date more than Bonus Validtiy From date."
+                            "Kindly select a date more than Bonus Validity From date."
                         );
                         oModelControl.setProperty(sPath + "/EndDate", null);
                         return;
