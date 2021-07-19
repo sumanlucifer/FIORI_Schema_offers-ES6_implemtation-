@@ -2807,7 +2807,7 @@ sap.ui.define(
                         .getSource()
                         .getBindingContext("oModelControl")
                         .getPath();
-                    console.log(sPath);
+                   
                     var oEndDate = oBject["EndDate"];
                     if (oEndDate) {
                         if (oStartDate > oEndDate) {
@@ -2815,12 +2815,14 @@ sap.ui.define(
                                 "Kindly select a date less than Bonus Validtiy To date."
                             );
                             oModelControl.setProperty(sPath + "/StartDate", null);
+                            return;
                         }
                     }
                     if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show("Kindly enter a date greater than current date");
 
                         oModelControl.setProperty(sPath + "/StartDate", null);
+                        return;
                     }
                 },
                 onEndDateBRRChange: function (oEvent) {
@@ -2838,17 +2840,18 @@ sap.ui.define(
                         .getBindingContext("oModelControl")
                         .getPath();
                     var oStartDate = oBject["StartDate"];
-                    if (oStartDate >= oEndDate) {
+                    if (oStartDate > oEndDate) {
                         MessageToast.show(
                             "Kindly select a date more than Bonus Validtiy From date."
                         );
                         oModelControl.setProperty(sPath + "/EndDate", null);
                         return;
                     }
-                    if (oEndDate <= new Date().setHours(0, 0, 0, 0)) {
+                    if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
                         MessageToast.show("Kindly enter a date greater than current date");
 
                         oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
                     }
                 },
 
