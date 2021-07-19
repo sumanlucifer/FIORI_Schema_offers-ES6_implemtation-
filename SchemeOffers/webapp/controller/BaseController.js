@@ -3241,6 +3241,7 @@ sap.ui.define(
                     // setting the flag for increasing the end date time
                     oPayLoad["EndDate"] = new Date(
                         oPayLoad["EndDate"].setHours(23, 59, 59, 999)
+                        //oPayLoad["EndDate"].setHours(17, 40, 59, 999)
                     );
                     promise.resolve(oPayLoad);
                     return promise;
