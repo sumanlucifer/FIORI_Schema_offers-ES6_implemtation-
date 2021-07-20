@@ -5,7 +5,7 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:m="sap.m" controllerName="com.knpl.pragati.ContactPainter.controller.ProfilePainter" height="100%">
-    <uxap:ObjectPageLayout busyIndicatorDelay="0" busy="{oModelControl>/ProfilePageBuzy}" navigate="onSectionChange" enableLazyLoading="true" useIconTabBar="{oModelControl2>/iCtbar}" showFooter="{=  ${ActivationStatus} !== 'DEACTIVATED' ? true : false }" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
+    <uxap:ObjectPageLayout busyIndicatorDelay="0" busy="{oModelControl2>/ProfilePageBuzy}" navigate="onSectionChange" enableLazyLoading="true" useIconTabBar="{oModelControl2>/iCtbar}" showFooter="{=  ${ActivationStatus} !== 'DEACTIVATED' ? true : false }" id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false" headerContentPinnable="true" toggleHeaderOnTitleClick="true">
         <uxap:headerTitle>
             <uxap:ObjectPageDynamicHeaderTitle>
                 <uxap:breadcrumbs>
@@ -45,12 +45,13 @@
                     <m:ObjectStatus title="{i18n>ContactNumber}" text="{Mobile}"/>
                     <m:ObjectStatus title="{i18n>AgeGroup}" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}"/>
                     <m:ObjectStatus title="{i18n>Category}" text="{path:'Slab/Slab'}"/>
-                    <m:ObjectStatus title="{i18n>TotalPoints}" text="{path:'RewardPoints' }"/>
                     <m:ObjectStatus title="{i18n>ActivationStatus}" text="{path:'ActivationStatus', formatter:'.sActivationStatus' }"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
                     <m:ObjectStatus title="{i18n>Address}" text="{parts:['PainterAddress/AddressLine1','PainterAddress/CityDetails/City','PainterAddress/StateDetails/State'], formatter:'.fmtAddress' }"/>
-
+                    <m:ObjectStatus title="{i18n>TotalPoints}" text="{path:'TotalPoints' }"/>
+                    <m:ObjectStatus title="{i18n>RedeemPoints}" text="{path:'RedeemPoints' }"/>
+                    <m:ObjectStatus title="{i18n>BalancePoints}" text="{path:'RewardPoints' }"/>
                 </layout:VerticalLayout>
 
 
@@ -159,7 +160,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection id="offerssection" titleUppercase="false" title="{i18n>Offers}">
+            <uxap:ObjectPageSection id="offerssection" titleUppercase="false" title="{i18n>Offers}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
