@@ -97,6 +97,10 @@ modules:
       - groupnotifications-content.zip
       name: groupnotifications
       target-path: resources/
+    - artifacts:
+      - redeempoints-content.zip
+      name: comknplpragatiredeempoints
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -243,6 +247,16 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: comknplpragatiredeempoints
+  type: html5
+  path: redeempoints
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
@@ -289,9 +303,10 @@ resources:
   type: org.cloudfoundry.existing-service
   parameters:
     service: workflow
-    service-plan: standard
     service-name: wm_workflow
+    service-plan: standard
 parameters:
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:

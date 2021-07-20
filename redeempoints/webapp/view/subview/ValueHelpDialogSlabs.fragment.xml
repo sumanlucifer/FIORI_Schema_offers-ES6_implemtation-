@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+        resizable="false"
+        contentWidth="30%"
+		id="selectDialog"
+		title="Slabs"
+        growing="true"
+        search=".onValueHelpSlabsSearch"
+        growingThreshold="15"
+		items="{path:'/MasterRequestTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}],sorter:{path:'RequestType'}}"
+		confirm=".onValueHelpSlabsClose"
+		cancel=".onValueHelpSlabsClose">
+		<StandardListItem 
+			title="{RequestType}"
+			description="Mob: {Category}" />
+	</SelectDialog>
+</core:FragmentDefinition>

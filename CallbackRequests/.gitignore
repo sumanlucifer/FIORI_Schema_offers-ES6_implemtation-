@@ -1,3 +1,8 @@
 /node_modules/
 /dist/
 
+
+# auto generated wildcard
+knpl-influencer-web/redeempoints/.env1
+# auto generated wildcard
+knpl-influencer-web/redeempoints/.env2

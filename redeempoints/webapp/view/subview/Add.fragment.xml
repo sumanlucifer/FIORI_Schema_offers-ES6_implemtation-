@@ -1,0 +1,94 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+        <f:SimpleForm id="FormCondonation" title="{i18n>AddRedemption}"  editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                
+                <core:Title text="{i18n>LblPainterDetails}" />
+                <Label text="{i18n>PrimaryMobileNo}" />
+                  <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/AddFields/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Label text="{i18n>PainterName}" />
+                <Text text="{oModelView>/AddFields/Name}" />
+                <Label text="{i18n>MembershipId}" />
+                <Text  text="{oModelView>/AddFields/MembershipCard}" />
+                <Label text="{i18n>Zone}" />
+                <Text  text="{oModelView>/AddFields/ZoneId}" />
+                <Label text="{i18n>Division}" />
+                <Text  text="{oModelView>/AddFields/DivisionId}" />
+                <Label text="{i18n>Depot}" />
+                <Text  text="{oModelView>/AddFields/Depot}" />
+                 <Label text="{i18n>PrimaryDealer}" />
+                <Text  text="{oModelView>/AddFields/PDealer}" />
+                
+
+                <!-- <Label text="{i18n>PainterName}" />
+                <Input editable="false" value="{oModelView>/addCompAddData/Name}" />
+                <Label text="{i18n>MembershipId}" />
+                <Input editable="false" value="{oModelView>/addCompAddData/MembershipCard}" />
+                <Label text="{i18n>AddResolution}" /> -->
+                <!-- <ComboBox change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
+                    <items>
+                        <core:Item text="{Resolution}" key="{Id}" />
+                    </items>
+                </ComboBox>
+                <Label />
+                <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
+                <core:Title text="" />
+
+
+                <!-- <Label text="{i18n>LblCategory}" /> -->
+                <!-- <ComboBox selectionChange="onCategoryChange" required="true" items="{path:'/MasterProductCategorySet'  }" selectedKey="{path:'oModelView>/AddFields/CategoryId',type :'sap.ui.model.type.String', constraints:{minLength:1,maxLength:10} }">
+                    <items>
+                       <core:Item key="{Id}" text="{Category}" />
+                    </items>
+                </ComboBox> -->
+                <Label text="{i18n>LblSlab}" />
+                <Input required="true" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" value="{path:'oModelView>/AddFields/Slab', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <!-- <MultiInput
+						id="multiInput"
+						valueHelpOnly="true"
+						valueHelpRequest=".onValueHelpSlabs"
+					>
+					</MultiInput> -->
+
+                <Label text=""/>
+                <VBox >
+                <Button  id="btnOTP" icon="sap-icon://paper-plane" enabled="{oModelControl>/bEnable}" type="Emphasized" text="{i18n>btnSendOtp}" press="onSendOtp" />
+                <HBox>
+                <Input id="inputOTP" visible="false" value="{path:'oModelView>/AddFields/Otp', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }"/>
+                <Button class="sapUiMediumMarginBegin" id="btnOTPResend" visible="false" icon="sap-icon://paper-plane" type="Emphasized" text="{i18n>btnReSendOtp}" press="onSendOtp" />
+                <Button class="sapUiMediumMarginBegin" id="btnOTPVerify" visible="false" icon="sap-icon://sys-enter-2" type="Emphasized" text="{i18n>btnVerifyOtp}" press="onVerifyOtp" />
+                </HBox>
+                </VBox>
+                <Label text="{i18n>Remark}"/>
+                <TextArea maxLength="250" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250}}" />
+
+                <!-- <Label text="{i18n>LblClassification}" />
+                <ComboBox  selectionChange="onClassificationChange" required="true" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelView>/AddFields/ClassId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
+                    <items>
+                      <core:Item key="{Id}" text="{Classification}" />
+                    </items>
+                </ComboBox> -->
+
+              
+                <!-- <Label text="{i18n>LblProduct}" />
+                <ComboBox id="Products" enabled="{= ${oModelView>/AddFields/CategoryId}.length>0}" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
+                    <items>
+                         <core:Item key="{Id}" text="{ProductName}" />
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Pack}" />
+                <ComboBox id="Packs" enabled="{= ${oModelView>/AddFields/ProductId}.length>0 }" change="onPackChange" required="true" items="{path:'/MasterRepProductSkuSet' }" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductSKUCode',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
+                    <items>
+                         <core:Item key="{SkuCode}" text="{Description}" />
+                    </items>
+                </ComboBox> 
+
+                <Label text="{i18n>LblQuantity}" />
+                <Select change="onPointsChange" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductQuantity',type:'.cmbxDtype2'}" width="10%" items="{oModelControl>/aQuantity}" >
+                 <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
+                </Select>    
+               
+               <Label text="{i18n>LblTotalPoints}" />
+               <Text text="{= ${oModelView>/PainterComplainProducts/0/Points}*${oModelView>/PainterComplainProducts/0/ProductQuantity} }"  /> -->
+            </f:content>
+        </f:SimpleForm>
+</core:FragmentDefinition>
