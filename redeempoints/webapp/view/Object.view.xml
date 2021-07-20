@@ -25,7 +25,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavBack"/>
-                 <Button width="7%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
+                <Button width="7%" text="{i18n>Save}" type="Emphasized" enabled="{oModelControl>/isValidOTP}" press="onPressSave"/>
             </Toolbar>
         </footer>
     </Page>

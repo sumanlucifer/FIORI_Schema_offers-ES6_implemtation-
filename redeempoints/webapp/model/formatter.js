@@ -14,7 +14,20 @@ sap.ui.define([], function () {
 				return "";
 			}
 			return parseFloat(sValue).toFixed(2);
-		}
+        },
+        fmtStatus: function (mParam) {
+            var sLetter = "";
+            if (mParam) {
+                sLetter = mParam
+                    .toLowerCase()
+                    .split(" ")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ");
+            }
+
+            return sLetter;
+        },
+
 
 	};
 
