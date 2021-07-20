@@ -28,8 +28,8 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "CON",
-                    "title": "Condonation",
+                    "action": "REDEEMPoints",
+                    "title": "Redeem Points",
                     "subTitle": "",
                     "icon": ""
                 }
