@@ -8,7 +8,7 @@
 	<App
 		id="app"
 		busy="{appView>/busy}"
-		busyIndicatorDelay="{appView>/delay}"/>
+		busyIndicatorDelay="0"/>
 	</Shell>
 
 </mvc:View>

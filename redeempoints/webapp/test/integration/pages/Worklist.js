@@ -65,8 +65,8 @@ sap.ui.define([
 							// Don't remember objects just strings since IE will not allow accessing objects of destroyed frames
 							this.getContext().currentItem = {
 								bindingPath: oBindingContext.getPath(),
-								id: oBindingContext.getProperty("CategoryName"),
-								name: oBindingContext.getProperty("CategoryName")
+								id: oBindingContext.getProperty("Id"),
+								name: oBindingContext.getProperty("AgeGroupId")
 							};
 						}
 					}));
@@ -186,9 +186,9 @@ sap.ui.define([
 					var aAllEntities,
 						iExpectedNumberOfItems;
 
-					// retrieve all Alphabetical_list_of_products to be able to check for the total amount
+					// retrieve all PainterSet to be able to check for the total amount
 					this.waitFor(this.createAWaitForAnEntitySet({
-						entitySet: "Alphabetical_list_of_products",
+						entitySet: "PainterSet",
 						success: function (aEntityData) {
 							aAllEntities = aEntityData;
 						}

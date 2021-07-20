@@ -1,557 +1,1248 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
-    <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
-        <Schema Namespace="NorthwindModel" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-            <EntityType Name="Category">
-                <Key>
-                    <PropertyRef Name="CategoryID" />
-                </Key>
-                <Property Name="CategoryID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Description" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-                <Property Name="Picture" Type="Edm.Binary" Nullable="true" MaxLength="Max" FixedLength="false" />
-                <NavigationProperty Name="Products" Relationship="NorthwindModel.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
-            </EntityType>
-            <EntityType Name="CustomerDemographic">
-                <Key>
-                    <PropertyRef Name="CustomerTypeID" />
-                </Key>
-                <Property Name="CustomerTypeID" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
-                <Property Name="CustomerDesc" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Customers" Relationship="NorthwindModel.CustomerCustomerDemo" FromRole="CustomerDemographics" ToRole="Customers" />
-            </EntityType>
-            <EntityType Name="Customer">
-                <Key>
-                    <PropertyRef Name="CustomerID" />
-                </Key>
-                <Property Name="CustomerID" Type="Edm.String" Nullable="false" MaxLength="5" Unicode="true" FixedLength="true" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ContactName" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="ContactTitle" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Phone" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <Property Name="Fax" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Orders" Relationship="NorthwindModel.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
-                <NavigationProperty Name="CustomerDemographics" Relationship="NorthwindModel.CustomerCustomerDemo" FromRole="Customers" ToRole="CustomerDemographics" />
-            </EntityType>
-            <EntityType Name="Employee">
-                <Key>
-                    <PropertyRef Name="EmployeeID" />
-                </Key>
-                <Property Name="EmployeeID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="LastName" Type="Edm.String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-                <Property Name="FirstName" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Title" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="TitleOfCourtesy" Type="Edm.String" Nullable="true" MaxLength="25" Unicode="true" FixedLength="false" />
-                <Property Name="BirthDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="HireDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="HomePhone" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <Property Name="Extension" Type="Edm.String" Nullable="true" MaxLength="4" Unicode="true" FixedLength="false" />
-                <Property Name="Photo" Type="Edm.Binary" Nullable="true" MaxLength="Max" FixedLength="false" />
-                <Property Name="Notes" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-                <Property Name="ReportsTo" Type="Edm.Int32" Nullable="true" />
-                <Property Name="PhotoPath" Type="Edm.String" Nullable="true" MaxLength="255" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Employees1" Relationship="NorthwindModel.FK_Employees_Employees" FromRole="Employees" ToRole="Employees1" />
-                <NavigationProperty Name="Employee1" Relationship="NorthwindModel.FK_Employees_Employees" FromRole="Employees1" ToRole="Employees" />
-                <NavigationProperty Name="Orders" Relationship="NorthwindModel.FK_Orders_Employees" FromRole="Employees" ToRole="Orders" />
-                <NavigationProperty Name="Territories" Relationship="NorthwindModel.EmployeeTerritories" FromRole="Employees" ToRole="Territories" />
-            </EntityType>
-            <EntityType Name="Order_Detail">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                    <PropertyRef Name="ProductID" />
-                </Key>
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
-                <Property Name="Quantity" Type="Edm.Int16" Nullable="false" />
-                <Property Name="Discount" Type="Edm.Single" Nullable="false" />
-                <NavigationProperty Name="Order" Relationship="NorthwindModel.FK_Order_Details_Orders" FromRole="Order_Details" ToRole="Orders" />
-                <NavigationProperty Name="Product" Relationship="NorthwindModel.FK_Order_Details_Products" FromRole="Order_Details" ToRole="Products" />
-            </EntityType>
-            <EntityType Name="Order">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                </Key>
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="CustomerID" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="true" FixedLength="true" />
-                <Property Name="EmployeeID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="OrderDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="RequiredDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShipVia" Type="Edm.Int32" Nullable="true" />
-                <Property Name="Freight" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="ShipName" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ShipAddress" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCity" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipRegion" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipPostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCountry" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Customer" Relationship="NorthwindModel.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
-                <NavigationProperty Name="Employee" Relationship="NorthwindModel.FK_Orders_Employees" FromRole="Orders" ToRole="Employees" />
-                <NavigationProperty Name="Order_Details" Relationship="NorthwindModel.FK_Order_Details_Orders" FromRole="Orders" ToRole="Order_Details" />
-                <NavigationProperty Name="Shipper" Relationship="NorthwindModel.FK_Orders_Shippers" FromRole="Orders" ToRole="Shippers" />
-            </EntityType>
-            <EntityType Name="Product">
-                <Key>
-                    <PropertyRef Name="ProductID" />
-                </Key>
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="SupplierID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="CategoryID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="QuantityPerUnit" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="UnitsInStock" Type="Edm.Int16" Nullable="true" />
-                <Property Name="UnitsOnOrder" Type="Edm.Int16" Nullable="true" />
-                <Property Name="ReorderLevel" Type="Edm.Int16" Nullable="true" />
-                <Property Name="Discontinued" Type="Edm.Boolean" Nullable="false" />
-                <NavigationProperty Name="Category" Relationship="NorthwindModel.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
-                <NavigationProperty Name="Order_Details" Relationship="NorthwindModel.FK_Order_Details_Products" FromRole="Products" ToRole="Order_Details" />
-                <NavigationProperty Name="Supplier" Relationship="NorthwindModel.FK_Products_Suppliers" FromRole="Products" ToRole="Suppliers" />
-            </EntityType>
-            <EntityType Name="Region">
-                <Key>
-                    <PropertyRef Name="RegionID" />
-                </Key>
-                <Property Name="RegionID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="RegionDescription" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
-                <NavigationProperty Name="Territories" Relationship="NorthwindModel.FK_Territories_Region" FromRole="Region" ToRole="Territories" />
-            </EntityType>
-            <EntityType Name="Shipper">
-                <Key>
-                    <PropertyRef Name="ShipperID" />
-                </Key>
-                <Property Name="ShipperID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="Phone" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Orders" Relationship="NorthwindModel.FK_Orders_Shippers" FromRole="Shippers" ToRole="Orders" />
-            </EntityType>
-            <EntityType Name="Supplier">
-                <Key>
-                    <PropertyRef Name="SupplierID" />
-                </Key>
-                <Property Name="SupplierID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ContactName" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="ContactTitle" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Phone" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <Property Name="Fax" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false" />
-                <Property Name="HomePage" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-                <NavigationProperty Name="Products" Relationship="NorthwindModel.FK_Products_Suppliers" FromRole="Suppliers" ToRole="Products" />
-            </EntityType>
-            <EntityType Name="Territory">
-                <Key>
-                    <PropertyRef Name="TerritoryID" />
-                </Key>
-                <Property Name="TerritoryID" Type="Edm.String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-                <Property Name="TerritoryDescription" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
-                <Property Name="RegionID" Type="Edm.Int32" Nullable="false" />
-                <NavigationProperty Name="Region" Relationship="NorthwindModel.FK_Territories_Region" FromRole="Territories" ToRole="Region" />
-                <NavigationProperty Name="Employees" Relationship="NorthwindModel.EmployeeTerritories" FromRole="Territories" ToRole="Employees" />
-            </EntityType>
-            <EntityType Name="Alphabetical_list_of_product">
-                <Key>
-                    <PropertyRef Name="ProductID" />
-                    <PropertyRef Name="ProductName" />
-                    <PropertyRef Name="Discontinued" />
-                    <PropertyRef Name="CategoryName" />
-                </Key>
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="SupplierID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="CategoryID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="QuantityPerUnit" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="UnitsInStock" Type="Edm.Int16" Nullable="true" />
-                <Property Name="UnitsOnOrder" Type="Edm.Int16" Nullable="true" />
-                <Property Name="ReorderLevel" Type="Edm.Int16" Nullable="true" />
-                <Property Name="Discontinued" Type="Edm.Boolean" Nullable="false" />
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-            </EntityType>
-            <EntityType Name="Category_Sales_for_1997">
-                <Key>
-                    <PropertyRef Name="CategoryName" />
-                </Key>
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="CategorySales" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Current_Product_List">
-                <Key>
-                    <PropertyRef Name="ProductID" />
-                    <PropertyRef Name="ProductName" />
-                </Key>
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-            </EntityType>
-            <EntityType Name="Customer_and_Suppliers_by_City">
-                <Key>
-                    <PropertyRef Name="CompanyName" />
-                    <PropertyRef Name="Relationship" />
-                </Key>
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ContactName" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
-                <Property Name="Relationship" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-            </EntityType>
-            <EntityType Name="Invoice">
-                <Key>
-                    <PropertyRef Name="CustomerName" />
-                    <PropertyRef Name="Salesperson" />
-                    <PropertyRef Name="OrderID" />
-                    <PropertyRef Name="ShipperName" />
-                    <PropertyRef Name="ProductID" />
-                    <PropertyRef Name="ProductName" />
-                    <PropertyRef Name="UnitPrice" />
-                    <PropertyRef Name="Quantity" />
-                    <PropertyRef Name="Discount" />
-                </Key>
-                <Property Name="ShipName" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ShipAddress" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCity" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipRegion" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipPostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCountry" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="CustomerID" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="true" FixedLength="true" />
-                <Property Name="CustomerName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Salesperson" Type="Edm.String" Nullable="false" MaxLength="31" Unicode="true" FixedLength="false" />
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="OrderDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="RequiredDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShipperName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
-                <Property Name="Quantity" Type="Edm.Int16" Nullable="false" />
-                <Property Name="Discount" Type="Edm.Single" Nullable="false" />
-                <Property Name="ExtendedPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="Freight" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Order_Details_Extended">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                    <PropertyRef Name="ProductID" />
-                    <PropertyRef Name="ProductName" />
-                    <PropertyRef Name="UnitPrice" />
-                    <PropertyRef Name="Quantity" />
-                    <PropertyRef Name="Discount" />
-                </Key>
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="ProductID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
-                <Property Name="Quantity" Type="Edm.Int16" Nullable="false" />
-                <Property Name="Discount" Type="Edm.Single" Nullable="false" />
-                <Property Name="ExtendedPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Order_Subtotal">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                </Key>
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="Subtotal" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Orders_Qry">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                    <PropertyRef Name="CompanyName" />
-                </Key>
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="CustomerID" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="true" FixedLength="true" />
-                <Property Name="EmployeeID" Type="Edm.Int32" Nullable="true" />
-                <Property Name="OrderDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="RequiredDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="ShipVia" Type="Edm.Int32" Nullable="true" />
-                <Property Name="Freight" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="ShipName" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ShipAddress" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCity" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipRegion" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ShipPostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="ShipCountry" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false" />
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false" />
-            </EntityType>
-            <EntityType Name="Product_Sales_for_1997">
-                <Key>
-                    <PropertyRef Name="CategoryName" />
-                    <PropertyRef Name="ProductName" />
-                </Key>
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ProductSales" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Products_Above_Average_Price">
-                <Key>
-                    <PropertyRef Name="ProductName" />
-                </Key>
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Products_by_Category">
-                <Key>
-                    <PropertyRef Name="CategoryName" />
-                    <PropertyRef Name="ProductName" />
-                    <PropertyRef Name="Discontinued" />
-                </Key>
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="QuantityPerUnit" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false" />
-                <Property Name="UnitsInStock" Type="Edm.Int16" Nullable="true" />
-                <Property Name="Discontinued" Type="Edm.Boolean" Nullable="false" />
-            </EntityType>
-            <EntityType Name="Sales_by_Category">
-                <Key>
-                    <PropertyRef Name="CategoryID" />
-                    <PropertyRef Name="CategoryName" />
-                    <PropertyRef Name="ProductName" />
-                </Key>
-                <Property Name="CategoryID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-                <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ProductSales" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Sales_Totals_by_Amount">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                    <PropertyRef Name="CompanyName" />
-                </Key>
-                <Property Name="SaleAmount" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-            </EntityType>
-            <EntityType Name="Summary_of_Sales_by_Quarter">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                </Key>
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="Subtotal" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <EntityType Name="Summary_of_Sales_by_Year">
-                <Key>
-                    <PropertyRef Name="OrderID" />
-                </Key>
-                <Property Name="ShippedDate" Type="Edm.DateTime" Nullable="true" />
-                <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
-                <Property Name="Subtotal" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4" />
-            </EntityType>
-            <Association Name="FK_Products_Categories">
-                <End Role="Categories" Type="NorthwindModel.Category" Multiplicity="0..1" />
-                <End Role="Products" Type="NorthwindModel.Product" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Categories">
-                        <PropertyRef Name="CategoryID" />
-                    </Principal>
-                    <Dependent Role="Products">
-                        <PropertyRef Name="CategoryID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Orders_Customers">
-                <End Role="Customers" Type="NorthwindModel.Customer" Multiplicity="0..1" />
-                <End Role="Orders" Type="NorthwindModel.Order" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Customers">
-                        <PropertyRef Name="CustomerID" />
-                    </Principal>
-                    <Dependent Role="Orders">
-                        <PropertyRef Name="CustomerID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Employees_Employees">
-                <End Role="Employees" Type="NorthwindModel.Employee" Multiplicity="0..1" />
-                <End Role="Employees1" Type="NorthwindModel.Employee" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Employees">
-                        <PropertyRef Name="EmployeeID" />
-                    </Principal>
-                    <Dependent Role="Employees1">
-                        <PropertyRef Name="ReportsTo" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Orders_Employees">
-                <End Role="Employees" Type="NorthwindModel.Employee" Multiplicity="0..1" />
-                <End Role="Orders" Type="NorthwindModel.Order" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Employees">
-                        <PropertyRef Name="EmployeeID" />
-                    </Principal>
-                    <Dependent Role="Orders">
-                        <PropertyRef Name="EmployeeID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Order_Details_Orders">
-                <End Role="Orders" Type="NorthwindModel.Order" Multiplicity="1" />
-                <End Role="Order_Details" Type="NorthwindModel.Order_Detail" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Orders">
-                        <PropertyRef Name="OrderID" />
-                    </Principal>
-                    <Dependent Role="Order_Details">
-                        <PropertyRef Name="OrderID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Order_Details_Products">
-                <End Role="Products" Type="NorthwindModel.Product" Multiplicity="1" />
-                <End Role="Order_Details" Type="NorthwindModel.Order_Detail" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Products">
-                        <PropertyRef Name="ProductID" />
-                    </Principal>
-                    <Dependent Role="Order_Details">
-                        <PropertyRef Name="ProductID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Orders_Shippers">
-                <End Role="Shippers" Type="NorthwindModel.Shipper" Multiplicity="0..1" />
-                <End Role="Orders" Type="NorthwindModel.Order" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Shippers">
-                        <PropertyRef Name="ShipperID" />
-                    </Principal>
-                    <Dependent Role="Orders">
-                        <PropertyRef Name="ShipVia" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Products_Suppliers">
-                <End Role="Suppliers" Type="NorthwindModel.Supplier" Multiplicity="0..1" />
-                <End Role="Products" Type="NorthwindModel.Product" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Suppliers">
-                        <PropertyRef Name="SupplierID" />
-                    </Principal>
-                    <Dependent Role="Products">
-                        <PropertyRef Name="SupplierID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="FK_Territories_Region">
-                <End Role="Region" Type="NorthwindModel.Region" Multiplicity="1" />
-                <End Role="Territories" Type="NorthwindModel.Territory" Multiplicity="*" />
-                <ReferentialConstraint>
-                    <Principal Role="Region">
-                        <PropertyRef Name="RegionID" />
-                    </Principal>
-                    <Dependent Role="Territories">
-                        <PropertyRef Name="RegionID" />
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="CustomerCustomerDemo">
-                <End Role="CustomerDemographics" Type="NorthwindModel.CustomerDemographic" Multiplicity="*" />
-                <End Role="Customers" Type="NorthwindModel.Customer" Multiplicity="*" />
-            </Association>
-            <Association Name="EmployeeTerritories">
-                <End Role="Employees" Type="NorthwindModel.Employee" Multiplicity="*" />
-                <End Role="Territories" Type="NorthwindModel.Territory" Multiplicity="*" />
-            </Association>
-        </Schema>
-        <Schema Namespace="ODataWeb.Northwind.Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-            <EntityContainer Name="NorthwindEntities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-                <EntitySet Name="Categories" EntityType="NorthwindModel.Category" />
-                <EntitySet Name="CustomerDemographics" EntityType="NorthwindModel.CustomerDemographic" />
-                <EntitySet Name="Customers" EntityType="NorthwindModel.Customer" />
-                <EntitySet Name="Employees" EntityType="NorthwindModel.Employee" />
-                <EntitySet Name="Order_Details" EntityType="NorthwindModel.Order_Detail" />
-                <EntitySet Name="Orders" EntityType="NorthwindModel.Order" />
-                <EntitySet Name="Products" EntityType="NorthwindModel.Product" />
-                <EntitySet Name="Regions" EntityType="NorthwindModel.Region" />
-                <EntitySet Name="Shippers" EntityType="NorthwindModel.Shipper" />
-                <EntitySet Name="Suppliers" EntityType="NorthwindModel.Supplier" />
-                <EntitySet Name="Territories" EntityType="NorthwindModel.Territory" />
-                <EntitySet Name="Alphabetical_list_of_products" EntityType="NorthwindModel.Alphabetical_list_of_product" />
-                <EntitySet Name="Category_Sales_for_1997" EntityType="NorthwindModel.Category_Sales_for_1997" />
-                <EntitySet Name="Current_Product_Lists" EntityType="NorthwindModel.Current_Product_List" />
-                <EntitySet Name="Customer_and_Suppliers_by_Cities" EntityType="NorthwindModel.Customer_and_Suppliers_by_City" />
-                <EntitySet Name="Invoices" EntityType="NorthwindModel.Invoice" />
-                <EntitySet Name="Order_Details_Extendeds" EntityType="NorthwindModel.Order_Details_Extended" />
-                <EntitySet Name="Order_Subtotals" EntityType="NorthwindModel.Order_Subtotal" />
-                <EntitySet Name="Orders_Qries" EntityType="NorthwindModel.Orders_Qry" />
-                <EntitySet Name="Product_Sales_for_1997" EntityType="NorthwindModel.Product_Sales_for_1997" />
-                <EntitySet Name="Products_Above_Average_Prices" EntityType="NorthwindModel.Products_Above_Average_Price" />
-                <EntitySet Name="Products_by_Categories" EntityType="NorthwindModel.Products_by_Category" />
-                <EntitySet Name="Sales_by_Categories" EntityType="NorthwindModel.Sales_by_Category" />
-                <EntitySet Name="Sales_Totals_by_Amounts" EntityType="NorthwindModel.Sales_Totals_by_Amount" />
-                <EntitySet Name="Summary_of_Sales_by_Quarters" EntityType="NorthwindModel.Summary_of_Sales_by_Quarter" />
-                <EntitySet Name="Summary_of_Sales_by_Years" EntityType="NorthwindModel.Summary_of_Sales_by_Year" />
-                <AssociationSet Name="FK_Products_Categories" Association="NorthwindModel.FK_Products_Categories">
-                    <End Role="Categories" EntitySet="Categories" />
-                    <End Role="Products" EntitySet="Products" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Orders_Customers" Association="NorthwindModel.FK_Orders_Customers">
-                    <End Role="Customers" EntitySet="Customers" />
-                    <End Role="Orders" EntitySet="Orders" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Employees_Employees" Association="NorthwindModel.FK_Employees_Employees">
-                    <End Role="Employees" EntitySet="Employees" />
-                    <End Role="Employees1" EntitySet="Employees" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Orders_Employees" Association="NorthwindModel.FK_Orders_Employees">
-                    <End Role="Employees" EntitySet="Employees" />
-                    <End Role="Orders" EntitySet="Orders" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Order_Details_Orders" Association="NorthwindModel.FK_Order_Details_Orders">
-                    <End Role="Orders" EntitySet="Orders" />
-                    <End Role="Order_Details" EntitySet="Order_Details" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Order_Details_Products" Association="NorthwindModel.FK_Order_Details_Products">
-                    <End Role="Products" EntitySet="Products" />
-                    <End Role="Order_Details" EntitySet="Order_Details" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Orders_Shippers" Association="NorthwindModel.FK_Orders_Shippers">
-                    <End Role="Shippers" EntitySet="Shippers" />
-                    <End Role="Orders" EntitySet="Orders" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Products_Suppliers" Association="NorthwindModel.FK_Products_Suppliers">
-                    <End Role="Suppliers" EntitySet="Suppliers" />
-                    <End Role="Products" EntitySet="Products" />
-                </AssociationSet>
-                <AssociationSet Name="FK_Territories_Region" Association="NorthwindModel.FK_Territories_Region">
-                    <End Role="Region" EntitySet="Regions" />
-                    <End Role="Territories" EntitySet="Territories" />
-                </AssociationSet>
-                <AssociationSet Name="CustomerCustomerDemo" Association="NorthwindModel.CustomerCustomerDemo">
-                    <End Role="CustomerDemographics" EntitySet="CustomerDemographics" />
-                    <End Role="Customers" EntitySet="Customers" />
-                </AssociationSet>
-                <AssociationSet Name="EmployeeTerritories" Association="NorthwindModel.EmployeeTerritories">
-                    <End Role="Employees" EntitySet="Employees" />
-                    <End Role="Territories" EntitySet="Territories" />
-                </AssociationSet>
-            </EntityContainer>
-        </Schema>
-    </edmx:DataServices>
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx
+xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+<edmx:DataServices m:DataServiceVersion="1.0"
+xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+<Schema Namespace="com.knpl.pragati.entity"
+xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+<EntityType Name="AdminModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Name" Type="Edm.String" Nullable="true"/>
+    <Property Name="Email" Type="Edm.String" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="RoleId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Country" Relationship="com.knpl.pragati.entity.AdminModel_2_r_Country" FromRole="AdminModel" ToRole="r_Country"/>
+    <NavigationProperty Name="Role" Relationship="com.knpl.pragati.entity.AdminModel_2_r_Role" FromRole="AdminModel" ToRole="r_Role"/>
+</EntityType>
+<EntityType Name="PainterAssetsModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AssetName" Type="Edm.String" Nullable="true"/>
+    <Property Name="AssetType" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="LicenseNumber" Type="Edm.String" Nullable="true"/>
+</EntityType>
+<EntityType Name="CompanySettingsModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AboutUs" Type="Edm.String" Nullable="true"/>
+    <Property Name="Disclaimer" Type="Edm.String" Nullable="true"/>
+    <Property Name="CallCenterHelpline" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="DealerModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="DealerName" Type="Edm.String" Nullable="true"/>
+    <Property Name="PlantCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="Depot" Type="Edm.String" Nullable="true"/>
+    <Property Name="SalesGroupId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SalesGroupName" Type="Edm.String" Nullable="true"/>
+    <Property Name="CustomerClass" Type="Edm.String" Nullable="true"/>
+    <Property Name="FiscalYear" Type="Edm.String" Nullable="true"/>
+    <Property Name="CustomerId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="CustomerCategory" Type="Edm.String" Nullable="true"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Dealers_2_r_Painter" FromRole="r_Dealers" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="LearningModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Title" Type="Edm.String" Nullable="true"/>
+    <Property Name="Duration" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="RewardPoints" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Description" Type="Edm.String" Nullable="true"/>
+    <Property Name="Url" Type="Edm.String" Nullable="true"/>
+    <Property Name="TrainingTypeId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="LearningQuestionnaire" Relationship="com.knpl.pragati.entity.r_Learning_2_r_LearningQuestionnaire" FromRole="r_Learning" ToRole="r_LearningQuestionnaire"/>
+</EntityType>
+<EntityType Name="LearningQuestionnaireModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Index" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="LearningId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Question" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsMultiCorrect" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Learning" Relationship="com.knpl.pragati.entity.r_Learning_2_r_LearningQuestionnaire" FromRole="r_LearningQuestionnaire" ToRole="r_Learning"/>
+    <NavigationProperty Name="LearningQuestionnaireOptions" Relationship="com.knpl.pragati.entity.r_LearningQuestionnaire_2_r_LearningQuestionnaireOptions" FromRole="r_LearningQuestionnaire" ToRole="r_LearningQuestionnaireOptions"/>
+</EntityType>
+<EntityType Name="LearningQuestionnaireOptionsModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Index" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Option" Type="Edm.String" Nullable="true"/>
+    <Property Name="QuestionnaireId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsCorrect" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="LearningQuestionnaire" Relationship="com.knpl.pragati.entity.r_LearningQuestionnaire_2_r_LearningQuestionnaireOptions" FromRole="r_LearningQuestionnaireOptions" ToRole="r_LearningQuestionnaire"/>
+</EntityType>
+<EntityType Name="MasterAdminRoleModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Role" Type="Edm.String" Nullable="true"/>
+    <Property Name="Description" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterAgeGroupModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AgeGroup" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterArcheTypeModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="ArcheType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterAssetTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AssetType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterBankAccountTypeModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AccountType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterBusinessCategoryModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="BusinessCategory" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterBusinessGroupModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="BusinessGroup" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterCityModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="City" Type="Edm.String" Nullable="true"/>
+    <Property Name="StateId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterComplaintTypeModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="ComplaintType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterCountryModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Country" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsoCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="DialCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterDepotModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Depot" Type="Edm.String" Nullable="true"/>
+    <Property Name="DivisionId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Division" Relationship="com.knpl.pragati.entity.MasterDepotModel_2_r_Division" FromRole="MasterDepotModel" ToRole="r_Division"/>
+</EntityType>
+<EntityType Name="MasterDivisionModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Division" Type="Edm.String" Nullable="true"/>
+    <Property Name="ZoneId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Zone" Relationship="com.knpl.pragati.entity.MasterDivisionModel_2_r_Zone" FromRole="MasterDivisionModel" ToRole="r_Zone"/>
+</EntityType>
+<EntityType Name="MasterEmailAttachmentModel">
+    <Key>
+        <PropertyRef Name="UUID"/>
+    </Key>
+    <Property Name="UUID" Type="Edm.String" Nullable="true"/>
+    <Property Name="AttachmentName" Type="Edm.String" Nullable="true"/>
+    <Property Name="AttachmentType" Type="Edm.String" Nullable="true"/>
+    <Property Name="Attachment" Type="Edm.String" Nullable="true"/>
+    <Property Name="TemplateId" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Template" Relationship="com.knpl.pragati.entity.r_Attachments_2_r_Template" FromRole="r_Attachments" ToRole="r_Template"/>
+</EntityType>
+<EntityType Name="MasterEmailTemplateModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="TemplateType" Type="Edm.String" Nullable="true"/>
+    <Property Name="TemplateSubject" Type="Edm.String" Nullable="true"/>
+    <Property Name="TemplateBody" Type="Edm.String" Nullable="true"/>
+    <Property Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Attachments" Relationship="com.knpl.pragati.entity.r_Attachments_2_r_Template" FromRole="r_Template" ToRole="r_Attachments"/>
+</EntityType>
+<EntityType Name="MasterExperienceModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Experience" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterExternalLinksModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Title" Type="Edm.String" Nullable="true"/>
+    <Property Name="Description" Type="Edm.String" Nullable="true"/>
+    <Property Name="Url" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterFAQModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Question" Type="Edm.String" Nullable="true"/>
+    <Property Name="Answer" Type="Edm.String" Nullable="true"/>
+    <Property Name="FAQCategoryId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="FAQCategory" Relationship="com.knpl.pragati.entity.MasterFAQModel_2_r_FaqCategory" FromRole="MasterFAQModel" ToRole="r_FaqCategory"/>
+</EntityType>
+<EntityType Name="MasterFAQCategoryModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="FAQCategory" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterFeedbackTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="FeedbackType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterKycTypeModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="KycType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterLanguageModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Language" Type="Edm.String" Nullable="true"/>
+    <Property Name="LanguageCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="LanguageDescription" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterMaritalStatusModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="MaritalStatus" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterPainterTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="PainterType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterProductModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SKU" Type="Edm.String" Nullable="true"/>
+    <Property Name="Name" Type="Edm.String" Nullable="true"/>
+    <Property Name="Description" Type="Edm.String" Nullable="true"/>
+    <Property Name="ProductCategoryId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="ProductCategory" Relationship="com.knpl.pragati.entity.MasterProductModel_2_r_ProductCategory" FromRole="MasterProductModel" ToRole="r_ProductCategory"/>
+</EntityType>
+<EntityType Name="MasterProductCategoryModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Religion" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterQueryTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="QueryType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterRedeemTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="RedeemType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterRelationshipModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Relationship" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterReligionModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Religion" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterRequestTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="RequestType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterSchemeTypeModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SchemeType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterSecurityQuestionModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Question" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterSitePerMonthModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SitePerMonth" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterSlabModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Slab" Type="Edm.String" Nullable="true"/>
+    <Property Name="LowerLimit" Type="Edm.String" Nullable="true"/>
+    <Property Name="UpperLimit" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterStateModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="State" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Country" Relationship="com.knpl.pragati.entity.MasterStateModel_2_r_Country" FromRole="MasterStateModel" ToRole="r_Country"/>
+    <NavigationProperty Name="MasterCity" Relationship="com.knpl.pragati.entity.MasterStateModel_2_r_MasterCity" FromRole="MasterStateModel" ToRole="r_MasterCity"/>
+</EntityType>
+<EntityType Name="MasterTimezoneModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="ZoneName" Type="Edm.String" Nullable="true"/>
+    <Property Name="Offset" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Country" Relationship="com.knpl.pragati.entity.MasterTimezoneModel_2_r_Country" FromRole="MasterTimezoneModel" ToRole="r_Country"/>
+</EntityType>
+<EntityType Name="MasterTrainingTypeModel" m:HasStream="true">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="TrainingType" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="MasterZoneModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Zone" Type="Edm.String" Nullable="true"/>
+    <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Country" Relationship="com.knpl.pragati.entity.MasterZoneModel_2_r_Country" FromRole="MasterZoneModel" ToRole="r_Country"/>
+</EntityType>
+<EntityType Name="MobileOTPVerificationModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="MobileOTP" Type="Edm.String" Nullable="true"/>
+    <Property Name="Username" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsValid" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="ErrorCode" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="ErrorMessage" Type="Edm.String" Nullable="true"/>
+    <NavigationProperty Name="PainterDevice" Relationship="com.knpl.pragati.entity.MobileOTPVerificationModel_2_r_PainterDevice" FromRole="MobileOTPVerificationModel" ToRole="r_PainterDevice"/>
+</EntityType>
+<EntityType Name="ODataEntityModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Status" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="Count" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Message" Type="Edm.String" Nullable="true"/>
+</EntityType>
+<EntityType Name="PainterModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="MembershipCard" Type="Edm.String" Nullable="true"/>
+    <Property Name="Name" Type="Edm.String" Nullable="true"/>
+    <Property Name="Username" Type="Edm.String" Nullable="true"/>
+    <Property Name="Email" Type="Edm.String" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="DOB" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="AgeGroupId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="RewardPoints" Type="Edm.Single" Nullable="true"/>
+    <Property Name="DealerId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="PainterTypeId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="ArcheTypeId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="RegistrationStatus" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="PainterFamily" Relationship="com.knpl.pragati.entity.PainterModel_2_r_PainterFamily" FromRole="PainterModel" ToRole="r_PainterFamily"/>
+    <NavigationProperty Name="Assets" Relationship="com.knpl.pragati.entity.PainterModel_2_r_Assets" FromRole="PainterModel" ToRole="r_Assets"/>
+    <NavigationProperty Name="PainterAddress" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterAddress" FromRole="r_Painter" ToRole="r_PainterAddress"/>
+    <NavigationProperty Name="PainterSegmentation" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterSegmentation" FromRole="r_Painter" ToRole="r_PainterSegmentation"/>
+    <NavigationProperty Name="PainterBankDetails" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterBankDetails" FromRole="r_Painter" ToRole="r_PainterBankDetails"/>
+    <NavigationProperty Name="PainterKycDetails" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterKycDetails" FromRole="r_Painter" ToRole="r_PainterKycDetails"/>
+    <NavigationProperty Name="PainterContact" Relationship="com.knpl.pragati.entity.PainterModel_2_r_PainterContact" FromRole="PainterModel" ToRole="r_PainterContact"/>
+    <NavigationProperty Name="AgeGroup" Relationship="com.knpl.pragati.entity.PainterModel_2_r_AgeGroup" FromRole="PainterModel" ToRole="r_AgeGroup"/>
+    <NavigationProperty Name="Preference" Relationship="com.knpl.pragati.entity.r_Painter_2_r_Preference" FromRole="r_Painter" ToRole="r_Preference"/>
+    <NavigationProperty Name="PainterDevice" Relationship="com.knpl.pragati.entity.PainterModel_2_r_PainterDevice" FromRole="PainterModel" ToRole="r_PainterDevice"/>
+    <NavigationProperty Name="Dealers" Relationship="com.knpl.pragati.entity.r_Dealers_2_r_Painter" FromRole="r_Painter" ToRole="r_Dealers"/>
+</EntityType>
+<EntityType Name="PainterAddressModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AddressLine1" Type="Edm.String" Nullable="true"/>
+    <Property Name="AddressLine2" Type="Edm.String" Nullable="true"/>
+    <Property Name="Town" Type="Edm.String" Nullable="true"/>
+    <Property Name="City" Type="Edm.String" Nullable="true"/>
+    <Property Name="State" Type="Edm.String" Nullable="true"/>
+    <Property Name="PinCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterAddress" FromRole="r_PainterAddress" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="PainterBankDetailsModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AccountType" Type="Edm.String" Nullable="true"/>
+    <Property Name="BankName" Type="Edm.String" Nullable="true"/>
+    <Property Name="AccountNumber" Type="Edm.String" Nullable="true"/>
+    <Property Name="IfscCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="AccountHolderName" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterBankDetails" FromRole="r_PainterBankDetails" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="PainterContactModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="PainterDeviceModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="DeviceId" Type="Edm.String" Nullable="true"/>
+    <Property Name="DeviceType" Type="Edm.String" Nullable="true"/>
+    <Property Name="AccessToken" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="PainterFamilyModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Name" Type="Edm.String" Nullable="true"/>
+    <Property Name="RelationshipId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="DOB" Type="Edm.String" Nullable="true"/>
+    <Property Name="Age" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AdhaarCard" Type="Edm.String" Nullable="true"/>
+    <Property Name="VoterCard" Type="Edm.String" Nullable="true"/>
+    <Property Name="PanCard" Type="Edm.String" Nullable="true"/>
+    <Property Name="Passport" Type="Edm.String" Nullable="true"/>
+    <Property Name="DrivingLicense" Type="Edm.String" Nullable="true"/>
+    <Property Name="Counter" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+</EntityType>
+<EntityType Name="PainterFamilyListModel">
+    <Key>
+        <PropertyRef Name="PainterId"/>
+    </Key>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="PainterFamily" Relationship="com.knpl.pragati.entity.PainterFamilyListModel_2_r_PainterFamily" FromRole="PainterFamilyListModel" ToRole="r_PainterFamily"/>
+</EntityType>
+<EntityType Name="PainterKycDetailsModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="GovtId" Type="Edm.String" Nullable="true"/>
+    <Property Name="KycTypeId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterKycDetails" FromRole="r_PainterKycDetails" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="PainterPreferenceModel">
+    <Key>
+        <PropertyRef Name="PainterId"/>
+    </Key>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AllowNotification" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="SecurityQuestionId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SecurityAnswer" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Language" Relationship="com.knpl.pragati.entity.PainterPreferenceModel_2_r_Language" FromRole="PainterPreferenceModel" ToRole="r_Language"/>
+    <NavigationProperty Name="SecurityQuestion" Relationship="com.knpl.pragati.entity.PainterPreferenceModel_2_r_SecurityQuestion" FromRole="PainterPreferenceModel" ToRole="r_SecurityQuestion"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Painter_2_r_Preference" FromRole="r_Preference" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="PainterRegistrationModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Name" Type="Edm.String" Nullable="true"/>
+    <Property Name="AgeGroupId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Mobile" Type="Edm.String" Nullable="true"/>
+    <Property Name="Username" Type="Edm.String" Nullable="true"/>
+    <Property Name="Password" Type="Edm.String" Nullable="true"/>
+    <Property Name="Email" Type="Edm.String" Nullable="true"/>
+    <Property Name="ReferralCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="CountryCode" Type="Edm.String" Nullable="true"/>
+    <Property Name="State" Type="Edm.String" Nullable="true"/>
+    <Property Name="City" Type="Edm.String" Nullable="true"/>
+    <Property Name="LanguageId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="AllowNotification" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="SecurityQuestionId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SecurityAnswer" Type="Edm.String" Nullable="true"/>
+</EntityType>
+<EntityType Name="PainterSegmentationModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="TeamSize" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterExperience" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="SitesPerMonth" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Potential" Type="Edm.String" Nullable="true"/>
+    <Property Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+    <NavigationProperty Name="Painter" Relationship="com.knpl.pragati.entity.r_Painter_2_r_PainterSegmentation" FromRole="r_PainterSegmentation" ToRole="r_Painter"/>
+</EntityType>
+<EntityType Name="TrainingModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Title" Type="Edm.String" Nullable="true"/>
+    <Property Name="EndTime" Type="Edm.String" Nullable="true"/>
+    <Property Name="Location" Type="Edm.String" Nullable="true"/>
+    <Property Name="StartDate" Type="Edm.String" Nullable="true"/>
+    <Property Name="StartTime" Type="Edm.String" Nullable="true"/>
+    <Property Name="RewardPoints" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Description" Type="Edm.String" Nullable="true"/>
+    <Property Name="Url" Type="Edm.String" Nullable="true"/>
+    <Property Name="TrainingTypeId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="TrainingQuestionnaire" Relationship="com.knpl.pragati.entity.r_Training_2_r_TrainingQuestionnaire" FromRole="r_Training" ToRole="r_TrainingQuestionnaire"/>
+</EntityType>
+<EntityType Name="TrainingQuestionnaireModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Index" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="TrainingId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Question" Type="Edm.String" Nullable="true"/>
+    <Property Name="IsMultiCorrect" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="Training" Relationship="com.knpl.pragati.entity.r_Training_2_r_TrainingQuestionnaire" FromRole="r_TrainingQuestionnaire" ToRole="r_Training"/>
+    <NavigationProperty Name="TrainingQuestionnaireOptions" Relationship="com.knpl.pragati.entity.r_TrainingQuestionnaire_2_r_TrainingQuestionnaireOptions" FromRole="r_TrainingQuestionnaire" ToRole="r_TrainingQuestionnaireOptions"/>
+</EntityType>
+<EntityType Name="TrainingQuestionnaireOptionsModel">
+    <Key>
+        <PropertyRef Name="Id"/>
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Index" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="Option" Type="Edm.String" Nullable="true"/>
+    <Property Name="QuestionnaireId" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsCorrect" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="IsArchived" Type="Edm.Boolean" Nullable="true"/>
+    <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="CreatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="UpdatedAt" Type="Edm.DateTime" Nullable="true"/>
+    <Property Name="UpdatedBy" Type="Edm.Int32" Nullable="true"/>
+    <Property Name="IsSelected" Type="Edm.Boolean" Nullable="true"/>
+    <NavigationProperty Name="TrainingQuestionnaire" Relationship="com.knpl.pragati.entity.r_TrainingQuestionnaire_2_r_TrainingQuestionnaireOptions" FromRole="r_TrainingQuestionnaireOptions" ToRole="r_TrainingQuestionnaire"/>
+</EntityType>
+<Association Name="r_Training_2_r_TrainingQuestionnaire">
+    <End Type="com.knpl.pragati.entity.TrainingModel" Multiplicity="*" Role="r_Training"/>
+    <End Type="com.knpl.pragati.entity.TrainingQuestionnaireModel" Multiplicity="*" Role="r_TrainingQuestionnaire"/>
+</Association>
+<Association Name="PainterModel_2_r_PainterFamily">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="1" Role="PainterModel"/>
+    <End Type="com.knpl.pragati.entity.PainterFamilyModel" Multiplicity="*" Role="r_PainterFamily"/>
+</Association>
+<Association Name="PainterPreferenceModel_2_r_Language">
+    <End Type="com.knpl.pragati.entity.PainterPreferenceModel" Multiplicity="1" Role="PainterPreferenceModel"/>
+    <End Type="com.knpl.pragati.entity.MasterLanguageModel" Multiplicity="0..1" Role="r_Language"/>
+</Association>
+<Association Name="r_Painter_2_r_PainterSegmentation">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="0..1" Role="r_Painter"/>
+    <End Type="com.knpl.pragati.entity.PainterSegmentationModel" Multiplicity="0..1" Role="r_PainterSegmentation"/>
+</Association>
+<Association Name="MasterStateModel_2_r_Country">
+    <End Type="com.knpl.pragati.entity.MasterStateModel" Multiplicity="1" Role="MasterStateModel"/>
+    <End Type="com.knpl.pragati.entity.MasterCountryModel" Multiplicity="0..1" Role="r_Country"/>
+</Association>
+<Association Name="r_Painter_2_r_PainterAddress">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="0..1" Role="r_Painter"/>
+    <End Type="com.knpl.pragati.entity.PainterAddressModel" Multiplicity="0..1" Role="r_PainterAddress"/>
+</Association>
+<Association Name="r_LearningQuestionnaire_2_r_LearningQuestionnaireOptions">
+    <End Type="com.knpl.pragati.entity.LearningQuestionnaireModel" Multiplicity="*" Role="r_LearningQuestionnaire"/>
+    <End Type="com.knpl.pragati.entity.LearningQuestionnaireOptionsModel" Multiplicity="*" Role="r_LearningQuestionnaireOptions"/>
+</Association>
+<Association Name="MasterFAQModel_2_r_FaqCategory">
+    <End Type="com.knpl.pragati.entity.MasterFAQModel" Multiplicity="1" Role="MasterFAQModel"/>
+    <End Type="com.knpl.pragati.entity.MasterFAQCategoryModel" Multiplicity="0..1" Role="r_FaqCategory"/>
+</Association>
+<Association Name="MasterDepotModel_2_r_Division">
+    <End Type="com.knpl.pragati.entity.MasterDepotModel" Multiplicity="1" Role="MasterDepotModel"/>
+    <End Type="com.knpl.pragati.entity.MasterDivisionModel" Multiplicity="0..1" Role="r_Division"/>
+</Association>
+<Association Name="MasterDivisionModel_2_r_Zone">
+    <End Type="com.knpl.pragati.entity.MasterDivisionModel" Multiplicity="1" Role="MasterDivisionModel"/>
+    <End Type="com.knpl.pragati.entity.MasterZoneModel" Multiplicity="0..1" Role="r_Zone"/>
+</Association>
+<Association Name="r_Attachments_2_r_Template">
+    <End Type="com.knpl.pragati.entity.MasterEmailAttachmentModel" Multiplicity="*" Role="r_Attachments"/>
+    <End Type="com.knpl.pragati.entity.MasterEmailTemplateModel" Multiplicity="0..1" Role="r_Template"/>
+</Association>
+<Association Name="MasterStateModel_2_r_MasterCity">
+    <End Type="com.knpl.pragati.entity.MasterStateModel" Multiplicity="1" Role="MasterStateModel"/>
+    <End Type="com.knpl.pragati.entity.MasterCityModel" Multiplicity="*" Role="r_MasterCity"/>
+</Association>
+<Association Name="AdminModel_2_r_Role">
+    <End Type="com.knpl.pragati.entity.AdminModel" Multiplicity="1" Role="AdminModel"/>
+    <End Type="com.knpl.pragati.entity.MasterAdminRoleModel" Multiplicity="0..1" Role="r_Role"/>
+</Association>
+<Association Name="PainterPreferenceModel_2_r_SecurityQuestion">
+    <End Type="com.knpl.pragati.entity.PainterPreferenceModel" Multiplicity="1" Role="PainterPreferenceModel"/>
+    <End Type="com.knpl.pragati.entity.MasterSecurityQuestionModel" Multiplicity="0..1" Role="r_SecurityQuestion"/>
+</Association>
+<Association Name="r_Painter_2_r_PainterBankDetails">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="0..1" Role="r_Painter"/>
+    <End Type="com.knpl.pragati.entity.PainterBankDetailsModel" Multiplicity="0..1" Role="r_PainterBankDetails"/>
+</Association>
+<Association Name="r_Learning_2_r_LearningQuestionnaire">
+    <End Type="com.knpl.pragati.entity.LearningModel" Multiplicity="*" Role="r_Learning"/>
+    <End Type="com.knpl.pragati.entity.LearningQuestionnaireModel" Multiplicity="*" Role="r_LearningQuestionnaire"/>
+</Association>
+<Association Name="PainterModel_2_r_AgeGroup">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="1" Role="PainterModel"/>
+    <End Type="com.knpl.pragati.entity.MasterAgeGroupModel" Multiplicity="0..1" Role="r_AgeGroup"/>
+</Association>
+<Association Name="MasterZoneModel_2_r_Country">
+    <End Type="com.knpl.pragati.entity.MasterZoneModel" Multiplicity="1" Role="MasterZoneModel"/>
+    <End Type="com.knpl.pragati.entity.MasterCountryModel" Multiplicity="0..1" Role="r_Country"/>
+</Association>
+<Association Name="AdminModel_2_r_Country">
+    <End Type="com.knpl.pragati.entity.AdminModel" Multiplicity="1" Role="AdminModel"/>
+    <End Type="com.knpl.pragati.entity.MasterCountryModel" Multiplicity="0..1" Role="r_Country"/>
+</Association>
+<Association Name="r_TrainingQuestionnaire_2_r_TrainingQuestionnaireOptions">
+    <End Type="com.knpl.pragati.entity.TrainingQuestionnaireModel" Multiplicity="*" Role="r_TrainingQuestionnaire"/>
+    <End Type="com.knpl.pragati.entity.TrainingQuestionnaireOptionsModel" Multiplicity="*" Role="r_TrainingQuestionnaireOptions"/>
+</Association>
+<Association Name="MasterTimezoneModel_2_r_Country">
+    <End Type="com.knpl.pragati.entity.MasterTimezoneModel" Multiplicity="1" Role="MasterTimezoneModel"/>
+    <End Type="com.knpl.pragati.entity.MasterCountryModel" Multiplicity="0..1" Role="r_Country"/>
+</Association>
+<Association Name="PainterModel_2_r_PainterDevice">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="1" Role="PainterModel"/>
+    <End Type="com.knpl.pragati.entity.PainterDeviceModel" Multiplicity="0..1" Role="r_PainterDevice"/>
+</Association>
+<Association Name="MobileOTPVerificationModel_2_r_PainterDevice">
+    <End Type="com.knpl.pragati.entity.MobileOTPVerificationModel" Multiplicity="1" Role="MobileOTPVerificationModel"/>
+    <End Type="com.knpl.pragati.entity.PainterDeviceModel" Multiplicity="0..1" Role="r_PainterDevice"/>
+</Association>
+<Association Name="MasterProductModel_2_r_ProductCategory">
+    <End Type="com.knpl.pragati.entity.MasterProductModel" Multiplicity="1" Role="MasterProductModel"/>
+    <End Type="com.knpl.pragati.entity.MasterProductCategoryModel" Multiplicity="0..1" Role="r_ProductCategory"/>
+</Association>
+<Association Name="r_Dealers_2_r_Painter">
+    <End Type="com.knpl.pragati.entity.DealerModel" Multiplicity="*" Role="r_Dealers"/>
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="*" Role="r_Painter"/>
+</Association>
+<Association Name="PainterModel_2_r_Assets">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="1" Role="PainterModel"/>
+    <End Type="com.knpl.pragati.entity.PainterAssetsModel" Multiplicity="*" Role="r_Assets"/>
+</Association>
+<Association Name="PainterModel_2_r_PainterContact">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="1" Role="PainterModel"/>
+    <End Type="com.knpl.pragati.entity.PainterContactModel" Multiplicity="*" Role="r_PainterContact"/>
+</Association>
+<Association Name="PainterFamilyListModel_2_r_PainterFamily">
+    <End Type="com.knpl.pragati.entity.PainterFamilyListModel" Multiplicity="1" Role="PainterFamilyListModel"/>
+    <End Type="com.knpl.pragati.entity.PainterFamilyModel" Multiplicity="*" Role="r_PainterFamily"/>
+</Association>
+<Association Name="r_Painter_2_r_PainterKycDetails">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="0..1" Role="r_Painter"/>
+    <End Type="com.knpl.pragati.entity.PainterKycDetailsModel" Multiplicity="0..1" Role="r_PainterKycDetails"/>
+</Association>
+<Association Name="r_Painter_2_r_Preference">
+    <End Type="com.knpl.pragati.entity.PainterModel" Multiplicity="0..1" Role="r_Painter"/>
+    <End Type="com.knpl.pragati.entity.PainterPreferenceModel" Multiplicity="0..1" Role="r_Preference"/>
+</Association>
+<EntityContainer Name="DefaultContainer" m:IsDefaultEntityContainer="true">
+    <EntitySet Name="AdminSet" EntityType="com.knpl.pragati.entity.AdminModel"/>
+    <EntitySet Name="PainterAssetsSet" EntityType="com.knpl.pragati.entity.PainterAssetsModel"/>
+    <EntitySet Name="CompanySettingsSet" EntityType="com.knpl.pragati.entity.CompanySettingsModel"/>
+    <EntitySet Name="DealerSet" EntityType="com.knpl.pragati.entity.DealerModel"/>
+    <EntitySet Name="LearningSet" EntityType="com.knpl.pragati.entity.LearningModel"/>
+    <EntitySet Name="LearningQuestionnaireSet" EntityType="com.knpl.pragati.entity.LearningQuestionnaireModel"/>
+    <EntitySet Name="LearningQuestionnaireOptionsSet" EntityType="com.knpl.pragati.entity.LearningQuestionnaireOptionsModel"/>
+    <EntitySet Name="MasterAdminRoleSet" EntityType="com.knpl.pragati.entity.MasterAdminRoleModel"/>
+    <EntitySet Name="MasterAgeGroupSet" EntityType="com.knpl.pragati.entity.MasterAgeGroupModel"/>
+    <EntitySet Name="MasterArcheTypeSet" EntityType="com.knpl.pragati.entity.MasterArcheTypeModel"/>
+    <EntitySet Name="MasterAssetTypeSet" EntityType="com.knpl.pragati.entity.MasterAssetTypeModel"/>
+    <EntitySet Name="MasterBankAccountTypeSet" EntityType="com.knpl.pragati.entity.MasterBankAccountTypeModel"/>
+    <EntitySet Name="MasterBusinessCategorySet" EntityType="com.knpl.pragati.entity.MasterBusinessCategoryModel"/>
+    <EntitySet Name="MasterBusinessGroupSet" EntityType="com.knpl.pragati.entity.MasterBusinessGroupModel"/>
+    <EntitySet Name="MasterCitySet" EntityType="com.knpl.pragati.entity.MasterCityModel"/>
+    <EntitySet Name="MasterComplaintTypeSet" EntityType="com.knpl.pragati.entity.MasterComplaintTypeModel"/>
+    <EntitySet Name="MasterCountrySet" EntityType="com.knpl.pragati.entity.MasterCountryModel"/>
+    <EntitySet Name="MasterDepotSet" EntityType="com.knpl.pragati.entity.MasterDepotModel"/>
+    <EntitySet Name="MasterDivisionSet" EntityType="com.knpl.pragati.entity.MasterDivisionModel"/>
+    <EntitySet Name="MasterEmailAttachmentSet" EntityType="com.knpl.pragati.entity.MasterEmailAttachmentModel"/>
+    <EntitySet Name="MasterEmailTemplateSet" EntityType="com.knpl.pragati.entity.MasterEmailTemplateModel"/>
+    <EntitySet Name="MasterExperienceSet" EntityType="com.knpl.pragati.entity.MasterExperienceModel"/>
+    <EntitySet Name="MasterExternalLinksSet" EntityType="com.knpl.pragati.entity.MasterExternalLinksModel"/>
+    <EntitySet Name="MasterFAQSet" EntityType="com.knpl.pragati.entity.MasterFAQModel"/>
+    <EntitySet Name="MasterFAQCategorySet" EntityType="com.knpl.pragati.entity.MasterFAQCategoryModel"/>
+    <EntitySet Name="MasterFeedbackTypeSet" EntityType="com.knpl.pragati.entity.MasterFeedbackTypeModel"/>
+    <EntitySet Name="MasterKycTypeSet" EntityType="com.knpl.pragati.entity.MasterKycTypeModel"/>
+    <EntitySet Name="MasterLanguageSet" EntityType="com.knpl.pragati.entity.MasterLanguageModel"/>
+    <EntitySet Name="MasterMaritalStatusSet" EntityType="com.knpl.pragati.entity.MasterMaritalStatusModel"/>
+    <EntitySet Name="MasterPainterTypeSet" EntityType="com.knpl.pragati.entity.MasterPainterTypeModel"/>
+    <EntitySet Name="MasterProductSet" EntityType="com.knpl.pragati.entity.MasterProductModel"/>
+    <EntitySet Name="MasterProductCategorySet" EntityType="com.knpl.pragati.entity.MasterProductCategoryModel"/>
+    <EntitySet Name="MasterQueryTypeSet" EntityType="com.knpl.pragati.entity.MasterQueryTypeModel"/>
+    <EntitySet Name="MasterRedeemTypeSet" EntityType="com.knpl.pragati.entity.MasterRedeemTypeModel"/>
+    <EntitySet Name="MasterRelationshipSet" EntityType="com.knpl.pragati.entity.MasterRelationshipModel"/>
+    <EntitySet Name="MasterReligionSet" EntityType="com.knpl.pragati.entity.MasterReligionModel"/>
+    <EntitySet Name="MasterRequestTypeSet" EntityType="com.knpl.pragati.entity.MasterRequestTypeModel"/>
+    <EntitySet Name="MasterSchemeTypeSet" EntityType="com.knpl.pragati.entity.MasterSchemeTypeModel"/>
+    <EntitySet Name="MasterSecurityQuestionSet" EntityType="com.knpl.pragati.entity.MasterSecurityQuestionModel"/>
+    <EntitySet Name="MasterSitePerMonthSet" EntityType="com.knpl.pragati.entity.MasterSitePerMonthModel"/>
+    <EntitySet Name="MasterSlabSet" EntityType="com.knpl.pragati.entity.MasterSlabModel"/>
+    <EntitySet Name="MasterStateSet" EntityType="com.knpl.pragati.entity.MasterStateModel"/>
+    <EntitySet Name="MasterTimezoneSet" EntityType="com.knpl.pragati.entity.MasterTimezoneModel"/>
+    <EntitySet Name="MasterTrainingTypeSet" EntityType="com.knpl.pragati.entity.MasterTrainingTypeModel"/>
+    <EntitySet Name="MasterZoneSet" EntityType="com.knpl.pragati.entity.MasterZoneModel"/>
+    <EntitySet Name="MobileOTPVerificationSet" EntityType="com.knpl.pragati.entity.MobileOTPVerificationModel"/>
+    <EntitySet Name="ODataEntitySet" EntityType="com.knpl.pragati.entity.ODataEntityModel"/>
+    <EntitySet Name="PainterSet" EntityType="com.knpl.pragati.entity.PainterModel"/>
+    <EntitySet Name="PainterAddressSet" EntityType="com.knpl.pragati.entity.PainterAddressModel"/>
+    <EntitySet Name="PainterBankDetailsSet" EntityType="com.knpl.pragati.entity.PainterBankDetailsModel"/>
+    <EntitySet Name="PainterContactSet" EntityType="com.knpl.pragati.entity.PainterContactModel"/>
+    <EntitySet Name="PainterDeviceSet" EntityType="com.knpl.pragati.entity.PainterDeviceModel"/>
+    <EntitySet Name="PainterFamilySet" EntityType="com.knpl.pragati.entity.PainterFamilyModel"/>
+    <EntitySet Name="PainterFamilyListSet" EntityType="com.knpl.pragati.entity.PainterFamilyListModel"/>
+    <EntitySet Name="PainterKycDetailsSet" EntityType="com.knpl.pragati.entity.PainterKycDetailsModel"/>
+    <EntitySet Name="PainterPreferenceSet" EntityType="com.knpl.pragati.entity.PainterPreferenceModel"/>
+    <EntitySet Name="PainterRegistrationSet" EntityType="com.knpl.pragati.entity.PainterRegistrationModel"/>
+    <EntitySet Name="PainterSegmentationSet" EntityType="com.knpl.pragati.entity.PainterSegmentationModel"/>
+    <EntitySet Name="TrainingSet" EntityType="com.knpl.pragati.entity.TrainingModel"/>
+    <EntitySet Name="TrainingQuestionnaireSet" EntityType="com.knpl.pragati.entity.TrainingQuestionnaireModel"/>
+    <EntitySet Name="TrainingQuestionnaireOptionsSet" EntityType="com.knpl.pragati.entity.TrainingQuestionnaireOptionsModel"/>
+    <AssociationSet Name="r_Training_2_r_TrainingQuestionnaire" Association="com.knpl.pragati.entity.r_Training_2_r_TrainingQuestionnaire">
+        <End EntitySet="TrainingSet" Role="r_Training"/>
+        <End EntitySet="TrainingQuestionnaireSet" Role="r_TrainingQuestionnaire"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterModel_2_r_PainterFamily" Association="com.knpl.pragati.entity.PainterModel_2_r_PainterFamily">
+        <End EntitySet="PainterSet" Role="PainterModel"/>
+        <End EntitySet="PainterFamilySet" Role="r_PainterFamily"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterPreferenceModel_2_r_Language" Association="com.knpl.pragati.entity.PainterPreferenceModel_2_r_Language">
+        <End EntitySet="PainterPreferenceSet" Role="PainterPreferenceModel"/>
+        <End EntitySet="MasterLanguageSet" Role="r_Language"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Painter_2_r_PainterSegmentation" Association="com.knpl.pragati.entity.r_Painter_2_r_PainterSegmentation">
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+        <End EntitySet="PainterSegmentationSet" Role="r_PainterSegmentation"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterStateModel_2_r_Country" Association="com.knpl.pragati.entity.MasterStateModel_2_r_Country">
+        <End EntitySet="MasterStateSet" Role="MasterStateModel"/>
+        <End EntitySet="MasterCountrySet" Role="r_Country"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Painter_2_r_PainterAddress" Association="com.knpl.pragati.entity.r_Painter_2_r_PainterAddress">
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+        <End EntitySet="PainterAddressSet" Role="r_PainterAddress"/>
+    </AssociationSet>
+    <AssociationSet Name="r_LearningQuestionnaire_2_r_LearningQuestionnaireOptions" Association="com.knpl.pragati.entity.r_LearningQuestionnaire_2_r_LearningQuestionnaireOptions">
+        <End EntitySet="LearningQuestionnaireSet" Role="r_LearningQuestionnaire"/>
+        <End EntitySet="LearningQuestionnaireOptionsSet" Role="r_LearningQuestionnaireOptions"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterFAQModel_2_r_FaqCategory" Association="com.knpl.pragati.entity.MasterFAQModel_2_r_FaqCategory">
+        <End EntitySet="MasterFAQSet" Role="MasterFAQModel"/>
+        <End EntitySet="MasterFAQCategorySet" Role="r_FaqCategory"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterDepotModel_2_r_Division" Association="com.knpl.pragati.entity.MasterDepotModel_2_r_Division">
+        <End EntitySet="MasterDepotSet" Role="MasterDepotModel"/>
+        <End EntitySet="MasterDivisionSet" Role="r_Division"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterDivisionModel_2_r_Zone" Association="com.knpl.pragati.entity.MasterDivisionModel_2_r_Zone">
+        <End EntitySet="MasterDivisionSet" Role="MasterDivisionModel"/>
+        <End EntitySet="MasterZoneSet" Role="r_Zone"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Attachments_2_r_Template" Association="com.knpl.pragati.entity.r_Attachments_2_r_Template">
+        <End EntitySet="MasterEmailAttachmentSet" Role="r_Attachments"/>
+        <End EntitySet="MasterEmailTemplateSet" Role="r_Template"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterStateModel_2_r_MasterCity" Association="com.knpl.pragati.entity.MasterStateModel_2_r_MasterCity">
+        <End EntitySet="MasterStateSet" Role="MasterStateModel"/>
+        <End EntitySet="MasterCitySet" Role="r_MasterCity"/>
+    </AssociationSet>
+    <AssociationSet Name="AdminModel_2_r_Role" Association="com.knpl.pragati.entity.AdminModel_2_r_Role">
+        <End EntitySet="AdminSet" Role="AdminModel"/>
+        <End EntitySet="MasterAdminRoleSet" Role="r_Role"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterPreferenceModel_2_r_SecurityQuestion" Association="com.knpl.pragati.entity.PainterPreferenceModel_2_r_SecurityQuestion">
+        <End EntitySet="PainterPreferenceSet" Role="PainterPreferenceModel"/>
+        <End EntitySet="MasterSecurityQuestionSet" Role="r_SecurityQuestion"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Painter_2_r_PainterBankDetails" Association="com.knpl.pragati.entity.r_Painter_2_r_PainterBankDetails">
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+        <End EntitySet="PainterBankDetailsSet" Role="r_PainterBankDetails"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Learning_2_r_LearningQuestionnaire" Association="com.knpl.pragati.entity.r_Learning_2_r_LearningQuestionnaire">
+        <End EntitySet="LearningSet" Role="r_Learning"/>
+        <End EntitySet="LearningQuestionnaireSet" Role="r_LearningQuestionnaire"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterModel_2_r_AgeGroup" Association="com.knpl.pragati.entity.PainterModel_2_r_AgeGroup">
+        <End EntitySet="PainterSet" Role="PainterModel"/>
+        <End EntitySet="MasterAgeGroupSet" Role="r_AgeGroup"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterZoneModel_2_r_Country" Association="com.knpl.pragati.entity.MasterZoneModel_2_r_Country">
+        <End EntitySet="MasterZoneSet" Role="MasterZoneModel"/>
+        <End EntitySet="MasterCountrySet" Role="r_Country"/>
+    </AssociationSet>
+    <AssociationSet Name="AdminModel_2_r_Country" Association="com.knpl.pragati.entity.AdminModel_2_r_Country">
+        <End EntitySet="AdminSet" Role="AdminModel"/>
+        <End EntitySet="MasterCountrySet" Role="r_Country"/>
+    </AssociationSet>
+    <AssociationSet Name="r_TrainingQuestionnaire_2_r_TrainingQuestionnaireOptions" Association="com.knpl.pragati.entity.r_TrainingQuestionnaire_2_r_TrainingQuestionnaireOptions">
+        <End EntitySet="TrainingQuestionnaireSet" Role="r_TrainingQuestionnaire"/>
+        <End EntitySet="TrainingQuestionnaireOptionsSet" Role="r_TrainingQuestionnaireOptions"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterTimezoneModel_2_r_Country" Association="com.knpl.pragati.entity.MasterTimezoneModel_2_r_Country">
+        <End EntitySet="MasterTimezoneSet" Role="MasterTimezoneModel"/>
+        <End EntitySet="MasterCountrySet" Role="r_Country"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterModel_2_r_PainterDevice" Association="com.knpl.pragati.entity.PainterModel_2_r_PainterDevice">
+        <End EntitySet="PainterSet" Role="PainterModel"/>
+        <End EntitySet="PainterDeviceSet" Role="r_PainterDevice"/>
+    </AssociationSet>
+    <AssociationSet Name="MobileOTPVerificationModel_2_r_PainterDevice" Association="com.knpl.pragati.entity.MobileOTPVerificationModel_2_r_PainterDevice">
+        <End EntitySet="MobileOTPVerificationSet" Role="MobileOTPVerificationModel"/>
+        <End EntitySet="PainterDeviceSet" Role="r_PainterDevice"/>
+    </AssociationSet>
+    <AssociationSet Name="MasterProductModel_2_r_ProductCategory" Association="com.knpl.pragati.entity.MasterProductModel_2_r_ProductCategory">
+        <End EntitySet="MasterProductSet" Role="MasterProductModel"/>
+        <End EntitySet="MasterProductCategorySet" Role="r_ProductCategory"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Dealers_2_r_Painter" Association="com.knpl.pragati.entity.r_Dealers_2_r_Painter">
+        <End EntitySet="DealerSet" Role="r_Dealers"/>
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterModel_2_r_Assets" Association="com.knpl.pragati.entity.PainterModel_2_r_Assets">
+        <End EntitySet="PainterSet" Role="PainterModel"/>
+        <End EntitySet="PainterAssetsSet" Role="r_Assets"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterModel_2_r_PainterContact" Association="com.knpl.pragati.entity.PainterModel_2_r_PainterContact">
+        <End EntitySet="PainterSet" Role="PainterModel"/>
+        <End EntitySet="PainterContactSet" Role="r_PainterContact"/>
+    </AssociationSet>
+    <AssociationSet Name="PainterFamilyListModel_2_r_PainterFamily" Association="com.knpl.pragati.entity.PainterFamilyListModel_2_r_PainterFamily">
+        <End EntitySet="PainterFamilyListSet" Role="PainterFamilyListModel"/>
+        <End EntitySet="PainterFamilySet" Role="r_PainterFamily"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Painter_2_r_PainterKycDetails" Association="com.knpl.pragati.entity.r_Painter_2_r_PainterKycDetails">
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+        <End EntitySet="PainterKycDetailsSet" Role="r_PainterKycDetails"/>
+    </AssociationSet>
+    <AssociationSet Name="r_Painter_2_r_Preference" Association="com.knpl.pragati.entity.r_Painter_2_r_Preference">
+        <End EntitySet="PainterSet" Role="r_Painter"/>
+        <End EntitySet="PainterPreferenceSet" Role="r_Preference"/>
+    </AssociationSet>
+    <FunctionImport Name="GetLoggedInAdmin" ReturnType="Collection(com.knpl.pragati.entity.AdminModel)" EntitySet="AdminSet" m:HttpMethod="GET"/>
+    <FunctionImport Name="VerifyMobileOTP" ReturnType="Collection(com.knpl.pragati.entity.MobileOTPVerificationModel)" EntitySet="MobileOTPVerificationSet" m:HttpMethod="GET">
+        <Parameter Name="Mobile" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="MobileOTP" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="DeviceId" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="DeviceType" Type="Edm.String" Nullable="false"/>
+    </FunctionImport>
+    <FunctionImport Name="SendMobileOTP" ReturnType="com.knpl.pragati.entity.MobileOTPVerificationModel" EntitySet="MobileOTPVerificationSet" m:HttpMethod="GET">
+        <Parameter Name="Mobile" Type="Edm.String" Nullable="false"/>
+    </FunctionImport>
+    <FunctionImport Name="GetPainterUsername" ReturnType="com.knpl.pragati.entity.MobileOTPVerificationModel" EntitySet="MobileOTPVerificationSet" m:HttpMethod="GET">
+        <Parameter Name="Mobile" Type="Edm.String" Nullable="false"/>
+    </FunctionImport>
+    <FunctionImport Name="CheckPainterUsername" ReturnType="com.knpl.pragati.entity.ODataEntityModel" EntitySet="ODataEntitySet" m:HttpMethod="GET">
+        <Parameter Name="Username" Type="Edm.String" Nullable="false"/>
+    </FunctionImport>
+    <FunctionImport Name="ChangePainterLinkStatus" ReturnType="com.knpl.pragati.entity.ODataEntityModel" EntitySet="ODataEntitySet" m:HttpMethod="GET">
+        <Parameter Name="PainterId" Type="Edm.Int32" Nullable="true"/>
+        <Parameter Name="DealerId" Type="Edm.Int32" Nullable="true"/>
+    </FunctionImport>
+    <FunctionImport Name="GetLoggedInPainter" ReturnType="Collection(com.knpl.pragati.entity.PainterModel)" EntitySet="PainterSet" m:HttpMethod="GET"/>
+</EntityContainer>
+</Schema>
+</edmx:DataServices>
 </edmx:Edmx>

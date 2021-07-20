@@ -39,8 +39,8 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "Redeem Points",
-									"targetURL": "#RedeemPoints-display"
+									"title": "Condonation",
+									"targetURL": "#Condonation-display"
 								}
 							}]
 						}]
@@ -51,11 +51,11 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"RedeemPoints-display": {
-								"semanticObject": "RedeemPoints",
+							"Condonation-display": {
+								"semanticObject": "Condonation",
 								"action": "display",
-
-								"title": "Redeem Points",
+								"description": "A Fiori application.",
+								"title": "Condonation",
 								"signature": {
 									"parameters": {}
 								},

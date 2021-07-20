@@ -22,14 +22,14 @@
         },
         "crossNavigation": {
             "inbounds": {
-                "com-knpl-pragati-redeempoints-inbound": {
+                "com-knpl-pragati-condonation-inbound": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "REDEEMPOINTS",
-                    "title": "Redeem Points",
+                    "action": "CON",
+                    "title": "Condonation",
                     "subTitle": "",
                     "icon": ""
                 }
@@ -80,7 +80,23 @@
             },
             "": {
                 "dataSource": "mainService",
-                "preload": true
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "defaultUpdateMethod": "Put",
+                    "useBatch": false
+                }
+            }
+        },
+        "services": {
+            "ShellUIService": {
+                "factoryName": "sap.ushell.ui5service.ShellUIService",
+                "lazy": false,
+                "settings": {
+                    "setTitle": "auto"
+                }
             }
         },
         "routing": {
@@ -106,8 +122,15 @@
                     ]
                 },
                 {
-                    "pattern": "Alphabetical_list_of_products/{objectId}",
-                    "name": "object",
+                    "pattern": "Detail/{Id}",
+                    "name": "Detail",
+                    "target": [
+                        "Detail"
+                    ]
+                },
+                {
+                    "pattern": "Add/{Id}",
+                    "name": "Add",
                     "target": [
                         "object"
                     ]
@@ -129,6 +152,12 @@
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",
                     "viewId": "objectNotFound"
+                },
+                "Detail": {
+                    "viewName": "Detail",
+                    "viewId": "Detail",
+                    "viewLevel": 2,
+                    "title": "{i18n>DisplayCondonation}"
                 },
                 "notFound": {
                     "viewName": "NotFound",

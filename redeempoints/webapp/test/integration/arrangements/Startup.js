@@ -46,7 +46,7 @@ sap.ui.define([
 
 			this.waitFor({
 				success : function() {
-					oOptions.hash = "Alphabetical_list_of_products/" + sObjectId;
+					oOptions.hash = "PainterSet/" + sObjectId;
 					this.iStartMyApp(oOptions);
 				}
 			});
