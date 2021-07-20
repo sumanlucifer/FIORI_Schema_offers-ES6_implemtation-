@@ -2,8 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
     "../model/formatter"
-], function (BaseController, JSONModel, History, formatter) {
+], function (BaseController, JSONModel, History, Filter, FilterOperator, formatter) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Manage_FAQ.controller.Object", {
@@ -25,6 +27,7 @@ sap.ui.define([
             var iOriginalBusyDelay,
                 oViewModel = new JSONModel({
                     busy: true,
+                    hasFAQSubcategory: false,
                     delay: 0
                 });
 
@@ -69,6 +72,26 @@ sap.ui.define([
         onAfterRendering: function () {
             //Init Validation framework
             this._initMessage();
+        },
+
+        onFAQCategoryChange: function (oEvent) {
+            var oViewModel = this.getModel("objectView");
+            var aFilter = [];
+            var sId = oEvent.getSource().getSelectedKey();
+            if (sId) {
+                oViewModel.setProperty("/hasFAQSubcategory", oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasSubcategory);
+                if (oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasSubcategory === true) {
+                    var oFAQSubcategory = this.getView().byId("idFAQSubcategory");
+                    var oFAQSubcategoryItems = oFAQSubcategory.getBinding("items");
+                    oFAQSubcategory.clearSelection();
+                    oFAQSubcategory.setValue("");
+                    aFilter.push(new Filter("IsArchived", FilterOperator.EQ, false));
+                    aFilter.push(new Filter("FAQCategoryId", FilterOperator.EQ, sId));
+                    oFAQSubcategoryItems.filter(aFilter);
+                }
+            } else {
+                oViewModel.setProperty("/hasFAQSubcategory", false);
+            }
         },
 
 		/**
@@ -116,11 +139,18 @@ sap.ui.define([
             oViewModel.setProperty("/busy", false);
             this._pendingDelOps = [];
             if (data) {
+                if (data.FAQSubcategoryId) {
+                    oViewModel.setProperty("/hasFAQSubcategory", true);
+                } else {
+                    oViewModel.setProperty("/hasFAQSubcategory", false);
+                }
                 oViewModel.setProperty("/oDetails", data);
                 return;
             }
+            oViewModel.setProperty("/hasFAQSubcategory", false);
             oViewModel.setProperty("/oDetails", {
                 FAQCategoryId: null,
+                FAQSubcategoryId: null,
                 Question: "",
                 Answer: ""
             });
@@ -147,7 +177,6 @@ sap.ui.define([
 		 * Save edit or create FAQ details 
 		 */
         onSave: function () {
-            debugger;
             this._oMessageManager.removeAllMessages();
 
             var oViewModel = this.getModel("objectView");
@@ -187,22 +216,30 @@ sap.ui.define([
                     target: "/oDetails/FAQCategoryId"
                 });
             } else
-                if (!data.Question) {
+                if (!data.FAQSubcategoryId && this.getModel("objectView").getProperty("/hasFAQSubcategory") === true) {
                     oReturn.IsNotValid = true;
-                    oReturn.sMsg.push("MSG_VALDTN_ERR_QUESTION");
+                    oReturn.sMsg.push("MSG_VALDTN_ERR_FAQSUBCATEGORYID");
                     aCtrlMessage.push({
-                        message: "MSG_VALDTN_ERR_QUESTION",
-                        target: "/oDetails/Question"
+                        message: "MSG_VALDTN_ERR_FAQSUBCATEGORYID",
+                        target: "/oDetails/FAQSubcategoryId"
                     });
                 } else
-                    if (!data.Answer) {
+                    if (!data.Question) {
                         oReturn.IsNotValid = true;
-                        oReturn.sMsg.push("MSG_VALDTN_ERR_ANSWER");
+                        oReturn.sMsg.push("MSG_VALDTN_ERR_QUESTION");
                         aCtrlMessage.push({
-                            message: "MSG_VALDTN_ERR_ANSWER",
-                            target: "/oDetails/Answer"
+                            message: "MSG_VALDTN_ERR_QUESTION",
+                            target: "/oDetails/Question"
                         });
-                    }
+                    } else
+                        if (!data.Answer) {
+                            oReturn.IsNotValid = true;
+                            oReturn.sMsg.push("MSG_VALDTN_ERR_ANSWER");
+                            aCtrlMessage.push({
+                                message: "MSG_VALDTN_ERR_ANSWER",
+                                target: "/oDetails/Answer"
+                            });
+                        }
 
             if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
             return oReturn;
@@ -233,9 +270,9 @@ sap.ui.define([
         CUOperation: function (oPayload) {
             var oViewModel = this.getModel("objectView");
             oPayload.FAQCategoryId = parseInt(oPayload.FAQCategoryId);
+            oPayload.FAQSubcategoryId = parseInt(oPayload.FAQSubcategoryId);
             var oClonePayload = $.extend(true, {}, oPayload),
                 that = this;
-            debugger;
             return new Promise(function (res, rej) {
                 if (oViewModel.getProperty("/sMode") === "E") {
                     var sKey = that.getModel().createKey("/MasterFAQSet", {
@@ -255,8 +292,6 @@ sap.ui.define([
                         }
                     });
                 } else {
-                    // delete oClonePayload.IsArchived;
-                    // oClonePayload.Id = +oClonePayload.Id;
                     that.getModel().create("/MasterFAQSet", oClonePayload, {
                         success: function (data) {
                             oViewModel.setProperty("/busy", false);
@@ -274,61 +309,6 @@ sap.ui.define([
 
             });
         }
-
-        // /**
-        //  * Binds the view to the object path.
-        //  * @function
-        //  * @param {string} sObjectPath path to the object to be bound
-        //  * @private
-        //  */
-        // _bindView : function (sObjectPath) {
-        // 	var oViewModel = this.getModel("objectView"),
-        // 		oDataModel = this.getModel();
-
-        // 	this.getView().bindElement({
-        // 		path: sObjectPath,
-        // 		events: {
-        // 			change: this._onBindingChange.bind(this),
-        // 			dataRequested: function () {
-        // 				oDataModel.metadataLoaded().then(function () {
-        // 					// Busy indicator on view should only be set if metadata is loaded,
-        // 					// otherwise there may be two busy indications next to each other on the
-        // 					// screen. This happens because route matched handler already calls '_bindView'
-        // 					// while metadata is loaded.
-        // 					oViewModel.setProperty("/busy", true);
-        // 				});
-        // 			},
-        // 			dataReceived: function () {
-        // 				oViewModel.setProperty("/busy", false);
-        // 			}
-        // 		}
-        // 	});
-        // },
-
-        // _onBindingChange : function () {
-        // 	var oView = this.getView(),
-        // 		oViewModel = this.getModel("objectView"),
-        // 		oElementBinding = oView.getElementBinding();
-
-        // 	// No data for the binding
-        // 	if (!oElementBinding.getBoundContext()) {
-        // 		this.getRouter().getTargets().display("objectNotFound");
-        // 		return;
-        // 	}
-
-        // 	var oResourceBundle = this.getResourceBundle(),
-        // 		oObject = oView.getBindingContext().getObject(),
-        // 		sObjectId = oObject.Id,
-        // 		sObjectName = oObject.Id;
-
-        // 	oViewModel.setProperty("/busy", false);
-
-        // 	oViewModel.setProperty("/shareSendEmailSubject",
-        // 	oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
-        // 	oViewModel.setProperty("/shareSendEmailMessage",
-        // 	oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
-        // }
-
     });
 
 });

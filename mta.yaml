@@ -99,7 +99,7 @@ modules:
       target-path: resources/
     - artifacts:
       - redeempoints-content.zip
-      name: comknplpragatiredeempoints
+      name: redeempoints
       target-path: resources/
 - name: MDM
   type: html5
@@ -247,15 +247,13 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: comknplpragatiredeempoints
+- name: redeempoints
   type: html5
   path: redeempoints
   build-parameters:
-    build-result: dist
     builder: custom
     commands:
-    - npm install
-    - npm run build:cf
+    - npm run build
     supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
@@ -303,10 +301,9 @@ resources:
   type: org.cloudfoundry.existing-service
   parameters:
     service: workflow
-    service-name: wm_workflow
     service-plan: standard
+    service-name: wm_workflow
 parameters:
-  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:

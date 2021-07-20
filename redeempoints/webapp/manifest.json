@@ -22,7 +22,7 @@
         },
         "crossNavigation": {
             "inbounds": {
-                "com-knpl-pragati-condonation-inbound": {
+                "intent1": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
