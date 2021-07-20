@@ -56,6 +56,7 @@ sap.ui.define([
 
             var oDataControl = {
                 bBusy: false,
+                bEnable:false,
                 bPayloadSent: false,
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
@@ -76,12 +77,14 @@ sap.ui.define([
                     ZoneId: "",
                     DivisionId: "",
                     Depot: "",
-                    PDealer: ""
+                    PDealer: "",
+                    Otp: "",//integer
+                    Slab:""
                 },
                 Remark: "",
                 ComplaintStatus: "RESOLVED",
                 ApprovalStatus: "APPROVED",
-                ResolutionType:2,
+                ResolutionType: 2,
                 ComplaintSubtypeId: 1,
                 ComplaintTypeId: 1,
                 PainterComplainProducts: [{
@@ -141,8 +144,7 @@ sap.ui.define([
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
 
-            if( oView.getModel("oModelControl").getProperty("/bPayloadSent") )
-            {
+            if (oView.getModel("oModelControl").getProperty("/bPayloadSent")) {
                 return;
             }
 
@@ -151,9 +153,9 @@ sap.ui.define([
             oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
 
             //Double click issue solution
-            
-           oData.create("/PainterComplainsSet", oPayLoad, {
-                success: function () {      
+
+            oData.create("/PainterComplainsSet", oPayLoad, {
+                success: function () {
                     MessageToast.show("Condonation request Sucessfully Submitted.")
                     othat.onNavBack();
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -170,7 +172,7 @@ sap.ui.define([
 
                 }
             })
-        
+
         },
         onCategoryChange: function (oEvent) {
             this._ClearProdPack()
@@ -280,9 +282,10 @@ sap.ui.define([
                     $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName'
                 },
                 success: function (obj) {
-                 oView.getModel("oModelControl").setProperty("/bBusy", false);
-                 
-                 oViewModel.setProperty(
+                    oView.getModel("oModelControl").setProperty("/bBusy", false);
+                    oView.getModel("oModelControl").setProperty("/bEnable", true);
+
+                    oViewModel.setProperty(
                         "/AddFields/MembershipCard",
                         obj["MembershipCard"]
                     );
@@ -300,7 +303,7 @@ sap.ui.define([
                     }
                 },
                 error: function () {
-                        oView.getModel("oModelControl").setProperty("/bBusy", false);
+                    oView.getModel("oModelControl").setProperty("/bBusy", false);
                 }
             })
         },
@@ -430,7 +433,126 @@ sap.ui.define([
             this.getView().byId(sap.ui.core.Fragment.createId("Add", "Product")).getBinding("items").filter(aFilters);
 
             oViewModel.setProperty("/ProductId", "");
-        }
+        },
+        /*Aditya changes start*/
+        onSendOtp: function () {
+            var oModel = this.getOwnerComponent().getModel();
+            var oModelView = this.getModel("oModelView");
+            var mobile = oModelView.getProperty("/AddFields/Mobile")
+            var btnOtp = this.getView().byId("btnOTP"),
+                inputOtp = this.getView().byId("inputOTP"),
+                btnOtpResend = this.getView().byId("btnOTPResend"),
+                verifyOtp = this.getView().byId("btnOTPVerify");
+
+            oModel.callFunction(
+                "/SendMobileOTP", {
+                method: "GET",
+                urlParameters: {
+                    Mobile: mobile
+                },
+                success: function (oData, response) {
+                    btnOtp.setVisible(false);
+                    inputOtp.setVisible(true);
+                    btnOtpResend.setVisible(true);
+                    verifyOtp.setVisible(true);
+                    //  var jModel = new sap.ui.model.json.JSONModel();
+                    //  var myData = {};
+                    //  myData.Fare = oData;
+                    //  jModel.setData(myData);
+                    //  oContext.getView().setModel(jModel, "fareModel");
+                },
+                error: function (oError) {
+
+                }
+            });
+
+        },
+        onVerifyOtp: function () {
+            var oModel = this.getOwnerComponent().getModel();
+            var oModelView = this.getModel("oModelView");
+            var mobile = oModelView.getProperty("/AddFields/Mobile"),
+                otp = oModelView.getProperty("/AddFields/Otp");
+            oModel.callFunction(
+                "/VerifyMobileOTP", {
+                method: "GET",
+                urlParameters: {
+                    Mobile: mobile,
+                    MobileOTP: parseInt(otp),
+                    DeviceId:1234,
+                    DeviceType:"Android"
+                },
+                success: function (oData, response) {
+                        var data=oData.results[0];
+                        if(data["ErrorCode"]==417){
+                            MessageToast.show("Enter valid OTP.")
+                        }
+                    //  var jModel = new sap.ui.model.json.JSONModel();
+                    //  var myData = {};
+                    //  myData.Fare = oData;
+                    //  jModel.setData(myData);
+                    //  oContext.getView().setModel(jModel, "fareModel");
+                },
+                error: function (oError) {
+
+                }
+            });
+
+        },
+        onValueHelpSlabs: function (oEvent) {
+            var sInputValue = oEvent.getSource().getValue(),
+                oView = this.getView();
+
+            if (!this._pValueHelpDialog) {
+                this._pValueHelpDialog = Fragment.load({
+                    id: oView.getId(),
+                    name:
+                        "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialogSlabs",
+                    controller: this,
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pValueHelpDialog.then(function (oDialog) {
+                // Create a filter for the binding
+
+
+                // Open ValueHelpDialog filtered by the input's value
+                oDialog.open();
+            });
+
+        },
+        onValueHelpSlabsClose: function (oEvent) {
+            var oModelView=this.getModel("oModelView");
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            var oViewModel = this.getView().getModel("oModelView");
+            if (!oSelectedItem) {
+                return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+
+            oModelView.setProperty("/AddFields/Slab",obj["RequestType"]);
+            //this._getPainterDetails(obj["Id"]);
+        },
+        onValueHelpSlabsSearch: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new Filter(
+                [
+                    new Filter({
+                        path: "RequestType",
+                        operator: "Contains",
+                        value1: sValue.trim(),
+                        caseSensitive: false
+                    }),
+                    new Filter("Category", FilterOperator.Contains, sValue.trim()),
+                ],
+                false
+            );
+
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        /*Aditya chnages end*/
 
     });
 
