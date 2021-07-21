@@ -57,8 +57,9 @@ sap.ui.define([
             var oDataControl = {
                 bBusy: false,
                 bEnable: false,
-                isValidOTP:false,
+                isValidOTP: false,
                 bPayloadSent: false,
+                noSlabText: "",
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
                     MembershipId: "",
@@ -81,9 +82,9 @@ sap.ui.define([
                     PDealer: "",
                     Otp: "",//integer
                     Slab: "",
-                    bnkStatus:"",
-                    kycStatus:"",
-                    BalPoints:""
+                    bnkStatus: "",
+                    kycStatus: "",
+                    BalPoints: ""
                 },
                 Remark: "",
                 ComplaintStatus: "RESOLVED",
@@ -312,6 +313,13 @@ sap.ui.define([
                     if (obj["PainterBankDetails"]) {
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
                     }
+                    if (obj["RewardPoints"] < 5000) {
+                        //oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        oView.getModel("oModelControl").setProperty("/noSlabText", "Minimum 5000 points required for redemption.");
+                    }
+                    if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
+                        oView.getModel("oModelControl").setProperty("/bEnable", false);
+                    }
                 },
                 error: function () {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -466,7 +474,7 @@ sap.ui.define([
                     inputOtp.setVisible(true);
                     btnOtpResend.setVisible(true);
                     verifyOtp.setVisible(true);
-                   
+
                 },
                 error: function (oError) {
 
@@ -493,10 +501,13 @@ sap.ui.define([
                     var data = oData.results[0];
                     if (data["ErrorCode"] == null) {
                         MessageToast.show("OTP verification successful");
-                        oModelControl.setProperty("/isValidOTP",true);
+                        oModelControl.setProperty("/isValidOTP", true);
                     }
-                    else{
-                        MessageToast.show("Enter valid OTP.")
+                    else if (data["ErrorCode"] == 410) {
+                        MessageToast.show("Provided OTP is already Expired.");
+                    }
+                    else if (data["ErrorCode"] == 417) {
+                        MessageToast.show("Please enter valid OTP.")
                     }
                     //  var jModel = new sap.ui.model.json.JSONModel();
                     //  var myData = {};
@@ -517,8 +528,8 @@ sap.ui.define([
             var sInputValue = oEvent.getSource().getValue(),
                 oView = this.getView();
 
-            if (!this._pValueHelpDialog) {
-                this._pValueHelpDialog = Fragment.load({
+            if (!this._sValueHelpDialog) {
+                this._sValueHelpDialog = Fragment.load({
                     id: oView.getId(),
                     name:
                         "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialogSlabs",
@@ -528,7 +539,7 @@ sap.ui.define([
                     return oDialog;
                 });
             }
-            this._pValueHelpDialog.then(function (oDialog) {
+            this._sValueHelpDialog.then(function (oDialog) {
                 // Create a filter for the binding
 
 
