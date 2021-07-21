@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <Table  items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onPainterUpdatedStart" id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onPainterUpdatedStart" id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
-                <Button  type="Emphasized" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
+                <Button type="Emphasized" icon="sap-icon://download" text="{i18n>Download}" press="onPainterListDownload" />
 
             </Toolbar>
         </headerToolbar>
@@ -27,15 +27,15 @@
             <Column width="10%">
                 <Text text="{i18n>formRegionLbl3}" />
             </Column>
-            <Column>
+            <!-- <Column>
                 <Text text="{i18n>DepotCode}" />
-            </Column>
+            </Column> -->
             <Column>
                 <Text text="{i18n>Dealer}" />
             </Column>
-            <Column>
+            <!-- <Column>
                 <Text text="{i18n>DealerCode}" />
-            </Column>
+            </Column> -->
             <Column>
                 <Text text="{i18n>Achievement}" />
             </Column>
@@ -45,7 +45,7 @@
             <Column>
                 <Text text="{i18n>BalanceQty}" />
             </Column>
-            <Column  width="8%">
+            <Column width="8%">
                 <Text text="{i18n>MUltiplesAllowed}" />
             </Column>
             <Column>
@@ -53,6 +53,9 @@
             </Column>
             <Column>
                 <Text text="{i18n>RedeemedRewards}" />
+            </Column>
+            <Column>
+                <Text text="{i18n>BonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }"/>
             </Column>
 
         </columns>
@@ -64,15 +67,16 @@
                     <Text text="{oModelControl3>ZoneId}" />
                     <Text text="{oModelControl3>DivisionId}" />
                     <Text text="{oModelControl3>Depot}"/>
-                    <Text text="{oModelControl3>DepotId}"/>
+                    <!-- <Text text="{oModelControl3>DepotId}"/> -->
                     <Text text="{oModelControl3>DealerName}"/>
-                    <Text text="{oModelControl3>DealerId}"/>
+                    <!-- <Text text="{oModelControl3>DealerId}"/> -->
                     <Text text="{oModelControl3>ProgressValue}"/>
                     <Text text="{oModelControl3>ProgressMax}"/>
                     <Text text="{= ${oModelControl3>ProgressMax} - ${oModelControl3>ProgressValue} }"/>
-                     <Text text="{oModelControl3>RedemeptionIndex} / {oModelControl3>RedemptionMax}"/>
+                    <Text text="{oModelControl3>RedemeptionIndex} / {oModelControl3>RedemptionMax}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionType','oModelControl3>RewardPoints','oModelControl3>RewardCash','oModelControl3>RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
+                    <Text text="{oModelControl3>RedeemedRewardBonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }" />
 
                 </cells>
             </ColumnListItem>

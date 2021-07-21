@@ -141,7 +141,6 @@ sap.ui.define(
                             OfferId: "" + iOfferId + "",
                             Offset: "" + mSkip + "",
                             Limit: "" + mTop + ""
-
                         },
                         success: function (data) {
                             if (data.hasOwnProperty("results")) {
