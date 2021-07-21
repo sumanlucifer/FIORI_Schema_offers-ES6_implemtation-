@@ -10,7 +10,7 @@
     <f:content>
 	<VBox class="sapUiSmallMargin">
 		<VBox class="sapUiMediumMargin">
-                    <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                    <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growingThreshold="10">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
@@ -63,12 +63,12 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
-                                                                    maximumFileSize="5.1"
+                                                                    maximumFileSize="10.1"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
                                                                 <ObjectAttribute class="sapUiTinyMargin" title="File Type" text=".pdf"/>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="5 MB"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
                                                                 </HBox>
                                                                 </VBox>
                                                             </FlexBox>
