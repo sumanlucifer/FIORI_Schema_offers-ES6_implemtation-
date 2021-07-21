@@ -208,8 +208,11 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1) {
             //m1 Redemption Status
-
+            console.log(m1);
             if (m1 === "REDEEMABLE") {
+                return true;
+            }
+            if (m1 === "REDEEMING") {
                 return true;
             }
 
