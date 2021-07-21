@@ -173,7 +173,7 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oModel = this.getView().getModel("local");
                 var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                 //To DO promises for sync
                 for (var i = 0; i <= aCatalogue.length; i++) {
@@ -181,6 +181,7 @@ sap.ui.define([
                     if (i == index) {
                         delItems = aCatalogue[i];
                         if (delItems.file !== null) {
+                            oModel.setProperty("/bBusy", true);
                             jQuery.ajax({
                                 method: "DELETE",
                                 url: http + sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
@@ -190,10 +191,11 @@ sap.ui.define([
                                 // data: delItems,
                                 success: function (data) {
                                     // aCatalogue.splice(aCatalogue[i-1], 1);
-
-                                    oModel.refresh(true);
+                                    oModel.setProperty("/bBusy", false);
+                                   // oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
+                                     oRouter.navTo("RouteHome");
                                 },
                                 error: function () { },
                             });
