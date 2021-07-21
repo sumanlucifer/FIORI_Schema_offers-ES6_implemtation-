@@ -32,7 +32,12 @@
                 <Label />
                 <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
                 <core:Title text="" />
-
+                <Label text="{i18n>Balpts}" />
+                <Text  text="{oModelView>/AddFields/BalPoints}" />
+                <Label text="{i18n>bnkStatus}" />
+                <Text  text="{path:'oModelView>/AddFields/bnkStatus',formatter:'.formatter.fmtStatus'}" />
+                <Label text="{i18n>kycStatus}" />
+                <Text  text="{path:'oModelView>/AddFields/kycStatus',formatter:'.formatter.fmtStatus'}" />
 
                 <!-- <Label text="{i18n>LblCategory}" /> -->
                 <!-- <ComboBox selectionChange="onCategoryChange" required="true" items="{path:'/MasterProductCategorySet'  }" selectedKey="{path:'oModelView>/AddFields/CategoryId',type :'sap.ui.model.type.String', constraints:{minLength:1,maxLength:10} }">
@@ -41,7 +46,7 @@
                     </items>
                 </ComboBox> -->
                 <Label text="{i18n>LblSlab}" />
-                <Input required="true" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" value="{path:'oModelView>/AddFields/Slab', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Input required="true" placeholder="{oModelControl>/noSlabText}" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" value="{path:'oModelView>/AddFields/Slab', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
                 <!-- <MultiInput
 						id="multiInput"
 						valueHelpOnly="true"

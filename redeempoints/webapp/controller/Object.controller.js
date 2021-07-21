@@ -56,8 +56,10 @@ sap.ui.define([
 
             var oDataControl = {
                 bBusy: false,
-                bEnable:false,
+                bEnable: false,
+                isValidOTP: false,
                 bPayloadSent: false,
+                noSlabText: "",
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
                 aFileds: {
                     MembershipId: "",
@@ -79,7 +81,10 @@ sap.ui.define([
                     Depot: "",
                     PDealer: "",
                     Otp: "",//integer
-                    Slab:""
+                    Slab: "",
+                    bnkStatus: "",
+                    kycStatus: "",
+                    BalPoints: ""
                 },
                 Remark: "",
                 ComplaintStatus: "RESOLVED",
@@ -278,8 +283,8 @@ sap.ui.define([
 
             oData.read(sPath, {
                 urlParameters: {
-                    $expand: 'Depot,PrimaryDealerDetails',
-                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName'
+                    $expand: 'Depot,PrimaryDealerDetails,PainterBankDetails,PainterKycDetails',
+                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,RewardPoints,Depot/Depot,PrimaryDealerDetails/DealerName,PainterBankDetails/Status,PainterKycDetails/Status'
                 },
                 success: function (obj) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -293,6 +298,7 @@ sap.ui.define([
                     oViewModel.setProperty("/AddFields/Name", obj["Name"]);
                     oViewModel.setProperty("/AddFields/ZoneId", obj["ZoneId"]);
                     oViewModel.setProperty("/AddFields/DivisionId", obj["DivisionId"]);
+                    oViewModel.setProperty("/AddFields/BalPoints", obj["RewardPoints"]);
                     oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
                     oViewModel.setProperty("/PainterId", obj["Id"]);
                     if (obj["Depot"]) {
@@ -300,6 +306,19 @@ sap.ui.define([
                     }
                     if (obj["PrimaryDealerDetails"]) {
                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
+                    }
+                    if (obj["PainterKycDetails"]) {
+                        oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
+                    }
+                    if (obj["PainterBankDetails"]) {
+                        oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
+                    }
+                    if (obj["RewardPoints"] < 5000) {
+                        //oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        oView.getModel("oModelControl").setProperty("/noSlabText", "Minimum 5000 points required for redemption.");
+                    }
+                    if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
+                        oView.getModel("oModelControl").setProperty("/bEnable", false);
                     }
                 },
                 error: function () {
@@ -455,11 +474,7 @@ sap.ui.define([
                     inputOtp.setVisible(true);
                     btnOtpResend.setVisible(true);
                     verifyOtp.setVisible(true);
-                    //  var jModel = new sap.ui.model.json.JSONModel();
-                    //  var myData = {};
-                    //  myData.Fare = oData;
-                    //  jModel.setData(myData);
-                    //  oContext.getView().setModel(jModel, "fareModel");
+
                 },
                 error: function (oError) {
 
@@ -470,6 +485,7 @@ sap.ui.define([
         onVerifyOtp: function () {
             var oModel = this.getOwnerComponent().getModel();
             var oModelView = this.getModel("oModelView");
+            var oModelControl = this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile"),
                 otp = oModelView.getProperty("/AddFields/Otp");
             oModel.callFunction(
@@ -478,14 +494,21 @@ sap.ui.define([
                 urlParameters: {
                     Mobile: mobile,
                     MobileOTP: parseInt(otp),
-                    DeviceId:1234,
-                    DeviceType:"Android"
+                    DeviceId: 1234,
+                    DeviceType: "Android"
                 },
                 success: function (oData, response) {
-                        var data=oData.results[0];
-                        if(data["ErrorCode"]==417){
-                            MessageToast.show("Enter valid OTP.")
-                        }
+                    var data = oData.results[0];
+                    if (data["ErrorCode"] == null) {
+                        MessageToast.show("OTP verification successful");
+                        oModelControl.setProperty("/isValidOTP", true);
+                    }
+                    else if (data["ErrorCode"] == 410) {
+                        MessageToast.show("Provided OTP is already Expired.");
+                    }
+                    else if (data["ErrorCode"] == 417) {
+                        MessageToast.show("Please enter valid OTP.")
+                    }
                     //  var jModel = new sap.ui.model.json.JSONModel();
                     //  var myData = {};
                     //  myData.Fare = oData;
@@ -498,12 +521,15 @@ sap.ui.define([
             });
 
         },
+        _getPainterSlabs: function () {
+
+        },
         onValueHelpSlabs: function (oEvent) {
             var sInputValue = oEvent.getSource().getValue(),
                 oView = this.getView();
 
-            if (!this._pValueHelpDialog) {
-                this._pValueHelpDialog = Fragment.load({
+            if (!this._sValueHelpDialog) {
+                this._sValueHelpDialog = Fragment.load({
                     id: oView.getId(),
                     name:
                         "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialogSlabs",
@@ -513,7 +539,7 @@ sap.ui.define([
                     return oDialog;
                 });
             }
-            this._pValueHelpDialog.then(function (oDialog) {
+            this._sValueHelpDialog.then(function (oDialog) {
                 // Create a filter for the binding
 
 
@@ -523,7 +549,7 @@ sap.ui.define([
 
         },
         onValueHelpSlabsClose: function (oEvent) {
-            var oModelView=this.getModel("oModelView");
+            var oModelView = this.getModel("oModelView");
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
             var oViewModel = this.getView().getModel("oModelView");
@@ -532,7 +558,7 @@ sap.ui.define([
             }
             var obj = oSelectedItem.getBindingContext().getObject();
 
-            oModelView.setProperty("/AddFields/Slab",obj["RequestType"]);
+            oModelView.setProperty("/AddFields/Slab", obj["RequestType"]);
             //this._getPainterDetails(obj["Id"]);
         },
         onValueHelpSlabsSearch: function (oEvent) {

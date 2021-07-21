@@ -2,7 +2,7 @@
 	<SelectDialog
         resizable="false"
         contentWidth="30%"
-		id="selectDialog"
+		id="selectSlabsDialog"
 		title="Slabs"
         growing="true"
         search=".onValueHelpSlabsSearch"
