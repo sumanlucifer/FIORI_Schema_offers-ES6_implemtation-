@@ -57,6 +57,9 @@
             <Column>
                 <Text text="{i18n>BonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }"/>
             </Column>
+            <Column>
+                <Text text="{i18n>Remark}" />
+            </Column>
 
         </columns>
         <items >
@@ -77,6 +80,7 @@
                     <Text text="{parts:['oModelControl3>RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionType','oModelControl3>RewardPoints','oModelControl3>RewardCash','oModelControl3>RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
                     <Text text="{oModelControl3>RedeemedRewardBonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }" />
+                     <Text text="{oModelControl3>Remark}"/>
 
                 </cells>
             </ColumnListItem>
