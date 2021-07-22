@@ -27,8 +27,8 @@ xmlns:f="sap.ui.layout.form">
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
                                                 <ToolbarSpacer />
-                                                <Button press="onEditCatalogue" type="Emphasized" text="Edit" visible="{=${!local>/bEdit}}"/>
-                                                <Button press="onAddCatalogue" type="Emphasized" text="Add" visible="{=${local>/bEdit}}"/>
+                                                <Button icon="sap-icon://edit" press="onEditCatalogue" type="Emphasized" text="Edit" visible="{=${!local>/bEdit}}"/>
+                                                <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add" visible="{=${local>/bEdit}}"/>
                                             </Toolbar>
                                         </headerToolbar>
                                             <columns>

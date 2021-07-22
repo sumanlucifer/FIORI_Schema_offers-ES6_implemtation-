@@ -1023,7 +1023,7 @@ sap.ui.define(
                                 PainterId: "" + oPainterId + ""
                             },
                             select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,"+
-                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash"
+                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
@@ -3431,6 +3431,7 @@ sap.ui.define(
                                         this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
                                             expand: "RewardGift"
                                         });
+                                        console.log(oGetProgress)
                                         oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
                                         oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
                                         this._DialogOfferRedeem.open();

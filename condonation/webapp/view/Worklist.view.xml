@@ -1,39 +1,48 @@
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.condonation.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+<mvc:View height="100%"
+    xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.condonation.controller.Worklist"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
-    
+
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
-                       
+
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
+                                    <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
                                         <core:Item text="{Id} " key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                      <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
                                         <core:Item text="{Id}" key="{Id}" />
-                                     </ComboBox>
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange" items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
                                         <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
@@ -47,7 +56,7 @@
         </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,Painter/Name,Painter/MembershipCard,Painter/Mobile,Painter/ZoneId,Painter/DivisionId,Painter/DepotId,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
@@ -67,6 +76,15 @@
                         <Text text="{i18n>PrimaryMobileNo}"/>
                     </Column>
                     <Column>
+                        <Text text="{i18n>Zone}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Division}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Depot}"/>
+                    </Column>
+                    <Column>
                         <Text text="{i18n>CondonationId}"/>
                     </Column>
                     <Column>
@@ -78,11 +96,14 @@
                 </columns>
 
                 <items>
-                    <ColumnListItem type="Navigation" press="onListItemPress" >
+                    <ColumnListItem type="Navigation" press="onListItemPress">
                         <cells>
                             <Text text="{Painter/Name}"/>
                             <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
+                            <Text text="{Painter/ZoneId}"/>
+                            <Text text="{Painter/DivisionId}"/>
+                            <Text text="{Painter/DepotId}"/>
                             <Text text="{ComplaintCode}"/>
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                             <ObjectStatus text="{path:'PainterComplainProducts',formatter:'.fmtPoints'}" />
