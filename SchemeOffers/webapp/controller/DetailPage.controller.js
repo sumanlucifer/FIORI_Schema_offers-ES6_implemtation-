@@ -2050,8 +2050,6 @@ sap.ui.define(
                             OfferId: sOfferId,
                         },
                         success: function (oData) {
-                            // oModelControl.setProperty("/Buttons/Redeem",false)
-                            // oModelControl.refresh(true);
                             console.log(oData);
                             if (oData.hasOwnProperty("Message")) {
                                 MessageToast.show(oData["Message"]);
