@@ -1022,8 +1022,8 @@ sap.ui.define(
                             custom: {
                                 PainterId: "" + oPainterId + ""
                             },
-                            select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,"+
-                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash"
+                            select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus," +
+                                "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,Remark"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
@@ -1677,6 +1677,15 @@ sap.ui.define(
                 onEditCancelBankingFields: function () {
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
+                    var oValidator = new Validator();
+                    var oForm = this.getView().byId("editbanking");
+                    // var bFlag = oValidator.validate(oForm,true);
+                    // console.log(bFlag);
+                    // if(!bFlag){
+                    //     return;
+
+                    // }
+                    console.log(oModelCtrl);
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
                     oModelCtrl.setProperty("/EditField", false);
@@ -1694,6 +1703,8 @@ sap.ui.define(
                     oModelView.setProperty("/PainterBankDetails/BankNameId", InitialBankId);
                     oModelView.setProperty("/PainterBankDetails/AccountTypeId", InitialAcTypeId);
                     oModelView.setProperty("/PainterBankDetails/AccountNumber", InitialAccNo);
+                    oModelView.refresh(true);
+                    console.log(oModelView.getData())
 
 
                 },
@@ -1811,11 +1822,13 @@ sap.ui.define(
                 onEditField: function (oEvent) {
                     var length = oEvent.getParameter("value").length;
                     var oModelCtrl = this.getView().getModel("oModelControl");
-                    if (length > 1) {
-                        oModelCtrl.setProperty("/EditField", true);
-                    } else {
-                        oModelCtrl.setProperty("/EditField", false);
-                    }
+                    oModelCtrl.setProperty("/EditField", true);
+                    // if (length > 1) {
+                    //     oModelCtrl.setProperty("/EditField", true);
+                    // } else {
+                    //     oModelCtrl.setProperty("/EditField", false);
+                    // }
+
 
 
                 },
@@ -3465,6 +3478,7 @@ sap.ui.define(
                 onConfirmRedeem: function () {
                     var oView = this.getView();
                     var oModelC2 = oView.getModel("oModelControl2");
+                    oModelC2.setProperty("/ProfilePageBuzy", true);
                     var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
                     console.log(iSelctedIndex)
                     if (iSelctedIndex < 0) {
@@ -3489,27 +3503,17 @@ sap.ui.define(
                             PainterId: sPainterId,
                         },
                         success: function (m1) {
-                            console.log(m1);
-                            if (m1.hasOwnProperty("Message")) {
-                                MessageToast.show(m1["Message"]);
-                            }
 
                             this.onDialogCloseRedeme();
                             this.getView().getModel().refresh(true);
-                            // if (oData !== null) {
-                            //     if (oData.hasOwnProperty("Status")) {
-                            //         if (oData["Status"] == true) {
-                            //             MessageToast.show(oData["Message"]);
-
-                            //             othat.oDefaultDialog.close();
-                            //         } else if (oData["Status"] == false) {
-                            //             MessageToast.show(oData["Message"]);
-                            //         }
-                            //         othat.getView().getModel().refresh(true);
-                            //     }
-                            // }
+                            oModelC2.setProperty("/ProfilePageBuzy", false);
+                            if (m1.hasOwnProperty("Message")) {
+                                MessageToast.show(m1["Message"]);
+                            }
                         }.bind(this),
-                        error: function () {},
+                        error: function () {
+                            oModelC2.setProperty("/ProfilePageBuzy", false);
+                        },
                     });
                 },
 

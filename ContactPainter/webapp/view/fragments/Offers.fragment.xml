@@ -7,13 +7,13 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
 
             </headerToolbar>
 
             <columns>
-            
+
                 <Column>
                     <Text text="{i18n>OfferCode}" />
                 </Column>
@@ -32,7 +32,7 @@
                 <Column>
                     <Text text="{i18n>ProgressStatus}" />
                 </Column>
-                  <Column>
+                <Column>
                     <Text text="{i18n>MultiplesAllowed}" />
                 </Column>
                 <Column>
@@ -41,11 +41,14 @@
                 <Column>
                     <Text text="{i18n>Rewards}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>Remark}" />
+                </Column>
             </columns>
             <dependents >
                 <ColumnListItem id="idTblOffersNew2Template">
                     <cells>
-                        
+
                         <Text text="{Offer/OfferCode}" />
                         <Text text="{Offer/Title}" />
                         <Text text="{Offer/OfferType/OfferType}" />
@@ -56,13 +59,14 @@
                         <HBox>
                             <items>
                                 <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtLowerCase2'}" />
-                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost"  press="onOfferReedeme" />
-                                <!-- <Button  text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
+                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />
+                                <!-- <Button text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
                         </HBox>
                         <HBox>
                             <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
                         </HBox>
+                        <Text text="{Remark}" />
                     </cells>
                 </ColumnListItem>
             </dependents>
