@@ -104,7 +104,7 @@ sap.ui.define(
                         LoggedInUser: {},
                         PageBusy: true,
                         Buttons: {
-                            Redeem: true, // check if its already redeemed
+                            Redeem: false, // check if its already redeemed
                             SendForApproval: false,
                         },
                         Dialog: {
@@ -156,7 +156,7 @@ sap.ui.define(
 
                         },
                         error: function () {
-                            console.log("error")
+                           
                         }
                     })
 
@@ -2062,7 +2062,9 @@ sap.ui.define(
                             othat._LoadPainterData(0, 16);
 
                             oModelControl.setProperty("/PageBusy", false);
+                            oModelControl.setProperty("/Buttons/Redeem", true);
                             othat.getView().getModel().refresh(true);
+                            oModelControl.refresh(true);
                         }.bind(this),
                         error: function () {
                             oModelControl.setProperty("/PageBusy", false)
