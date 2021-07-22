@@ -90,6 +90,7 @@
         </f:content>
         <f:footer>
             <OverflowToolbar >
+                <Text text="{i18n>Message3}" visible="{= ${RedemptionStatus}==='REDEEMING'}"/>
                 <ToolbarSpacer/>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">

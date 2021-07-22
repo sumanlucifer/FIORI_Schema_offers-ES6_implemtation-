@@ -135,6 +135,9 @@ sap.ui.define(
                     var oControlModel = oView.getModel("oModelControl3");
                     var iOfferId = oControlModel.getProperty("/OfferId")
                     var oDataPainter = oControlModel.getProperty("/oData/Painters");
+                    if(mSkip==0){
+                        oDataPainter=[];
+                    }
 
                     oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
                         urlParameters: {
@@ -143,6 +146,7 @@ sap.ui.define(
                             Limit: "" + mTop + ""
                         },
                         success: function (data) {
+                            console.log(data);
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     var aNewArray = oDataPainter.concat(data["results"]);
@@ -2027,9 +2031,11 @@ sap.ui.define(
                         emphasizedAction: MessageBox.Action.OK,
                         onClose: function (sAction) {
                             if (sAction == "OK") {
+                                this.getView().getModel("oModelControl3").setProperty("/PageBusy", true)
                                 othat._onOfferRedeem();
                             }
-                        },
+
+                        }.bind(this),
                     });
                 },
                 _onOfferRedeem: function () {
@@ -2046,11 +2052,20 @@ sap.ui.define(
                         success: function (oData) {
                             // oModelControl.setProperty("/Buttons/Redeem",false)
                             // oModelControl.refresh(true);
-                            MessageToast.show("Offer Successfully Redeemed.");
+                            console.log(oData);
+                            if (oData.hasOwnProperty("Message")) {
+                                MessageToast.show(oData["Message"]);
+                            } else {
+                                MessageToast.show("Offer Successfully Redeemed.");
+                            }
                             othat.getView().getModel().refresh(true);
+                            this._LoadPainterData(0, 16);
 
-                        },
+                            oModelControl.setProperty("/PageBusy", false)
+
+                        }.bind(this),
                         error: function () {
+                            oModelControl.setProperty("/PageBusy", false)
                             MessageBox.error(
                                 "Unable to redeem to the offer because of server error."
                             );
@@ -2126,10 +2141,11 @@ sap.ui.define(
                         );
                         return;
                     }
-
+                    var oModelC = oView.getModel("oModelControl3");
+                    oModelC.setProperty("/PageBusy", true)
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
-                    var oModelC = oView.getModel("oModelControl3");
+
                     var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
                     var sRemark = oModelC.getProperty("/Dialog/Remarks");
                     var oNewPayLoad = Object.assign({}, oPayload);
@@ -2167,6 +2183,7 @@ sap.ui.define(
                         c2 = othat._UpdateOffer(oNewPayLoad);
                         c2.then(function (oNewPayLoad) {
                             othat._RemarksDialog2.close();
+                            oModelC.setProperty("/PageBusy", true)
                             othat.handleCancelPress(oNewPayLoad)
                         })
                     });
