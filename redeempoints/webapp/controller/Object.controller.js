@@ -98,7 +98,8 @@ sap.ui.define([
                     ProductQuantity: 1,//integer
                     Points: 0,//integer
 
-                }]
+                }],
+                Slabs:[]
             }
             var oModel1 = new JSONModel(oDataView);
             var oModel2 = new JSONModel(oDataControl)
@@ -271,6 +272,7 @@ sap.ui.define([
             var obj = oSelectedItem.getBindingContext().getObject();
 
             this._getPainterDetails(obj["Id"]);
+            this._getSlabsForPainter(obj["Id"])
         },
         _getPainterDetails: function (mParam) {
             var oView = this.getView();
@@ -502,6 +504,7 @@ sap.ui.define([
                     if (data["ErrorCode"] == null) {
                         MessageToast.show("OTP verification successful");
                         oModelControl.setProperty("/isValidOTP", true);
+                        oModelControl.setProperty("/bEnable", true);
                     }
                     else if (data["ErrorCode"] == 410) {
                         MessageToast.show("Provided OTP is already Expired.");
@@ -519,9 +522,6 @@ sap.ui.define([
 
                 }
             });
-
-        },
-        _getPainterSlabs: function () {
 
         },
         onValueHelpSlabs: function (oEvent) {
@@ -578,6 +578,26 @@ sap.ui.define([
 
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
+        _getSlabsForPainter:function (Id){
+            var oModel = this.getOwnerComponent().getModel();
+            var oModelCtrl = this.getModel("oModelControl");
+            oModel.callFunction(
+                "/GetSlabBankRedemption", {
+                method: "GET",
+                urlParameters: {
+                    PainterId: Id
+                },
+                success: function (oData, response) {
+                    var data=oData.results;
+                    oModelCtrl.setProperty("/Slabs",data)
+                   
+
+                },
+                error: function (oError) {
+
+                }
+            });
+        }
         /*Aditya chnages end*/
 
     });

@@ -7,11 +7,11 @@
         growing="true"
         search=".onValueHelpSlabsSearch"
         growingThreshold="15"
-		items="{path:'/MasterRequestTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}],sorter:{path:'RequestType'}}"
+		items="{path:'oModelControl>/Slabs',filters:[{path:'IsArchived',operator:'EQ',value1:false}],sorter:{path:'Id'}}"
 		confirm=".onValueHelpSlabsClose"
 		cancel=".onValueHelpSlabsClose">
 		<StandardListItem 
-			title="{RequestType}"
-			description="Mob: {Category}" />
+			title="Points: {oModelControl>SlabPoints}"
+			description="Amount: {oModelControl>RedemptionAmount}" />
 	</SelectDialog>
 </core:FragmentDefinition>

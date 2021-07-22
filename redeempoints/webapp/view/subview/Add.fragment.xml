@@ -66,34 +66,7 @@
                 <Label text="{i18n>Remark}"/>
                 <TextArea maxLength="250" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250}}" />
 
-                <!-- <Label text="{i18n>LblClassification}" />
-                <ComboBox  selectionChange="onClassificationChange" required="true" items="{path:'/MasterProductClassificationSet' }" selectedKey="{path:'oModelView>/AddFields/ClassId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
-                    <items>
-                      <core:Item key="{Id}" text="{Classification}" />
-                    </items>
-                </ComboBox> -->
-
-              
-                <!-- <Label text="{i18n>LblProduct}" />
-                <ComboBox id="Products" enabled="{= ${oModelView>/AddFields/CategoryId}.length>0}" change="onProductChange" required="true" items="{path:'/MasterProductSet' }" selectedKey="{path:'oModelView>/AddFields/ProductId',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
-                    <items>
-                         <core:Item key="{Id}" text="{ProductName}" />
-                    </items>
-                </ComboBox>
-                <Label text="{i18n>Pack}" />
-                <ComboBox id="Packs" enabled="{= ${oModelView>/AddFields/ProductId}.length>0 }" change="onPackChange" required="true" items="{path:'/MasterRepProductSkuSet' }" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductSKUCode',type  : 'sap.ui.model.type.String',  constraints:{minLength:1,maxLength:10} }">
-                    <items>
-                         <core:Item key="{SkuCode}" text="{Description}" />
-                    </items>
-                </ComboBox> 
-
-                <Label text="{i18n>LblQuantity}" />
-                <Select change="onPointsChange" selectedKey="{path:'oModelView>/PainterComplainProducts/0/ProductQuantity',type:'.cmbxDtype2'}" width="10%" items="{oModelControl>/aQuantity}" >
-                 <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
-                </Select>    
-               
-               <Label text="{i18n>LblTotalPoints}" />
-               <Text text="{= ${oModelView>/PainterComplainProducts/0/Points}*${oModelView>/PainterComplainProducts/0/ProductQuantity} }"  /> -->
+                
             </f:content>
         </f:SimpleForm>
 </core:FragmentDefinition>
