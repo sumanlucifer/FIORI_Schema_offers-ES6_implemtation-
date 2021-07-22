@@ -135,8 +135,8 @@ sap.ui.define(
                     var oControlModel = oView.getModel("oModelControl3");
                     var iOfferId = oControlModel.getProperty("/OfferId")
                     var oDataPainter = oControlModel.getProperty("/oData/Painters");
-                    if(mSkip==0){
-                        oDataPainter=[];
+                    if (mSkip == 0) {
+                        oDataPainter = [];
                     }
 
                     oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
@@ -2058,11 +2058,11 @@ sap.ui.define(
                             } else {
                                 MessageToast.show("Offer Successfully Redeemed.");
                             }
+
+                            othat._LoadPainterData(0, 16);
+
+                            oModelControl.setProperty("/PageBusy", false);
                             othat.getView().getModel().refresh(true);
-                            this._LoadPainterData(0, 16);
-
-                            oModelControl.setProperty("/PageBusy", false)
-
                         }.bind(this),
                         error: function () {
                             oModelControl.setProperty("/PageBusy", false)
