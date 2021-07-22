@@ -46,13 +46,8 @@
                     </items>
                 </ComboBox> -->
                 <Label text="{i18n>LblSlab}" />
-                <Input required="true" placeholder="{oModelControl>/noSlabText}" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" value="{path:'oModelView>/AddFields/Slab', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
-                <!-- <MultiInput
-						id="multiInput"
-						valueHelpOnly="true"
-						valueHelpRequest=".onValueHelpSlabs"
-					>
-					</MultiInput> -->
+                <Input required="false" placeholder="{oModelControl>/noSlabText}" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" 
+                value="{path:'oModelControl>/SlabPoints', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
 
                 <Label text=""/>
                 <VBox >

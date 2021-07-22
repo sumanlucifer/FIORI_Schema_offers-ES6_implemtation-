@@ -68,10 +68,10 @@ sap.ui.define([
             };
             var oDataView = {
                 PainterId: "",
+                SlabBankRedemptionId: "",
+                Remark: "",
+                Status:"PENDING",
                 AddFields: {
-                    CategoryId: "",
-                    ClassId: "",
-                    ProductId: "",
                     Mobile: "",
                     Name: "",
                     MembershipCard: "",
@@ -81,24 +81,24 @@ sap.ui.define([
                     Depot: "",
                     PDealer: "",
                     Otp: "",//integer
-                    Slab: "",
                     bnkStatus: "",
                     kycStatus: "",
                     BalPoints: ""
+                    
                 },
-                Remark: "",
-                ComplaintStatus: "RESOLVED",
-                ApprovalStatus: "APPROVED",
-                ResolutionType: 2,
-                ComplaintSubtypeId: 1,
-                ComplaintTypeId: 1,
-                PainterComplainProducts: [{
-                    PainterId: "",//integer
-                    ProductSKUCode: "",
-                    ProductQuantity: 1,//integer
-                    Points: 0,//integer
+                
+                //ComplaintStatus: "RESOLVED",
+                //ApprovalStatus: "APPROVED",
+                // ResolutionType: 2,
+                // ComplaintSubtypeId: 1,
+                // ComplaintTypeId: 1,
+                // PainterComplainProducts: [{
+                //     PainterId: "",//integer
+                //     ProductSKUCode: "",
+                //     ProductQuantity: 1,//integer
+                //     Points: 0,//integer
 
-                }],
+                // }],
                 Slabs:[]
             }
             var oModel1 = new JSONModel(oDataView);
@@ -149,6 +149,7 @@ sap.ui.define([
             var oModelView = oView.getModel("oModelView");
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
+            delete oPayLoad["Slabs"];
 
             if (oView.getModel("oModelControl").getProperty("/bPayloadSent")) {
                 return;
@@ -160,9 +161,9 @@ sap.ui.define([
 
             //Double click issue solution
 
-            oData.create("/PainterComplainsSet", oPayLoad, {
+            oData.create("/PainterLoyaltyRedemptionRequestSet", oPayLoad, {
                 success: function () {
-                    MessageToast.show("Condonation request Sucessfully Submitted.")
+                    MessageToast.show("Redemption request Sucessfully Submitted.")
                     othat.onNavBack();
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                 },
@@ -170,7 +171,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
-                        "Unable to create Condonation request due to the server issues",
+                        "Unable to create Redemption request due to the server issues",
                         {
                             title: "Error Code: " + a.statusCode,
                         }
@@ -270,7 +271,6 @@ sap.ui.define([
                 return;
             }
             var obj = oSelectedItem.getBindingContext().getObject();
-
             this._getPainterDetails(obj["Id"]);
             this._getSlabsForPainter(obj["Id"])
         },
@@ -491,13 +491,11 @@ sap.ui.define([
             var mobile = oModelView.getProperty("/AddFields/Mobile"),
                 otp = oModelView.getProperty("/AddFields/Otp");
             oModel.callFunction(
-                "/VerifyMobileOTP", {
+                "/VerifyMobileOTPAdmin", {
                 method: "GET",
                 urlParameters: {
                     Mobile: mobile,
-                    MobileOTP: parseInt(otp),
-                    DeviceId: 1234,
-                    DeviceType: "Android"
+                    MobileOTP: parseInt(otp)
                 },
                 success: function (oData, response) {
                     var data = oData.results[0];
@@ -550,15 +548,15 @@ sap.ui.define([
         },
         onValueHelpSlabsClose: function (oEvent) {
             var oModelView = this.getModel("oModelView");
+            var oModelCtrl = this.getModel("oModelControl");
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
-            var oViewModel = this.getView().getModel("oModelView");
             if (!oSelectedItem) {
                 return;
             }
-            var obj = oSelectedItem.getBindingContext().getObject();
-
-            oModelView.setProperty("/AddFields/Slab", obj["RequestType"]);
+            var obj = oSelectedItem.getBindingContext("oModelControl").getObject();
+            oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
+            oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
             //this._getPainterDetails(obj["Id"]);
         },
         onValueHelpSlabsSearch: function (oEvent) {
@@ -566,12 +564,12 @@ sap.ui.define([
             var oFilter = new Filter(
                 [
                     new Filter({
-                        path: "RequestType",
+                        path: "SlabPoints",
                         operator: "Contains",
                         value1: sValue.trim(),
                         caseSensitive: false
                     }),
-                    new Filter("Category", FilterOperator.Contains, sValue.trim()),
+                    new Filter("RedemptionAmount", FilterOperator.Contains, sValue.trim()),
                 ],
                 false
             );

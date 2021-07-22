@@ -4,7 +4,8 @@ sap.ui.define(
         "sap/ui/model/json/JSONModel",
         "sap/m/MessageBox",
         "sap/m/MessageToast",
-        "sap/ui/core/Fragment"
+        "sap/ui/core/Fragment",
+        "../model/formatter",
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -14,13 +15,15 @@ sap.ui.define(
         JSONModel,
         MessageBox,
         MessageToast,
-        Fragment
+        Fragment,
+        formatter
     ) {
         "use strict";
 
         return BaseController.extend(
             "com.knpl.pragati.redeempoints.controller.Detail",
             {
+                formatter: formatter,
 
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
@@ -38,14 +41,15 @@ sap.ui.define(
                 _initData: function (oProp) {
                     var oData = {
                         modeEdit: false,
-                        bindProp: "PainterComplainsSet(" + oProp + ")",
-                        TokenCode: true,
-                        tokenCodeValue: "",
-                        ImageLoaded: false,
-                        ComplainResolved: false,
-                        ProbingSteps: "",
-                        ComplainCode: "",
-                        ComplainId: oProp,
+                        bindProp: "PainterLoyaltyRedemptionRequestSet('" + oProp + "')",
+                        // TokenCode: true,
+                        // tokenCodeValue: "",
+                        // ImageLoaded: false,
+                        // ComplainResolved: false,
+                        // ProbingSteps: "",
+                        // ComplainCode: "",
+                        // ComplainId: oProp,
+                        UUID:oProp,
                         bBusy: false
                     };
                     var oDataModel;
@@ -73,7 +77,7 @@ sap.ui.define(
                     var oView = this.getView();
 
                     var sExpandParam =
-                        "Painter/Depot,Painter/PrimaryDealerDetails,PainterComplainProducts";
+                        "PainterDetails,MasterSlabBankRedemptionDetails";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({
@@ -99,12 +103,12 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataValue = "";
                     var othat = this;
-                    var exPand = "PainterComplainProducts/ProductPackDetails/ProductDetails/ProductCategory,PainterComplainProducts/ProductPackDetails/ProductCategoryDetails";
+                    var exPand = "PainterDetails,PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
                     oView.getModel("oModelControl").setProperty("/bBusy", true);
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
                             $expand: exPand,
-                            $select:'PainterComplainProducts'
+                           // $select:'PainterComplainProducts'
                         },
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
@@ -186,200 +190,200 @@ sap.ui.define(
                     );
                     //oView.byId("smartHistory").rebindTable();
                 },
-                _CheckImage: function (oProp) {
-                    var oView = this.getView();
-                    var oModelControl = this.getView().getModel("oModelControl");
-                    var sImageUrl =
-                        "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
-                    jQuery
-                        .get(sImageUrl)
-                        .done(function () {
-                            oModelControl.setProperty("/ImageLoaded", true);
-                            console.log("Image Exist");
-                        })
-                        .fail(function () {
-                            oModelControl.setProperty("/ImageLoaded", false);
-                            console.log("Image Doesnt Exist");
-                        });
-                },
-                _loadEditProfile: function (mParam) {
-                    var promise = jQuery.Deferred();
-                    var oView = this.getView();
-                    var othat = this;
-                    var oVboxProfile = oView.byId("idVbx");
-                    var sFragName = mParam == "Edit" ? "EditProfile" : "DisplayComplaint";
-                    oVboxProfile.destroyItems();
-                    return Fragment.load({
-                        id: oView.getId(),
-                        controller: othat,
-                        name: "com.knpl.pragati.redeempoints.view.subview." + sFragName,
-                    }).then(function (oControlProfile) {
-                        oView.addDependent(oControlProfile);
-                        oVboxProfile.addItem(oControlProfile);
-                        promise.resolve();
-                        return promise;
-                    });
-                },
-                onPressTokenCode: function (oEvent) {
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-                    var oModelControl = oView.getModel("oModelControl");
-                    var sTokenCode = oModelControl.getProperty("/tokenCodeValue").trim();
-                    if (sTokenCode == "") {
-                        MessageToast.show("Kindly enter the token code to continue");
-                        return;
-                    }
+                // _CheckImage: function (oProp) {
+                //     var oView = this.getView();
+                //     var oModelControl = this.getView().getModel("oModelControl");
+                //     var sImageUrl =
+                //         "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value";
+                //     jQuery
+                //         .get(sImageUrl)
+                //         .done(function () {
+                //             oModelControl.setProperty("/ImageLoaded", true);
+                //             console.log("Image Exist");
+                //         })
+                //         .fail(function () {
+                //             oModelControl.setProperty("/ImageLoaded", false);
+                //             console.log("Image Doesnt Exist");
+                //         });
+                // },
+                // _loadEditProfile: function (mParam) {
+                //     var promise = jQuery.Deferred();
+                //     var oView = this.getView();
+                //     var othat = this;
+                //     var oVboxProfile = oView.byId("idVbx");
+                //     var sFragName = mParam == "Edit" ? "EditProfile" : "DisplayComplaint";
+                //     oVboxProfile.destroyItems();
+                //     return Fragment.load({
+                //         id: oView.getId(),
+                //         controller: othat,
+                //         name: "com.knpl.pragati.redeempoints.view.subview." + sFragName,
+                //     }).then(function (oControlProfile) {
+                //         oView.addDependent(oControlProfile);
+                //         oVboxProfile.addItem(oControlProfile);
+                //         promise.resolve();
+                //         return promise;
+                //     });
+                // },
+                // onPressTokenCode: function (oEvent) {
+                //     var oView = this.getView();
+                //     var oModelView = oView.getModel("oModelView");
+                //     var oModelControl = oView.getModel("oModelControl");
+                //     var sTokenCode = oModelControl.getProperty("/tokenCodeValue").trim();
+                //     if (sTokenCode == "") {
+                //         MessageToast.show("Kindly enter the token code to continue");
+                //         return;
+                //     }
 
-                    var oData = oView.getModel();
+                //     var oData = oView.getModel();
 
-                    oData.read("/QRCodeValidationAdmin", {
-                        urlParameters: {
-                            qrcode: "'" + sTokenCode + "'",
-                            painterid: oModelView.getProperty("/PainterId"),
-                            channel: "'Complains'",
-                        },
-                        success: function (oData) {
-                            if (oData !== null) {
-                                if (oData.hasOwnProperty("Status")) {
-                                    if (oData["Status"] == true) {
-                                        oModelView.setProperty(
-                                            "/RewardPoints",
-                                            oData["RewardPoints"]
-                                        );
-                                        oModelControl.setProperty("/TokenCode", false);
-                                        oModelView.setProperty("/TokenCode", sTokenCode);
-                                        MessageToast.show(oData["Message"]);
-                                    } else if (oData["Status"] == false) {
-                                        oModelView.setProperty("/RewardPoints", "");
-                                        oModelView.setProperty("/TokenCode", "");
-                                        oModelControl.setProperty("/tokenCodeValue", "");
-                                        oModelControl.setProperty("/TokenCode", true);
-                                        MessageToast.show(oData["Message"]);
-                                    }
-                                }
-                            }
-                        },
-                        error: function () { },
-                    });
-                },
-                onViewAttachment: function (oEvent) {
-                    var oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    if (!this._pKycDialog) {
-                        Fragment.load({
-                            name:
-                                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
-                            controller: this,
-                        }).then(
-                            function (oDialog) {
-                                this._pKycDialog = oDialog;
-                                oView.addDependent(this._pKycDialog);
-                                this._pKycDialog.open();
-                            }.bind(this)
-                        );
-                    } else {
-                        oView.addDependent(this._pKycDialog);
-                        this._pKycDialog.open();
-                    }
-                },
-                onPressCloseDialog: function (oEvent) {
-                    oEvent.getSource().getParent().close();
-                },
-                onDialogClose: function (oEvent) {
-                    this._pKycDialog.open().destroy();
-                    delete this._pKycDialog;
-                },
-                handleSavePress: function () {
-                    var oModel = this.getView().getModel("oModelView");
-                    var oValidator = new Validator();
-                    var oVbox = this.getView().byId("idVbx");
-                    var bValidation = oValidator.validate(oVbox, true);
-                    if (bValidation == false) {
-                        MessageToast.show(
-                            "Kindly input the fields in proper format to continue. "
-                        );
-                    }
-                    if (bValidation) {
-                        oModel.setProperty("/InitiateForceTat", false);
-                        this._postDataToSave();
-                    }
-                },
-                onChangeResolution: function (oEvent) {
-                    var oView = this.getView();
-                    var oModel = oView.getModel("oModelView");
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    if (sKey !== 90) {
-                        oModel.setProperty("/ResolutionOthers", "");
-                    }
-                    //console.log(oModel);
-                },
-                onScenarioChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var sSuTypeId = oView
-                        .getModel("oModelView")
-                        .getProperty("/ComplaintSubtypeId");
+                //     oData.read("/QRCodeValidationAdmin", {
+                //         urlParameters: {
+                //             qrcode: "'" + sTokenCode + "'",
+                //             painterid: oModelView.getProperty("/PainterId"),
+                //             channel: "'Complains'",
+                //         },
+                //         success: function (oData) {
+                //             if (oData !== null) {
+                //                 if (oData.hasOwnProperty("Status")) {
+                //                     if (oData["Status"] == true) {
+                //                         oModelView.setProperty(
+                //                             "/RewardPoints",
+                //                             oData["RewardPoints"]
+                //                         );
+                //                         oModelControl.setProperty("/TokenCode", false);
+                //                         oModelView.setProperty("/TokenCode", sTokenCode);
+                //                         MessageToast.show(oData["Message"]);
+                //                     } else if (oData["Status"] == false) {
+                //                         oModelView.setProperty("/RewardPoints", "");
+                //                         oModelView.setProperty("/TokenCode", "");
+                //                         oModelControl.setProperty("/tokenCodeValue", "");
+                //                         oModelControl.setProperty("/TokenCode", true);
+                //                         MessageToast.show(oData["Message"]);
+                //                     }
+                //                 }
+                //             }
+                //         },
+                //         error: function () { },
+                //     });
+                // },
+                // onViewAttachment: function (oEvent) {
+                //     var oButton = oEvent.getSource();
+                //     var oView = this.getView();
+                //     if (!this._pKycDialog) {
+                //         Fragment.load({
+                //             name:
+                //                 "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+                //             controller: this,
+                //         }).then(
+                //             function (oDialog) {
+                //                 this._pKycDialog = oDialog;
+                //                 oView.addDependent(this._pKycDialog);
+                //                 this._pKycDialog.open();
+                //             }.bind(this)
+                //         );
+                //     } else {
+                //         oView.addDependent(this._pKycDialog);
+                //         this._pKycDialog.open();
+                //     }
+                // },
+                // onPressCloseDialog: function (oEvent) {
+                //     oEvent.getSource().getParent().close();
+                // },
+                // onDialogClose: function (oEvent) {
+                //     this._pKycDialog.open().destroy();
+                //     delete this._pKycDialog;
+                // },
+                // handleSavePress: function () {
+                //     var oModel = this.getView().getModel("oModelView");
+                //     var oValidator = new Validator();
+                //     var oVbox = this.getView().byId("idVbx");
+                //     var bValidation = oValidator.validate(oVbox, true);
+                //     if (bValidation == false) {
+                //         MessageToast.show(
+                //             "Kindly input the fields in proper format to continue. "
+                //         );
+                //     }
+                //     if (bValidation) {
+                //         oModel.setProperty("/InitiateForceTat", false);
+                //         this._postDataToSave();
+                //     }
+                // },
+                // onChangeResolution: function (oEvent) {
+                //     var oView = this.getView();
+                //     var oModel = oView.getModel("oModelView");
+                //     var sKey = oEvent.getSource().getSelectedKey();
+                //     if (sKey !== 90) {
+                //         oModel.setProperty("/ResolutionOthers", "");
+                //     }
+                //     //console.log(oModel);
+                // },
+                // onScenarioChange: function (oEvent) {
+                //     var sKey = oEvent.getSource().getSelectedKey();
+                //     var oView = this.getView();
+                //     var sSuTypeId = oView
+                //         .getModel("oModelView")
+                //         .getProperty("/ComplaintSubtypeId");
 
-                    var oResolution = oView.byId("resolution");
-                    //clearning the serction for the resolution
-                    var aFilter = [];
-                    if (sKey) {
-                        aFilter.push(new Filter("Scenario", FilterOperator.EQ, sKey));
-                    }
-                    if (sSuTypeId !== "") {
-                        aFilter.push(new Filter("TypeId", FilterOperator.EQ, sSuTypeId));
-                    }
-                    oResolution.setSelectedKey("");
+                //     var oResolution = oView.byId("resolution");
+                //     //clearning the serction for the resolution
+                //     var aFilter = [];
+                //     if (sKey) {
+                //         aFilter.push(new Filter("Scenario", FilterOperator.EQ, sKey));
+                //     }
+                //     if (sSuTypeId !== "") {
+                //         aFilter.push(new Filter("TypeId", FilterOperator.EQ, sSuTypeId));
+                //     }
+                //     oResolution.setSelectedKey("");
 
-                    oResolution.getBinding("items").filter(aFilter);
-                },
-                handleSavePress: function () {
-                    var oModel = this.getView().getModel("oModelView");
-                    var oValidator = new Validator();
-                    var oVbox = this.getView().byId("idVbx");
-                    var bValidation = oValidator.validate(oVbox, true);
-                    if (bValidation == false) {
-                        MessageToast.show(
-                            "Kindly input the fields in proper format to continue."
-                        );
-                    }
-                    if (bValidation) {
-                        oModel.setProperty("/InitiateForceTat", false);
-                        console.log("Propery")
-                        this._postDataToSave();
-                    }
-                },
-                _postDataToSave: function () {
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-                    var oModelControl = oView.getModel("oModelControl");
+                //     oResolution.getBinding("items").filter(aFilter);
+                // },
+                // handleSavePress: function () {
+                //     var oModel = this.getView().getModel("oModelView");
+                //     var oValidator = new Validator();
+                //     var oVbox = this.getView().byId("idVbx");
+                //     var bValidation = oValidator.validate(oVbox, true);
+                //     if (bValidation == false) {
+                //         MessageToast.show(
+                //             "Kindly input the fields in proper format to continue."
+                //         );
+                //     }
+                //     if (bValidation) {
+                //         oModel.setProperty("/InitiateForceTat", false);
+                //         console.log("Propery")
+                //         this._postDataToSave();
+                //     }
+                // },
+                // _postDataToSave: function () {
+                //     var oView = this.getView();
+                //     var oModelView = oView.getModel("oModelView");
+                //     var oModelControl = oView.getModel("oModelControl");
 
-                    var oData = oView.getModel();
-                    var sPath = oView.getElementBinding().getPath();
-                    var oViewData = oView.getModel("oModelView").getData();
-                    var oPayload = Object.assign({}, oViewData);
-                    for (var a in oPayload) {
-                        if (oPayload[a] === "") {
-                            oPayload[a] = null;
-                        }
-                    }
-                    var othat = this;
-                    console.log(oPayload);
-                    oData.update(sPath, oPayload, {
-                        success: function () {
-                            MessageToast.show("Complaint Sucessfully Updated.");
-                            oData.refresh(true);
-                            othat.onNavBack();
-                        },
-                        error: function (a) {
-                            MessageBox.error(othat._sErrorText, {
-                                title: "Error Code: " + a.statusCode,
-                            });
-                        },
-                    });
+                //     var oData = oView.getModel();
+                //     var sPath = oView.getElementBinding().getPath();
+                //     var oViewData = oView.getModel("oModelView").getData();
+                //     var oPayload = Object.assign({}, oViewData);
+                //     for (var a in oPayload) {
+                //         if (oPayload[a] === "") {
+                //             oPayload[a] = null;
+                //         }
+                //     }
+                //     var othat = this;
+                //     console.log(oPayload);
+                //     oData.update(sPath, oPayload, {
+                //         success: function () {
+                //             MessageToast.show("Complaint Sucessfully Updated.");
+                //             oData.refresh(true);
+                //             othat.onNavBack();
+                //         },
+                //         error: function (a) {
+                //             MessageBox.error(othat._sErrorText, {
+                //                 title: "Error Code: " + a.statusCode,
+                //             });
+                //         },
+                //     });
 
-                    //var oProp =
-                },
+                //     //var oProp =
+                // },
                 handleCancelPress: function () {
                     this.onNavBack();
                 }

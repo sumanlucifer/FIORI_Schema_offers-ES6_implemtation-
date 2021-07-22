@@ -147,26 +147,7 @@ sap.ui.define(
                     var aFlaEmpty = true;
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
-                            if (prop === "ComplaintTypeId") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(
-                                        "ComplaintTypeId",
-                                        FilterOperator.EQ,
-                                        oViewFilter[prop]
-                                    )
-                                );
-                            } else if (prop === "ComplaintSubTypeId") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(
-                                        "ComplaintSubtype/Id",
-                                        FilterOperator.EQ,
-                                        oViewFilter[prop]
-                                    )
-                                    //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
-                                );
-                            } else if (prop === "StartDate") {
+                             if (prop === "StartDate") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -184,22 +165,18 @@ sap.ui.define(
                                     new Filter("CreatedAt", FilterOperator.LT, oDate)
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
-                            } else if (prop === "ComplaintStatus") {
+                            }  else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
-                            } else if (prop === "ZoneId") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "DivisionId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "DepotId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/DepotId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -207,7 +184,7 @@ sap.ui.define(
                                         [
                                             new Filter(
                                                 {
-                                                    path: "Painter/Name",
+                                                    path: "PainterDetails/Name",
                                                     operator: "Contains",
                                                     value1: oViewFilter[prop].trim(),
                                                     caseSensitive: false
@@ -215,22 +192,17 @@ sap.ui.define(
                                             ),
                                             new Filter(
                                                 {
-                                                    path: "Painter/MembershipCard",
+                                                    path: "PainterDetails/MembershipCard",
                                                     operator: "Contains",
                                                     value1: oViewFilter[prop].trim(),
                                                     caseSensitive: false
                                                 }
                                             ),
                                             new Filter(
-                                                "Painter/Mobile",
+                                                "PainterDetails/Mobile",
                                                 FilterOperator.Contains,
                                                 oViewFilter[prop].trim()
-                                            ),
-                                            new Filter(
-                                                "ComplaintCode",
-                                                FilterOperator.Contains,
-                                                oViewFilter[prop].trim()
-                                            ),
+                                            )
                                         ],
                                         false
                                     )
@@ -485,7 +457,7 @@ sap.ui.define(
                     console.log(oObj);
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("Detail", {
-                        Id: oObj["Id"]
+                        Id: oObj["UUID"]
                     });
 
 

@@ -2,44 +2,33 @@
 
     <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
-            <core:Title text="{i18n>CondonationDetails}" />
-            <Label text="{i18n>CondonationId}" />
-            <Text text="{ComplaintCode}" />
-            <Label text="{i18n>DateAndTime}" />
-            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
-             <Label text="{i18n>LblCategory}"/>
-            <Text text="{oModelView>/PainterComplainProducts/results/0/ProductPackDetails/ProductCategoryDetails/Category}"/>
-              <Label text="{i18n>LblProduct}"/>
-            <Text text="{oModelView>/PainterComplainProducts/results/0/ProductPackDetails/ProductDetails/ProductName}"/>
-             <Label text="{i18n>Pack}"/>
-            <Text text="{oModelView>/PainterComplainProducts/results/0/ProductPackDetails/Description}"/>
-
-             <Label text="{i18n>LblQuantity}"/>
-            <Text text="{oModelView>/PainterComplainProducts/results/0/ProductQuantity}"/>
-
-            <Label text="{i18n>LblTotalPoints}"/>
-            <Text text="{= ${oModelView>/PainterComplainProducts/results/0/Points} * ${oModelView>/PainterComplainProducts/results/0/ProductQuantity} }"/>
-            <core:Title text="{i18n>PainterDetails}" />
-             <Label text="{i18n>PrimaryMobileNo}" />
-            <Text text="{Painter/Mobile}" />
-            <Label text="{i18n>PainterName}" />
-            <Text text="{Painter/Name}" />
-            <Label text="{i18n>MembershipId}" />
-            <Text text="{Painter/MembershipCard}" />
-             <Label text="{i18n>Zone}" />
-            <Text text="{Painter/ZoneId}" />
-             <Label text="{i18n>Division}" />
-            <Text text="{Painter/DivisionId}" />
-              <Label text="{i18n>Depot}" />
-            <Text text="{Painter/Depot/Id}" />
-               <Label text="{i18n>PrimaryDealer}" />
-            <Text text="{Painter/PrimaryDealerDetails/DealerName}" />
-
-            <Label text="{i18n>Remark}"/>
-            <Text text="{Remark}" />
-            
-          
-
+            <core:Title text="{i18n>LblPainterDetails}" />
+                <Label text="{i18n>PainterName}" />
+                <Text text="{oModelView>/PainterDetails/Name}" />
+                <Label text="{i18n>PrimaryMobileNo}" />
+                <Text text="{oModelView>/PainterDetails/Mobile}" />
+                <Label text="{i18n>MembershipId}" />
+                <Text  text="{oModelView>/PainterDetails/MembershipCard}" />
+                <Label text="{i18n>Zone}" />
+                <Text  text="{oModelView>/PainterDetails/ZoneId}" />
+                <Label text="{i18n>Division}" />
+                <Text  text="{oModelView>/PainterDetails/DivisionId}" />
+                <Label text="{i18n>Depot}" />
+                <Text  text="{oModelView>/PainterDetails/Depot/Depot}" />
+                 <!-- <Label text="{i18n>PrimaryDealer}" />
+                <Text  text="{oModelView>/AddFields/PDealer}" /> -->
+                
+                <core:Title text="" />
+                <Label text="{i18n>Balpts}" />
+                <Text  text="{oModelView>/PainterDetails/RewardPoints}" />
+                <Label text="{i18n>bnkStatus}" />
+                <Text  text="{path:'oModelView>/PainterDetails/PainterBankDetails/Status',formatter:'.formatter.fmtStatus'}" />
+                <Label text="{i18n>kycStatus}" />
+                <Text  text="{path:'oModelView>/PainterDetails/PainterKycDetails/Status',formatter:'.formatter.fmtStatus'}" />
+                <Label text="{i18n>LblSlabPoints}" />
+                <Text  text="{oModelView>/MasterSlabBankRedemptionDetails/SlabPoints}" />
+                <Label text="{i18n>Remark}"/>
+                <Text  text="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250}}" />
         </f:content>
     </f:SimpleForm>
 
