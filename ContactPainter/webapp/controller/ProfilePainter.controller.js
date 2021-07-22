@@ -1677,6 +1677,15 @@ sap.ui.define(
                 onEditCancelBankingFields: function () {
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
+                    var oValidator = new Validator();
+                    var oForm = this.getView().byId("editbanking");
+                    var bFlag = oValidator.validate(oForm,true);
+                    console.log(bFlag);
+                    if(!bFlag){
+                        return;
+
+                    }
+
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
                     oModelCtrl.setProperty("/EditField", false);
@@ -1811,11 +1820,13 @@ sap.ui.define(
                 onEditField: function (oEvent) {
                     var length = oEvent.getParameter("value").length;
                     var oModelCtrl = this.getView().getModel("oModelControl");
-                    if (length > 1) {
-                        oModelCtrl.setProperty("/EditField", true);
-                    } else {
-                        oModelCtrl.setProperty("/EditField", false);
-                    }
+                    oModelCtrl.setProperty("/EditField", true);
+                    // if (length > 1) {
+                    //     oModelCtrl.setProperty("/EditField", true);
+                    // } else {
+                    //     oModelCtrl.setProperty("/EditField", false);
+                    // }
+
 
 
                 },

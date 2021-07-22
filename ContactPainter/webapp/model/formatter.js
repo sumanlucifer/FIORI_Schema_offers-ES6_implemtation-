@@ -119,7 +119,7 @@ sap.ui.define([], function () {
                 if (mParam2) {
                     if (mParam2.length > 0) {
                         var pointData = this.getView().getModel().getData("/" + mParam2[0]);
-                        console.log(pointData);
+                       
                         if (pointData.RedemptionType === "POINTS_TRANSFER" && pointData["RewardPoints"]) {
                             var point = "Points - " + pointData.RewardPoints;
                             return point;

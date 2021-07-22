@@ -15,7 +15,7 @@
             </OverflowToolbar>
 		</headerToolbar>
 		<content>
-            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+            <f:SimpleForm id="editbanking" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text=""/>
                 <Label text="{i18n>IFSCCode}" required="{= ${oModelControl>/AddNewBank} }"/>
@@ -64,7 +64,7 @@
 
                 <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
-                    <Input editable="{=${oModelControl>/EditBank} }" change="onEditField" required="{=${oModelControl>/EditField} }" valueStateText="Kindly enter account number of 18 digits" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:8,maxLength:18, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[\\s\\./0-9]*$' }}" visible="{= !${oModelControl>/AddNewBank} }"/>
+                    <Input editable="{=${oModelControl>/EditBank} }" liveChange="onEditField" required="{=${oModelControl>/EditField} }" valueStateText="Kindly enter account number of 18 digits" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:8,maxLength:18, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[\\s\\./0-9]*$' }}" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountNumber" change="onPrimaryAcChange" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Account Number should be of min 10 digits." required="true" type="Number" 
                     value="{path:'oModelControl>/PainterAddBanDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:20, search: '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$' } }" />
                     <Label text="{i18n>ConfirmAccNumber}" visible="{oModelControl>/AddNewBank}" required="true"/>
