@@ -1679,13 +1679,13 @@ sap.ui.define(
                     var oModelView = this.getView().getModel("oModelView");
                     var oValidator = new Validator();
                     var oForm = this.getView().byId("editbanking");
-                    var bFlag = oValidator.validate(oForm,true);
-                    console.log(bFlag);
-                    if(!bFlag){
-                        return;
+                    // var bFlag = oValidator.validate(oForm,true);
+                    // console.log(bFlag);
+                    // if(!bFlag){
+                    //     return;
 
-                    }
-
+                    // }
+                    console.log(oModelCtrl);
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
                     oModelCtrl.setProperty("/EditField", false);
@@ -1703,6 +1703,8 @@ sap.ui.define(
                     oModelView.setProperty("/PainterBankDetails/BankNameId", InitialBankId);
                     oModelView.setProperty("/PainterBankDetails/AccountTypeId", InitialAcTypeId);
                     oModelView.setProperty("/PainterBankDetails/AccountNumber", InitialAccNo);
+                    oModelView.refresh(true);
+                    console.log(oModelView.getData())
 
 
                 },
