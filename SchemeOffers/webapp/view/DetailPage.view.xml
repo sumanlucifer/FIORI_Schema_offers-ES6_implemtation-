@@ -90,6 +90,7 @@
         </f:content>
         <f:footer>
             <OverflowToolbar >
+                <Text text="{i18n>Message3}" visible="{= ${RedemptionStatus}==='REDEEMING'}"/>
                 <ToolbarSpacer/>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">
@@ -113,7 +114,7 @@
                     <!-- Publish -->
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                     <!-- Redemption Button -->
-                    <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus'],formatter:'.formatter.btnRedeemCheck'}" />
+                    <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                 </HBox>
 
 
