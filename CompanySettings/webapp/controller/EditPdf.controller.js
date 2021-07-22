@@ -181,7 +181,9 @@ sap.ui.define([
                     if (i == index) {
                         delItems = aCatalogue[i];
                         if (delItems.file !== null) {
+
                             oModel.setProperty("/bBusy", true);
+
                             jQuery.ajax({
                                 method: "DELETE",
                                 url: http + sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
@@ -195,6 +197,7 @@ sap.ui.define([
                                    // oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
+                                    
                                      oRouter.navTo("RouteHome");
                                 },
                                 error: function () { },

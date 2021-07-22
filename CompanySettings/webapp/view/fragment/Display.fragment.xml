@@ -11,7 +11,7 @@
 		
 	</HeaderContainer> -->
         <HBox class="sapUiSmallMarginEnd" width="100%" justifyContent="End" >
-        <Button icon="sap-icon://edit" text="Edit" type="Emphasized" press="onEditTextContent" />
+        <Button  text="Edit" type="Emphasized" icon="sap-icon://edit" press="onEditTextContent" />
         </HBox>
 
     <HBox width="100%">

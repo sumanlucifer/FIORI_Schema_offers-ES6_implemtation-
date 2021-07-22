@@ -26,7 +26,7 @@
                                                     <Text text="{i18n>selectMedia}" />
                                                 </Column>
                                                 <Column >
-                                                    <Text text="Media Name" />
+                                                    <Text text="{i18n>MediaName}" />
                                                 </Column>
 
                                                 <Column width="10%">
@@ -63,7 +63,7 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
-                                                                    maximumFileSize="10.1"
+                                                                    maximumFileSize="10"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
                                                                     <HBox>
