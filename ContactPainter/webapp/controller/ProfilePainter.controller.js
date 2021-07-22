@@ -1022,8 +1022,8 @@ sap.ui.define(
                             custom: {
                                 PainterId: "" + oPainterId + ""
                             },
-                            select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,"+
-                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash"
+                            select: "Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus," +
+                                "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,Remark"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                         sorter: new Sorter("CreatedAt", true)
@@ -3465,6 +3465,7 @@ sap.ui.define(
                 onConfirmRedeem: function () {
                     var oView = this.getView();
                     var oModelC2 = oView.getModel("oModelControl2");
+                    oModelC2.setProperty("/ProfilePageBuzy", true);
                     var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
                     console.log(iSelctedIndex)
                     if (iSelctedIndex < 0) {
@@ -3489,27 +3490,17 @@ sap.ui.define(
                             PainterId: sPainterId,
                         },
                         success: function (m1) {
-                            console.log(m1);
-                            if (m1.hasOwnProperty("Message")) {
-                                MessageToast.show(m1["Message"]);
-                            }
 
                             this.onDialogCloseRedeme();
                             this.getView().getModel().refresh(true);
-                            // if (oData !== null) {
-                            //     if (oData.hasOwnProperty("Status")) {
-                            //         if (oData["Status"] == true) {
-                            //             MessageToast.show(oData["Message"]);
-
-                            //             othat.oDefaultDialog.close();
-                            //         } else if (oData["Status"] == false) {
-                            //             MessageToast.show(oData["Message"]);
-                            //         }
-                            //         othat.getView().getModel().refresh(true);
-                            //     }
-                            // }
+                            oModelC2.setProperty("/ProfilePageBuzy", false);
+                            if (m1.hasOwnProperty("Message")) {
+                                MessageToast.show(m1["Message"]);
+                            }
                         }.bind(this),
-                        error: function () {},
+                        error: function () {
+                            oModelC2.setProperty("/ProfilePageBuzy", false);
+                        },
                     });
                 },
 
