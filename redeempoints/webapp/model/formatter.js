@@ -28,9 +28,7 @@ sap.ui.define([], function () {
             return sLetter;
         },
         btnEscalate:function(m1,m2,m3){
-            if(m1==="PEDNING"){
-                return true;
-            }
+           return true;
         }
 
 

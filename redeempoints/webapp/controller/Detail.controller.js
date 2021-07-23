@@ -166,6 +166,7 @@ sap.ui.define(
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
                             oView.getModel("oModelControl").setProperty("/bBusy", false);
+                            oViewModel.setProperty("/Remark","")
                             oView.setModel(oViewModel, "oModelView");
 
                         },
