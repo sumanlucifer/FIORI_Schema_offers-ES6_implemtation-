@@ -63,6 +63,7 @@
                                                                     fileType="pdf"
                                                                     useMultipart="false"
                                                                     sendXHR="true"
+                                                                    value="{local>FileName}"
                                                                     maximumFileSize="10"
                                                                     fileSizeExceed="onFileSizeExceed"
                                                                     uploadComplete="handleUploadCompletePdf" />
