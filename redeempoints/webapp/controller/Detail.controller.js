@@ -176,7 +176,8 @@ sap.ui.define(
                     promise.resolve();
                     return promise;
                 },
-                onApproveReject: function () {
+                onApproveReject: function (mParam1) {
+
                     var oView = this.getView();
                     var oForm = oView.byId("DisplayData");
                     var oValidate = new Validator();
@@ -193,45 +194,24 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelView").getData();
 
-                    var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
-                    var sRemark = oModelC.getProperty("/Dialog/Remarks");
                     var oNewPayLoad = Object.assign({}, oPayload);
-                    oNewPayLoad["Remark"] = sRemark;
-                    // if the offer status if
-                    if (
-                        sOfferStatus === "PUBLISHED" ||
-                        sOfferStatus === "PENDING" ||
-                        sOfferStatus === "APPROVED" ||
-                        sOfferStatus === "REJECTED"
-                    ) {
-                        oNewPayLoad["OfferStatus"] = sOfferStatus;
-                        if (sOfferStatus === "PUBLISHED") {
-                            oNewPayLoad["IsPublished"] = true;
-                        } else {
-                            oNewPayLoad["IsPublished"] = false;
-                        }
-                        oNewPayLoad["InitiateForceTat"] = false;
-                    } else if (sOfferStatus === "ESCALATE") {
-                        oNewPayLoad["InitiateForceTat"] = true;
-                    }
-                    // check is workflow flag
-                    var aCheck2 = ["PENDING", "APPROVED", "REJECTED", "ESCALATE"];
-                    if (aCheck2.indexOf(sOfferStatus) >= 0) {
-                        oNewPayLoad["IsWorkFlowApplicable"] = true;
-                    } else {
-                        oNewPayLoad["IsWorkFlowApplicable"] = false;
-                    }
 
-                 
+                    // if the offer status if
+                    if (mParam1 === "APPROVED") {
+                       
+
+                    }
+                    if (mParam1 === "PUBLISHED") {
+
+                    }
 
                     var c1, c2, c3;
 
 
                     c2 = othat._UpdatePoints(oNewPayLoad);
                     c2.then(function (oNewPayLoad) {
-                        othat._RemarksDialog2.close();
                         oModelC.setProperty("/bBusy", true)
-                        othat.handleCancelPress(oNewPayLoad)
+
                     })
 
                 },

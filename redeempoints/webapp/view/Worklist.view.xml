@@ -55,7 +55,7 @@
         </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails',select:'UUID,PainterDetails/Name,PainterDetails/MembershipCard,PainterDetails/Mobile,PainterDetails/ZoneId,PainterDetails/DivisionId,PainterDetails/Depot/Depot,MasterSlabBankRedemptionDetails/SlabPoints,MasterSlabBankRedemptionDetails/RedemptionAmount,Remark,Status,CreatedAt' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails/Depot,MasterSlabBankRedemptionDetails'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
