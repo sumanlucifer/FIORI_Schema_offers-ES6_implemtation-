@@ -7,8 +7,8 @@
         growing="true"
         search=".onValueHelpSlabsSearch"
         growingThreshold="15"
-		items="{path:'oModelControl>/Slabs',filters:[{path:'IsArchived',operator:'EQ',value1:false}],sorter:{path:'Id'}}"
-		confirm=".onValueHelpSlabsClose"
+		items="{path:'oModelControl>/Slabs',filters:[{path:'IsArchived',operator:'EQ',value1:false},{path:'IsRedemptionAllowed',operator:'EQ',value1:true}],sorter:{path:'Id'}}"
+		confirm=".onValueHelpSlabsOk"
 		cancel=".onValueHelpSlabsClose">
 		<StandardListItem 
 			title="Points: {oModelControl>SlabPoints}"

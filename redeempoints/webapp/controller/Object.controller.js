@@ -58,6 +58,7 @@ sap.ui.define([
                 bBusy: false,
                 bEnable: false,
                 isValidOTP: false,
+                bVerify:false,
                 bPayloadSent: false,
                 noSlabText: "",
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
@@ -468,11 +469,12 @@ sap.ui.define([
         onSendOtp: function () {
             var oModel = this.getOwnerComponent().getModel();
             var oModelView = this.getModel("oModelView");
+            var oModelControl=this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile")
-            var btnOtp = this.getView().byId("btnOTP"),
-                inputOtp = this.getView().byId("inputOTP"),
-                btnOtpResend = this.getView().byId("btnOTPResend"),
-                verifyOtp = this.getView().byId("btnOTPVerify");
+             var btnOtp = this.getView().byId("btnOTP");
+            //     inputOtp = this.getView().byId("inputOTP"),
+            //     btnOtpResend = this.getView().byId("btnOTPResend"),
+            //     verifyOtp = this.getView().byId("btnOTPVerify");
 
             oModel.callFunction(
                 "/SendMobileOTP", {
@@ -482,9 +484,8 @@ sap.ui.define([
                 },
                 success: function (oData, response) {
                     btnOtp.setVisible(false);
-                    inputOtp.setVisible(true);
-                    btnOtpResend.setVisible(true);
-                    verifyOtp.setVisible(true);
+                    oModelControl.setProperty("/bVerify",true);
+                    MessageToast.show("OTP sent successfully.");
 
                 },
                 error: function (oError) {
@@ -498,7 +499,8 @@ sap.ui.define([
             var oModelView = this.getModel("oModelView");
             var oModelControl = this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile"),
-                otp = oModelView.getProperty("/AddFields/Otp");
+            otp = oModelView.getProperty("/AddFields/Otp");
+            var btnOtp = this.getView().byId("btnOTP");
             oModel.callFunction(
                 "/VerifyMobileOTPAdmin", {
                 method: "GET",
@@ -511,7 +513,8 @@ sap.ui.define([
                     if (data["ErrorCode"] == null) {
                         MessageToast.show("OTP verification successful");
                         oModelControl.setProperty("/isValidOTP", true);
-                        oModelControl.setProperty("/bEnable", true);
+                        oModelControl.setProperty("/bVerify",false);
+                        btnOtp.setVisible(false);
                     }
                     else if (data["ErrorCode"] == 410) {
                         MessageToast.show("Provided OTP is already Expired.");
@@ -555,10 +558,11 @@ sap.ui.define([
             });
 
         },
-        onValueHelpSlabsClose: function (oEvent) {
+        onValueHelpSlabsOk: function (oEvent) {
             var oModelView = this.getModel("oModelView");
             var oModelCtrl = this.getModel("oModelControl");
             var oSelectedItem = oEvent.getParameter("selectedItem");
+            var btnOtp = this.getView().byId("btnOTP");
             oEvent.getSource().getBinding("items").filter([]);
             if (!oSelectedItem) {
                 return;
@@ -566,7 +570,12 @@ sap.ui.define([
             var obj = oSelectedItem.getBindingContext("oModelControl").getObject();
             oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
-            //this._getPainterDetails(obj["Id"]);
+            oModelCtrl.setProperty("/isValidOTP",false);
+            btnOtp.setVisible(true);
+            
+        },
+        onValueHelpSlabsClose: function(){
+                this.byId("selectSlabsDialog").close();
         },
         onValueHelpSlabsSearch: function (oEvent) {
             var sValue = oEvent.getParameter("value");
@@ -589,7 +598,7 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel();
             var oModelCtrl = this.getModel("oModelControl");
             oModel.callFunction(
-                "/GetSlabBankRedemption", {
+                "/GetLoyaltyPointsRedemptionSlabs", {
                 method: "GET",
                 urlParameters: {
                     PainterId: Id
