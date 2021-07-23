@@ -68,8 +68,8 @@
 
 
 
-                <HBox justifyContent="SpaceBetween">
-                    <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="onNavBack"/>
+                <HBox justifyContent="SpaceBetween" just>
+                    <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="onNavBack" class="sapUiTinyMarginEnd" />
                     <!-- Send For Approval -->
                     <!-- <Button press="onApproveReject('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/OfferStatus','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" /> -->
                     <!-- Escalate -->

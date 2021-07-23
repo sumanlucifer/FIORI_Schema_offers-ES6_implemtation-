@@ -166,7 +166,7 @@ sap.ui.define(
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
                             oView.getModel("oModelControl").setProperty("/bBusy", false);
-                            oViewModel.setProperty("/Remark","")
+                            oViewModel.setProperty("/Remark", "")
                             oView.setModel(oViewModel, "oModelView");
 
                         },
@@ -200,7 +200,7 @@ sap.ui.define(
 
                     // if the offer status if
                     if (mParam1 === "APPROVED") {
-                       
+
 
                     }
                     if (mParam1 === "PUBLISHED") {
@@ -212,7 +212,8 @@ sap.ui.define(
 
                     c2 = othat._UpdatePoints(oNewPayLoad);
                     c2.then(function (oNewPayLoad) {
-                        oModelC.setProperty("/bBusy", true)
+                        oModelC.setProperty("/bBusy", false);
+                        othat.onNavBack();
 
                     })
 

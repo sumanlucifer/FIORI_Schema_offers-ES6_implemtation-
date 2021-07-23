@@ -27,7 +27,8 @@ sap.ui.define([], function () {
 
             return sLetter;
         },
-        btnEscalate:function(m1,m2,m3){
+        btnPublished:function(m1,m2,m3){
+            console.log(m1,m2,m3)
            return true;
         }
 

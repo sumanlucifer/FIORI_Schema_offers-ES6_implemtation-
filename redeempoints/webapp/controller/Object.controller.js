@@ -161,7 +161,7 @@ sap.ui.define([
             oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
 
             //Double click issue solution
-
+            
             oData.create("/PainterLoyaltyRedemptionRequestSet", oPayLoad, {
                 success: function () {
                     MessageToast.show("Redemption request Sucessfully Submitted.")
