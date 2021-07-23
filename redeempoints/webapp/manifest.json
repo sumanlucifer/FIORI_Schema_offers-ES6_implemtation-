@@ -88,7 +88,11 @@
                     "defaultUpdateMethod": "Put",
                     "useBatch": false
                 }
+            },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
             }
+
         },
         "services": {
             "ShellUIService": {
@@ -113,8 +117,7 @@
                 },
                 "async": true
             },
-            "routes": [
-                {
+            "routes": [{
                     "pattern": "",
                     "name": "worklist",
                     "target": [
