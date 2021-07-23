@@ -119,7 +119,7 @@ sap.ui.define([], function () {
                 if (mParam2) {
                     if (mParam2.length > 0) {
                         var pointData = this.getView().getModel().getData("/" + mParam2[0]);
-                       
+
                         if (pointData.RedemptionType === "POINTS_TRANSFER" && pointData["RewardPoints"]) {
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
@@ -136,7 +136,23 @@ sap.ui.define([], function () {
                 }
             }
             return "NA";
-        }
+        },
+        fmtCheckBonusPoints: function (m1) {
+            if (m1) {
+               
+                var obj;
+                for (var i in m1) {
+                    obj = this.getView().getModel().getData("/" + m1[i]);
+                    console.log(obj)
+                    if (obj["RedemptionStatus"] === "REDEEMED") {
+                       
+                        return obj["TotalBonusPoints"];
+                    }
+                }
+
+            }
+            return "NA";
+        },
 
     };
 

@@ -44,6 +44,9 @@
                 <Column>
                     <Text text="{i18n>Remark}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>BonusPoints}" />
+                </Column>
             </columns>
             <dependents >
                 <ColumnListItem id="idTblOffersNew2Template">
@@ -67,6 +70,7 @@
                             <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
                         </HBox>
                         <Text text="{Remark}" />
+                        <Text text="{parts:['PainterOfferRedemption'],formatter:'.formatter.fmtCheckBonusPoints'}" />
                     </cells>
                 </ColumnListItem>
             </dependents>
