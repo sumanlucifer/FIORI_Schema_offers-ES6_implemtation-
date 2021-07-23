@@ -38,6 +38,14 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/Status}.length>1}" id="idStatus" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
+                                        <core:Item text="Pending" key="PENDING" />
+                                        <core:Item text="Inprogress" key="INPROGRESS" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
 
 
                         </fb:filterGroupItems>
@@ -46,13 +54,13 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
+            filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails/Depot,MasterSlabBankRedemptionDetails'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
-                        <Button icon="sap-icon://add" text="{i18n>AddComplaint}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddComplaint}"></Button>
+                        <Button icon="sap-icon://add" text="{i18n>AddRedemption}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button>
                         <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
@@ -60,31 +68,56 @@
                     <Column>
                         <Text text="{i18n>PainterName}"/>
                     </Column>
-                    <Column>
+                     <Column>
                         <Text text="{i18n>MembershipId}"/>
                     </Column>
+                   
                     <Column>
                         <Text text="{i18n>PrimaryMobileNo}"/>
                     </Column>
+                     <Column>
+                        <Text text="{i18n>Zone}"/>
+                    </Column>
                     <Column>
-                        <Text text="{i18n>CondonationId}"/>
+                        <Text text="{i18n>Division}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Depot}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>slabPoints}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>slabAmt}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Remark}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Status}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>DateAndTime}"/>
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>Points}"/>
-                    </Column>
+                    </Column> -->
                 </columns>
 
                 <items>
                     <ColumnListItem type="Navigation" press="onListItemPress" >
                         <cells>
-                            <Text text="{Painter/Name}"/>
-                            <Text text="{Painter/MembershipCard}"/>
-                            <Text text="{Painter/Mobile}"/>
-                            <Text text="{ComplaintCode}"/>
-                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                            <Text text="{PainterDetails/Name}"/>
+                            <Text text="{PainterDetails/MembershipCard}"/>
+                            <Text text="{PainterDetails/Mobile}"/>
+                            <Text text="{PainterDetails/ZoneId}"/>
+                            <Text text="{PainterDetails/DivisionId}"/>
+                            <Text text="{PainterDetails/Depot/Depot}"/>
+                            <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}"/>
+                            <Text text="{MasterSlabBankRedemptionDetails/RedemptionAmount}"/>
+                            <Text text="{Remark}"/>
+                            <Text text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
                             <ObjectStatus text="{path:'PainterComplainProducts',formatter:'.fmtPoints'}" />
                         </cells>
                     </ColumnListItem>

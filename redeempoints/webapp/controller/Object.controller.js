@@ -58,6 +58,7 @@ sap.ui.define([
                 bBusy: false,
                 bEnable: false,
                 isValidOTP: false,
+                bVerify:false,
                 bPayloadSent: false,
                 noSlabText: "",
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
@@ -68,10 +69,10 @@ sap.ui.define([
             };
             var oDataView = {
                 PainterId: "",
+                SlabBankRedemptionId: "",
+                Remark: "",
+                Status:"PENDING",
                 AddFields: {
-                    CategoryId: "",
-                    ClassId: "",
-                    ProductId: "",
                     Mobile: "",
                     Name: "",
                     MembershipCard: "",
@@ -81,24 +82,25 @@ sap.ui.define([
                     Depot: "",
                     PDealer: "",
                     Otp: "",//integer
-                    Slab: "",
                     bnkStatus: "",
                     kycStatus: "",
                     BalPoints: ""
+                    
                 },
-                Remark: "",
-                ComplaintStatus: "RESOLVED",
-                ApprovalStatus: "APPROVED",
-                ResolutionType: 2,
-                ComplaintSubtypeId: 1,
-                ComplaintTypeId: 1,
-                PainterComplainProducts: [{
-                    PainterId: "",//integer
-                    ProductSKUCode: "",
-                    ProductQuantity: 1,//integer
-                    Points: 0,//integer
+                
+                //ComplaintStatus: "RESOLVED",
+                //ApprovalStatus: "APPROVED",
+                // ResolutionType: 2,
+                // ComplaintSubtypeId: 1,
+                // ComplaintTypeId: 1,
+                // PainterComplainProducts: [{
+                //     PainterId: "",//integer
+                //     ProductSKUCode: "",
+                //     ProductQuantity: 1,//integer
+                //     Points: 0,//integer
 
-                }]
+                // }],
+                Slabs:[]
             }
             var oModel1 = new JSONModel(oDataView);
             var oModel2 = new JSONModel(oDataControl)
@@ -148,6 +150,7 @@ sap.ui.define([
             var oModelView = oView.getModel("oModelView");
             var oPayLoad = Object.assign({}, oModelView.getData());
             delete oPayLoad["AddFields"];
+            delete oPayLoad["Slabs"];
 
             if (oView.getModel("oModelControl").getProperty("/bPayloadSent")) {
                 return;
@@ -158,10 +161,10 @@ sap.ui.define([
             oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
 
             //Double click issue solution
-
-            oData.create("/PainterComplainsSet", oPayLoad, {
+            
+            oData.create("/PainterLoyaltyRedemptionRequestSet", oPayLoad, {
                 success: function () {
-                    MessageToast.show("Condonation request Sucessfully Submitted.")
+                    MessageToast.show("Redemption request Sucessfully Submitted.")
                     othat.onNavBack();
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                 },
@@ -169,7 +172,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
-                        "Unable to create Condonation request due to the server issues",
+                        "Unable to create Redemption request due to the server issues",
                         {
                             title: "Error Code: " + a.statusCode,
                         }
@@ -269,8 +272,8 @@ sap.ui.define([
                 return;
             }
             var obj = oSelectedItem.getBindingContext().getObject();
-
             this._getPainterDetails(obj["Id"]);
+            this._getSlabsForPainter(obj["Id"])
         },
         _getPainterDetails: function (mParam) {
             var oView = this.getView();
@@ -284,7 +287,6 @@ sap.ui.define([
             oData.read(sPath, {
                 urlParameters: {
                     $expand: 'Depot,PrimaryDealerDetails,PainterBankDetails,PainterKycDetails',
-                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,RewardPoints,Depot/Depot,PrimaryDealerDetails/DealerName,PainterBankDetails/Status,PainterKycDetails/Status'
                 },
                 success: function (obj) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -317,8 +319,18 @@ sap.ui.define([
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
                         oView.getModel("oModelControl").setProperty("/noSlabText", "Minimum 5000 points required for redemption.");
                     }
-                    if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
-                        oView.getModel("oModelControl").setProperty("/bEnable", false);
+                    // if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
+                    //     oView.getModel("oModelControl").setProperty("/bEnable", false);
+                    // }
+                    if(obj["PainterBankDetails"]){
+                        if(obj["PainterBankDetails"]["Status"] !== "APPROVED" ){
+                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        }
+                    }
+                    if(obj["PainterKycDetails"]){
+                        if(obj["PainterKycDetails"]["Status"] !== "APPROVED" ){
+                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        }
                     }
                 },
                 error: function () {
@@ -457,11 +469,12 @@ sap.ui.define([
         onSendOtp: function () {
             var oModel = this.getOwnerComponent().getModel();
             var oModelView = this.getModel("oModelView");
+            var oModelControl=this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile")
-            var btnOtp = this.getView().byId("btnOTP"),
-                inputOtp = this.getView().byId("inputOTP"),
-                btnOtpResend = this.getView().byId("btnOTPResend"),
-                verifyOtp = this.getView().byId("btnOTPVerify");
+             var btnOtp = this.getView().byId("btnOTP");
+            //     inputOtp = this.getView().byId("inputOTP"),
+            //     btnOtpResend = this.getView().byId("btnOTPResend"),
+            //     verifyOtp = this.getView().byId("btnOTPVerify");
 
             oModel.callFunction(
                 "/SendMobileOTP", {
@@ -471,9 +484,8 @@ sap.ui.define([
                 },
                 success: function (oData, response) {
                     btnOtp.setVisible(false);
-                    inputOtp.setVisible(true);
-                    btnOtpResend.setVisible(true);
-                    verifyOtp.setVisible(true);
+                    oModelControl.setProperty("/bVerify",true);
+                    MessageToast.show("OTP sent successfully.");
 
                 },
                 error: function (oError) {
@@ -487,21 +499,22 @@ sap.ui.define([
             var oModelView = this.getModel("oModelView");
             var oModelControl = this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile"),
-                otp = oModelView.getProperty("/AddFields/Otp");
+            otp = oModelView.getProperty("/AddFields/Otp");
+            var btnOtp = this.getView().byId("btnOTP");
             oModel.callFunction(
-                "/VerifyMobileOTP", {
+                "/VerifyMobileOTPAdmin", {
                 method: "GET",
                 urlParameters: {
                     Mobile: mobile,
-                    MobileOTP: parseInt(otp),
-                    DeviceId: 1234,
-                    DeviceType: "Android"
+                    MobileOTP: parseInt(otp)
                 },
                 success: function (oData, response) {
                     var data = oData.results[0];
                     if (data["ErrorCode"] == null) {
                         MessageToast.show("OTP verification successful");
                         oModelControl.setProperty("/isValidOTP", true);
+                        oModelControl.setProperty("/bVerify",false);
+                        btnOtp.setVisible(false);
                     }
                     else if (data["ErrorCode"] == 410) {
                         MessageToast.show("Provided OTP is already Expired.");
@@ -519,9 +532,6 @@ sap.ui.define([
 
                 }
             });
-
-        },
-        _getPainterSlabs: function () {
 
         },
         onValueHelpSlabs: function (oEvent) {
@@ -548,36 +558,62 @@ sap.ui.define([
             });
 
         },
-        onValueHelpSlabsClose: function (oEvent) {
+        onValueHelpSlabsOk: function (oEvent) {
             var oModelView = this.getModel("oModelView");
+            var oModelCtrl = this.getModel("oModelControl");
             var oSelectedItem = oEvent.getParameter("selectedItem");
+            var btnOtp = this.getView().byId("btnOTP");
             oEvent.getSource().getBinding("items").filter([]);
-            var oViewModel = this.getView().getModel("oModelView");
             if (!oSelectedItem) {
                 return;
             }
-            var obj = oSelectedItem.getBindingContext().getObject();
-
-            oModelView.setProperty("/AddFields/Slab", obj["RequestType"]);
-            //this._getPainterDetails(obj["Id"]);
+            var obj = oSelectedItem.getBindingContext("oModelControl").getObject();
+            oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
+            oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
+            oModelCtrl.setProperty("/isValidOTP",false);
+            btnOtp.setVisible(true);
+            
+        },
+        onValueHelpSlabsClose: function(){
+                this.byId("selectSlabsDialog").close();
         },
         onValueHelpSlabsSearch: function (oEvent) {
             var sValue = oEvent.getParameter("value");
             var oFilter = new Filter(
                 [
                     new Filter({
-                        path: "RequestType",
+                        path: "SlabPoints",
                         operator: "Contains",
                         value1: sValue.trim(),
                         caseSensitive: false
                     }),
-                    new Filter("Category", FilterOperator.Contains, sValue.trim()),
+                    new Filter("RedemptionAmount", FilterOperator.Contains, sValue.trim()),
                 ],
                 false
             );
 
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
+        _getSlabsForPainter:function (Id){
+            var oModel = this.getOwnerComponent().getModel();
+            var oModelCtrl = this.getModel("oModelControl");
+            oModel.callFunction(
+                "/GetLoyaltyPointsRedemptionSlabs", {
+                method: "GET",
+                urlParameters: {
+                    PainterId: Id
+                },
+                success: function (oData, response) {
+                    var data=oData.results;
+                    oModelCtrl.setProperty("/Slabs",data)
+                   
+
+                },
+                error: function (oError) {
+
+                }
+            });
+        }
         /*Aditya chnages end*/
 
     });

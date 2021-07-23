@@ -26,8 +26,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.redeempoints.controller.Worklist",
-            {
+            "com.knpl.pragati.redeempoints.controller.Worklist", {
                 formatter: formatter,
 
                 /* =========================================================== */
@@ -59,13 +58,13 @@ sap.ui.define(
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
                     var startupParams = null;
-                    console.log("Init Trigerred");
+
                     if (this.getOwnerComponent().getComponentData()) {
                         console.log("Inside If Condition")
                         startupParams = this.getOwnerComponent().getComponentData().startupParameters;
 
                     }
-                     console.log(startupParams);
+
                     if (startupParams) {
                         if (startupParams.hasOwnProperty("PainterId")) {
                             if (startupParams["PainterId"].length > 0) {
@@ -73,7 +72,8 @@ sap.ui.define(
                             }
                         }
                     }
-                   
+
+
                 },
                 _onRouteMatched: function (mParam1) {
                     this._InitData();
@@ -89,6 +89,7 @@ sap.ui.define(
 
                 },
                 _InitData: function () {
+
                     var oViewModel,
                         iOriginalBusyDelay,
                         oTable = this.byId("table");
@@ -130,7 +131,29 @@ sap.ui.define(
                     this.getView().getModel().refresh();
                     //this._fiterBarSort();
                     this._addSearchFieldAssociationToFB();
+
+                    this._getLoggedInInfo();
+
                 },
+                _getLoggedInInfo: function () {
+                    var oData = this.getView().getModel();
+                    var oLoginData = this.getView().getModel("LoginInfo");
+                    oData.callFunction("/GetLoggedInAdmin", {
+                        method: "GET",
+                        urlParameters: {
+                            $expand: "UserType",
+                        },
+                        success: function (data) {
+                            if (data.hasOwnProperty("results")) {
+                                if (data["results"].length > 0) {
+                                    oLoginData.setData(data["results"][0]);
+                                    console.log(oLoginData)
+                                }
+                            }
+                        },
+                    });
+                },
+
                 _fiterBarSort: function () {
                     if (this._ViewSortDialog) {
                         var oDialog = this.getView().byId("viewSetting");
@@ -147,26 +170,7 @@ sap.ui.define(
                     var aFlaEmpty = true;
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
-                            if (prop === "ComplaintTypeId") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(
-                                        "ComplaintTypeId",
-                                        FilterOperator.EQ,
-                                        oViewFilter[prop]
-                                    )
-                                );
-                            } else if (prop === "ComplaintSubTypeId") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(
-                                        "ComplaintSubtype/Id",
-                                        FilterOperator.EQ,
-                                        oViewFilter[prop]
-                                    )
-                                    //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
-                                );
-                            } else if (prop === "StartDate") {
+                            if (prop === "StartDate") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -184,53 +188,40 @@ sap.ui.define(
                                     new Filter("CreatedAt", FilterOperator.LT, oDate)
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
-                            } else if (prop === "ComplaintStatus") {
-                                aFlaEmpty = false;
-                                aCurrentFilterValues.push(
-                                    new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "DivisionId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "DepotId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("PainterDetails/DepotId", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
                                         [
+                                            new Filter({
+                                                path: "PainterDetails/Name",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "PainterDetails/MembershipCard",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
                                             new Filter(
-                                                {
-                                                    path: "Painter/Name",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                                {
-                                                    path: "Painter/MembershipCard",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                                "Painter/Mobile",
+                                                "PainterDetails/Mobile",
                                                 FilterOperator.Contains,
                                                 oViewFilter[prop].trim()
-                                            ),
-                                            new Filter(
-                                                "ComplaintCode",
-                                                FilterOperator.Contains,
-                                                oViewFilter[prop].trim()
-                                            ),
+                                            )
                                         ],
                                         false
                                     )
@@ -288,7 +279,10 @@ sap.ui.define(
                     var oTable = this.byId("table");
                     var oBinding = oTable.getBinding("items");
                     oBinding.filter([]);
-                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
                     //reset the sort order of the dialog box
                     this._fiterBarSort()
                 },
@@ -374,7 +368,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                   
+
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -485,7 +479,7 @@ sap.ui.define(
                     console.log(oObj);
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("Detail", {
-                        Id: oObj["Id"]
+                        Id: oObj["UUID"]
                     });
 
 
@@ -505,7 +499,9 @@ sap.ui.define(
                         target: {
                             semanticObject: "Manage",
                             action: sAction,
-                            params: { PainterId: "Id1" }
+                            params: {
+                                PainterId: "Id1"
+                            }
                         }
                     });
                 },
@@ -514,7 +510,10 @@ sap.ui.define(
                     if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
                         var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
                         oCrossAppNav.toExternal({
-                            target: { semanticObject: oSemAct.target.semanticObject, action: oSemAct.target.action },
+                            target: {
+                                semanticObject: oSemAct.target.semanticObject,
+                                action: oSemAct.target.action
+                            },
                             params: oSemAct.target.params
                         })
                     }
