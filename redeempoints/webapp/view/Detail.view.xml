@@ -78,7 +78,7 @@
                     <!-- <Button press="onApproveReject('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
                     <Button press="onApproveReject('APPROVED')" text="{i18n>Approve}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" /> -->
                     <!-- Publish -->
-                    <!-- <Button press="onApproveReject('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" /> -->
+                    <Button press="onApproveReject('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                  
                 </HBox>
 

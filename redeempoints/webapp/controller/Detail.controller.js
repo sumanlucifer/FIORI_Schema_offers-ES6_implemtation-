@@ -122,6 +122,7 @@ sap.ui.define(
                         promise.resolve();
                         return promise;
                     }
+                    console.log(oControlModel)
                 },
 
                 _setDisplayData: function (oProp) {
