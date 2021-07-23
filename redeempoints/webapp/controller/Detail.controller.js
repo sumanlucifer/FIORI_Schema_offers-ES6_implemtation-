@@ -199,11 +199,10 @@ sap.ui.define(
 
                     // if the offer status if
                     if (mParam1 === "APPROVED") {
-
-
+                       oNewPayLoad.Status = "APPROVED";
                     }
-                    if (mParam1 === "PUBLISHED") {
-
+                    if (mParam1 === "REJECTED") {
+                        oNewPayLoad.Status = "REJECTED";
                     }
 
                     var c1, c2, c3;
