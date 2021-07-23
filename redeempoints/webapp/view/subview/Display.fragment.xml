@@ -11,29 +11,29 @@
         <f:content>
             <core:Title text="{i18n>LblPainterDetails}" />
             <Label text="{i18n>PainterName}" />
-            <Text text="{oModelView>/PainterDetails/Name}" />
+            <Text text="{PainterDetails/Name}" />
             <Label text="{i18n>PrimaryMobileNo}" />
-            <Text text="{oModelView>/PainterDetails/Mobile}" />
+            <Text text="{PainterDetails/Mobile}" />
             <Label text="{i18n>MembershipId}" />
-            <Text text="{oModelView>/PainterDetails/MembershipCard}" />
+            <Text text="{PainterDetails/MembershipCard}" />
             <Label text="{i18n>Zone}" />
-            <Text text="{oModelView>/PainterDetails/ZoneId}" />
+            <Text text="{PainterDetails/ZoneId}" />
             <Label text="{i18n>Division}" />
-            <Text text="{oModelView>/PainterDetails/DivisionId}" />
+            <Text text="{PainterDetails/DivisionId}" />
             <Label text="{i18n>Depot}" />
-            <Text text="{oModelView>/PainterDetails/Depot/Depot}" />
+            <Text text="{PainterDetails/Depot/Depot}" />
             <!-- <Label text="{i18n>PrimaryDealer}" />
                 <Text text="{oModelView>/AddFields/PDealer}" /> -->
 
             <core:Title text="" />
             <Label text="{i18n>Balpts}" />
-            <Text text="{oModelView>/PainterDetails/RewardPoints}" />
+            <Text text="{PainterDetails/RewardPoints}" />
             <Label text="{i18n>bnkStatus}" />
-            <Text text="{path:'oModelView>/PainterDetails/PainterBankDetails/Status',formatter:'.formatter.fmtStatus'}" />
+            <Text text="{path:'PainterDetails/PainterBankDetails/Status',formatter:'.formatter.fmtStatus'}" />
             <Label text="{i18n>kycStatus}" />
-            <Text text="{path:'oModelView>/PainterDetails/PainterKycDetails/Status',formatter:'.formatter.fmtStatus'}" />
+            <Text text="{path:'PainterDetails/PainterKycDetails/Status',formatter:'.formatter.fmtStatus'}" />
             <Label text="{i18n>LblSlabPoints}" />
-            <Text text="{oModelView>/MasterSlabBankRedemptionDetails/SlabPoints}" />
+            <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}" />
             <Label text="{i18n>Remark}"/>
             <TextArea required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250} }" />
         </f:content>

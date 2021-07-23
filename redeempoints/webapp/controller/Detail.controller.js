@@ -129,14 +129,13 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
 
-                    var sExpandParam =
-                        "PainterDetails,MasterSlabBankRedemptionDetails";
+                   var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/" + oProp,
                             parameters: {
-                                expand: sExpandParam,
+                                expand: exPand,
                             },
                             events: {
                                 dataRequested: function (oEvent) {
@@ -156,11 +155,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataValue = "";
                     var othat = this;
-                    var exPand = "PainterDetails,PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
+                    //var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
                     oView.getModel("oModelControl").setProperty("/bBusy", true);
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
-                            $expand: exPand,
+                            //$expand: exPand,
                             // $select:'PainterComplainProducts'
                         },
                         success: function (data) {
