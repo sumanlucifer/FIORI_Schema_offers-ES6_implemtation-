@@ -286,7 +286,6 @@ sap.ui.define([
             oData.read(sPath, {
                 urlParameters: {
                     $expand: 'Depot,PrimaryDealerDetails,PainterBankDetails,PainterKycDetails',
-                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,RewardPoints,Depot/Depot,PrimaryDealerDetails/DealerName,PainterBankDetails/Status,PainterKycDetails/Status'
                 },
                 success: function (obj) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -319,8 +318,18 @@ sap.ui.define([
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
                         oView.getModel("oModelControl").setProperty("/noSlabText", "Minimum 5000 points required for redemption.");
                     }
-                    if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
-                        oView.getModel("oModelControl").setProperty("/bEnable", false);
+                    // if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
+                    //     oView.getModel("oModelControl").setProperty("/bEnable", false);
+                    // }
+                    if(obj["PainterBankDetails"]){
+                        if(obj["PainterBankDetails"]["Status"] !== "APPROVED" ){
+                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        }
+                    }
+                    if(obj["PainterKycDetails"]){
+                        if(obj["PainterKycDetails"]["Status"] !== "APPROVED" ){
+                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        }
                     }
                 },
                 error: function () {
