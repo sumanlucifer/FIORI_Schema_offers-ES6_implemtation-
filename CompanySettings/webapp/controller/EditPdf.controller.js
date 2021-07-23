@@ -10,13 +10,14 @@ sap.ui.define([
     "sap/m/Button",
     "sap/m/ButtonType",
     "sap/m/Text",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox",
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, Fragment, MessageToast, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
-        JSONModel) {
+        JSONModel,MessageBox) {
         "use strict";
 
         var DisclaimerVersion;
@@ -155,16 +156,42 @@ sap.ui.define([
                 });
                 oModel.refresh(true);
             },
-            onPressRemoveCatalogue: function (oEvent) {
-                this.getView().getModel("local").setProperty("bNew", true);
+            onDeleteFile: function (oEvent) {
+                
                 var oView = this.getView();
                 var oModel = oView.getModel("local");
+                oModel.setProperty("bNew", true);
                 var sPath = oEvent
                     .getSource()
                     .getBindingContext("local")
                     .getPath()
                     .split("/");
                 var aCatalogue = oModel.getProperty("/Catalogue");
+                var othat = this;
+                    MessageBox.confirm(
+                        "Kindly confirm to delete the file.",
+                        {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    othat.onPressRemoveCatalogue(sPath,aCatalogue);
+                                }
+                            },
+                        }
+                    );
+                },
+
+            onPressRemoveCatalogue: function (sPath,aCatalogue) {
+                // this.getView().getModel("local").setProperty("bNew", true);
+                // var oView = this.getView();
+                // var oModel = oView.getModel("local");
+                // var sPath = oEvent
+                //     .getSource()
+                //     .getBindingContext("local")
+                //     .getPath()
+                //     .split("/");
+                // var aCatalogue = oModel.getProperty("/Catalogue");
 
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
