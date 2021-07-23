@@ -236,7 +236,7 @@
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
                     demandPopin="true"
-                    requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName"
+                    requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName,PaymentTransaction/TransactionAmount"
                     enableAutoBinding="true"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
@@ -252,9 +252,9 @@
                                     </Column>
                                  <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "GiftRedemption/RewardGiftName","type":"string", "leadingProperty": "GiftRedemption/RewardGiftName", "columnIndex": 8 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnIndex": 8 }'/>
                                         </customData>
-                                          <Text text="{i18n>RewardGift}"/>
+                                          <Text text="{i18n>RewardGiftCash}"/>
                                     </Column>
                                     <Column hAlign="Center">
                                         <customData>
@@ -267,7 +267,7 @@
                                     <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
+                                            <Text text="{= ${GiftRedemption}=== null ? ${PaymentTransaction/TransactionAmount} : ${GiftRedemption/RewardGiftName} }"/>
                                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                         
                                             

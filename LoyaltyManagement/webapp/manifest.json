@@ -25,7 +25,8 @@
                     "semanticObject": "Manage",
                     "action": "LTM",
                     "title": "{{appTileTitle}}",
-                    "subTitle": "{{appTileSubTitle}}"
+                    "subTitle": "{{appTileSubTitle}}",
+                    "icon": "sap-icon://monitor-payments"
                 }
             }
         },
