@@ -506,7 +506,7 @@ sap.ui.define([
                 method: "GET",
                 urlParameters: {
                     Mobile: mobile,
-                    MobileOTP: parseInt(otp)
+                    MobileOTP:otp
                 },
                 success: function (oData, response) {
                     var data = oData.results[0];

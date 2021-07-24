@@ -73,13 +73,11 @@
                     <!-- Send For Approval -->
                     <!-- <Button press="onApproveReject('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/OfferStatus','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" /> -->
                     <!-- Escalate -->
-                    <!-- <Button press="onApproveReject('ESCALATE')" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnEscalate'}" /> -->
+                    <Button press="onApproveReject('ESCALATE')" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId', 'oModelView>/AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
                     <!-- Approve Reject -->
-                    <!-- <Button press="onApproveReject('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
-                    <Button press="onApproveReject('APPROVED')" text="{i18n>Approve}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" /> -->
-                    <!-- Publish -->
-                    <Button press="onApproveReject('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
-                 
+                    <Button press="onApproveReject('REJECTED')" text="{i18n>Reject}" type="Reject" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
+                    <Button press="onApproveReject('APPROVED')" text="{i18n>Approve}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{parts:['oModelView>/Status','oModelControl>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnApproveDisplay'}" />
+                    
                 </HBox>
 
 

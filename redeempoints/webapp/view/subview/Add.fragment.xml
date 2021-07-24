@@ -54,8 +54,8 @@
                 <Button  id="btnOTP" icon="sap-icon://paper-plane" enabled="{oModelControl>/bEnable}" type="Emphasized" text="{i18n>btnSendOtp}" press="onSendOtp" />
                 <HBox>
                 <Input id="inputOTP" visible="{oModelControl>/bVerify}" value="{path:'oModelView>/AddFields/Otp', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }"/>
-                <Button class="sapUiMediumMarginBegin" id="btnOTPResend" visible="{oModelControl>/bVerify}" icon="sap-icon://paper-plane" type="Emphasized" text="{i18n>btnReSendOtp}" press="onSendOtp" />
                 <Button class="sapUiMediumMarginBegin" id="btnOTPVerify" visible="{oModelControl>/bVerify}" icon="sap-icon://sys-enter-2" type="Emphasized" text="{i18n>btnVerifyOtp}" press="onVerifyOtp" />
+                <Button class="sapUiMediumMarginBegin" id="btnOTPResend" visible="{oModelControl>/bVerify}" icon="sap-icon://paper-plane" type="Emphasized" text="{i18n>btnReSendOtp}" press="onSendOtp" />
                 </HBox>
                 </VBox>
                 <Label text="{i18n>Remark}"/>
