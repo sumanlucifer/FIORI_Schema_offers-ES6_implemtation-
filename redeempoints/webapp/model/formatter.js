@@ -27,11 +27,34 @@ sap.ui.define([], function () {
 
             return sLetter;
         },
-        btnPublished:function(m1,m2,m3){
-            console.log(m1,m2,m3)
-           return true;
-        }
+        btnEscalate:function(m1,m2, m3){
+            console.log(m1,m2, m3);
+            if (m1 === "PENDING") {
+                if (m2 === 3 && m3 === "TL") {
+                    return true;
+                }
+            }
+           return false;
+        },
 
+        btnApproveDisplay:function(m1,m2){
+            console.log(m1,m2);
+            if (m1 === "PENDING") {
+                if (m2 === 3 || m2 === 4) {
+                    return true;
+                }
+            }
+           return false;
+        },
+
+        // List view workflow changes
+        btnAddRedemption: function (m1) {
+            //m1 is the logged in user type
+            // if (m1 === 2) {
+                return true;
+            // }
+            return false;
+        },
 
 	};
 
