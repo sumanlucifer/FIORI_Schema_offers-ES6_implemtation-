@@ -114,8 +114,7 @@ sap.ui.define([
 					},
 					success: this._setView.bind(this)
                 });
-                //added fix masterdepotSet error on _fnChangeDivDepot
-                //gets the Mastedepot set in odataModel
+                //added fix masterdepotSet error on _fnChangeDivDepot gets the Mastedepot set in odataModel
                 this.getModel().read("/MasterDepotSet", {
 					
 				});
@@ -786,7 +785,7 @@ sap.ui.define([
                     );
                     this.getView().addDependent(this._oValueHelpDialog);
 
-                    this._oValueHelpDialog.setBusy(true);
+                        this._oValueHelpDialog.setBusy(true);
 
                     this._oValueHelpDialog.getTableAsync().then(
                         function (oTable) {
@@ -797,8 +796,8 @@ sap.ui.define([
                                     path: "/UserSet", filters: [oFilter], parameters: { expand: "Painter,Painter/Depot,Painter/Division,Painter/ArcheType,Painter/PainterType" }, events:
                                     {
                                         dataReceived: function () {
-                                            this._oValueHelpDialog.setBusy(false);
-                                            this._oValueHelpDialog.update();
+                                                this._oValueHelpDialog.setBusy(false);
+                                                this._oValueHelpDialog.update();
                                             
                                             // var update=this._oValueHelpDialog.update();
                                             // update.then(
