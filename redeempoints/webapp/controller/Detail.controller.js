@@ -65,7 +65,8 @@ sap.ui.define(
                         // ComplainId: oProp,
                         UUID: oProp,
                         LoggedInUser: {},
-                        bBusy: false
+                        bBusy: false,
+                        IctbarKey: "0"
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -76,6 +77,10 @@ sap.ui.define(
                         .getResourceBundle()
                         .getText("errorText");
                     var oBindProp = oData["bindProp"];
+                    this.oWorkflowModel = new JSONModel();
+                    this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
+                    this.getView().setModel(this.oWorkflowModel, "wfmodel");
+
                     var c1A, c1, c2;
 
                     othat._showFormFragment("Display");
@@ -85,6 +90,9 @@ sap.ui.define(
                         c1 = othat._setDisplayData(oBindProp);
                         c1.then(function (mParam) {
                             c2 = othat._initEditData(oBindProp);
+                            c2.then(function (data) {
+                                othat._getExecLogData(data);
+                            })
                         })
                     })
                 },
@@ -129,7 +137,7 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
 
-                   var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
+                    var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({
@@ -156,27 +164,80 @@ sap.ui.define(
                     var oDataValue = "";
                     var othat = this;
                     //var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
+
                     oView.getModel("oModelControl").setProperty("/bBusy", true);
-                    oView.getModel().read("/" + oProp, {
-                        urlParameters: {
-                            //$expand: exPand,
-                            // $select:'PainterComplainProducts'
-                        },
-                        success: function (data) {
-                            var oViewModel = new JSONModel(data);
-                            oView.getModel("oModelControl").setProperty("/bBusy", false);
-                            oViewModel.setProperty("/Remark", "")
-                            oView.setModel(oViewModel, "oModelView");
+                    return new Promise((resolve, reject) => {
+                        oView.getModel().read("/" + oProp, {
 
-                        },
-                        error: function () {
-                            oView.getModel("oModelControl").setProperty("/bBusy", false);
+                            success: function (data) {
+                                var oViewModel = new JSONModel(data);
+                                oView.getModel("oModelControl").setProperty("/bBusy", false);
+                                oViewModel.setProperty("/Remark", "")
+                                oView.setModel(oViewModel, "oModelView");
+                                resolve(data)
 
-                        },
-                    });
+                            },
+                            error: function () {
+                                oView.getModel("oModelControl").setProperty("/bBusy", false);
+
+                            },
+                        });
+                    })
+
+
+                },
+                _getExecLogData: function (oData) {
+                    var promise = jQuery.Deferred();
+                    //for Test case scenerios delete as needed
+                    var oView = this.getView();
+
+                    var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    //console.log(sWorkFlowInstanceId)
+
+                    if (sWorkFlowInstanceId) {
+                        var sUrl =
+                            "/comknplpragatiSchemeOffers/bpmworkflowruntime/v1/workflow-instances/" +
+                            sWorkFlowInstanceId +
+                            "/execution-logs";
+
+                        this.oWorkflowModel.loadData(sUrl);
+                    } else {
+                        this.oWorkflowModel.setData([]);
+                    }
+
                     promise.resolve();
                     return promise;
                 },
+
+                _setWfData: function () {
+                    //TODO: format subject FORCETAT
+                    //console.log(this.oWorkflowModel.getData());
+                    var aWfData = this.oWorkflowModel.getData(),
+                        taskSet = new Set([
+                            "WORKFLOW_STARTED",
+                            "WORKFLOW_COMPLETED",
+                            "WORKFLOW_CANCELED",
+                            "USERTASK_CREATED",
+                            "USERTASK_COMPLETED",
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
+                        ]);
+
+                    aWfData = aWfData.filter((ele) => taskSet.has(ele.type));
+                    console.log(aWfData);
+                    this.oWorkflowModel.setData(aWfData);
+                },
+                onIcnTbarChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    if (sKey == "1") {
+                        //oView.byId("PainteTable1").rebindTable();
+                    } else if (sKey == "2") {
+                        //oView.byId("PainteTable2").rebindTable();
+                    } else if (sKey == "3") {
+                        //oView.byId("OfferHistory").rebindTable();
+                    }
+                },
+
                 onApproveReject: function (mParam1) {
 
                     var oView = this.getView();
@@ -199,8 +260,8 @@ sap.ui.define(
 
                     // if the offer status if
                     if (mParam1 === "APPROVED") {
-                       oNewPayLoad.Status = "APPROVED";
-                       oNewPayLoad.InitiateForceTat = false;
+                        oNewPayLoad.Status = "APPROVED";
+                        oNewPayLoad.InitiateForceTat = false;
                     }
                     if (mParam1 === "REJECTED") {
                         oNewPayLoad.Status = "REJECTED";

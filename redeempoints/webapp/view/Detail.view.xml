@@ -50,12 +50,20 @@
             </f:DynamicPageHeader>
         </f:header> -->
         <f:content>
-            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding">
+            <IconTabBar  select="onIcnTbarChange" selectedKey="{oModelControl>/IctbarKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter text="{i18n>Overview}">
+                    <IconTabFilter text="{i18n>Overview}" key="0">
                         <VBox id="oVbxSmtTbl" width="100%">
                         </VBox>
                     </IconTabFilter>
+                         <IconTabFilter text="{i18n>PointsHistory}" key="2">
+                        <core:Fragment fragmentName="com.knpl.pragati.redeempoints.view.subview.PointsHistory" type="XML"/>
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>ExecutionLog}" key="2">
+                        <core:Fragment fragmentName="com.knpl.pragati.redeempoints.view.subview.ExecutionLog" type="XML"/>
+                    </IconTabFilter>
+
+
 
                 </items>
             </IconTabBar>
