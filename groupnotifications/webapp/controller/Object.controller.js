@@ -156,7 +156,9 @@ sap.ui.define([
              oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
              
                 }else if(data.IsTargetGroup==true){
+                    
                     oViewModel.setProperty("/oDetails/Members",[]);
+
                     oViewModel.setProperty("/TargetDetails/TargetFilterType", "GROUP");
                     aArray = [];
                             if (data.NotificationGroupZone && data.NotificationGroupZone.results) {
