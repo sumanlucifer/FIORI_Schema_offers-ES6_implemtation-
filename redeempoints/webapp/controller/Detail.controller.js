@@ -204,6 +204,9 @@ sap.ui.define(
                     if (mParam1 === "REJECTED") {
                         oNewPayLoad.Status = "REJECTED";
                     }
+                    if (mParam1 === "ESCALATE") {
+                        oNewPayLoad.InitiateForceTat = true;
+                    }
 
                     var c1, c2, c3;
 
