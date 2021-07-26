@@ -2064,6 +2064,7 @@ sap.ui.define(
                             oModelControl.setProperty("/Buttons/Redeem", true);
                             othat.getView().getModel().refresh(true);
                             oModelControl.refresh(true);
+                            othat.handleCancelPress();
                         }.bind(this),
                         error: function () {
                             oModelControl.setProperty("/PageBusy", false)
