@@ -147,14 +147,15 @@ sap.ui.define([
 			if (data) {
                 oViewModel.setProperty("/oDetails", data);
                 if(data.IsTargetGroup==false){
-                oViewModel.setProperty("/oDetails/Members", data.Members.results);
-                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
-                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+
+             oViewModel.setProperty("/oDetails/Members", data.Members.results);
+             oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
              oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
+             
                 }else if(data.IsTargetGroup==true){
                     oViewModel.setProperty("/oDetails/Members",[]);
                     oViewModel.setProperty("/TargetDetails/TargetFilterType", "GROUP");
