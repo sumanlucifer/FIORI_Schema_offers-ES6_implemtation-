@@ -200,9 +200,11 @@ sap.ui.define(
                     // if the offer status if
                     if (mParam1 === "APPROVED") {
                        oNewPayLoad.Status = "APPROVED";
+                       oNewPayLoad.InitiateForceTat = false;
                     }
                     if (mParam1 === "REJECTED") {
                         oNewPayLoad.Status = "REJECTED";
+                        oNewPayLoad.InitiateForceTat = false;
                     }
                     if (mParam1 === "ESCALATE") {
                         oNewPayLoad.InitiateForceTat = true;
