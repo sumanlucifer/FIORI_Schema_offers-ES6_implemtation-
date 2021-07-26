@@ -156,7 +156,7 @@ sap.ui.define(
 
                         },
                         error: function () {
-                           
+
                         }
                     })
 
@@ -168,6 +168,7 @@ sap.ui.define(
                         HasTillDate: true,
                         ImageLoaded: false,
                         mode: "display",
+                        EndDate: "",
                         OfferId: oProp, //.replace(/[^0-9]/g, ""),
                         //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
                         tableDealay: 0,
@@ -2061,8 +2062,10 @@ sap.ui.define(
 
                             oModelControl.setProperty("/PageBusy", false);
                             oModelControl.setProperty("/Buttons/Redeem", true);
+                            othat.handleCancelPress();
                             othat.getView().getModel().refresh(true);
                             oModelControl.refresh(true);
+
                         }.bind(this),
                         error: function () {
                             oModelControl.setProperty("/PageBusy", false)
@@ -2142,7 +2145,10 @@ sap.ui.define(
                         return;
                     }
                     var oModelC = oView.getModel("oModelControl3");
-                    oModelC.setProperty("/PageBusy", true)
+                    this._RemarksDialog2.setBusy(true);
+                    oModelC.setProperty("/PageBusy", true);
+
+
                     var oData = oView.getModel();
                     var oPayload = this.getView().getModel("oModelDisplay").getData();
 
@@ -2182,29 +2188,49 @@ sap.ui.define(
                     c1.then(function (oNewPayLoad) {
                         c2 = othat._UpdateOffer(oNewPayLoad);
                         c2.then(function (oNewPayLoad) {
+                            othat._RemarksDialog2.setBusy(false);
                             othat._RemarksDialog2.close();
                             oModelC.setProperty("/PageBusy", true)
                             othat.handleCancelPress(oNewPayLoad)
                         })
                     });
                 },
-                onPublishTemporary: function () {
+                onDetailPageSave: function () {
                     var oView = this.getView();
-                    var oData = oView.getModel();
-                    var oPayload = this.getView().getModel("oModelDisplay").getData();
-                    var oNewPayLoad = Object.assign({}, oPayload);
-                    oNewPayLoad["OfferStatus"] = "PUBLISHED";
-                    oNewPayLoad["IsPublished"] = true;
-                    var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
-                    oData.update("/" + sPath, oNewPayLoad, {
-                        success: function () {
-                            MessageToast.show("Offer Successfully Updated.");
-                            this._navToHome();
-                        }.bind(this),
-                        error: function () {
-                            MessageBox.error("Unanle to update the offer.");
-                        },
+                    var oValidate = new Validator();
+                    var oForm = oView.byId("FormDisplay");
+
+                    var bFlagValidate = oValidate.validate(oForm, true);
+
+                    if (!bFlagValidate) {
+                        MessageToast.show("Kindly Input All the mandatory fields to continue.");
+                        return;
+                    }
+                    this._postDetailSave();
+
+                },
+                _postDetailSave: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelDisplay");
+                    var oViewData = oModelView.getData();
+                    var oModelC = oView.getModel("oModelControl3");
+                    oModelC.setProperty("/PageBusy", true);
+                    var othat = this;
+                    var oNewPayLoad = this._RemoveEmptyValue(oViewData);
+                    oNewPayLoad["EndDate"] = new Date(
+                        oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
+
+                    );
+                    var c1, c2, c3;
+                    c1 = othat._CheckExpandPainter(oNewPayLoad);
+                    c1.then(function (oNewPayLoad) {
+                        c2 = othat._UpdateOffer(oNewPayLoad);
+                        c2.then(function (oNewPayLoad) {
+                            oModelC.setProperty("/PageBusy", true)
+                            othat.handleCancelPress()
+                        })
                     });
+
                 },
                 //execution Log
                 _getExecLogData: function (oData) {

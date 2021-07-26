@@ -12,7 +12,6 @@
       "destination": "KNPL_PAINTER_API",
       "target": "$1"
     },
-    
     {
       "source": "^/bpmworkflowruntime/(.*)$",
       "target": "/$1",
@@ -20,7 +19,6 @@
       "endpoint": "workflow_rest_url",
       "authenticationType": "xsuaa"
     },
-
     {
       "source": "^(.*)$",
       "target": "$1",

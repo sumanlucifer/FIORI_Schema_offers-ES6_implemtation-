@@ -44,9 +44,14 @@
                                 <Text text="{Title}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBasicInfoLbl4}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{= ${OfferStatus}==='EXPIRED'}">
                             <f:fields>
-                                <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/>
+                                <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}" visible="{= ${OfferStatus}==='EXPIRED'}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{= ${OfferStatus}!=='EXPIRED'}">
+                            <f:fields>
+                                <DatePicker  change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
