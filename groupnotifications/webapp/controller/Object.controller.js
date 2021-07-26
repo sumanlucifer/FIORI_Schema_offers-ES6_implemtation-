@@ -147,14 +147,15 @@ sap.ui.define([
 			if (data) {
                 oViewModel.setProperty("/oDetails", data);
                 if(data.IsTargetGroup==false){
-                oViewModel.setProperty("/oDetails/Members", data.Members.results);
-                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
-                oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
+
+             oViewModel.setProperty("/oDetails/Members", data.Members.results);
+             oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
              oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", []);
              oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
+             
                 }else if(data.IsTargetGroup==true){
                     oViewModel.setProperty("/oDetails/Members",[]);
                     oViewModel.setProperty("/TargetDetails/TargetFilterType", "GROUP");
@@ -288,12 +289,12 @@ sap.ui.define([
             var oPayload;
             if(GroupType=="PAINTER"){
             oPayload = oViewModel.getProperty("/oDetails");
-            oPayload["IsTargetGroup"]=false;
-            oPayload["NotificationGroupZone"]=null;
-            oPayload["NotificationGroupDivision"]=null;
-            oPayload["NotificationGroupDepot"]=null;
-            oPayload["NotificationGroupPainterType"]=null;
-            oPayload["NotificationGroupPainterArcheType"]=null;
+            oPayload["IsTargetGroup"] = false;
+            oPayload["NotificationGroupZone"] = null;
+            oPayload["NotificationGroupDivision"] = null;
+            oPayload["NotificationGroupDepot"] = null;
+            oPayload["NotificationGroupPainterType"] = null;
+            oPayload["NotificationGroupPainterArcheType"] = null;
             var oValid = this._fnValidation(oPayload);
                     if (oValid.IsNotValid) {
                         //this.showError(this._fnMsgConcatinator(oValid.sMsg));
