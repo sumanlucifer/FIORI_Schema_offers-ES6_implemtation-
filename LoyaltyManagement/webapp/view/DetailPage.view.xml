@@ -108,11 +108,23 @@
                                         <Text class="sapUiTinyMarginTop" text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionAmount} }"/>
                                     </form:fields>
                                 </form:FormElement>
+                                <form:FormElement label="Redeemed Points" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                    <form:fields >
+                                        <Text class="sapUiTinyMarginTop" text="{= ${PaymentTransaction}=== null ? 'NA' : ${RewardPoints} }"/>
+                                    </form:fields>
+                                </form:FormElement>
                                 <form:FormElement label="Status" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
                                     <form:fields >
                                     <FlexBox >
                                         <Text class="sapUiTinyMarginTop" visible="{= ${GiftRedemption}!== null}" text="{path:'GiftRedemption/TrackingStatus',formatter:'.formatter.accuralType'}"/>
                                         <Text class="sapUiTinyMarginTop" visible="{= ${PaymentTransaction}!== null}" text="{path:'PaymentTransaction/TransactionStatus',formatter:'.formatter.accuralType'}"/>
+                                    </FlexBox>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Remark" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                    <form:fields >
+                                    <FlexBox >
+                                        <Text class="sapUiTinyMarginTop" visible="{= ${PaymentTransaction}!== null}" text="{path:'PaymentTransaction/TransactionMessage'}"/>
                                     </FlexBox>
                                     </form:fields>
                                 </form:FormElement>
