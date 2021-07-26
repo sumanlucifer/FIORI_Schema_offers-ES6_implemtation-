@@ -5,6 +5,9 @@ sap.ui.define(
         "sap/m/MessageBox",
         "sap/m/MessageToast",
         "sap/ui/core/Fragment",
+        "sap/ui/model/Filter",
+        "sap/ui/model/FilterOperator",
+        "sap/ui/model/Sorter",
         "com/knpl/pragati/redeempoints/controller/Validator",
         "sap/ui/core/ValueState",
         "../model/formatter",
@@ -18,6 +21,9 @@ sap.ui.define(
         MessageBox,
         MessageToast,
         Fragment,
+        Sorter,
+        Filter,
+        FilterOperator,
         Validator,
         ValueState,
         formatter
@@ -237,7 +243,30 @@ sap.ui.define(
                         //oView.byId("OfferHistory").rebindTable();
                     }
                 },
+                onBeforeBindOfferHistory: function (oEvent) {
+                    var oView = this.getView();
+                    var sOfferId = oView
+                        .getModel("oModelControl")
+                        .getProperty("/UUID");
+                    var aFilter = [];
 
+                    var aFilter2 = new Filter(
+                        "UUID",
+                        FilterOperator.EQ,
+                        parseInt(sOfferId)
+                    );
+                    aFilter.push(aFilter2);
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+
+                    oBindingParams.filters.push(
+                        new Filter({
+                            filters: aFilter,
+                            and: true,
+                        })
+                    );
+                    oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+
+                },
                 onApproveReject: function (mParam1) {
 
                     var oView = this.getView();
