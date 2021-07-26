@@ -19,7 +19,6 @@
       "endpoint": "workflow_rest_url",
       "authenticationType": "xsuaa"
     },
- 
     {
       "source": "^(.*)$",
       "target": "$1",
