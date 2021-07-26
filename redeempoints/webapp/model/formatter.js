@@ -29,7 +29,7 @@ sap.ui.define([], function () {
         },
         btnEscalate:function(m1,m2, m3){
             console.log(m1,m2, m3);
-            if (m1 === "PENDING") {
+            if (m1 === "INPROGRESS") {
                 if (m2 === 3 && m3 === "TL") {
                     return true;
                 }
@@ -39,7 +39,7 @@ sap.ui.define([], function () {
 
         btnApproveDisplay:function(m1,m2){
             console.log(m1,m2);
-            if (m1 === "PENDING") {
+            if (m1 === "INPROGRESS") {
                 if (m2 === 3 || m2 === 4) {
                     return true;
                 }
