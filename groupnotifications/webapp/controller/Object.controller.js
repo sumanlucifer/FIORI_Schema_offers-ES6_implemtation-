@@ -476,12 +476,12 @@ sap.ui.define([
                             for (var i = 0; i < oClonePayload.Members.length; i++) {
                                 var oMembers = oClonePayload.Members[i];
                                 delete oMembers.__metadata;
-                                delete oMembers.VolunteerAssignment;
-                                delete oMembers.UserPreference;
-                                delete oMembers.UserDevice;
-                                delete oMembers.Specialities;
-                                delete oMembers.Manager;
-                                delete oMembers.EmergencyRelationship;
+                                // delete oMembers.VolunteerAssignment;
+                                // delete oMembers.UserPreference;
+                                // delete oMembers.UserDevice;
+                                // delete oMembers.Specialities;
+                                delete oMembers.Admin;
+                                delete oMembers.Role;
                                 delete oMembers.Painter;//Aditya chnages
                                 }
                             }
