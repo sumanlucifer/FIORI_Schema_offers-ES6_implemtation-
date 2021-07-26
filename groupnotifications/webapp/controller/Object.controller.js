@@ -288,12 +288,12 @@ sap.ui.define([
             var oPayload;
             if(GroupType=="PAINTER"){
             oPayload = oViewModel.getProperty("/oDetails");
-            oPayload["IsTargetGroup"]=false;
-            oPayload["NotificationGroupZone"]=null;
-            oPayload["NotificationGroupDivision"]=null;
-            oPayload["NotificationGroupDepot"]=null;
-            oPayload["NotificationGroupPainterType"]=null;
-            oPayload["NotificationGroupPainterArcheType"]=null;
+            oPayload["IsTargetGroup"] = false;
+            oPayload["NotificationGroupZone"] = null;
+            oPayload["NotificationGroupDivision"] = null;
+            oPayload["NotificationGroupDepot"] = null;
+            oPayload["NotificationGroupPainterType"] = null;
+            oPayload["NotificationGroupPainterArcheType"] = null;
             var oValid = this._fnValidation(oPayload);
                     if (oValid.IsNotValid) {
                         //this.showError(this._fnMsgConcatinator(oValid.sMsg));
