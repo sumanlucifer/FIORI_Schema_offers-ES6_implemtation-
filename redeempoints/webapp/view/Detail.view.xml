@@ -56,7 +56,7 @@
                         <VBox id="oVbxSmtTbl" width="100%">
                         </VBox>
                     </IconTabFilter>
-                         <IconTabFilter text="{i18n>PointsHistory}" key="2">
+                    <IconTabFilter text="{i18n>PointsHistory}" key="2">
                         <core:Fragment fragmentName="com.knpl.pragati.redeempoints.view.subview.PointsHistory" type="XML"/>
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>ExecutionLog}" key="2">

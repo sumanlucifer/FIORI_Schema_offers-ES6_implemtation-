@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="PointsHistory" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="OfferActivationLogSet" beforeRebindTable="onBeforeBindOfferHistory" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="true" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfferHistorySmartTableKey">
+    <smartTable:SmartTable id="PainterLoyaltyRedemptionRequestSet" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterLoyaltyRedemptionRequestSet" beforeRebindTable="onBeforeBindOfferHistory" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="true" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="PointsHistorySmartTableKey">
         <Table growing="true" growingThreshold="15" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
             <columns>
                 <Column hAlign="Begin">
@@ -12,7 +12,7 @@
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "OfferStatus", "leadingProperty": "OfferStatus", "columnIndex": 1 ,"sortProperty": "OfferStatus","filterProperty": "OfferStatus"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 1 ,"sortProperty": "Status","filterProperty": "Status"}'/>
                     </customData>
                     <Text text="{i18n>Status}"/>
                 </Column>
@@ -24,7 +24,7 @@
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedByName", "leadingProperty": "UpdatedByName", "columnIndex": 3 ,"sortProperty": "UpdatedByName","filterProperty": "UpdatedByName"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedBy", "leadingProperty": "UpdatedBy", "columnIndex": 3 ,"sortProperty": "UpdatedBy","filterProperty": "UpdatedBy"}'/>
                     </customData>
                     <Text text="{i18n>UpdatedBy}"/>
                 </Column>
