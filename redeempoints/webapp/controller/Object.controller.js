@@ -273,7 +273,7 @@ sap.ui.define([
             }
             var obj = oSelectedItem.getBindingContext().getObject();
             this._getPainterDetails(obj["Id"]);
-            this._getSlabsForPainter(obj["Id"])
+            this._getSlabsForPainter(obj["Id"]);
         },
         _getPainterDetails: function (mParam) {
             var oView = this.getView();
@@ -605,7 +605,8 @@ sap.ui.define([
                 },
                 success: function (oData, response) {
                     var data=oData.results;
-                    oModelCtrl.setProperty("/Slabs",data)
+                    oModelCtrl.setProperty("/Slabs",data);
+                    oModelCtrl.setProperty("/isValidOTP",false)
                    
 
                 },

@@ -46,7 +46,7 @@
                     </items>
                 </ComboBox> -->
                 <Label text="{i18n>LblSlab}" />
-                <Input required="false" placeholder="{oModelControl>/noSlabText}" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" 
+                <Input required="true" placeholder="{oModelControl>/noSlabText}" valueHelpOnly="true" showValueHelp="true" enabled="{oModelControl>/bEnable}" valueHelpRequest="onValueHelpSlabs" 
                 value="{path:'oModelControl>/SlabPoints', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
 
                 <Label text=""/>
@@ -57,6 +57,7 @@
                 <Button class="sapUiMediumMarginBegin" id="btnOTPVerify" visible="{oModelControl>/bVerify}" icon="sap-icon://sys-enter-2" type="Emphasized" text="{i18n>btnVerifyOtp}" press="onVerifyOtp" />
                 <Button class="sapUiMediumMarginBegin" id="btnOTPResend" visible="{oModelControl>/bVerify}" icon="sap-icon://paper-plane" type="Emphasized" text="{i18n>btnReSendOtp}" press="onSendOtp" />
                 </HBox>
+                <Text text="OTP verification successful" visible="{oModelControl>/isValidOTP}"/>
                 </VBox>
                 <Label text="{i18n>Remark}"/>
                 <TextArea maxLength="250" required="true" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250}}" />
