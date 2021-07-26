@@ -104,22 +104,22 @@ sap.ui.define([], function () {
                 case "FORCETAT":
                     return "Manual Escalation";
                 case "APPROVED":
-                    return "Offer Approved";
+                    return "Redemption request Approved";
                 case "REJECTED":
-                    return "Offer Rejected";
+                    return "Redemption request Rejected";
             }
 
             switch (sType) {
                 case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
                     return "Auto Escalation";
                 case "WORKFLOW_STARTED":
-                    return "Offer Sent for Approval.";
+                    return "Redemption request Sent for Approval.";
                 case "WORKFLOW_COMPLETED":
-                    return "Offer Approval Process Completed.";
+                    return "Redemption request Approval Process Completed.";
                 case "WORKFLOW_CANCELED":
-                    return "Offer Workflow Cancelled.";
+                    return "Redemption request Workflow Cancelled.";
                 case "USERTASK_COMPLETED":
-                    return "Offer Approved.";
+                    return "Redemption request Approved.";
             }
 
             return sSubject;
