@@ -108,7 +108,7 @@
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
                     demandPopin="true"
-                    requestAtLeastFields="Id,PointType,Painter/Name"
+                    requestAtLeastFields="Id,PointType,Painter/Name,PaymentTransaction/TransactionMessage"
                     enableAutoBinding="true"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
@@ -136,6 +136,12 @@
                                     </Column> -->
                                     <Column hAlign="Center">
                                         <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnIndex": 9 }'/>
+                                        </customData>
+                                          <Text text="{i18n>Remark}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 10 }'/>
                                         </customData>
                                           <Text text="{i18n>tblColDateTime}"/>
@@ -145,8 +151,7 @@
                                     <ColumnListItem type="Navigation" press="onListItemPress">
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
-                                            <!-- <Text text="{path:'RewardPoints'}"/>
-                                            <Text text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/> -->
+                                            <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionMessage} }"/>
                                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                         
                                             
@@ -236,7 +241,7 @@
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
                     demandPopin="true"
-                    requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName,PaymentTransaction/TransactionAmount"
+                    requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName,PaymentTransaction/TransactionAmount,PaymentTransaction/TransactionMessage"
                     enableAutoBinding="true"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
@@ -258,7 +263,13 @@
                                     </Column>
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 9 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnIndex": 9 }'/>
+                                        </customData>
+                                          <Text text="{i18n>Remark}"/>
+                                    </Column>
+                                    <Column hAlign="Center">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt","type":"date", "leadingProperty": "CreatedAt", "columnIndex": 10 }'/>
                                         </customData>
                                           <Text text="{i18n>tblColDateTimeRdm}"/>
                                     </Column>
@@ -268,6 +279,7 @@
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{= ${GiftRedemption}=== null ? ${PaymentTransaction/TransactionAmount} : ${GiftRedemption/RewardGiftName} }"/>
+                                            <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionMessage} }"/>
                                             <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
                         
                                             
