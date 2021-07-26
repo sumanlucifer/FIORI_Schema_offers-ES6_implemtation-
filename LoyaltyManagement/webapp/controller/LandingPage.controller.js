@@ -536,7 +536,7 @@ sap.ui.define([
 
             var oBindingParams = oEvent.getParameter("bindingParams");
             oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
-            oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption";
+            oBindingParams.parameters["expand"] = "Painter,Painter/Depot,GiftRedemption,PaymentTransaction";
             // var filter=new Filter({
             //         filters: [
             //             new Filter({

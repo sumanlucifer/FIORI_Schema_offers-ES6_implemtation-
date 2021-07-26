@@ -43,10 +43,10 @@
                             <PropertyValue Property="Label" String="Depot"/>
                             <PropertyValue Property="Value" Path="Painter/Depot/Depot"/>
                         </Record>
-                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                        <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Depot Code"/>
                             <PropertyValue Property="Value" Path="Painter/DepotId"/>
-                        </Record>
+                        </Record> -->
                         <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Type of Redemption"/>
                             <PropertyValue Property="Value" Path="PointType"/>
