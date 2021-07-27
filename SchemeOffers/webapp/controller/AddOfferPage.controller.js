@@ -431,8 +431,8 @@ sap.ui.define(
                         bFileFlag = true;
                     }
                     if (!bFileFlag) {
-                        MessageToast.show("Kindly upload an image to continue.");
-                        return
+                        //MessageToast.show("Kindly upload an image to continue.");
+                        //return
                     }
                     if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
@@ -452,7 +452,7 @@ sap.ui.define(
 
                 },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c2, c3, c4, c5, c5A, c6, c7;
+                    var c1, c1B, c2, c3, c4, c5, c5A, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -462,26 +462,29 @@ sap.ui.define(
                     // create payload 4 and 5 used for table 1,2 and table 3,4
                     //othat._CreatePayloadPart2();othat._UploadFile(mParam1, bFileFlag);
                     c1.then(function (oPayload) {
-                        c2 = othat._CreatePayloadPart2(oPayload);
-                        c2.then(function (oPayload) {
-                            c3 = othat._CreatePayloadPart3(oPayload);
-                            c3.then(function (oPayLoad) {
-                                c4 = othat._CreatePayLoadPart4(oPayLoad);
-                                c4.then(function (oPayLoad) {
-                                    c5 = othat._CreatePayLoadPart5(oPayLoad);
-                                    c5.then(function (oPayLoad) {
-                                        c5A = othat._CreateWorkFlowData(oPayLoad);
-                                        c5A.then(function () {
-                                            c6 = othat._CreateOffer(oPayLoad);
-                                            c6.then(function (oData) {
-                                                c7 = othat._UploadFile(oData, bFileFlag);
-                                            });
-                                        })
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oPayload);
+                        c1B.then(function (oPayload) {
+                            c2 = othat._CreatePayloadPart2(oPayload);
+                            c2.then(function (oPayload) {
+                                c3 = othat._CreatePayloadPart3(oPayload);
+                                c3.then(function (oPayLoad) {
+                                    c4 = othat._CreatePayLoadPart4(oPayLoad);
+                                    c4.then(function (oPayLoad) {
+                                        c5 = othat._CreatePayLoadPart5(oPayLoad);
+                                        c5.then(function (oPayLoad) {
+                                            c5A = othat._CreateWorkFlowData(oPayLoad);
+                                            c5A.then(function () {
+                                                c6 = othat._CreateOffer(oPayLoad);
+                                                c6.then(function (oData) {
+                                                    c7 = othat._UploadFile(oData, bFileFlag);
+                                                });
+                                            })
 
+                                        });
                                     });
                                 });
                             });
-                        });
+                        })
                     });
                 },
                 _CreateOffer: function (oPayLoad) {
@@ -507,7 +510,7 @@ sap.ui.define(
                 _UploadFile: function (mParam1, mParam2) {
                     var promise = jQuery.Deferred();
                     if (!mParam2) {
-
+                        console.log("no image uploaded")
                         promise.resolve();
                         return promise;
                     }
@@ -558,7 +561,7 @@ sap.ui.define(
                 onExit: function () {
 
                 },
-              
+
             }
         );
     }

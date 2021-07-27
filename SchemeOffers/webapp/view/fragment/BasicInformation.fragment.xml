@@ -28,7 +28,7 @@
 
                     <f:FormElement >
                         <f:label>
-                            <Label text="{i18n>OfferImage}" required="true"/>
+                            <Label text="{i18n>OfferImage}" required="false"/>
                         </f:label>
                         <f:fields>
                             <u:FileUploader placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>

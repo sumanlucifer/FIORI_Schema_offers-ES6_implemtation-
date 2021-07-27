@@ -166,14 +166,14 @@ sap.ui.define(
                             return;
                         }
                     }
-                    if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show(
-                            "Kindly enter a date greater than or equal to current date"
-                        );
-                        oModelControl.setProperty("/StartDate", "");
-                        oModelView.setProperty("/StartDate", null);
-                        return;
-                    }
+                    // if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
+                    //     MessageToast.show(
+                    //         "Kindly enter a date greater than or equal to current date"
+                    //     );
+                    //     oModelControl.setProperty("/StartDate", "");
+                    //     oModelView.setProperty("/StartDate", null);
+                    //     return;
+                    // }
                 },
                 onEndDateChange: function (oEvent) {
                     var oView = this.getView();
@@ -181,17 +181,20 @@ sap.ui.define(
                     var oModelView = oView.getModel("oModelView");
                     var oEndDate = oEvent.getSource().getDateValue();
                     var oStartDate = oModelView.getProperty("/StartDate");
-                    if (oStartDate > oEndDate) {
-                        MessageToast.show("Kindly select a date more than or equal start date.");
-                        oModelControl.setProperty("/EndDate", "");
-                        oModelView.setProperty("/EndDate", null);
-                        return;
+                    if (oStartDate) {
+                        if (oStartDate > oEndDate) {
+                            MessageToast.show("Kindly select a date more than or equal start date.");
+                            oModelControl.setProperty("/EndDate", "");
+                            oModelView.setProperty("/EndDate", null);
+                            return;
+                        }
                     }
-                    if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show("Kindly enter a date greater than or equal to current date");
-                        oModelControl.setProperty("/EndDate", "");
-                        oModelView.setProperty("/EndDate", null);
-                    }
+
+                    // if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
+                    //     MessageToast.show("Kindly enter a date greater than or equal to current date");
+                    //     oModelControl.setProperty("/EndDate", "");
+                    //     oModelView.setProperty("/EndDate", null);
+                    // }
                 },
                 onEndDateChange2: function (oEvent) {
                     var oView = this.getView();
@@ -3257,15 +3260,14 @@ sap.ui.define(
                         }
                     }
                     // setting the flag for increasing the end date time
-                    oPayLoad["EndDate"] = new Date(
-                        oPayLoad["EndDate"].setHours(23, 59, 59, 999)
-                        //oPayLoad["EndDate"].setHours(16, 48, 59, 999)
-                    );
+                    // oPayLoad["EndDate"] = new Date(
+                    //     oPayLoad["EndDate"].setHours(23, 59, 59, 999)
+                    // );
                     promise.resolve(oPayLoad);
                     return promise;
                 },
-                _CreatePayLoadPart1A: function (oPayLoad) {
-                    var oPromise = jQuery.Deffered();
+                _CreatePayLoadPart1AForEndDate: function (oPayLoad) {
+                    var oPromise = jQuery.Deferred();
                     oPayLoad["EndDate"] = new Date(
                         oPayLoad["EndDate"].setHours(23, 59, 59, 999)
                         //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
