@@ -1,13 +1,13 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
     <Dialog title="{i18n>KycDocuments}" titleAlignment="Center" contentWidth="70%" afterClose="onDialogClose">
         <content>
-            <Carousel height="650px" arrowsPlacement="PageIndicator" class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}=== 1}">
-                <Image decorative="false" src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
-                <Image decorative="false" src="{oModelControl>/KycImage/Image2}" alt="No KYC Found"/>
+            <Carousel height="400px"  arrowsPlacement="PageIndicator" class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}=== 1}">
+                <Image height="400px" decorative="false" src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
+                <Image   height="400px" decorative="false" src="{oModelControl>/KycImage/Image2}" alt="No KYC Found"/>
               
             </Carousel>
              <Carousel class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}!== 1}">
-                <Image decorative="false"  src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
+                <Image  height="400px" decorative="false"  src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
               
             </Carousel>
         </content>
