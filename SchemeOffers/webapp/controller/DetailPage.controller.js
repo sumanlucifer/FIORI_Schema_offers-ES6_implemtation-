@@ -2188,8 +2188,6 @@ sap.ui.define(
 
                     var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
-
-
                     c1.then(function (oNewPayLoad) {
                         c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
                         c1B.then(function (oNewPayLoad) {
@@ -2225,17 +2223,20 @@ sap.ui.define(
                     oModelC.setProperty("/PageBusy", true);
                     var othat = this;
                     var oNewPayLoad = this._RemoveEmptyValue(oViewData);
-                    oNewPayLoad["EndDate"] = new Date(
-                        oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
+                    // oNewPayLoad["EndDate"] = new Date(
+                    //     oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
 
-                    );
-                    var c1, c2, c3;
+                    // );
+                    var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
                     c1.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function (oNewPayLoad) {
-                            oModelC.setProperty("/PageBusy", true)
-                            othat.handleCancelPress()
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                        c1B.then(function (oNewPayLoad) {
+                            c2 = othat._UpdateOffer(oNewPayLoad);
+                            c2.then(function (oNewPayLoad) {
+                                oModelC.setProperty("/PageBusy", true)
+                                othat.handleCancelPress()
+                            })
                         })
                     });
 
