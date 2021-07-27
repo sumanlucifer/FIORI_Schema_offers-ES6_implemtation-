@@ -43,6 +43,11 @@
                                      <ComboBox enabled="{= ${oModelControl>/filterBar/Status}.length>1}" id="idStatus" placeholder="{i18n>Enter} {i18n>Status}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
                                         <core:Item text="Pending" key="PENDING" />
                                         <core:Item text="Inprogress" key="INPROGRESS" />
+                                        <core:Item text="Completed" key="COMPLETED" />
+                                        <core:Item text="Rejected" key="REJECTED" />
+                                        <core:Item text="Approved" key="APPROVED" />
+                                        <core:Item text="Initiated" key="INITIATED" />
+                                        <core:Item text="Failed" key="FAILED" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -68,10 +73,12 @@
                     <Column>
                         <Text text="{i18n>PainterName}"/>
                     </Column>
-                     <Column>
+                    <Column>
                         <Text text="{i18n>MembershipId}"/>
                     </Column>
-                   
+                    <Column>
+                        <Text text="{i18n>RedeemCode}"/>
+                    </Column>
                     <Column>
                         <Text text="{i18n>PrimaryMobileNo}"/>
                     </Column>
@@ -109,6 +116,7 @@
                         <cells>
                             <Text text="{PainterDetails/Name}"/>
                             <Text text="{PainterDetails/MembershipCard}"/>
+                            <Text text="{RedemptionCode}"/>
                             <Text text="{PainterDetails/Mobile}"/>
                             <Text text="{PainterDetails/ZoneId}"/>
                             <Text text="{PainterDetails/DivisionId}"/>

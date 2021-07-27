@@ -66,6 +66,25 @@ sap.ui.define([], function () {
 
             return sLetter;
         },
+        fmtLowerCase: function (mParam) {
+            var sStatus = "";
+            if (mParam) {
+                sStatus = mParam;
+                sStatus = sStatus.toLowerCase();
+                var aCharStatus = sStatus.split("");
+                if (aCharStatus.indexOf("_") !== -1) {
+                    aCharStatus[aCharStatus.indexOf("_") + 1] = aCharStatus[
+                        aCharStatus.indexOf("_") + 1
+                    ].toUpperCase();
+                    aCharStatus.splice(aCharStatus.indexOf("_"), 1, " ");
+                }
+                aCharStatus[0] = aCharStatus[0].toUpperCase();
+                sStatus = aCharStatus.join("");
+            }
+
+            return sStatus;
+        },
+
         btnEscalate: function (m1, m2, m3) {
             console.log(m1, m2, m3);
             if (m1 === "INPROGRESS") {
