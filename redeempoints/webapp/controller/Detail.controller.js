@@ -21,9 +21,9 @@ sap.ui.define(
         MessageBox,
         MessageToast,
         Fragment,
-        Sorter,
         Filter,
         FilterOperator,
+        Sorter,
         Validator,
         ValueState,
         formatter
@@ -244,16 +244,17 @@ sap.ui.define(
                     }
                 },
                 onBeforeBindOfferHistory: function (oEvent) {
+                    debugger;
                     var oView = this.getView();
-                    var sOfferId = oView
+                    var sRedeemId = oView
                         .getModel("oModelControl")
                         .getProperty("/UUID");
                     var aFilter = [];
 
                     var aFilter2 = new Filter(
-                        "UUID",
+                        "PainterLoyaltyRedemptionId",
                         FilterOperator.EQ,
-                        parseInt(sOfferId)
+                        sRedeemId
                     );
                     aFilter.push(aFilter2);
                     var oBindingParams = oEvent.getParameter("bindingParams");

@@ -200,6 +200,10 @@ sap.ui.define(
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("PainterDetails/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+                            } else if (prop === "Status") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Status", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -213,6 +217,12 @@ sap.ui.define(
                                             }),
                                             new Filter({
                                                 path: "PainterDetails/MembershipCard",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "RedemptionCode",
                                                 operator: "Contains",
                                                 value1: oViewFilter[prop].trim(),
                                                 caseSensitive: false

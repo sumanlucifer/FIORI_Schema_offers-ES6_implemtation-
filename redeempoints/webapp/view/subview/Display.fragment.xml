@@ -16,14 +16,14 @@
             <Text text="{PainterDetails/Mobile}" />
             <Label text="{i18n>MembershipId}" />
             <Text text="{PainterDetails/MembershipCard}" />
+            <Label text="{i18n>RedeemCode}" />
+            <Text text="{oModelView>/RedemptionCode}" />
             <Label text="{i18n>Zone}" />
             <Text text="{PainterDetails/ZoneId}" />
             <Label text="{i18n>Division}" />
             <Text text="{PainterDetails/DivisionId}" />
             <Label text="{i18n>Depot}" />
             <Text text="{PainterDetails/Depot/Depot}" />
-            <!-- <Label text="{i18n>PrimaryDealer}" />
-                <Text text="{oModelView>/AddFields/PDealer}" /> -->
 
             <core:Title text="" />
             <Label text="{i18n>Balpts}" />
