@@ -291,6 +291,7 @@ sap.ui.define([
                 success: function (obj) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     oView.getModel("oModelControl").setProperty("/bEnable", true);
+                    oView.getModel("oModelControl").setProperty("/bVerify", false);
 
                     oViewModel.setProperty(
                         "/AddFields/MembershipCard",
@@ -571,6 +572,7 @@ sap.ui.define([
             oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
             oModelCtrl.setProperty("/isValidOTP",false);
+            oModelCtrl.setProperty("/bVerify", false);
             btnOtp.setVisible(true);
             
         },
