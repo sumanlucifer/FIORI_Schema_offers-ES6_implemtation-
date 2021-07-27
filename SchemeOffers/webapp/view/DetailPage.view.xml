@@ -65,7 +65,7 @@
         <f:content>
             <IconTabBar select="onIcnTbarChange" selectedKey="{oModelControl3>/selectedKey}" id="idIconTabBar" expandable="false" expanded="{device>/isNoPhone}">
                 <items>
-                    <IconTabFilter text="{i18n>offerDetailsTabFilter}" key="0">
+                    <IconTabFilter text="{i18n>Details}" key="0">
                         <VBox id="idVbProfile" visible="{= ${oModelControl3>/mode}=== 'display'}">
 
                         </VBox>

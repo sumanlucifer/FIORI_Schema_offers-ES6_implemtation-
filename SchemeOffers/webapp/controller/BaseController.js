@@ -3280,7 +3280,6 @@ sap.ui.define(
                             //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
                         );
                     }
-
                     oPromise.resolve(oPayLoad);
                     return oPromise;
 
