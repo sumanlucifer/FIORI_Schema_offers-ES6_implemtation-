@@ -2,12 +2,12 @@
     <Dialog title="{i18n>KycDocuments}" titleAlignment="Center" afterClose="onDialogClose">
         <content>
             <Carousel height="600px" arrowsPlacement="PageIndicator" class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}=== 1}">
-                <Image  src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
+                <Image src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
                 <Image src="{oModelControl>/KycImage/Image2}" alt="No KYC Found"/>
               
             </Carousel>
              <Carousel class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}!== 1}">
-                <Image src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
+                <Image decorative="false"  src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
               
             </Carousel>
         </content>
