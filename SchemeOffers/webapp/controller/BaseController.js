@@ -202,17 +202,20 @@ sap.ui.define(
                     var oModelView = oView.getModel("oModelDisplay");
                     var oEndDate = oEvent.getSource().getDateValue();
                     var oStartDate = oModelView.getProperty("/StartDate");
-                    if (oStartDate > oEndDate) {
-                        MessageToast.show("Kindly select a date more than or equal start date.");
-                        oModelControl.setProperty("/EndDate", "");
-                        oModelView.setProperty("/EndDate", null);
-                        return;
+                    if (oStartDate) {
+                        if (oStartDate > oEndDate) {
+                            MessageToast.show("Kindly select a date more than or equal start date.");
+                            oModelControl.setProperty("/EndDate", "");
+                            oModelView.setProperty("/EndDate", null);
+                            return;
+                        }
                     }
-                    if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show("Kindly enter a date greater than or equal to current date");
-                        oModelControl.setProperty("/EndDate", "");
-                        oModelView.setProperty("/EndDate", null);
-                    }
+
+                    // if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
+                    //     MessageToast.show("Kindly enter a date greater than or equal to current date");
+                    //     oModelControl.setProperty("/EndDate", "");
+                    //     oModelView.setProperty("/EndDate", null);
+                    // }
                 },
 
                 onOfferTypeChanged: function (oEvent) {
@@ -2839,12 +2842,12 @@ sap.ui.define(
                             return;
                         }
                     }
-                    if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show("Kindly enter a date greater than current date");
+                    // if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
+                    //     MessageToast.show("Kindly enter a date greater than current date");
 
-                        oModelControl.setProperty(sPath + "/StartDate", null);
-                        return;
-                    }
+                    //     oModelControl.setProperty(sPath + "/StartDate", null);
+                    //     return;
+                    // }
                 },
                 onEndDateBRRChange: function (oEvent) {
                     var oView = this.getView();
@@ -2861,19 +2864,22 @@ sap.ui.define(
                         .getBindingContext("oModelControl")
                         .getPath();
                     var oStartDate = oBject["StartDate"];
-                    if (oStartDate > oEndDate) {
-                        MessageToast.show(
-                            "Kindly select a date more than Bonus Validity From date."
-                        );
-                        oModelControl.setProperty(sPath + "/EndDate", null);
-                        return;
+                    if (oStartDate) {
+                        if (oStartDate > oEndDate) {
+                            MessageToast.show(
+                                "Kindly select a date more than Bonus Validity From date."
+                            );
+                            oModelControl.setProperty(sPath + "/EndDate", null);
+                            return;
+                        }
                     }
-                    if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
-                        MessageToast.show("Kindly enter a date greater than current date");
 
-                        oModelControl.setProperty(sPath + "/EndDate", null);
-                        return;
-                    }
+                    // if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
+                    //     MessageToast.show("Kindly enter a date greater than current date");
+
+                    //     oModelControl.setProperty(sPath + "/EndDate", null);
+                    //     return;
+                    // }
                 },
 
                 _propertyToBlank: function (aArray, aModel2) {

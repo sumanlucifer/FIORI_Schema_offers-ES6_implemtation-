@@ -2186,15 +2186,20 @@ sap.ui.define(
 
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
 
-                    var c1, c2, c3;
+                    var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
+
+
                     c1.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function (oNewPayLoad) {
-                            othat._RemarksDialog2.setBusy(false);
-                            othat._RemarksDialog2.close();
-                            oModelC.setProperty("/PageBusy", true)
-                            othat.handleCancelPress(oNewPayLoad)
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                        c1B.then(function (oNewPayLoad) {
+                            c2 = othat._UpdateOffer(oNewPayLoad);
+                            c2.then(function (oNewPayLoad) {
+                                othat._RemarksDialog2.setBusy(false);
+                                othat._RemarksDialog2.close();
+                                oModelC.setProperty("/PageBusy", true)
+                                othat.handleCancelPress(oNewPayLoad)
+                            })
                         })
                     });
                 },
