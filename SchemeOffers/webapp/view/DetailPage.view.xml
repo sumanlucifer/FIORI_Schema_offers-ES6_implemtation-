@@ -71,7 +71,7 @@
                         </VBox>
                         <mvc:XMLView id="wizardViewBranching" async="true" visible="{= ${oModelControl3>/mode}=== 'edit'}" viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" />
                     </IconTabFilter>
-                    <IconTabFilter text="{i18n>Painters}" key="1">
+                    <IconTabFilter text="{i18n>OfferReport}" key="1">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.PainterTable1" type="XML"/>
                     </IconTabFilter>
                     <!-- <IconTabFilter text="{i18n>QualifiedPainter}" key="2">
@@ -116,7 +116,7 @@
                     <!-- Redemption Button -->
                     <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                       <!-- Redemption Button -->
-                    <Button press="onDetailPageSave" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{= ${OfferStatus}!=='EXPIRED'}" />
+                    <Button press="onDetailPageSave" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd"  visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSaveCheckDetail'}"  />
                 </HBox>
 
 

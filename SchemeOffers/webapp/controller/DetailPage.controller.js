@@ -1742,7 +1742,7 @@ sap.ui.define(
                 //     return [true, ""]
                 // },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c2, c3, c4, c5, c5A, c5B, c6, c7;
+                    var c1, c1B, c2, c3, c4, c5, c5A, c5B, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -1752,24 +1752,27 @@ sap.ui.define(
                     // create payload 4 and 5 used for table 1,2 and table 3,4
                     //othat._CreatePayloadPart2();othat._UploadFile(mParam1, bFileFlag);
                     c1.then(function (oPayload) {
-                        c2 = othat._CreatePayloadPart2(oPayload);
-                        c2.then(function (oPayload) {
-                            c3 = othat._CreatePayloadPart3(oPayload);
-                            c3.then(function (oPayLoad) {
-                                c4 = othat._CreatePayLoadPart4(oPayLoad);
-                                c4.then(function (oPayLoad) {
-                                    //c5 = othat._CreateOffer(oPayLoad);
-                                    c5 = othat._CreatePayLoadPart5(oPayLoad);
-                                    c5.then(function (oPayLoad) {
-                                        c5A = othat._CreateWorkFlowData(oPayLoad);
-                                        c5A.then(function () {
-                                            c5B = othat._CheckExpandPainter(oPayLoad);
-                                            c5B.then(function () {
-                                                c6 = othat._UpdateOffer(oPayLoad);
-                                                c6.then(function (oPayLoad) {
-                                                    c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                                    c7.then(function (data) {
-                                                        othat.handleCancelPress(data);
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oPayload)
+                        c1B.then(function (oPayload) {
+                            c2 = othat._CreatePayloadPart2(oPayload);
+                            c2.then(function (oPayload) {
+                                c3 = othat._CreatePayloadPart3(oPayload);
+                                c3.then(function (oPayLoad) {
+                                    c4 = othat._CreatePayLoadPart4(oPayLoad);
+                                    c4.then(function (oPayLoad) {
+                                        //c5 = othat._CreateOffer(oPayLoad);
+                                        c5 = othat._CreatePayLoadPart5(oPayLoad);
+                                        c5.then(function (oPayLoad) {
+                                            c5A = othat._CreateWorkFlowData(oPayLoad);
+                                            c5A.then(function () {
+                                                c5B = othat._CheckExpandPainter(oPayLoad);
+                                                c5B.then(function () {
+                                                    c6 = othat._UpdateOffer(oPayLoad);
+                                                    c6.then(function (oPayLoad) {
+                                                        c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                                                        c7.then(function (data) {
+                                                            othat.handleCancelPress(data);
+                                                        });
                                                     });
                                                 });
                                             });
@@ -1777,7 +1780,7 @@ sap.ui.define(
                                     });
                                 });
                             });
-                        });
+                        })
                     });
                 },
                 _UpdateOffer: function (oPayLoad) {
@@ -2183,15 +2186,18 @@ sap.ui.define(
 
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
 
-                    var c1, c2, c3;
+                    var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
                     c1.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function (oNewPayLoad) {
-                            othat._RemarksDialog2.setBusy(false);
-                            othat._RemarksDialog2.close();
-                            oModelC.setProperty("/PageBusy", true)
-                            othat.handleCancelPress(oNewPayLoad)
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                        c1B.then(function (oNewPayLoad) {
+                            c2 = othat._UpdateOffer(oNewPayLoad);
+                            c2.then(function (oNewPayLoad) {
+                                othat._RemarksDialog2.setBusy(false);
+                                othat._RemarksDialog2.close();
+                                oModelC.setProperty("/PageBusy", true)
+                                othat.handleCancelPress(oNewPayLoad)
+                            })
                         })
                     });
                 },
@@ -2217,17 +2223,20 @@ sap.ui.define(
                     oModelC.setProperty("/PageBusy", true);
                     var othat = this;
                     var oNewPayLoad = this._RemoveEmptyValue(oViewData);
-                    oNewPayLoad["EndDate"] = new Date(
-                        oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
+                    // oNewPayLoad["EndDate"] = new Date(
+                    //     oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
 
-                    );
-                    var c1, c2, c3;
+                    // );
+                    var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
                     c1.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function (oNewPayLoad) {
-                            oModelC.setProperty("/PageBusy", true)
-                            othat.handleCancelPress()
+                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                        c1B.then(function (oNewPayLoad) {
+                            c2 = othat._UpdateOffer(oNewPayLoad);
+                            c2.then(function (oNewPayLoad) {
+                                oModelC.setProperty("/PageBusy", true)
+                                othat.handleCancelPress()
+                            })
                         })
                     });
 
