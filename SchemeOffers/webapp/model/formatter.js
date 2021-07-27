@@ -208,7 +208,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2) {
             //m1 Redemption Status
-           
+
             if (m1 === "REDEEMABLE") {
                 if (!m2) {
                     return true;
@@ -327,12 +327,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return "NA";
         },
         btnSaveCheckDetail: function (m1, m2) {
-            if (m1 === "EXPIRED") {
+            if (m1 !== "EXPIRED") {
                 if (m2 === 6 || m2 === 7) {
                     return true;
                 }
 
             }
+            return false;
         },
     };
 });
