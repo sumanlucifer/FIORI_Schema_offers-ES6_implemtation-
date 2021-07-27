@@ -3073,11 +3073,16 @@ sap.ui.define(
                     );
 
                     aFilters.push(
-                        new Filter({
+                        new Filter([new Filter({
                             path: "PointType",
                             operator: FilterOperator.Contains,
                             value1: "OFFER_BANK_TRANSFER"
-                        })
+                        }),
+                    new Filter({
+                            path: "PointType",
+                            operator: FilterOperator.Contains,
+                            value1: "BANK_TRANSFER"
+                        })],false)
                     );
 
                     oBindingParams.filters.push(
