@@ -218,6 +218,12 @@
                                         </customData>
                                          <Text text="{i18n>RedeemStatus}"/>
                                     </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionMessage", "leadingProperty": "PaymentTransaction/TransactionMessage", "columnIndex": 6}'/>
+                                        </customData>
+                                         <Text text="{i18n>Remark}"/>
+                                    </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
@@ -230,6 +236,7 @@
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
                                                 <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionAmount'} }" />
                                                 <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionStatus',formatter:'.fmtStatusType'} }" />
+                                                <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionMessage'} }" />
                                          </cells>      
                                     </ColumnListItem>
                                 </items> 
