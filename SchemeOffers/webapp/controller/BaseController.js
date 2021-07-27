@@ -3274,10 +3274,13 @@ sap.ui.define(
                 },
                 _CreatePayLoadPart1AForEndDate: function (oPayLoad) {
                     var oPromise = jQuery.Deferred();
-                    oPayLoad["EndDate"] = new Date(
-                        oPayLoad["EndDate"].setHours(23, 59, 59, 999)
-                        //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
-                    );
+                    if (oPayLoad.hasOwnProperty("EndDate")) {
+                        oPayLoad["EndDate"] = new Date(
+                            oPayLoad["EndDate"].setHours(23, 59, 59, 999)
+                            //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
+                        );
+                    }
+
                     oPromise.resolve(oPayLoad);
                     return oPromise;
 
