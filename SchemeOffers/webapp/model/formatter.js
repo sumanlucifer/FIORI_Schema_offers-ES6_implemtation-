@@ -208,7 +208,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2) {
             //m1 Redemption Status
-            console.log(m1);
+           
             if (m1 === "REDEEMABLE") {
                 if (!m2) {
                     return true;
@@ -305,6 +305,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "No";
         },
+
         checkPainterReward: function (m1, m2, m3, m4, m5) {
             //m1 RedemptionStatus
             //m2 RedemptionType
@@ -324,6 +325,14 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return "Not Redeemed"
             }
             return "NA";
+        },
+        btnSaveCheckDetail: function (m1, m2) {
+            if (m1 === "EXPIRED") {
+                if (m2 === 6 || m2 === 7) {
+                    return true;
+                }
+
+            }
         },
     };
 });

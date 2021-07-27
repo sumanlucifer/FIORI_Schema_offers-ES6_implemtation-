@@ -116,7 +116,7 @@
                     <!-- Redemption Button -->
                     <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                       <!-- Redemption Button -->
-                    <Button press="onDetailPageSave" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{= ${OfferStatus}!=='EXPIRED'}" />
+                    <Button press="onDetailPageSave" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd"  visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSaveCheckDetail'}"  />
                 </HBox>
 
 
