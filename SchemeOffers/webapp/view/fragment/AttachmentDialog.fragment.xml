@@ -1,9 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog title="{i18n>Attachment}" titleAlignment="Center" afterClose="onAfterAttachClose">
+    <Dialog title="{i18n>Attachment}" contentWidth="600px" contentHeight="500px"  titleAlignment="Center" afterClose="onAfterAttachClose">
         <content>
             <Carousel class="sapUiContentPadding" loop="true">
-                <Image alt="No Data Found" src="{path:'__metadata/media_src' , formatter: '.formatter.formatURL' }"></Image>
+                <Image decorative="false" alt="No Data Found" src="{path:'__metadata/media_src' , formatter: '.formatter.formatURL' }"></Image>
             </Carousel>
         </content>
         <endButton>
