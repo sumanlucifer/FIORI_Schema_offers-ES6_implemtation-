@@ -198,7 +198,7 @@ sap.ui.define(
                     oCtrl2Model.setProperty("/ProfilePageBuzy", true);
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
-                    var c1, c2, c3, c4;
+                    var c1, c2, c3, c4,c4A;
                     var othat = this;
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
