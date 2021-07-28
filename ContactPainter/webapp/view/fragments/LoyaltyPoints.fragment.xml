@@ -208,19 +208,25 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionAmount", "leadingProperty": "PaymentTransaction/TransactionAmount", "columnIndex": 4}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "RewardPoints", "leadingProperty": "RewardPoints", "columnIndex": 4}'/>
+                                        </customData>
+                                         <Text text="{i18n>RdmdPoints}"/>
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionAmount", "leadingProperty": "PaymentTransaction/TransactionAmount", "columnIndex": 5}'/>
                                         </customData>
                                          <Text text="{i18n>RedeemCash}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionStatus", "leadingProperty": "PaymentTransaction/TransactionStatus", "columnIndex": 5}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionStatus", "leadingProperty": "PaymentTransaction/TransactionStatus", "columnIndex": 6}'/>
                                         </customData>
                                          <Text text="{i18n>RedeemStatus}"/>
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionMessage", "leadingProperty": "PaymentTransaction/TransactionMessage", "columnIndex": 6}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "PaymentTransaction/TransactionMessage", "leadingProperty": "PaymentTransaction/TransactionMessage", "columnIndex": 7}'/>
                                         </customData>
                                          <Text text="{i18n>Remark}"/>
                                     </Column>
@@ -234,6 +240,7 @@
                                                <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/Title} } " />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
+                                                 <Text text="{= ${PointType}=== 'OFFER_BANK_TRANSFER' ? 'NA' : ${path:'RewardPoints'} }" />
                                                 <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionAmount'} }" />
                                                 <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionStatus',formatter:'.fmtStatusType'} }" />
                                                 <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${path:'PaymentTransaction/TransactionMessage'} }" />
