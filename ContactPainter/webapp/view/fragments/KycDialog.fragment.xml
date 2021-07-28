@@ -7,7 +7,7 @@
               
             </Carousel>
              <Carousel height="450px" class="sapUiContentPadding" loop="true" visible="{=${oModelView>/PainterKycDetails/KycTypeId}!== 1}">
-                <Image  height="400px" decorative="false"  src="{oModelControl>/KycImage/Image1}" alt="No KYC Found"/>
+                <Image  height="400px" decorative="false"  src="{oModelControl>/KycImage/Image1}" alt="No KYC Image Found"/>
               
             </Carousel>
         </content>
