@@ -241,7 +241,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
         btnPublished: function (m1, m2) {
             if (m1 === "APPROVED") {
-                return true;
+                if (m2 === 5 || m2 === 6 || m2 === 7) {
+                    return true;
+                }
             }
             return false;
         },
