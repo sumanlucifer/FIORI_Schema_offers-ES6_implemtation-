@@ -26,7 +26,7 @@
                 <ToolbarSpacer/>
                 <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavBack"/>
                 <Button width="7%" text="{i18n>Redeem}" type="Accept" enabled="{oModelControl>/isValidOTP}" visible="{= ${oModelControl>/IsWorkflowApplicable} === false}" press="onPressSave"/>
-                <Button width="7%" text="{i18n>SendForApproval}" type="Emphasized" enabled="{oModelControl>/isValidOTP}" visible="{= ${oModelControl>/IsWorkflowApplicable} === true}" press="onPressSave"/>
+                <Button text="{i18n>SendForApproval}" type="Emphasized" enabled="{oModelControl>/isValidOTP}" visible="{= ${oModelControl>/IsWorkflowApplicable} === true}" press="onPressSave"/>
             </Toolbar>
         </footer>
     </Page>
