@@ -571,7 +571,7 @@ sap.ui.define([
             var obj = oSelectedItem.getBindingContext("oModelControl").getObject();
             oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
-            oModelCtrl.setProperty("/isValidOTP",false);
+            //oModelCtrl.setProperty("/isValidOTP",false);
            // oModelCtrl.setProperty("/bVerify", false);
             oModelCtrl.setProperty("/IsWorkflowApplicable", obj.IsWorkflowApplicable);
            // btnOtp.setVisible(true);
