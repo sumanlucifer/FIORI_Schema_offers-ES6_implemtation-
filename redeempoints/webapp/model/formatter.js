@@ -108,9 +108,9 @@ sap.ui.define([], function () {
         // List view workflow changes
         btnAddRedemption: function (m1) {
             //m1 is the logged in user type
-            // if (m1 === 2) {
-            return true;
-            // }
+            if (m1 === 2) {
+                return true;
+            }
             return false;
         },
 
