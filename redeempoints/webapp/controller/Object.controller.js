@@ -573,6 +573,7 @@ sap.ui.define([
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
             oModelCtrl.setProperty("/isValidOTP",false);
             oModelCtrl.setProperty("/bVerify", false);
+            oModelCtrl.setProperty("/IsWorkflowApplicable", obj.IsWorkflowApplicable);
             btnOtp.setVisible(true);
             
         },
