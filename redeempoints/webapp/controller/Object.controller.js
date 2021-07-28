@@ -103,7 +103,7 @@ sap.ui.define([
                 Slabs:[]
             }
             var oModel1 = new JSONModel(oDataView);
-            var oModel2 = new JSONModel(oDataControl)
+            var oModel2 = new JSONModel(oDataControl);
             oView.setModel(oModel1, "oModelView");
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
@@ -563,7 +563,7 @@ sap.ui.define([
             var oModelView = this.getModel("oModelView");
             var oModelCtrl = this.getModel("oModelControl");
             var oSelectedItem = oEvent.getParameter("selectedItem");
-            var btnOtp = this.getView().byId("btnOTP");
+            //var btnOtp = this.getView().byId("btnOTP");
             oEvent.getSource().getBinding("items").filter([]);
             if (!oSelectedItem) {
                 return;
@@ -572,9 +572,9 @@ sap.ui.define([
             oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
             oModelCtrl.setProperty("/isValidOTP",false);
-            oModelCtrl.setProperty("/bVerify", false);
+           // oModelCtrl.setProperty("/bVerify", false);
             oModelCtrl.setProperty("/IsWorkflowApplicable", obj.IsWorkflowApplicable);
-            btnOtp.setVisible(true);
+           // btnOtp.setVisible(true);
             
         },
         onValueHelpSlabsClose: function(){
@@ -600,6 +600,7 @@ sap.ui.define([
         _getSlabsForPainter:function (Id){
             var oModel = this.getOwnerComponent().getModel();
             var oModelCtrl = this.getModel("oModelControl");
+            var btnOtp = this.getView().byId("btnOTP");
             oModel.callFunction(
                 "/GetLoyaltyPointsRedemptionSlabs", {
                 method: "GET",
@@ -609,8 +610,8 @@ sap.ui.define([
                 success: function (oData, response) {
                     var data=oData.results;
                     oModelCtrl.setProperty("/Slabs",data);
-                    oModelCtrl.setProperty("/isValidOTP",false)
-                   
+                    oModelCtrl.setProperty("/isValidOTP",false);
+                    btnOtp.setVisible(true);
 
                 },
                 error: function (oError) {
