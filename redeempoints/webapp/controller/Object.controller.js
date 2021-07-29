@@ -280,7 +280,6 @@ sap.ui.define([
             var oData = oView.getModel();
             var oViewModel = oView.getModel("oModelView");
             var sPath = "/PainterSet(" + mParam + ")";
-
             //Added Busy
             oView.getModel("oModelControl").setProperty("/bBusy", true);
 
@@ -292,7 +291,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     oView.getModel("oModelControl").setProperty("/bEnable", true);
                     oView.getModel("oModelControl").setProperty("/bVerify", false);
-
+                    oView.getModel("oModelView").setProperty("/AddFields/Otp", "");
                     oViewModel.setProperty(
                         "/AddFields/MembershipCard",
                         obj["MembershipCard"]
