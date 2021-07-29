@@ -3546,13 +3546,23 @@ sap.ui.define(
                 onConfirmRedeem: function () {
                     var oView = this.getView();
                     var oModelC2 = oView.getModel("oModelControl2");
-                    oModelC2.setProperty("/ProfilePageBuzy", true);
                     var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
-                    console.log(iSelctedIndex)
                     if (iSelctedIndex < 0) {
                         MessageToast.show("Kindly Select at least one of the reward to redeem.");
                         return;
                     }
+                    this.onConfirmRedeem1();
+                },
+                onConfirmRedeem1: function () {
+                    var oView = this.getView();
+                    var oModelC2 = oView.getModel("oModelControl2");
+                    oModelC2.setProperty("/ProfilePageBuzy", true);
+                    var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
+                    console.log(iSelctedIndex)
+                    // if (iSelctedIndex < 0) {
+                    //     MessageToast.show("Kindly Select at least one of the reward to redeem.");
+                    //     return;
+                    // }
 
                     var oRedemptionType = {
                         0: "POINTS_TRANSFER",
