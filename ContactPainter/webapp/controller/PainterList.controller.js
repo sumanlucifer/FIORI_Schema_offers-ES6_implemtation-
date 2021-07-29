@@ -33,8 +33,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.ContactPainter.controller.PainterList",
-            {
+            "com.knpl.pragati.ContactPainter.controller.PainterList", {
                 formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
@@ -56,8 +55,9 @@ sap.ui.define(
                             DivisionId: "",
                             PreferredLanguage: "",
                             SourceRegistration: "",
-                            BankDetailsStatus:"",/*Aditya changes*/
-                            KycStatus:""/*Aditya changes*/
+                            BankDetailsStatus: "",
+                            /*Aditya changes*/
+                            KycStatus: "" /*Aditya changes*/
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -158,8 +158,7 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            }
-                            else if (prop === "BankDetailsStatus") {
+                            } else if (prop === "BankDetailsStatus") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -168,7 +167,7 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            }/*Aditya changes end*/
+                            } /*Aditya changes end*/
                             else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -204,9 +203,16 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            } 
-                            
-                                else if (prop === "SourceRegistration") {
+                            } else if (prop === "ActivationStatus") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "ActivationStatus",
+                                        FilterOperator.EQ,
+                                        oViewFilter[prop]
+                                    )
+                                );
+                            } else if (prop === "SourceRegistration") {
                                 aFlaEmpty = false;
                                 if (oViewFilter[prop] == "MOBILE") {
                                     aCurrentFilterValues.push(
@@ -216,42 +222,35 @@ sap.ui.define(
                                     aCurrentFilterValues.push(
                                         new Filter("CreatedBy", FilterOperator.GT, 0)
                                     );
-                                }
-                                 else if (oViewFilter[prop] == "MIGRATED") {
+                                } else if (oViewFilter[prop] == "MIGRATED") {
                                     aCurrentFilterValues.push(
                                         new Filter("IsMigrated", FilterOperator.EQ, true)
                                     );
                                 }
-                               
+
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
                                         [
-                                            new Filter(
-                                                {
-                                                    path: "Name",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                                {
-                                                    path: "MembershipCard",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                                {
-                                                    path: "Mobile",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
+                                            new Filter({
+                                                path: "Name",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "MembershipCard",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "Mobile",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
                                         ],
                                         false
                                     )
@@ -299,15 +298,19 @@ sap.ui.define(
                         DivisionId: "",
                         PreferredLanguage: "",
                         PainterType: "",
-                        BankDetailsStatus:"",/*Aditya changes*/
-                        KycStatus:""/*Aditya changes*/
+                        BankDetailsStatus: "",
+                        /*Aditya changes*/
+                        KycStatus: "" /*Aditya changes*/
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
                     var oTable = this.byId("idPainterTable");
                     var oBinding = oTable.getBinding("items");
                     oBinding.filter([]);
-                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
                     this._fiterBarSort();
                 },
                 onPressAddPainter: function (oEvent) {
@@ -353,8 +356,8 @@ sap.ui.define(
                                     new Filter("Name", function (sText) {
                                         return (
                                             (sText || "")
-                                                .toUpperCase()
-                                                .indexOf(sValue.toUpperCase()) > -1
+                                            .toUpperCase()
+                                            .indexOf(sValue.toUpperCase()) > -1
                                         );
                                     }),
                                 ],
@@ -405,7 +408,10 @@ sap.ui.define(
                         aFilters.push(filter1);
                         //aFilters.push(filter2);
                         //aFilters.push(filtes3);
-                        endFilter = new Filter({ filters: aFilters, and: false });
+                        endFilter = new Filter({
+                            filters: aFilters,
+                            and: false
+                        });
                     }
 
                     // update list binding
@@ -550,8 +556,7 @@ sap.ui.define(
                     var othat = this;
                     console.log(sPath, oBject);
                     MessageBox.confirm(
-                        "Kindly confirm to delete the painter- " + oBject["Name"],
-                        {
+                        "Kindly confirm to delete the painter- " + oBject["Name"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
