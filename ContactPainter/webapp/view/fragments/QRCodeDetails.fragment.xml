@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog   binding="{oModelControl2>/QRCodeData}" class="sapUiContentPadding" title="{i18n>TokenCodeDetails}" titleAlignment="Center" >
+        <content>
+            <form:SimpleForm visible="{= ${oModelControl2>ProductCategory} === null ? false: true }"	columnsL="2" layout="ResponsiveGridLayout"	columnsM="2"	singleContainerFullSize="false"  >
+                <Label text="Category" />
+                <Text text="{oModelControl2>ProductCategory}" />
+                <Label text="Classification" />
+                <Text text="{oModelControl2>ProductClassification}" />
+                <Label text="Product Name" />
+                <Text text="{oModelControl2>ProductName}" />
+                <Label text="Points" />
+                <Text text="{oModelControl2>RewardPoints}" />
+                 <Label text="Painter Name" visible="{= ${oModelControl2>PainterName} !== null }" />
+                <Text text="{oModelControl2>PainterName}" visible="{= ${oModelControl2>PainterName} !== null }"  />
+                 <Label text="Painter Mobile No." visible="{= ${oModelControl2>PainterName} !== null }"  />
+                <Text text="{oModelControl2>PainterMobile}" visible="{= ${oModelControl2>PainterName} !== null }"  />
+            </form:SimpleForm>
+                <ObjectStatus  state="{= ${oModelControl2>Status} ? 'Success'  : 'Error'   }" text= "{oModelControl2>Message}" />
+        </content>
+        <beginButton>
+            <Button text="Close" press="onTokenDlgClose" />
+        </beginButton>
+        <endButton>
+              <Button text="{i18n>ApplyToken}" type="Emphasized" press="onApplyLoyalyPoints" visible="{= ${oModelControl2>Status} === true }" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

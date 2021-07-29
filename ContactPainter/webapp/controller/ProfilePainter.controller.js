@@ -138,7 +138,8 @@ sap.ui.define(
                             UUID: ""
                         },
                         IctabBarLoyalty: "accrued",
-                        ProfilePageBuzy: true
+                        ProfilePageBuzy: true,
+                        QRCodeData: {}
 
                     };
                     var oView = this.getView();
@@ -198,7 +199,7 @@ sap.ui.define(
                     oCtrl2Model.setProperty("/ProfilePageBuzy", true);
                     oCtrl2Model.setProperty("/modeEdit", true);
                     oCtrl2Model.setProperty("/iCtbar", false);
-                    var c1, c2, c3, c4,c4A;
+                    var c1, c2, c3, c4, c4A;
                     var othat = this;
                     c1 = othat._loadEditProfile("Edit");
                     c1.then(function () {
@@ -2371,9 +2372,10 @@ sap.ui.define(
                                 },
                             }),
                             endButton: new Button({
-                                text: "{i18n>Ok}",
+                                text: "{i18n>Validate}",
                                 type: "Emphasized",
-                                press: othat._onApplyLoyalyPoints.bind(othat),
+                                press: othat._onValidateTokenCode.bind(othat)
+                                //press: othat._onApplyLoyalyPoints.bind(othat),
                             }),
                         });
 
@@ -2383,7 +2385,65 @@ sap.ui.define(
 
                     this.oDefaultDialog.open();
                 },
-                _onApplyLoyalyPoints: function () {
+                _onValidateTokenCode: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var that = this;
+                    var sTokenCode = oModelControl.getProperty("/ApplyLoyaltyPoints").trim();
+                    if (sTokenCode == "") {
+                        MessageToast.show("Kindly enter the token code to continue");
+                        return;
+                    }
+
+                    var oData = oView.getModel();
+
+                    oData.callFunction("/QRCodeDetailsAdmin", {
+                        urlParameters: {
+                            qrcode: sTokenCode.toString(),
+                            painterid: oModelControl.getProperty("/PainterId")
+                        },
+                        success: function (oData) {
+                            if (oData !== null) {
+                                if (oData.hasOwnProperty("Status")) {
+                                    // if (oData["Status"] == true) {
+                                    //     oModelView.setProperty("/RewardPoints",
+                                    //         oData["RewardPoints"]
+                                    //     );
+                                    //     oModelView.setProperty(
+                                    //         "/TokenCode",
+                                    //         sTokenCode
+                                    //     );
+                                    // }
+                                    that.showQRCodedetails.call(that, oData);
+                                }
+                            }
+                        },
+                        error: function () {},
+                    });
+                },
+                showQRCodedetails: function (data) {
+                    var oModel = this.getView().getModel("oModelControl2");
+                    oModel.setProperty("/QRCodeData", data);
+                    var othat = this;
+                    if (!this.oQRCodeDtlsDialog) {
+                        Fragment.load({
+                            type: "XML",
+                            controller: othat,
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.QRCodeDetails"
+                        }).then(function (oDialog) {
+                            othat.oQRCodeDtlsDialog = oDialog;
+                            othat.getView().addDependent(oDialog);
+                            oDialog.open();
+                        }.bind(othat));
+                    } else {
+                        this.oQRCodeDtlsDialog.open();
+                    }
+                },
+                onTokenDlgClose: function () {
+                    this.oQRCodeDtlsDialog.close();
+                },
+                onApplyLoyalyPoints: function () {
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl2");
@@ -2410,6 +2470,7 @@ sap.ui.define(
                                         MessageToast.show(oData["Message"]);
 
                                         othat.oDefaultDialog.close();
+                                        othat.oQRCodeDtlsDialog.close();
                                     } else if (oData["Status"] == false) {
                                         MessageToast.show(oData["Message"]);
                                     }
@@ -3074,15 +3135,16 @@ sap.ui.define(
 
                     aFilters.push(
                         new Filter([new Filter({
-                            path: "PointType",
-                            operator: FilterOperator.Contains,
-                            value1: "OFFER_BANK_TRANSFER"
-                        }),
-                    new Filter({
-                            path: "PointType",
-                            operator: FilterOperator.Contains,
-                            value1: "BANK_TRANSFER"
-                        })],false)
+                                path: "PointType",
+                                operator: FilterOperator.Contains,
+                                value1: "OFFER_BANK_TRANSFER"
+                            }),
+                            new Filter({
+                                path: "PointType",
+                                operator: FilterOperator.Contains,
+                                value1: "BANK_TRANSFER"
+                            })
+                        ], false)
                     );
 
                     oBindingParams.filters.push(
@@ -3484,13 +3546,23 @@ sap.ui.define(
                 onConfirmRedeem: function () {
                     var oView = this.getView();
                     var oModelC2 = oView.getModel("oModelControl2");
-                    oModelC2.setProperty("/ProfilePageBuzy", true);
                     var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
-                    console.log(iSelctedIndex)
                     if (iSelctedIndex < 0) {
                         MessageToast.show("Kindly Select at least one of the reward to redeem.");
                         return;
                     }
+                    this.onConfirmRedeem1();
+                },
+                onConfirmRedeem1: function () {
+                    var oView = this.getView();
+                    var oModelC2 = oView.getModel("oModelControl2");
+                    oModelC2.setProperty("/ProfilePageBuzy", true);
+                    var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
+                    console.log(iSelctedIndex)
+                    // if (iSelctedIndex < 0) {
+                    //     MessageToast.show("Kindly Select at least one of the reward to redeem.");
+                    //     return;
+                    // }
 
                     var oRedemptionType = {
                         0: "POINTS_TRANSFER",
