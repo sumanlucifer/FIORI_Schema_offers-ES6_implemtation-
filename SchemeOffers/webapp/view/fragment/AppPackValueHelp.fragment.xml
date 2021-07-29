@@ -4,9 +4,9 @@
 		<SelectDialog
 		title="Packs"
         growing="true"
-        growingThreshold="15"
+        growingThreshold="10"
 		class="sapUiPopupWithPadding"
-		items="{path:'/MasterRepProductSkuSet',sorter:{path:'Description'}}"
+		items="{path:'/MasterRepProductSkuSet',parameters:{select:'SkuCode,Description'} }"
 	    search="_handlePackValueHelpSearch"
 		confirm="_handlePackValueHelpConfirm"
         cancel="_handleProdValueHelpClose"

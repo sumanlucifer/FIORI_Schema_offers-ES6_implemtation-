@@ -2464,9 +2464,33 @@ sap.ui.define(
                         oModel = oView.getModel("oModelControl");
                     var aNumber = mParam1.match(/\d+$/)[0];
                     var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                    var aProdMapped = aProd.map(function (elem) {
+                        return parseInt(elem["Id"]);
+                    });
+                    var aProdSort = aProdMapped.sort(function (el1, el2) {
+                        return el1 - el2;
+                    })
+                    var aProdLimitArray = []
+                    for (var x of aProdSort) {
+                        if (aProdSort.indexOf(x - 1) < 0 && aProdSort.indexOf(x + 1) < 0) {
+                            aProdLimitArray.push(x);
+                            continue;
+                        }
+
+                        if (aProdSort.indexOf(x - 1) < 0) {
+                            aProdLimitArray.push([x]);
+                            continue;
+                        }
+                        if (aProdSort.indexOf(x + 1) < 0) {
+                            aProdLimitArray[aProdLimitArray.length - 1].push(x);
+                            continue;
+                        }
+                    }
+                    console.log(aProd, aProdSort, aProdLimitArray);
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                     var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aFilter1 = [];
+                    var aFilter1A = [];
                     var aFilter2 = [];
                     var aFilter3 = [];
 
@@ -2474,7 +2498,21 @@ sap.ui.define(
                         aFilter1.push(
                             new Filter("ProductCode", FilterOperator.EQ, a["Id"])
                         );
+                    };
+                    for (var a1 of aProdLimitArray) {
+                        if (Array.isArray(a1)) {
+                            aFilter1A.push(new Filter([
+                                new Filter("ProductCode", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
+                                new Filter("ProductCode", FilterOperator.LT, ('000' + a1[1]).slice(-3))
+                            ],true))
+                        } else {
+                            aFilter1A.push(
+                                new Filter("ProductCode", FilterOperator.EQ, ('000' + a1).slice(-3))
+                            );
+
+                        }
                     }
+                    console.log(aFilter1A)
                     for (var b of aCat) {
                         aFilter2.push(new Filter("CategoryCode", FilterOperator.EQ, b));
                     }
@@ -2484,7 +2522,7 @@ sap.ui.define(
                         );
                     }
                     var aFilterProd = new Filter({
-                        filters: aFilter1,
+                        filters: aFilter1A,
                         and: false,
                     });
                     var aFilterCat = new Filter({
@@ -2496,7 +2534,7 @@ sap.ui.define(
                         and: false,
                     });
                     var aFinalFilter = [];
-                    if (aFilter1.length > 0) {
+                    if (aFilter1A.length > 0) {
                         aFinalFilter.push(aFilterProd);
                     }
                     if (aFilter2.length > 0) {
