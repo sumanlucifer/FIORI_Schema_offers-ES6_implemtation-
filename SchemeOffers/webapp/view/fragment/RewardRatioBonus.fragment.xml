@@ -15,7 +15,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>Description}">
                             <f:fields>
-                                <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/BonusDescription', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                                <TextArea required="true" placeholder="{i18n>placeHolder3}" height="80Px" maxLength="500" value="{path : 'oModelView>/BonusDescription', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBonusRewardRatio}" visible="{= ${oModelView>/OfferTypeId}=== 4}">
