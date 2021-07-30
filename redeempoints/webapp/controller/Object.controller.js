@@ -273,7 +273,7 @@ sap.ui.define([
             }
             var obj = oSelectedItem.getBindingContext().getObject();
             this._getPainterDetails(obj["Id"]);
-            this._getSlabsForPainter(obj["Id"]);
+            // this._getSlabsForPainter(obj["Id"]);
         },
         _getPainterDetails: function (mParam) {
             var oView = this.getView();
@@ -292,6 +292,8 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bEnable", true);
                     oView.getModel("oModelControl").setProperty("/bVerify", false);
                     oView.getModel("oModelView").setProperty("/AddFields/Otp", "");
+                    oView.getModel("oModelControl").setProperty("/Slabs", "");
+                    oView.getModel("oModelControl").setProperty("/SlabPoints", "");
                     oViewModel.setProperty(
                         "/AddFields/MembershipCard",
                         obj["MembershipCard"]
@@ -303,6 +305,7 @@ sap.ui.define([
                     oViewModel.setProperty("/AddFields/BalPoints", obj["RewardPoints"]);
                     oViewModel.setProperty("/PainterComplainProducts/0/PainterId", obj["Id"]);
                     oViewModel.setProperty("/PainterId", obj["Id"]);
+                    this._getSlabsForPainter(obj["Id"]);
                     if (obj["Depot"]) {
                         oViewModel.setProperty("/AddFields/Depot", obj["Depot"]["Depot"]);
                     }
@@ -332,7 +335,7 @@ sap.ui.define([
                             oView.getModel("oModelControl").setProperty("/bEnable", false);
                         }
                     }
-                },
+                }.bind(this),
                 error: function () {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                 }
@@ -576,9 +579,9 @@ sap.ui.define([
            // btnOtp.setVisible(true);
             
         },
-        onValueHelpSlabsClose: function(){
-                this.byId("selectSlabsDialog").close();
-        },
+        // onValueHelpSlabsClose: function(){
+        //          this.getView().byId("selectSlabsDialog").close();
+        // },
         onValueHelpSlabsSearch: function (oEvent) {
             var sValue = oEvent.getParameter("value");
             var oFilter = new Filter(
@@ -600,6 +603,7 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel();
             var oModelCtrl = this.getModel("oModelControl");
             var btnOtp = this.getView().byId("btnOTP");
+            var slabs=[];
             oModel.callFunction(
                 "/GetLoyaltyPointsRedemptionSlabs", {
                 method: "GET",
@@ -608,7 +612,14 @@ sap.ui.define([
                 },
                 success: function (oData, response) {
                     var data=oData.results;
-                    oModelCtrl.setProperty("/Slabs",data);
+                    //oModelCtrl.setProperty("/Slabs",data);
+
+                    data.forEach(function (ele){
+                        if(ele.IsRedemptionAllowed == true){
+                        slabs.push(ele);
+                    }
+                    });
+                    oModelCtrl.setProperty("/Slabs",slabs);
                     oModelCtrl.setProperty("/isValidOTP",false);
                     btnOtp.setVisible(true);
 
