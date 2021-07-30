@@ -586,13 +586,8 @@ sap.ui.define([
             var sValue = oEvent.getParameter("value");
             var oFilter = new Filter(
                 [
-                    new Filter({
-                        path: "SlabPoints",
-                        operator: "Contains",
-                        value1: sValue.trim(),
-                        caseSensitive: false
-                    }),
-                    new Filter("RedemptionAmount", FilterOperator.Contains, sValue.trim()),
+                    new Filter("SlabPoints", FilterOperator.EQ, parseInt(sValue)),
+                    new Filter("RedemptionAmount", FilterOperator.EQ, parseInt(sValue)),
                 ],
                 false
             );
