@@ -279,6 +279,14 @@ sap.ui.define(
                     } else {
                         oBinding.filter([]);
                     }
+                    //deleted table filter
+                    var oTable = this.getView().byId("idDelPainterTable");
+                    var oBinding = oTable.getBinding("items");
+                    if (!aFlaEmpty) {
+                        oBinding.filter(endFilter);
+                    } else {
+                        oBinding.filter([]);
+                    }
                 },
                 onResetFilterBar: function () {
                     this._ResetFilterBar();
@@ -311,6 +319,15 @@ sap.ui.define(
                         path: "CreatedAt",
                         descending: true
                     }));
+                    //deleted table
+                     var oTable = this.byId("idDelPainterTable");
+                    var oBinding = oTable.getBinding("items");
+                    oBinding.filter([]);
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
+
                     this._fiterBarSort();
                 },
                 onPressAddPainter: function (oEvent) {
@@ -457,6 +474,21 @@ sap.ui.define(
 
                     // apply the selected sort and group settings
                     oBinding.sort(aSorters);
+
+                    //deleted painter sort
+                     var oTable = this.byId("idDelPainterTable"),
+                        mParams = oEvent.getParameters(),
+                        oBinding = oTable.getBinding("items"),
+                        sPath,
+                        bDescending,
+                        aSorters = [];
+
+                    sPath = mParams.sortItem.getKey();
+                    bDescending = mParams.sortDescending;
+                    aSorters.push(new Sorter(sPath, bDescending));
+
+                    // apply the selected sort and group settings
+                    oBinding.sort(aSorters);
                 },
 
                 onUpdateFinished: function (oEvent) {
@@ -474,6 +506,22 @@ sap.ui.define(
                         sTitle = this.getResourceBundle().getText("PainterList", [0]);
                     }
                     this.getViewModel("oModelView").setProperty("/pageTitle", sTitle);
+                },
+                onUpdateFinishedDel: function (oEvent) {
+                    // update the worklist's object counter after the table update
+                    var sTitle,
+                        oTable = this.getView().byId("idDelPainterTable"),
+                        iTotalItems = oEvent.getParameter("total");
+                    // only update the counter if the length is final and
+                    // the table is not empty
+                    if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                        sTitle = this.getResourceBundle().getText("PainterList", [
+                            iTotalItems,
+                        ]);
+                    } else {
+                        sTitle = this.getResourceBundle().getText("PainterList", [0]);
+                    }
+                    this.getViewModel("oModelView").setProperty("/pageTitleDel", sTitle);
                 },
                 fmtDate: function (mDate) {
                     var date = new Date(mDate);
@@ -556,7 +604,7 @@ sap.ui.define(
                     var othat = this;
                     console.log(sPath, oBject);
                     MessageBox.confirm(
-                        "Kindly confirm to delete the painter- " + oBject["Name"], {
+                        "Kindly confirm to deactivate the painter- " + oBject["Name"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
@@ -574,7 +622,7 @@ sap.ui.define(
                     };
                     oData.update(sPath + "/IsArchived", oPayload, {
                         success: function (mData) {
-                            MessageToast.show(oBject["Name"] + " Successfully Deleted.");
+                            MessageToast.show(oBject["Name"] + " Successfully Deactivated.");
                             oData.refresh();
                         },
                         error: function (data) {
@@ -583,6 +631,41 @@ sap.ui.define(
                         },
                     });
                 },
+                onDeactivate2: function (oEvent) {
+                    var oView = this.getView();
+                    var oBject = oEvent.getSource().getBindingContext().getObject();
+                    var sPath = oEvent.getSource().getBindingContext().getPath();
+                    var oData = oView.getModel();
+                    var othat = this;
+                    console.log(sPath, oBject);
+                    MessageBox.confirm(
+                        "Kindly confirm to activate the painter- " + oBject["Name"], {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    othat._Deactivate2(oData, sPath, oBject);
+                                }
+                            },
+                        }
+                    );
+                },
+
+                _Deactivate2: function (oData, sPath, oBject) {
+                    var oPayload = {
+                        IsArchived: false,
+                    };
+                    oData.update(sPath + "/IsArchived", oPayload, {
+                        success: function (mData) {
+                            MessageToast.show(oBject["Name"] + " Successfully Activated.");
+                            oData.refresh();
+                        },
+                        error: function (data) {
+                            var oRespText = JSON.parse(data.responseText);
+                            MessageBox.error(oRespText["error"]["message"]["value"]);
+                        },
+                    });
+                }
             }
         );
     }

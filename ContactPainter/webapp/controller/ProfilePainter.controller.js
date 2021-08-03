@@ -2639,7 +2639,8 @@ sap.ui.define(
 
                 _toggleButtonsAndView: function (bEdit) {
                     var oView = this.getView();
-
+                    var oCtrlModel2 = oView.getModel("oModelControl2");
+                    oCtrlModel2.setProperty("/modeEdit", false);
                     // Show the appropriate action buttons
                     oView.byId("edit").setVisible(!bEdit);
                     oView.byId("save").setVisible(bEdit);

@@ -131,6 +131,12 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
+        <IconTabBar
+            id="idIconTabBar"
+            expanded="{device>/isNoPhone}"
+            class="sapUiResponsiveContentPadding">
+            <items>
+            <IconTabFilter text="{i18n>allpainters}" key="allpainters">
             <Table id="idPainterTable" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',select:'Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag' }}" noDataText="{i18n>tableNoDataText}"  busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                 <headerToolbar>
                     <Toolbar>
@@ -228,6 +234,105 @@
                     </ColumnListItem>
                 </items>
             </Table>
+            </IconTabFilter>
+            <IconTabFilter text="{i18n>delpainters}" key="delpainters">
+            <Table id="idDelPainterTable" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinishedDel" width="auto" items="{path: '/PainterSet',sorter:{path:'CreatedAt',descending:true},filters:[{path:'IsArchived',operator:'EQ',value1:true}], parameters:{expand:'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',select:'Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag' }}" noDataText="{i18n>tableNoDataText}"  busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{oModelView>/pageTitleDel}"/>
+                        <ToolbarSpacer/>
+                        <!-- <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Emphasized" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button> -->
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="14%">
+                        <Text text="{i18n>Name}"/>
+                    </Column>
+                    <Column width="10%">
+                        <Text text="{i18n>MembershipId}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>RegistrationDate}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>MobileNumber}"/>
+                    </Column>
+                 
+                    <Column>
+                        <Text text="{i18n>LinkPrimaryDealer}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>PreferredLanguage}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>KycStatus}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>BankDetailsStatus}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ProfileCompleted}"/>
+                    </Column>
+                    <!-- <Column>
+                        <Text text="{i18n>RegStatus}"/>
+                    </Column> -->
+                    <Column width="8%">
+                        <Text text="{i18n>Action}"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem press="onListItemPress" type="Navigation">
+                        <cells>
+                            <HBox  >
+                            <core:Icon class="sapUiTinyMarginEnd" src="{path:'RegistrationStatus',formatter:'.formatter.RegStatusIcon'}" 
+                                       color="{path:'RegistrationStatus',formatter:'.formatter.RegStatusColor'}" tooltip="{RegistrationStatus}" />
+                            <ObjectIdentifier tooltip="{Name}" title="{Name}" titleActive="true"/>
+                            </HBox>
+                            <VBox width="100%" >
+                                <Text text="{MembershipCard}" visible="{= ${MembershipCard} !== null }"/>
+                                <Button tooltip="{i18n>GenerateMId}" width="100%" text="{i18n>GenerateMId}" type="Ghost" press="onGenMemId"  visible="{= ${MembershipCard}===null }"/>
+                            </VBox>
+                            <Text text="{path:'CreatedAt',formatter:'.fmtDate' }"/>
+                            <Text text="{Mobile}"/>
+                            <FlexBox >
+                            <Text visible="{= ${PrimaryDealerDetails}===null}" text="Not Linked"/>
+                            <Text text="{PrimaryDealerDetails/DealerName}"/>
+                            </FlexBox>
+                            
+                            <Text text="{path:'Preference/Language/Language'}"/>
+                            <!-- <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/> -->
+                            <!-- <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/> -->
+                            <!-- Aditya changes start-->
+                            <FlexBox >
+                            <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
+                            <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                            </FlexBox>
+                            <FlexBox >
+                             <ObjectStatus visible="{= ${PainterBankDetails} === null}" text="Not Submitted" state="Error"/>
+                             <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
+                            </FlexBox>
+                            
+                             <!-- <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
+                            <!-- <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
+                            state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
+                            <!-- Aditya changes end-->
+                            <Text text="{= ${ProfileCompleted}===true?'Yes':'No'}"/>
+                            <!-- <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/> -->
+                            <Button icon="sap-icon://accept" tooltip="{i18n>activate}"  type="Transparent" press="onDeactivate2"></Button>
+                                
+                            
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            </IconTabFilter>
+                </items>
+	        </IconTabBar>
         </f:content>
     </f:DynamicPage>
 </mvc:View>
