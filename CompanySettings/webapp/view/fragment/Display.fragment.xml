@@ -27,12 +27,28 @@
             </VBox>
             
         </HBox>
-        <HBox class="sapUiTinyMargin" width="100%">
-            <VBox class="sapUiTinyMargin"  width="100%">
-            <Title text="Call Center Number"/>
-            
-                               <FormattedText htmlText="{CallCenterHelpline}"/>
-                              </VBox>
+        <HBox class="sapUiTinyMargin" width="70%">
+            <VBox class="sapUiTinyMargin">
+                <Title text="Call Center Number"/>
+                <FormattedText htmlText="{CallCenterHelpline}" />
+             </VBox>
+             <VBox class="sapUiTinyMargin">
+                        <Title text="Offer Enabled"   class="sapUiLargeMarginBegin"/>
+                        <Switch  class="sapUiLargeMarginBegin" state="{path : 'IsOfferEnabled'}" customTextOn="Yes" customTextOff="No"  enabled="false">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Switch>
+            </VBox>
+             <VBox  class="sapUiTinyMargin">
+                <Title text="Bank Redemption" class="sapUiLargeMarginBegin"/>
+                <Switch class="sapUiLargeMarginBegin" state="{path : 'IsRedemptionEnabled'}" customTextOn="Yes" customTextOff="No" enabled="false">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+             </VBox>
+             
                               
         </HBox>
 

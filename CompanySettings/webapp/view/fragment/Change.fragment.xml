@@ -10,7 +10,7 @@
     </HBox> -->
 
    
-            <VBox class="sapUiTinyMargin" width="100%">
+            <!-- <VBox class="sapUiTinyMargin" width="100%">
                  <Title text="About Us"/>
                 <richtexteditor:RichTextEditor 
                 width="100%"
@@ -19,8 +19,8 @@
                 required="true"
                 value="{path : 'ActionEditModel>/AboutUs'}">
                 </richtexteditor:RichTextEditor>
-            </VBox>
-            <VBox class="sapUiTinyMargin" width="100%">
+            </VBox> -->
+            <!-- <VBox class="sapUiTinyMargin" width="100%">
                <Title text="Privacy Policy"/>
                 <richtexteditor:RichTextEditor
                  width="100%"
@@ -28,11 +28,11 @@
                  required="true"
                  value="{path : 'ActionEditModel>/Disclaimer'}">
                  </richtexteditor:RichTextEditor>
-                 <!-- <TextArea visible="true" value="{path:'ActionEditModel>/Disclaimer'}"/> -->
-            </VBox>
+
+            </VBox> -->
         
         
-            <VBox class="sapUiTinyMargin"  width="100%">
+            <!-- <VBox class="sapUiTinyMargin"  width="100%">
             <Title text="Call Center Number"/>
             <Input   required="true"  type="Text"
                 maxLength="15"
@@ -40,7 +40,7 @@
         				placeholder="Enter Call Center Number ..."
         				valueStateText="Call Center Number must not be empty."
                         value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
-                              </VBox>
+                              </VBox> -->
        
 	
 	</VBox>
