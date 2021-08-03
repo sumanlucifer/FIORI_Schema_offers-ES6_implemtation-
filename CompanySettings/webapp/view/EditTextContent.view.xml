@@ -12,13 +12,35 @@ xmlns:richtexteditor="sap.ui.richtexteditor">
             </l:VerticalLayout>
 
             <VBox class="sapUiTinyMargin"  width="100%">
+            
+            <VBox>
                 <Title text="Call Center Number" class="sapUiTinyMargin"/>
                     <Input  required="true"  type="Text" class="sapUiTinyMargin"
                         maxLength="15"
                         width="30%"
                         placeholder="Enter Call Center Number ..."
                         valueStateText="Call Center Number must not be empty."
+                        change="onValueChange"
                         value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
+             </VBox>
+             <HBox width="80%" justifyContent="Start" alignContent="SpaceAround">
+             <VBox class="sapUiTinyMargin">
+                        <Title text="Offer Enabled" />
+                        <Switch state="{path : 'ActionEditModel>/IsOfferEnabled'}" customTextOn="Yes" customTextOff="No" >
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Switch>
+            </VBox>
+            <VBox class="sapUiTinyMargin">
+                        <Title text="Bank Redemption" class="sapUiLargeMarginBegin"/>
+                        <Switch class="sapUiLargeMarginBegin" state="{path : 'ActionEditModel>/IsRedemptionEnabled'}" customTextOn="Yes" customTextOff="No">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Switch>
+            </VBox>
+            </HBox>
             </VBox>
        
 	

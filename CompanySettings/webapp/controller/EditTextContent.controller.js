@@ -33,15 +33,26 @@ sap.ui.define([
 
                 this.richtexteditor;
 
+
+                var ctrls = {
+                    bEditText: false,
+                    bToggle:false
+                }
+
                 var oData = {
                     AboutUs: null,
                     Disclaimer: null,
                     CallCenterHelpline: "",
-                    DisclaimerVersion:null,
-                    bBusy:true
+                    DisclaimerVersion: null,
+                    IsOfferEnabled:false,
+                    IsRedemptionEnabled:false,
+                    bBusy: true
                 }
                 var oViewModel = new JSONModel(oData);
                 this.getView().setModel(oViewModel, "ActionEditModel");
+
+                var oCtrlModel = new JSONModel(ctrls);
+                this.getView().setModel(oCtrlModel, "oCtrlModel");
 
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.rteAbout = this.getView().byId("rteAbout");
@@ -81,7 +92,8 @@ sap.ui.define([
 
             initData: function () {
 
-                var that = this;
+                //var that = this;
+                var oActionModel=this.getView().getModel("ActionEditModel");
                 this.getOwnerComponent().getModel("data").read("/MasterCompanySettingsSet(1)", {
                     success: function (data, response) {
                         // that.entitySet = data;
@@ -93,11 +105,13 @@ sap.ui.define([
                         // that.getView().setModel(oViewModel, "ActionEditModel");
                         //that.getView().getModel("ActionEditModel").setData(data);
                         setTimeout(() => {
-                            that.getView().getModel("ActionEditModel").setProperty("/AboutUs", data.AboutUs);
-                            that.getView().getModel("ActionEditModel").setProperty("/Disclaimer", data.Disclaimer);
-                            that.getView().getModel("ActionEditModel").setProperty("/CallCenterHelpline", data.CallCenterHelpline);
-                            that.getView().getModel("ActionEditModel").setProperty("/DisclaimerVersion", data.DisclaimerVersion);
-                            that.getView().getModel("ActionEditModel").setProperty("/bBusy", false);
+                            oActionModel.setProperty("/AboutUs", data.AboutUs);
+                            oActionModel.setProperty("/Disclaimer", data.Disclaimer);
+                            oActionModel.setProperty("/CallCenterHelpline", data.CallCenterHelpline);
+                            oActionModel.setProperty("/DisclaimerVersion", data.DisclaimerVersion);
+                            oActionModel.setProperty("/IsOfferEnabled", data.IsOfferEnabled);
+                            oActionModel.setProperty("/IsRedemptionEnabled", data.IsRedemptionEnabled);
+                            oActionModel.setProperty("/bBusy", false);
                         }, 1000);
 
                     },
@@ -189,20 +203,14 @@ sap.ui.define([
 
             handleSavePress: function () {
 
-                // // console.log(DisclaimerVersion);
-
-                // var oDataModel = this.getView().getModel();
-                // var oView = this.getView();
-                // // var oModelView = oView.getModel("oModelView");
-                // // oModelView.setProperty("/busy", true);
-                // var sEntityPath = oView.getElementBinding().getPath();
-                // var oDataValue = oDataModel.getObject(sEntityPath);
-                // //var oPrpReq = oModelView.getProperty("/prop2");
+                var oActionModel = this.getView().getModel("ActionEditModel");
                 var oDataValue = {
-                    AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
-                    Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
-                    CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
-                    DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion"),
+                    AboutUs: oActionModel.getProperty("/AboutUs"),
+                    Disclaimer: oActionModel.getProperty("/Disclaimer"),
+                    CallCenterHelpline: oActionModel.getProperty("/CallCenterHelpline"),
+                    DisclaimerVersion: oActionModel.getProperty("/DisclaimerVersion"),
+                    IsOfferEnabled:oActionModel.getProperty("/IsOfferEnabled"),
+                    IsRedemptionEnabled:oActionModel.getProperty("/IsRedemptionEnabled")
                 }
 
 
@@ -214,13 +222,21 @@ sap.ui.define([
                     this.handleEmptyFields();
                     return false;
                 }
-
                 var oData = {
-                    AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
-                    Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
-                    CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
-                    DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion") + 1,
+                    AboutUs: oDataValue.AboutUs,
+                    Disclaimer: oDataValue.Disclaimer,
+                    CallCenterHelpline: oDataValue.CallCenterHelpline,
+                    DisclaimerVersion: oDataValue.DisclaimerVersion + 1,
+                    IsOfferEnabled:oDataValue.IsOfferEnabled,
+                    IsRedemptionEnabled:oDataValue.IsRedemptionEnabled
                 }
+
+                // var oData = {
+                //     AboutUs: this.getView().getModel("ActionEditModel").getProperty("/AboutUs"),
+                //     Disclaimer: this.getView().getModel("ActionEditModel").getProperty("/Disclaimer"),
+                //     CallCenterHelpline: this.getView().getModel("ActionEditModel").getProperty("/CallCenterHelpline"),
+                //     DisclaimerVersion: this.getView().getModel("ActionEditModel").getProperty("/DisclaimerVersion") + 1,
+                // }
                 var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
                 var oModel = this.getView().getModel("data");
@@ -293,6 +309,11 @@ sap.ui.define([
 
                 this.oEscapePreventDialog.open();
             },
+            onToggleChange: function () {
+                var oCtrlModel = this.getView().getModel("oCtrlModel");
+                oCtrlModel.setProperty("/bToggle", true);
+
+            }
 
 
 
