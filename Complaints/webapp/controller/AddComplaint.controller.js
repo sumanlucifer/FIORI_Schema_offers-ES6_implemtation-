@@ -138,7 +138,7 @@ sap.ui.define(
                             $select: 'ZoneId,Id,Mobile,Name,MembershipCard,Depot/Depot'
                         },
                         success: function (obj) {
-                            console.log(obj)
+                            // console.log(obj)
                             oViewModel.setProperty(
                                 "/addCompAddData/MembershipCard",
                                 obj["MembershipCard"]
@@ -276,7 +276,7 @@ sap.ui.define(
                     if (oItems.length > 0) {
                         jQuery.when.apply(null, async_request).then(
                             function () {
-                                console.log("File successfully uploaded")
+                                // console.log("File successfully uploaded")
                                 //promise.resolve("FileUpdated");
                             },
                             function () {
@@ -558,7 +558,7 @@ sap.ui.define(
                     if (sKey !== 90) {
                         oModel.setProperty("/addComplaint/ResolutionOthers", "");
                     }
-                    console.log(sKey)
+                    // console.log(sKey)
                 },
                 navPressBack: function () {
                     var oHistory = History.getInstance();

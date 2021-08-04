@@ -63,11 +63,11 @@ sap.ui.define(
                         .attachMatched(this._onRouteMatched, this);
                     var startupParams = null;
                     if (this.getOwnerComponent().getComponentData()) {
-                        console.log("Inside If Condition")
+                        // console.log("Inside If Condition")
                         startupParams = this.getOwnerComponent().getComponentData().startupParameters;
 
                     }
-                    console.log(startupParams);
+                    // console.log(startupParams);
                     if (startupParams) {
                         if (startupParams.hasOwnProperty("PainterId")) {
                             if (startupParams["PainterId"].length > 0) {
@@ -154,7 +154,7 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     oLoginData.setData(data["results"][0]);
-                                    console.log(oLoginData)
+                                    // console.log(oLoginData)
                                 }
                             }
                         },
