@@ -489,7 +489,7 @@ sap.ui.define([
                     dataToSend = aTokens[0].getKey();
 
                 }
-                console.log(dataToSend);
+                // console.log(dataToSend);
             },
 
             onValueHelpCancelPress: function () {
