@@ -59,13 +59,13 @@ sap.ui.define(
                         .getRoute("worklist")
                         .attachMatched(this._onRouteMatched, this);
                     var startupParams = null;
-                    console.log("Init Trigerred");
+                    // console.log("Init Trigerred");
                     if (this.getOwnerComponent().getComponentData()) {
-                        console.log("Inside If Condition")
+                        // console.log("Inside If Condition")
                         startupParams = this.getOwnerComponent().getComponentData().startupParameters;
 
                     }
-                     console.log(startupParams);
+                    //  console.log(startupParams);
                     if (startupParams) {
                         if (startupParams.hasOwnProperty("PainterId")) {
                             if (startupParams["PainterId"].length > 0) {
@@ -482,7 +482,7 @@ sap.ui.define(
                         .getSource()
                         .getBindingContext()
                         .getObject();
-                    console.log(oObj);
+                    // console.log(oObj);
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("Detail", {
                         Id: oObj["Id"]
@@ -499,7 +499,7 @@ sap.ui.define(
 
                 },
                 onCrossNavigate: function (sAction) {
-                    console.log("Cross Navigate Trigerred");
+                    // console.log("Cross Navigate Trigerred");
 
                     this.Navigate({
                         target: {

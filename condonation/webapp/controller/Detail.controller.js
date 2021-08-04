@@ -30,7 +30,7 @@ sap.ui.define(
                     var sId = window.decodeURIComponent(
                         oEvent.getParameter("arguments").Id
                     );
-                    console.log(sId);
+                    // console.log(sId);
 
                     this._initData(sId);
                 },
@@ -195,11 +195,11 @@ sap.ui.define(
                         .get(sImageUrl)
                         .done(function () {
                             oModelControl.setProperty("/ImageLoaded", true);
-                            console.log("Image Exist");
+                            // console.log("Image Exist");
                         })
                         .fail(function () {
                             oModelControl.setProperty("/ImageLoaded", false);
-                            console.log("Image Doesnt Exist");
+                            // console.log("Image Doesnt Exist");
                         });
                 },
                 _loadEditProfile: function (mParam) {
@@ -345,7 +345,7 @@ sap.ui.define(
                     }
                     if (bValidation) {
                         oModel.setProperty("/InitiateForceTat", false);
-                        console.log("Propery")
+                        // console.log("Propery")
                         this._postDataToSave();
                     }
                 },
@@ -364,7 +364,7 @@ sap.ui.define(
                         }
                     }
                     var othat = this;
-                    console.log(oPayload);
+                    // console.log(oPayload);
                     oData.update(sPath, oPayload, {
                         success: function () {
                             MessageToast.show("Complaint Sucessfully Updated.");

@@ -98,7 +98,7 @@ sap.ui.define([
             oView.setModel(oModel1, "oModelView");
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
-            console.log(mParam1);
+            // console.log(mParam1);
             if (mParam1 !== "new") {
                 this._getPainterDetails(mParam1);
             }
@@ -122,7 +122,7 @@ sap.ui.define([
 
         onPressSave: function () {
 
-            console.log(this.getView().getModel("oModelView").getData());
+            // console.log(this.getView().getModel("oModelView").getData());
             var oView = this.getView();
             var oValidate = new Validator();
             var oForm = oView.byId("FormCondonation");
