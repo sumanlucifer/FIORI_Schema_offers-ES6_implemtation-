@@ -548,7 +548,7 @@ sap.ui.define(
                     }
                     this._pPopover.then(function (oPopover) {
                         oPopover.openBy(oSource);
-                        console.log(sPath);
+                        //console.log(sPath);
                         oPopover.bindElement({
                             path: sPath,
                             parameters: {
@@ -565,7 +565,7 @@ sap.ui.define(
                         .getBindingContext()
                         .getPath()
                         .substr(1);
-                    console.log(sPath);
+                    //console.log(sPath);
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteProfile", {
                         mode: "edit",
@@ -580,7 +580,7 @@ sap.ui.define(
                         .getBindingContext()
                         .getPath()
                         .substr(1);
-                    console.log(sPath);
+                    //console.log(sPath);
 
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteProfile", {
@@ -602,7 +602,7 @@ sap.ui.define(
                     var sPath = oEvent.getSource().getBindingContext().getPath();
                     var oData = oView.getModel();
                     var othat = this;
-                    console.log(sPath, oBject);
+                    //console.log(sPath, oBject);
                     MessageBox.confirm(
                         "Kindly confirm to deactivate the painter- " + oBject["Name"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
@@ -637,7 +637,7 @@ sap.ui.define(
                     var sPath = oEvent.getSource().getBindingContext().getPath();
                     var oData = oView.getModel();
                     var othat = this;
-                    console.log(sPath, oBject);
+                    //console.log(sPath, oBject);
                     MessageBox.confirm(
                         "Kindly confirm to activate the painter- " + oBject["Name"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],

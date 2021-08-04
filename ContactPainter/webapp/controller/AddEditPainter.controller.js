@@ -256,7 +256,7 @@ sap.ui.define(
                         .getEntry("/sap.app").dataSources.mainService.uri;
 
                     var oModel = this.getView().getModel("oModelView");
-                    console.log(oModel);
+                    //console.log(oModel);
                     var oValidator = new Validator();
                     var oVbox = this.getView().byId("idVbx");
                     var bValidation = oValidator.validate(oVbox, true);
@@ -406,7 +406,7 @@ sap.ui.define(
                         },
                         oPainterData
                     );
-                    console.log(oPayload);
+                    //console.log(oPayload);
                     var c1, c2, c3, c4;
                     var oData = this.getView().getModel();
                     var othat = this;
@@ -902,7 +902,7 @@ sap.ui.define(
                     this._dealerReset();
                 },
                 handleLoadItems: function (oControlEvent) {
-                    console.log("true");
+                    //console.log("true");
                     oControlEvent.getSource().getBinding("items").resume();
                 },
                 onDepotChange: function (oEvent) {
@@ -951,7 +951,7 @@ sap.ui.define(
                     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
                 },
                 onPinCodeSelect: function (oEvent) {
-                    console.log("suggestion item selected");
+                   // console.log("suggestion item selected");
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
                     var oObject = oEvent
