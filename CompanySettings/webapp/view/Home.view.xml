@@ -6,7 +6,7 @@ xmlns:f="sap.ui.layout.form">
 	<Shell id="shell" >
 		<App id="app">
 			<pages>
-            <Page>
+            <Page busyIndicatorDelay="0" busy="{local>/bBusy}">
             <content>
             <VBox visible="{=!${local>/bEdit}}">
             
@@ -63,30 +63,6 @@ xmlns:f="sap.ui.layout.form">
                                                             </Select>
                                                         
                                                         </VBox>
-                                                
-                                                        <!-- <VBox visible="{=${local>/bEdit}}">
-                                                            <FlexBox>
-                                                                <VBox>
-                                                                <u:FileUploader
-                                                                    id="idFormToolPdfUploader"
-                                                                    name="formToolPdfUploader"
-                                                                    tooltip="{i18n>fileUploaderTooltip}"
-                                                                    change="onChangePdf"
-                                                                    typeMissmatch="handleTypeMissmatch"
-                                                                    fileType="pdf"
-                                                                    useMultipart="false"
-                                                                    sendXHR="true"
-                                                                    maximumFileSize="10.1"
-                                                                    fileSizeExceed="onFileSizeExceed"
-                                                                    uploadComplete="handleUploadCompletePdf" />
-                                                                    <HBox>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text="PDF"/>
-                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
-                                                                </HBox>
-                                                                </VBox>
-                                                            </FlexBox>
-                                                        
-                                                        </VBox> -->
                                                          <VBox visible="{!=${local>/bEdit}}">
                                                             <Text text="{local>MediaName}"></Text>
                                                             </VBox>
@@ -105,20 +81,7 @@ xmlns:f="sap.ui.layout.form">
                                          
              
                      </VBox>
-            <!-- <footer>
-            <OverflowToolbar>
             
-				<ToolbarSpacer/>
-                
-
-                <Button id="edit" text="Edit" type="Emphasized" press="handleEditPress" />
-					
-					<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
-                    <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
-                
-                 
-			</OverflowToolbar>
-            </footer> -->
             </content>
 		</Page>
 				
