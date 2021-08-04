@@ -60,7 +60,7 @@ sap.ui.define(
                     var startupParams = null;
 
                     if (this.getOwnerComponent().getComponentData()) {
-                        console.log("Inside If Condition")
+                       // console.log("Inside If Condition")
                         startupParams = this.getOwnerComponent().getComponentData().startupParameters;
 
                     }
@@ -147,7 +147,7 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     oLoginData.setData(data["results"][0]);
-                                    console.log(oLoginData)
+                                   // console.log(oLoginData)
                                 }
                             }
                         },
@@ -486,7 +486,7 @@ sap.ui.define(
                         .getSource()
                         .getBindingContext()
                         .getObject();
-                    console.log(oObj);
+                   // console.log(oObj);
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("Detail", {
                         Id: oObj["UUID"]
@@ -503,7 +503,7 @@ sap.ui.define(
 
                 },
                 onCrossNavigate: function (sAction) {
-                    console.log("Cross Navigate Trigerred");
+                   // console.log("Cross Navigate Trigerred");
 
                     this.Navigate({
                         target: {

@@ -58,7 +58,8 @@ sap.ui.define([
                 bBusy: false,
                 bEnable: false,
                 isValidOTP: false,
-                bVerify:false,
+                bDoc: false,
+                bVerify: false,
                 bPayloadSent: false,
                 noSlabText: "",
                 aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
@@ -71,7 +72,7 @@ sap.ui.define([
                 PainterId: "",
                 SlabBankRedemptionId: "",
                 Remark: "",
-                Status:"PENDING",
+                Status: "PENDING",
                 AddFields: {
                     Mobile: "",
                     Name: "",
@@ -85,9 +86,9 @@ sap.ui.define([
                     bnkStatus: "",
                     kycStatus: "",
                     BalPoints: ""
-                    
+
                 },
-                
+
                 //ComplaintStatus: "RESOLVED",
                 //ApprovalStatus: "APPROVED",
                 // ResolutionType: 2,
@@ -100,14 +101,14 @@ sap.ui.define([
                 //     Points: 0,//integer
 
                 // }],
-                Slabs:[]
+                Slabs: []
             }
             var oModel1 = new JSONModel(oDataView);
             var oModel2 = new JSONModel(oDataControl);
             oView.setModel(oModel1, "oModelView");
             oView.setModel(oModel2, "oModelControl");
             this._showFormFragment("Add");
-            console.log(mParam1);
+            //console.log(mParam1);
             if (mParam1 !== "new") {
                 this._getPainterDetails(mParam1);
             }
@@ -131,7 +132,7 @@ sap.ui.define([
 
         onPressSave: function () {
 
-            console.log(this.getView().getModel("oModelView").getData());
+            //console.log(this.getView().getModel("oModelView").getData());
             var oView = this.getView();
             var oValidate = new Validator();
             var oForm = oView.byId("FormCondonation");
@@ -161,7 +162,7 @@ sap.ui.define([
             oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
 
             //Double click issue solution
-            
+
             oData.create("/PainterLoyaltyRedemptionRequestSet", oPayLoad, {
                 success: function () {
                     MessageToast.show("Redemption request Sucessfully Submitted.")
@@ -315,14 +316,18 @@ sap.ui.define([
                     if (obj["PainterKycDetails"]) {
                         oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
-                    }else{
+
+                    } else {
                         oViewModel.setProperty("/AddFields/kycStatus", "NOT SUBMITTED");
+                        oView.getModel("oModelControl").setProperty("/bDoc", true);
                     }
                     if (obj["PainterBankDetails"]) {
                         oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
-                    }else{
-                        oViewModel.setProperty("/AddFields/bnkStatus","NOT SUBMITTED");
+
+                    } else {
+                        oViewModel.setProperty("/AddFields/bnkStatus", "NOT SUBMITTED");
+                        oView.getModel("oModelControl").setProperty("/bDoc", true);
                     }
                     if (obj["RewardPoints"] < 5000) {
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
@@ -331,14 +336,24 @@ sap.ui.define([
                     // if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
                     //     oView.getModel("oModelControl").setProperty("/bEnable", false);
                     // }
-                    if(obj["PainterBankDetails"]){
-                        if(obj["PainterBankDetails"]["Status"] !== "APPROVED" ){
+                    if (obj["PainterBankDetails"]) {
+                        if (obj["PainterBankDetails"]["Status"] !== "APPROVED") {
                             oView.getModel("oModelControl").setProperty("/bEnable", false);
+                            oView.getModel("oModelControl").setProperty("/bDoc", true);
                         }
+                        
                     }
-                    if(obj["PainterKycDetails"]){
-                        if(obj["PainterKycDetails"]["Status"] !== "APPROVED" ){
+                    if (obj["PainterKycDetails"]) {
+                        if (obj["PainterKycDetails"]["Status"] !== "APPROVED") {
                             oView.getModel("oModelControl").setProperty("/bEnable", false);
+                            oView.getModel("oModelControl").setProperty("/bDoc", true);
+                        }
+                        
+                    }
+                    if(obj["PainterBankDetails"] && obj["PainterKycDetails"] ){
+                        if (obj["PainterBankDetails"]["Status"] === "APPROVED" && obj["PainterKycDetails"]["Status"] === "APPROVED") {
+                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                            oView.getModel("oModelControl").setProperty("/bDoc", false);
                         }
                     }
                 }.bind(this),
@@ -478,9 +493,9 @@ sap.ui.define([
         onSendOtp: function () {
             var oModel = this.getOwnerComponent().getModel();
             var oModelView = this.getModel("oModelView");
-            var oModelControl=this.getModel("oModelControl");
+            var oModelControl = this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile")
-             var btnOtp = this.getView().byId("btnOTP");
+            var btnOtp = this.getView().byId("btnOTP");
             //     inputOtp = this.getView().byId("inputOTP"),
             //     btnOtpResend = this.getView().byId("btnOTPResend"),
             //     verifyOtp = this.getView().byId("btnOTPVerify");
@@ -493,7 +508,7 @@ sap.ui.define([
                 },
                 success: function (oData, response) {
                     btnOtp.setVisible(false);
-                    oModelControl.setProperty("/bVerify",true);
+                    oModelControl.setProperty("/bVerify", true);
                     MessageToast.show("OTP sent successfully.");
 
                 },
@@ -508,21 +523,21 @@ sap.ui.define([
             var oModelView = this.getModel("oModelView");
             var oModelControl = this.getModel("oModelControl");
             var mobile = oModelView.getProperty("/AddFields/Mobile"),
-            otp = oModelView.getProperty("/AddFields/Otp");
+                otp = oModelView.getProperty("/AddFields/Otp");
             var btnOtp = this.getView().byId("btnOTP");
             oModel.callFunction(
                 "/VerifyMobileOTPAdmin", {
                 method: "GET",
                 urlParameters: {
                     Mobile: mobile,
-                    MobileOTP:otp
+                    MobileOTP: otp
                 },
                 success: function (oData, response) {
                     var data = oData.results[0];
                     if (data["ErrorCode"] == null) {
                         MessageToast.show("OTP verification successful");
                         oModelControl.setProperty("/isValidOTP", true);
-                        oModelControl.setProperty("/bVerify",false);
+                        oModelControl.setProperty("/bVerify", false);
                         btnOtp.setVisible(false);
                     }
                     else if (data["ErrorCode"] == 410) {
@@ -580,10 +595,10 @@ sap.ui.define([
             oModelView.setProperty("/SlabBankRedemptionId", parseInt(obj["Id"]));
             oModelCtrl.setProperty("/SlabPoints", parseInt(obj["SlabPoints"]));
             //oModelCtrl.setProperty("/isValidOTP",false);
-           // oModelCtrl.setProperty("/bVerify", false);
+            // oModelCtrl.setProperty("/bVerify", false);
             oModelCtrl.setProperty("/IsWorkflowApplicable", obj.IsWorkflowApplicable);
-           // btnOtp.setVisible(true);
-            
+            // btnOtp.setVisible(true);
+
         },
         // onValueHelpSlabsClose: function(){
         //          this.getView().byId("selectSlabsDialog").close();
@@ -600,11 +615,11 @@ sap.ui.define([
 
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
-        _getSlabsForPainter:function (Id){
+        _getSlabsForPainter: function (Id) {
             var oModel = this.getOwnerComponent().getModel();
             var oModelCtrl = this.getModel("oModelControl");
             var btnOtp = this.getView().byId("btnOTP");
-            var slabs=[];
+            var slabs = [];
             oModel.callFunction(
                 "/GetLoyaltyPointsRedemptionSlabs", {
                 method: "GET",
@@ -612,16 +627,16 @@ sap.ui.define([
                     PainterId: Id
                 },
                 success: function (oData, response) {
-                    var data=oData.results;
+                    var data = oData.results;
                     //oModelCtrl.setProperty("/Slabs",data);
 
-                    data.forEach(function (ele){
-                        if(ele.IsRedemptionAllowed == true){
-                        slabs.push(ele);
-                    }
+                    data.forEach(function (ele) {
+                        if (ele.IsRedemptionAllowed == true) {
+                            slabs.push(ele);
+                        }
                     });
-                    oModelCtrl.setProperty("/Slabs",slabs);
-                    oModelCtrl.setProperty("/isValidOTP",false);
+                    oModelCtrl.setProperty("/Slabs", slabs);
+                    oModelCtrl.setProperty("/isValidOTP", false);
                     btnOtp.setVisible(true);
 
                 },
