@@ -289,7 +289,7 @@ sap.ui.define([
                 },
                 success: function (obj) {
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
-                    oView.getModel("oModelControl").setProperty("/bEnable", true);
+                    oView.getModel("oModelControl").setProperty("/bEnable", false);
                     oView.getModel("oModelControl").setProperty("/bVerify", false);
                     oView.getModel("oModelView").setProperty("/AddFields/Otp", "");
                     oView.getModel("oModelControl").setProperty("/Slabs", "");
@@ -313,10 +313,16 @@ sap.ui.define([
                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
                     }
                     if (obj["PainterKycDetails"]) {
+                        oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
+                    }else{
+                        oViewModel.setProperty("/AddFields/kycStatus", "");
                     }
                     if (obj["PainterBankDetails"]) {
+                        oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
+                    }else{
+                        oViewModel.setProperty("/AddFields/bnkStatus","");
                     }
                     if (obj["RewardPoints"] < 5000) {
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
