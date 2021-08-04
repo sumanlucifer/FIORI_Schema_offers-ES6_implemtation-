@@ -314,7 +314,7 @@ sap.ui.define([
                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
                     }
                     if (obj["PainterKycDetails"]) {
-                        oView.getModel("oModelControl").setProperty("/bEnable", true);
+                        
                         oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
 
                     } else {
@@ -322,7 +322,7 @@ sap.ui.define([
                         oView.getModel("oModelControl").setProperty("/bDoc", true);
                     }
                     if (obj["PainterBankDetails"]) {
-                        oView.getModel("oModelControl").setProperty("/bEnable", true);
+                        
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
 
                     } else {
@@ -352,7 +352,7 @@ sap.ui.define([
                     }
                     if(obj["PainterBankDetails"] && obj["PainterKycDetails"] ){
                         if (obj["PainterBankDetails"]["Status"] === "APPROVED" && obj["PainterKycDetails"]["Status"] === "APPROVED") {
-                            oView.getModel("oModelControl").setProperty("/bEnable", false);
+                            oView.getModel("oModelControl").setProperty("/bEnable", true);
                             oView.getModel("oModelControl").setProperty("/bDoc", false);
                         }
                     }

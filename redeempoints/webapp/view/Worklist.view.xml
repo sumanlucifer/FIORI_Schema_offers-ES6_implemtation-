@@ -65,8 +65,7 @@
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
-                        <Button icon="sap-icon://add" text="{i18n>AddRedemption}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button>
-                        <!-- <Button icon="sap-icon://add" text="{i18n>AddRedemption}" visible="{parts:['LoginInfo>/UserTypeId'],formatter:'.formatter.btnAddRedemption'}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button> -->
+                        <Button icon="sap-icon://add" text="{i18n>AddRedemption}" visible="{parts:['LoginInfo>/UserTypeId'],formatter:'.formatter.btnAddRedemption'}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button>
                         <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
