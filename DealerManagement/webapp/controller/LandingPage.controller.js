@@ -111,7 +111,7 @@ sap.ui.define([
                 var salesGroupName = this.getInputText("idSalesGroupName");
                 var fiscalYear = this.getInputText("idFiscalYear");
                 if (genericSearch == "" && plantCode == "" && depot == "" && salesGroupName == "" && fiscalYear == "") {
-                    console.log("empty");
+                    // console.log("empty");
                 }
                 else {
 
