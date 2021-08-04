@@ -492,7 +492,7 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                    console.log(oPayLoad);
+                   // console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
@@ -510,7 +510,7 @@ sap.ui.define(
                 _UploadFile: function (mParam1, mParam2) {
                     var promise = jQuery.Deferred();
                     if (!mParam2) {
-                        console.log("no image uploaded")
+                        //console.log("no image uploaded")
                         promise.resolve();
                         return promise;
                     }

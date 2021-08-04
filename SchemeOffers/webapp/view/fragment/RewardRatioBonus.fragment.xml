@@ -210,7 +210,7 @@
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddGenericReward2V2"></Button>
-                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onSaveGenericBonusReward"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveGenericBonusReward"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedGenericReward2"></Button>
                         </HBox>
                         <!-- <Text text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
@@ -295,7 +295,7 @@
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards2V2"></Button>
-                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onSaveBonusRewardV2"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveBonusRewardV2"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward2"></Button>
                         </HBox>
                     </cells>

@@ -146,7 +146,7 @@ sap.ui.define(
                             Limit: "" + mTop + ""
                         },
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     var aNewArray = oDataPainter.concat(data["results"]);
@@ -356,7 +356,7 @@ sap.ui.define(
                 _CheckPromiseData: function (oData) {
                     var promise = jQuery.Deferred();
                     // work flow releated data
-                    console.log(oData);
+                    //console.log(oData);
                     promise.resolve(oData);
                     return promise;
                 },
@@ -881,7 +881,7 @@ sap.ui.define(
                 },
                 _checkPromise: function (data) {
                     var promise = jQuery.Deferred();
-                    console.log(data);
+                    //console.log(data);
                     promise.resolve(data);
                     return promise;
                 },
@@ -1789,7 +1789,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                    console.log(oPayLoad);
+                    //console.log(oPayLoad);
 
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
@@ -2054,7 +2054,7 @@ sap.ui.define(
                             OfferId: sOfferId,
                         },
                         success: function (oData) {
-                            console.log(oData);
+                            //console.log(oData);
                             if (oData.hasOwnProperty("Message")) {
                                 MessageToast.show(oData["Message"]);
                             } else {
@@ -2111,7 +2111,7 @@ sap.ui.define(
                     if (aCheck1.indexOf(oEvent) >= 0) {
                         oModelC.setProperty("/Dialog/Remarks", "Approved");
                     }
-                    console.log(oEvent);
+                    //console.log(oEvent);
                     if (!this._RemarksDialog2) {
                         Fragment.load({
                             id: oView.getId(),
@@ -2278,7 +2278,7 @@ sap.ui.define(
                         ]);
 
                     aWfData = aWfData.filter((ele) => taskSet.has(ele.type));
-                    console.log(aWfData);
+                    //console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                 },
                 onPainterListDownload: function () {
@@ -2291,7 +2291,7 @@ sap.ui.define(
                         .getModel("oModelControl3")
                         .getProperty("/OfferId");
                     var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferEligibleAndQualifiedPainterSet(0)/$value?OfferId=" + sOfferId
-                    console.log(sSource)
+                    //console.log(sSource)
                     sap.m.URLHelper.redirect(sSource, true);
 
                 },

@@ -88,7 +88,7 @@ sap.ui.define(
                     this._navToHome();
                 },
                 onFileUploadChange: function (oEvent) {
-                    console.log(oEvent);
+                    //console.log(oEvent);
                     var oFileUploder = oEvent.getSource();
                     if (oEvent.getParameter("newValue")) {
                         this._verifyImages(oEvent.mParameters.files[0], oFileUploder);
@@ -116,7 +116,7 @@ sap.ui.define(
                 },
                 _removeImageOrNot: function (imgInfo, oFileUploder) {
                     //get the UploadColection files and remove if is needed
-                    console.log(imgInfo)
+                    //console.log(imgInfo)
                     if (imgInfo["height"] < 420 || imgInfo["width"] < 860) {
                         oFileUploder.setValue("");
                         MessageToast.show("Kindly Upload a file greater than dimension 860 X 420.")
@@ -856,9 +856,9 @@ sap.ui.define(
                     }
                 },
                 onSaveBonusRewardV2: function (oEvent) {
-                    console.log(
-                        oEvent.getSource().getBindingContext("oModelControl").getObject()
-                    );
+                    // console.log(
+                    //     oEvent.getSource().getBindingContext("oModelControl").getObject()
+                    // );
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oObject = oEvent
@@ -1631,7 +1631,7 @@ sap.ui.define(
                         });
                     }
                     oModelControl.setProperty("/MultiCombo/Reward", aSelectedData);
-                    console.log(oModelControl);
+                    //console.log(oModelControl);
                 },
                 _setBRProductsData: function () {
                     var oView = this.getView();
@@ -2421,7 +2421,7 @@ sap.ui.define(
                         var aSpath = sPath.split("/");
                         var mParam1 = aSpath[aSpath.length - 1];
                         var aNumber = mParam1.match(/\d+$/)[0];
-                        console.log(aNumber);
+                        //console.log(aNumber);
                         if (aNumber == "1") {} else if (aNumber == "4") {
                             this._CreateBonusRewardTable();
                         }
@@ -2486,7 +2486,7 @@ sap.ui.define(
                             continue;
                         }
                     }
-                    console.log(aProd, aProdSort, aProdLimitArray);
+                    //console.log(aProd, aProdSort, aProdLimitArray);
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                     var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aFilter1 = [];
@@ -2512,7 +2512,7 @@ sap.ui.define(
 
                         }
                     }
-                    console.log(aFilter1A)
+                    //console.log(aFilter1A)
                     for (var b of aCat) {
                         aFilter2.push(new Filter("CategoryCode", FilterOperator.EQ, b));
                     }
@@ -2607,7 +2607,7 @@ sap.ui.define(
                         var aSpath = sPath.split("/");
                         var mParam1 = aSpath[aSpath.length - 1];
                         var aNumber = mParam1.match(/\d+$/)[0];
-                        console.log(aNumber);
+                        //console.log(aNumber);
                         if (aNumber == "1") {} else if (aNumber == "4") {
                             this._CreateBonusRewardTable();
                         }

@@ -73,7 +73,10 @@
 
             </f:FormContainer>
             <f:FormContainer title="   ">
-                <f:FormElement label="{i18n>formBasicInfoLbl5}">
+                <f:FormElement >
+                    <f:label>
+                        <Label text="{i18n>formBasicInfoLbl5}" required="true"/>
+                    </f:label>
                     <f:fields>
                         <VBox width="100%">
                             <items>
