@@ -126,8 +126,12 @@
                             <Text text="{Remark}"/>
                             <FlexBox >
                             <ObjectStatus  visible="{=${Status} === 'COMPLETED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'APPROVED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
                             <ObjectStatus  visible="{=${Status} === 'INPROGRESS'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'PENDING'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'INITIATED'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
                             <ObjectStatus  visible="{=${Status} === 'REJECTED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'FAILED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
                             </FlexBox>
                             
                             <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
