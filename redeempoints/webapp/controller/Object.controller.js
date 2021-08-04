@@ -316,13 +316,13 @@ sap.ui.define([
                         oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
                     }else{
-                        oViewModel.setProperty("/AddFields/kycStatus", "");
+                        oViewModel.setProperty("/AddFields/kycStatus", "NOT SUBMITTED");
                     }
                     if (obj["PainterBankDetails"]) {
                         oView.getModel("oModelControl").setProperty("/bEnable", true);
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
                     }else{
-                        oViewModel.setProperty("/AddFields/bnkStatus","");
+                        oViewModel.setProperty("/AddFields/bnkStatus","NOT SUBMITTED");
                     }
                     if (obj["RewardPoints"] < 5000) {
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
