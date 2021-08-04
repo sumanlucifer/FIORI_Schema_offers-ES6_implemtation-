@@ -176,7 +176,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oData = oView.getModel("oModelView").getData();
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
-                    console.log(sWorkFlowInstanceId);
+                    // console.log(sWorkFlowInstanceId);
                     if (sWorkFlowInstanceId) {
                         var sUrl =
                             "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
