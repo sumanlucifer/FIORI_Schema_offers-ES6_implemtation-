@@ -34,7 +34,7 @@
              </VBox>
              <VBox class="sapUiTinyMargin">
                         <Title text="Offer Enabled"   class="sapUiLargeMarginBegin"/>
-                        <Switch  class="sapUiLargeMarginBegin" state="{path : 'IsOfferEnabled'}" customTextOn="Yes" customTextOff="No"  enabled="false">
+                        <Switch  name="offer" class="sapUiLargeMarginBegin" state="{path : 'local>/IsOfferEnabled'}" customTextOn="Yes" customTextOff="No" change="onToggleChange">
                             <layoutData>
                                 <FlexItemData growFactor="1" />
                             </layoutData>
@@ -42,7 +42,7 @@
             </VBox>
              <VBox  class="sapUiTinyMargin">
                 <Title text="Bank Redemption" class="sapUiLargeMarginBegin"/>
-                <Switch class="sapUiLargeMarginBegin" state="{path : 'IsRedemptionEnabled'}" customTextOn="Yes" customTextOff="No" enabled="false">
+                <Switch name="redemption" class="sapUiLargeMarginBegin" state="{path : 'local>/IsRedemptionEnabled'}" customTextOn="Yes" customTextOff="No" change="onToggleChange">
                     <layoutData>
                         <FlexItemData growFactor="1" />
                     </layoutData>

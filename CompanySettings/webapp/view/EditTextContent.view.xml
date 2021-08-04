@@ -23,7 +23,7 @@ xmlns:richtexteditor="sap.ui.richtexteditor">
                         change="onValueChange"
                         value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
              </VBox>
-             <HBox width="80%" justifyContent="Start" alignContent="SpaceAround">
+             <!-- <HBox width="80%" justifyContent="Start" alignContent="SpaceAround">
              <VBox class="sapUiTinyMargin">
                         <Title text="Offer Enabled" />
                         <Switch state="{path : 'ActionEditModel>/IsOfferEnabled'}" customTextOn="Yes" customTextOff="No" >
@@ -40,7 +40,7 @@ xmlns:richtexteditor="sap.ui.richtexteditor">
                             </layoutData>
                         </Switch>
             </VBox>
-            </HBox>
+            </HBox> -->
             </VBox>
        
 	

@@ -2,6 +2,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/ui/core/Fragment',
     'sap/m/MessageToast',
+    'sap/m/MessageBox',
     "sap/ui/core/library",
     "sap/ui/core/ValueState",
     "../utils/Validator",
@@ -15,7 +16,7 @@ sap.ui.define([
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Fragment, MessageToast, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
+    function (Controller, Fragment, MessageToast, MessageBox, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
         JSONModel) {
         "use strict";
 
@@ -33,9 +34,7 @@ sap.ui.define([
                 this.getView().setModel(oModel);
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
-
-
-                  this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
+                this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
 
                 // Attaches validation handlers
@@ -49,14 +48,18 @@ sap.ui.define([
 
 
                 var oLocaModel = new JSONModel({
+                    bBusy:false,
                     bEdit: false,
-                    Catalogue: []
+                    Catalogue: [],
+                    IsOfferEnabled: false,
+                    IsRedemptionEnabled: false
                 });
                 this.getView().setModel(oLocaModel, "local");
 
                 this._property = "MasterCompanySettingsSet(1)";
 
-               // this.showPdfList();
+
+                // this.showPdfList();
 
 
                 // this.oRouter.getRoute("RouteHome").attachPatternMatched(this.onRoteMatched, this);
@@ -65,7 +68,18 @@ sap.ui.define([
                 this.showPdfList();
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
                 this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-                var oModel = this.getView().getModel();
+                var oModel = this.getView().getModel("data");
+                var oLocaModel = this.getView().getModel("local");
+                oModel.read("/" + this._property, {
+                    success: function (oRetrievedResult) {
+                        oLocaModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
+                        oLocaModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
+
+                    },
+                    error: function (oError) {
+
+                    }
+                });
                 oModel.refresh(true);
             },
             handleEditPress: function () {
@@ -245,12 +259,12 @@ sap.ui.define([
             //     var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
 
             //     sap.m.URLHelper.redirect(sSource, true);
-               
+
             // },
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-                sSource = "https://"+location.host + "/" + sSource    
+                sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
             onChangePdf: function (oEvent) {
@@ -355,6 +369,56 @@ sap.ui.define([
 
                 oModel.refresh(true);
             },
+            onToggleChange: function (oEvent) {
+                var oView = this.getView();
+                var sPath = oEvent.getSource().getBindingContext().getPath();
+                var oData = oView.getModel("data");
+                var othat = this;
+                var switchName = oEvent.getSource().getName();
+                MessageBox.confirm(
+                    "Kindly confirm to change the status", {
+                    actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction == "OK") {
+                            othat.onChnage(oData, sPath, switchName);
+                        }
+                    },
+                }
+                );
+            },
+
+            onChnage: function (oData, sPath, switchName) {
+                var oPayload, property;
+                var oLocalModel = this.getView().getModel("local");
+                oLocalModel.setProperty("/bBusy",true);
+                if (switchName == "offer") {
+                    property = "/IsOfferEnabled";
+                    oPayload = {
+                        IsOfferEnabled: oLocalModel.getProperty("/IsOfferEnabled")
+                    };
+                } else {
+                    property = "/IsRedemptionEnabled";
+                    oPayload = {
+                        IsRedemptionEnabled: oLocalModel.getProperty("/IsRedemptionEnabled"),
+                    };
+
+                }
+
+                oData.update(sPath + property, oPayload, {
+                    success: function (mData) {
+                        MessageToast.show(" Successfully Updated.");
+                        oData.refresh();
+                         oLocalModel.setProperty("/bBusy",false);
+                    },
+                    error: function (data) {
+                        var oRespText = JSON.parse(data.responseText);
+                        MessageBox.error(oRespText["error"]["message"]["value"]);
+                        oLocalModel.setProperty("/bBusy",false);
+                    },
+                });
+            }
+
 
 
 
