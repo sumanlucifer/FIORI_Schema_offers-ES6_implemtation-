@@ -648,18 +648,18 @@ sap.ui.define(
                     var oCells = oEvent.getSource().getParent().getParent().getCells();
                     var oValidator = new Validator();
                     var cFlag = oValidator.validate(oCells);
-
                     var bFlag = true;
-                    if (oObject["StartDate"] == null) {
-                        MessageToast.show("Kindly Input Start Date to Continue");
+                    if (!oObject["StartDate"]) {
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue");
                         return;
                     }
-                    if (oObject["EndDate"] == null) {
-                        MessageToast.show("Kindly Input End Date to Continue");
+                    if (!oObject["EndDate"]) {
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue");
                         return;
                     }
+
                     if (!cFlag) {
-                        MessageToast.show("Kindly enter the fields in proper format.");
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue.");
                         return;
                     }
 
@@ -868,7 +868,7 @@ sap.ui.define(
 
                     var oCells = oEvent.getSource().getParent().getParent().getCells();
                     var oValidator = new Validator();
-                    var cFlag = oValidator.validate(oCells);
+
                     var bFlag = true;
 
                     var bHasPack = oModel.getProperty("/Rbtn/AppPacks4");
@@ -885,16 +885,17 @@ sap.ui.define(
                             return;
                         }
                     }
-                    if (oObject["StartDate"] == null) {
-                        MessageToast.show("Kindly Input Start Date to Continue");
+                    var cFlag = oValidator.validate(oCells);
+                    if (!oObject["StartDate"]) {
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue");
                         return;
                     }
-                    if (oObject["EndDate"] == null) {
-                        MessageToast.show("Kindly Input End Date to Continue");
+                    if (!oObject["EndDate"]) {
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue");
                         return;
                     }
                     if (!cFlag) {
-                        MessageToast.show("Kindly enter the fields in proper format.");
+                        MessageToast.show("Kindly Input All Bonus Validity Fields to Continue");
                         return;
                     }
 
@@ -2504,7 +2505,7 @@ sap.ui.define(
                             aFilter1A.push(new Filter([
                                 new Filter("ProductCode", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
                                 new Filter("ProductCode", FilterOperator.LT, ('000' + a1[1]).slice(-3))
-                            ],true))
+                            ], true))
                         } else {
                             aFilter1A.push(
                                 new Filter("ProductCode", FilterOperator.EQ, ('000' + a1).slice(-3))
