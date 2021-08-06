@@ -8,7 +8,7 @@
                 <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status'}" 
                 state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
 			<ToolbarSpacer/>
-            <FlexBox visible="{=${PainterBankDetails/Status} !== 'PENDING'}">
+            <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED'}">
                 <Button visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
                 <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
             </FlexBox>

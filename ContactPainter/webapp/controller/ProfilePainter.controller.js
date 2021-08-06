@@ -182,7 +182,7 @@ sap.ui.define(
                         oView.byId("smrtLoyalty2").rebindTable(); //redeemed cash table
                         oView.getModel("oModelControl2").setProperty("/IctabBarLoyalty", "accrued");
                     } else if (sId.match("learnSection")) {
-                        console.log("learnSection")
+                        
                         oView.byId("smrtLiveTraining").rebindTable();
                         oView.byId("smrtOfflineTraining").rebindTable();
                         oView.byId("smrtVideoTraining").rebindTable();
@@ -600,9 +600,9 @@ sap.ui.define(
                 },
 
                 onCrossNavigate: function (sAction) {
-                    console.log("Cross Navigate Trigerred");
+                    // console.log("Cross Navigate Trigerred");
                     var sPainterId = this.getView().getModel("oModelControl2").getProperty("/PainterId") + "";
-                    console.log(sPainterId);
+                    //console.log(sPainterId);
                     this.Navigate({
                         target: {
                             semanticObject: "Manage",
@@ -851,7 +851,7 @@ sap.ui.define(
                     }
 
 
-                    console.log(oPayload, sPath);
+                    //console.log(oPayload, sPath);
                     var oModel = this.getView().getModel();
 
                     var c1, c2, c3, c4;
@@ -921,7 +921,7 @@ sap.ui.define(
                 },
                 _UpdateData: function (oPayload, sPath) {
                     var i = 0;
-                    console.log(i + 1);
+                    //console.log(i + 1);
                     var promise = jQuery.Deferred();
                     var othat = this;
                     var oModel = this.getView().getModel();
@@ -1687,7 +1687,7 @@ sap.ui.define(
                     //     return;
 
                     // }
-                    console.log(oModelCtrl);
+                   // console.log(oModelCtrl);
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
                     oModelCtrl.setProperty("/EditField", false);
@@ -1706,7 +1706,7 @@ sap.ui.define(
                     oModelView.setProperty("/PainterBankDetails/AccountTypeId", InitialAcTypeId);
                     oModelView.setProperty("/PainterBankDetails/AccountNumber", InitialAccNo);
                     oModelView.refresh(true);
-                    console.log(oModelView.getData())
+                    //console.log(oModelView.getData())
 
 
                 },
@@ -2118,7 +2118,7 @@ sap.ui.define(
                     var sPainterId = oView
                         .getModel("oModelControl2")
                         .getProperty("/PainterId");
-                    console.log(sPainterId);
+                    //console.log(sPainterId);
                     if (sPath.match("LoyaltyPoints")) {
                         //this._SearchLoyaltyPoints(sValue, sPainterId);
                     } else if (sPath.match("Tokens")) {
@@ -2348,7 +2348,7 @@ sap.ui.define(
                             title: "{i18n>ApplyToken}",
                             afterClose: function () {
                                 othat.oDefaultDialog.destroy();
-                                console.log("onCloseTrigerred");
+                                //console.log("onCloseTrigerred");
                                 delete othat.oDefaultDialog;
                                 oModelControl.setProperty("/ApplyLoyaltyPoints", "");
                             },
@@ -2529,7 +2529,7 @@ sap.ui.define(
                         ReferralCode: oDataValue["RegistrationReferralCode"],
                         ReferredBy: parseInt(sPainterId),
                     };
-                    console.log(oSentPayoad);
+                   // console.log(oSentPayoad);
 
                     oData.create("/PainterReferralHistorySet", oSentPayoad, {
                         success: function () {
@@ -2962,7 +2962,7 @@ sap.ui.define(
                 },
                 //himank loyalty table changes
                 onBeforeRebind: function (oEvent) {
-                    console.log("Binding Trigerred for loyalty")
+                    //console.log("Binding Trigerred for loyalty")
                     var oPainterId = this.getViewModel("oModelControl2").getProperty(
                         "/PainterId"
                     );
@@ -3035,7 +3035,7 @@ sap.ui.define(
                 // himank loyalty hanges end
                 /*Aditya loyalty changes*/
                 onBeforeRebindRdmd: function (oEvent) {
-                    console.log("Binding Trigerred for loyalty redeemed")
+                    //console.log("Binding Trigerred for loyalty redeemed")
                     var oPainterId = this.getViewModel("oModelControl2").getProperty(
                         "/PainterId"
                     );
@@ -3092,7 +3092,7 @@ sap.ui.define(
                     );
                 },
                 onBeforeRebindRdmdCash: function (oEvent) {
-                    console.log("Binding Trigerred for loyalty redeemed cash")
+                   // console.log("Binding Trigerred for loyalty redeemed cash")
                     var oPainterId = this.getViewModel("oModelControl2").getProperty(
                         "/PainterId"
                     );
@@ -3158,7 +3158,7 @@ sap.ui.define(
                 /*Aditya loyalty chnages end */
                 // knowledge table changes
                 fmtVisible: function (mParam) {
-                    console.log(mParam);
+                    //console.log(mParam);
                     if (mParam === "") {
                         return true;
                     }
@@ -3261,7 +3261,7 @@ sap.ui.define(
                 _setQuestioanireData: function (sPath) {
                     var oView = this.getView();
                     var oTable = oView.byId("Questionnaire");
-                    console.log(sPath);
+                    //console.log(sPath);
                     this._pQuestionaireDialog.bindElement({
                         path: "/PainterTrainingSet(" + sPath["Id"] + ")",
                         parameters: {
@@ -3273,7 +3273,7 @@ sap.ui.define(
                 },
                 QuestionaaireFactory: function (sId, oContext) {
                     var oBject = oContext.getObject();
-                    console.log(oBject);
+                   // console.log(oBject);
                     var oColumnListItem = new sap.m.ColumnListItem();
                     oColumnListItem.addCell(
                         new sap.m.Text({
@@ -3373,7 +3373,7 @@ sap.ui.define(
                 },
                 LearningQuestionaaireFactory: function (sId, oContext) {
                     var oBject = oContext.getObject();
-                    console.log(oBject);
+                    //console.log(oBject);
                     var oColumnListItem = new sap.m.ColumnListItem();
                     oColumnListItem.addCell(
                         new sap.m.Text({
@@ -3397,7 +3397,7 @@ sap.ui.define(
                                             "SelectedOptionId",
                                         ],
                                         formatter: function (mPram1, mPram2, mPram3) {
-                                            console.log(mPram1, mPram2, mPram3);
+                                            //console.log(mPram1, mPram2, mPram3);
                                             if (mPram1) {
                                                 return "Success";
                                             }
@@ -3474,7 +3474,7 @@ sap.ui.define(
                 //offer table and dialog box code integration
                 onOfferReedeme: function (oEvent) {
                     var obj = oEvent.getSource().getBindingContext().getObject();
-                    console.log(obj);
+                    //console.log(obj);
                     var oView = this.getView();
                     // create value help dialog
                     if (!this._DialogOfferRedeem) {
@@ -3499,7 +3499,7 @@ sap.ui.define(
                 _BeforeRedeemOpen: function (mParam1) {
                     var oProgress = mParam1["PainterOfferProgress"],
                         oSelectedProgress;
-                    console.log(mParam1);
+                    //console.log(mParam1);
                     var oModelC2 = this.getView().getModel("oModelControl2");
                     // if Offer Type is not slab
                     if (oProgress.hasOwnProperty("__list")) {
@@ -3513,7 +3513,7 @@ sap.ui.define(
                                         this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
                                             expand: "RewardGift"
                                         });
-                                        console.log(oGetProgress)
+                                        //console.log(oGetProgress)
                                         oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
                                         oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
                                         this._DialogOfferRedeem.open();
@@ -3559,7 +3559,7 @@ sap.ui.define(
                     var oModelC2 = oView.getModel("oModelControl2");
                     oModelC2.setProperty("/ProfilePageBuzy", true);
                     var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
-                    console.log(iSelctedIndex)
+                    //console.log(iSelctedIndex)
                     // if (iSelctedIndex < 0) {
                     //     MessageToast.show("Kindly Select at least one of the reward to redeem.");
                     //     return;
@@ -3572,7 +3572,7 @@ sap.ui.define(
                     }
                     var sPainterId = oModelC2.getProperty("/PainterId");
                     var sProgressId = oModelC2.getProperty("/OfferRedeemDlg/UUID");
-                    console.log(sProgressId, sPainterId);
+                    //console.log(sProgressId, sPainterId);
                     var oData = oView.getModel();
                     var othat = this;
                     oData.read("/RedeemOffer", {
