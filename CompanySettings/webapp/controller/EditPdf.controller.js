@@ -221,11 +221,11 @@ sap.ui.define([
                                 success: function (data) {
                                     // aCatalogue.splice(aCatalogue[i-1], 1);
                                     oModel.setProperty("/bBusy", false);
-                                   // oModel.refresh(true);
+                                    oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
                                     
-                                     oRouter.navTo("RouteHome");
+                                    oRouter.navTo("RouteHome");
                                 },
                                 error: function () { },
                             });

@@ -48,7 +48,7 @@ sap.ui.define([
 
 
                 var oLocaModel = new JSONModel({
-                    bBusy:false,
+                    bBusy: false,
                     bEdit: false,
                     Catalogue: [],
                     IsOfferEnabled: false,
@@ -105,7 +105,7 @@ sap.ui.define([
 
             showPdfList: function () {
 
-
+                var oLocalModel = this.getView().getModel("local");
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
                     urlParameters: {
@@ -116,12 +116,7 @@ sap.ui.define([
                             return !ele.ContentType.includes("image");
 
                         });
-
-
-                        that.getView().getModel("local").setProperty("/Catalogue", Catalogue);
-
-
-
+                        oLocalModel.setProperty("/Catalogue", Catalogue);
                     },
                     error: function (oError) {
                     }
@@ -254,121 +249,113 @@ sap.ui.define([
 
                 this.oEscapePreventDialog.open();
             },
-            // openPdf: function (oEvent) {
-            //     var oContext = oEvent.getSource().getBindingContext("local");
-            //     var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-
-            //     sap.m.URLHelper.redirect(sSource, true);
-
-            // },
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
-            onChangePdf: function (oEvent) {
-                var oContext = oEvent.getSource().getBindingContext("local");
-                if (oEvent.getParameter("files").length > 0) {
-                    //this.pdfName = this.oFileUploaderPdf.getValue();
-                    this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
-                    this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
-                    this.getView().getModel("local").setProperty("bNew", true, oContext);
-                }
-            },
-            _updatePdf: function (propertySet) {
-                var oModel = this.getView().getModel("local");
-                var catalogue = oModel.getProperty("/Catalogue");
-                var fileUploader;
-                var sServiceUri = this.sServiceURI;
+            // onChangePdf: function (oEvent) {
+            //     var oContext = oEvent.getSource().getBindingContext("local");
+            //     if (oEvent.getParameter("files").length > 0) {
+            //         //this.pdfName = this.oFileUploaderPdf.getValue();
+            //         this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
+            //         this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+            //         this.getView().getModel("local").setProperty("bNew", true, oContext);
+            //     }
+            // },
+            // _updatePdf: function (propertySet) {
+            //     var oModel = this.getView().getModel("local");
+            //     var catalogue = oModel.getProperty("/Catalogue");
+            //     var sServiceUri = this.sServiceURI;
 
-                catalogue.forEach(function (ele) {
-                    if (ele.bNew) {
-                        var that = this;
-                        jQuery.ajax({
-                            method: "PUT",
-                            url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            data: ele.file,
+            //     catalogue.forEach(function (ele) {
+            //         if (ele.bNew) {
+            //             var that = this;
+            //             jQuery.ajax({
+            //                 method: "PUT",
+            //                 url: sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+            //                 cache: false,
+            //                 contentType: false,
+            //                 processData: false,
+            //                 data: ele.file,
 
-                            success: function (data) {
-                                // that.getView().getModel("local").refresh(true);
-                                var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-                                oFileUploaderPdf.clear();
-                            },
-                            error: function () { },
-                        })
-                    }
-                });
-            },
-            onAddCatalogue: function () {
-                var oModel = this.getView().getModel("local");
-                var oObject = this.getView().getModel("local").getProperty("/Catalogue");
+            //                 success: function (data) {
+            //                     // that.getView().getModel("local").refresh(true);
+            //                     var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+            //                     oFileUploaderPdf.clear();
+            //                 },
+            //                 error: function () { },
+            //             })
+            //         }
+            //     });
+            // },
+            // onAddCatalogue: function () {
+            //     var oModel = this.getView().getModel("local");
+            //     var oObject = this.getView().getModel("local").getProperty("/Catalogue");
 
-                oObject.push({
-                    LanguageCode: "",
-                    file: null,
-                    fileName: ""
-                });
-                oModel.refresh(true);
-            },
-            onPressRemoveCatalogue: function (oEvent) {
-                this.getView().getModel("local").setProperty("bNew", true);
-                var oView = this.getView();
-                var oModel = oView.getModel("local");
-                var sPath = oEvent
-                    .getSource()
-                    .getBindingContext("local")
-                    .getPath()
-                    .split("/");
-                var aCatalogue = oModel.getProperty("/Catalogue");
+            //     oObject.push({
+            //         LanguageCode: "",
+            //         file: null,
+            //         fileName: ""
+            //     });
+            //     oModel.refresh(true);
+            // },
+            // onPressRemoveCatalogue: function (oEvent) {
+            //     this.getView().getModel("local").setProperty("bNew", true);
+            //     var oView = this.getView();
+            //     var oModel = oView.getModel("local");
+            //     var sPath = oEvent
+            //         .getSource()
+            //         .getBindingContext("local")
+            //         .getPath()
+            //         .split("/");
+            //     var aCatalogue = oModel.getProperty("/Catalogue");
 
-                var index = parseInt(sPath[sPath.length - 1]);
-                var delItems = [];
-                var property = this._property;
-                var sServiceUri = this.sServiceURI;
-                var oModel = this.getView().getModel("local");
-                var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+            //     var index = parseInt(sPath[sPath.length - 1]);
+            //     var delItems = [];
+            //     var property = this._property;
+            //     var sServiceUri = this.sServiceURI;
+            //     var oModel = this.getView().getModel("local");
+            //     var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
 
-                // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
-                //To DO promises for sync
-                for (var i = 0; i <= aCatalogue.length; i++) {
+            //     // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+            //     //To DO promises for sync
+            //     for (var i = 0; i <= aCatalogue.length; i++) {
 
-                    if (i == index) {
-                        delItems = aCatalogue[i];
-                        if (delItems.file !== null) {
-                            jQuery.ajax({
-                                method: "DELETE",
-                                url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
-                                cache: false,
-                                contentType: false,
-                                processData: false,
-                                // data: delItems,
-                                success: function (data) {
-                                    // aCatalogue.splice(aCatalogue[i-1], 1);
+            //         if (i == index) {
+            //             delItems = aCatalogue[i];
+            //             if (delItems.file !== null) {
+            //                 jQuery.ajax({
+            //                     method: "DELETE",
+            //                     url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+            //                     cache: false,
+            //                     contentType: false,
+            //                     processData: false,
+            //                     // data: delItems,
+            //                     success: function (data) {
+            //                         // aCatalogue.splice(aCatalogue[i-1], 1);
 
-                                    oModel.refresh(true);
-                                    var sMessage = "PDF Deleted!";
-                                    MessageToast.show(sMessage);
-                                },
-                                error: function () { },
-                            });
-                        }
-                        else {
-                            aCatalogue.splice(i);
-                        }
-                        aCatalogue.splice(i);
+            //                         oModel.refresh(true);
+            //                         var sMessage = "PDF Deleted!";
+            //                         MessageToast.show(sMessage);
+            //                     },
+            //                     error: function () { },
+            //                 });
+            //             }
+            //             else {
+            //                 aCatalogue.splice(i);
+            //             }
+            //             aCatalogue.splice(i);
 
-                    }
+            //         }
 
-                };
-
+            //     }
 
 
-                oModel.refresh(true);
-            },
+
+            //     oModel.refresh(true);
+            // },
             onToggleChange: function (oEvent) {
                 var oView = this.getView();
                 var sPath = oEvent.getSource().getBindingContext().getPath();
@@ -391,7 +378,7 @@ sap.ui.define([
             onChnage: function (oData, sPath, switchName) {
                 var oPayload, property;
                 var oLocalModel = this.getView().getModel("local");
-                oLocalModel.setProperty("/bBusy",true);
+                oLocalModel.setProperty("/bBusy", true);
                 if (switchName == "offer") {
                     property = "/IsOfferEnabled";
                     oPayload = {
@@ -408,13 +395,13 @@ sap.ui.define([
                 oData.update(sPath + property, oPayload, {
                     success: function (mData) {
                         MessageToast.show(" Successfully Updated.");
-                        oData.refresh();
-                         oLocalModel.setProperty("/bBusy",false);
+                        oData.refresh(true);
+                        oLocalModel.setProperty("/bBusy", false);
                     },
                     error: function (data) {
                         var oRespText = JSON.parse(data.responseText);
                         MessageBox.error(oRespText["error"]["message"]["value"]);
-                        oLocalModel.setProperty("/bBusy",false);
+                        oLocalModel.setProperty("/bBusy", false);
                     },
                 });
             }
