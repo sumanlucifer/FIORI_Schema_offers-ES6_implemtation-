@@ -23,24 +23,6 @@ xmlns:richtexteditor="sap.ui.richtexteditor">
                         change="onValueChange"
                         value="{path : 'ActionEditModel>/CallCenterHelpline'}"/>
              </VBox>
-             <!-- <HBox width="80%" justifyContent="Start" alignContent="SpaceAround">
-             <VBox class="sapUiTinyMargin">
-                        <Title text="Offer Enabled" />
-                        <Switch state="{path : 'ActionEditModel>/IsOfferEnabled'}" customTextOn="Yes" customTextOff="No" >
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                        </Switch>
-            </VBox>
-            <VBox class="sapUiTinyMargin">
-                        <Title text="Bank Redemption" class="sapUiLargeMarginBegin"/>
-                        <Switch class="sapUiLargeMarginBegin" state="{path : 'ActionEditModel>/IsRedemptionEnabled'}" customTextOn="Yes" customTextOff="No">
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                        </Switch>
-            </VBox>
-            </HBox> -->
             </VBox>
        
 	

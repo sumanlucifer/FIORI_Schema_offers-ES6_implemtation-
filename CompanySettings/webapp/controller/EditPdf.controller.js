@@ -52,7 +52,7 @@ sap.ui.define([
 
             showPdfList: function () {
 
-
+                var oLocalModel=this.getView().getModel("local")
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
                     urlParameters: {
@@ -64,10 +64,9 @@ sap.ui.define([
 
                         });
 
-
-                        that.getView().getModel("local").setProperty("/Catalogue", Catalogue);
-                        that.getView().getModel("local").setProperty("/bBusy", false);
-                        that.getView().getModel("local").refresh(true);
+                        oLocalModel.setProperty("/Catalogue", Catalogue);
+                        oLocalModel.setProperty("/bBusy", false);
+                        oLocalModel.refresh(true);
 
 
                     },
@@ -129,12 +128,14 @@ sap.ui.define([
                             processData: false,
                             data: ele.file,
                             success: function (data) {
-                                var msg = 'Saved Successfully!';
-                                MessageToast.show(msg);
-                                oRouter.navTo("RouteHome");
+                                 oModel.setProperty("/bBusy", false);
+                                    oModel.refresh(true);
+                                    var sMessage = "Saved Successfully!";
+                                    MessageToast.show(sMessage);
+                                    oRouter.navTo("RouteHome");
                                 // setTimeout(() => {
                                 //     oRouter.navTo("RouteHome");
-                                // }, 50);
+                                // }, 1000);
 
                             },
                             error: function () { },
@@ -147,7 +148,7 @@ sap.ui.define([
             },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
-                var oObject = this.getView().getModel("local").getProperty("/Catalogue");
+                var oObject = oModel.getProperty("/Catalogue");
 
                 oObject.push({
                     LanguageCode: "",
@@ -221,11 +222,11 @@ sap.ui.define([
                                 success: function (data) {
                                     // aCatalogue.splice(aCatalogue[i-1], 1);
                                     oModel.setProperty("/bBusy", false);
-                                   // oModel.refresh(true);
+                                    oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
                                     
-                                     oRouter.navTo("RouteHome");
+                                    oRouter.navTo("RouteHome");
                                 },
                                 error: function () { },
                             });
@@ -237,11 +238,7 @@ sap.ui.define([
 
                     }
 
-                };
-
-
-
-                oModel.refresh(true);
+                }
             },
 
 
