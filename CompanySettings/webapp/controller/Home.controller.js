@@ -33,6 +33,17 @@ sap.ui.define([
                 var oModel = this.getOwnerComponent().getModel("data");
                 this.getView().setModel(oModel);
 
+                 var oLocaModel = new JSONModel({
+                    bBusy: false,
+                    bEdit: false,
+                    Catalogue: [],
+                    IsOfferEnabled: false,
+                    IsRedemptionEnabled: false
+                });
+                this.getView().setModel(oLocaModel, "local");
+
+                this._property = "MasterCompanySettingsSet(1)";
+
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
                 this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
@@ -47,16 +58,7 @@ sap.ui.define([
 
 
 
-                var oLocaModel = new JSONModel({
-                    bBusy: false,
-                    bEdit: false,
-                    Catalogue: [],
-                    IsOfferEnabled: false,
-                    IsRedemptionEnabled: false
-                });
-                this.getView().setModel(oLocaModel, "local");
-
-                this._property = "MasterCompanySettingsSet(1)";
+               
 
 
                 // this.showPdfList();
@@ -65,33 +67,45 @@ sap.ui.define([
                 // this.oRouter.getRoute("RouteHome").attachPatternMatched(this.onRoteMatched, this);
             },
             _onObjectMatched: function () {
-                this.showPdfList();
+               // this.showPdfList();
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-                this.oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
                 var oModel = this.getView().getModel("data");
+                
                 var oLocaModel = this.getView().getModel("local");
+                
                 oModel.read("/" + this._property, {
+                    urlParameters: {
+                        "$expand": "MediaList"
+                    },
                     success: function (oRetrievedResult) {
                         oLocaModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
                         oLocaModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
+                        var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
+                            return !ele.ContentType.includes("image");
+
+                        });
+                        oLocaModel.setProperty("/Catalogue", Catalogue);
+                        
 
                     },
-                    error: function (oError) {
-
-                    }
+                    error: function (oError) { }
                 });
+                oLocaModel.refresh(true);
                 oModel.refresh(true);
+                
             },
-            handleEditPress: function () {
-                this.getView().getModel("local").setProperty("/bEdit", true);
+            
+
+            // handleEditPress: function () {
+            //     this.getView().getModel("local").setProperty("/bEdit", true);
 
 
-                //Clone the data
-                this._oSupplier = Object.assign({}, this.getView().bindElement("/MasterCompanySettingsSet(1)"));
-                this._toggleButtonsAndView(true);
+            //     //Clone the data
+            //     this._oSupplier = Object.assign({}, this.getView().bindElement("/MasterCompanySettingsSet(1)"));
+            //     this._toggleButtonsAndView(true);
 
 
-            },
+            // },
             onEditTextContent: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("EditTextContent");
@@ -125,130 +139,130 @@ sap.ui.define([
 
             },
 
-            handleCancelPress: function () {
+            // handleCancelPress: function () {
 
-                this.getView().getModel("local").setProperty("/bEdit", false);
+            //     this.getView().getModel("local").setProperty("/bEdit", false);
 
-                //Restore the data
-                var oModel = this.getView().getModel("data");
-                this.getView().setModel(oModel);
+            //     //Restore the data
+            //     var oModel = this.getView().getModel("data");
+            //     this.getView().setModel(oModel);
 
-                this.getView().bindElement("/MasterCompanySettingsSet(1)");
-
-
-                this._toggleButtonsAndView(false);
-                var localModel = this.getView().getModel("local");
-                localModel.refresh(true);
-
-            },
-            handleEmptyFields: function (oEvent) {
-                console.log("empty");
-                this.onDialogPress();
-            },
-
-            handleSavePress: function () {
-
-                // console.log(DisclaimerVersion);
-
-                var oDataModel = this.getView().getModel();
-                var oView = this.getView();
-                // var oModelView = oView.getModel("oModelView");
-                // oModelView.setProperty("/busy", true);
-                var sEntityPath = oView.getElementBinding().getPath();
-                var oDataValue = oDataModel.getObject(sEntityPath);
-                //var oPrpReq = oModelView.getProperty("/prop2");
+            //     this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
 
+            //     this._toggleButtonsAndView(false);
+            //     var localModel = this.getView().getModel("local");
+            //     localModel.refresh(true);
 
+            // },
+            // handleEmptyFields: function (oEvent) {
+            //     console.log("empty");
+            //     this.onDialogPress();
+            // },
 
-                var passedValidation = this.onValidate();
+            // handleSavePress: function () {
 
-                if (passedValidation === false) {
-                    //show an error message, rest of code will not execute.
-                    this.handleEmptyFields();
-                    return false;
-                }
+            //     // console.log(DisclaimerVersion);
+
+            //     var oDataModel = this.getView().getModel();
+            //     var oView = this.getView();
+            //     // var oModelView = oView.getModel("oModelView");
+            //     // oModelView.setProperty("/busy", true);
+            //     var sEntityPath = oView.getElementBinding().getPath();
+            //     var oDataValue = oDataModel.getObject(sEntityPath);
+            //     //var oPrpReq = oModelView.getProperty("/prop2");
 
 
 
 
-                var oData = {
-                    AboutUs: oDataValue["AboutUs"],
-                    Disclaimer: oDataValue["Disclaimer"],
-                    CallCenterHelpline: oDataValue["CallCenterHelpline"],
-                    DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
-                }
+            //     var passedValidation = this.onValidate();
 
-
-                //console.log(oData);
-                var that = this;
-                var editSet = "/MasterCompanySettingsSet(1)";
-                var oModel = this.getView().getModel("data");
-                oModel.update(editSet, oData, {
-                    success: function () {
-                        that._updatePdf(that._property);
-                        that.onSuccessPress();
-                    }
-                });
-
-
-            },
-            onSuccessPress: function (msg) {
-
-                var msg = 'Saved Successfully!';
-                MessageToast.show(msg);
-
-                setTimeout(function () {
-                    this.getView().getModel("local").setProperty("/bEdit", false);
-                    this._toggleButtonsAndView(false);
-                }.bind(this), 1000);
+            //     if (passedValidation === false) {
+            //         //show an error message, rest of code will not execute.
+            //         this.handleEmptyFields();
+            //         return false;
+            //     }
 
 
 
-            },
 
-            _toggleButtonsAndView: function (bEdit) {
-
-                var oView = this.getView();
-
-                // Show the appropriate action buttons
-                oView.byId("edit").setVisible(!bEdit);
-                oView.byId("save").setVisible(bEdit);
-                oView.byId("cancel").setVisible(bEdit);
-
-                // Set the right form type
-                //this._showFormFragment(bEdit ? "Change" : "Display");
-            },
+            //     var oData = {
+            //         AboutUs: oDataValue["AboutUs"],
+            //         Disclaimer: oDataValue["Disclaimer"],
+            //         CallCenterHelpline: oDataValue["CallCenterHelpline"],
+            //         DisclaimerVersion: oDataValue["DisclaimerVersion"] + 1,
+            //     }
 
 
+            //     //console.log(oData);
+            //     var that = this;
+            //     var editSet = "/MasterCompanySettingsSet(1)";
+            //     var oModel = this.getView().getModel("data");
+            //     oModel.update(editSet, oData, {
+            //         success: function () {
+            //             that._updatePdf(that._property);
+            //             that.onSuccessPress();
+            //         }
+            //     });
 
-            onValidate: function () {
-                // Create new validator instance
-                var validator = new Validator();
 
-                // Validate input fields against root page with id 'somePage'
-                return validator.validate(this.byId("EditFragment"));
-            },
-            onDialogPress: function () {
-                if (!this.oEscapePreventDialog) {
-                    this.oEscapePreventDialog = new Dialog({
-                        title: "Error",
-                        content: new Text({ text: "Mandatory Fields Are Empty!" }),
-                        type: DialogType.Message,
-                        buttons: [
-                            new Button({
-                                text: "Close",
-                                press: function () {
-                                    this.oEscapePreventDialog.close();
-                                }.bind(this)
-                            })
-                        ]
+            // },
+            // onSuccessPress: function (msg) {
 
-                    });
-                }
+            //     var msg = 'Saved Successfully!';
+            //     MessageToast.show(msg);
 
-                this.oEscapePreventDialog.open();
-            },
+            //     setTimeout(function () {
+            //         this.getView().getModel("local").setProperty("/bEdit", false);
+            //         this._toggleButtonsAndView(false);
+            //     }.bind(this), 1000);
+
+
+
+            // },
+
+            // _toggleButtonsAndView: function (bEdit) {
+
+            //     var oView = this.getView();
+
+            //     // Show the appropriate action buttons
+            //     oView.byId("edit").setVisible(!bEdit);
+            //     oView.byId("save").setVisible(bEdit);
+            //     oView.byId("cancel").setVisible(bEdit);
+
+            //     // Set the right form type
+            //     //this._showFormFragment(bEdit ? "Change" : "Display");
+            // },
+
+
+
+            // onValidate: function () {
+            //     // Create new validator instance
+            //     var validator = new Validator();
+
+            //     // Validate input fields against root page with id 'somePage'
+            //     return validator.validate(this.byId("EditFragment"));
+            // },
+            // onDialogPress: function () {
+            //     if (!this.oEscapePreventDialog) {
+            //         this.oEscapePreventDialog = new Dialog({
+            //             title: "Error",
+            //             content: new Text({ text: "Mandatory Fields Are Empty!" }),
+            //             type: DialogType.Message,
+            //             buttons: [
+            //                 new Button({
+            //                     text: "Close",
+            //                     press: function () {
+            //                         this.oEscapePreventDialog.close();
+            //                     }.bind(this)
+            //                 })
+            //             ]
+
+            //         });
+            //     }
+
+            //     this.oEscapePreventDialog.open();
+            // },
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
