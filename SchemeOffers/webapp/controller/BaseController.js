@@ -1856,14 +1856,18 @@ sap.ui.define(
                 _getFilterForPainterValue: function () {
                     var aFilters = [];
                     var aFilter1 = new Filter("IsArchived", FilterOperator.EQ, false);
+                    aFilters.push(new Filter("MembershipCard", FilterOperator.NE, null))
+                     aFilters.push(new Filter("RegistrationStatus", FilterOperator.EQ, "REGISTERED"));
+                       aFilters.push(new Filter("ActivationStatus", FilterOperator.NE, "DEACTIVATED"))
                     aFilters.push(aFilter1);
                     if (aFilters.length == 0) {
                         return [];
                     }
 
-                    return aFilter1;
+                    return aFilters;
                 },
                 _FilterPainterValueTable: function (oFilter, sType) {
+                    console.log(oFilter)
                     var oValueHelpDialog = this._PainterValueHelp;
 
                     oValueHelpDialog.getTableAsync().then(function (oTable) {
