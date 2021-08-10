@@ -86,14 +86,14 @@
 					"bundleName": "com.knpl.pragati.CompanySettings.i18n.i18n"
 				}
             },
-            "data": {
+            "": {
                 "dataSource": "mainService",
                 "preload": true,
                 "settings": {
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
-                    "refreshAfterChange": false,
-                    "defaultUpdateMethod":"PUT",
+                    "refreshAfterChange": true,
+                    "defaultUpdateMethod":"Put",
                     "useBatch" : false
                 }
             }

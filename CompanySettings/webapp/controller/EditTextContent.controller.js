@@ -94,7 +94,7 @@ sap.ui.define([
 
                 //var that = this;
                 var oActionModel=this.getView().getModel("ActionEditModel");
-                this.getOwnerComponent().getModel("data").read("/MasterCompanySettingsSet(1)", {
+                this.getOwnerComponent().getModel().read("/MasterCompanySettingsSet(1)", {
                     success: function (data, response) {
                         // that.entitySet = data;
                         // oData.AboutUs = data.AboutUs
@@ -239,7 +239,7 @@ sap.ui.define([
                 // }
                 var that = this;
                 var editSet = "/MasterCompanySettingsSet(1)";
-                var oModel = this.getView().getModel("data");
+                var oModel = this.getView().getModel();
                 oModel.update(editSet, oData, {
                     success: function () {
                         that.onSuccessPress();
@@ -252,7 +252,7 @@ sap.ui.define([
 
                 var msg = 'Saved Successfully!';
                 MessageToast.show(msg);
-                this.getOwnerComponent().getModel("data").refresh(true);
+                this.getOwnerComponent().getModel().refresh(true);
                 setTimeout(function () {
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     oRouter.navTo("RouteHome");

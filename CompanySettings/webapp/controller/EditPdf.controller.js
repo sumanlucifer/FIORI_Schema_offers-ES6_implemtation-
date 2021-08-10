@@ -24,8 +24,8 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.EditPdf", {
             onInit: function () {
-                var oModel = this.getOwnerComponent().getModel("data");
-                this.getView().setModel(oModel);
+                // var oModel = this.getOwnerComponent().getModel("data");
+                // this.getView().setModel(oModel);
 
                 // this.getView().bindElement("/MasterCompanySettingsSet(1)");
 
@@ -51,7 +51,6 @@ sap.ui.define([
 
 
             showPdfList: function () {
-
                 var oLocalModel=this.getView().getModel("local")
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
@@ -106,9 +105,28 @@ sap.ui.define([
                     this.getView().getModel("local").setProperty("bNew", true, oContext);
                 }
             },
+            // onPressSave: function (){
+            //      var oLocalModel = this.getView().getModel("local");
+            //     var c1, c2;
+            //         var othat = this;
+            //         c1 = othat._updatePdf();
+            //         c1.then(function () {
+            //             setTimeout(() => {
+            //             c2 = othat.showPdfList();
+            //             c2.then(function () {
+            //                 var sMessage = "Saved Successfully!";
+            //                 MessageToast.show(sMessage);
+            //                 othat.handleCancelPress();
+            //                 });
+            //             }, 7000);
+                       
+            //         });
+            //         oLocalModel.refresh(true);
+
+            // },
             _updatePdf: function () {
                 var oModel = this.getView().getModel("local");
-                var dataModel = this.getOwnerComponent().getModel("data");
+                var dataModel = this.getOwnerComponent().getModel();
                 var catalogue = oModel.getProperty("/Catalogue");
                 var fileUploader;
                 var sServiceUri = this.sServiceURI;
@@ -129,8 +147,7 @@ sap.ui.define([
                             data: ele.file,
                             success: function (data) {
                                  oModel.setProperty("/bBusy", false);
-                                    oModel.refresh(true);
-                                    var sMessage = "Saved Successfully!";
+                                 var sMessage = "Saved Successfully!";
                                     MessageToast.show(sMessage);
                                     oRouter.navTo("RouteHome");
                                 // setTimeout(() => {
@@ -140,12 +157,9 @@ sap.ui.define([
                             },
                             error: function () { },
                         })
-                    }
-                });
-
-
-
-            },
+                     }
+                    });
+                },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
                 var oObject = oModel.getProperty("/Catalogue");
