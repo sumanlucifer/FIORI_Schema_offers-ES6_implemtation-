@@ -314,32 +314,35 @@ sap.ui.define(
                     this.getView().setModel(oModel, "oModelControl2");
 
                     var othat = this;
-                    var c1, c1b, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9;
+                    var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9;
                     var oView = this.getView();
 
                     c1 = this._loadEditProfile("Display");
                     c1.then(function () {
                         c1b = othat._CheckLoginData();
                         c1b.then(function () {
-                            c2 = othat._getInitData(oProp);
-                            c2.then(function (data) {
-                                c2b = othat._setWorkflowFlags(data);
-                                c2b.then(function (data) {
-                                    c3 = othat._SetRbtnData(data);
-                                    c3.then(function (data) {
-                                        c4 = othat._setViewData1(data);
-                                        c4.then(function (data) {
-                                            c5 = othat._setViewData2(data);
-                                            c5.then(function (data) {
-                                                c6 = othat._setAdditionalData(data);
-                                                c6.then(function (data) {
-                                                    c7 = othat._OfferTypeValidation(data);
-                                                    c7.then(function (data) {
-                                                        c7B = othat._getExecLogData(data);
-                                                        c7B.then(function (data) {
-                                                            c8 = othat._CheckAttachment();
-                                                            c8.then(function () {
-                                                                c9 = othat._RemovePageBusy();
+                            c1c = othat._getInitPayLoad(oProp);
+                            c1c.then(function () {
+                                c2 = othat._getInitData(oProp);
+                                c2.then(function (data) {
+                                    c2b = othat._setWorkflowFlags(data);
+                                    c2b.then(function (data) {
+                                        c3 = othat._SetRbtnData(data);
+                                        c3.then(function (data) {
+                                            c4 = othat._setViewData1(data);
+                                            c4.then(function (data) {
+                                                c5 = othat._setViewData2(data);
+                                                c5.then(function (data) {
+                                                    c6 = othat._setAdditionalData(data);
+                                                    c6.then(function (data) {
+                                                        c7 = othat._OfferTypeValidation(data);
+                                                        c7.then(function (data) {
+                                                            c7B = othat._getExecLogData(data);
+                                                            c7B.then(function (data) {
+                                                                c8 = othat._CheckAttachment();
+                                                                c8.then(function () {
+                                                                    c9 = othat._RemovePageBusy();
+                                                                });
                                                             });
                                                         });
                                                     });
@@ -348,7 +351,7 @@ sap.ui.define(
                                         });
                                     });
                                 });
-                            });
+                            })
                         });
                     }); //c1.then
                     this._toggleButtonsAndView(false);
@@ -444,6 +447,28 @@ sap.ui.define(
                 onPressSave: function () {
                     this.oViewModel.setProperty("/editable", false);
                 },
+                _getInitPayLoad: function () {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oModelControl2 = oView.getModel("oModelControl2");
+                    var sPath = oModelControl2.getProperty("/bindProp");
+                    var othat = this;
+
+                    return new Promise((resolve, reject) => {
+                        oView.getModel().read("/" + sPath, {
+
+                            success: function (data) {
+                                var oModel = new JSONModel(data);
+                                othat.getView().setModel(oModel, "oModelDisplay");
+                                resolve(data);
+                            },
+                            error: function () {
+                                reject();
+                            },
+                        });
+                    });
+                },
                 _getInitData: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -463,8 +488,8 @@ sap.ui.define(
                                 $expand: exPand,
                             },
                             success: function (data) {
-                                var oModel = new JSONModel(data);
-                                othat.getView().setModel(oModel, "oModelDisplay");
+                                //var oModel = new JSONModel(data);
+                                //othat.getView().setModel(oModel, "oModelDisplay");
                                 resolve(data);
                             },
                             error: function () {
@@ -1789,7 +1814,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                    //console.log(oPayLoad);
+                    console.log(oPayLoad);
 
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
@@ -2188,18 +2213,18 @@ sap.ui.define(
 
                     var c1, c1B, c2, c3;
                     c1 = othat._CheckExpandPainter(oNewPayLoad);
-                    c1.then(function (oNewPayLoad) {
-                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
-                        c1B.then(function (oNewPayLoad) {
-                            c2 = othat._UpdateOffer(oNewPayLoad);
-                            c2.then(function (oNewPayLoad) {
-                                othat._RemarksDialog2.setBusy(false);
-                                othat._RemarksDialog2.close();
-                                oModelC.setProperty("/PageBusy", true)
-                                othat.handleCancelPress(oNewPayLoad)
-                            })
+
+                    c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                    c1B.then(function (oNewPayLoad) {
+                        c2 = othat._UpdateOffer(oNewPayLoad);
+                        c2.then(function (oNewPayLoad) {
+                            othat._RemarksDialog2.setBusy(false);
+                            othat._RemarksDialog2.close();
+                            oModelC.setProperty("/PageBusy", true)
+                            othat.handleCancelPress(oNewPayLoad)
                         })
-                    });
+                    })
+
                 },
                 onDetailPageSave: function () {
                     var oView = this.getView();
@@ -2228,17 +2253,15 @@ sap.ui.define(
 
                     // );
                     var c1, c1B, c2, c3;
-                    c1 = othat._CheckExpandPainter(oNewPayLoad);
-                    c1.then(function (oNewPayLoad) {
-                        c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
-                        c1B.then(function (oNewPayLoad) {
-                            c2 = othat._UpdateOffer(oNewPayLoad);
-                            c2.then(function (oNewPayLoad) {
-                                oModelC.setProperty("/PageBusy", true)
-                                othat.handleCancelPress()
-                            })
+                    c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                    c1B.then(function (oNewPayLoad) {
+                        c2 = othat._UpdateOffer(oNewPayLoad);
+                        c2.then(function (oNewPayLoad) {
+                            oModelC.setProperty("/PageBusy", true)
+                            othat.handleCancelPress()
                         })
-                    });
+                    })
+
 
                 },
                 //execution Log

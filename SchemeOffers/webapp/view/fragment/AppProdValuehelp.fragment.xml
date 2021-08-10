@@ -3,8 +3,8 @@
 	xmlns:core="sap.ui.core">
 		<SelectDialog
 		title="Products"
-         growing="true"
-        growingThreshold="10"
+        growing="true"
+        growingThreshold="12"
 		class="sapUiPopupWithPadding"
 		items="{path:'/MasterProductSet',sorter:{path:'ProductName'},parameters:{select:'Id,ProductName'} }"
 	    search="_handlePValueHelpSearch"

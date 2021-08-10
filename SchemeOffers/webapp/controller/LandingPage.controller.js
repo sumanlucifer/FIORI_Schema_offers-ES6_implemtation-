@@ -101,7 +101,7 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     oLoginData.setData(data["results"][0]);
-                                    console.log(oLoginData)
+                                    //console.log(oLoginData)
                                 }
                             }
                         },
