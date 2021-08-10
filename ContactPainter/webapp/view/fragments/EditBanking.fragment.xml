@@ -8,7 +8,7 @@
                 <ObjectStatus  visible="{= ${PainterBankDetails} !== null}" text="{path:'PainterBankDetails/Status'}" 
                 state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
 			<ToolbarSpacer/>
-            <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED'}">
+            <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED' || ${PainterBankDetails} === null}">
                 <Button visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
                 <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
             </FlexBox>
@@ -39,7 +39,7 @@
                     </ComboBox>
                 </VBox>
                 <Label text="{i18n>DocumentType}"/>
-                    <ComboBox id="IdDocumentType"  required="{=${oModelControl>/EditField} }" items="{oModelControl>/DocumentType}" change="onEditField" editable="{=${oModelControl>/AddBankDoc} }" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <ComboBox id="IdDocumentType"  required="{=${oModelControl>/EditField}}" items="{oModelControl>/DocumentType}" change="onEditField" editable="{=${oModelControl>/AddBankDoc} }" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
         
