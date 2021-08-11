@@ -1857,8 +1857,9 @@ sap.ui.define(
                     var aFilters = [];
                     var aFilter1 = new Filter("IsArchived", FilterOperator.EQ, false);
                     aFilters.push(new Filter("MembershipCard", FilterOperator.NE, null))
-                     aFilters.push(new Filter("RegistrationStatus", FilterOperator.EQ, "REGISTERED"));
-                       aFilters.push(new Filter("ActivationStatus", FilterOperator.NE, "DEACTIVATED"))
+                    aFilters.push(new Filter("RegistrationStatus", FilterOperator.EQ, "REGISTERED"));
+                    aFilters.push(new Filter("ActivationStatus", FilterOperator.NE, "DEACTIVATED"));
+                    aFilters.push(new Filter("Name", FilterOperator.NotContains, "DIS EXTENTIA%"));
                     aFilters.push(aFilter1);
                     if (aFilters.length == 0) {
                         return [];
