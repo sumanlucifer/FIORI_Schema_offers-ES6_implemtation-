@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog   binding="{oModelControl>/QRCodeData2}" class="sapUiContentPadding" title="{i18n>TokenCodeDetails}" titleAlignment="Center" >
+        <content>
+            <form:SimpleForm visible="{= ${oModelControl>ProductCategory} === null ? false: true }"	columnsL="2" layout="ResponsiveGridLayout"	columnsM="2"	singleContainerFullSize="false"  >
+                <Label text="Category" />
+                <Text text="{oModelControl>ProductCategory}" />
+                <Label text="Classification" />
+                <Text text="{oModelControl>ProductClassification}" />
+                <Label text="Product Name" />
+                <Text text="{oModelControl>ProductName}" />
+                <Label text="Points" />
+                <Text text="{oModelControl>RewardPoints}" />
+                <Label text="Painter Name" visible="{= ${oModelControl>PainterName} !== null }" />
+                <Text text="{oModelControl>PainterName}" visible="{= ${oModelControl>PainterName} !== null }"  />
+                <Label text="Painter Mobile No." visible="{= ${oModelControl>PainterName} !== null }"  />
+                <Text text="{oModelControl>PainterMobile}" visible="{= ${oModelControl>PainterName} !== null }"  />
+                <Label text="Date" visible="{= ${oModelControl>ScanDate} !== null }"/>
+                <Text text="{path:'oModelControl>ScanDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+            </form:SimpleForm>
+                <ObjectStatus  state="{= ${oModelControl>Status} ? 'Success'  : 'Error'   }" text= "{oModelControl>Message}" />
+        </content>
+        <endButton>
+            <Button text="Close" press="onTokenDlgClose2" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
