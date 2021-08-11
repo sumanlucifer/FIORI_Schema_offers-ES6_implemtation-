@@ -1281,17 +1281,17 @@ sap.ui.define(
                         oModel.setProperty("/EditTb2AST", false);
                     }
                 },
-                onRbBankStatus: function (oEvent) {
-                    var iIndex = oEvent.getSource().getSelectedIndex();
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
+                // onRbBankStatus: function (oEvent) {
+                //     var iIndex = oEvent.getSource().getSelectedIndex();
+                //     var oView = this.getView();
+                //     var oModelView = oView.getModel("oModelView");
 
-                    if (iIndex == 0) {
-                        oModelView.setProperty("/PainterBankDetails/Status", "PENDING");
-                    } else if (iIndex == 1) {
-                        oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                    }
-                },
+                //     if (iIndex == 0) {
+                //         oModelView.setProperty("/PainterBankDetails/Status", "PENDING");
+                //     } else if (iIndex == 1) {
+                //         oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+                //     }
+                // },
                 onRbKycStatus: function (oEvent) {
                     var iIndex = oEvent.getSource().getSelectedIndex();
                     var oView = this.getView();
