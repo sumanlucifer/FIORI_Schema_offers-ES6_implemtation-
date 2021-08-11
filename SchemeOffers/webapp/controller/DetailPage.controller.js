@@ -876,7 +876,7 @@ sap.ui.define(
                                                         c9B.then(function (data) {
                                                             c9C = othat._getExecLogData(data);
                                                             c9C.then(function () {
-                                                                c10 = othat._getProductsData();
+                                                                c10 = othat._getProductsData([]);
                                                                 c10.then(function () {
                                                                     c11 = othat._getPacksData();
                                                                     c11.then(function () {
@@ -1375,7 +1375,7 @@ sap.ui.define(
                     var oModelView = new JSONModel(oData);
                     oView.setModel(oModelView, "oModelView");
                     //oModelView.refresh()
-                    this._getProductsData();
+                    //this._getProductsData([]);
                     promise.resolve(data);
                     return promise;
                 },
