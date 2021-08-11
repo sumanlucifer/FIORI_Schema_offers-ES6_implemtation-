@@ -39,7 +39,7 @@
                     </ComboBox>
                 </VBox>
                 <Label text="{i18n>DocumentType}"/>
-                    <ComboBox id="IdDocumentType" editable="{=${oModelControl>/AddBankDoc} }" required="{=${oModelControl>/EditField} }" items="{oModelControl>/DocumentType}" change="onEditField" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <ComboBox id="IdDocumentType" editable="{=${oModelControl>/AddBankDoc}}" required="{=${oModelControl>/AddBankDoc}}" items="{oModelControl>/DocumentType}" change="onEditField" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
         
