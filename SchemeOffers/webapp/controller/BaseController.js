@@ -578,7 +578,27 @@ sap.ui.define(
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
                     if (sCheckPacks == 0) {
-                        othat._setBRProductsData();
+                        var aFilter = [];
+                        var aCat = oModelControl.getProperty("/MultiCombo/PCat4");
+                        var aClass = oModelControl.getProperty("/MultiCombo/PClass4");
+                        var aFilter1 = [];
+                        var aFilter2 = [];
+                        for (var a of aCat) {
+                            aFilter.push(
+                                new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                            );
+                        }
+                        for (var b of aClass) {
+                            aFilter.push(
+                                new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                            );
+                        }
+
+                        var c1 = othat._getProductsData(aFilter);
+                        c1.then(function () {
+                            othat._setBRProductsData();
+                        })
+
                     } else {
                         othat._setBRPacksData();
                     }
@@ -1641,6 +1661,11 @@ sap.ui.define(
                     var oControl = [];
                     var bRbProd = oModelControl.getProperty("/Rbtn/AppProd4");
                     var aSelectedData = [];
+                    var othat = this;
+                    var c1, c2, c3;
+                    var aFilterProducts = [];
+                    c1 = othat._getProductsData();
+
                     if (aSelectedKeys.length <= 0 && bRbProd == 0) {
                         oControl = oModelControl.getProperty("/oData/Products");
                         for (var x of oControl) {
@@ -1678,14 +1703,15 @@ sap.ui.define(
                     }
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
                 },
-                _getProductsData: function () {
+                _getProductsData: function (aFilter) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oData = oView.getModel();
-                    0;
+
                     return new Promise((resolve, reject) => {
                         oData.read("/MasterProductSet", {
+                            filters: aFilter,
                             success: function (mParam1) {
                                 oModelControl.setProperty(
                                     "/oData/Products",

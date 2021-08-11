@@ -323,7 +323,7 @@ sap.ui.define(
                     this._showFormFragment("ChangeDetail2");
                     //get products data
                     this._getLoggedInUserDeatils();
-                    this._getProductsData();
+                    this._getProductsData([]);
                     this._getPacksData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
