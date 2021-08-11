@@ -1560,6 +1560,99 @@ sap.ui.define(
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh(true);
                 },
+                // conditions table change
+                onPressAddCondition1: function (oEvent) {
+
+                    var oView = this.getView();
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table5");
+                    if (oEvent !== "add") {
+                        var oView = this.getView();
+                        var oModel = oView.getModel("oModelControl");
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+
+                        oModel.refresh(true);
+                    } else {
+                        var bFlag = true;
+                        var sLength = 1;
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show("We can only add 1 Item.");
+                            bFlag = false;
+                            return;
+                        }
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                StartDate: null,
+                                EndDate: "",
+                                RequiredPoints: "",
+                                RequiredVolume:"",
+                                editable: true
+                            });
+
+                            //relvalue and editable properties are added here and will be removed in the postsave function
+                        }
+                        oModel.refresh(true);
+                    }
+                },
+                onPressSaveCondition1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+
+                    var bFlag = true;
+
+              
+
+
+                    var cFlag = oValidator.validate(oCells);
+
+                    if (!oObject["EndDate"]) {
+                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        bFlag = false;
+                        return;
+                    }
+                    if (!cFlag) {
+                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        return;
+                    }
+
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
+                },
+
                 onRbChnageMain: function (oEvent) {
                     var oView = this.getView();
                     var oSource = oEvent.getSource();
