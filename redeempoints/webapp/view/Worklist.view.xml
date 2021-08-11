@@ -121,7 +121,7 @@
                             <Text text="{PainterDetails/Mobile}"/>
                             <Text text="{PainterDetails/ZoneId}"/>
                             <Text text="{PainterDetails/DivisionId}"/>
-                            <Text text="{PainterDetails/Depot/Depot}"/>
+                            <Text text="{PainterDetails/DepotId}"/>
                             <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}"/>
                             <Text text="{MasterSlabBankRedemptionDetails/RedemptionAmount}"/>
                             <Text text="{Remark}"/>
