@@ -481,6 +481,7 @@ sap.ui.define(
                         "PainterBankDetails/IfscCode",
                         "PainterBankDetails/BankNameId",
                         "PainterBankDetails/AccountTypeId",
+                        "PainterBankDetails/DocumentType",
                         // "PainterBankDetails/AccountNumber",
                         // "PainterBankDetails/AccountHolderName",
                         // "PainterKycDetails/KycTypeId",
@@ -1822,7 +1823,7 @@ sap.ui.define(
                     delete this._addDocDialog;
                 },
                 onEditField: function (oEvent) {
-                    var length = oEvent.getParameter("value").length;
+                    //var length = oEvent.getParameter("value").length;
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     oModelCtrl.setProperty("/EditField", true);
                     // if (length > 1) {
