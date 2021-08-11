@@ -41,7 +41,7 @@
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Depot"/>
-                            <PropertyValue Property="Value" Path="Painter/Depot/Depot"/>
+                            <PropertyValue Property="Value" Path="Painter/DepotId"/>
                         </Record>
                         <!-- <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Depot Code"/>
