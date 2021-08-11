@@ -20,6 +20,9 @@
                 <f:snappedTitleOnMobile>
                     <Title text="{ComplaintType/ComplaintType}"/>
                 </f:snappedTitleOnMobile>
+                <f:actions>
+                    <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>btnValidateToken}" />
+                </f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -42,6 +45,10 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <Label  text="{i18n>Status}:"/>
+                        <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout>
                         <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>

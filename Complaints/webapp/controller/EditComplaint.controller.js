@@ -20,6 +20,9 @@ sap.ui.define(
         "sap/ui/core/format/DateFormat",
         "sap/ui/core/routing/History",
         "../model/formatter",
+        "sap/m/Dialog",
+        "sap/m/Button",
+        "sap/m/VBox",
         "com/knpl/pragati/Complaints/model/customInt",
         "com/knpl/pragati/Complaints/model/cmbxDtype2",
     ],
@@ -47,6 +50,9 @@ sap.ui.define(
         DateFormat,
         History,
         formatter,
+        Dialog,
+        Button,
+        VBox,
         customInt,
         cmbxDtype2
     ) {
@@ -126,7 +132,10 @@ sap.ui.define(
                         PointsThrough: 0,
                         //data for Product fields
                         ProductCode: "",
-                        CategoryCode: ""
+                        CategoryCode: "",
+                        QRCodeData2: {},
+                        TokenCode2: ""
+
                     };
 
                     /* Fields required for Post with PainterComplainProducts array index 0
@@ -610,6 +619,104 @@ sap.ui.define(
                 onTokenDlgClose: function () {
                     this.oQRCodeDialog.close();
                 },
+
+                // Begin of Debasisa changes for Token Code
+                onPressOpenTokenDialog: function (oEvent) {
+                    var othat = this;
+                    var oModelControl = this.getView().getModel("oModelControl");
+                    if (!this.oDefaultDialog) {
+                        this.oDefaultDialog = new Dialog({
+                            title: "{i18n>ApplyToken}",
+                            afterClose: function () {
+                                othat.oDefaultDialog.destroy();
+                                delete othat.oDefaultDialog;
+                                oModelControl.setProperty("/TokenCode2", "");
+                            },
+                            content: [
+                                new VBox({
+                                    alignItems: "Center",
+                                    items: [
+                                        new Input({
+                                            width: "120%",
+                                            placeholder: "Enter Token Code",
+                                            value: "{oModelControl>/TokenCode2}",
+                                        }),
+                                    ],
+                                }),
+                            ],
+                            beginButton: new Button({
+                                text: "{i18n>Cancel}",
+                                type: "Default",
+                                press: function () {
+                                    othat.oDefaultDialog.close();
+                                },
+                            }),
+                            endButton: new Button({
+                                text: "{i18n>Validate}",
+                                type: "Emphasized",
+                                press: othat.onValidateTokenCode.bind(othat)
+                            }),
+                        });
+
+                        // to get access to the controller's model
+                        this.getView().addDependent(this.oDefaultDialog);
+                    }
+
+                    this.oDefaultDialog.open();
+                },
+
+                onValidateTokenCode: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelControl = oView.getModel("oModelControl");
+                    var that = this;
+                    if (oModelControl.getProperty("/TokenCode2") == "") {
+                        MessageToast.show("Kindly enter the token code to continue");
+                        return;
+                    }
+                    var sTokenCode = oModelControl.getProperty("/TokenCode2").trim();
+
+                    var oData = oView.getModel();
+
+                    oData.callFunction("/QRCodeDetailsAdmin",
+                        {
+                            urlParameters: {
+                                qrcode: sTokenCode.toString(),
+                                painterid: oModelView.getProperty("/PainterId")
+                            },
+                            success: function (oData) {
+                                if (oData !== null) {
+                                    if (oData.hasOwnProperty("Status")) {
+                                        that.showQRCodedetails2.call(that, oData);
+                                    }
+                                }
+                            },
+                            error: function () { },
+                        });
+                },
+
+
+                showQRCodedetails2: function (data) {
+                    var oModel = this.getView().getModel("oModelControl");
+                    oModel.setProperty("/QRCodeData2", data);
+
+                    if (!this.oQRCodeDialog2) {
+                        Fragment.load({ type: "XML", controller: this, name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails2" }).then(function (oDialog) {
+                            this.oQRCodeDialog2 = oDialog;
+                            this.getView().addDependent(oDialog);
+                            oDialog.open();
+                        }.bind(this));
+                    } else {
+                        this.oQRCodeDialog2.open();
+                    }
+
+
+
+                },
+                onTokenDlgClose2: function () {
+                    this.oQRCodeDialog2.close();
+                },
+                // End of Debasisa changes for Token code 
 
                 onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();

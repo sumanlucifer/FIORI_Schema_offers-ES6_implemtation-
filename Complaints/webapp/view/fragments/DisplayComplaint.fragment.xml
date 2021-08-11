@@ -24,8 +24,6 @@
                 <Text text="{i18n>NoAttachFound}" visible="{= !${oModelControl>/ImageLoaded} }"></Text>
             </VBox>
 
-
-
             <Label text="{i18n>ProbingSteps}"/>
             	<FormattedText  id="FormattedText" htmlText="{ path:'ProbingSteps' ,formatter:'.fmtProbingSteps' }"/>
 
