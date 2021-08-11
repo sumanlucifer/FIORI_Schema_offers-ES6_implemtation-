@@ -212,7 +212,10 @@ sap.ui.define(
                             Table2: [],
                             Table3: [],
                             Table4: [],
-                            Table5:[]
+                            Table5:[],
+                            Table6:[],
+                            Table7:[]
+                           
                         },
                         oData: {
                             Products: [],
