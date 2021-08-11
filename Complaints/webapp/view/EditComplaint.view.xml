@@ -47,10 +47,6 @@
                         <Label  text="{i18n>Status}:"/>
                         <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
                     </layout:VerticalLayout>
-
-                    <layout:VerticalLayout>
-                        <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/>
-                    </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
