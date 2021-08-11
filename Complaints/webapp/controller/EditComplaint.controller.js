@@ -626,7 +626,7 @@ sap.ui.define(
                     var oModelControl = this.getView().getModel("oModelControl");
                     if (!this.oDefaultDialog) {
                         this.oDefaultDialog = new Dialog({
-                            title: "{i18n>ApplyToken}",
+                            title: "{i18n>btnValidateToken}",
                             afterClose: function () {
                                 othat.oDefaultDialog.destroy();
                                 delete othat.oDefaultDialog;
