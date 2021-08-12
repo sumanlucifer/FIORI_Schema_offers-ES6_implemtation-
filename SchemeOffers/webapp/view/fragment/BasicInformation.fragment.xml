@@ -87,6 +87,11 @@
 
                     </f:fields>
                 </f:FormElement>
+                  <f:FormElement label="{i18n>Criteria}">
+                    <f:fields>
+                        <TextArea required="false" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                    </f:fields>
+                </f:FormElement>
                 <f:FormElement label="{i18n>Remark}" visible="{= ${oModelControl>/mode}==='edit'}">
                     <f:fields>
                         <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>

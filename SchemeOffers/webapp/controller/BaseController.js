@@ -3476,10 +3476,11 @@ sap.ui.define(
                 },
                 GetProdName: function (mParam1) {
                     var sPath = "/MasterProductSet('" + mParam1 + "')";
-                    var oData = this.getView().getModel().getProperty(sPath);
-                    if (oData !== undefined && oData !== null) {
-                        return oData["ProductName"];
-                    }
+                    console.log(this.getView().getModel())
+                    var oData = this.getView().getModel().getData(sPath);
+
+                    console.log(sPath,oData)
+                    console.log()
                 },
 
                 /// Methods Specific to Display and Edit Offers
@@ -3573,6 +3574,30 @@ sap.ui.define(
                         return [
                             false,
                             "Kindly Save the data in the Condition 1 Table to Continue.",
+                        ];
+                    }
+                },
+                _CheckTableCondition2: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oDataTable = oModelData["Table"]["Table6"];
+                    var bFlag = true;
+                    if (oDataTable.length > 0) {
+                        oDataTable.forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 2 Table to Continue.",
                         ];
                     }
                 },

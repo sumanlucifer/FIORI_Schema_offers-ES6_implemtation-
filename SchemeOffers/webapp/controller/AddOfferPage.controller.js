@@ -290,6 +290,7 @@ sap.ui.define(
                         OfferTypeId: "",
                         Title: "",
                         Description: "",
+                        Criteria:"",
                         StartDate: null,
                         EndDate: null,
                         IsSpecificZone: false,
@@ -430,6 +431,7 @@ sap.ui.define(
                     var aTableValidation = this._CheckTableValidation();
                     var aTableBonusValidation = this._CheckTableBonusValidation()
                     var bTableCondition1 = this._CheckTableCondition1();
+                    var bTableCondition2 = this._CheckTableCondition2();
                     var bTableCondition3 = this._CheckTableCondition3();
                     if (bFlagValidate == false) {
                         MessageToast.show("Kindly Input All the Mandatory(*) fields.");
@@ -453,6 +455,14 @@ sap.ui.define(
                     }
                     if (!bTableCondition1[0]) {
                         MessageToast.show(bTableCondition1[1]);
+                        return;
+                    }
+                    if (!bTableCondition2[0]) {
+                        MessageToast.show(bTableCondition2[1]);
+                        return;
+                    }
+                    if (!bTableCondition3[0]) {
+                        MessageToast.show(bTableCondition3[1]);
                         return;
                     }
                     //validate the data

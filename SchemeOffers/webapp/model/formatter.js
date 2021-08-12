@@ -338,9 +338,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
         fmtGetProductName: function (mParam1) {
             var sPath = "/MasterProductSet('" + mParam1 + "')";
-            var oData = this.getView().getModel().getProperty(sPath);
+            var oData = this.getView().getModel().getData(sPath);
             
-            if (oData !== undefined && oData !== null) {
+            if (oData) {
                 return oData["ProductName"];
             }
         }
