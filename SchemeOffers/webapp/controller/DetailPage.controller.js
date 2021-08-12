@@ -1750,8 +1750,8 @@ sap.ui.define(
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
-                    if (!aTableBonusValidation[0]) {
-                        MessageToast.show(aTableBonusValidation[1]);
+                    if (!bTableCondition1[0]) {
+                        MessageToast.show(bTableCondition1[1]);
                         return;
                     }
                     if (!bTableCondition1[0]) {
