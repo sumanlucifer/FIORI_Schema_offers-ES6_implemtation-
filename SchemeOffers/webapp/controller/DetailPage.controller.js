@@ -885,6 +885,7 @@ sap.ui.define(
                                                                             c13 = othat._destroyDialogs();
                                                                             c13.then(function () {
                                                                                 c14 = othat._RemovePageBusy();
+                                                                                othat.getView().getModel("oModelControl").refresh(true)
                                                                             });
                                                                         });
                                                                     });
@@ -1378,7 +1379,7 @@ sap.ui.define(
                     var oModelView = new JSONModel(oData);
                     oView.setModel(oModelView, "oModelView");
                     //oModelView.refresh()
-                    this._getProductsData([]);
+                    //this._getProductsData([]);
                     promise.resolve(data);
                     return promise;
                 },

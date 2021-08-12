@@ -3476,11 +3476,15 @@ sap.ui.define(
                 },
                 GetProdName: function (mParam1) {
                     var sPath = "/MasterProductSet('" + mParam1 + "')";
-                    console.log(this.getView().getModel())
-                    var oData = this.getView().getModel().getData(sPath);
-
-                    console.log(sPath,oData)
-                    console.log()
+                    var oModel = this.getView().getModel();
+                    var oData = oModel.getObject(sPath,{
+                        select:"ProductName"
+                    });
+                    console.log(sPath,oData,oModel);
+                    if(oData){
+                        return oData["ProductName"];
+                    }
+                    //return oData["ProductName"];
                 },
 
                 /// Methods Specific to Display and Edit Offers
