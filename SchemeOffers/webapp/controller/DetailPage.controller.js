@@ -876,7 +876,7 @@ sap.ui.define(
                                                         c9B.then(function (data) {
                                                             c9C = othat._getExecLogData(data);
                                                             c9C.then(function () {
-                                                                c10 = othat._getProductsData();
+                                                                c10 = othat._getProductsData([]);
                                                                 c10.then(function () {
                                                                     c11 = othat._getPacksData();
                                                                     c11.then(function () {
@@ -1150,7 +1150,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer";
+                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
@@ -1303,6 +1303,9 @@ sap.ui.define(
                             Table2: [],
                             Table3: [],
                             Table4: [],
+                            Table5: [],
+                            Table6: [],
+                            Table7: []
                         },
                         oData: {
                             Products: [],
@@ -1375,7 +1378,7 @@ sap.ui.define(
                     var oModelView = new JSONModel(oData);
                     oView.setModel(oModelView, "oModelView");
                     //oModelView.refresh()
-                    this._getProductsData();
+                    this._getProductsData([]);
                     promise.resolve(data);
                     return promise;
                 },
@@ -1430,7 +1433,25 @@ sap.ui.define(
                             );
                         }
                     }
-
+                    if (oData["OfferEarnedPointsCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table5",
+                            oData["OfferEarnedPointsCondition"]["results"]
+                        );
+                    }
+                     if (oData["OfferProductValueCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table6",
+                            oData["OfferProductValueCondition"]["results"]
+                        );
+                    }
+                     if (oData["OfferRedemptionCycleCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table7",
+                            oData["OfferRedemptionCycleCondition"]["results"]
+                        );
+                    }
+                   
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1733,6 +1754,9 @@ sap.ui.define(
                     var bFlagValidate = oValidate.validate(oSteps, true);
                     var aTableValidation = this._CheckTableValidation();
                     var aTableBonusValidation = this._CheckTableBonusValidation();
+                    var bTableCondition1 = this._CheckTableCondition1();
+                    var bTableCondition2 = this._CheckTableCondition2();
+                    var bTableCondition3 = this._CheckTableCondition3();
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
 
@@ -1753,6 +1777,18 @@ sap.ui.define(
                         MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
+                    if (!bTableCondition1[0]) {
+                        MessageToast.show(bTableCondition1[1]);
+                        return;
+                    }
+                    if (!bTableCondition2[0]) {
+                        MessageToast.show(bTableCondition2[1]);
+                        return;
+                    }
+                    if (!bTableCondition3[0]) {
+                        MessageToast.show(bTableCondition3[1]);
+                        return;
+                    }
                     this._postDataToSave(bFileFlag);
                 },
                 // _CheckTableValidation: function () {
@@ -1767,7 +1803,7 @@ sap.ui.define(
                 //     return [true, ""]
                 // },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c1B, c2, c3, c4, c5, c5A, c5B, c6, c7;
+                    var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5B, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -1788,19 +1824,22 @@ sap.ui.define(
                                         //c5 = othat._CreateOffer(oPayLoad);
                                         c5 = othat._CreatePayLoadPart5(oPayLoad);
                                         c5.then(function (oPayLoad) {
-                                            c5A = othat._CreateWorkFlowData(oPayLoad);
-                                            c5A.then(function () {
-                                                c5B = othat._CheckExpandPainter(oPayLoad);
-                                                c5B.then(function () {
-                                                    c6 = othat._UpdateOffer(oPayLoad);
-                                                    c6.then(function (oPayLoad) {
-                                                        c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                                        c7.then(function (data) {
-                                                            othat.handleCancelPress(data);
+                                            c5A1 = othat._CreatePayLoadConditions(oPayLoad);
+                                            c5A1.then(function () {
+                                                c5A = othat._CreateWorkFlowData(oPayLoad);
+                                                c5A.then(function () {
+                                                    c5B = othat._CheckExpandPainter(oPayLoad);
+                                                    c5B.then(function () {
+                                                        c6 = othat._UpdateOffer(oPayLoad);
+                                                        c6.then(function (oPayLoad) {
+                                                            c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                                                            c7.then(function (data) {
+                                                                othat.handleCancelPress(data);
+                                                            });
                                                         });
                                                     });
                                                 });
-                                            });
+                                            })
                                         });
                                     });
                                 });

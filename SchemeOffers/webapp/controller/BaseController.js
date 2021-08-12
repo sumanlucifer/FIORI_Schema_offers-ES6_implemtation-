@@ -578,7 +578,27 @@ sap.ui.define(
                     var oDataModel = this.getView().getModel();
                     var c1, c2, c3, c4, c5;
                     if (sCheckPacks == 0) {
-                        othat._setBRProductsData();
+                        var aFilter = [];
+                        var aCat = oModelControl.getProperty("/MultiCombo/PCat4");
+                        var aClass = oModelControl.getProperty("/MultiCombo/PClass4");
+                        var aFilter1 = [];
+                        var aFilter2 = [];
+                        for (var a of aCat) {
+                            aFilter.push(
+                                new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                            );
+                        }
+                        for (var b of aClass) {
+                            aFilter.push(
+                                new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                            );
+                        }
+
+                        var c1 = othat._getProductsData(aFilter);
+                        c1.then(function () {
+                            othat._setBRProductsData();
+                        })
+
                     } else {
                         othat._setBRPacksData();
                     }
@@ -1349,6 +1369,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     oModel.setProperty("/Table/Table2", []);
+                    oModel.setProperty("/Table/Table5", []);
                 },
                 onRbRRDialogVolume2: function (oEvent) {
                     var oView = this.getView();
@@ -1540,6 +1561,383 @@ sap.ui.define(
                     oTable.splice(sPath[sPath.length - 1], 1);
                     oModel.refresh(true);
                 },
+                // conditions table change
+                onPressAddCondition1: function (oEvent) {
+
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModel2 = oView.getModel("oModelView");
+                    var oRewardDtl = oModel.getProperty("/Table/Table5");
+
+                    if (oEvent !== "add") {
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+                        oModel.refresh();
+                    } else {
+                        var bFlag = true;
+                        var sLength = 1;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the scenario we can only add " +
+                                sLength +
+                                " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                InputType: oModel2.getProperty("/InputType"),
+                                RequiredPoints: "",
+                                RequiredVolume: "",
+                                EndDate: null,
+                                editable: true,
+                            });
+                        }
+                        oModel.refresh(true);
+                    }
+                },
+                onPressSaveCondition1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+
+                    var bFlag = true;
+                    var cFlag = oValidator.validate(oCells);
+
+                    if (!oObject["EndDate"]) {
+                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        bFlag = false;
+                        return;
+                    }
+                    if (!cFlag) {
+                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        return;
+                    }
+
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
+                },
+                onEndDateCondition1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oModelView = oView.getModel("oModelView");
+                    var oCurrentDate = oEvent.getSource().getDateValue();
+                    var oEndDate = oModelView.getProperty("/EndDate");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
+
+                    if (oEndDate) {
+                        if (oCurrentDate < oEndDate) {
+                            MessageToast.show("Kindly select a date more than Offer End date.");
+                            oModelControl.setProperty(sPath + "/EndDate", null);
+                            return;
+                        }
+                    } else {
+                        MessageToast.show("Kindly Select A Offer End Date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                    }
+
+                },
+                onRemovedCondition: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
+                    var sTablepath = sPath.replace(/[0-9]$/g, '');
+                    var sPathArray = sPath.split("/");
+
+                    var oTable = oModel.getProperty(sTablepath);
+
+                    oTable.splice(sPathArray[sPathArray.length - 1], 1);
+                    oModel.refresh();
+                },
+                onPressAddCondition2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table6");
+
+                    if (oEvent !== "add") {
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+                        oModel.refresh();
+                    } else {
+                        var bFlag = true;
+                        var sLength = 5;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the scenario we can only add " +
+                                sLength +
+                                " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                ProductCode: "",
+                                Percentage: "",
+                                editable: true,
+                            });
+                        }
+                        oModel.refresh(true);
+                    }
+                },
+                onPressSaveCondition2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+
+                    var bFlag = true;
+                    var cFlag = oValidator.validate(oCells);
+
+                    if (!oObject["ProductCode"]) {
+                        MessageToast.show("Kindly Input All Condtion 2 Fields to Continue.");
+                        return;
+                    }
+                    if (!cFlag) {
+                        MessageToast.show("Kindly Input All Condtion 2 Fields to Continue.");
+                        return;
+                    }
+
+                    //var cFlag = oValidator.validate();
+                    // var oCheckProp = ["RelationshipId", "Name"];
+                    // for (var abc in oCheckProp) {
+                    //     if (oObject[abc] == "") {
+                    //         bFlag = false;
+                    //         break;
+                    //     }
+                    // }
+
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
+                },
+                onPressAddCondition3: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oRewardDtl = oModel.getProperty("/Table/Table7");
+
+                    if (oEvent !== "add") {
+                        var oObject = oEvent
+                            .getSource()
+                            .getBindingContext("oModelControl")
+                            .getObject();
+                        oObject["editable"] = true;
+                        oModel.refresh();
+                    } else {
+                        var bFlag = true;
+                        var sLength = 1;
+                        if (oRewardDtl.length >= sLength) {
+                            MessageToast.show(
+                                "For the scenario we can only add " +
+                                sLength +
+                                " item(s)."
+                            );
+                            bFlag = false;
+                            return;
+                        }
+                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bFlag == true) {
+                            oRewardDtl.push({
+                                Percentage: "",
+                                RedemptionCycle: 1,
+                                editable: true,
+                            });
+                        }
+                        oModel.refresh(true);
+                    }
+                },
+                onPressSaveCondition3: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+                    var oCells = oEvent.getSource().getParent().getParent().getCells();
+                    var oValidator = new Validator();
+                    var bFlag = true;
+                    var cFlag = oValidator.validate(oCells);
+                    if (!cFlag) {
+                        MessageToast.show("Kindly Input All Condtion 3 Fields to Continue.");
+                        return;
+                    }
+                    if (bFlag && cFlag) {
+                        oObject["editable"] = false;
+                        oModel.refresh(true);
+                    }
+                },
+                onValueHelpProductsTable: function (oEvent) {
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath()
+
+
+
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/Dialog/ProdVH2", sPath);
+
+                    // create value help dialog
+                    if (!this._ProdValueHelpDialog2) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp2",
+                            controller: this,
+                        }).then(
+                            function (oValueHelpDialog) {
+                                this._ProdValueHelpDialog2 = oValueHelpDialog;
+                                this.getView().addDependent(this._ProdValueHelpDialog2);
+                                this._openPValueHelpDialog2(sPath);
+                            }.bind(this)
+                        );
+                    } else {
+                        this._openPValueHelpDialog2(sPath);
+                    }
+
+                },
+                _openPValueHelpDialog2: function (mParam1) {
+
+                    this._FilterForProds2("AppProd1");
+                },
+                _FilterForProds2: function (mParam1) {
+                    var oView = this.getView(),
+                        oModel = oView.getModel("oModelControl");
+                    var aNumber = mParam1.match(/\d+$/)[0];
+
+                    var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
+                    var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                    var aFilter1 = [];
+                    var aFilter2 = [];
+                    for (var a of aCat) {
+                        aFilter1.push(
+                            new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                        );
+                    }
+                    for (var b of aClass) {
+                        aFilter2.push(
+                            new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                        );
+                    }
+                    var aFilterCat = new Filter({
+                        filters: aFilter1,
+                        and: false,
+                    });
+                    var aFilterClass = new Filter({
+                        filters: aFilter2,
+                        and: false,
+                    });
+                    var aFinalFilter = [];
+                    if (aFilter1.length > 0) {
+                        aFinalFilter.push(aFilterCat);
+                    }
+                    if (aFilter2.length > 0) {
+                        aFinalFilter.push(aFilterClass);
+                    }
+                    this._ProdValueHelpDialog2
+                        .getBinding("items")
+                        .filter(aFinalFilter, "Control");
+                    this._ProdValueHelpDialog2.open();
+
+                },
+                _handlePValueHelpSearch2: function (oEvent) {
+                    var sValue = oEvent.getParameter("value").trim();
+
+                    if (sValue.length > 0) {
+                        var aFilter = new Filter({
+                            path: "ProductName",
+                            operator: "Contains",
+                            value1: sValue,
+                            caseSensitive: false,
+                        });
+                        this._ProdValueHelpDialog2
+                            .getBinding("items")
+                            .filter(aFilter, "Application");
+                    }
+                },
+
+                _handleProdValueHelpConfirm2: function (oEvent) {
+                    var oSelected = oEvent.getParameter("selectedItem").getBindingContext().getObject()["Id"];
+                    console.log(oSelected)
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = oModel.getProperty("/Dialog/ProdVH2");
+                    
+                   oModel.setProperty(sPath+"/ProductCode",oSelected);
+                  
+                },
+
                 onRbChnageMain: function (oEvent) {
                     var oView = this.getView();
                     var oSource = oEvent.getSource();
@@ -1641,6 +2039,11 @@ sap.ui.define(
                     var oControl = [];
                     var bRbProd = oModelControl.getProperty("/Rbtn/AppProd4");
                     var aSelectedData = [];
+                    var othat = this;
+                    var c1, c2, c3;
+                    var aFilterProducts = [];
+                    c1 = othat._getProductsData();
+
                     if (aSelectedKeys.length <= 0 && bRbProd == 0) {
                         oControl = oModelControl.getProperty("/oData/Products");
                         for (var x of oControl) {
@@ -1678,14 +2081,15 @@ sap.ui.define(
                     }
                     oModelControl.setProperty("/MultiCombo/Reward2", aSelectedData);
                 },
-                _getProductsData: function () {
+                _getProductsData: function (aFilter) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var oData = oView.getModel();
-                    0;
+
                     return new Promise((resolve, reject) => {
                         oData.read("/MasterProductSet", {
+                            filters: aFilter,
                             success: function (mParam1) {
                                 oModelControl.setProperty(
                                     "/oData/Products",
@@ -2630,7 +3034,7 @@ sap.ui.define(
 
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/Dialog/ProdVH", sParam1);
-
+                    // multiselect or singe select
                     // create value help dialog
                     if (!this._ProdValueHelpDialog) {
                         Fragment.load({
@@ -2687,6 +3091,10 @@ sap.ui.define(
                     if (this._PackValueHelpDialog) {
                         this._PackValueHelpDialog.destroy();
                         delete this._PackValueHelpDialog;
+                    }
+                    if (this._ProdValueHelpDialog2) {
+                        this._ProdValueHelpDialog2.destroy();
+                        delete this._ProdValueHelpDialog2;
                     }
                 },
                 _FilterForProds1: function (mParam1) {
@@ -3068,10 +3476,11 @@ sap.ui.define(
                 },
                 GetProdName: function (mParam1) {
                     var sPath = "/MasterProductSet('" + mParam1 + "')";
-                    var oData = this.getView().getModel().getProperty(sPath);
-                    if (oData !== undefined && oData !== null) {
-                        return oData["ProductName"];
-                    }
+                    console.log(this.getView().getModel())
+                    var oData = this.getView().getModel().getData(sPath);
+
+                    console.log(sPath,oData)
+                    console.log()
                 },
 
                 /// Methods Specific to Display and Edit Offers
@@ -3141,6 +3550,78 @@ sap.ui.define(
                         return [
                             false,
                             "Kindly Save the data in the Bonus Reward Ratio Table to Continue",
+                        ];
+                    }
+                },
+                _CheckTableCondition1: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table5"];
+                    var bFlag = true;
+                    if (oModelData["Table"]["Table5"].length > 0) {
+                        oModelData["Table"]["Table5"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 1 Table to Continue.",
+                        ];
+                    }
+                },
+                _CheckTableCondition2: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oDataTable = oModelData["Table"]["Table6"];
+                    var bFlag = true;
+                    if (oDataTable.length > 0) {
+                        oDataTable.forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 2 Table to Continue.",
+                        ];
+                    }
+                },
+                _CheckTableCondition3: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oDataTable = oModelData["Table"]["Table7"];
+                    var bFlag = true;
+                    if (oDataTable.length > 0) {
+                        oDataTable.forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 3 Table to Continue.",
                         ];
                     }
                 },
@@ -3972,6 +4453,106 @@ sap.ui.define(
                         return promise;
                     }
                     // this means that the user has selected specific for bonus reward packs
+                },
+                _CreatePayLoadConditions: function (oPayLoad) {
+                    var promise = jQuery.Deferred();
+                    // conditions table 1 
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+
+                    var aTable5 = oModel.getProperty("/Table/Table5");
+                    var aFinalArray = [];
+                    if (aTable5.length > 0) {
+                        var oDataTbl = aTable5.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp = [
+                            "EndDate",
+                            "RequiredVolume",
+                            "RequiredPoints",
+                            "StartDate"
+                        ];
+                        aFinalArray = oDataTbl.filter(function (ele) {
+                            for (var a in aCheckProp) {
+                                if (ele[aCheckProp[a]] === "") {
+                                    ele[aCheckProp[a]] = null;
+                                }
+                                if (aCheckProp[a] === "RequiredVolume") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "RequiredPoints") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "EndDate") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = new Date(
+                                            ele[aCheckProp[a]].setHours(23, 59, 59, 999)
+                                        );
+                                    }
+                                }
+                                if (aCheckProp[a] === "StartDate") {
+
+                                    ele[aCheckProp[a]] = oPayLoad["StartDate"]
+                                }
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
+
+                    }
+                    var aTable6 = oModel.getProperty("/Table/Table6");
+                    var aFinalArray3 = [];
+                    if (aTable6.length > 0) {
+                        var oDataTbl3 = aTable6.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp3 = [
+                            "ProductCode",
+                            "Percentage"
+                        ];
+                        aFinalArray3 = oDataTbl3.filter(function (ele) {
+                            for (var a in aCheckProp3) {
+                                if (ele[aCheckProp3[a]] === "") {
+                                    ele[aCheckProp3[a]] = null;
+                                }
+
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferProductValueCondition"] = aFinalArray3;
+
+                    }
+                   
+                    var aTable7 = oModel.getProperty("/Table/Table7");
+                    var aFinalArray2 = [];
+                    if (aTable7.length > 0) {
+                        var oDataTbl2 = aTable7.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp2 = [
+                            "Percentage"
+                        ];
+                        aFinalArray2 = oDataTbl2.filter(function (ele) {
+                            for (var a in aCheckProp2) {
+                                if (ele[aCheckProp2[a]] === "") {
+                                    ele[aCheckProp2[a]] = null;
+                                }
+
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferRedemptionCycleCondition"] = aFinalArray2;
+
+                    }
+                    promise.resolve(oPayLoad);
+                    return promise;
                 },
                 onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();

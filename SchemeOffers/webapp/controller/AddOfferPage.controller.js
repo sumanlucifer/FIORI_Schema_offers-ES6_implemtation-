@@ -120,7 +120,8 @@ sap.ui.define(
                             Bonus2: {},
                             Key2: "",
                             ProdVH: "",
-                            PackVH: ""
+                            PackVH: "",
+                            ProdVH2:""
                         },
                         MultiCombo: {
                             Zones: [],
@@ -212,6 +213,10 @@ sap.ui.define(
                             Table2: [],
                             Table3: [],
                             Table4: [],
+                            Table5: [],
+                            Table6: [],
+                            Table7: []
+
                         },
                         oData: {
                             Products: [],
@@ -285,6 +290,7 @@ sap.ui.define(
                         OfferTypeId: "",
                         Title: "",
                         Description: "",
+                        Criteria:"",
                         StartDate: null,
                         EndDate: null,
                         IsSpecificZone: false,
@@ -313,7 +319,10 @@ sap.ui.define(
                         InputType: 0,
                         OfferStatus: null,
                         OfferApplicableProductCategory: [],
-                        BonusInputType: 0
+                        BonusInputType: 0,
+                        OfferEarnedPointsCondition:[],
+                        OfferProductValueCondition:[],
+                        OfferRedemptionCycleCondition:[]
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -323,7 +332,7 @@ sap.ui.define(
                     this._showFormFragment("ChangeDetail2");
                     //get products data
                     this._getLoggedInUserDeatils();
-                    this._getProductsData();
+                    this._getProductsData([]);
                     this._getPacksData();
                     //this._setDefaultValues();
                     this._destroyDialogs();
@@ -421,7 +430,9 @@ sap.ui.define(
                     var bFileFlag = false;
                     var aTableValidation = this._CheckTableValidation();
                     var aTableBonusValidation = this._CheckTableBonusValidation()
-
+                    var bTableCondition1 = this._CheckTableCondition1();
+                    var bTableCondition2 = this._CheckTableCondition2();
+                    var bTableCondition3 = this._CheckTableCondition3();
                     if (bFlagValidate == false) {
                         MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                         return;
@@ -442,6 +453,18 @@ sap.ui.define(
                         MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
+                    if (!bTableCondition1[0]) {
+                        MessageToast.show(bTableCondition1[1]);
+                        return;
+                    }
+                    if (!bTableCondition2[0]) {
+                        MessageToast.show(bTableCondition2[1]);
+                        return;
+                    }
+                    if (!bTableCondition3[0]) {
+                        MessageToast.show(bTableCondition3[1]);
+                        return;
+                    }
                     //validate the data
 
                     this._postDataToSave(bFileFlag);
@@ -452,7 +475,7 @@ sap.ui.define(
 
                 },
                 _postDataToSave: function (bFileFlag) {
-                    var c1, c1B, c2, c3, c4, c5, c5A, c6, c7;
+                    var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c6, c7;
                     var othat = this;
 
                     c1 = othat._CreatePayloadPart1();
@@ -472,14 +495,16 @@ sap.ui.define(
                                     c4.then(function (oPayLoad) {
                                         c5 = othat._CreatePayLoadPart5(oPayLoad);
                                         c5.then(function (oPayLoad) {
-                                            c5A = othat._CreateWorkFlowData(oPayLoad);
-                                            c5A.then(function () {
-                                                c6 = othat._CreateOffer(oPayLoad);
-                                                c6.then(function (oData) {
-                                                    c7 = othat._UploadFile(oData, bFileFlag);
-                                                });
+                                            c5A1 = othat._CreatePayLoadConditions(oPayLoad);
+                                            c5A1.then(function () {
+                                                c5A = othat._CreateWorkFlowData(oPayLoad);
+                                                c5A.then(function () {
+                                                    c6 = othat._CreateOffer(oPayLoad);
+                                                    c6.then(function (oData) {
+                                                        c7 = othat._UploadFile(oData, bFileFlag);
+                                                    });
+                                                })
                                             })
-
                                         });
                                     });
                                 });
@@ -492,12 +517,12 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                   // console.log(oPayLoad);
+                     console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Successfully Created.");
-                                othat._navToHome();
+                                //othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {

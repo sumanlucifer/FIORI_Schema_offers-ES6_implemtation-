@@ -333,9 +333,16 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 if (m2 === 6 || m2 === 7) {
                     return true;
                 }
-
             }
             return false;
         },
+        fmtGetProductName: function (mParam1) {
+            var sPath = "/MasterProductSet('" + mParam1 + "')";
+            var oData = this.getView().getModel().getData(sPath);
+            
+            if (oData) {
+                return oData["ProductName"];
+            }
+        }
     };
 });
