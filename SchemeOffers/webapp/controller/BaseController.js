@@ -1817,7 +1817,7 @@ sap.ui.define(
                                 editable: true,
                             });
                         }
-                        oModel.refresh(true);
+                        oModel.refresh();
                     }
                 },
                 onPressSaveCondition3: function (oEvent) {
@@ -1837,7 +1837,7 @@ sap.ui.define(
                     }
                     if (bFlag && cFlag) {
                         oObject["editable"] = false;
-                        oModel.refresh(true);
+                        oModel.refresh();
                     }
                 },
                 onValueHelpProductsTable: function (oEvent) {
@@ -3480,7 +3480,7 @@ sap.ui.define(
                     var oData = oModel.getObject(sPath,{
                         select:"ProductName"
                     });
-                    console.log(sPath,oData,oModel);
+                    //console.log(sPath,oData,oModel);
                     if(oData){
                         return oData["ProductName"];
                     }
