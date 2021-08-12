@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+		<SelectDialog
+		title="Products"
+        growing="true"
+        growingThreshold="12"
+		class="sapUiPopupWithPadding"
+		items="{path:'/MasterProductSet',sorter:{path:'ProductName'},parameters:{select:'Id,ProductName'} }"
+	    search="_handlePValueHelpSearch2"
+		confirm="_handleProdValueHelpConfirm2"
+        cancel="_handleProdValueHelpClose"
+		multiSelect="false">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+            title="{ProductName}"
+			 />
+	</SelectDialog>
+</core:FragmentDefinition>

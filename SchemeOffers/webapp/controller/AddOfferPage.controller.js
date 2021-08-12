@@ -120,7 +120,8 @@ sap.ui.define(
                             Bonus2: {},
                             Key2: "",
                             ProdVH: "",
-                            PackVH: ""
+                            PackVH: "",
+                            ProdVH2:""
                         },
                         MultiCombo: {
                             Zones: [],
@@ -319,6 +320,7 @@ sap.ui.define(
                         OfferApplicableProductCategory: [],
                         BonusInputType: 0,
                         OfferEarnedPointsCondition:[],
+                        OfferProductValueCondition:[],
                         OfferRedemptionCycleCondition:[]
                     };
                     var oViewMOdel = new JSONModel(oDataView);

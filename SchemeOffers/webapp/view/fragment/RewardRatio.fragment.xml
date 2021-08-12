@@ -179,7 +179,7 @@
             </items>
         </Table>
 
-        <Table class="sapUiMediumMarginTop" id="Table5" items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}" >
+        <Table class="sapUiMediumMarginTop" id="Table5" items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>Condotion1EarnedPoints}"/>
@@ -192,8 +192,8 @@
                 <Column>
                     <Text text="{i18n>EndDate}" />
                 </Column>
-                
-                 <Column visible="{= ${oModelView>/InputType}===0 }" >
+
+                <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Text text="{i18n>VolumeToBeCompleted}" />
                 </Column>
                 <Column visible="{= ${oModelView>/InputType}===1 }">
@@ -209,9 +209,9 @@
                     <cells>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            <DatePicker change=".onEndDateCondition1"  visible="{= ${oModelControl>editable} === true }" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="50%" dateValue="{oModelControl>EndDate}" />
+                            <DatePicker change=".onEndDateCondition1" visible="{= ${oModelControl>editable} === true }" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="50%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
-                        <VBox visible="{= ${oModelView>/InputType}===0 }" >
+                        <VBox visible="{= ${oModelView>/InputType}===0 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
@@ -229,11 +229,11 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table id="Table6" class="sapUiMediumMarginTop"  items="{path: 'oModelControl>/Table/Table6',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table6" class="sapUiMediumMarginTop" items="{path: 'oModelControl>/Table/Table6',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>Condition2ProdValue}"/>
-                   
+
                     <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition2('add')"/>
                 </Toolbar>
@@ -241,7 +241,7 @@
 
             <columns>
 
-              
+
                 <Column>
                     <Text text="{i18n>Products}" />
                 </Column>
@@ -270,12 +270,12 @@
                             </Select>
                         </VBox> -->
                         <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>ProductCode',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }"  showValueHelp="true"  valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable"  placeholder="{i18n>placeHolder3}" width="50%" value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
+                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddCondition2"></Button>
@@ -287,11 +287,11 @@
                 </ColumnListItem>
             </items>
         </Table>
-         <Table id="Table7" class="sapUiMediumMarginTop"  items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Table7" class="sapUiMediumMarginTop" items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>Condotion3redemptionCycle}"/>
-                   
+
                     <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition3('add')"/>
                 </Toolbar>
@@ -299,7 +299,7 @@
 
             <columns>
 
-              
+
                 <Column>
                     <Text text="{i18n>RedemptionCycle}" />
                 </Column>
@@ -315,20 +315,8 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
 
-                        <!-- <VBox>
-                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
-                            <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
-                        </VBox> -->
-                        <!-- <VBox >
-                            <Select editable="{= ${oModelControl>editable} === true }" selectedKey="{oModelControl>Type}">
-                                <items>
-                                    <core:Item text="Required Volumne" key="1" />
-                                    <core:Item text="Required Points" key="2" />
-                                </items>
-                            </Select>
-                        </VBox> -->
-                       
-                        <Label  text="{path:'oModelControl>RedemptionCycle',formatter:'.formatter.fmtCheckNull'}" />
+                    
+                        <Label text="{path:'oModelControl>RedemptionCycle',formatter:'.formatter.fmtCheckNull'}" />
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
                             <Input required="true" visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />

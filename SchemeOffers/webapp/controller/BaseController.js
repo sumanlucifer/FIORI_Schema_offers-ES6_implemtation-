@@ -1693,8 +1693,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table6");
-                    var iPackRbtn = oModel.getProperty("/Rbtn/AppPacks4");
-                    var aProdPackData = oModel.getProperty("/MultiCombo/Reward2");
+
                     if (oEvent !== "add") {
                         var oObject = oEvent
                             .getSource()
@@ -1704,7 +1703,7 @@ sap.ui.define(
                         oModel.refresh();
                     } else {
                         var bFlag = true;
-                        var sLength = aProdPackData.length;
+                        var sLength = 5;
                         if (oRewardDtl.length >= sLength) {
                             MessageToast.show(
                                 "For the scenario we can only add " +
@@ -1729,8 +1728,8 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
-                                Percentage: "",
                                 ProductCode: "",
+                                Percentage: "",
                                 editable: true,
                             });
                         }
@@ -1840,6 +1839,103 @@ sap.ui.define(
                         oObject["editable"] = false;
                         oModel.refresh(true);
                     }
+                },
+                onValueHelpProductsTable: function (oEvent) {
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath()
+
+
+
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/Dialog/ProdVH2", sPath);
+
+                    // create value help dialog
+                    if (!this._ProdValueHelpDialog2) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp2",
+                            controller: this,
+                        }).then(
+                            function (oValueHelpDialog) {
+                                this._ProdValueHelpDialog2 = oValueHelpDialog;
+                                this.getView().addDependent(this._ProdValueHelpDialog2);
+                                this._openPValueHelpDialog2(sPath);
+                            }.bind(this)
+                        );
+                    } else {
+                        this._openPValueHelpDialog2(sPath);
+                    }
+
+                },
+                _openPValueHelpDialog2: function (mParam1) {
+
+                    this._FilterForProds2("AppProd1");
+                },
+                _FilterForProds2: function (mParam1) {
+                    var oView = this.getView(),
+                        oModel = oView.getModel("oModelControl");
+                    var aNumber = mParam1.match(/\d+$/)[0];
+
+                    var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
+                    var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                    var aFilter1 = [];
+                    var aFilter2 = [];
+                    for (var a of aCat) {
+                        aFilter1.push(
+                            new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                        );
+                    }
+                    for (var b of aClass) {
+                        aFilter2.push(
+                            new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                        );
+                    }
+                    var aFilterCat = new Filter({
+                        filters: aFilter1,
+                        and: false,
+                    });
+                    var aFilterClass = new Filter({
+                        filters: aFilter2,
+                        and: false,
+                    });
+                    var aFinalFilter = [];
+                    if (aFilter1.length > 0) {
+                        aFinalFilter.push(aFilterCat);
+                    }
+                    if (aFilter2.length > 0) {
+                        aFinalFilter.push(aFilterClass);
+                    }
+                    this._ProdValueHelpDialog2
+                        .getBinding("items")
+                        .filter(aFinalFilter, "Control");
+                    this._ProdValueHelpDialog2.open();
+
+                },
+                _handlePValueHelpSearch2: function (oEvent) {
+                    var sValue = oEvent.getParameter("value").trim();
+
+                    if (sValue.length > 0) {
+                        var aFilter = new Filter({
+                            path: "ProductName",
+                            operator: "Contains",
+                            value1: sValue,
+                            caseSensitive: false,
+                        });
+                        this._ProdValueHelpDialog2
+                            .getBinding("items")
+                            .filter(aFilter, "Application");
+                    }
+                },
+
+                _handleProdValueHelpConfirm2: function (oEvent) {
+                    var oSelected = oEvent.getParameter("selectedItem").getBindingContext().getObject()["Id"];
+                    console.log(oSelected)
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = oModel.getProperty("/Dialog/ProdVH2");
+                    
+                   oModel.setProperty(sPath+"/ProductCode",oSelected);
+                  
                 },
 
                 onRbChnageMain: function (oEvent) {
@@ -2938,7 +3034,7 @@ sap.ui.define(
 
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/Dialog/ProdVH", sParam1);
-
+                    // multiselect or singe select
                     // create value help dialog
                     if (!this._ProdValueHelpDialog) {
                         Fragment.load({
@@ -2995,6 +3091,10 @@ sap.ui.define(
                     if (this._PackValueHelpDialog) {
                         this._PackValueHelpDialog.destroy();
                         delete this._PackValueHelpDialog;
+                    }
+                    if (this._ProdValueHelpDialog2) {
+                        this._ProdValueHelpDialog2.destroy();
+                        delete this._ProdValueHelpDialog2;
                     }
                 },
                 _FilterForProds1: function (mParam1) {
@@ -4380,6 +4480,30 @@ sap.ui.define(
                         oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
 
                     }
+                    var aTable6 = oModel.getProperty("/Table/Table6");
+                    var aFinalArray3 = [];
+                    if (aTable6.length > 0) {
+                        var oDataTbl3 = aTable6.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp3 = [
+                            "ProductCode",
+                            "Percentage"
+                        ];
+                        aFinalArray3 = oDataTbl3.filter(function (ele) {
+                            for (var a in aCheckProp3) {
+                                if (ele[aCheckProp3[a]] === "") {
+                                    ele[aCheckProp3[a]] = null;
+                                }
+
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferProductValueCondition"] = aFinalArray3;
+
+                    }
+                   
                     var aTable7 = oModel.getProperty("/Table/Table7");
                     var aFinalArray2 = [];
                     if (aTable7.length > 0) {
@@ -4394,7 +4518,7 @@ sap.ui.define(
                                 if (ele[aCheckProp2[a]] === "") {
                                     ele[aCheckProp2[a]] = null;
                                 }
-                                
+
                             }
                             delete ele["editable"];
                             return ele;
