@@ -1732,8 +1732,9 @@ sap.ui.define(
                     var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                     var bFlagValidate = oValidate.validate(oSteps, true);
                     var aTableValidation = this._CheckTableValidation();
-                    var bTableCondition1 = this._CheckTableBonusValidation();
-                    var aTableCondition1 = this._CheckTableCondition1();
+                    var aTableBonusValidation = this._CheckTableBonusValidation();
+                    var bTableCondition1 = this._CheckTableCondition1();
+                     var bTableCondition3 = this._CheckTableCondition3();
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
 
@@ -1750,12 +1751,16 @@ sap.ui.define(
                         MessageToast.show(aTableValidation[1]);
                         return;
                     }
-                    if (!bTableCondition1[0]) {
-                        MessageToast.show(bTableCondition1[1]);
+                    if (!aTableBonusValidation[0]) {
+                        MessageToast.show(aTableBonusValidation[1]);
                         return;
                     }
                     if (!bTableCondition1[0]) {
                         MessageToast.show(bTableCondition1[1]);
+                        return;
+                    }
+                    if (!bTableCondition3[0]) {
+                        MessageToast.show(bTableCondition3[1]);
                         return;
                     }
                     this._postDataToSave(bFileFlag);

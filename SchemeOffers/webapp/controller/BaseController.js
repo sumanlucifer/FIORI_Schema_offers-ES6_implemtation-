@@ -1664,7 +1664,7 @@ sap.ui.define(
 
                     if (oEndDate) {
                         if (oCurrentDate < oEndDate) {
-                            MessageToast.show("Kindly select a date more than end date.");
+                            MessageToast.show("Kindly select a date more than Offer End date.");
                             oModelControl.setProperty(sPath + "/EndDate", null);
                             return;
                         }
@@ -1828,28 +1828,14 @@ sap.ui.define(
                         .getSource()
                         .getBindingContext("oModelControl")
                         .getObject();
-
                     var oCells = oEvent.getSource().getParent().getParent().getCells();
                     var oValidator = new Validator();
-
                     var bFlag = true;
                     var cFlag = oValidator.validate(oCells);
-
-                    if (!oObject["Percentage"]) {
+                    if (!cFlag) {
                         MessageToast.show("Kindly Input All Condtion 3 Fields to Continue.");
                         return;
                     }
-
-
-                    //var cFlag = oValidator.validate();
-                    // var oCheckProp = ["RelationshipId", "Name"];
-                    // for (var abc in oCheckProp) {
-                    //     if (oObject[abc] == "") {
-                    //         bFlag = false;
-                    //         break;
-                    //     }
-                    // }
-
                     if (bFlag && cFlag) {
                         oObject["editable"] = false;
                         oModel.refresh(true);
@@ -3490,6 +3476,30 @@ sap.ui.define(
                         ];
                     }
                 },
+                _CheckTableCondition3: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oDataTable = oModelData["Table"]["Table7"];
+                    var bFlag = true;
+                    if (oDataTable.length > 0) {
+                        oDataTable.forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 3 Table to Continue.",
+                        ];
+                    }
+                },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -4368,6 +4378,28 @@ sap.ui.define(
                             return ele;
                         });
                         oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
+
+                    }
+                    var aTable7 = oModel.getProperty("/Table/Table7");
+                    var aFinalArray2 = [];
+                    if (aTable7.length > 0) {
+                        var oDataTbl2 = aTable7.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp2 = [
+                            "Percentage"
+                        ];
+                        aFinalArray2 = oDataTbl2.filter(function (ele) {
+                            for (var a in aCheckProp2) {
+                                if (ele[aCheckProp2[a]] === "") {
+                                    ele[aCheckProp2[a]] = null;
+                                }
+                                
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferRedemptionCycleCondition"] = aFinalArray2;
 
                     }
                     promise.resolve(oPayLoad);

@@ -318,7 +318,8 @@ sap.ui.define(
                         OfferStatus: null,
                         OfferApplicableProductCategory: [],
                         BonusInputType: 0,
-                        OfferEarnedPointsCondition:[]
+                        OfferEarnedPointsCondition:[],
+                        OfferRedemptionCycleCondition:[]
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -427,6 +428,7 @@ sap.ui.define(
                     var aTableValidation = this._CheckTableValidation();
                     var aTableBonusValidation = this._CheckTableBonusValidation()
                     var bTableCondition1 = this._CheckTableCondition1();
+                    var bTableCondition3 = this._CheckTableCondition3();
                     if (bFlagValidate == false) {
                         MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                         return;

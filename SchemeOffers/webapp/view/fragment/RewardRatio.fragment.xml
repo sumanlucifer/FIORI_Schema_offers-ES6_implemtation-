@@ -275,7 +275,7 @@
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z0-9]{1}[wW]*',minLength:1,maxLength:50} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
+                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddCondition2"></Button>
@@ -331,7 +331,7 @@
                         <Label  text="{path:'oModelControl>RedemptionCycle',formatter:'.formatter.fmtCheckNull'}" />
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z0-9]{1}[wW]*',minLength:1,maxLength:50} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
+                            <Input required="true" visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>Percentage',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddCondition3"></Button>
