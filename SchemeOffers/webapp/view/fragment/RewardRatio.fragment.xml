@@ -192,7 +192,11 @@
                 <Column>
                     <Text text="{i18n>EndDate}" />
                 </Column>
-                <Column>
+                
+                 <Column visible="{= ${oModelView>/InputType}===0 }" >
+                    <Text text="{i18n>VolumeToBeCompleted}" />
+                </Column>
+                <Column visible="{= ${oModelView>/InputType}===1 }">
                     <Text text="{i18n>PointsToComplete}" />
                 </Column>
                 <Column>
@@ -205,11 +209,15 @@
                     <cells>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            <DatePicker visible="{= ${oModelControl>editable} === true }" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+                            <DatePicker change=".onEndDateCondition1"  visible="{= ${oModelControl>editable} === true }" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="50%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
-                        <VBox >
+                        <VBox visible="{= ${oModelView>/InputType}===0 }" >
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                        </VBox>
+                        <VBox visible="{= ${oModelView>/InputType}===1 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" width="50%" maxLength="50" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search :'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddCondition1"></Button>

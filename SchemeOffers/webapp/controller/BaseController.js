@@ -1369,6 +1369,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     oModel.setProperty("/Table/Table2", []);
+                    oModel.setProperty("/Table/Table5", []);
                 },
                 onRbRRDialogVolume2: function (oEvent) {
                     var oView = this.getView();
@@ -1565,6 +1566,7 @@ sap.ui.define(
 
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
+                    var oModel2 = oView.getModel("oModelView");
                     var oRewardDtl = oModel.getProperty("/Table/Table5");
 
                     if (oEvent !== "add") {
@@ -1601,8 +1603,10 @@ sap.ui.define(
 
                         if (bFlag == true) {
                             oRewardDtl.push({
-                                Percentage: "",
-                                ProductCode: "",
+                                InputType: oModel2.getProperty("/InputType"),
+                                RequiredPoints: "",
+                                RequiredVolume: "",
+                                EndDate: null,
                                 editable: true,
                             });
                         }
@@ -1646,6 +1650,29 @@ sap.ui.define(
                         oObject["editable"] = false;
                         oModel.refresh(true);
                     }
+                },
+                onEndDateCondition1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oModelView = oView.getModel("oModelView");
+                    var oCurrentDate = oEvent.getSource().getDateValue();
+                    var oEndDate = oModelView.getProperty("/EndDate");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
+
+                    if (oEndDate) {
+                        if (oCurrentDate < oEndDate) {
+                            MessageToast.show("Kindly select a date more than end date.");
+                            oModelControl.setProperty(sPath + "/EndDate", null);
+                            return;
+                        }
+                    } else {
+                        MessageToast.show("Kindly Select A Offer End Date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                    }
+
                 },
                 onRemovedCondition: function (oEvent) {
                     var oView = this.getView();
@@ -1747,11 +1774,11 @@ sap.ui.define(
                         oModel.refresh(true);
                     }
                 },
-                 onPressAddCondition3: function (oEvent) {
+                onPressAddCondition3: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table7");
-                  
+
                     if (oEvent !== "add") {
                         var oObject = oEvent
                             .getSource()
@@ -1812,7 +1839,7 @@ sap.ui.define(
                         MessageToast.show("Kindly Input All Condtion 3 Fields to Continue.");
                         return;
                     }
-                 
+
 
                     //var cFlag = oValidator.validate();
                     // var oCheckProp = ["RelationshipId", "Name"];
@@ -3439,6 +3466,30 @@ sap.ui.define(
                         ];
                     }
                 },
+                _CheckTableCondition1: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oModelData = oModel.getData();
+                    var oData = oModelData["Table"]["Table5"];
+                    var bFlag = true;
+                    if (oModelData["Table"]["Table5"].length > 0) {
+                        oModelData["Table"]["Table5"].forEach(function (a) {
+                            if (a.hasOwnProperty("editable")) {
+                                if (a["editable"]) {
+                                    bFlag = false;
+                                }
+                            }
+                        });
+                    }
+                    if (bFlag) {
+                        return [true, ""];
+                    } else {
+                        return [
+                            false,
+                            "Kindly Save the data in the Condition 1 Table to Continue.",
+                        ];
+                    }
+                },
                 onAttachDialogClose: function (oEvent) {
                     oEvent.getSource().getParent().close();
                 },
@@ -4267,6 +4318,60 @@ sap.ui.define(
                         return promise;
                     }
                     // this means that the user has selected specific for bonus reward packs
+                },
+                _CreatePayLoadConditions: function (oPayLoad) {
+                    var promise = jQuery.Deferred();
+                    // conditions table 1 
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+
+                    var aTable5 = oModel.getProperty("/Table/Table5");
+                    var aFinalArray = [];
+                    if (aTable5.length > 0) {
+                        var oDataTbl = aTable5.map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                        var aCheckProp = [
+                            "EndDate",
+                            "RequiredVolume",
+                            "RequiredPoints",
+                            "StartDate"
+                        ];
+                        aFinalArray = oDataTbl.filter(function (ele) {
+                            for (var a in aCheckProp) {
+                                if (ele[aCheckProp[a]] === "") {
+                                    ele[aCheckProp[a]] = null;
+                                }
+                                if (aCheckProp[a] === "RequiredVolume") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "RequiredPoints") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                    }
+                                }
+                                if (aCheckProp[a] === "EndDate") {
+                                    if (ele[aCheckProp[a]]) {
+                                        ele[aCheckProp[a]] = new Date(
+                                            ele[aCheckProp[a]].setHours(23, 59, 59, 999)
+                                        );
+                                    }
+                                }
+                                if (aCheckProp[a] === "StartDate") {
+
+                                    ele[aCheckProp[a]] = oPayLoad["StartDate"]
+                                }
+                            }
+                            delete ele["editable"];
+                            return ele;
+                        });
+                        oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
+
+                    }
+                    promise.resolve(oPayLoad);
+                    return promise;
                 },
                 onViewAttachment: function (oEvent) {
                     var oButton = oEvent.getSource();
