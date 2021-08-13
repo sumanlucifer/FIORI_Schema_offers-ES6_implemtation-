@@ -1933,9 +1933,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oModel.getProperty("/Dialog/ProdVH2");
-                    
-                   oModel.setProperty(sPath+"/ProductCode",oSelected);
-                  
+
+                    oModel.setProperty(sPath + "/ProductCode", oSelected);
+
                 },
 
                 onRbChnageMain: function (oEvent) {
@@ -2272,7 +2272,7 @@ sap.ui.define(
                     return aFilters;
                 },
                 _FilterPainterValueTable: function (oFilter, sType) {
-                    console.log(oFilter)
+
                     var oValueHelpDialog = this._PainterValueHelp;
 
                     oValueHelpDialog.getTableAsync().then(function (oTable) {
@@ -2394,7 +2394,7 @@ sap.ui.define(
                         new Filter({
                             filters: aCurrentFilterValues,
                             and: true,
-                        })
+                        }), "Application"
                     );
                 },
                 onPVhZoneChange: function (oEvent) {
@@ -3477,11 +3477,11 @@ sap.ui.define(
                 GetProdName: function (mParam1) {
                     var sPath = "/MasterProductSet('" + mParam1 + "')";
                     var oModel = this.getView().getModel();
-                    var oData = oModel.getObject(sPath,{
-                        select:"ProductName"
+                    var oData = oModel.getObject(sPath, {
+                        select: "ProductName"
                     });
                     //console.log(sPath,oData,oModel);
-                    if(oData){
+                    if (oData) {
                         return oData["ProductName"];
                     }
                     //return oData["ProductName"];
@@ -4532,7 +4532,7 @@ sap.ui.define(
                         oPayLoad["OfferProductValueCondition"] = aFinalArray3;
 
                     }
-                   
+
                     var aTable7 = oModel.getProperty("/Table/Table7");
                     var aFinalArray2 = [];
                     if (aTable7.length > 0) {
