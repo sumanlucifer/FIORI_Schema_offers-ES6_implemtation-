@@ -30,21 +30,21 @@ sap.ui.define([
 
         return Controller.extend("com.knpl.pragati.CompanySettings.controller.Home", {
             onInit: function () {
-                var oModel = this.getOwnerComponent().getModel("data");
-                this.getView().setModel(oModel);
+                // var oModel = this.getOwnerComponent().getModel("data");
+                // this.getView().setModel(oModel);
 
-                 var oLocaModel = new JSONModel({
-                    bBusy: false,
-                    bEdit: false,
-                    Catalogue: [],
-                    IsOfferEnabled: false,
-                    IsRedemptionEnabled: false
-                });
-                this.getView().setModel(oLocaModel, "local");
+                //  var oLocaModel = new JSONModel({
+                //     bBusy: false,
+                //     bEdit: false,
+                //     Catalogue: [],
+                //     IsOfferEnabled: false,
+                //     IsRedemptionEnabled: false
+                // });
+                // this.getView().setModel(oLocaModel, "local");
 
-                this._property = "MasterCompanySettingsSet(1)";
+                // this._property = "MasterCompanySettingsSet(1)";
 
-                this.getView().bindElement("/MasterCompanySettingsSet(1)");
+                // this.getView().bindElement("/MasterCompanySettingsSet(1)");
                 this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
 
@@ -56,43 +56,59 @@ sap.ui.define([
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
 
-
-
-               
-
-
-                // this.showPdfList();
-
-
-                // this.oRouter.getRoute("RouteHome").attachPatternMatched(this.onRoteMatched, this);
             },
             _onObjectMatched: function () {
+                
+                 var that=this,oLocalModel = new JSONModel({
+                    bBusy: false,
+                    bEdit: false,
+                    Catalogue: [],
+                    IsOfferEnabled: false,
+                    IsRedemptionEnabled: false
+                });
+                this.getView().setModel(oLocalModel, "local");
+
+                this._property = "MasterCompanySettingsSet(1)";
+
+                this.getView().bindElement("/MasterCompanySettingsSet(1)");
+                
                // this.showPdfList();
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-                var oModel = this.getView().getModel("data");
+                    
+                this.initData();
+                // setTimeout(()=>{
+                //     that.initData();
+                // },5000)
                 
-                var oLocaModel = this.getView().getModel("local");
+               
                 
+                
+                
+            },
+            initData:function (){
+                var oModel = this.getView().getModel();
+                //oModel.refresh(true);
+                var oLocalModel = this.getView().getModel("local");
                 oModel.read("/" + this._property, {
                     urlParameters: {
                         "$expand": "MediaList"
                     },
                     success: function (oRetrievedResult) {
-                        oLocaModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
-                        oLocaModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
+                        oLocalModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
+                        oLocalModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
                         var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
                             return !ele.ContentType.includes("image");
-
                         });
-                        oLocaModel.setProperty("/Catalogue", Catalogue);
+                        oLocalModel.setProperty("/Catalogue", Catalogue);
+                        oLocalModel.updateBindings();
                         
 
                     },
                     error: function (oError) { }
                 });
-                oLocaModel.refresh(true);
-                oModel.refresh(true);
-                
+                oLocalModel.refresh(true);
+                //oModel.refresh(true);
+
             },
             
 
@@ -373,7 +389,7 @@ sap.ui.define([
             onToggleChange: function (oEvent) {
                 var oView = this.getView();
                 var sPath = oEvent.getSource().getBindingContext().getPath();
-                var oData = oView.getModel("data");
+                var oData = oView.getModel();
                 var othat = this;
                 var switchName = oEvent.getSource().getName();
                 MessageBox.confirm(
