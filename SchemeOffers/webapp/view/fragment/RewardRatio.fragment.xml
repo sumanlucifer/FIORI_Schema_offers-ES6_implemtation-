@@ -321,7 +321,7 @@
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table visible="{oModelView>/OfferConditions/IsRedemptionCycleCondition}" id="Table7" class="sapUiMediumMarginTop" items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <Table visible="{oModelView>/OfferConditions/IsRedemptionCycleCondition}" id="Table7"  items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>RedemptionCycle}"/>
