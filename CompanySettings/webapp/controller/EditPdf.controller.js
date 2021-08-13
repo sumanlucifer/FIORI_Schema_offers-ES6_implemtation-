@@ -215,6 +215,7 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oModel = this.getView().getModel("local");
                 var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
+                
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                 //To DO promises for sync
