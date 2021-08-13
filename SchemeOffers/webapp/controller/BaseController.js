@@ -352,7 +352,33 @@ sap.ui.define(
                                 // reward ratio is false means this is not a slab offer hense we have set max value as 1
                                 othat._RbtnReset(["Rbtn/Rewards"]);
                                 oModelControl.setProperty("/Fields/RewardRationCount", 1);
+                            }else if (a === "EarnedPointsCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsEarnedPointsCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsEarnedPointsCondition"
+                                ]);
+                                othat._propertyToBlank([
+                                    "Table/Table5"
+                                ]);
+                            }else if (a === "ProductValueCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsProductValueCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsProductValueCondition"
+                                ]);
+                                othat._propertyToBlank([
+                                    "Table/Table6"
+                                ],true);
+                            }else if (a === "RedemptionCycleCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsRedemptionCycleCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsRedemptionCycleCondition"
+                                ],true);
+                                othat._propertyToBlank([
+                                    "Table/Table7"
+                                ],true);
                             }
+                            
+
                         } else if (oOfferType[a]) {
                             if (a === "RewardRatio") {
                                 oModelControl.setProperty("/Rbtn/Rewards", 1);
@@ -1579,6 +1605,7 @@ sap.ui.define(
                         oModelC.setProperty(oTable[sPath], []);
                     } else {
                         oModel.setProperty(sPath, true);
+                        // one value should be added by default
                     }
 
                 },

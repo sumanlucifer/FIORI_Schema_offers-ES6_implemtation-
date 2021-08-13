@@ -97,6 +97,9 @@ sap.ui.define(
                             ApplicablePainters: true,
                             ApplicablePainterProducts: true,
                             AdditionalReward: true,
+                            EarnedPointsCondition: true,
+                            ProductValueCondition: true,
+                            RedemptionCycleCondition: true,
                         },
                         Search: {
                             PainterVh: {
