@@ -1571,10 +1571,10 @@ sap.ui.define(
                     var sSelectedIndex = oEvent.getParameter("selectedIndex");
                     var oTable = {
                         "/OfferConditions/IsEarnedPointsCondition": "/Table/Table5",
-                        "/OfferConditions/IsProductValueCondition": "/Table/Table5",
-                        "/OfferConditions/IsRedemptionCycleCondition": "/Table/Table5"
+                        "/OfferConditions/IsProductValueCondition": "/Table/Table6",
+                        "/OfferConditions/IsRedemptionCycleCondition": "/Table/Table7"
                     }
-                    if (sSelectedIndex === 1) {
+                    if (sSelectedIndex === 0) {
                         oModel.setProperty(sPath, false);
                         oModelC.setProperty(oTable[sPath], []);
                     } else {

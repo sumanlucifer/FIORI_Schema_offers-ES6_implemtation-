@@ -326,7 +326,7 @@ sap.ui.define(
                         OfferConditions: {
                             IsEarnedPointsCondition: false,
                             IsProductValueCondition: false,
-                            IsRedemptionCycleCondition: true
+                            IsRedemptionCycleCondition: false
                         }
                     };
                     var oViewMOdel = new JSONModel(oDataView);
