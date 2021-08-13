@@ -178,11 +178,17 @@
                 </ColumnListItem>
             </items>
         </Table>
-
-        <Table class="sapUiMediumMarginTop" id="Table5" items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
+        <Title text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" />
+        <RadioButtonGroup columns="2" select=".onRbConditions1" selectedIndex="{= ${oModelView>/OfferConditions/IsEarnedPointsCondition} === true ? 0:1}" >
+            <buttons>
+                <RadioButton text="{i18n>Yes}"/>
+                <RadioButton text="{i18n>No}"/>
+            </buttons>
+        </RadioButtonGroup>
+        <Table visible="{oModelView>/OfferConditions/IsEarnedPointsCondition}" id="Table5" items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
             <headerToolbar>
                 <Toolbar>
-                    <Title text="{i18n>Condotion1EarnedPoints}"/>
+                    <Title text="Earned Points" />
                     <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition1('add')"/>
                 </Toolbar>
@@ -271,7 +277,7 @@
                         </VBox> -->
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }"  showValueHelp="true"  valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable"  placeholder="{i18n>placeHolder3}" width="50%" value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable" placeholder="{i18n>placeHolder3}" width="50%" value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
@@ -315,7 +321,7 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
 
-                    
+
                         <Label text="{path:'oModelControl>RedemptionCycle',formatter:'.formatter.fmtCheckNull'}" />
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />

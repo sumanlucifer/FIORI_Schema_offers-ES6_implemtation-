@@ -1562,6 +1562,26 @@ sap.ui.define(
                     oModel.refresh(true);
                 },
                 // conditions table change
+                onRbConditions1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelC = oView.getModel("oModelControl");
+                    var oBinding = oEvent.getSource().getBinding("selectedIndex").getBindings()[0];
+                    var sPath = oBinding.getPath();
+                    var oModel = oBinding.getModel();
+                    var sSelectedIndex = oEvent.getParameter("selectedIndex");
+                    var oTable = {
+                        "/OfferConditions/IsEarnedPointsCondition": "/Table/Table5",
+                        "/OfferConditions/IsProductValueCondition": "/Table/Table5",
+                        "/OfferConditions/IsRedemptionCycleCondition": "/Table/Table5"
+                    }
+                    if (sSelectedIndex === 1) {
+                        oModel.setProperty(sPath, false);
+                        oModelC.setProperty(oTable[sPath], []);
+                    } else {
+                        oModel.setProperty(sPath, true);
+                    }
+
+                },
                 onPressAddCondition1: function (oEvent) {
 
                     var oView = this.getView();
