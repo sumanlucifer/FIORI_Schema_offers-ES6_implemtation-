@@ -352,7 +352,33 @@ sap.ui.define(
                                 // reward ratio is false means this is not a slab offer hense we have set max value as 1
                                 othat._RbtnReset(["Rbtn/Rewards"]);
                                 oModelControl.setProperty("/Fields/RewardRationCount", 1);
+                            }else if (a === "EarnedPointsCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsEarnedPointsCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsEarnedPointsCondition"
+                                ]);
+                                othat._propertyToBlank([
+                                    "Table/Table5"
+                                ]);
+                            }else if (a === "ProductValueCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsProductValueCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsProductValueCondition"
+                                ]);
+                                othat._propertyToBlank([
+                                    "Table/Table6"
+                                ],true);
+                            }else if (a === "RedemptionCycleCondition") {
+                                // if earned points condition is false we are going to make the offer OfferConditions/IsRedemptionCycleCondition false
+                               othat._propertyToBlank([
+                                    "OfferConditions/IsRedemptionCycleCondition"
+                                ],true);
+                                othat._propertyToBlank([
+                                    "Table/Table7"
+                                ],true);
                             }
+                            
+
                         } else if (oOfferType[a]) {
                             if (a === "RewardRatio") {
                                 oModelControl.setProperty("/Rbtn/Rewards", 1);
@@ -1562,6 +1588,27 @@ sap.ui.define(
                     oModel.refresh(true);
                 },
                 // conditions table change
+                onRbConditions1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelC = oView.getModel("oModelControl");
+                    var oBinding = oEvent.getSource().getBinding("selectedIndex").getBindings()[0];
+                    var sPath = oBinding.getPath();
+                    var oModel = oBinding.getModel();
+                    var sSelectedIndex = oEvent.getParameter("selectedIndex");
+                    var oTable = {
+                        "/OfferConditions/IsEarnedPointsCondition": "/Table/Table5",
+                        "/OfferConditions/IsProductValueCondition": "/Table/Table6",
+                        "/OfferConditions/IsRedemptionCycleCondition": "/Table/Table7"
+                    }
+                    if (sSelectedIndex === 0) {
+                        oModel.setProperty(sPath, false);
+                        oModelC.setProperty(oTable[sPath], []);
+                    } else {
+                        oModel.setProperty(sPath, true);
+                        // one value should be added by default
+                    }
+
+                },
                 onPressAddCondition1: function (oEvent) {
 
                     var oView = this.getView();
@@ -1817,7 +1864,7 @@ sap.ui.define(
                                 editable: true,
                             });
                         }
-                        oModel.refresh(true);
+                        oModel.refresh();
                     }
                 },
                 onPressSaveCondition3: function (oEvent) {
@@ -1837,7 +1884,7 @@ sap.ui.define(
                     }
                     if (bFlag && cFlag) {
                         oObject["editable"] = false;
-                        oModel.refresh(true);
+                        oModel.refresh();
                     }
                 },
                 onValueHelpProductsTable: function (oEvent) {
@@ -1933,9 +1980,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oModel.getProperty("/Dialog/ProdVH2");
-                    
-                   oModel.setProperty(sPath+"/ProductCode",oSelected);
-                  
+
+                    oModel.setProperty(sPath + "/ProductCode", oSelected);
+
                 },
 
                 onRbChnageMain: function (oEvent) {
@@ -2272,7 +2319,7 @@ sap.ui.define(
                     return aFilters;
                 },
                 _FilterPainterValueTable: function (oFilter, sType) {
-                    console.log(oFilter)
+
                     var oValueHelpDialog = this._PainterValueHelp;
 
                     oValueHelpDialog.getTableAsync().then(function (oTable) {
@@ -2394,7 +2441,7 @@ sap.ui.define(
                         new Filter({
                             filters: aCurrentFilterValues,
                             and: true,
-                        })
+                        }), "Application"
                     );
                 },
                 onPVhZoneChange: function (oEvent) {
@@ -3476,11 +3523,15 @@ sap.ui.define(
                 },
                 GetProdName: function (mParam1) {
                     var sPath = "/MasterProductSet('" + mParam1 + "')";
-                    console.log(this.getView().getModel())
-                    var oData = this.getView().getModel().getData(sPath);
-
-                    console.log(sPath,oData)
-                    console.log()
+                    var oModel = this.getView().getModel();
+                    var oData = oModel.getObject(sPath, {
+                        select: "ProductName"
+                    });
+                    //console.log(sPath,oData,oModel);
+                    if (oData) {
+                        return oData["ProductName"];
+                    }
+                    //return oData["ProductName"];
                 },
 
                 /// Methods Specific to Display and Edit Offers
@@ -4528,7 +4579,7 @@ sap.ui.define(
                         oPayLoad["OfferProductValueCondition"] = aFinalArray3;
 
                     }
-                   
+
                     var aTable7 = oModel.getProperty("/Table/Table7");
                     var aFinalArray2 = [];
                     if (aTable7.length > 0) {

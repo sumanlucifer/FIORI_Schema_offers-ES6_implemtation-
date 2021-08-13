@@ -97,6 +97,9 @@ sap.ui.define(
                             ApplicablePainters: true,
                             ApplicablePainterProducts: true,
                             AdditionalReward: true,
+                            EarnedPointsCondition: true,
+                            ProductValueCondition: true,
+                            RedemptionCycleCondition: true,
                         },
                         Search: {
                             PainterVh: {
@@ -121,7 +124,7 @@ sap.ui.define(
                             Key2: "",
                             ProdVH: "",
                             PackVH: "",
-                            ProdVH2:""
+                            ProdVH2: ""
                         },
                         MultiCombo: {
                             Zones: [],
@@ -290,7 +293,7 @@ sap.ui.define(
                         OfferTypeId: "",
                         Title: "",
                         Description: "",
-                        Criteria:"",
+                        Criteria: "",
                         StartDate: null,
                         EndDate: null,
                         IsSpecificZone: false,
@@ -320,9 +323,14 @@ sap.ui.define(
                         OfferStatus: null,
                         OfferApplicableProductCategory: [],
                         BonusInputType: 0,
-                        OfferEarnedPointsCondition:[],
-                        OfferProductValueCondition:[],
-                        OfferRedemptionCycleCondition:[]
+                        OfferEarnedPointsCondition: [],
+                        OfferProductValueCondition: [],
+                        OfferRedemptionCycleCondition: [],
+                        OfferConditions: {
+                            IsEarnedPointsCondition: false,
+                            IsProductValueCondition: false,
+                            IsRedemptionCycleCondition: false
+                        }
                     };
                     var oViewMOdel = new JSONModel(oDataView);
                     oView.setModel(oViewMOdel, "oModelView");
@@ -517,7 +525,7 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                     console.log(oPayLoad);
+                    console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
