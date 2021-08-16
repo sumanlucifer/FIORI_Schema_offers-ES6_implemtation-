@@ -525,12 +525,12 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                    console.log(oPayLoad);
+                    //console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.create("/OfferSet", oPayLoad, {
                             success: function (data) {
                                 MessageToast.show("Offer Successfully Created.");
-                                //othat._navToHome();
+                                othat._navToHome();
                                 resolve(data);
                             },
                             error: function (data) {
