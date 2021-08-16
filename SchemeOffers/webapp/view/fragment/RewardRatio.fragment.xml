@@ -180,7 +180,7 @@
             </items>
         </Table>
 
-        <VBox>
+        <VBox visible="{oModelControl>/OfferType/EarnedPointsCondition}">
             <items>
                 <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" />
 
@@ -190,7 +190,7 @@
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table visible="{oModelView>/OfferConditions/IsEarnedPointsCondition}" id="Table5" items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
+                <Table id="Table5" visible="{oModelView>/OfferConditions/IsEarnedPointsCondition}"  items="{oModelControl>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>EarnedPoints}" />
@@ -242,21 +242,19 @@
                 </Table>
             </items>
         </VBox>
-        <VBox>
+        <VBox visible="{oModelControl>/OfferType/ProductValueCondition}" >
             <items>
                 <Title titleStyle="H4" text="{i18n>Condition2ProdValue}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup columns="2" select=".onRbConditions1" selectedIndex="{= ${oModelView>/OfferConditions/IsProductValueCondition} === false ? 0:1}">
                     <buttons>
-
                         <RadioButton text="{i18n>No}"/>
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table visible="{oModelView>/OfferConditions/IsProductValueCondition}" id="Table6" items="{path: 'oModelControl>/Table/Table6',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <Table  id="Table6" visible="{oModelView>/OfferConditions/IsProductValueCondition}" items="{path: 'oModelControl>/Table/Table6',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>ProuctValueCondition}"/>
-
                             <ToolbarSpacer />
                             <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition2('add')"/>
                         </Toolbar>
@@ -311,9 +309,9 @@
                 </Table>
             </items>
         </VBox>
-        <VBox>
+        <VBox visible="{oModelControl>/OfferType/RedemptionCycleCondition}"  class="sapUiMediumMarginTop">
             <items>
-                <Title titleStyle="H4" text="{i18n>Condotion3redemptionCycle}" class="sapUiMediumMarginTop" />
+                <Title titleStyle="H4" text="{i18n>Condotion3redemptionCycle}" />
                 <RadioButtonGroup columns="2" select=".onRbConditions1" selectedIndex="{= ${oModelView>/OfferConditions/IsRedemptionCycleCondition} === false ? 0:1}">
                     <buttons>
 
@@ -321,7 +319,7 @@
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table visible="{oModelView>/OfferConditions/IsRedemptionCycleCondition}" id="Table7"  items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <Table  id="Table7" visible="{oModelView>/OfferConditions/IsRedemptionCycleCondition}" items="{path: 'oModelControl>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>RedemptionCycle}"/>

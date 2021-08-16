@@ -268,8 +268,21 @@ sap.ui.define(
                             Table2: [],
                             Table3: [],
                             Table4: [],
+                            Table5: [],
+                            Table6: [],
+                            Table7: []
                         },
-                        OfferType: {},
+                        OfferType: {
+                            BasicInformation: true,
+                            ApplicableProducts: true,
+                            RewardRatio: true,
+                            ApplicablePainters: true,
+                            ApplicablePainterProducts: true,
+                            AdditionalReward: true,
+                            EarnedPointsCondition: false,
+                            ProductValueCondition: false,
+                            RedemptionCycleCondition: false,
+                        },
                         oData: {
                             Products: [],
                             Packs: [],
@@ -481,7 +494,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer";
+                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + sPath, {
                             urlParameters: {
@@ -548,6 +561,25 @@ sap.ui.define(
                                 oData["OfferBonusRewardRatio"]["results"]
                             );
                         }
+                    }
+                    // condtions table added here
+                    if (oData["OfferEarnedPointsCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table5",
+                            oData["OfferEarnedPointsCondition"]["results"]
+                        );
+                    }
+                    if (oData["OfferProductValueCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table6",
+                            oData["OfferProductValueCondition"]["results"]
+                        );
+                    }
+                    if (oData["OfferRedemptionCycleCondition"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table7",
+                            oData["OfferRedemptionCycleCondition"]["results"]
+                        );
                     }
 
                     promise.resolve(oData);
@@ -1191,6 +1223,9 @@ sap.ui.define(
                             ApplicablePainters: true,
                             ApplicablePainterProducts: true,
                             AdditionalReward: true,
+                            EarnedPointsCondition: false,
+                            ProductValueCondition: false,
+                            RedemptionCycleCondition: false,
                         },
                         Search: {
                             PainterVh: {
@@ -1440,19 +1475,19 @@ sap.ui.define(
                             oData["OfferEarnedPointsCondition"]["results"]
                         );
                     }
-                     if (oData["OfferProductValueCondition"]["results"].length > 0) {
+                    if (oData["OfferProductValueCondition"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table6",
                             oData["OfferProductValueCondition"]["results"]
                         );
                     }
-                     if (oData["OfferRedemptionCycleCondition"]["results"].length > 0) {
+                    if (oData["OfferRedemptionCycleCondition"]["results"].length > 0) {
                         oModelControl2.setProperty(
                             "/Table/Table7",
                             oData["OfferRedemptionCycleCondition"]["results"]
                         );
                     }
-                   
+
                     promise.resolve(oData);
                     return promise;
                 },
@@ -1854,7 +1889,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                    console.log(oPayLoad);
+                    //console.log(oPayLoad);
 
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
