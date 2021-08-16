@@ -1710,8 +1710,8 @@ sap.ui.define(
                         .getPath();
 
                     if (oEndDate) {
-                        if (oCurrentDate < oEndDate) {
-                            MessageToast.show("Kindly select a date more than Offer End date.");
+                        if (oCurrentDate > oEndDate) {
+                            MessageToast.show("Kindly select a date less than Offer End date.");
                             oModelControl.setProperty(sPath + "/EndDate", null);
                             return;
                         }
