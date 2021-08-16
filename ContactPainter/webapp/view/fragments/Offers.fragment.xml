@@ -62,7 +62,7 @@
                         <HBox>
                             <items>
                                 <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtLowerCase2'}" />
-                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />
+                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" enabled="{=!${Painter/IsArchived}}"/>
                                 <!-- <Button text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
                         </HBox>
