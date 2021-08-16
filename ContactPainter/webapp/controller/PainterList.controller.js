@@ -604,7 +604,7 @@ sap.ui.define(
                     var othat = this;
                     //console.log(sPath, oBject);
                     MessageBox.confirm(
-                        "Kindly confirm to deactivate the painter- " + oBject["Name"], {
+                        "Kindly confirm to delete the painter- " + oBject["Name"], {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             onClose: function (sAction) {
@@ -622,7 +622,7 @@ sap.ui.define(
                     };
                     oData.update(sPath + "/IsArchived", oPayload, {
                         success: function (mData) {
-                            MessageToast.show(oBject["Name"] + " Successfully Deactivated.");
+                            MessageToast.show(oBject["Name"] + " Successfully Deleted.");
                             oData.refresh();
                         },
                         error: function (data) {
