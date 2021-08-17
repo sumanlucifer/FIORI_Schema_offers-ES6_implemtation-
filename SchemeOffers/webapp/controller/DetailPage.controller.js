@@ -2258,7 +2258,7 @@ sap.ui.define(
 
                     var sOfferStatus = oModelC.getProperty("/Dialog/OfferStatus");
                     var sRemark = oModelC.getProperty("/Dialog/Remarks");
-                    var oNewPayLoad = Object.assign({}, oPayload);
+                    var oNewPayLoad = {};
                     oNewPayLoad["Remark"] = sRemark;
                     // if the offer status if
                     if (
@@ -2292,7 +2292,7 @@ sap.ui.define(
 
                     c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
                     c1B.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
+                        c2 = othat._UpdateSingleProperty(oNewPayLoad, "OfferStatus");
                         c2.then(function (oNewPayLoad) {
                             othat._RemarksDialog2.setBusy(false);
                             othat._RemarksDialog2.close();
@@ -2301,6 +2301,27 @@ sap.ui.define(
                         })
                     })
 
+                },
+                _UpdateSingleProperty: function (oPayLoad, sProperty) {
+                    var promise = jQuery.Deferred();
+                    var othat = this;
+                    var oView = this.getView();
+                    var oDataModel = oView.getModel();
+                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/";
+                    //console.log(oPayLoad);
+                    return new Promise((resolve, reject) => {
+                        oDataModel.update("/" + oProp, oPayLoad, {
+                            success: function (data) {
+                                MessageToast.show("Offer Successfully Updated.");
+                                //othat._navToHome();
+                                resolve(data);
+                            },
+                            error: function (data) {
+                                MessageToast.show("Error In Updating the Offer.");
+                                reject(data);
+                            },
+                        });
+                    });
                 },
                 onDetailPageSave: function () {
                     var oView = this.getView();
@@ -2320,23 +2341,37 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelDisplay");
                     var oViewData = oModelView.getData();
+                    oViewData["EndDate"] = new Date(
+                        oViewData["EndDate"].setHours(23, 59, 59, 999)
+                    );
                     var oModelC = oView.getModel("oModelControl3");
                     oModelC.setProperty("/PageBusy", true);
                     var othat = this;
-                    var oNewPayLoad = this._RemoveEmptyValue(oViewData);
+                    var oNewPayLoad = {
+                        EndDate: oViewData["EndDate"]
+                    }
+
                     // oNewPayLoad["EndDate"] = new Date(
                     //     oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
 
                     // );
+                    // var c1, c1B, c2, c3;
+                    // c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
+                    // c1B.then(function (oNewPayLoad) {
+                    //     c2 = othat._UpdateSingleProperty(oNewPayLoad,"EndDate");
+                    //     c2.then(function (oNewPayLoad) {
+                    //         oModelC.setProperty("/PageBusy", true)
+                    //         othat.handleCancelPress()
+                    //     })
+                    // })
                     var c1, c1B, c2, c3;
-                    c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
-                    c1B.then(function (oNewPayLoad) {
-                        c2 = othat._UpdateOffer(oNewPayLoad);
-                        c2.then(function (oNewPayLoad) {
-                            oModelC.setProperty("/PageBusy", true)
-                            othat.handleCancelPress()
-                        })
+
+                    c2 = othat._UpdateSingleProperty(oNewPayLoad, "EndDate");
+                    c2.then(function (oNewPayLoad) {
+                        oModelC.setProperty("/PageBusy", true)
+                        othat.handleCancelPress()
                     })
+
 
 
                 },
