@@ -66,6 +66,7 @@ sap.ui.define([], function () {
 
             return sLetter;
         },
+
         fmtLowerCase: function (mParam) {
             var sStatus = "";
             if (mParam) {
