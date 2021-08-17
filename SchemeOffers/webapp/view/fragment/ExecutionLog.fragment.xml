@@ -13,14 +13,15 @@
 			filterTitle="Task Type"
             showIcons="true"
             enableScroll="false"
+            showSearch="false"
             sortOldestFirst="false"
 			content="{wfmodel>/}">
 		<content>
            <!-- formatter required datetime, title icon -->
-			<TimelineItem	dateTime="{wfmodel>timestamp}"
+			<TimelineItem dateTime="{ path :'wfmodel>timestamp', formatOptions:{pattern:'dd/MM/YYYY hh:mm a'} }"
 					title="{ parts :['wfmodel>subject' , 'wfmodel>type' ], formatter : '.formatter.ExecutionLogTitle'}"
 					text="{ path : 'wfmodel>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
-                    filterValue="{type}"
+                    filterValue="{wfmodel>type}"
 					icon="{path : 'wfmodel>type' , formatter : '.formatter.ExecutionLogIcon'}">
 			</TimelineItem>
 		</content>

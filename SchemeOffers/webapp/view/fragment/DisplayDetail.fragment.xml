@@ -398,7 +398,7 @@
                             </Select>
                         </VBox> -->
                                 <VBox >
-                                    <Label text="{path:'oModelControl2>ProductCode',formatter:'.GetProdName'}" />
+                                    <Label text="{path:'oModelControl2>Product/ProductName'}" />
 
                                 </VBox>
                                 <VBox >

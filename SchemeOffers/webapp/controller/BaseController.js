@@ -352,32 +352,32 @@ sap.ui.define(
                                 // reward ratio is false means this is not a slab offer hense we have set max value as 1
                                 othat._RbtnReset(["Rbtn/Rewards"]);
                                 oModelControl.setProperty("/Fields/RewardRationCount", 1);
-                            }else if (a === "EarnedPointsCondition") {
+                            } else if (a === "EarnedPointsCondition") {
                                 // if earned points condition is false we are going to make the offer OfferConditions/IsEarnedPointsCondition false
-                               othat._propertyToBlank([
+                                othat._propertyToBlank([
                                     "OfferConditions/IsEarnedPointsCondition"
                                 ]);
                                 othat._propertyToBlank([
                                     "Table/Table5"
                                 ]);
-                            }else if (a === "ProductValueCondition") {
+                            } else if (a === "ProductValueCondition") {
                                 // if earned points condition is false we are going to make the offer OfferConditions/IsProductValueCondition false
-                               othat._propertyToBlank([
+                                othat._propertyToBlank([
                                     "OfferConditions/IsProductValueCondition"
                                 ]);
                                 othat._propertyToBlank([
                                     "Table/Table6"
-                                ],true);
-                            }else if (a === "RedemptionCycleCondition") {
+                                ], true);
+                            } else if (a === "RedemptionCycleCondition") {
                                 // if earned points condition is false we are going to make the offer OfferConditions/IsRedemptionCycleCondition false
-                               othat._propertyToBlank([
+                                othat._propertyToBlank([
                                     "OfferConditions/IsRedemptionCycleCondition"
-                                ],true);
+                                ], true);
                                 othat._propertyToBlank([
                                     "Table/Table7"
-                                ],true);
+                                ], true);
                             }
-                            
+
 
                         } else if (oOfferType[a]) {
                             if (a === "RewardRatio") {
@@ -1675,12 +1675,12 @@ sap.ui.define(
                     var cFlag = oValidator.validate(oCells);
 
                     if (!oObject["EndDate"]) {
-                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         bFlag = false;
                         return;
                     }
                     if (!cFlag) {
-                        MessageToast.show("Kindly Input All Condtion 1 Fields to Continue.");
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         return;
                     }
 
@@ -1704,20 +1704,23 @@ sap.ui.define(
                     var oModelView = oView.getModel("oModelView");
                     var oCurrentDate = oEvent.getSource().getDateValue();
                     var oEndDate = oModelView.getProperty("/EndDate");
+                    var oStartDate = oModelView.getProperty("/StartDate");
                     var sPath = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")
                         .getPath();
 
-                    if (oEndDate) {
-                        if (oCurrentDate > oEndDate) {
-                            MessageToast.show("Kindly select a date less than Offer End date.");
-                            oModelControl.setProperty(sPath + "/EndDate", null);
-                            return;
-                        }
-                    } else {
-                        MessageToast.show("Kindly Select A Offer End Date.");
+
+                    if (oCurrentDate > oEndDate) {
+                        MessageToast.show("Kindly select a date less than Offer End date.");
                         oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+
+                    }else if (oCurrentDate < oStartDate) {
+                        MessageToast.show("Kindly select a date more than Offer Start date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+
                     }
 
                 },
@@ -1798,11 +1801,11 @@ sap.ui.define(
                     var cFlag = oValidator.validate(oCells);
 
                     if (!oObject["ProductCode"]) {
-                        MessageToast.show("Kindly Input All Condtion 2 Fields to Continue.");
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         return;
                     }
                     if (!cFlag) {
-                        MessageToast.show("Kindly Input All Condtion 2 Fields to Continue.");
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         return;
                     }
 
@@ -1879,7 +1882,7 @@ sap.ui.define(
                     var bFlag = true;
                     var cFlag = oValidator.validate(oCells);
                     if (!cFlag) {
-                        MessageToast.show("Kindly Input All Condtion 3 Fields to Continue.");
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         return;
                     }
                     if (bFlag && cFlag) {
@@ -1925,8 +1928,10 @@ sap.ui.define(
 
                     var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                    var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
                     var aFilter1 = [];
                     var aFilter2 = [];
+                    var aFilter3 = [];
                     for (var a of aCat) {
                         aFilter1.push(
                             new Filter("ProductCategory/Id", FilterOperator.EQ, a)
@@ -1935,6 +1940,11 @@ sap.ui.define(
                     for (var b of aClass) {
                         aFilter2.push(
                             new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                        );
+                    }
+                    for (var c of aProd) {
+                        aFilter3.push(
+                            new Filter("Id", FilterOperator.EQ, c["Id"])
                         );
                     }
                     var aFilterCat = new Filter({
@@ -1951,6 +1961,9 @@ sap.ui.define(
                     }
                     if (aFilter2.length > 0) {
                         aFinalFilter.push(aFilterClass);
+                    }
+                    if (aFilter3.length > 0) {
+                        aFinalFilter = aFilter3;
                     }
                     this._ProdValueHelpDialog2
                         .getBinding("items")
@@ -1976,12 +1989,30 @@ sap.ui.define(
 
                 _handleProdValueHelpConfirm2: function (oEvent) {
                     var oSelected = oEvent.getParameter("selectedItem").getBindingContext().getObject()["Id"];
-                    console.log(oSelected)
+
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oModel.getProperty("/Dialog/ProdVH2");
+                    var oTable = oModel.getProperty("/Table/Table6");
+                    var aNumber = sPath.match(/\d+$/)[0];
+                    var bCheckExistProd = false
+                    for (var ele in oTable) {
+                        if (ele == aNumber) {
+                            continue;
+                        }
+                        if (oTable[ele]["ProductCode"] === oSelected) {
+                            MessageToast.show(
+                                "Product Already Selected, Kindly select a different Product."
+                            );
+                            oModel.setProperty(sPath + "/ProductCode", "");
+                            bCheckExistProd = true
+                            break;
+                        }
+                    }
+                    if (!bCheckExistProd) {
+                        oModel.setProperty(sPath + "/ProductCode", oSelected);
+                    }
 
-                    oModel.setProperty(sPath + "/ProductCode", oSelected);
 
                 },
 
@@ -1999,16 +2030,18 @@ sap.ui.define(
                         this._propertyToBlank(["MultiCombo/" + sPathArray[2]], true);
                     }
 
-                    var aChkTblData = ["PCat1", "PClass1", "AppProd1", "AppPacks1"];
+                    var aChkTblData = ["PCat1", "PClass1", "AppProd1"];
                     var aChkTblData2 = ["PCat4", "PClass4", "AppProd4", "AppPacks4"];
                     if (aChkTblData.indexOf(sPathArray[2]) >= 0) {
-                        //this._CreateRewardTableData();
+                        this._CheckCondProdTable();
                     }
                     if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
                         this._CreateBonusRewardTable();
                     }
                 },
-
+                _CheckCondProdTable: function () {
+                    this.getView().getModel("oModelControl").setProperty("/Table/Table6", []);
+                },
                 onRbBonusRewardChange: function (oEvent) {},
 
                 _CreateRewardTableData: function (oEvent) {
@@ -2846,6 +2879,7 @@ sap.ui.define(
                     var aNumber = mParam1.match(/\d+$/)[0];
                     if (aNumber == "1") {
                         this._CreateRewardTableData();
+                        this._CheckCondProdTable();
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
@@ -3069,6 +3103,14 @@ sap.ui.define(
                             this._CreateBonusRewardTable();
                         }
                     }
+                    var sPath = oEvent.getSource().getBinding("tokens").getPath();
+                    var sPathArray = sPath.split("/");
+                    console.log(sPathArray);
+                    var aChkTblDataProdData = ["AppProd1"];
+                    if (aChkTblDataProdData.indexOf(sPathArray[2]) >= 0) {
+                        this._CheckCondProdTable();
+                    }
+
                 },
                 handleProdValueHelp: function (oEvent) {
                     var oView = this.getView();
@@ -3125,7 +3167,7 @@ sap.ui.define(
                     oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
 
                     if (aNumber == "1") {
-                        //this._CreateRewardTableData();
+                        this._CheckCondProdTable();
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
@@ -3533,6 +3575,10 @@ sap.ui.define(
                     }
                     //return oData["ProductName"];
                 },
+                GetProdNam2: function (mParam1) {
+                    console.log(mParam1);
+                    return mParam1["ProductName"]
+                },
 
                 /// Methods Specific to Display and Edit Offers
                 // 1. Display Offers
@@ -3624,7 +3670,7 @@ sap.ui.define(
                     } else {
                         return [
                             false,
-                            "Kindly Save the data in the Condition 1 Table to Continue.",
+                            "Kindly Save the data in the Earned Points Conditon Table to Continue.",
                         ];
                     }
                 },
@@ -3648,7 +3694,7 @@ sap.ui.define(
                     } else {
                         return [
                             false,
-                            "Kindly Save the data in the Condition 2 Table to Continue.",
+                            "Kindly Save the data in the Product Value Conditions Table to Continue.",
                         ];
                     }
                 },
@@ -3672,7 +3718,7 @@ sap.ui.define(
                     } else {
                         return [
                             false,
-                            "Kindly Save the data in the Condition 3 Table to Continue.",
+                            "Kindly Save the data in the Redemption Cycle Conditions Table to Continue.",
                         ];
                     }
                 },
