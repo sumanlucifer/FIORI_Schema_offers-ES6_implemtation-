@@ -2288,7 +2288,7 @@ sap.ui.define(
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
 
                     var c1, c1B, c2, c3;
-                    c1 = othat._CheckExpandPainter(oNewPayLoad);
+                  
 
                     c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
                     c1B.then(function (oNewPayLoad) {
@@ -2307,7 +2307,7 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/";
+                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/"+sProperty;
                     //console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
