@@ -3105,7 +3105,7 @@ sap.ui.define(
                     }
                     var sPath = oEvent.getSource().getBinding("tokens").getPath();
                     var sPathArray = sPath.split("/");
-                    console.log(sPathArray);
+                   // console.log(sPathArray);
                     var aChkTblDataProdData = ["AppProd1"];
                     if (aChkTblDataProdData.indexOf(sPathArray[2]) >= 0) {
                         this._CheckCondProdTable();
@@ -3576,7 +3576,7 @@ sap.ui.define(
                     //return oData["ProductName"];
                 },
                 GetProdNam2: function (mParam1) {
-                    console.log(mParam1);
+                    //console.log(mParam1);
                     return mParam1["ProductName"]
                 },
 
