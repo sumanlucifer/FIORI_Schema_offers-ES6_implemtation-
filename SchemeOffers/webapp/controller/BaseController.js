@@ -1704,20 +1704,23 @@ sap.ui.define(
                     var oModelView = oView.getModel("oModelView");
                     var oCurrentDate = oEvent.getSource().getDateValue();
                     var oEndDate = oModelView.getProperty("/EndDate");
+                    var oStartDate = oModelView.getProperty("/StartDate");
                     var sPath = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")
                         .getPath();
 
-                    if (oEndDate) {
-                        if (oCurrentDate > oEndDate) {
-                            MessageToast.show("Kindly select a date less than Offer End date.");
-                            oModelControl.setProperty(sPath + "/EndDate", null);
-                            return;
-                        }
-                    } else {
-                        MessageToast.show("Kindly Select A Offer End Date.");
+
+                    if (oCurrentDate > oEndDate) {
+                        MessageToast.show("Kindly select a date less than Offer End date.");
                         oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+
+                    }else if (oCurrentDate < oStartDate) {
+                        MessageToast.show("Kindly select a date more than Offer Start date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+
                     }
 
                 },
