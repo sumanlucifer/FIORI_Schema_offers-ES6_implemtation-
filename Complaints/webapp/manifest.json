@@ -36,7 +36,12 @@
                     "action": "CM",
                     "title": "{{appTitle}}",
                     "subTitle": "{{appSubTitle}}",
-                    "icon": "sap-icon://quality-issue"
+                    "icon": "sap-icon://quality-issue",
+                    "indicatorDataSource": {
+                        "dataSource": "mainService",
+                        "path": "/dynamic_dest/mainService/PainterComplainsSet/$count",
+                        "refresh": 0
+                    }
                 }
             }
         }
