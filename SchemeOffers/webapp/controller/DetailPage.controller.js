@@ -2288,7 +2288,7 @@ sap.ui.define(
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
 
                     var c1, c1B, c2, c3;
-                    c1 = othat._CheckExpandPainter(oNewPayLoad);
+                  
 
                     c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
                     c1B.then(function (oNewPayLoad) {
