@@ -146,10 +146,10 @@ sap.ui.define([
                             processData: false,
                             data: ele.file,
                             success: function (data) {
-                                 oModel.setProperty("/bBusy", false);
+                                 //oModel.setProperty("/bBusy", false);
                                  var sMessage = "Saved Successfully!";
-                                    MessageToast.show(sMessage);
-                                    oRouter.navTo("RouteHome");
+                                MessageToast.show(sMessage);
+                                oRouter.navTo("RouteHome");
                                 // setTimeout(() => {
                                 //     oRouter.navTo("RouteHome");
                                 // }, 1000);
@@ -241,8 +241,9 @@ sap.ui.define([
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
                                     
-                                    oRouter.navTo("RouteHome");
-                                },
+                                    //oRouter.navTo("RouteHome");
+                                    this.showPdfList();
+                                }.bind(this),
                                 error: function () { },
                             });
                         }
