@@ -2307,7 +2307,7 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/";
+                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/"+sProperty;
                     //console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
