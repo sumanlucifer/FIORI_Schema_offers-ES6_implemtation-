@@ -350,7 +350,7 @@
                 </Table>
             </items>
         </VBox>
-        <VBox visible="{oModelControl>/OfferType/ProductValueCondition}">
+        <VBox visible="{oModelControl2>/OfferType/ProductValueCondition}">
             <items>
                 <Title titleStyle="H4" text="{i18n>Condition2ProdValue}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup editable="false" columns="2" select=".onRbConditions1" selectedIndex="{= ${OfferConditions/IsProductValueCondition} === false ? 0:1}">
@@ -412,7 +412,7 @@
                 </Table>
             </items>
         </VBox>
-        <VBox visible="{OfferType/RedemptionCycleCondition}">
+        <VBox visible="{oModelControl2>/OfferType/RedemptionCycleCondition}">
             <items>
                 <Title titleStyle="H4" text="{i18n>Condotion3redemptionCycle}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup editable="false" columns="2" select=".onRbConditions1" selectedIndex="{= ${OfferConditions/IsRedemptionCycleCondition} === false ? 0:1}">
