@@ -1931,7 +1931,7 @@ sap.ui.define(
                     var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
                     var aFilter1 = [];
                     var aFilter2 = [];
-                    var aFilter3 = [];
+                    var aFilter1A = [];
                     for (var a of aCat) {
                         aFilter1.push(
                             new Filter("ProductCategory/Id", FilterOperator.EQ, a)
@@ -1942,11 +1942,47 @@ sap.ui.define(
                             new Filter("ProductClassification/Id", FilterOperator.EQ, b)
                         );
                     }
-                    for (var c of aProd) {
-                        aFilter3.push(
-                            new Filter("Id", FilterOperator.EQ, c["Id"])
-                        );
+                   
+                    // Prod Filters
+                    var aProdMapped = aProd.map(function (elem) {
+                        return parseInt(elem["Id"]);
+                    });
+                    var aProdSort = aProdMapped.sort(function (el1, el2) {
+                        return el1 - el2;
+                    })
+                    var aProdLimitArray = []
+                    for (var x of aProdSort) {
+                        if (aProdSort.indexOf(x - 1) < 0 && aProdSort.indexOf(x + 1) < 0) {
+                            aProdLimitArray.push(x);
+                            continue;
+                        }
+
+                        if (aProdSort.indexOf(x - 1) < 0) {
+                            aProdLimitArray.push([x]);
+                            continue;
+                        }
+                        if (aProdSort.indexOf(x + 1) < 0) {
+                            aProdLimitArray[aProdLimitArray.length - 1].push(x);
+                            continue;
+                        }
                     }
+                    for (var a1 of aProdLimitArray) {
+                        if (Array.isArray(a1)) {
+                            aFilter1A.push(new Filter([
+                                new Filter("Id", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
+                                new Filter("Id", FilterOperator.LT, ('000' + a1[1]).slice(-3))
+                            ], true))
+                        } else {
+                            aFilter1A.push(
+                                new Filter("Id", FilterOperator.EQ, ('000' + a1).slice(-3))
+                            );
+
+                        }
+                    }
+                    var aFilterProd = new Filter({
+                        filters: aFilter1A,
+                        and: false,
+                    });
                     var aFilterCat = new Filter({
                         filters: aFilter1,
                         and: false,
@@ -1962,8 +1998,8 @@ sap.ui.define(
                     if (aFilter2.length > 0) {
                         aFinalFilter.push(aFilterClass);
                     }
-                    if (aFilter3.length > 0) {
-                        aFinalFilter = aFilter3;
+                    if (aFilter1A.length > 0) {
+                        aFinalFilter = aFilterProd;
                     }
                     this._ProdValueHelpDialog2
                         .getBinding("items")
