@@ -63,7 +63,7 @@
                                 <Text text="{Description}"/>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>formBasicInfoLbl5}">
+                        <f:FormElement label="{i18n>Criteria}">
                             <f:fields>
                                 <Text text="{Criteria}"/>
                             </f:fields>
