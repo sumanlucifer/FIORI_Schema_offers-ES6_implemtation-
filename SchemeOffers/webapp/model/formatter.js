@@ -311,8 +311,8 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         checkPainterReward: function (m1, m2, m3, m4, m5) {
             //m1 RedemptionStatus
             //m2 RedemptionType
-            //m3 RewardPoints
-            //m4 RewardCash
+            //m3 RedeemRewardPoints
+            //m4 RedeemRewardCash
             //m5 RewardGift
             if (m1 === 'REDEEMED') {
                 if (m2 === "POINTS_TRANSFER") {
