@@ -288,7 +288,7 @@
                                 <core:Item text="{oModelControl2>Name}" key="{oModelControl2>key}"/>
                            </ComboBox> -->
                         <Label text="{path:'oModelControl2>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
-                        <Label text="{path:'oModelControl2>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" />
+                        <Label text="{path:'oModelControl2>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" tooltip="{oModelControl2>RewardGiftName}" />
 
                     </cells>
                 </ColumnListItem>
