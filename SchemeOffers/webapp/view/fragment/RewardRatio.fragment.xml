@@ -159,8 +159,8 @@
                             <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="50" value="{path:'oModelControl>RewardGiftName',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z0-9]{1}[wW]*',minLength:1,maxLength:50} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" tooltip="{oModelControl>RewardGiftName}"/>
+                            <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="100" value="{path:'oModelControl>RewardGiftName',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z0-9]{1}[wW]*',minLength:1,maxLength:100} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
                         </VBox>
 
 
