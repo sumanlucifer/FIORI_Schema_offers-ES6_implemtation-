@@ -2158,7 +2158,7 @@ sap.ui.define(
                     var othat = this;
                     var c1, c2, c3;
                     var aFilterProducts = [];
-                    c1 = othat._getProductsData();
+                    //c1 = othat._getProductsData();
 
                     if (aSelectedKeys.length <= 0 && bRbProd == 0) {
                         oControl = oModelControl.getProperty("/oData/Products");
