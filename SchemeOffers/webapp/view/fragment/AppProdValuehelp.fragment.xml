@@ -6,7 +6,7 @@
         growing="true"
         growingThreshold="8"
 		class="sapUiPopupWithPadding"
-		items="{path:'/MasterProductSet' }"
+		items="{path:'/MasterProductSet',sorter:{path:'ProductName'},parameters:{select:'Id,ProductName'} }"
 	    search="_handlePValueHelpSearch"
 		confirm="_handleProdValueHelpConfirm"
         cancel="_handleProdValueHelpClose"
