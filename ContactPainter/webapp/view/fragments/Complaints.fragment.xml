@@ -5,7 +5,7 @@
                 <Toolbar>
                     <ToolbarSpacer />
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Complains}" />
-                    <Button press=".onCrossNavigate('CM')" text="{i18n>btnAddComplaint}" type="Emphasized" icon="sap-icon://add" enabled="{=!${IsArchived}}" />
+                    <Button press=".onCrossNavigate('CM')" text="{i18n>btnAddComplaint}" type="Emphasized" icon="sap-icon://add" enabled="{=!${IsArchived} &amp;&amp; ${ActivationStatus}==='ACTIVATED' }" />
                 </Toolbar>
             </headerToolbar>
 

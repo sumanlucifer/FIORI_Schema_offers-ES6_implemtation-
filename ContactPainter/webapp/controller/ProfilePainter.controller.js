@@ -1025,7 +1025,7 @@ sap.ui.define(
                                 PainterId: "" + oPainterId + ""
                                 //  PainterId: "" + 289 + ""
                             },
-                            select: "Painter/IsArchived,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus," +
+                            select: "Painter/IsArchived,Painter/ActivationStatus,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus," +
                                 "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,PainterOfferRedemption/TotalBonusPoints,PainterOfferRedemption/RedemptionStatus,Remark"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
