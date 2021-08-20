@@ -1654,6 +1654,7 @@ sap.ui.define(
                                 RequiredPoints: "",
                                 RequiredVolume: "",
                                 EndDate: null,
+                                StartDate: null,
                                 editable: true,
                             });
                         }
@@ -1679,6 +1680,11 @@ sap.ui.define(
                         bFlag = false;
                         return;
                     }
+                    if (!oObject["StartDate"]) {
+                        MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
+                        bFlag = false;
+                        return;
+                    }
                     if (!cFlag) {
                         MessageToast.show("Kindly Input All Fields of table in proper format to Continue.");
                         return;
@@ -1698,6 +1704,38 @@ sap.ui.define(
                         oModel.refresh(true);
                     }
                 },
+                onStartDateCondition1: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oModelView = oView.getModel("oModelView");
+                    var oCurrentDate = oEvent.getSource().getDateValue();
+                    var oEndDate = oModelView.getProperty("/EndDate");
+
+                    var oStartDate = oModelView.getProperty("/StartDate");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
+
+                    var oConditionEndDate = oModelView.getProperty(sPath + "/EndDate");
+                    if (oCurrentDate > oConditionEndDate) {
+                        MessageToast.show("Kindly select a date less than Earned Point Condition End date.");
+                        oModelControl.setProperty(sPath + "/StartDate", null);
+                        return;
+
+                    } else if (oCurrentDate < oStartDate) {
+                        MessageToast.show("Kindly select a date more than Offer Start date.");
+                        oModelControl.setProperty(sPath + "/StartDate", null);
+                        return;
+
+                    } else if (oCurrentDate > oEndDate) {
+                        MessageToast.show("Kindly select a date less than Offer End date.");
+                        oModelControl.setProperty(sPath + "/StartDate", null);
+                        return;
+
+                    }
+
+                },
                 onEndDateCondition1: function (oEvent) {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
@@ -1710,14 +1748,19 @@ sap.ui.define(
                         .getBindingContext("oModelControl")
                         .getPath();
 
-
-                    if (oCurrentDate > oEndDate) {
-                        MessageToast.show("Kindly select a date less than Offer End date.");
+                    var oConditionStartDate = oModelView.getProperty(sPath + "/StartDate");
+                    if (oCurrentDate < oConditionStartDate) {
+                        MessageToast.show("Kindly select a date more than Earned Point Condition Start date.");
                         oModelControl.setProperty(sPath + "/EndDate", null);
                         return;
 
-                    }else if (oCurrentDate < oStartDate) {
+                    } else if (oCurrentDate < oStartDate) {
                         MessageToast.show("Kindly select a date more than Offer Start date.");
+                        oModelControl.setProperty(sPath + "/EndDate", null);
+                        return;
+
+                    } else if (oCurrentDate > oEndDate) {
+                        MessageToast.show("Kindly select a date less than Offer End date.");
                         oModelControl.setProperty(sPath + "/EndDate", null);
                         return;
 
@@ -1942,7 +1985,7 @@ sap.ui.define(
                             new Filter("ProductClassification/Id", FilterOperator.EQ, b)
                         );
                     }
-                   
+
                     // Prod Filters
                     var aProdMapped = aProd.map(function (elem) {
                         return parseInt(elem["Id"]);
@@ -1969,8 +2012,8 @@ sap.ui.define(
                     for (var a1 of aProdLimitArray) {
                         if (Array.isArray(a1)) {
                             aFilter1A.push(new Filter([
-                                new Filter("Id", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
-                                new Filter("Id", FilterOperator.LT, ('000' + a1[1]).slice(-3))
+                                new Filter("Id", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                                new Filter("Id", FilterOperator.LE, ('000' + a1[1]).slice(-3))
                             ], true))
                         } else {
                             aFilter1A.push(
@@ -3029,8 +3072,8 @@ sap.ui.define(
                     for (var a1 of aProdLimitArray) {
                         if (Array.isArray(a1)) {
                             aFilter1A.push(new Filter([
-                                new Filter("ProductCode", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
-                                new Filter("ProductCode", FilterOperator.LT, ('000' + a1[1]).slice(-3))
+                                new Filter("ProductCode", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                                new Filter("ProductCode", FilterOperator.LE, ('000' + a1[1]).slice(-3))
                             ], true))
                         } else {
                             aFilter1A.push(
@@ -4627,10 +4670,7 @@ sap.ui.define(
                                         );
                                     }
                                 }
-                                if (aCheckProp[a] === "StartDate") {
 
-                                    ele[aCheckProp[a]] = oPayLoad["StartDate"]
-                                }
                             }
                             delete ele["editable"];
                             return ele;

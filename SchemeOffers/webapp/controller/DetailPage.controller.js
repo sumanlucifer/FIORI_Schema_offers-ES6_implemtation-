@@ -170,6 +170,7 @@ sap.ui.define(
                         ImageLoaded: false,
                         mode: "display",
                         EndDate: "",
+                        EndDate2: "",
                         OfferId: oProp, //.replace(/[^0-9]/g, ""),
                         //ProfilePic:"/KNPL_PAINTER_API/api/v2/odata.svc/PainterSet(717)/$value",
                         tableDealay: 0,
@@ -469,19 +470,8 @@ sap.ui.define(
                     var sPath = oModelControl2.getProperty("/bindProp");
                     var othat = this;
 
-                    return new Promise((resolve, reject) => {
-                        oView.getModel().read("/" + sPath, {
-
-                            success: function (data) {
-                                var oModel = new JSONModel(data);
-                                othat.getView().setModel(oModel, "oModelDisplay");
-                                resolve(data);
-                            },
-                            error: function () {
-                                reject();
-                            },
-                        });
-                    });
+                    promise.resolve()
+                    return promise;
                 },
                 _getInitData: function () {
                     var promise = jQuery.Deferred();
@@ -502,8 +492,8 @@ sap.ui.define(
                                 $expand: exPand,
                             },
                             success: function (data) {
-                                //var oModel = new JSONModel(data);
-                                //othat.getView().setModel(oModel, "oModelDisplay");
+                                var oModel = new JSONModel(data);
+                                othat.getView().setModel(oModel, "oModelDisplay");
                                 resolve(data);
                             },
                             error: function () {
@@ -2288,7 +2278,7 @@ sap.ui.define(
                     var sPath = oView.getModel("oModelControl3").getProperty("/bindProp");
 
                     var c1, c1B, c2, c3;
-                  
+
 
                     c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
                     c1B.then(function (oNewPayLoad) {
@@ -2307,7 +2297,7 @@ sap.ui.define(
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
-                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/"+sProperty;
+                    var oProp = oView.getModel("oModelControl3").getProperty("/bindProp") + "/" + sProperty;
                     //console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
@@ -2322,6 +2312,29 @@ sap.ui.define(
                             },
                         });
                     });
+                },
+                onEndDateCndtDisplay: function (oEvent) {
+                    var oSource =   oEvent.getSource()
+                    var oModelDisplay=this.getView().getModel("oModelDisplay");
+                    var iInitialValue =oSource.data("dataValue");
+                    var newValue = oSource.getDateValue();
+                    var oEndDate=oModelDisplay.getProperty("/EndDate")
+                    if(!newValue){
+                        oSource.setDateValue(iInitialValue)
+                        MessageToast.show("Date cannot be blank.");
+                        return;
+                    }
+                    if(newValue>oEndDate){
+                        oSource.setDateValue(iInitialValue)
+                        MessageToast.show("Date cannot be more than Offer End Date.");
+                        return;
+                    }
+
+                },
+                onNavEndDtDspCnd1: function (oEvent) {
+                    var oSrc = oEvent.getSource();
+                    var sValue = oSrc.getDateValue();
+                    oSrc.data("dataValue", sValue);
                 },
                 onDetailPageSave: function () {
                     var oView = this.getView();
@@ -2341,36 +2354,36 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelDisplay");
                     var oViewData = oModelView.getData();
+                    //1. Detail Page End Date Change
                     oViewData["EndDate"] = new Date(
                         oViewData["EndDate"].setHours(23, 59, 59, 999)
                     );
+                    //2. End Date Changed For the Earned Points Table
+                    if (oViewData["OfferEarnedPointsCondition"].hasOwnProperty("results")) {
+                        if (oViewData["OfferEarnedPointsCondition"]["results"].length > 0) {
+                            oViewData["OfferEarnedPointsCondition"]["results"].forEach(function (mPram1) {
+                                mPram1["EndDate"] = new Date(
+                                    mPram1["EndDate"].setHours(23, 59, 59, 999)
+                                );
+                            })
+                        }
+                    }
+
                     var oModelC = oView.getModel("oModelControl3");
                     oModelC.setProperty("/PageBusy", true);
                     var othat = this;
-                    var oNewPayLoad = {
-                        EndDate: oViewData["EndDate"]
-                    }
 
-                    // oNewPayLoad["EndDate"] = new Date(
-                    //     oNewPayLoad["EndDate"].setHours(23, 59, 59, 999)
 
-                    // );
-                    // var c1, c1B, c2, c3;
-                    // c1B = othat._CreatePayLoadPart1AForEndDate(oNewPayLoad);
-                    // c1B.then(function (oNewPayLoad) {
-                    //     c2 = othat._UpdateSingleProperty(oNewPayLoad,"EndDate");
-                    //     c2.then(function (oNewPayLoad) {
-                    //         oModelC.setProperty("/PageBusy", true)
-                    //         othat.handleCancelPress()
-                    //     })
-                    // })
                     var c1, c1B, c2, c3;
-
-                    c2 = othat._UpdateSingleProperty(oNewPayLoad, "EndDate");
-                    c2.then(function (oNewPayLoad) {
-                        oModelC.setProperty("/PageBusy", true)
-                        othat.handleCancelPress()
+                    c1B = othat._CheckExpandPainter(oViewData);
+                    c1B.then(function (oViewData) {
+                        c2 = othat._UpdateOffer(oViewData);
+                        c2.then(function (oViewData) {
+                            oModelC.setProperty("/PageBusy", true)
+                            othat.handleCancelPress()
+                        })
                     })
+
 
 
 

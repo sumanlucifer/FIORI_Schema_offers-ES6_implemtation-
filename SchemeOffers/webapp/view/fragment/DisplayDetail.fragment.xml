@@ -304,7 +304,7 @@
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table id="Table5" visible="{OfferConditions/IsEarnedPointsCondition}" items="{oModelControl2>/Table/Table5}" width="auto" noDataText="{i18n>tableNoDataText}">
+                <Table id="Table5" visible="{OfferConditions/IsEarnedPointsCondition}" items="{oModelDisplay>/OfferEarnedPointsCondition/results}" width="auto" noDataText="{i18n>tableNoDataText}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>EarnedPoints}" />
@@ -314,6 +314,9 @@
                     </headerToolbar>
 
                     <columns>
+                        <Column>
+                            <Text text="{i18n>StartDate}" />
+                        </Column>
                         <Column>
                             <Text text="{i18n>EndDate}" />
                         </Column>
@@ -330,16 +333,17 @@
                     <items>
                         <ColumnListItem >
                             <cells>
+                                 <Label text="{path:'oModelDisplay>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                                 
                                 <VBox >
-                                    <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-
+                                   <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.fnEndDateContion1Display'}"  minDate="{oModelDisplay>StartDate}"  change="onEndDateCndtDisplay"  width="50%" dateValue="{oModelDisplay>EndDate}" placeholder="DD/MM/YYYY"   required="true"/>
                                 </VBox>
                                 <VBox visible="{= ${InputType}===0 }">
-                                    <Label text="{path:'oModelControl2>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
+                                    <Label text="{path:'oModelDisplay>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
 
                                 </VBox>
                                 <VBox visible="{= ${InputType}===1 }">
-                                    <Label text="{path:'oModelControl2>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
+                                    <Label text="{path:'oModelDisplay>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
 
                                 </VBox>
 
