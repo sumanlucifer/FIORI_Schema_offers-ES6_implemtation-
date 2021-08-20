@@ -3072,8 +3072,8 @@ sap.ui.define(
                     for (var a1 of aProdLimitArray) {
                         if (Array.isArray(a1)) {
                             aFilter1A.push(new Filter([
-                                new Filter("ProductCode", FilterOperator.GT, ('000' + a1[0]).slice(-3)),
-                                new Filter("ProductCode", FilterOperator.LT, ('000' + a1[1]).slice(-3))
+                                new Filter("ProductCode", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                                new Filter("ProductCode", FilterOperator.LE, ('000' + a1[1]).slice(-3))
                             ], true))
                         } else {
                             aFilter1A.push(
