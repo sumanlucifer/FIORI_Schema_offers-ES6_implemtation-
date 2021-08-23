@@ -10,7 +10,7 @@
             <f:DynamicPageTitle>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="Add New Loyalty Point">
-                        <Link press="onPressBreadcrumbLink" text="Loyalty Management" />
+                        <Link press="onPressBreadcrumbLink" text="Rewards" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>

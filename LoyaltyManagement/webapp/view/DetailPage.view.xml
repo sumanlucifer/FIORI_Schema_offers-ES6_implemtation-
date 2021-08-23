@@ -13,7 +13,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{path:'PointTransactionType',formatter:'.formatter.requestType'} Details">
-                        <Link press="onPressBreadcrumbLink" text="Loyalty Management"/>
+                        <Link press="onPressBreadcrumbLink" text="Rewards"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
@@ -126,6 +126,11 @@
                                     <FlexBox >
                                         <Text class="sapUiTinyMarginTop" visible="{= ${PaymentTransaction}!== null}" text="{path:'PaymentTransaction/TransactionMessage'}"/>
                                     </FlexBox>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Payment Transaction Id" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                    <form:fields >
+                                        <Text class="sapUiTinyMarginTop" text="{= ${PaymentTransactionId}=== null ? 'NA' : ${PaymentTransactionId} }"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Date">
