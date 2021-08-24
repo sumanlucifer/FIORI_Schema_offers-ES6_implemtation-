@@ -615,15 +615,42 @@ sap.ui.define([
 
 
         },
-        onPressRemoveCatalogue: function (oEvent) {
+        onDeleteFile: function (oEvent) {
+                
+                var oView = this.getView();
+                var oModel = oView.getModel("ActionViewModel");
+                //oModel.setProperty("bNew", true);
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("ActionViewModel")
+                    .getPath()
+                    .split("/");
+                var aCatalogue = oModel.getProperty("/Catalogue");
+                var othat = this;
+                    MessageBox.confirm(
+                        "Kindly confirm to delete the file.",
+                        {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    othat.onPressRemoveCatalogue(sPath,aCatalogue);
+                                }
+                            },
+                        }
+                    );
+                },
+
+
+        onPressRemoveCatalogue: function (sPath,aCatalogue) {
             var oView = this.getView();
             var oModel = oView.getModel("ActionViewModel");
-            var sPath = oEvent
-                .getSource()
-                .getBindingContext("ActionViewModel")
-                .getPath()
-                .split("/");
-            var aCatalogue = oModel.getProperty("/Catalogue");
+            // var sPath = oEvent
+            //     .getSource()
+            //     .getBindingContext("ActionViewModel")
+            //     .getPath()
+            //     .split("/");
+            // var aCatalogue = oModel.getProperty("/Catalogue");
             var index = parseInt(sPath[sPath.length - 1]);
             var delItems = [];
             var property = this._property;
@@ -636,6 +663,7 @@ sap.ui.define([
                     delItems = aCatalogue[i];
                     if(delItems.MediaName!=null)
                     {
+                        oModel.setProperty("/bBusy", true);
                     jQuery.ajax({
                         method: "DELETE",
                         url: sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
@@ -645,7 +673,7 @@ sap.ui.define([
                         // data: delItems,
                         success: function (data) {
                             // aCatalogue.splice(i);
-                            
+                            oModel.setProperty("/bBusy", false);
                             aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                             var sMessage = "Catalogue Deleted!";
                             MessageToast.show(sMessage);

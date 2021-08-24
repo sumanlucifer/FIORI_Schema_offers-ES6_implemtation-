@@ -11,7 +11,7 @@
 				class="sapUiForceWidthAuto sapUiResponsiveMargin" >
                 
 				<form:content> -->
-             <Table id="idPdf" width="auto" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+             <Table id="idPdf" width="auto"  busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
@@ -81,7 +81,7 @@
                         
                                                     
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd"/>
-                                                            <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="Delete" />
+                                                            <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
                                                         
                                                         </HBox>
                                                     </cells>
