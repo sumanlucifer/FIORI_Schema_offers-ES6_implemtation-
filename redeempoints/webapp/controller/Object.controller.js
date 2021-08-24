@@ -504,7 +504,8 @@ sap.ui.define([
                 "/SendMobileOTP", {
                 method: "GET",
                 urlParameters: {
-                    Mobile: mobile
+                    Mobile: mobile,
+                    flag:'true'
                 },
                 success: function (oData, response) {
                     btnOtp.setVisible(false);
