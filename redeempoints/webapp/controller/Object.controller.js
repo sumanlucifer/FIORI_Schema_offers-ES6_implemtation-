@@ -505,7 +505,7 @@ sap.ui.define([
                 method: "GET",
                 urlParameters: {
                     Mobile: mobile,
-                    flag:'true'
+                    type:'redeem'
                 },
                 success: function (oData, response) {
                     btnOtp.setVisible(false);
