@@ -1,21 +1,14 @@
 /node_modules/
-<<<<<<< HEAD
-
-/dist/
-
-<<<<<<< HEAD
-=======
 /dist/
 # auto generated wildcard
 debasisa_web/Manage_Notifications/.env2
->>>>>>> debasisa
-=======
-
 # auto generated wildcard
-knpl-influencer-web/condonation/.env3
->>>>>>> origin/condonation
-
+training/Training_Learning/.env9
 # auto generated wildcard
-knpl-influencer-web/redeempoints/.env1
+training/Training_Learning/.env10
 # auto generated wildcard
-knpl-influencer-web/redeempoints/.env2
+Training/Training_Learning/.env11
+# auto generated wildcard
+FAQ/Manage_FAQ/.env3
+# auto generated wildcard
+knpl-influencer-web/Training_Learning/.env13
