@@ -209,7 +209,6 @@ sap.ui.define(
                             oViewModel.setProperty("/displayDepots", aArray); // to display in view training
 
                             aArray = [];
-                            debugger;
                             var editPainters = [];
                             if (data.TrainingPainters && data.TrainingPainters.results) {
                                 // for (var r of data["TrainingPainters"]["results"]) {
@@ -266,7 +265,6 @@ sap.ui.define(
                 },
 
                 onExportEnrollment: function (oEvent) {
-                    debugger;
                     var that = this;
                     var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
                     var aFilters = new sap.ui.model.Filter({
@@ -278,7 +276,7 @@ sap.ui.define(
                     });
                     that.getModel().read("/PainterTrainingSet", {
                         urlParameters: {
-                            "$expand": "PainterDetails"
+                            "$expand": "PainterDetails/PrimaryDealerDetails"
                         },
                         filters: [aFilters],
                         success: function (data) {
@@ -359,6 +357,192 @@ sap.ui.define(
 
                 },
 
+                onExportViews: function (oEvent) {
+                    var that = this;
+                    var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
+                    var aFilters = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('LearningId', sap.ui.model.FilterOperator.EQ, trainingId)
+                        ],
+                        and: true
+                    });
+                    that.getModel().read("/PainterLearningSet", {
+                        urlParameters: {
+                            "$expand": "PainterDetails/PrimaryDealerDetails"
+                        },
+                        filters: [aFilters],
+                        success: function (data) {
+                            that.getModel("oModelView").setProperty("/TrainingEnrollments", data.results);
+
+                            var oExport = new Export({
+                                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                                exportType: new ExportTypeCSV({
+                                    separatorChar: ";"
+                                }),
+                                // Pass in the model created above
+                                models: that.getView().getModel("oModelView"),
+
+                                // binding information for the rows aggregation
+                                rows: {
+                                    path: "/TrainingEnrollments"
+                                },
+
+                                // column definitions with column name and binding info for the content
+
+                                columns: [{
+                                    name: "Name",
+                                    template: {
+                                        content: "{PainterDetails/Name}"
+                                    }
+                                }, {
+                                    name: "Membership Id",
+                                    template: {
+                                        content: "{PainterDetails/MembershipCard}"
+                                    }
+                                }, {
+                                    name: "Mobile Number",
+                                    template: {
+                                        content: "{PainterDetails/Mobile}"
+                                    }
+                                }, {
+                                    name: "Zone",
+                                    template: {
+                                        content: "{PainterDetails/ZoneId}"
+                                    }
+                                }, {
+                                    name: "Division",
+                                    template: {
+                                        content: "{PainterDetails/DivisionId}"
+                                    }
+                                }, {
+                                    name: "Depot",
+                                    template: {
+                                        content: "{PainterDetails/DepotId}"
+                                    }
+                                }, {
+                                    name: "Primary Dealer",
+                                    template: {
+                                        content: "{PainterDetails/PrimaryDealerDetails/DealerName}"
+                                    }
+                                }, {
+                                    name: "View Date",
+                                    template: {
+                                        content: "{CreatedAt}"
+                                    }
+                                }, {
+                                    name: "Earned Points",
+                                    template: {
+                                        content: "{EarnedPoints}"
+                                    }
+                                }
+                                ]
+                            });
+
+                            // download exported file
+                            oExport.saveFile().catch(function (oError) {
+                                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                            }).then(function () {
+                                oExport.destroy();
+                            });
+                        }
+                    });
+
+                },
+
+                onExportAttendance: function (oEvent) {
+                    var that = this;
+                    var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
+                    var aFilters = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('TrainingId', sap.ui.model.FilterOperator.EQ, trainingId)
+                        ],
+                        and: true
+                    });
+                    that.getModel().read("/PainterTrainingSet", {
+                        urlParameters: {
+                            "$expand": "PainterDetails/PrimaryDealerDetails"
+                        },
+                        filters: [aFilters],
+                        success: function (data) {
+                            that.getModel("oModelView").setProperty("/TrainingEnrollments", data.results);
+
+                            var oExport = new Export({
+                                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                                exportType: new ExportTypeCSV({
+                                    separatorChar: ";"
+                                }),
+                                // Pass in the model created above
+                                models: that.getView().getModel("oModelView"),
+
+                                // binding information for the rows aggregation
+                                rows: {
+                                    path: "/TrainingEnrollments"
+                                },
+
+                                // column definitions with column name and binding info for the content
+
+                                columns: [{
+                                    name: "Name",
+                                    template: {
+                                        content: "{PainterDetails/Name}"
+                                    }
+                                }, {
+                                    name: "Membership Id",
+                                    template: {
+                                        content: "{PainterDetails/MembershipCard}"
+                                    }
+                                }, {
+                                    name: "Mobile Number",
+                                    template: {
+                                        content: "{PainterDetails/Mobile}"
+                                    }
+                                }, {
+                                    name: "Zone",
+                                    template: {
+                                        content: "{PainterDetails/ZoneId}"
+                                    }
+                                }, {
+                                    name: "Division",
+                                    template: {
+                                        content: "{PainterDetails/DivisionId}"
+                                    }
+                                }, {
+                                    name: "Depot",
+                                    template: {
+                                        content: "{PainterDetails/DepotId}"
+                                    }
+                                }, {
+                                    name: "Primary Dealer",
+                                    template: {
+                                        content: "{PainterDetails/PrimaryDealerDetails/DealerName}"
+                                    }
+                                }, {
+                                    name: "Attendance Date",
+                                    template: {
+                                        content: "{CreatedAt}"
+                                    }
+                                }, {
+                                    name: "Earned Points",
+                                    template: {
+                                        content: "{EarnedPoints}"
+                                    }
+                                }
+                                ]
+                            });
+
+                            // download exported file
+                            oExport.saveFile().catch(function (oError) {
+                                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                            }).then(function () {
+                                oExport.destroy();
+                            });
+                        }
+                    });
+
+                },
+
                 onClearPainterSearch: function () {
                     var aCurrentFilterValues = [];
                     var oDataFilter = {
@@ -373,7 +557,7 @@ sap.ui.define(
                     };
                     var oModel = new JSONModel(oDataFilter);
                     this.getView().setModel(oModel, "PainterFilter");
-                    
+
                     aCurrentFilterValues.push(new Filter({
                         path: "IsArchived",
                         operator: FilterOperator.EQ,
@@ -472,43 +656,74 @@ sap.ui.define(
                     }
                 },
 
+                onViewsSearch: function (oEvent) {
+                    var oView = this.getView();
+                    var sValue = oEvent.getSource().getValue();
+                    var sTrainingId = oView
+                        .getModel("oModelView")
+                        .getProperty("/trainingId");
+                    this._SearchView(sValue, sTrainingId);
+                },
+
                 _SearchAttendance: function (sValue, sTrainingId) {
                     var oView = this.getView();
                     var aCurrentFilter = [];
 
                     var oTable = oView.byId("idTblAttendance");
-                    if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
-                        aCurrentFilter.push(
-                            new Filter(
-                                [
-                                    new Filter(
-                                        "PainterDetails/Mobile",
-                                        FilterOperator.Contains,
-                                        sValue.trim().substring(0, 8)
-                                    ),
-                                ],
-                                false
-                            )
-                        );
-                    } else {
-                        aCurrentFilter.push(
-                            new Filter(
-                                [
-                                    new Filter(
-                                        "tolower(PainterDetails/Name)",
-                                        FilterOperator.Contains,
-                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
-                                    ),
-                                    new Filter(
-                                        "tolower(PainterDetails/MembershipCard)",
-                                        FilterOperator.Contains,
-                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
-                                    ),
+                    if (sValue) {
+                        if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "PainterDetails/Mobile",
+                                            FilterOperator.Contains,
+                                            sValue.trim().substring(0, 10)
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(PainterDetails/Name)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/MembershipCard)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/ZoneId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DivisionId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DepotId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+                                        // new Filter(
+                                        //     "tolower(PainterDetails/PrimaryDealerDetails/DealerName)",
+                                        //     FilterOperator.Contains,
+                                        //     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        // )
 
-                                ],
-                                false
-                            )
-                        );
+                                    ],
+                                    false
+                                )
+                            );
+                        }
                     }
                     aCurrentFilter.push(
                         new Filter("TrainingId", FilterOperator.EQ, parseInt(sTrainingId))
@@ -526,41 +741,134 @@ sap.ui.define(
                     var aCurrentFilter = [];
 
                     var oTable = oView.byId("idTblEnrollment");
-                    if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
-                        aCurrentFilter.push(
-                            new Filter(
-                                [
-                                    new Filter(
-                                        "PainterDetails/Mobile",
-                                        FilterOperator.Contains,
-                                        sValue.trim().substring(0, 8)
-                                    ),
-                                ],
-                                false
-                            )
-                        );
-                    } else {
-                        aCurrentFilter.push(
-                            new Filter(
-                                [
-                                    new Filter(
-                                        "tolower(PainterDetails/Name)",
-                                        FilterOperator.Contains,
-                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
-                                    ),
-                                    new Filter(
-                                        "tolower(PainterDetails/MembershipCard)",
-                                        FilterOperator.Contains,
-                                        "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
-                                    ),
+                    if (sValue) {
+                        if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "PainterDetails/Mobile",
+                                            FilterOperator.Contains,
+                                            sValue.trim().substring(0, 10)
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(PainterDetails/Name)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/MembershipCard)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/ZoneId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DivisionId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DepotId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+                                        // new Filter(
+                                        //     "tolower(PainterDetails/PrimaryDealerDetails/DealerName)",
+                                        //     FilterOperator.Contains,
+                                        //     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        // )
 
-                                ],
-                                false
-                            )
-                        );
+                                    ],
+                                    false
+                                )
+                            );
+                        }
                     }
                     aCurrentFilter.push(
                         new Filter("TrainingId", FilterOperator.EQ, parseInt(sTrainingId))
+                    );
+                    var endFilter = new Filter({
+                        filters: aCurrentFilter,
+                        and: true,
+                    });
+
+                    oTable.getBinding("items").filter(endFilter);
+                },
+
+                _SearchView: function (sValue, sTrainingId) {
+                    var oView = this.getView();
+                    var aCurrentFilter = [];
+
+                    var oTable = oView.byId("idVdTblEnrollment");
+                    if (sValue) {
+                        if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "PainterDetails/Mobile",
+                                            FilterOperator.Contains,
+                                            sValue.trim().substring(0, 10)
+                                        ),
+                                    ],
+                                    false
+                                )
+                            );
+                        } else {
+                            aCurrentFilter.push(
+                                new Filter(
+                                    [
+                                        new Filter(
+                                            "tolower(PainterDetails/Name)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/MembershipCard)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/ZoneId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DivisionId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        ),
+                                        new Filter(
+                                            "tolower(PainterDetails/DepotId)",
+                                            FilterOperator.Contains,
+                                            "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        )
+                                        // new Filter(
+                                        //     "tolower(PainterDetails/PrimaryDealerDetails/DealerName)",
+                                        //     FilterOperator.Contains,
+                                        //     "'" + sValue.trim().toLowerCase().replace("'", "''") + "'"
+                                        // )
+
+                                    ],
+                                    false
+                                )
+                            );
+                        }
+                    }
+                    aCurrentFilter.push(
+                        new Filter("LearningId", FilterOperator.EQ, parseInt(sTrainingId))
                     );
                     var endFilter = new Filter({
                         filters: aCurrentFilter,
@@ -822,7 +1130,6 @@ sap.ui.define(
                 },
 
                 onZoneChange: function (oEvent) {
-                    debugger;
                     var sId = oEvent.getSource().getSelectedKey();
                     var oDivision = sap.ui.getCore().byId("idSingleDivision");
                     var oDivItems = oDivision.getBinding("items");
@@ -1327,7 +1634,7 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                     oViewModel.setProperty("/busy", true);
+                    oViewModel.setProperty("/busy", true);
                     if (trainingType === 'ONLINE') {
                         this.CUOperationOnlineTraining(oPayload, oEvent);
                     } else if (trainingType === 'VIDEO') {
@@ -1554,7 +1861,7 @@ sap.ui.define(
                     var sKey = that.getModel().createKey("/TrainingSet", {
                         Id: oClonePayload.Id
                     });
-                   
+
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
@@ -1598,7 +1905,7 @@ sap.ui.define(
                     var sKey = that.getModel().createKey("/LearningSet", {
                         Id: oClonePayload.Id
                     });
-                  
+
                     that.getModel().update(sKey, oClonePayload, {
                         success: that._UploadImageforVideo(sKey, oViewModel.getProperty("/ProfilePic")).then(that._Success.bind(that, oEvent), that._Error.bind(
                             that)),
