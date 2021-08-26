@@ -88,7 +88,7 @@
             </items>
         </Table> -->
 
-        <MessageStrip text="{i18n>Meesage4}" showIcon="true"/>
+        <!-- <MessageStrip text="{i18n>Meesage4}" showIcon="true"/> -->
         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
