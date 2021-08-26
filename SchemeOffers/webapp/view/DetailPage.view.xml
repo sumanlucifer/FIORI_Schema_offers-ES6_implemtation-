@@ -96,7 +96,7 @@
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">
                     <Button class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
                     <Button class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
-                    <Button class="sapUiTinyMarginEnd" id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+                    <Button class="sapUiTinyMarginEnd" id="save" text="Save" enabled="{= ${OfferStatus}!=='EXPIRED'}" type="Emphasized" visible="false" press="handleSavePress"/>
                 </HBox>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
@@ -115,8 +115,8 @@
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                     <!-- Redemption Button -->
                     <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
-                      <!-- SAVE Button -->
-                    <Button press="onDetailPageSave" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd"   />
+                    <!-- SAVE Button -->
+                    <Button press="onDetailPageSave" visible="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" />
                 </HBox>
 
 
