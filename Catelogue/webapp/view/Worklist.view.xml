@@ -82,6 +82,7 @@
         <smartTable:SmartTable
                             id="idCatlogueTable"
                             editable="false"
+                            header="{i18n>worklistTableTitle}"
                             beforeRebindTable="fnrebindTable"                    
                             entitySet="ProductCatalogueSet"
                             tableType="ResponsiveTable"
@@ -98,7 +99,7 @@
                             >
                             	<smartTable:customToolbar>
 			<OverflowToolbar>
-                        <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" />
+                        <!-- <Title text="{i18n>worklistTableTitle}" level="H4" class="stdTitleColor" /> -->
                         <ToolbarSpacer />
                         
                         <Button icon="sap-icon://add" type="Emphasized" text="Add Catalogue" press="onPressAdd" enabled="{= (${appView>/loggedUserRoleId} !== 2) }"/>
