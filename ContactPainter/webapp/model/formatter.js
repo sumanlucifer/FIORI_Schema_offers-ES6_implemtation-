@@ -153,6 +153,14 @@ sap.ui.define([], function () {
             }
             return "NA";
         },
+        fmtOfferProgressStatus:function(mParam1){
+            if(mParam1==="COMPLETED"){
+                return "completed"
+            }
+             if(mParam1==="NOT_STARTED"){
+                return "Not completed"
+            }
+        }
 
     };
 
