@@ -42,9 +42,7 @@
             <Column>
                 <Text text="{i18n>SchemeSlab}" />
             </Column>
-             <Column>
-                <Text text="{i18n>MaxSlabValue}" />
-            </Column>
+            
             <Column>
                 <Text text="{i18n>BalanceQty}" />
             </Column>
@@ -78,7 +76,7 @@
                     <!-- <Text text="{oModelControl3>DealerId}"/> -->
                     <Text text="{oModelControl3>ProgressValue}"/>
                     <Text text="{oModelControl3>ProgressMax}"/>
-                     <Text text="{oModelControl3>MaxSlabValue}"/>
+                   
                     <Text text="{= ${oModelControl3>MaxSlabValue} - ${oModelControl3>ProgressValue} }"/>
                     <Text text="{oModelControl3>RedemeptionIndex} / {oModelControl3>RedemptionMax}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
