@@ -77,7 +77,7 @@
                     <Text text="{oModelControl3>ProgressValue}"/>
                     <Text text="{oModelControl3>ProgressMax}"/>
                    
-                    <Text text="{= ${oModelControl3>ProgressMax} - ${oModelControl3>ProgressValue} }"/>
+                    <Text text="{= ${oModelControl3>MaxSlabValue} - ${oModelControl3>ProgressValue} }"/>
                     <Text text="{oModelControl3>RedemeptionIndex} / {oModelControl3>RedemptionMax}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus'],formatter:'.formatter.chkEligibleForGift'}"/>
                     <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionType','oModelControl3>RedeemedRewardPoints','oModelControl3>RedeemedRewardCash','oModelControl3>RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
