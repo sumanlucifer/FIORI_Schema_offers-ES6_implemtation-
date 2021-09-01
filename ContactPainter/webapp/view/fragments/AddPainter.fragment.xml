@@ -264,6 +264,12 @@
         <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>BankingDetails}" />
+                <!-- <Label text="" /> -->
+                <HBox >
+                    <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank" />
+                    <!-- <Label /> -->
+                    <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank" />
+                </HBox>
                 <Label text="{i18n>IFSCCode}" />
                 <Input maxLength="11" id="IdAbIfscCode" enabled="{oModelControl>/AddNewBank}" valueStateText="Kindly enter a valid IFSC code" required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:10,maxLength:11, search:'^[a-zA-Z0-9]*$'} }" />
                 <Label text="{i18n>BankName}" />
@@ -301,12 +307,12 @@
                     <RadioButton text="{i18n>Pending}" />
                     <RadioButton text="{i18n>Approved}" />
                 </RadioButtonGroup> -->
-                <Label text="" />
+                <!-- <Label text="" />
                 <HBox justifyContent="SpaceBetween">
                     <Link text="{i18n>Cancel}" visible="{= ${oModelControl>/AddNewBank} }" press="onAddCanNewBank" />
                     <Label />
                     <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank" />
-                </HBox>
+                </HBox> -->
                 <core:Title text="{i18n>KYCDetails}" />
                 <Label text="{i18n>SelectKYCDocument}" />
                 <ComboBox change=".onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
