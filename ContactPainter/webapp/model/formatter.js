@@ -155,10 +155,13 @@ sap.ui.define([], function () {
         },
         fmtOfferProgressStatus:function(mParam1){
             if(mParam1==="COMPLETED"){
-                return "completed"
+                return "Completed"
             }
              if(mParam1==="NOT_STARTED"){
                 return "Not completed"
+            }
+            if(mParam1==="STARTED"){
+                return "In Progress"
             }
         }
 
