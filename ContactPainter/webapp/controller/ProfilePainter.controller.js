@@ -135,7 +135,9 @@ sap.ui.define(
                         selectedSection: "referral",
                         OfferRedeemDlg: {
                             RbtnRedeemType: -1,
-                            UUID: ""
+                            UUID: "",
+                            AddPoints: "",
+                            AddCash: "",
                         },
                         IctabBarLoyalty: "accrued",
                         ProfilePageBuzy: true,
@@ -182,7 +184,7 @@ sap.ui.define(
                         oView.byId("smrtLoyalty2").rebindTable(); //redeemed cash table
                         oView.getModel("oModelControl2").setProperty("/IctabBarLoyalty", "accrued");
                     } else if (sId.match("learnSection")) {
-                        
+
                         oView.byId("smrtLiveTraining").rebindTable();
                         oView.byId("smrtOfflineTraining").rebindTable();
                         oView.byId("smrtVideoTraining").rebindTable();
@@ -1025,7 +1027,7 @@ sap.ui.define(
                                 PainterId: "" + oPainterId + ""
                                 //  PainterId: "" + 289 + ""
                             },
-                            select: "Painter/IsArchived,Painter/ActivationStatus,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus," +
+                            select: "Painter/IsArchived,Painter/ActivationStatus,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,UUID," +
                                 "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,PainterOfferRedemption/TotalBonusPoints,PainterOfferRedemption/RedemptionStatus,Remark"
                         },
                         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
@@ -1688,7 +1690,7 @@ sap.ui.define(
                     //     return;
 
                     // }
-                   // console.log(oModelCtrl);
+                    // console.log(oModelCtrl);
                     oModelCtrl.setProperty("/EditBank", false);
                     oModelCtrl.setProperty("/EditBankButton", false);
                     oModelCtrl.setProperty("/EditField", false);
@@ -1826,10 +1828,10 @@ sap.ui.define(
                     //var length = oEvent.getParameter("value").length;
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
-                    var sValue=oModelView.getProperty("/PainterBankDetails/DocumentType");
+                    var sValue = oModelView.getProperty("/PainterBankDetails/DocumentType");
                     if (sValue == undefined) {
-                            oModelView.setProperty("/PainterBankDetails/DocumentType", "");
-                        }
+                        oModelView.setProperty("/PainterBankDetails/DocumentType", "");
+                    }
                     oModelCtrl.setProperty("/EditField", true);
                     // if (length > 1) {
                     //     oModelCtrl.setProperty("/EditField", true);
@@ -2535,7 +2537,7 @@ sap.ui.define(
                         ReferralCode: oDataValue["RegistrationReferralCode"],
                         ReferredBy: parseInt(sPainterId),
                     };
-                   // console.log(oSentPayoad);
+                    // console.log(oSentPayoad);
 
                     oData.create("/PainterReferralHistorySet", oSentPayoad, {
                         success: function () {
@@ -3098,7 +3100,7 @@ sap.ui.define(
                     );
                 },
                 onBeforeRebindRdmdCash: function (oEvent) {
-                   // console.log("Binding Trigerred for loyalty redeemed cash")
+                    // console.log("Binding Trigerred for loyalty redeemed cash")
                     var oPainterId = this.getViewModel("oModelControl2").getProperty(
                         "/PainterId"
                     );
@@ -3279,7 +3281,7 @@ sap.ui.define(
                 },
                 QuestionaaireFactory: function (sId, oContext) {
                     var oBject = oContext.getObject();
-                   // console.log(oBject);
+                    // console.log(oBject);
                     var oColumnListItem = new sap.m.ColumnListItem();
                     oColumnListItem.addCell(
                         new sap.m.Text({
@@ -3507,6 +3509,7 @@ sap.ui.define(
                         oSelectedProgress;
                     //console.log(mParam1);
                     var oModelC2 = this.getView().getModel("oModelControl2");
+                    var othat = this;
                     // if Offer Type is not slab
                     if (oProgress.hasOwnProperty("__list")) {
                         if (Array.isArray(oProgress["__list"])) {
@@ -3522,27 +3525,44 @@ sap.ui.define(
                                         //console.log(oGetProgress)
                                         oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
                                         oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
-                                        this._DialogOfferRedeem.open();
+                                        othat._getAdditionlOfferReward(mParam1["UUID"], oModelC2);
                                         break;
                                     }
 
                                 }
-                                // oSelectedProgress = oProgress["__list"][oProgress["__list"].length - 1];
-                                // var oGetProgress = this.getView().getModel().getData("/" + oSelectedProgress);
-
-                                // this._DialogOfferRedeem.bindElement("/OfferRewardRatioSet(" + oGetProgress["OfferRewardRatioId"] + ")", {
-                                //     expand: "RewardGift"
-                                // });
-                                // // set rbtn default to null
-                                // oModelC2.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
-                                // oModelC2.setProperty("/OfferRedeemDlg/UUID", oGetProgress["UUID"]);
-                                // //OfferRedmDlg/UUId
 
                             }
                         }
                     }
 
                     // if offer type is slab
+
+                },
+                _getAdditionlOfferReward: function (mPram1, oModelControl) {
+                    var oData = this.getView().getModel();
+                    var sPath = "/PainterOfferSet(" + "'" + mPram1 + "'" + ")";
+                     oModelControl.setProperty("/ProfilePageBuzy", true);
+                    oData.read(sPath, {
+                        success: function (m1) {
+                            if (m1["AdditionalRewardPoints"]) {
+                                oModelControl.setProperty("/OfferRedeemDlg/AddPoints", "+ " + m1["AdditionalRewardPoints"]);
+                            }else {
+                                oModelControl.setProperty("/OfferRedeemDlg/AddPoints", null);
+                            }
+                            if (m1["AdditionalRewardCash"]) {
+                                oModelControl.setProperty("/OfferRedeemDlg/AddCash", "+ " + m1["AdditionalRewardCash"]);
+                            }else {
+                                oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
+                            }
+                            this._DialogOfferRedeem.open();
+                             oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(this),
+                        error: function () {
+                             oModelControl.setProperty("/ProfilePageBuzy", false);
+                        },
+                    });
+
+
 
                 },
                 onDialogCloseRedeme: function (oEvent) {
