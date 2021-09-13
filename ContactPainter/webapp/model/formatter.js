@@ -143,7 +143,7 @@ sap.ui.define([], function () {
                 var obj;
                 for (var i in m1) {
                     obj = this.getView().getModel().getData("/" + m1[i]);
-                    console.log(obj)
+                  
                     if (obj["RedemptionStatus"] === "REDEEMED") {
                        
                         return obj["TotalBonusPoints"];
