@@ -68,7 +68,10 @@
                                         <cells>
                                             <!-- <Text text="{Id}"/> -->
                                             <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
-                                            <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
+                                            <HBox>
+                                                <Button icon="sap-icon://customer" press="onPressCallPainter" tooltip="{i18n>callPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
+                                                <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
+                                            </HBox>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
