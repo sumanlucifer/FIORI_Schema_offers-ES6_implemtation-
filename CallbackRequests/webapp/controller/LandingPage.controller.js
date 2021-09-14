@@ -164,8 +164,7 @@ sap.ui.define(
                     this.oDialog.open();
                 },
 
-                onPressCallPainter: function (oEvent) {
-                    debugger;
+                onPressDisplayPainter: function (oEvent) {
                     var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
                     var that = this;
                     this.getComponentModel().read("/" + sPath, {
@@ -194,6 +193,18 @@ sap.ui.define(
                             params: oSemAct.target.params
                         })
                     }
+                },
+
+                onPressCallPainter: function (oEvent) {
+                    var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
+                    var that = this;
+                    var mobileHyperLink;
+                    this.getComponentModel().read("/" + sPath, {
+                        success: function (data) {
+                            mobileHyperLink = "tel://+91" + data.PainterMobile;
+                            window.open(mobileHyperLink);
+                        }
+                    })
                 },
 
                 onPressRemarks: function (oEvent) {
