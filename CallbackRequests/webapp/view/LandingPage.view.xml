@@ -56,7 +56,7 @@
                                         </customData>
                                         <Text text="{i18n>tblColCreationDate}"/>
                                     </Column> 
-                                    <Column hAlign="Center">
+                                    <Column width="12%">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 9}'/>
                                         </customData>
@@ -68,9 +68,10 @@
                                         <cells>
                                             <!-- <Text text="{Id}"/> -->
                                             <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
-                                            <HBox>
-                                                <Button icon="sap-icon://customer" press="onPressCallPainter" tooltip="{i18n>callPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
-                                                <Button text="{i18n>completeStatusBtnTxt}" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
+                                            <HBox width="12%">
+                                                <Button icon="sap-icon://customer" press="onPressDisplayPainter" tooltip="{i18n>displayPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
+                                                <Button icon="sap-icon://call" press="onPressCallPainter" tooltip="{i18n>callPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
+                                                <Button icon="sap-icon://complete" press="onPressComplete" tooltip="{i18n>completeBtnTooltip}"></Button>
                                             </HBox>
                                         </cells>
                                     </ColumnListItem>
@@ -111,11 +112,11 @@
                                         </customData>
                                         <Text text="{i18n>tblColCreationDate}"/>
                                     </Column> 
-                                    <Column hAlign="Center">
+                                    <Column width="12%">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "Remarks", "leadingProperty": "Remarks", "columnIndex": 11}'/>
                                         </customData>
-                                        <Text text="{i18n>tblColRemarks}"/>
+                                        <Text text="{i18n>tblColAction}"/>
                                     </Column>
                                 </columns>
                                 <items>
@@ -123,7 +124,11 @@
                                         <cells>
                                             <!-- <Text text="{Id}"/> -->
                                             <Text text="{path: 'CreatedAt', type:'sap.ui.model.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy, hh:mm:ss aa'}}"/>
-                                            <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" text="{i18n>remarkBtnText}" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/>
+                                            <HBox width="12%">
+                                                <Button icon="sap-icon://customer" press="onPressDisplayPainter" tooltip="{i18n>displayPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
+                                                <Button icon="sap-icon://call" press="onPressCallPainter" tooltip="{i18n>callPainterBtnTooltip}" class="sapUiSmallMarginEnd"></Button>
+                                                <Button visible="{=${Remarks} !== '' &amp;&amp; ${Remarks} !== null}" icon="sap-icon://message-information" tooltip="{i18n>remarkBtnTooltip}" data:remarks="{Remarks}" press="onPressRemarks"/>
+                                            </HBox>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
