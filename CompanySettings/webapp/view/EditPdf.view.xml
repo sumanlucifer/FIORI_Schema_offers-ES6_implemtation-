@@ -9,7 +9,7 @@
     <f:DynamicPage busyIndicatorDelay="0" busy="{local>/bBusy}" showFooter="true" >
     <f:content>
 	<VBox class="sapUiSmallMargin">
-		<VBox class="sapUiMediumMargin">
+		<VBox class="sapUiMediumMargin" visible="{local>/t1Visible}">
                     <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growingThreshold="10">
                                         <headerToolbar>
                                             <Toolbar>
@@ -83,6 +83,90 @@
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
                                                     
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="{i18n>Remove}" />
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                            </Table>
+                                         
+             
+                     </VBox>
+                     <VBox class="sapUiMediumMargin" visible="{local>/t2Visible}">
+                    <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growingThreshold="10">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>mediclaim}" />
+                                                <ToolbarSpacer />
+                                                <Button icon="sap-icon://add" press="onAddMediclaim" type="Emphasized" text="Add" />
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <Column >
+                                                    <Text text="{i18n>selectMedia}" />
+                                                </Column>
+                                                <Column >
+                                                    <Text text="{i18n>MediaName}" />
+                                                </Column>
+
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
+                                    
+                                                            selectedKey="{local>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                
+                                                        <VBox class="sapUiMediumMarginTop">
+                                                            <FlexBox >
+                                                                <VBox>
+                                                                <u:FileUploader
+                                                                    id="idFormToolPdfUploader2"
+                                                                    name="formToolPdfUploader"
+                                                                    tooltip="{i18n>fileUploaderTooltip}"
+                                                                    change="onChangePdf"
+                                                                    typeMissmatch="handleTypeMissmatch"
+                                                                    fileType="pdf"
+                                                                    useMultipart="false"
+                                                                    sendXHR="true"
+                                                                    value="{local>FileName}"
+                                                                    maximumFileSize="10"
+                                                                    fileSizeExceed="onFileSizeExceed"
+                                                                    uploadComplete="handleUploadCompletePdf" />
+                                                                    <HBox>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="File Type" text=".pdf"/>
+                                                                <ObjectAttribute class="sapUiTinyMargin" title="Max Size" text="10 MB"/>
+                                                                </HBox>
+                                                                </VBox>
+                                                            </FlexBox>
+                                                        
+                                                        </VBox>
+                                                         <VBox >
+                                                            <Text text="{local>MediaName}"></Text>
+                                                            </VBox>
+
+                                                        <HBox>
+                                                            <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
+                                                    
+                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
                                                             <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="{i18n>Remove}" />
                                                         
                                                         </HBox>
