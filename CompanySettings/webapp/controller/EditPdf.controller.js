@@ -17,7 +17,7 @@ sap.ui.define([
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, Fragment, MessageToast, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
-        JSONModel,MessageBox) {
+        JSONModel, MessageBox) {
         "use strict";
 
         var DisclaimerVersion;
@@ -35,10 +35,10 @@ sap.ui.define([
                 var oLocaModel = new JSONModel({
                     bEdit: false,
                     Catalogue: [],
-                    Mediclaim:[],
-                    bBusy:false,
-                    t1Visible:false,
-                    t2Visible:false
+                    Mediclaim: [],
+                    bBusy: false,
+                    t1Visible: false,
+                    t2Visible: false
                 });
                 this.getView().setModel(oLocaModel, "local");
 
@@ -50,26 +50,26 @@ sap.ui.define([
             },
             _onObjectMatched: function (oEvent) {
                 var sTableId = oEvent.getParameter("arguments").tableId;
-                var oLocalModel=this.getView().getModel("local");
+                var oLocalModel = this.getView().getModel("local");
                 oLocalModel.setProperty("/t1Visible", false);
                 oLocalModel.setProperty("/t2Visible", false);
-               if(sTableId == "Table1"){
-                   oLocalModel.setProperty("/t1Visible", true);
-                oLocalModel.setProperty("/t2Visible", true);
+                if (sTableId == "Table1") {
+                    oLocalModel.setProperty("/t1Visible", true);
+                    oLocalModel.setProperty("/t2Visible", false);
                     this.showPdfList();
-               }
-               else if(sTableId == "Table2"){
-                oLocalModel.setProperty("/t1Visible", false);
-                oLocalModel.setProperty("/t2Visible", true);
-                        console.log("Table 2");
-                        this.showPdfList();
-               }
-                
+                }
+                else if (sTableId == "Table2") {
+                    oLocalModel.setProperty("/t1Visible", false);
+                    oLocalModel.setProperty("/t2Visible", true);
+                    console.log("Table 2");
+                    this.showPdfList();
+                }
+
             },
 
 
             showPdfList: function () {
-                var oLocalModel=this.getView().getModel("local");
+                var oLocalModel = this.getView().getModel("local");
                 //oLocalModel.setProperty("/t1Visible", true);
                 var that = this;
                 this.getView().getModel().read("/MasterCompanySettingsSet(1)", {
@@ -100,8 +100,8 @@ sap.ui.define([
                 oRouter.navTo("RouteHome");
 
             },
-            onFileSizeExceed: function (){
-                    MessageToast.show("Maximum File Size Exceded.")
+            onFileSizeExceed: function () {
+                MessageToast.show("Maximum File Size Exceded.")
             },
 
             // openPdf: function (oEvent) {
@@ -138,7 +138,7 @@ sap.ui.define([
             //                 othat.handleCancelPress();
             //                 });
             //             }, 7000);
-                       
+
             //         });
             //         oLocalModel.refresh(true);
 
@@ -165,8 +165,8 @@ sap.ui.define([
                             processData: false,
                             data: ele.file,
                             success: function (data) {
-                                 //oModel.setProperty("/bBusy", false);
-                                 var sMessage = "Saved Successfully!";
+                                //oModel.setProperty("/bBusy", false);
+                                var sMessage = "Saved Successfully!";
                                 MessageToast.show(sMessage);
                                 oRouter.navTo("RouteHome");
                                 // setTimeout(() => {
@@ -176,9 +176,9 @@ sap.ui.define([
                             },
                             error: function () { },
                         })
-                     }
-                    });
-                },
+                    }
+                });
+            },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
                 var oObject = oModel.getProperty("/Catalogue");
@@ -190,7 +190,7 @@ sap.ui.define([
                 });
                 oModel.refresh(true);
             },
-            onAddMediclaim: function (){
+            onAddMediclaim: function () {
                 var oModel = this.getView().getModel("local");
                 var oObject = oModel.getProperty("/Catalogue");
 
@@ -203,7 +203,7 @@ sap.ui.define([
 
             },
             onDeleteFile: function (oEvent) {
-                
+
                 var oView = this.getView();
                 var oModel = oView.getModel("local");
                 oModel.setProperty("bNew", true);
@@ -214,22 +214,22 @@ sap.ui.define([
                     .split("/");
                 var aCatalogue = oModel.getProperty("/Catalogue");
                 var othat = this;
-                    MessageBox.confirm(
-                        "Kindly confirm to delete the file.",
-                        {
-                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
-                            emphasizedAction: MessageBox.Action.OK,
-                            onClose: function (sAction) {
-                                if (sAction == "OK") {
-                                    othat.onPressRemoveCatalogue(sPath,aCatalogue);
-                                }
-                            },
-                        }
-                    );
-                },
+                MessageBox.confirm(
+                    "Kindly confirm to delete the file.",
+                    {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat.onPressRemoveCatalogue(sPath, aCatalogue);
+                            }
+                        },
+                    }
+                );
+            },
 
-                onDeleteFile2: function (oEvent) {
-                
+            onDeleteFile2: function (oEvent) {
+
                 var oView = this.getView();
                 var oModel = oView.getModel("local");
                 oModel.setProperty("bNew", true);
@@ -240,21 +240,21 @@ sap.ui.define([
                     .split("/");
                 var aMediclaim = oModel.getProperty("/Mediclaim");
                 var othat = this;
-                    MessageBox.confirm(
-                        "Kindly confirm to delete the file.",
-                        {
-                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
-                            emphasizedAction: MessageBox.Action.OK,
-                            onClose: function (sAction) {
-                                if (sAction == "OK") {
-                                    othat.onPressRemoveMediclaim(sPath,aMediclaim);
-                                }
-                            },
-                        }
-                    );
-                },
+                MessageBox.confirm(
+                    "Kindly confirm to delete the file.",
+                    {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat.onPressRemoveMediclaim(sPath, aMediclaim);
+                            }
+                        },
+                    }
+                );
+            },
 
-            onPressRemoveCatalogue: function (sPath,aCatalogue) {
+            onPressRemoveCatalogue: function (sPath, aCatalogue) {
                 // this.getView().getModel("local").setProperty("bNew", true);
                 // var oView = this.getView();
                 // var oModel = oView.getModel("local");
@@ -272,7 +272,7 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oModel = this.getView().getModel("local");
                 var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-                
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                 //To DO promises for sync
@@ -297,7 +297,7 @@ sap.ui.define([
                                     oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
-                                    
+
                                     //oRouter.navTo("RouteHome");
                                     this.showPdfList();
                                 }.bind(this),
@@ -313,7 +313,7 @@ sap.ui.define([
 
                 }
             },
-            onPressRemoveMediclaim: function (sPath,aCatalogue) {
+            onPressRemoveMediclaim: function (sPath, aCatalogue) {
 
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
@@ -322,7 +322,7 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oModel = this.getView().getModel("local");
                 var oFileUploaderPdf = this.getView().byId("idFormToolPdfUploader");
-                
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
                 //To DO promises for sync
@@ -347,7 +347,7 @@ sap.ui.define([
                                     oModel.refresh(true);
                                     var sMessage = "PDF Deleted!";
                                     MessageToast.show(sMessage);
-                                    
+
                                     //oRouter.navTo("RouteHome");
                                     this.showPdfList();
                                 }.bind(this),
