@@ -69,8 +69,64 @@ xmlns:f="sap.ui.layout.form">
 
                                                         <HBox>
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
-                                                    
                                                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            <!-- <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" /> -->
+                                                        
+                                                        </HBox>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                            </Table>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin">
+                    <Table id="idPdf2" width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>mediclaim}" />
+                                                <ToolbarSpacer />
+                                                <Button icon="sap-icon://edit"  press="onEditMediclaim" type="Emphasized" text="Edit" visible="{=${!local>/bEdit}}"/>
+                                                <Button icon="sap-icon://add" press="onAddMediclaim" type="Emphasized" text="Add" visible="{=${local>/bEdit}}"/>
+                                            </Toolbar>
+                                        </headerToolbar>
+                                            <columns>
+                                                <Column>
+                                                    <Text text="{i18n>selectLanguage}" />
+                                                </Column>
+                                                <!-- <Column visible="{=${local>/bEdit}}">
+                                                    <Text text="{i18n>selectCatalogue}" />
+                                                </Column> -->
+                                                <Column visible="{!=${local>/bEdit}}">
+                                                    <Text text="Media Name" />
+                                                </Column>
+
+                                                <Column width="10%">
+                                                    <Text text="{i18n>Action}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <VBox>
+                                                        <Select
+                                                            forceSelection="false"
+                                                            editable="{=${local>/bEdit}}"
+                                                            selectedKey="{local>LanguageCode}"
+                                                            items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }">
+                                                            <core:Item key="{LanguageCode}" text="{Language}" />
+                                                            </Select>
+                                                        
+                                                        </VBox>
+                                                         <VBox visible="{!=${local>/bEdit}}">
+                                                            <Text text="{local>MediaName}"></Text>
+                                                            </VBox>
+
+                                                        <HBox>
+                                                            <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
+                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
                                                             <!-- <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" /> -->
                                                         
                                                         </HBox>
