@@ -695,9 +695,9 @@ sap.ui.define(
                     var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc"
                     if (oMenuItem instanceof sap.m.MenuItem) {
                         var sText = oMenuItem.getText();
-                        if (sText === "Dealer Mapped with Painter") {
+                        if (sText === "Dealer Painter Registartion Mapping") {
                             sSource +="/PainterMappedWithDealerSet(0)/$value";
-                        } else if (sText === "Painter Data Dump") {
+                        } else if (sText === "Painter Dump") {
                              sSource +="/PainterAnalyticsSet(0)/$value";
                         } else if (sText === "Product Purchase History") {
                              sSource +="/PainterProductPurchaseHistorySet(0)/$value";
