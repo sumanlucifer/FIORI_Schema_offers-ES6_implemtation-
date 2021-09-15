@@ -230,6 +230,42 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return false;
         },
+
+        // btn republishoffer 
+        btnRepublishOffer: function (m1, m2) {
+            if (m1 === "EXPIRED" || m2 === 6) {
+
+                return true;
+            }
+            else {
+                return false;
+            }
+
+            return false;
+        },
+
+
+        // enddate field visible
+
+        endDateField: function (m1, m2) {
+            if (m1 !== "EXPIRED" || m2 === 6) {
+                return true;
+
+            }
+            else if (m2 === 7) {
+                return true;
+            }
+            return false;
+        },
+
+        endDateField1: function (m1, m2) {
+            if (m1 === "EXPIRED" || m2 === 6) {
+                return false;
+
+            }
+
+            return false;
+        },
         //btn Approve Display and reject button
         btnApproveDisplay: function (m1, m2) {
             if (m1 === "PENDING") {
