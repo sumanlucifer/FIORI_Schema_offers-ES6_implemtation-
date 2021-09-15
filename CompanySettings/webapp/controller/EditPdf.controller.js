@@ -54,6 +54,8 @@ sap.ui.define([
                 oLocalModel.setProperty("/t1Visible", false);
                 oLocalModel.setProperty("/t2Visible", false);
                if(sTableId == "Table1"){
+                   oLocalModel.setProperty("/t1Visible", true);
+                oLocalModel.setProperty("/t2Visible", true);
                     this.showPdfList();
                }
                else if(sTableId == "Table2"){
