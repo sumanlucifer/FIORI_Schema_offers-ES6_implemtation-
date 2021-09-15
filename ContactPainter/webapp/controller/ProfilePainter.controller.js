@@ -676,7 +676,7 @@ sap.ui.define(
                     }
                     if (addBankDoc && addKycDoc) {
                         if (this.eValidateBank == false && this.eValidateKyc == false) {
-                            MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.");
+                            MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
                         if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc) {
                             this._postDataToSave();
@@ -686,7 +686,7 @@ sap.ui.define(
                         if (this.eValidateBank == false) {
                             MessageToast.show("Kindly upload the image of the selected Bank Details.");
                         } else if (this.eValidateKyc == false) {
-                            MessageToast.show("Kindly upload the image of the selected Kyc Details.");
+                            MessageToast.show("Kindly upload the image of the selected Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
                         if (addBankDoc) {
                             if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
@@ -1907,7 +1907,7 @@ sap.ui.define(
                     var oUpload = oView.byId("idUploadCollection");
                     var iItems = oUpload.getItems().length;
                     if (sKYCId !== "") {
-                        if (sKYCId == "1") {
+                        if (sKYCId == "1" || sKYCId =="3") {
                             if (iItems < 2) {
                                 return false;
                             }
@@ -1985,7 +1985,7 @@ sap.ui.define(
                     var oUploadCollection = this.getView().byId("idUploadCollection");
 
                     var othat = this;
-                    oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+                    oUploadCollection._setNumberOfAttachmentsTitle = function (
                         count
                     ) {
                         var nItems = count || 0;
@@ -2019,13 +2019,14 @@ sap.ui.define(
                     var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
                     var oUploadCol = this.getView().byId("idUploadCollection");
                     if (sKycTypeId !== "") {
-                        if (sKycTypeId == "1") {
+                        if (sKycTypeId == "1" || sKycTypeId=="3") {
                             if (mParam >= 2) {
                                 oUploadCol.setUploadButtonInvisible(true);
                             } else if (mParam < 2) {
                                 oUploadCol.setUploadButtonInvisible(false);
                             }
-                        } else {
+                            // below changes manik
+                        }else {
                             if (mParam >= 1) {
                                 oUploadCol.setUploadButtonInvisible(true);
                             } else if (mParam < 1) {
