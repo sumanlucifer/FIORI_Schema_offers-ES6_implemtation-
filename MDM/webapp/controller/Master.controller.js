@@ -15,11 +15,16 @@ sap.ui.define([
 			this._bDescendingSort = false;
 		},
 		onListItemPress: function (oEvent) {
+            debugger;
 			var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1),
 				tabPath = oEvent.getSource().getBindingContext("tabData").getPath(),
 				tab = tabPath.split("/").slice(-1).pop();
-
-			this.oRouter.navTo("detail", {layout: oNextUIState.layout, tab: tab});
+            if (tab === "13") {
+                this.getRouter().navTo("bannerImageList");
+            } else {
+                this.oRouter.navTo("detail", {layout: oNextUIState.layout, tab: tab});
+            }
+			
 		},
 		onSearch: function (oEvent) {
 			var oTableSearchState = [],

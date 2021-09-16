@@ -77,8 +77,13 @@
             "tabName": "Security Question",
             "smartTblEntity": "MasterSecurityQuestionSet",
             "smartTblFields": "Question"
-        }
-         
+        },
+        {
+			"tabId": 13,
+            "tabName": "Banner Image",
+            "smartTblEntity": "MasterLanguageSet",
+            "smartTblFields": "Language,LanguageCode,LanguageDescription"
+        }        
         
 	]
 }

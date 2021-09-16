@@ -31,8 +31,8 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - MasterDataManagement-content.zip
-      name: MasterDataManagement
+      - MDM-content.zip
+      name: MDM
       target-path: resources/
     - artifacts:
       - ContactPainter-content.zip
@@ -70,9 +70,9 @@ modules:
       - CompanySettings-content.zip
       name: CompanySettings
       target-path: resources/
-- name: MasterDataManagement
+- name: MDM
   type: html5
-  path: MasterDataManagement
+  path: MDM
   build-parameters:
     builder: custom
     commands:
