@@ -95,11 +95,14 @@
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">
                     <Button class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                    <Button class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
+                   
+                      <Button class="sapUiTinyMarginEnd" id="republish" text="Republish Offer"  type="Emphasized"  press="handleSavePress"/>
                     <Button class="sapUiTinyMarginEnd" id="save" text="Save" enabled="{= ${OfferStatus}!=='EXPIRED'}" type="Emphasized" visible="false" press="handleSavePress"/>
                 </HBox>
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
+                    
+                    <Button text="Republish Offer" press="onRepublishPageSave"  visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnRepublishOffer'}" type="Ghost"  class="sapUiTinyMarginEnd"/>
                     <!-- <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish} (only used for testing)" class="sapUiTinyMarginEnd" /> -->
                     <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
                     <!-- <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
