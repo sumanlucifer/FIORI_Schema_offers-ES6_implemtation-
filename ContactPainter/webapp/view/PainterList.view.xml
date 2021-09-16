@@ -143,17 +143,7 @@
                         <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Emphasized" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                     
-                        <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>DownloadReports}" type="Ghost" text="{i18n>DownloadReports}" buttonMode="Split" useDefaultActionOnly="true">
-                            <menu>
-                                <Menu itemSelected="onMenuAction">
-                                    <MenuItem text="{i18n>PainterDataDump}" icon="sap-icon://save" />
-                                    <MenuItem text="{i18n>ProductPurchaseHistory}" icon="sap-icon://save" />
-                                      <MenuItem text="{i18n>DealerMappedWithPainter}" icon="sap-icon://save" />
-                                </Menu>
-                            </menu>
-		                </MenuButton>
-                           <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
                 <columns>

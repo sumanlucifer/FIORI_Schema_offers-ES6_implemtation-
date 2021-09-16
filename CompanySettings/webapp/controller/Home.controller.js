@@ -58,12 +58,11 @@ sap.ui.define([
 
             },
             _onObjectMatched: function () {
-
-                var that = this, oLocalModel = new JSONModel({
+                
+                 var that=this,oLocalModel = new JSONModel({
                     bBusy: false,
                     bEdit: false,
                     Catalogue: [],
-                    Mediclaim: [],
                     IsOfferEnabled: false,
                     IsRedemptionEnabled: false
                 });
@@ -72,21 +71,21 @@ sap.ui.define([
                 this._property = "MasterCompanySettingsSet(1)";
 
                 this.getView().bindElement("/MasterCompanySettingsSet(1)");
-
-                // this.showPdfList();
+                
+               // this.showPdfList();
                 this.sServiceURI = this.getOwnerComponent().getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
-
+                    
                 this.initData();
                 // setTimeout(()=>{
                 //     that.initData();
                 // },5000)
-
-
-
-
-
+                
+               
+                
+                
+                
             },
-            initData: function () {
+            initData:function (){
                 var oModel = this.getView().getModel();
                 //oModel.refresh(true);
                 var oLocalModel = this.getView().getModel("local");
@@ -102,7 +101,7 @@ sap.ui.define([
                         });
                         oLocalModel.setProperty("/Catalogue", Catalogue);
                         oLocalModel.updateBindings();
-
+                        
 
                     },
                     error: function (oError) { }
@@ -111,7 +110,7 @@ sap.ui.define([
                 //oModel.refresh(true);
 
             },
-
+            
 
             // handleEditPress: function () {
             //     this.getView().getModel("local").setProperty("/bEdit", true);
@@ -130,18 +129,7 @@ sap.ui.define([
             },
             onEditCatalogue: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("EditPdf", {
-                    tableId: "Table1"
-                }
-                );
-
-            },
-            onEditMediclaim: function () {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("EditPdf", {
-                    tableId: "Table2"
-                }
-                );
+                oRouter.navTo("EditPdf");
 
             },
 
@@ -446,13 +434,7 @@ sap.ui.define([
                         oLocalModel.setProperty("/bBusy", false);
                     },
                 });
-            },
-            openPdf2: function (oEvent) {
-                var oContext = oEvent.getSource().getBindingContext("local");
-                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-                sSource = "https://" + location.host + "/" + sSource
-                sap.m.URLHelper.redirect(sSource, true);
-            },
+            }
 
 
 
