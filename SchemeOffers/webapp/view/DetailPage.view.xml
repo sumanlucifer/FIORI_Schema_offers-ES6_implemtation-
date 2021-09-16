@@ -102,7 +102,7 @@
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? true : false }" justifyContent="SpaceBetween">
                     
-                    <!-- <Button text="Republish Offer" press="onRepublishPageSave"  visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnRepublishOffer'}" type="Ghost"  class="sapUiTinyMarginEnd"/> -->
+                    <Button text="Republish Offer" press="onRepublishPageSave"  visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnRepublishOffer'}" type="Ghost"  class="sapUiTinyMarginEnd"/>
                     <!-- <Button press="onPublishTemporary" type="Ghost" text="Temp {i18n>Publish} (only used for testing)" class="sapUiTinyMarginEnd" /> -->
                     <Button text="Cancel" type="Ghost" press="handleCancelPress" class="sapUiTinyMarginEnd"/>
                     <!-- <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
