@@ -14,7 +14,7 @@
             showIcons="true"
             showSearch="false"
             enableScroll="false"
-            sortOldestFirst="false"
+            sortOldestFirst="true"
 			content="{wfmodel>/}">
 		<content>
            <!-- formatter required datetime, title icon -->
