@@ -301,7 +301,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             });
 
             var oNow = new Date(localDate);
-            return oDateFormat.format(oNow); 
+            return oDateFormat.format(oNow);
         },
 
         ExecutionLogIcon: function (sStatus) {
@@ -385,23 +385,22 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         // enddate field visible
 
         endDateField: function (m1, m2) {
-            if (m1 !== "EXPIRED" || m2 === 6) {
-                return true;
+            if (m1 === "EXPIRED") {
+                if (m2 === 6) {
+                    return true;
 
-            }
-            else if (m2 === 7) {
+                }
                 return true;
+            }
+            else if (m1 !== "EXPIRED") {
+                if (m2 === 6 || 7) {
+                    return true;
+                }
+
             }
             return false;
-        },
+        }
 
-        endDateField1: function (m1, m2) {
-            if (m1 === "EXPIRED" || m2 === 6) {
-                return false;
 
-            }
-
-            return false;
-        },
     };
 });
