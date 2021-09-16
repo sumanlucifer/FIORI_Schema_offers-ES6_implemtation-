@@ -691,21 +691,55 @@ sap.ui.define(
                     });
                 },
                 onMenuAction: function (oEvent) {
+                    var oModelView = this.getView().getModel("oModelView");
                     var oMenuItem = oEvent.getParameter("item");
                     var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc"
                     if (oMenuItem instanceof sap.m.MenuItem) {
                         var sText = oMenuItem.getText();
                         if (sText === "Dealer Painter Registration Mapping") {
-                            sSource +="/PainterMappedWithDealerSet(0)/$value";
+                            sSource += "/PainterMappedWithDealerSet(0)/$value";
                         } else if (sText === "Painter Dump") {
-                             sSource +="/PainterAnalyticsSet(0)/$value";
+                            sSource += "/PainterAnalyticsSet(0)/$value";
                         } else if (sText === "Product Purchase History") {
-                             sSource +="/PainterProductPurchaseHistorySet(0)/$value";
+                            sSource += "/PainterProductPurchaseHistorySet(0)/$value";
                         }
-                        console.log(sSource)
-                        sap.m.URLHelper.redirect(sSource, true);
+                        oModelView.setProperty("/busy", true)
+                        this._CallServiceForDownloadReport(sSource, oModelView);
                     }
-                }
+
+
+                },
+                _CallServiceForDownloadReport: function (sSourceUrl, oModelView) {
+                    var postData = new FormData();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', sSourceUrl, true);
+                    xhr.responseType = 'blob';
+                    xhr.onerror = function () { // only triggers if the request couldn't be made at all
+                        oModelView.setProperty("/busy", false);
+                        MessageBox.error("Unable to Connect to the Server.");
+                    };
+
+
+                    xhr.onload = function (e) {
+
+                        var blob = xhr.response;
+                        var contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
+                        var fileName = "";
+                        if (contentDispo) {
+                            fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+                        }
+                        oModelView.setProperty("/busy", false);
+                        this.saveOrOpenBlob(blob, fileName);
+                    }.bind(this)
+                    xhr.send(postData);
+                },
+                saveOrOpenBlob: function (blob, fileName) {
+                    var a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(blob);
+                    a.download = fileName;
+                    a.dispatchEvent(new MouseEvent('click'));
+
+                },
             }
         );
     }
