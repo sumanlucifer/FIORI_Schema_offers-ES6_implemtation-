@@ -691,6 +691,7 @@ sap.ui.define(
                     });
                 },
                 onMenuAction: function (oEvent) {
+                    var oModelView = this.getView().getModel("oModelView");
                     var oMenuItem = oEvent.getParameter("item");
                     var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc"
                     if (oMenuItem instanceof sap.m.MenuItem) {
@@ -702,24 +703,32 @@ sap.ui.define(
                         } else if (sText === "Product Purchase History") {
                             sSource += "/PainterProductPurchaseHistorySet(0)/$value";
                         }
-                        //console.log(sSource)
-                        //sap.m.URLHelper.redirect(sSource, true);
-
+                        oModelView.setProperty("/busy", true)
+                        this._CallServiceForDownloadReport(sSource, oModelView);
                     }
-                    this._CallService();
+
 
                 },
-                _CallService: function () {
+                _CallServiceForDownloadReport: function (sSourceUrl, oModelView) {
                     var postData = new FormData();
                     var xhr = new XMLHttpRequest();
-                    xhr.open('GET', "/KNPL_PAINTER_API/api/v2/odata.svc/PainterAnalyticsSet(0)/$value", true);
+                    xhr.open('GET', sSourceUrl, true);
                     xhr.responseType = 'blob';
+                    xhr.onerror = function () { // only triggers if the request couldn't be made at all
+                        oModelView.setProperty("/busy", false);
+                        MessageBox.error("Unable to Connect to the Server.");
+                    };
+
+
                     xhr.onload = function (e) {
+
                         var blob = xhr.response;
                         var contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
-                        // https://stackoverflow.com/a/23054920/
-                        var fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-                        console.log(blob, fileName)
+                        var fileName = "";
+                        if (contentDispo) {
+                            fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+                        }
+                        oModelView.setProperty("/busy", false);
                         this.saveOrOpenBlob(blob, fileName);
                     }.bind(this)
                     xhr.send(postData);

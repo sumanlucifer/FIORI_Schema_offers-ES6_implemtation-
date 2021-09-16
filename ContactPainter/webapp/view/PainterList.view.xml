@@ -9,7 +9,7 @@
     xmlns:vm="sap.ui.comp.variants"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" busy="{oModelView>/busy}">
         <!-- <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
