@@ -30,6 +30,9 @@
                                 </tokens>
                             </MultiInput>
 
+                            <Button text="Open Dialouge" press="onpressfrag"/>
+
+
 
                         </f:fields>
                     </f:FormElement>
