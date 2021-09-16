@@ -95,8 +95,7 @@
 
                 <HBox visible="{= ${oModelControl3>/mode} === 'display' ? false : true }">
                     <Button class="sapUiTinyMarginEnd" id="edit" text="Edit" type="Emphasized" enabled="true" press="handleEditPress"/>
-                   
-                      <Button class="sapUiTinyMarginEnd" id="republish" text="Republish Offer"  type="Emphasized"  press="handleSavePress"/>
+                      <Button class="sapUiTinyMarginEnd" id="cancel" text="Cancel" type="Ghost" visible="false" press="handleCancelPress"/>
                     <Button class="sapUiTinyMarginEnd" id="save" text="Save" enabled="{= ${OfferStatus}!=='EXPIRED'}" type="Emphasized" visible="false" press="handleSavePress"/>
                 </HBox>
 
