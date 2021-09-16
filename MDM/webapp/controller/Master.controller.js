@@ -20,7 +20,7 @@ sap.ui.define([
 				tabPath = oEvent.getSource().getBindingContext("tabData").getPath(),
 				tab = tabPath.split("/").slice(-1).pop();
             if (tab === "13") {
-                this.getRouter().navTo("bannerImageList");
+                this.getRouter().navTo("imageList");
             } else {
                 this.oRouter.navTo("detail", {layout: oNextUIState.layout, tab: tab});
             }

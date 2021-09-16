@@ -109,7 +109,16 @@
 						"master",
 						"detailDetail"
 					]
+                },
+                {
+					"pattern": "imageList",
+					"name": "BannerImageList",
+					"target": [
+						"master",
+						"BannerImageList"
+					]
 				}
+                
 			],
 			"targets": {
 				"master": {
@@ -122,6 +131,10 @@
 				},
 				"detailDetail": {
 					"viewName": "DetailDetail",
+					"controlAggregation": "midColumnPages"
+                },
+                "imageList": {
+					"viewName": "BannerImageList",
 					"controlAggregation": "midColumnPages"
 				}
 			}
