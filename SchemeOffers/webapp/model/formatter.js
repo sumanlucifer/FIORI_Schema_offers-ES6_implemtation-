@@ -1,7 +1,7 @@
 // @ts-ignore
 sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
     "use strict";
-   // object
+
     var wfIcons = {
         WORKFLOW_STARTED: "sap-icon://initiative",
         WORKFLOW_COMPLETED: "sap-icon://stop",
