@@ -54,11 +54,13 @@ sap.ui.define([
                 oLocalModel.setProperty("/t1Visible", false);
                 oLocalModel.setProperty("/t2Visible", false);
                 if (sTableId == "Table1") {
+                    oLocalModel.setProperty("/table", "1");
                     oLocalModel.setProperty("/t1Visible", true);
                     oLocalModel.setProperty("/t2Visible", false);
                     this.showPdfList();
                 }
                 else if (sTableId == "Table2") {
+                    oLocalModel.setProperty("/table", "2");
                     oLocalModel.setProperty("/t1Visible", false);
                     oLocalModel.setProperty("/t2Visible", true);
                     console.log("Table 2");
@@ -77,12 +79,23 @@ sap.ui.define([
                         "$expand": "MediaList"
                     },
                     success: function (data, response) {
+                        // var Catalogue = data.MediaList.results.filter(function (ele) {
+                        //     return !ele.ContentType.includes("image");
+                        // });
+                        // oLocalModel.setProperty("/Catalogue", Catalogue);
                         var Catalogue = data.MediaList.results.filter(function (ele) {
-                            return !ele.ContentType.includes("image");
+                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
+                                return ele;
+                            }
+                        });
+                        var Mediclaim = data.MediaList.results.filter(function (ele) {
+                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
+                                return ele;
+                            }
 
                         });
-
                         oLocalModel.setProperty("/Catalogue", Catalogue);
+                        oLocalModel.setProperty("/Mediclaim", Mediclaim);
                         oLocalModel.setProperty("/bBusy", false);
                         oLocalModel.refresh(true);
 
@@ -104,18 +117,29 @@ sap.ui.define([
                 MessageToast.show("Maximum File Size Exceded.")
             },
 
-            // openPdf: function (oEvent) {
-            //     var oContext = oEvent.getSource().getBindingContext("local");
-            //     var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-            //     sap.m.URLHelper.redirect(sSource, true);
-            // },
+            
             openPdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
+            openPdf2: function (oEvent) {
+                var oContext = oEvent.getSource().getBindingContext("local");
+                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode")+"&directory=MEDICLAIM";
+                sSource = "https://" + location.host + "/" + sSource
+                sap.m.URLHelper.redirect(sSource, true);
+            },
             onChangePdf: function (oEvent) {
+                var oContext = oEvent.getSource().getBindingContext("local");
+                if (oEvent.getParameter("files").length > 0) {
+                    //this.pdfName = this.oFileUploaderPdf.getValue();
+                    this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                    this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                    this.getView().getModel("local").setProperty("bNew", true, oContext);
+                }
+            },
+            onChangePdf2: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
                 if (oEvent.getParameter("files").length > 0) {
                     //this.pdfName = this.oFileUploaderPdf.getValue();
@@ -143,6 +167,19 @@ sap.ui.define([
             //         oLocalModel.refresh(true);
 
             // },
+            onPressSave: function () {
+                var oLocalModel = this.getView().getModel("local");
+                var table = oLocalModel.getProperty("/table");
+                if (table == "1") {
+                    this._updatePdf();
+
+                } else if (table == "2") {
+                    this._updatePdf2();
+
+                }
+
+
+            },
             _updatePdf: function () {
                 var oModel = this.getView().getModel("local");
                 var dataModel = this.getOwnerComponent().getModel();
@@ -179,6 +216,37 @@ sap.ui.define([
                     }
                 });
             },
+            _updatePdf2: function () {
+                var oModel = this.getView().getModel("local");
+                var dataModel = this.getOwnerComponent().getModel();
+                var catalogue = oModel.getProperty("/Mediclaim");
+                var sServiceUri = this.sServiceURI;
+                var propertySet = this._property;
+                var http = "https://" + location.host + "/";
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oModel.setProperty("/bBusy", true);
+                catalogue.forEach(function (ele) {
+                    if (ele.bNew) {
+                        var that = this;
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: http + sServiceUri + propertySet + "/$value?doc_type=pdf&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode + "&directory=MEDICLAIM",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+                            success: function (data) {
+                                //oModel.setProperty("/bBusy", false);
+                                var sMessage = "Saved Successfully!";
+                                MessageToast.show(sMessage);
+                                oRouter.navTo("RouteHome");
+
+                            },
+                            error: function () { },
+                        })
+                    }
+                });
+            },
             onAddCatalogue: function () {
                 var oModel = this.getView().getModel("local");
                 var oObject = oModel.getProperty("/Catalogue");
@@ -192,7 +260,7 @@ sap.ui.define([
             },
             onAddMediclaim: function () {
                 var oModel = this.getView().getModel("local");
-                var oObject = oModel.getProperty("/Catalogue");
+                var oObject = oModel.getProperty("/Mediclaim");
 
                 oObject.push({
                     LanguageCode: "",
@@ -336,7 +404,7 @@ sap.ui.define([
 
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: http + sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                                url: http + sServiceUri + property + "/$value?doc_type=pdf&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode+"&directory=MEDICLAIM",
                                 cache: false,
                                 contentType: false,
                                 processData: false,

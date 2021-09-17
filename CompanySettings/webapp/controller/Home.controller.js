@@ -98,9 +98,18 @@ sap.ui.define([
                         oLocalModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
                         oLocalModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
                         var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
-                            return !ele.ContentType.includes("image");
+                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
+                                return ele;
+                            }
+                        });
+                        var Mediclaim = oRetrievedResult.MediaList.results.filter(function (ele) {
+                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
+                                return ele;
+                            }
+
                         });
                         oLocalModel.setProperty("/Catalogue", Catalogue);
+                        oLocalModel.setProperty("/Mediclaim", Mediclaim);
                         oLocalModel.updateBindings();
 
 
@@ -449,7 +458,7 @@ sap.ui.define([
             },
             openPdf2: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
-                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode")+"&directory=MEDICLAIM";
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
