@@ -94,7 +94,7 @@
              
                      </VBox>
                      <VBox class="sapUiMediumMargin" visible="{local>/t2Visible}">
-                    <Table  width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growingThreshold="10">
+                    <Table  width="auto" items="{path: 'local>/Mediclaim', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growingThreshold="10">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>mediclaim}" />
@@ -142,7 +142,7 @@
                                                                     id="idFormToolPdfUploader2"
                                                                     name="formToolPdfUploader"
                                                                     tooltip="{i18n>fileUploaderTooltip}"
-                                                                    change="onChangePdf"
+                                                                    change="onChangePdf2"
                                                                     typeMissmatch="handleTypeMissmatch"
                                                                     fileType="pdf"
                                                                     useMultipart="false"
@@ -166,8 +166,8 @@
                                                         <HBox>
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
                                                     
-                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
-                                                            <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="{i18n>Remove}" />
+                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf2" class="sapUiTinyMarginEnd"/>
+                                                            <Button icon="sap-icon://delete" press="onDeleteFile2" type="Transparent" tooltip="{i18n>Remove}" />
                                                         
                                                         </HBox>
                                                     </cells>
@@ -188,7 +188,7 @@
                        
                             
                              <Button id="cancel" text="Cancel" press="handleCancelPress" />
-                            <Button id="save" text="Save" type="Emphasized"  press="_updatePdf" />
+                            <Button id="save" text="Save" type="Emphasized"  press="onPressSave" />
                         
                         
                     </OverflowToolbar>

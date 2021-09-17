@@ -79,7 +79,7 @@ xmlns:f="sap.ui.layout.form">
                             </Table>
                         </VBox>
                         <VBox class="sapUiSmallMargin">
-                    <Table id="idPdf2" width="auto" items="{path: 'local>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                    <Table id="idPdf2" width="auto" items="{path: 'local>/Mediclaim', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>mediclaim}" />
@@ -126,7 +126,7 @@ xmlns:f="sap.ui.layout.form">
 
                                                         <HBox>
                                                             <!-- <Button  icon="sap-icon://edit" type="Transparent" visible="{= ${ActionViewModel>/Catalogue} !== null}"/> -->
-                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf" class="sapUiTinyMarginEnd"/>
+                                                            <Button id="pdfBtn2" icon="sap-icon://pdf-attachment"  type="Transparent" press="openPdf2" class="sapUiTinyMarginEnd"/>
                                                             <!-- <Button icon="sap-icon://delete" press="onPressRemoveCatalogue" type="Transparent" tooltip="{i18n>Remove}" visible="{=${local>/bEdit}}" /> -->
                                                         
                                                         </HBox>
