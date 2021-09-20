@@ -370,12 +370,11 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
         // btn republishoffer 
         btnRepublishOffer: function (m1, m2) {
-            if (m1 === "EXPIRED" || m2 === 6) {
-
-                return true;
-            }
-            else {
-                return false;
+            //
+            if(m1 ==="EXPIRED"){
+                if(m2===6){
+                    return true;
+                }
             }
 
             return false;
@@ -390,14 +389,14 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                     return true;
 
                 }
-                return true;
             }
-            else if (m1 !== "EXPIRED") {
-                if (m2 === 6 || 7) {
+            if (m1 !== "EXPIRED") {
+                if (m2 === 6 || m2 === 7) {
                     return true;
                 }
 
             }
+
             return false;
         }
 
