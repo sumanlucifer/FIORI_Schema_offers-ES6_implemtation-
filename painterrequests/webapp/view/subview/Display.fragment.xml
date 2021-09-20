@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <f:SimpleForm id="DisplayData" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:content>
+            <core:Title text="{i18n>LblPainterDetails}" />
+            <Label text="{i18n>PainterName}" />
+            <Text text="{PainterDetails/Name}" />
+            <Label text="{i18n>PrimaryMobileNo}" />
+            <Text text="{PainterDetails/Mobile}" />
+            <Label text="{i18n>MembershipId}" />
+            <Text text="{PainterDetails/MembershipCard}" />
+            <Label text="{i18n>RedeemCode}" />
+            <Text text="{oModelView>/RedemptionCode}" />
+            <Label text="{i18n>Zone}" />
+            <Text text="{PainterDetails/ZoneId}" />
+            <Label text="{i18n>Division}" />
+            <Text text="{PainterDetails/DivisionId}" />
+            <Label text="{i18n>Depot}" />
+            <Text text="{PainterDetails/Depot/Depot}" />
+
+            <core:Title text="" />
+            <Label text="{i18n>Balpts}" />
+            <Text text="{PainterDetails/RewardPoints}" />
+            <Label text="{i18n>bnkStatus}" />
+            <Text text="{path:'PainterDetails/PainterBankDetails/Status',formatter:'.formatter.fmtStatus'}" />
+            <Label text="{i18n>kycStatus}" />
+            <Text text="{path:'PainterDetails/PainterKycDetails/Status',formatter:'.formatter.fmtStatus'}" />
+            <Label text="{i18n>LblSlabPoints}" />
+            <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}" />
+            <Label text="{i18n>LblStatus}" />
+            <Text text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+            <Label text="{i18n>Remark}" visible="{= ${Status}!=='INPROGRESS'}"/>
+            <Text text="{Remark}" visible="{=${Status}!=='INPROGRESS'}" />
+            <Label text="{i18n>Remark}" visible="{= ${Status}==='INPROGRESS'}"/>
+            <TextArea required="true" visible="{=${Status}==='INPROGRESS'}" value="{path:'oModelView>/Remark',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:250} }" />
+        </f:content>
+    </f:SimpleForm>
+
+</core:FragmentDefinition>
