@@ -144,7 +144,7 @@
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Emphasized" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
                      
-                        <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>DownloadReports}" type="Ghost" text="{i18n>DownloadReports}" buttonMode="Split" useDefaultActionOnly="true">
+                        <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>DownloadReports}" type="Ghost" text="{i18n>DownloadReports}" buttonMode="Regular" useDefaultActionOnly="false">
                             <menu>
                                 <Menu itemSelected="onMenuAction">
                                     <MenuItem text="{i18n>PainterDataDump}" icon="sap-icon://save" />
