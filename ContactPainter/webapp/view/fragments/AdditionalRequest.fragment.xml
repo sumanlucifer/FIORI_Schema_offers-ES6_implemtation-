@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%">
+        <Table id="idAdditionalRequest" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>Title}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Remark}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Status}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>Date}" />
+                </Column>
+            </columns>
+            <dependents >
+                <ColumnListItem id="idTbladditionalReqNew2Template" type="Navigation" press="onReqListItemPress">
+                    <cells>
+                        <Text text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
+                        <Text text="{Remark}" />
+                        <Text text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                    </cells>
+                </ColumnListItem>
+            </dependents>
+        </Table>
+
+    </VBox>
+</core:FragmentDefinition>
