@@ -321,7 +321,7 @@ sap.ui.define(
                     ParentOfferId: 0,
                     BonusDescription: "",
                     InputType: 0,
-                    IsMultiRewardAllowed: null,
+                    IsMultiRewardAllowed: false,
                     OfferStatus: null,
                     OfferApplicableProductCategory: [],
                     BonusInputType: 0,
