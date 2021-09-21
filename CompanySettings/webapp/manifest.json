@@ -123,7 +123,7 @@
 				"target": ["TargetEditTextContent"]
 			},{
 				"name": "EditPdf",
-				"pattern": "EditPdf/{tableId}",
+				"pattern": "EditPdf",
 				"target": ["TargetEditPdf"]
 			}],
 			"targets": {

@@ -676,7 +676,7 @@ sap.ui.define(
                     }
                     if (addBankDoc && addKycDoc) {
                         if (this.eValidateBank == false && this.eValidateKyc == false) {
-                            MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
+                            MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.");
                         }
                         if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc) {
                             this._postDataToSave();
@@ -686,7 +686,7 @@ sap.ui.define(
                         if (this.eValidateBank == false) {
                             MessageToast.show("Kindly upload the image of the selected Bank Details.");
                         } else if (this.eValidateKyc == false) {
-                            MessageToast.show("Kindly upload the image of the selected Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
+                            MessageToast.show("Kindly upload the image of the selected Kyc Details.");
                         }
                         if (addBankDoc) {
                             if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
@@ -1797,11 +1797,10 @@ sap.ui.define(
                     oModelCtrl.setProperty("/AddBankDoc", true);
                     oModelCtrl.setProperty("/AddBankDocButton", false);
 
-                    this._setUploadCollectionMethodBank();
+
 
                 },
                 onCancelBankDoc: function () {
-                    var oView = this.getView();
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
                     oModelCtrl.setProperty("/AddBankDoc", false);
@@ -1810,7 +1809,6 @@ sap.ui.define(
                     oModelCtrl.setProperty("/EditBankButton", true);
                     var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
                     oModelView.setProperty("/PainterBankDetails/DocumentType", InitialDocType);
-                    oView.byId("idUploadCollectionBank").removeAllItems();
                 },
                 onPressCloseDocDialog: function (oEvent) {
                     var oModelCtrl = this.getView().getModel("oModelControl");
@@ -1888,7 +1886,6 @@ sap.ui.define(
                     oModelCtrl.setProperty("/AddKycDocButton", false);
                 },
                 onCancelKycDoc: function () {
-                    var oView = this.getView();
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
                     oModelCtrl.setProperty("/AddKycDoc", false);
@@ -1901,7 +1898,6 @@ sap.ui.define(
                         oModelView.setProperty("/PainterKycDetails/KycTypeId", InitialDocType);
                         oModelView.setProperty("/PainterKycDetails/GovtId", govtId);
                     }
-                    oView.byId("idUploadCollection").removeAllItems();
 
                 },
                 _CheckTheKyc: function () {
@@ -1911,7 +1907,7 @@ sap.ui.define(
                     var oUpload = oView.byId("idUploadCollection");
                     var iItems = oUpload.getItems().length;
                     if (sKYCId !== "") {
-                        if (sKYCId == "1" || sKYCId == "3") {
+                        if (sKYCId == "1") {
                             if (iItems < 2) {
                                 return false;
                             }
@@ -1985,52 +1981,11 @@ sap.ui.define(
                     promise.resolve(oData);
                     return promise;
                 },
-                _setUploadCollectionMethodBank: function () {
-                    var oUploadCollection = this.getView().byId("idUploadCollectionBank");
-
-                    var othat = this;
-                    oUploadCollection._setNumberOfAttachmentsTitle = function (
-                        count
-                    ) {
-                        var nItems = count || 0;
-                        var sText;
-                        // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
-                        if (this._oItemToUpdate) {
-                            nItems--;
-                        }
-                        if (this.getNumberOfAttachmentsText()) {
-                            sText = this.getNumberOfAttachmentsText();
-                        } else {
-                            sText = this._oRb.getText("UPLOADCOLLECTION_ATTACHMENTS", [
-                                nItems,
-                            ]);
-                        }
-                        if (!this._oNumberOfAttachmentsTitle) {
-                            this._oNumberOfAttachmentsTitle = new Title(
-                                this.getId() + "-numberOfAttachmentsTitle", {
-                                    text: sText,
-                                }
-                            );
-                        } else {
-                            this._oNumberOfAttachmentsTitle.setText(sText);
-                        }
-
-                        othat._CheckAddBtnForUploadBank.call(othat, nItems);
-                    };
-                },
-                _CheckAddBtnForUploadBank: function (mParam) {
-                       var oUploadCol = this.getView().byId("idUploadCollectionBank");
-                    if (mParam == 1) {
-                        oUploadCol.setUploadButtonInvisible(true);
-                    } else if (mParam < 1) {
-                        oUploadCol.setUploadButtonInvisible(false);
-                    }
-                },
                 _setUploadCollectionMethod: function () {
                     var oUploadCollection = this.getView().byId("idUploadCollection");
 
                     var othat = this;
-                    oUploadCollection._setNumberOfAttachmentsTitle = function (
+                    oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
                         count
                     ) {
                         var nItems = count || 0;
@@ -2059,19 +2014,17 @@ sap.ui.define(
                         othat._CheckAddBtnForUpload.call(othat, nItems);
                     };
                 },
-
                 _CheckAddBtnForUpload: function (mParam) {
                     var oModel = this.getView().getModel("oModelView");
                     var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
                     var oUploadCol = this.getView().byId("idUploadCollection");
                     if (sKycTypeId !== "") {
-                        if (sKycTypeId == "1" || sKycTypeId == "3") {
+                        if (sKycTypeId == "1") {
                             if (mParam >= 2) {
                                 oUploadCol.setUploadButtonInvisible(true);
                             } else if (mParam < 2) {
                                 oUploadCol.setUploadButtonInvisible(false);
                             }
-                            // below changes manik
                         } else {
                             if (mParam >= 1) {
                                 oUploadCol.setUploadButtonInvisible(true);
@@ -3588,24 +3541,24 @@ sap.ui.define(
                 _getAdditionlOfferReward: function (mPram1, oModelControl) {
                     var oData = this.getView().getModel();
                     var sPath = "/PainterOfferSet(" + "'" + mPram1 + "'" + ")";
-                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                     oModelControl.setProperty("/ProfilePageBuzy", true);
                     oData.read(sPath, {
                         success: function (m1) {
                             if (m1["AdditionalRewardPoints"]) {
                                 oModelControl.setProperty("/OfferRedeemDlg/AddPoints", "+ " + m1["AdditionalRewardPoints"]);
-                            } else {
+                            }else {
                                 oModelControl.setProperty("/OfferRedeemDlg/AddPoints", null);
                             }
                             if (m1["AdditionalRewardCash"]) {
                                 oModelControl.setProperty("/OfferRedeemDlg/AddCash", "+ " + m1["AdditionalRewardCash"]);
-                            } else {
+                            }else {
                                 oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                             }
                             this._DialogOfferRedeem.open();
-                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                             oModelControl.setProperty("/ProfilePageBuzy", false);
                         }.bind(this),
                         error: function () {
-                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                             oModelControl.setProperty("/ProfilePageBuzy", false);
                         },
                     });
 
