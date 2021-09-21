@@ -42,6 +42,10 @@
             "mockData_alias": {
                 "uri": "model/data.json",
                 "type": "JSON"
+            },
+            "fragment_JSON": {
+                "uri": "model/local.json",
+                "type": "JSON"
             }
         }
     },
@@ -105,6 +109,10 @@
             },
             "LoginInfo": {
                 "type": "sap.ui.model.json.JSONModel"
+            },
+           "FragData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "fragment_JSON"
             }
         },
         "resources": {

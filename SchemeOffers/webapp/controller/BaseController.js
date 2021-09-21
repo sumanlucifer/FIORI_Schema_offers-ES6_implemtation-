@@ -95,6 +95,14 @@ sap.ui.define(
                 }
 
             },
+            onFileUploadChange1: function (oEvent) {
+                //console.log(oEvent);
+                var oFileUploder = oEvent.getSource();
+                if (oEvent.getParameter("newValue")) {
+                    this.onpressfrag();
+                }
+
+            },
             _verifyImages: function (files, oFileUploder) {
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
@@ -138,11 +146,80 @@ sap.ui.define(
                 oRouter.navTo("RouteLandingPage", {}, true);
             },
 
-            // created for painter specipic //
             onpressfrag: function () {
 
+                this._PainterMultiDialoge = this.getView().byId("Painters1");
+
+                var oView = this.getView();
+
+                var dataModel = oView.getModel("FragData");
+                this.getView().setModel(dataModel, "DataModel");
+                var fragmentData = oView.getModel("DataModel").getData();
+
+                oView.getModel("oModelControl").setProperty("/ofragmentModel", fragmentData.OfferSet);
+
+
+                return new Promise(function (resolve, reject) {
+                    if (!this._CsvDialoge) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.PainterDialogue",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._CsvDialoge = oDialog;
+                                oView.addDependent(this._CsvDialoge);
+
+                                this._CsvDialoge.open();
+                                resolve();
+                            }.bind(this)
+                        );
+                    } else {
+
+                        this._CsvDialoge.open();
+                        resolve();
+                    }
+                }.bind(this));
+            },
+
+
+            onSelection: function (oeve) {
+                var oView = this.getView();
+                var sValue = oeve.getSource().getValue();
+                if (sValue === "YES")
+                    oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", true);
+                else
+                    oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", false);
+            },
+
+            // created for painter specipic //
+            onSavePaitner: function (oEvent) {
+                var oView = this.getView();
+                var fragmentData = oView.getModel("oModelControl").getProperty("/ofragmentModel");
+                var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
+                var selectedData = iGetSelIndices.map(i => fragmentData[i]);
+
+                var itemModel = selectedData.map(function (item) {
+                    return {
+                        PainterId: item.PainterId,
+                        PainterName: item.PainterType
+                    };
+                });
+
+
+                oView.getModel("oModelControl")
+                    .setProperty("/MultiCombo/Painters", itemModel);
+                this._CsvDialoge.close();
+                console.log(selectedData);
 
             },
+
+            onSavePaitnerClose: function () {
+                this._CsvDialoge.close();
+            },
+
+
+
 
 
             onPostSchemeData: function (oPayload, fileFlag) { },
@@ -1668,6 +1745,8 @@ sap.ui.define(
                     oModel.refresh(true);
                 }
             },
+
+
             onPressSaveCondition1: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3355,6 +3434,7 @@ sap.ui.define(
                         "Fields/PainterCount",
                         "Fields/Date1",
                         "Fields/Date2",
+                        "UploadField"
                     ],
                     true
                 );
@@ -3381,7 +3461,11 @@ sap.ui.define(
                 } else if (iIndex == 2) {
                     oModelControl.setProperty("/MultiCombo/AppPainter", true);
                     oModelView.setProperty("/PainterSelection", 2);
-                } //
+                }
+                else if (iIndex == 3) {
+                    oModelControl.setProperty("/MultiCombo/AppPainter", true);
+                    oModelView.setProperty("/PainterSelection", 3);
+                }//
                 // making the fields blank
             },
             onAppPainterPointsUppChg: function (oEvent) {
@@ -4755,6 +4839,11 @@ sap.ui.define(
             },
             onUploadMisMatch: function () {
                 MessageToast.show("Kindly upload a file of type .png, .jpg, .jpeg");
+            },
+
+            onUploadMisMatch1: function () {
+                MessageToast.show("Kindly upload a file of type XLSX");
+                this.onpressfrag();
             },
 
             /**

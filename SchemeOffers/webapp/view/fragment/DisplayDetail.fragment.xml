@@ -250,6 +250,23 @@
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
+              <infoToolbar>
+					<OverflowToolbar >
+                    <Label text="{i18n>sample}"/>
+						<ComboBox  editable="false" selectedKey="{= ${IsMultiRewardAllowed} === false ? '1' : '0' }"  change="onSelection"> 
+                <items> 
+                <core:Item 
+                key="0"   
+                text="YES" 
+                /> 
+                <core:Item 
+                key="1" 
+                text="NO" 
+                /> 
+                </items> 
+                </ComboBox>
+					</OverflowToolbar>
+				</infoToolbar>
 
             <columns>
                 <!-- <Column>
