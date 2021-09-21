@@ -141,7 +141,10 @@ sap.ui.define(
                     },
                     IctabBarLoyalty: "accrued",
                     ProfilePageBuzy: true,
-                    QRCodeData: {}
+                    QRCodeData: {},
+                    AdditionalReqDlg:{
+                        
+                    }
 
                 };
                 var oView = this.getView();
@@ -3688,10 +3691,100 @@ sap.ui.define(
             },
             onReqListItemPress :function (oEvent){
                 //console.log(oEvent);
-                var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("RouteAdditionalRequestDetail",
-                {Id: oEvent.getSource().getBindingContext().getObject().UUID,
-                Pid:oEvent.getSource().getBindingContext().getObject().painterId});
+                // var oRouter = this.getOwnerComponent().getRouter();
+                // oRouter.navTo("RouteAdditionalRequestDetail",
+                // {Id: oEvent.getSource().getBindingContext().getObject().UUID,
+                // Pid:oEvent.getSource().getBindingContext().getObject().painterId});
+                 var oView = this.getView();
+                 var obj = oEvent.getSource().getBindingContext().getObject();
+                // create value help dialog
+                if (!this._DialogUpdateRequest) {
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.ContactPainter.view.fragments.AdditionalRequestDetail",
+                        controller: this,
+                    }).then(
+                        function (oValueHelpDialog) {
+                            this._DialogUpdateRequest = oValueHelpDialog;
+                            this.getView().addDependent(this._DialogUpdateRequest);
+                            this._DialogUpdateRequest.open();
+                            this._BeforeAllReqOpen(obj);
+                        }.bind(this)
+                    );
+                } else {
+                    this._DialogUpdateRequest.open();
+                }
+            },
+            onDialogCloseAllReq: function (oEvent) {
+                this._DialogUpdateRequest.close();
+                this._DialogUpdateRequest.destroy();
+                delete this._DialogUpdateRequest;
+            },
+            _BeforeAllReqOpen: function (obj) {
+                var oModelC2 = this.getView().getModel("oModelControl2");
+                oModelC2.setProperty("/AdditionalReqDlg",obj);
+                var UUID=obj.UUID;
+                
+                this._DialogUpdateRequest.bindElement("/PainterAdditionalBenifitSet('" + UUID + "')", {
+                                        expand: "masterAdditionalBenifit"
+                                    });
+
+            },
+            onApproveReject: function (mParam1) {
+               var oModelC2 = this.getView().getModel("oModelControl2");
+               var oPayload= oModelC2.getProperty("/AdditionalReqDlg");
+                var oNewPayLoad = Object.assign({}, oPayload);
+                //oModelControl.setProperty("/bBusy", true);
+                var othat=this;
+                // if the offer status if
+                if (mParam1 === "APPROVED") {
+                    oNewPayLoad.Status = "APPROVED";
+                }
+                if (mParam1 === "REJECTED") {
+                    oNewPayLoad.Status = "REJECTED";
+                }
+                 MessageBox.confirm(
+                        "Kindly confirm to change the status.", {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    var c1;
+                                        c1 = othat._UpdateRequest(oNewPayLoad);
+                                        // c1.then(function (oNewPayLoad) {
+                                        //    // oModelControl.setProperty("/bBusy", false);
+                                        //     othat.onPressBreadcrumbLink();
+                                        // })
+                                }
+                            },
+                        }
+                    );
+                
+                
+
+            },
+            _UpdateRequest: function (oPayload){
+
+                var promise = jQuery.Deferred();
+                var othat = this;
+                var oView = this.getView();
+                var oDataModel = oView.getModel();
+                var oProp = "PainterAdditionalBenifitSet('" + oPayload.UUID + "')";
+                delete oPayload.masterAdditionalBenifit;
+                return new Promise((resolve, reject) => {
+                    oDataModel.update("/" + oProp, oPayload, {
+                        success: function (data) {
+                            MessageToast.show("Status Successfully Updated.");
+                            //othat._navToHome();
+                            resolve(data);
+                        },
+                        error: function (data) {
+                            MessageToast.show("Error In Update");
+                            reject(data);
+                        },
+                    });
+                });
+
             }
         
 

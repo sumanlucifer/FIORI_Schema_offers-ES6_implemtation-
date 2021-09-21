@@ -25,14 +25,18 @@
                 <Column>
                     <Text text="{i18n>Date}" />
                 </Column>
+                <Column>
+                    <Text text="{i18n>Action}" />
+                </Column>
             </columns>
             <dependents >
-                <ColumnListItem id="idTbladditionalReqNew2Template" type="Navigation" press="onReqListItemPress">
+                <ColumnListItem id="idTbladditionalReqNew2Template" press="onReqListItemPress">
                     <cells>
                         <Text text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
                         <Text text="{Remark}" />
                         <Text text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                        <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onReqListItemPress"></Button>
                     </cells>
                 </ColumnListItem>
             </dependents>

@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog class="sapUiContentPadding" title="{i18n>AdditionalRequestDetails}" stretch="true">
+        <content>
+        
+            <VBox>
+                <form:Form id="idDetailForm"
+                    editable="true" >
+                    <form:layout>
+                        <form:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="12"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="2"
+                            singleContainerFullSize="false" />
+                    </form:layout>
+                    <form:formContainers>
+                        <form:FormContainer >
+                        
+                            <form:formElements>
+                                <form:FormElement label="Title">
+                                    <form:fields>
+                                        <Text  text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Description">
+                                    <form:fields>
+                                        <Text   text="{path:'masterAdditionalBenifit/Description'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Criteria">
+                                    <form:fields>
+                                        <Text  text="{path:'masterAdditionalBenifit/Criteria'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                
+                            </form:formElements>
+                        </form:FormContainer>
+
+                        <form:FormContainer >
+                        
+                            <form:formElements>
+                                <form:FormElement label="Remark">
+                                    <form:fields>
+                                        <Text   text="{path:'Remark'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Status">
+                                    <form:fields>
+                                        <Text  text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Date">
+                                    <form:fields>
+                                        <Text  text="{path:'CreatedAt',formatter:'.formatter.dateFormatter'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        
+                    </form:formContainers>
+                </form:Form>
+            </VBox>
+        
+       
+        </content>
+        <buttons>
+            <Button text="Close" press="onDialogCloseAllReq" />
+            <Button press="onApproveReject('REJECTED')" visible="{=${Status}!=='REJECTED'}" text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
+            <Button press="onApproveReject('APPROVED')" visible="{=${Status}!=='APPROVED'}" text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
