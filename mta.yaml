@@ -101,10 +101,6 @@ modules:
       - redeempoints-content.zip
       name: redeempoints
       target-path: resources/
-    - artifacts:
-      - painterrequests-content.zip
-      name: painterrequests
-      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -259,14 +255,6 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: painterrequests
-  type: html5
-  path: painterrequests
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
@@ -284,7 +272,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -313,10 +301,9 @@ resources:
   type: org.cloudfoundry.existing-service
   parameters:
     service: workflow
-    service-name: wm_workflow
     service-plan: standard
+    service-name: wm_workflow
 parameters:
-  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
