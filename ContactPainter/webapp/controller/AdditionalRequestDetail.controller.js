@@ -88,7 +88,9 @@ sap.ui.define(
             // },
             onApproveReject: function (mParam1) {
                 var oModelControl=this.getView().getModel("oModelControl");
-                var oPayload = this.getView().getModel("oModelView").getData();
+                var oModelView=this.getView().getModel("oModelView");
+
+                var oPayload = oModelView.getData();
                 var oNewPayLoad = Object.assign({}, oPayload);
                 oModelControl.setProperty("/bBusy", true);
                 var othat=this;
@@ -99,13 +101,24 @@ sap.ui.define(
                 if (mParam1 === "REJECTED") {
                     oNewPayLoad.Status = "REJECTED";
                 }
+                 MessageBox.confirm(
+                        "Kindly confirm to change the status.", {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    var c1;
+                                        c1 = othat._UpdateRequest(oNewPayLoad);
+                                        c1.then(function (oNewPayLoad) {
+                                            oModelControl.setProperty("/bBusy", false);
+                                            othat.onPressBreadcrumbLink();
+                                        })
+                                }
+                            },
+                        }
+                    );
                 
-                var c1;
-                c1 = this._UpdateRequest(oNewPayLoad);
-                c1.then(function (oNewPayLoad) {
-                    oModelControl.setProperty("/bBusy", false);
-                    othat.onPressBreadcrumbLink();
-                }).bind(this)
+                
 
             },
             _UpdateRequest: function (oPayload){
