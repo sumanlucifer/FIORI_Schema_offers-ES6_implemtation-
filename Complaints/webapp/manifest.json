@@ -39,7 +39,7 @@
                     "icon": "sap-icon://quality-issue",
                     "indicatorDataSource": {
                         "dataSource": "mainService",
-                        "path": "/dynamic_dest/mainService/PainterComplainsSet/$count",
+                        "path": "/dynamic_dest/KNPL_PAINTER_API/PainterComplainsSet/$count",
                         "refresh": 0
                     }
                 }

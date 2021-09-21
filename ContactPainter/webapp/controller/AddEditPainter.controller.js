@@ -55,8 +55,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.ContactPainter.controller.AddEditPainter",
-            {
+            "com.knpl.pragati.ContactPainter.controller.AddEditPainter", {
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
 
@@ -86,7 +85,7 @@ sap.ui.define(
                     this._GetServiceData();
                     this._initData("add");
                 },
-                _GetServiceData: function () { },
+                _GetServiceData: function () {},
                 _initData: function (mParMode) {
                     var oView = this.getView();
                     var oViewModel = new JSONModel({
@@ -175,15 +174,20 @@ sap.ui.define(
                     });
                     var oControlData = {
                         AddNewBank: false,
-                        DocumentType: [{ Name: "Passbook", Id: 0 }, { Name: "Cheque", Id: 1 }]
+                        DocumentType: [{
+                            Name: "Passbook",
+                            Id: 0
+                        }, {
+                            Name: "Cheque",
+                            Id: 1
+                        }]
                     };
                     var oContrModel = new JSONModel(oControlData);
 
                     if (mParMode == "add") {
                         this._showFormFragment("AddPainter");
                         this.getView().unbindElement();
-                    } else {
-                    }
+                    } else {}
 
                     this._formFragments; //used for the fragments of the add and edit forms
                     oView.setModel(oViewModel, "oModelView");
@@ -204,6 +208,14 @@ sap.ui.define(
                                 return [
                                     false,
                                     "Kinldy Upload front and back image of Aadhaar Card",
+                                ];
+                            }
+                        }
+                        if (sKYCId == "3") {
+                            if (iItems < 2) {
+                                return [
+                                    false,
+                                    "Kinldy Upload front and back image of Voter Id Card",
                                 ];
                             }
                         }
@@ -236,7 +248,7 @@ sap.ui.define(
                     var uploadInfo = cFiles + " file(s)";
                     oUploadCollection.upload();
                 },
-                onUploadComplete: function (oEvent) { },
+                onUploadComplete: function (oEvent) {},
                 onBeforeUploadStarts: function (oEvent) {
                     // Header Slug
                     var oCustomerHeaderSlug = new UploadCollectionParameter({
@@ -320,10 +332,14 @@ sap.ui.define(
                     );
                     var aPainterSecContact = [];
                     if (SMobile1.trim() !== "") {
-                        aPainterSecContact.push({ Mobile: SMobile1 });
+                        aPainterSecContact.push({
+                            Mobile: SMobile1
+                        });
                     }
                     if (SMobile2.trim() !== "") {
-                        aPainterSecContact.push({ Mobile: SMobile2 });
+                        aPainterSecContact.push({
+                            Mobile: SMobile2
+                        });
                     }
 
                     //Getting the data for the PainterAddress
@@ -392,8 +408,7 @@ sap.ui.define(
                     // settting the username of the painter same as the mobile number
                     //oPainterData["Username"] = oPainterData["Mobile"];
 
-                    var oPayload = Object.assign(
-                        {
+                    var oPayload = Object.assign({
                             PainterAddress: oPainterAddress,
                             PainterContact: aPainterSecContact,
                             Preference: oPreferrence,
@@ -440,7 +455,7 @@ sap.ui.define(
                             }
                             MessageBox.error(sMessage, {
                                 title: "Error Code: " + a.statusCode,
-                                onClose: function () { },
+                                onClose: function () {},
                             });
                         }
                     );
@@ -532,8 +547,8 @@ sap.ui.define(
                                 contentType: false,
                                 processData: false,
                                 data: sFile,
-                                success: function (data) { },
-                                error: function () { },
+                                success: function (data) {},
+                                error: function () {},
                             })
                         );
                     }
@@ -579,20 +594,20 @@ sap.ui.define(
 
                     var sUrl2 = "";
                     var async_request = [];
-                    var docType=oBankData["DocumentType"];
+                    var docType = oBankData["DocumentType"];
                     for (var x = 0; x < oItems.length; x++) {
                         var sFile = sap.ui.getCore().byId(oItems[x].getFileUploader()).oFileUpload.files[0];
-                         sUrl2 = docType == 0 ? "passbook" : "cheque";
+                        sUrl2 = docType == 0 ? "passbook" : "cheque";
                         async_request.push(
                             jQuery.ajax({
                                 method: "PUT",
-                                url: sUrl+sUrl2,
+                                url: sUrl + sUrl2,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
                                 data: sFile,
-                                success: function (data) { },
-                                error: function () { },
+                                success: function (data) {},
+                                error: function () {},
                             })
                         );
                     }
@@ -622,16 +637,15 @@ sap.ui.define(
                             urlParameters: {
                                 $expand: "PainterKycDetails",
                             },
-                            success: function (oData) { },
-                            error: function () { },
+                            success: function (oData) {},
+                            error: function () {},
                         });
                     }
                 },
                 _ReturnObjects: function (mParam) {
                     var obj = Object.assign({}, mParam);
                     var oNew = Object.entries(obj).reduce(
-                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
-                        {}
+                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
                     );
                     return oNew;
                 },
@@ -669,8 +683,8 @@ sap.ui.define(
                         oView.addDependent(oVBox);
                         objSection.addItem(oVBox);
                         othat._setDataValue.call(othat);
-                        othat._setUploadCollectionMethod.call(othat);
-                        othat._setUploadCollectionBankMethod.call(othat);
+                        othat._setUploadCollectionMethod();
+                        othat._setUploadCollectionBankMethod();
                     });
                 },
                 _setPrimaryDealerilter: function () {
@@ -686,17 +700,19 @@ sap.ui.define(
                 },
                 _setUploadCollectionMethod: function () {
                     var oUploadCollection = this.getView().byId("idUploadCollection");
-
                     var othat = this;
-                    oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+                    oUploadCollection._setNumberOfAttachmentsTitle = function (
                         count
                     ) {
                         var nItems = count || 0;
                         var sText;
+                        console.log("manik1");
+
                         // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
                         if (this._oItemToUpdate) {
                             nItems--;
                         }
+                        othat._CheckAddBtnForUploadKYC.call(othat, nItems);
                         if (this.getNumberOfAttachmentsText()) {
                             sText = this.getNumberOfAttachmentsText();
                         } else {
@@ -706,8 +722,7 @@ sap.ui.define(
                         }
                         if (!this._oNumberOfAttachmentsTitle) {
                             this._oNumberOfAttachmentsTitle = new Title(
-                                this.getId() + "-numberOfAttachmentsTitle",
-                                {
+                                this.getId() + "-numberOfAttachmentsTitle", {
                                     text: sText,
                                 }
                             );
@@ -715,19 +730,42 @@ sap.ui.define(
                             this._oNumberOfAttachmentsTitle.setText(sText);
                         }
 
-                        othat._CheckAddBtnForUpload.call(othat, nItems);
+
                     };
+                },
+
+                _CheckAddBtnForUploadKYC: function (mParam) {
+                    console.log(mParam)
+                    var oModel = this.getView().getModel("oModelView");
+                    var sKycTypeId = oModel.getProperty("/PainterKycDetails/KycTypeId");
+                    var oUploadCol = this.getView().byId("idUploadCollection");
+                    if (sKycTypeId !== "") {
+                        if (sKycTypeId == "1" || sKycTypeId == "3") {
+                            if (mParam >= 2) {
+                                oUploadCol.setUploadButtonInvisible(true);
+                            } else if (mParam < 2) {
+                                oUploadCol.setUploadButtonInvisible(false);
+                            }
+                        } else {
+                            if (mParam >= 1) {
+                                oUploadCol.setUploadButtonInvisible(true);
+                            } else if (mParam < 1) {
+                                oUploadCol.setUploadButtonInvisible(false);
+                            }
+                        }
+                    }
                 },
                 /*Aditya chnages */
                 _setUploadCollectionBankMethod: function () {
-                    var oUploadCollection = this.getView().byId("idUploadCollectionBank");
+                    var oUploadCollection1 = this.getView().byId("idUploadCollectionBank");
                     // oUploadCollection.setUploadButtonInvisible(true);
                     var othat = this;
-                    oUploadCollection.__proto__._setNumberOfAttachmentsTitle = function (
+                    oUploadCollection1._setNumberOfAttachmentsTitle = function (
                         count
                     ) {
                         var nItems = count || 0;
                         var sText;
+                        console.log("manik");
                         // When a file is being updated to a new version, there is one more file on the server than in the list so this corrects that mismatch.
                         if (this._oItemToUpdate) {
                             nItems--;
@@ -741,8 +779,7 @@ sap.ui.define(
                         }
                         if (!this._oNumberOfAttachmentsTitle) {
                             this._oNumberOfAttachmentsTitle = new Title(
-                                this.getId() + "-numberOfAttachmentsTitle",
-                                {
+                                this.getId() + "-numberOfAttachmentsTitle", {
                                     text: sText,
                                 }
                             );
@@ -784,8 +821,7 @@ sap.ui.define(
                 },
                 _setDataValue: function () {
                     var oInput = this.getView().byId("idCnfAcntNum");
-                    oInput.addEventDelegate(
-                        {
+                    oInput.addEventDelegate({
                             onAfterRendering: function () {
                                 var oInput = this.$().find(".sapMInputBaseInner");
                                 var oID = oInput[0].id;
@@ -804,8 +840,7 @@ sap.ui.define(
                     // if (!this._formFragments) {
                     this._formFragments = Fragment.load({
                         id: oView.getId(),
-                        name:
-                            "com.knpl.pragati.ContactPainter.view.fragments." + sFragmentName,
+                        name: "com.knpl.pragati.ContactPainter.view.fragments." + sFragmentName,
                         controller: othat,
                     }).then(function (oFragament) {
                         return oFragament;
@@ -951,7 +986,7 @@ sap.ui.define(
                     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
                 },
                 onPinCodeSelect: function (oEvent) {
-                   // console.log("suggestion item selected");
+                    // console.log("suggestion item selected");
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
                     var oObject = oEvent
@@ -1545,8 +1580,7 @@ sap.ui.define(
                     if (!this._PvalueHelpDialog) {
                         Fragment.load({
                             id: oView.getId(),
-                            name:
-                                "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.PDealerValHelp",
                             controller: this,
                         }).then(
                             function (oValueHelpDialog) {
@@ -1720,8 +1754,7 @@ sap.ui.define(
                 onValueHelpRequested: function () {
                     this._oMultiInput = this.getView().byId("multiInput");
                     this.oColModel = new JSONModel({
-                        cols: [
-                            {
+                        cols: [{
                                 label: "SAP Code",
                                 template: "Id",
                                 width: "10rem",
@@ -1887,7 +1920,7 @@ sap.ui.define(
                     this._oValueHelpDialog.close();
                 },
 
-                onExit: function () { },
+                onExit: function () {},
             }
         );
     }
