@@ -110,7 +110,7 @@
             "LoginInfo": {
                 "type": "sap.ui.model.json.JSONModel"
             },
-            "FragData": {
+           "FragData": {
                 "type": "sap.ui.model.json.JSONModel",
                 "dataSource": "fragment_JSON"
             }
