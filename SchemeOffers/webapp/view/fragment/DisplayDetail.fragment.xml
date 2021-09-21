@@ -250,6 +250,23 @@
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
+              <infoToolbar>
+					<OverflowToolbar >
+                    <Label text="{i18n>sample}"/>
+						<ComboBox enabled="false" selectedKey="{= ${oModelControl2>/IsMultiRewardAllowed} === false ? '0' : '1' }"   xmlns="sap.m"  id="box0" change="onSelection"> 
+                <items> 
+                <core:Item xmlns:core="sap.ui.core" 
+                key="0"   
+                text="YES" 
+                id="item0"/> 
+                <core:Item xmlns:core="sap.ui.core" 
+                key="1" 
+                text="NO" 
+                id="item1"/> 
+                </items> 
+                </ComboBox>
+					</OverflowToolbar>
+				</infoToolbar>
 
             <columns>
                 <!-- <Column>
