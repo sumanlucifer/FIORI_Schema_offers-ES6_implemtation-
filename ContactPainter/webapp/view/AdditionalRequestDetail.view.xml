@@ -110,8 +110,8 @@
                 <ToolbarSpacer/>
                     <HBox justifyContent="SpaceBetween" >
                     <Button  text="Cancel" type="Ghost" press="onPressBreadcrumbLink" class="sapUiTinyMarginEnd" />
-                    <Button press="onApproveReject('REJECTED')" text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
-                    <Button press="onApproveReject('APPROVED')" text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
+                    <Button press="onApproveReject('REJECTED')" visible="{=${oModelView>/Status}!=='REJECTED'}" text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
+                    <Button press="onApproveReject('APPROVED')" visible="{=${oModelView>/Status}!=='APPROVED'}" text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
                     </HBox>
 
                 
