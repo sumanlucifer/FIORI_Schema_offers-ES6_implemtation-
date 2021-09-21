@@ -90,7 +90,6 @@
 
         <!-- <MessageStrip text="{i18n>Meesage4}" showIcon="true"/> -->
         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-            
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>Slab}"/>
@@ -102,32 +101,8 @@
                     </RadioButtonGroup>
                     <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewardsV1('add')"/>
-            
-                
                 </Toolbar>
             </headerToolbar>
-
-            <infoToolbar>
-					<OverflowToolbar >
-                    <Label text="{i18n>sample}"/>
-						<ComboBox   xmlns="sap.m"  id="box0" change="onSelection"> 
-                <items> 
-                <core:Item xmlns:core="sap.ui.core" 
-                key="0"   
-                text="YES" 
-                id="item0"/> 
-                <core:Item xmlns:core="sap.ui.core" 
-                key="1" 
-                text="NO" 
-                id="item1"/> 
-                </items> 
-                </ComboBox>
-					</OverflowToolbar>
-				</infoToolbar>
-            
-     
-            	
-				
 
             <columns>
 

@@ -92,8 +92,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
 
             return sStatus;
         },
-
-
         fmtOfferStatus: function (mParam1) {
             if (mParam1 === "DRAFT") {
                 return "Draft"

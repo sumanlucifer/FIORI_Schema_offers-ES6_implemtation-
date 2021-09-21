@@ -11,11 +11,10 @@
         </f:layout>
         <f:toolbar>
             <Toolbar >
-                <RadioButtonGroup selectedIndex="{oModelControl>/Rbtn/AppPainter}" columns="4" select="onRbAppPainter">
+                <RadioButtonGroup selectedIndex="{oModelControl>/Rbtn/AppPainter}" columns="3" select="onRbAppPainter">
                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                     <RadioButton text="{i18n>formApplicableLbl16}"/>
-                    <RadioButton text="{i18n>formApplicableLbl17}"/>
                 </RadioButtonGroup>
             </Toolbar>
         </f:toolbar>
@@ -31,7 +30,7 @@
                                 </tokens>
                             </MultiInput>
 
-                            <!-- <Button text="Open Dialouge" id="Painters1" press="onpressfrag"/> -->
+                            <Button text="Open Dialouge" press="onpressfrag"/>
 
 
 
@@ -39,35 +38,6 @@
                     </f:FormElement>
 
                 </f:formElements>
-
-
-                
-            </f:FormContainer>
-
-
-             <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===3 }">
-                <f:formElements>
-
-                    <f:FormElement >
-                        <f:fields>
-                           <VBox>
-
-                          <!-- <Button text="Open" id="Painters2" press="onpressfrag"/> -->
-                           <MultiInput placeholder="{i18n>placeHolder1}" showValueHelp="false" enabled="true" id="Painters2" tokens="{oModelControl>/MultiCombo/Painters}">
-                                <tokens>
-                                    <Token editable="false" text="{oModelControl>PainterName}" key="{oModelControl>PainterId}"/>
-                                </tokens>
-                            </MultiInput>
-
-        <u:FileUploader  change="onFileUploadChange1"   buttonOnly="true" placeholder="{i18n>UploadNewExcel}"   typeMissmatch="onUploadMisMatch1" fileType="XLSX,xlsx" id="idFileUpload1" name="schemeImgFileUpload1"/>
-
-                          </VBox>
-                        </f:fields>
-                    </f:FormElement>
-
-                </f:formElements>
-
-                
             </f:FormContainer>
             <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}!==2 }">
                 <f:formElements>
@@ -100,7 +70,7 @@
 
                         </f:fields>
                     </f:FormElement>
-                    <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl>/Rbtn/AppPainter}!== 3 }">
+                    <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl>/Rbtn/AppPainter}!== 2 }" >
                         <f:fields>
                             <Text text ="{path:'oModelControl>/Fields/PainterCount',formatter:'.formatter.fmtCheckNull2'}">
                                 <layoutData>
