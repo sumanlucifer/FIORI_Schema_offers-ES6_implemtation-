@@ -158,6 +158,7 @@ sap.ui.define(
 
                                 that._initFilerForTablesEnrollment(data.Id);
                                 var TrainingVideoDetails = that.getView().getModel("i18n").getResourceBundle().getText("OnlineTrainingDetails");
+                                that._initFilerForTablesLiveAttendance(data.Id);
                             }
 
                             if (trainingType === 'VIDEO') {
@@ -2200,7 +2201,187 @@ sap.ui.define(
                             res();
                         });
                     })
+                },
+                //CR changes
+                onPressUpload: function () {
+                    console.log("Hit!");
+                    var oViewModel = this.getModel("oModelView");
+                    var oPayload = {};
+                    $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
+                    var trainingType = this.getModel("appView").getProperty("/trainingType");
+                    this._UploadAttendanceLiveVidTr(oPayload);
+
+                },
+                _UploadAttendanceLiveVidTr: function (oPayload) {
+
+                    var that = this;
+                    var fU = this.getView().byId("idAttendanceLiveFileUploader");
+                    var domRef = fU.getFocusDomRef();
+                    var file = domRef.files[0];
+                    var oViewModel = this.getModel("oModelView");
+
+                    // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
+                    //     oPayload.RewardPoints = 0;
+                    // }
+
+                    var settings = {
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + oPayload.TrainingSubTypeId + ")/$value?Points=" + oPayload.RewardPoints + "&trainingId=1",
+                        data: file,
+                        method: "PUT",
+                        headers: that.getModel().getHeaders(),
+                        contentType: "text/csv",
+                        processData: false,
+                        statusCode: {
+                            206: function (result) {
+                                that._SuccessUpload(result, 206);
+                            },
+                            200: function (result) {
+                                that._SuccessUpload(result, 200);
+                            },
+                            202: function (result) {
+                                that._SuccessUpload(result, 202);
+                            },
+                            400: function (result) {
+                                that._SuccessUpload(result, 400);
+                            }
+                        },
+                        error: function (error) {
+                            that._Error(error);
+                        }
+                    };
+
+                    $.ajax(settings);
+                    // });
+                },
+                _SuccessUpload: function (result, oStatus) {
+                    var that = this;
+                    var oModelView = that.getModel("oModelView");
+                    var TrainingId = oModelView.getProperty("/TrainingDetails/Id");
+                    this._initFilerForTablesLiveAttendance(TrainingId);
+                    oModelView.setProperty("/busy", false);
+                    if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
+                        if (result.length == 0) {
+                            that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
+                        } else {
+                            var oView = that.getView();
+
+                            oModelView.setProperty("/oResult", result);
+                            if (!that.AttendanceUploadedStatusMsg) {
+                                // load asynchronous XML fragment
+                                Fragment.load({
+                                    id: oView.getId(),
+                                    name: "com.knpl.pragati.Training_Learning.view.fragments.AttendanceUploadedStatusMsg",
+                                    controller: that
+                                }).then(function (oDialog) {
+                                    // connect dialog to the root view 
+                                    //of this component (models, lifecycle)
+                                    oView.addDependent(oDialog);
+                                    that.AttendanceUploadedStatusMsg = oDialog;
+                                    oDialog.open();
+                                });
+                            } else {
+                                that.AttendanceUploadedStatusMsg.open();
+                            }
+                        }
+                    } else if (oStatus === 400) {
+                        that.showToast.call(that, result.responseText);
+                    }
+                },
+                closeAttendanceStatusDialog: function () {
+                    this.AttendanceUploadedStatusMsg.close();
+                    //MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_ATTENDANCE_UPDATED"));
+                    // this.getRouter().navTo("worklist", true);
+                    var fU = this.getView().byId("idAttendanceLiveFileUploader");
+                    fU.setValue("");
+
+                    var oModel = this.getModel();
+                    oModel.refresh(true);
+                },
+
+                onDataExport: function (oEvent) {
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: ";"
+                        }),
+
+                        // Pass in the model created above
+                        models: this.getView().getModel("oModelView"),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/oResult"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [{
+                            name: "Row",
+                            template: {
+                                content: "{Row}"
+                            }
+                        }, {
+                            name: "MobileNumber",
+                            template: {
+                                content: "{PainterMobile}"
+                            }
+                        }, {
+                            name: "Attendance Date",
+                            template: {
+                                content: "{AttendedDate}"
+                            }
+                        }, {
+                            name: "Message",
+                            template: {
+                                content: "{UploadMessage}"
+                            }
+                        }, {
+                            name: "Status",
+                            template: {
+                                content: {
+                                    parts: ["UploadStatus"],
+                                    formatter: formatter.UploadStatus
+                                }
+                            }
+                        }
+                        ]
+                    });
+
+                    // download exported file
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+                },
+
+                _Error: function (error) {
+                    this.getModel("oModelView").setProperty("/busy", false);
+                    MessageToast.show(error.toString());
+                },
+                _initFilerForTablesLiveAttendance: function (trainingId) {
+                    console.log(trainingId);
+                    var oView = this.getView();
+                    var aFilters = new sap.ui.model.Filter({
+                        filters: [
+                            new sap.ui.model.Filter('IsArchived', sap.ui.model.FilterOperator.EQ, false),
+                            new sap.ui.model.Filter('TrainingId', sap.ui.model.FilterOperator.EQ, trainingId)
+                        ],
+                        and: true
+                    });
+                    oView.byId("idTblAttendanceLiveVid").getBinding("items").filter(aFilters);
+                },
+                onFileUploadChange: function (oEvent) {
+                //console.log(oEvent);
+                var oFileUploder = oEvent.getSource();
+                if (oEvent.getParameter("newValue")) {
+                    this.onPressUpload();
                 }
+            },
+
+
+
+
 
             }
         );
