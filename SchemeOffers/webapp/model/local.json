@@ -1,6 +1,7 @@
 {
     "OfferSet": [
         {
+            "isSelected": true,
             "MembershipID": 1,
             "PainterId":"1",
             "Name": "Buy",
@@ -12,6 +13,7 @@
             "PainterArcheType": "Approved"
         },
         {
+             "isSelected": true,
             "MembershipID": 2,
             "PainterId":"2",
             "Name": "Buy 1000ltr of scheme products",
@@ -19,10 +21,11 @@
             "Zone": "Bank Transfer",
             "Division": "12/15/2020",
             "Depot": "12/15/2020",
-            "PainterType": "Mj Kulkarni",
+            "PainterType": "Mike",
             "PainterArcheType": "Approved"
         },
         {
+             "isSelected": true,
             "MembershipID": 3,
             "PainterId":"3",
             "Name": "Buy 1000ltr of scheme products",
@@ -30,10 +33,11 @@
             "Zone": "Bank Transfer",
             "Division": "12/15/2020",
             "Depot": "12/15/2020",
-            "PainterType": "Mj Kulkarni",
+            "PainterType": "Jack",
             "PainterArcheType": "Approved"
         },
         {
+             "isSelected": true,
             "MembershipID": 4,
             "PainterId":"4",
             "Name": "Buy 1000ltr of scheme products",
@@ -41,10 +45,11 @@
             "Zone": "Bank Transfer",
             "Division": "12/15/2020",
             "Depot": "12/15/2020",
-            "PainterType": "Mj Kulkarni",
+            "PainterType": "James",
             "PainterArcheType": "Approved"
         },
         {
+             "isSelected": true,
             "MembershipID": 5,
             "PainterId":"5",
             "Name": "Buy 1000ltr of scheme products",
@@ -56,6 +61,7 @@
             "PainterArcheType": "Approved"
         },
         {
+             "isSelected": true,
             "MembershipID": 6,
             "PainterId":"6",
             "Name": "Buy 1000ltr of scheme products",
@@ -63,7 +69,7 @@
             "Zone": "Bank Transfer",
             "Division": "12/15/2020",
             "Depot": "12/15/2020",
-            "PainterType": "Mj Kulkarni",
+            "PainterType": "Nikki",
             "PainterArcheType": "Approved"
         }
     ]
