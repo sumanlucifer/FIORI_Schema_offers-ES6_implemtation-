@@ -239,7 +239,7 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <Select items="{path:'/MasterVehicleTypeSet',sorter:{path:'VehicleType'},templateShareable:false, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>VehicleTypeId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                            <Select change="onAssetChange" items="{path:'/MasterVehicleTypeSet',sorter:{path:'VehicleType'},templateShareable:false, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>VehicleTypeId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                                 <items>
                                     <core:Item text="{VehicleType}" key="{Id}" />
                                 </items>
@@ -247,7 +247,7 @@
                             <ObjectIdentifier title="{path:'oModelView>VehicleTypeId',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <VBox>
-                            <Input maxLength="25" width="70%" required="true" value="{path:'oModelView>VehicleName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }" />
+                            <Input enabled="{= ${oModelView>VehicleTypeId} !==11 }" maxLength="25" width="70%" required="true" value="{path:'oModelView>VehicleName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }" />
                             <Text text="{oModelView>VehicleName}" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <Text />

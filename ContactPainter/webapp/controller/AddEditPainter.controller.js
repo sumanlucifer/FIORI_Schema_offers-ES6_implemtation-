@@ -1284,7 +1284,7 @@ sap.ui.define(
                     oModel.refresh(true);
                     this._setASTTbleFlag();
                 },
-
+              
                 onPressRemoveAsset: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
