@@ -70,6 +70,10 @@ modules:
       - CompanySettings-content.zip
       name: CompanySettings
       target-path: resources/
+    - artifacts:
+      - newmdm-content.zip
+      name: newmdm
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -166,6 +170,16 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: newmdm
+  type: html5
+  path: newmdm
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: uaa_knpl-influencer-web
   type: org.cloudfoundry.existing-service
@@ -189,6 +203,18 @@ resources:
 - name: destination-knpl-pragati
   type: org.cloudfoundry.managed-service
   parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
     service: destination
     service-plan: lite
 - name: portal_resources_knpl-influencer-web
@@ -197,6 +223,7 @@ resources:
     service: portal
     service-plan: standard
 parameters:
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
