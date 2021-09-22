@@ -13,11 +13,8 @@
                     <f:formElements>
                         <f:FormElement >
                             <f:fields>
-
                             </f:fields>
                         </f:FormElement>
-                    
-
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
@@ -30,9 +27,7 @@
                     <Button enabled="{= ${oModelControl>/Table/Table1}.length &lt; 1 }" icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddGenericRewardsV1('add')"/>
                 </Toolbar>
             </headerToolbar>
-
             <columns>
-               
                 <Column>
                     <Label text="{i18n>RequiredVolume}" required="false" />
                 </Column>
@@ -42,7 +37,6 @@
                 <Column>
                     <Label text="{i18n>Table1Label4}" required="false"/>
                 </Column>
-              
                 <Column>
                     <Text text="{i18n>Table1Label6}" />
                 </Column>
@@ -50,13 +44,9 @@
                     <Text text="{i18n>tblColAction}"/>
                 </Column>
             </columns>
-
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-
-
-                    
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} === false }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" type="Number" required="false" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]+$',minLength:1,maxLength:6} }" />
@@ -73,11 +63,6 @@
                             <Label visible="{= ${oModelControl>editable} === false }" text="{path:'oModelControl>RewardCash',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RewardCash',type: 'sap.ui.model.type.String',constraints:{search:'^[0-9]',minLength:1,maxLength:6} }" />
                         </VBox>
-
-
-
-                 
-
                         <HBox>
                             <Button visible="{= ${oModelView>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewards"></Button>
                             <Button visible="{= ${oModelView>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Edit}" type="Transparent" press="onPressSaveReward"></Button>
@@ -87,10 +72,8 @@
                 </ColumnListItem>
             </items>
         </Table> -->
-
         <!-- <MessageStrip text="{i18n>Meesage4}" showIcon="true"/> -->
         <Table id="Table2" items="{path: 'oModelControl>/Table/Table2',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-            
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>Slab}"/>
@@ -102,35 +85,21 @@
                     </RadioButtonGroup>
                     <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddRewardsV1('add')"/>
-            
-                
                 </Toolbar>
             </headerToolbar>
-
             <infoToolbar>
 					<OverflowToolbar >
                     <Label text="{i18n>sample}"/>
-						<ComboBox   xmlns="sap.m"  id="box0" change="onSelection"> 
-                <items> 
-                <core:Item xmlns:core="sap.ui.core" 
-                key="0"   
-                text="YES" 
-                id="item0"/> 
-                <core:Item xmlns:core="sap.ui.core" 
-                key="1" 
-                text="NO" 
-                id="item1"/> 
-                </items> 
-                </ComboBox>
-					</OverflowToolbar>
+                    	<Select
+                        change="onSelection"
+                        selectedKey="1"
+                        >
+					<core:Item key="0" text="Yes" />
+                    <core:Item key="1" text="No" />
+				</Select>
+											</OverflowToolbar>
 				</infoToolbar>
-            
-     
-            	
-				
-
             <columns>
-
                 <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="true"/>
                 </Column>
@@ -150,11 +119,9 @@
                     <Text text="{i18n>tblColAction}"/>
                 </Column>
             </columns>
-
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-
                         <!-- <VBox>
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
@@ -187,28 +154,21 @@
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RewardGiftName',formatter:'.formatter.fmtCheckNull'}" tooltip="{oModelControl>RewardGiftName}"/>
                             <Input visible="{= ${oModelControl>editable} === true }" placeholder="{i18n>placeHolder3}" width="100%" maxLength="100" value="{path:'oModelControl>RewardGiftName',type: 'sap.ui.model.type.String',constraints:{search :'^[a-zA-Z0-9]{1}[wW]*',minLength:1,maxLength:100} }" valueStateText="Kindly Enter a Valid Text of max 50 characters" />
                         </VBox>
-
-
-
                         <!-- <ComboBox editable="false" placeholder="{i18n>placeHolder1}" width="80%" items="{path:'oModelControl>/oData/Rewards',type:'.cmbxDtype2', templateShareable:false}" selectedKey="{path:'oModelControl>RewardGiftId',type:'.cmbxDtype2'}">
                                 <core:Item text="{oModelControl>Name}" key="{oModelControl>key}"/>
                            </ComboBox> -->
-
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewardsV1"></Button>
                             <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveReward"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward"></Button>
                         </HBox>
-
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-
         <VBox visible="{oModelControl>/OfferType/EarnedPointsCondition}">
             <items>
                 <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" />
-
                 <RadioButtonGroup columns="2" select=".onRbConditions1" selectedIndex="{= ${oModelView>/OfferConditions/IsEarnedPointsCondition} === false ? 0:1}">
                     <buttons>
                         <RadioButton text="{i18n>No}"/>
@@ -223,7 +183,6 @@
                             <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition1('add')"/>
                         </Toolbar>
                     </headerToolbar>
-
                     <columns>
                         <Column>
                             <Text text="{i18n>StartDate}" />
@@ -231,7 +190,6 @@
                         <Column>
                             <Text text="{i18n>EndDate}" />
                         </Column>
-
                         <Column visible="{= ${oModelView>/InputType}===0 }">
                             <Text text="{i18n>VolumeToBeCompleted}" />
                         </Column>
@@ -242,7 +200,6 @@
                             <Text text="{i18n>tblColAction}"/>
                         </Column>
                     </columns>
-
                     <items>
                         <ColumnListItem >
                             <cells>
@@ -267,7 +224,6 @@
                                     <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCondition1"></Button>
                                     <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCondition"></Button>
                                 </HBox>
-
                             </cells>
                         </ColumnListItem>
                     </items>
@@ -292,8 +248,6 @@
                         </Toolbar>
                     </headerToolbar>
                     <columns>
-
-
                         <Column>
                             <Text text="{i18n>Products}" />
                         </Column>
@@ -304,11 +258,9 @@
                             <Text text="{i18n>tblColAction}"/>
                         </Column>
                     </columns>
-
                     <items>
                         <ColumnListItem press="onListItemPress">
                             <cells>
-
                                 <!-- <VBox>
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 1 }" text="{path:'oModelControl>SkuCode',formatter:'.GetPackName'}" />
                             <Label visible="{= ${oModelControl>/Rbtn/AppPacks1}=== 0 }" text="{path:'oModelControl>ProductCode',formatter:'.GetProdName'}" />
@@ -334,7 +286,6 @@
                                     <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCondition2"></Button>
                                     <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCondition"></Button>
                                 </HBox>
-
                             </cells>
                         </ColumnListItem>
                     </items>
@@ -346,7 +297,6 @@
                 <Title titleStyle="H4" text="{i18n>Condotion3redemptionCycle}" />
                 <RadioButtonGroup columns="2" select=".onRbConditions1" selectedIndex="{= ${oModelView>/OfferConditions/IsRedemptionCycleCondition} === false ? 0:1}">
                     <buttons>
-
                         <RadioButton text="{i18n>No}"/>
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
@@ -359,10 +309,7 @@
                             <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition3('add')"/>
                         </Toolbar>
                     </headerToolbar>
-
                     <columns>
-
-
                         <Column>
                             <Text text="{i18n>RedemptionCycle}" />
                         </Column>
@@ -373,12 +320,9 @@
                             <Text text="{i18n>tblColAction}"/>
                         </Column>
                     </columns>
-
                     <items>
                         <ColumnListItem press="onListItemPress">
                             <cells>
-
-
                                 <Label text="{path:'oModelControl>RedemptionCycle',formatter:'.formatter.fmtCheckNull'}" />
                                 <VBox >
                                     <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Percentage',formatter:'.formatter.fmtCheckNull'}" />
@@ -389,17 +333,11 @@
                                     <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCondition3"></Button>
                                     <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCondition"></Button>
                                 </HBox>
-
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
             </items>
         </VBox>
-
-
-
     </l:VerticalLayout>
-
-
 </core:FragmentDefinition>
