@@ -162,8 +162,8 @@ sap.ui.define(
             },
             onSelection: function (oeve) {
                 var oView = this.getView();
-                var sValue = oeve.getSource().getValue();
-                if (sValue === "YES")
+                var sValue = oeve.getSource().getSelectedKey();
+                if (sValue === "0")
                     oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", true);
                 else
                     oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", false);
