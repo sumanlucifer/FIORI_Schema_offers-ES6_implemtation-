@@ -1,5 +1,4 @@
 <core:FragmentDefinition
-	
     xmlns:m="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
@@ -7,13 +6,9 @@
     xmlns="sap.ui.table"
     	xmlns:u="sap.ui.unified">
 	  <m:Dialog id="idP" showHeader="false"  contentWidth="700px">
-     
-
-       
            	<Table id="idPainterDialog"
-              
 				rows="{oModelControl>/ofragmentModel}"
-				selectionMode="MultiToggle"
+			  selectionMode="None"
 				visibleRowCount="7"
 				paste="onPaste"
 				ariaLabelledBy="title">
@@ -23,6 +18,12 @@
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
+                 <Column width="4rem">
+						<m:CheckBox select="onSelectAll" ></m:CheckBox> 
+						<template>
+							<m:CheckBox  selected="{oModelControl>isSelected}"  />
+						</template>
+					</Column>
 					<Column width="11rem">
 						<m:Label text="Membership ID" />
 						<template>
@@ -41,15 +42,12 @@
 								<m:Text text="{oModelControl>MobileNumber}" wrapping="false" />
 						</template>
 					</Column>
-				
-				
 					<Column width="9rem">
 						<m:Label text="Zone" />
 						<template>
 								<m:Text text="{oModelControl>Zone}" wrapping="false" />
 						</template>
 					</Column>
-					
 					<Column width="9rem">
 						<m:Label text="Division" />
 						<template>
@@ -62,41 +60,23 @@
 								<m:Text text="{oModelControl>Depot}" wrapping="false" />
 						</template>
 					</Column>
-
                 <Column width="9rem">
 						<m:Label text="Painter Type" />
 						<template>
 							<m:Text text="{oModelControl>PainterType}" wrapping="false" />
 						</template>
 					</Column>
-
-
                     <Column width="9rem">
 						<m:Label text="Painter ArcheType" />
 						<template>
 							<m:Text text="{oModelControl>PainterArcheType}" wrapping="false" />
 						</template>
 					</Column>
-				
-				
-					
-					
-					
-						
-
-
-                  
-
 				</columns>
 			</Table>
-        
-     
           <m:buttons>
             <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
             <m:Button  text="Save" type="Ghost" press="onSavePaitner"/>
-           
         </m:buttons>
-        
-   
     </m:Dialog>
 </core:FragmentDefinition>
