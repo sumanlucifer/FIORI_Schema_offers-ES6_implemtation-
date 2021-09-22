@@ -535,6 +535,7 @@ sap.ui.define([
                     var userData = aContexts[i].getObject();
                     if(userData.Admin){
                          var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                          
                     }
                     else {
                     var painterData=this.getModel().getData("/" + userData.Painter.__ref);
@@ -849,10 +850,11 @@ sap.ui.define([
                     if (aTokens && aTokens.length) {
 				for (var i = 0; i < aTokens.length; i++) {
                     var userData = aTokens[i].getCustomData()[0].getValue();
-                    if(userData.AdminId){
+                    if(userData.AdminId !==null){
                          var painterData=this.getModel().getData("/" + userData.Admin.__ref);
+                         
                     }
-                    else {
+                    else if(userData.Painter !==null){
                     var painterData=this.getModel().getData("/" + userData.Painter.__ref);
                    }
                     //var roleData = this.getModel().getData("/" + userData.Role.__ref);
