@@ -10,7 +10,6 @@
                     </Breadcrumbs>
                 </uxap:breadcrumbs>
             </uxap:ObjectPageHeader>
-            
 		</uxap:headerTitle>
 		<uxap:sections>
 			<uxap:ObjectPageSection title="{i18n>groupName}">
@@ -35,7 +34,6 @@
                                 <RadioButton id="RB3" text="Painter Specific" selected="{= ${objectView>/TargetDetails/TargetFilterType} === 'PAINTER'}"/>
                                 <RadioButton id="RB2" text="Group Specific" selected="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                                 </RadioButtonGroup>
-
 							</VBox>
 						</l:Grid>
 					</uxap:ObjectPageSubSection>
@@ -46,36 +44,28 @@
 					<uxap:ObjectPageSubSection>
 						<l:Grid width="100%" defaultSpan="XL6 L6 M6 S12">
 							<VBox>
-
                 <Label text="{i18n>colZone}" visible="{=${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                 <MultiComboBox id="idZone" editable="{= ${objectView>/sMode} !== 'V'}" selectedKeys="{objectView>/TargetDetails/NotificationGroupZone}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
-
                 <Label text="{i18n>colDivision}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                 <MultiComboBox id="idDivision" editable="{= ${objectView>/sMode} !== 'V'}" selectedKeys="{objectView>/TargetDetails/NotificationGroupDivision}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}" selectionChange="onMultyDivisionChange" items="{ path : '/MasterDivisionSet'}">
 					<core:Item key="{Id}" text="{Id}"/>
 				</MultiComboBox>
-
                 <Label text="{i18n>colDepot}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                 <MultiInput id="multiInputDepotAdd" editable="{= ${objectView>/sMode} !== 'V'}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}" tokens="{objectView>/TargetDetails/NotificationGroupDepot}" valueHelpRequest="onValueHelpRequestedDepot">
 	                <tokens>
                         <Token editable="false" text="{objectView>DepotId}" key="{objectView>DepotId}"/>
                     </tokens>
 	            </MultiInput>
-
                 <Label text="{i18n>colPainterType}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                 <MultiComboBox id="idPainterType" editable="{= ${objectView>/sMode} !== 'V'}" selectedKeys="{objectView>/TargetDetails/NotificationGroupPainterType}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}" items="{path:'/MasterPainterTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<core:Item key="{Id}" text="{PainterType}"/>
 				</MultiComboBox>
-
                 <Label text="{i18n>colPainterArcheType}" visible="{=${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}"/>
                 <MultiComboBox id="idPainterArcheType" editable="{= ${objectView>/sMode} !== 'V'}" selectedKeys="{objectView>/TargetDetails/NotificationGroupPainterArcheType}" visible="{= ${objectView>/TargetDetails/TargetFilterType} === 'GROUP'}" items="{path:'/MasterArcheTypeSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<core:Item key="{Id}" text="{ArcheType}"/>
 				</MultiComboBox>
-
-
-
 							</VBox>
 						</l:Grid>
 					</uxap:ObjectPageSubSection>
@@ -92,7 +82,6 @@
 									<ToolbarSpacer/>
 									<!-- <Button press="addMember" icon="sap-icon://add" type="Emphasized" text="{i18n>btnAddMember}"/> -->
                                      <Button press="onValueHelpRequestedPainter" icon="sap-icon://add" type="Emphasized" text="{i18n>btnAddMember}"/>
-
 								</Toolbar>
 							</headerToolbar>
 							<columns>
@@ -105,14 +94,26 @@
 								<Column>
 									<Text text="{i18n>colEmail}"/>
 								</Column>
-								<!-- <Column>
+                                	<!-- <Column>
 									<Text text="{i18n>colRole}"/>
 								</Column> -->
+								<Column>
+									<Text text="{i18n>colMembershipid}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDevision}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDepot}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colZone}"/>
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem>
 									<cells>
-                                    <FlexBox >
+                                    <FlexBox>
                                     <Text text="{objectView>Admin/Name}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/Name}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
@@ -124,9 +125,25 @@
                                     <Text text="{objectView>Admin/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
+                                      <FlexBox >
+                                    <Text text="{objectView>Admin/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{objectView>Admin/DivisionId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/DivisionId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                    <FlexBox >
+                                    <Text text="{objectView>Admin/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{objectView>Admin/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
                                     <!-- <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/> -->
-									</cells>
-								</ColumnListItem>
+                                    </cells>
+                                </ColumnListItem>
 							</items>
 						</Table>
                         <Table id="List1" width="auto"
@@ -148,9 +165,21 @@
 								<Column>
 									<Text text="{i18n>colEmail}"/>
 								</Column>
-								<!-- <Column>
+                                	<!-- <Column>
 									<Text text="{i18n>colRole}"/>
 								</Column> -->
+                                <Column>
+									<Text text="{i18n>colMembershipid}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDevision}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDepot}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colZone}"/>
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem>
@@ -166,6 +195,22 @@
 									<FlexBox >
                                     <Text text="{objectView>Admin/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{objectView>Admin/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{objectView>Admin/DivisionId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/DivisionId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                    <FlexBox >
+                                    <Text text="{objectView>Admin/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{objectView>Admin/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
+                                    <Text text="{objectView>Painter/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
                                     <!-- <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/> -->
 									</cells>
