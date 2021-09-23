@@ -3630,15 +3630,16 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                         }
                         if(m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")){
-                            //m1["Offer"]["IsMultiRewardAllowed"]
+                            m1["Offer"]["IsMultiRewardAllowed"]=true
                             if(m1["Offer"]["IsMultiRewardAllowed"]){
                                  oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
                                 oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 3);
                             }
 
                         }
+                         oModelControl.setProperty("/ProfilePageBuzy", false);
                         this._DialogOfferRedeem.open();
-                        oModelControl.setProperty("/ProfilePageBuzy", false);
+                       
                     }.bind(this),
                     error: function () {
                         oModelControl.setProperty("/ProfilePageBuzy", false);
@@ -3668,11 +3669,7 @@ sap.ui.define(
                 var oModelC2 = oView.getModel("oModelControl2");
                 oModelC2.setProperty("/ProfilePageBuzy", true);
                 var iSelctedIndex = oModelC2.getProperty("/OfferRedeemDlg/RbtnRedeemType");
-                //console.log(iSelctedIndex)
-                // if (iSelctedIndex < 0) {
-                //     MessageToast.show("Kindly Select at least one of the reward to redeem.");
-                //     return;
-                // }
+                
 
                 var oRedemptionType = {
                     0: "POINTS_TRANSFER",
@@ -3682,7 +3679,7 @@ sap.ui.define(
                 }
                 var sPainterId = oModelC2.getProperty("/PainterId");
                 var sProgressId = oModelC2.getProperty("/OfferRedeemDlg/UUID");
-                //console.log(sProgressId, sPainterId);
+                console.log(sProgressId,  oRedemptionType[iSelctedIndex] ,sPainterId);
                 var oData = oView.getModel();
                 var othat = this;
                 oData.read("/RedeemOffer", {
