@@ -133,16 +133,20 @@ sap.ui.define([
         },
         // assets change
         onAssetChange: function (oEvent) {
-            var oView = this.getView();
+             var oView = this.getView();
             var oModel = oView.getModel("oModelView");
             var oObject = oEvent
                 .getSource()
                 .getBindingContext("oModelView")
                 .getObject();
-            console.log(oObject);
-            if (oObject["VehicleTypeId"] === 11) {
-                oObject["VehicleName"] = null;
+            
+            if (oObject["VehicleTypeId"] === 5) {
+                oObject["VehicleName"] = "None";
             }
+            if(oObject["VehicleTypeId"] !== 5 && oObject["VehicleName"] == "None" ){
+                oObject["VehicleName"] = "";
+            }
+
 
         },
 

@@ -21,6 +21,7 @@ sap.ui.define(
         "sap/m/UploadCollectionParameter",
         "sap/m/Title",
         "sap/m/Token",
+        "../model/formatter",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
     ],
@@ -49,6 +50,7 @@ sap.ui.define(
         UploadCollectionParameter,
         Title,
         Token,
+        formatter,
         custDatatype1,
         custDatatype2
     ) {
@@ -56,6 +58,7 @@ sap.ui.define(
 
         return BaseController.extend(
             "com.knpl.pragati.ContactPainter.controller.AddEditPainter", {
+                formatter:formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
 
@@ -1284,7 +1287,7 @@ sap.ui.define(
                     oModel.refresh(true);
                     this._setASTTbleFlag();
                 },
-              
+
                 onPressRemoveAsset: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
