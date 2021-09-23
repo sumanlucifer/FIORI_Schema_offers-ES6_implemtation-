@@ -3630,7 +3630,7 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                         }
                         if(m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")){
-                            m1["Offer"]["IsMultiRewardAllowed"]=true
+                            //m1["Offer"]["IsMultiRewardAllowed"]=true
                             if(m1["Offer"]["IsMultiRewardAllowed"]){
                                  oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
                                 oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 3);
@@ -3679,7 +3679,7 @@ sap.ui.define(
                 }
                 var sPainterId = oModelC2.getProperty("/PainterId");
                 var sProgressId = oModelC2.getProperty("/OfferRedeemDlg/UUID");
-                console.log(sProgressId,  oRedemptionType[iSelctedIndex] ,sPainterId);
+                //console.log(sProgressId,  oRedemptionType[iSelctedIndex] ,sPainterId);
                 var oData = oView.getModel();
                 var othat = this;
                 oData.read("/RedeemOffer", {
