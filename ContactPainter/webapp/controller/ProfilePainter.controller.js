@@ -3614,6 +3614,7 @@ sap.ui.define(
                 var sPath = "/PainterOfferSet(" + "'" + mPram1 + "'" + ")";
                 oModelControl.setProperty("/ProfilePageBuzy", true);
                 oData.read(sPath, {
+                    expand:"Offer",
                     success: function (m1) {
                         if (m1["AdditionalRewardPoints"]) {
                             oModelControl.setProperty("/OfferRedeemDlg/AddPoints", "+ " + m1["AdditionalRewardPoints"]);
