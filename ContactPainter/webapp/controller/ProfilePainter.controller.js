@@ -3633,7 +3633,7 @@ sap.ui.define(
                             //m1["Offer"]["IsMultiRewardAllowed"]
                             if(m1["Offer"]["IsMultiRewardAllowed"]){
                                  oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
-                                  oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 4);
+                                oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 3);
                             }
 
                         }
@@ -3677,7 +3677,8 @@ sap.ui.define(
                 var oRedemptionType = {
                     0: "POINTS_TRANSFER",
                     1: "BANK_TRANSFER",
-                    2: "GIFT_REDEMPTION"
+                    2: "GIFT_REDEMPTION",
+                    3:"MULTI_REWARDS"
                 }
                 var sPainterId = oModelC2.getProperty("/PainterId");
                 var sProgressId = oModelC2.getProperty("/OfferRedeemDlg/UUID");
