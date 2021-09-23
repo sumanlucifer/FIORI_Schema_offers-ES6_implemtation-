@@ -138,6 +138,7 @@ sap.ui.define(
                         UUID: "",
                         AddPoints: "",
                         AddCash: "",
+                        IsMultiRewardAllowed:false
                     },
                     IctabBarLoyalty: "accrued",
                     ProfilePageBuzy: true,
@@ -3614,7 +3615,9 @@ sap.ui.define(
                 var sPath = "/PainterOfferSet(" + "'" + mPram1 + "'" + ")";
                 oModelControl.setProperty("/ProfilePageBuzy", true);
                 oData.read(sPath, {
-                    expand:"Offer",
+                      urlParameters: {
+                        "$expand": "Offer"
+                    },
                     success: function (m1) {
                         if (m1["AdditionalRewardPoints"]) {
                             oModelControl.setProperty("/OfferRedeemDlg/AddPoints", "+ " + m1["AdditionalRewardPoints"]);
@@ -3625,6 +3628,14 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", "+ " + m1["AdditionalRewardCash"]);
                         } else {
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
+                        }
+                        if(m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")){
+                            //m1["Offer"]["IsMultiRewardAllowed"]
+                            if(m1["Offer"]["IsMultiRewardAllowed"]){
+                                 oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
+                                  oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 4);
+                            }
+
                         }
                         this._DialogOfferRedeem.open();
                         oModelControl.setProperty("/ProfilePageBuzy", false);
