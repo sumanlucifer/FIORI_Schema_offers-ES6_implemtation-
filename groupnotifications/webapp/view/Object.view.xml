@@ -129,7 +129,9 @@
                                     <Text text="{objectView>Admin/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
-                                                                         <FlexBox >
+
+                                    
+                                     <FlexBox >
                                     <Text text="{objectView>Admin/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/ZoneId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
