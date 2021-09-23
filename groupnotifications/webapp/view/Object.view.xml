@@ -214,6 +214,7 @@
                                     <Text text="{objectView>Admin/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
+                                    
                                     <!-- <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/> -->
 									</cells>
 								</ColumnListItem>
