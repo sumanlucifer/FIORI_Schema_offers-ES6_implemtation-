@@ -2614,8 +2614,11 @@ sap.ui.define(
                         othat.getView().getModel().refresh(true);
                     },
                     error: function (a) {
-                        var sMessage =
-                            "Unable to update a painter due to the server issues";
+                         var sMessage =
+                                "Unable to update a painter due to the server issues";
+                            if (a.statusCode == 409) {
+                                sMessage = "Painter already exist with the same mobile number.";
+                            }
 
                         MessageBox.error(sMessage, {
                             title: "Error Code: " + a.statusCode,

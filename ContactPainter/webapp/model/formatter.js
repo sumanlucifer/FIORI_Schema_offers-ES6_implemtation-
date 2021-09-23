@@ -155,6 +155,15 @@ sap.ui.define([
             }
             return "NA";
         },
+         fmtCheckAsssetType: function (mParam) {
+            var sPath = "/MasterVehicleTypeSet(" + mParam + ")";
+            var oData = this.getView().getModel().getProperty(sPath);
+            if (oData !== undefined && oData !== null) {
+                if (oData["VehicleType"] === "None") {
+                    return false;
+                }
+            }
+        },
         fmtOfferProgressStatus:function(mParam1){
             if(mParam1==="COMPLETED"){
                 return "Completed"
