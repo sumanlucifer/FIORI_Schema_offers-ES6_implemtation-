@@ -219,7 +219,8 @@ sap.ui.define(
                         Table4: [],
                         Table5: [],
                         Table6: [],
-                        Table7: []
+                        Table7: [],
+                        Table8: []
 
                     },
                     oData: {
@@ -330,7 +331,6 @@ sap.ui.define(
                     OfferProductValueCondition: [],
                     OfferRedemptionCycleCondition: [],
                     IsSpecificAchieverCount: false,
-                   
                     OfferAchiever:[],
                     OfferConditions: {
                         IsEarnedPointsCondition: false,
