@@ -185,6 +185,7 @@ sap.ui.define(
                         BrReqCash: 0,
                         BrReqPercent: 0,
                         Bns2ReqPercent: 0,
+                        MultiReward:0
                     },
                     MultiEnabled: {
                         PCat1: false,
