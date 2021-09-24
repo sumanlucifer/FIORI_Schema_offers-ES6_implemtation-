@@ -3956,6 +3956,7 @@ sap.ui.define(
                     IsSpecificBonusProduct: "AppProd4",
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
+                    IsMultiRewardAllowed:"MultiReward"
                 };
                 var oModelControl = oView.getModel("oModelControl");
                 var oPropRbtn = oModelControl.getProperty("/Rbtn");
@@ -4772,6 +4773,23 @@ sap.ui.define(
             onUploadMisMatch1: function () {
                 MessageToast.show("Kindly upload a file of type XLSX");
                 this.onpressfrag();
+            },
+            /*SlbSample radio buttons*/
+             onRbChnageSlbSample: function (oEvent) {
+                var oView = this.getView();
+                var oSource = oEvent.getSource();
+                var sKey = oSource.getSelectedIndex();
+                var sPath = oSource.getBinding("selectedIndex").getPath();
+                var sPathArray = sPath.split("/");
+                var oModelControl = oView.getModel("oModelControl");
+               
+                oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
+                // if (sKey == 1) {
+                //     oModelControl.setProperty("/Rbtn/" + sPathArray[2], true);
+                // } else {
+                //     oModelControl.setProperty("/Rbtn/" + sPathArray[2], false);
+                // }
+               
             },
             /**
              * Adds a history entry in the FLP page history
