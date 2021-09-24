@@ -116,7 +116,7 @@
                     <!-- Publish -->
                     <Button press="onOpenRemarksDialog('PUBLISHED')" text="{i18n>Publish}" type="Success" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnPublished'}" />
                     <!-- Redemption Button -->
-                    <Button enabled="{= ${RedemptionStatus}==='REDEEMING' ? false:true }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
+                         <Button enabled="{parts:['RedemptionStatus','oModelControl3>/Buttons/RedeemEnable' ],formatter:'.formatter.btnRedeenAllEnable' }" press=".onApplyRedemption" text="{i18n>RedeemAll}" type="Ghost" class="sapUiTinyMarginEnd" visible="{parts:['RedemptionStatus','oModelControl3>/Buttons/Redeem'],formatter:'.formatter.btnRedeemCheck'}" />
                     <!-- SAVE Button -->
                     <Button press="onDetailPageSave" enabled="{= ${OfferStatus}!=='EXPIRED'}" visible="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" />
                 </HBox>
