@@ -314,10 +314,10 @@ sap.ui.define(
 
                     function onYes() {
                         var data = sPath + "/IsArchived";
-                        this.getModel().update(data, {
+                        this.getModel().update(sPath, {
                             IsArchived: true
                         }, {
-                            success: this.showToast.bind(this, "MSG_SUCCESS_BANNERIMAGE_REMOVE")
+                            success: this.showToast.bind(this, "MSG_SUCCESS_BANNER_IMAGE_REMOVE")
                         });
                     }
                     this.showWarning("MSG_CONFIRM_DELETE", onYes);
