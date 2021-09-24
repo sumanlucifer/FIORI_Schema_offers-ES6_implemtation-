@@ -195,9 +195,9 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
-            /// open fragment for local table data old //
+        
             onpressfrag: function (itemModel) {
-                // this._PainterMultiDialoge = this.getView().byId("Painters1");
+                this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
                 oView.getModel("oModelControl").setProperty("/ofragmentModel", itemModel);
                 return new Promise(function (resolve, reject) {
@@ -4660,6 +4660,57 @@ sap.ui.define(
                 var oTable = oModel.getProperty("/Table/Table8");
                 oTable.splice(sPath[sPath.length - 1], 1);
                 oModel.refresh(true);
+            },
+
+            onStartDateAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
+                var oStartDateAddInfo = oEvent.getSource().getDateValue();
+                var oBject1 = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var sPath1 = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath();
+                var oEndDateAddInfo = oBject1["EndDate"];
+                if (oEndDateAddInfo) {
+                    if (oStartDateAddInfo > oEndDateAddInfo) {
+                        MessageToast.show(
+                            "Kindly select a date less than Bonus Validity To date."
+                        );
+                        oModelControl.setProperty(sPath1 + "/StartDate", null);
+                        return;
+                    }
+                }
+               
+            },
+
+            	 onEndDateAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
+                var oEndDate1 = oEvent.getSource().getDateValue();
+                var oBject2 = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                
+                var sPath2 = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath();
+                var oStartDate1 = oBject2["StartDate"];
+                if (oStartDate1) {
+                    if (oStartDate1 > oEndDate1) {
+                        MessageToast.show(
+                            "Kindly select a date more than Bonus Validity From date."
+                        );
+                        oModelControl.setProperty(sPath2 + "/EndDate", null);
+                        return;
+                    }
+                }
+                
             },
             onPressSaveAddInfo: function (oEvent) {
                 var oView = this.getView();

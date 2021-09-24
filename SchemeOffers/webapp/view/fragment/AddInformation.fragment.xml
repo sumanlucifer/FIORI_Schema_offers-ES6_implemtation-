@@ -5,10 +5,10 @@
     xmlns:core="sap.ui.core">
     <VBox>
     <items>
-                <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" />
+                <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
                 <RadioButtonGroup columns="2" select=".onRbRRDialogAddInfo" selectedIndex="{oModelView>/InputType}">
                         <buttons>
-                            <RadioButton text="{i18n>all}"/>
+                            <RadioButton text="{i18n>All}"/>
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
                         </buttons>
                     </RadioButtonGroup>
@@ -42,14 +42,14 @@
                             <!-- <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                <Label  visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>              
                             <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
-                   <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl>StartDate}"/>       
+                   <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl>StartDate}"/>       
                         </VBox>
                         <!-- <VBox visible="{= ${oModelView>/InputType}===1 }"> -->
                          <VBox >
                             <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                    <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />          
                             <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" value="{path:'oModelControl>EndDate'}" /> -->
-                    <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />     
+                    <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" change= ".onEndDateAddInfo" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />     
                         </VBox>
                         <VBox >
                             <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>AchieverCount'}" /> -->
