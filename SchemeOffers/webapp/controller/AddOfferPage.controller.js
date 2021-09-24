@@ -329,6 +329,9 @@ sap.ui.define(
                     OfferEarnedPointsCondition: [],
                     OfferProductValueCondition: [],
                     OfferRedemptionCycleCondition: [],
+                    IsSpecificAchieverCount: false,
+                   
+                    OfferAchiever:[],
                     OfferConditions: {
                         IsEarnedPointsCondition: false,
                         IsProductValueCondition: false,

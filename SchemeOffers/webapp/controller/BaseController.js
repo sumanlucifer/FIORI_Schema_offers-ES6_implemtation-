@@ -86,13 +86,6 @@ sap.ui.define(
                     this._verifyImages(oEvent.mParameters.files[0], oFileUploder);
                 }
             },
-            onFileUploadChange1: function (oEvent) {
-                //console.log(oEvent);
-                var oFileUploder = oEvent.getSource();
-                if (oEvent.getParameter("newValue")) {
-                    this.onpressfrag();
-                }
-            },
             _verifyImages: function (files, oFileUploder) {
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
@@ -133,13 +126,80 @@ sap.ui.define(
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("RouteLandingPage", {}, true);
             },
-            onpressfrag: function () {
-                this._PainterMultiDialoge = this.getView().byId("Painters1");
+            onFileUploadChange1: function (oEvent) {
+                //console.log(oEvent);
+                var oFileUploder = oEvent.getSource();
+                if (oEvent.getParameter("newValue")) {
+                    this.onUploadPainter1();
+                }
+            },
+            onUploadComplete: function (oEvent) {
+            },
+            /// calling upload api///
+            onUploadPainter1: function () {
+                var that = this;
+                var fU = this.getView().byId("idOfferFileUploader");
+                var domRef = fU.getFocusDomRef();
+                var file = domRef.files[0];
+                var oView = that.getView();
+                var dataModel = oView.getModel("oModelControl");
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value",
+                    data: file,
+                    method: "PUT",
+                    headers: that.getView().getModel().getHeaders(),
+                    contentType: "text/csv",
+                    processData: false,
+                    statusCode: {
+                        206: function (result) {
+                            that._SuccessPainter(result, 206);
+                        },
+                        200: function (result) {
+                            that._SuccessPainter(result, 200);
+                        },
+                        202: function (result) {
+                            that._SuccessPainter(result, 202);
+                        },
+                        400: function (result) {
+                            that._SuccessPainter(result, 400);
+                        }
+                    },
+                    error: function (error) {
+                        // that._Error(error);
+                    }
+                };
+                $.ajax(settings);
+            },
+            // upload csv file ///
+            _SuccessPainter: function (result, oStatus) {
+                var that = this;
+                var oView = that.getView();
+                var oModelView = oView.getModel("oModelControl");
+                oModelView.setProperty("/busy", false);
+                if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
+                    if (result.ValidPainter.length == 0) {
+                        that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
+                    } else {
+                        var selectedItems = result.ValidPainter;
+                        var itemModel = selectedItems.map(function (item) {
+                            return {
+                                PainterMobile: item.PainterMobile,
+                                PainterName: item.PainterName,
+                                isSelected: true
+                            };
+                        });
+                        that.onpressfrag(itemModel);
+                        that.getView().byId("idOfferFileUploader").setValue("");
+                    }
+                    // oView.getModel("oModelControl")
+                    //         .setProperty("/MultiCombo/Painters", itemModel);
+                }
+            },
+            /// open fragment for local table data old //
+            onpressfrag: function (itemModel) {
+                // this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
-                var dataModel = oView.getModel("FragData");
-                this.getView().setModel(dataModel, "DataModel");
-                var fragmentData = oView.getModel("DataModel").getData();
-                oView.getModel("oModelControl").setProperty("/ofragmentModel", fragmentData.OfferSet);
+                oView.getModel("oModelControl").setProperty("/ofragmentModel", itemModel);
                 return new Promise(function (resolve, reject) {
                     if (!this._CsvDialoge) {
                         Fragment.load({
@@ -179,8 +239,8 @@ sap.ui.define(
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
                 var itemModel = selectedItems.map(function (item) {
                     return {
-                        PainterId: item.PainterId,
-                        PainterName: item.PainterType
+                        PainterMobile: item.PainterMobile,
+                        PainterName: item.PainterName
                     };
                 });
                 oView.getModel("oModelControl")
@@ -4547,8 +4607,129 @@ sap.ui.define(
                     });
                     oPayLoad["OfferRedemptionCycleCondition"] = aFinalArray2;
                 }
+                var aTable8 = oModel.getProperty("/Table/Table8");
+                var aFinalArray4 = [];
+                if (aTable8.length > 0) {
+                    var oDataTbl3 = aTable8.map(function (a) {
+                        return Object.assign({}, a);
+                    });
+                    var aCheckProp4 = [
+                        "StartDate",
+                        "EndDate",
+                        "AchieverCount",
+                    ];
+                    aFinalArray4 = oDataTbl3.filter(function (ele) {
+                        for (var a in aCheckProp4) {
+                            if (ele[aCheckProp4[a]] === "") {
+                                ele[aCheckProp4[a]] = "";
+                            }
+                        }
+                        delete ele["editable"];
+                        return ele;
+                    });
+                    oPayLoad["OfferAchiever"] = aFinalArray4;
+                }
                 promise.resolve(oPayLoad);
                 return promise;
+            },
+            onRemovedAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var oTable = oModel.getProperty("/Table/Table8");
+                oTable.splice(sPath[sPath.length - 1], 1);
+                oModel.refresh(true);
+            },
+            onPressSaveAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var oCells = oEvent.getSource().getParent().getParent().getCells();
+                var oValidator = new Validator();
+                var cFlag = oValidator.validate(oCells);
+                var bFlag = true;
+                if (!cFlag) {
+                    MessageToast.show(
+                        "Kindly Input Mandatory Fields In Proper Format To Continue."
+                    );
+                    return;
+                }
+                if (
+                    !oObject["StartDate"] &&
+                    !oObject["EndDate"] &&
+                    !oObject["AchieverCount"]
+                ) {
+                    MessageToast.show(
+                        "Kindly Enter Either start Date  Or End Date Cash or Count."
+                    );
+                    return;
+                }
+                if (bFlag && cFlag) {
+                    oObject["editable"] = false;
+                    if (!oObject["RewardGiftName"]) {
+                        if (oObject.hasOwnProperty("RewardGiftId")) {
+                            oObject["RewardGiftId"] = null;
+                        }
+                    }
+                    oModel.refresh(true);
+                }
+                //oModel.refresh(true);
+            },
+            onPressAddInformation: function (oEvent) {
+                var oView = this.getView();
+                var oModel = this.getView().getModel("oModelControl");
+                var oRewardDt12 = oModel.getProperty("/Table/Table8");
+                if (oEvent !== "add") {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+                    oObject["editable"] = true;
+                    oModel.refresh();
+                } else {
+                    var bFlag = true;
+                    var sLength = oModel.getProperty("/Fields/RewardRationCount");
+                    if (oRewardDt12.length > 0 && oRewardDt12.length <= sLength) {
+                        for (var prop of oRewardDt12) {
+                            if (prop["editable"] == true) {
+                                bFlag = false;
+                                MessageToast.show(
+                                    "Save or delete the existing data in the table before adding a new data"
+                                );
+                                return;
+                                break;
+                            }
+                        }
+                    }
+                    // if (oRewardDt12.length >= sLength) {
+                    //     MessageToast.show(
+                    //         "For the current Offer type we can add only " +
+                    //         sLength +
+                    //         " item(s)."
+                    //     );
+                    //     bFlag = false;
+                    //     return;
+                    // }
+                    if (bFlag == true) {
+                        oRewardDt12.push({
+                            editable: true,
+                            StartDate: "",
+                            EndDate: "",
+                            AchieverCount: ""
+                        });
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
+                    oModel.refresh();
+                }
             },
             onViewAttachment: function (oEvent) {
                 var oButton = oEvent.getSource();
