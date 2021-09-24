@@ -239,6 +239,7 @@ sap.ui.define(
                         ParentOffer: 0,
                         BrReqVol: 0,
                         BrReqCash: 0,
+                        MultiReward:0
                     },
                     MultiEnabled: {
                         PCat1: false,
@@ -1300,6 +1301,7 @@ sap.ui.define(
                         BrReqVol: 0,
                         BrReqCash: 0,
                         Bns2ReqPercent: 0,
+                        MultiReward:0
                     },
                     MultiEnabled: {
                         PCat1: false,
@@ -1511,6 +1513,7 @@ sap.ui.define(
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
                     IsSpecificPainter: "AppPainter",
+                    IsMultiRewardAllowed:"MultiReward"
                 };
                 for (var a in aBoleanProps) {
                     oMultiEnabled[aBoleanProps[a]] = oData[a];
