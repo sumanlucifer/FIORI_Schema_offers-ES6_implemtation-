@@ -4609,7 +4609,7 @@ sap.ui.define(
                 var aTable8 = oModel.getProperty("/Table/Table8");
                 var aFinalArray4 = [];
                 if (aTable8.length > 0) {
-                    var oDataTbl3 = aTable8.map(function (a) {
+                    var oDataTbl8 = aTable8.map(function (a) {
                         return Object.assign({}, a);
                     });
                     var aCheckProp4 = [
@@ -4617,10 +4617,27 @@ sap.ui.define(
                         "EndDate",
                         "AchieverCount",
                     ];
-                    aFinalArray4 = oDataTbl3.filter(function (ele) {
+                    aFinalArray4 = oDataTbl8.filter(function (ele) {
                         for (var a in aCheckProp4) {
+                            // if (ele[aCheckProp4[a]] === "") {
+                            //     // ele[aCheckProp4[a]] = "";
+                            //      ele[aCheckProp4[a]] = parseInt(ele[aCheckProp4[a]]);
+                            // }
                             if (ele[aCheckProp4[a]] === "") {
-                                ele[aCheckProp4[a]] = "";
+                                ele[aCheckProp4[a]] = null;
+                            }
+                            if (aCheckProp4[a] === "AchieverCount") {
+                                if (ele[aCheckProp4[a]]) {
+                                    ele[aCheckProp4[a]] = parseInt(ele[aCheckProp4[a]]);
+                                }
+                            }
+                           
+                            if (aCheckProp4[a] === "EndDate") {
+                                if (ele[aCheckProp4[a]]) {
+                                    ele[aCheckProp4[a]] = new Date(
+                                        ele[aCheckProp4[a]].setHours(23, 59, 59, 999)
+                                    );
+                                }
                             }
                         }
                         delete ele["editable"];
@@ -4721,8 +4738,8 @@ sap.ui.define(
                     if (bFlag == true) {
                         oRewardDt12.push({
                             editable: true,
-                            StartDate: "",
-                            EndDate: "",
+                            StartDate: null,
+                            EndDate: null,
                             AchieverCount: ""
                         });
                         //relvalue and editable properties are added here and will be removed in the postsave function
