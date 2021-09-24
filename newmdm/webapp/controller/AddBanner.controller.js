@@ -61,18 +61,13 @@ sap.ui.define([
 
         _initData: function (mParMode, mKey, mPainterId) {
             var oViewModel = new JSONModel({
-                sIctbTitle: mParMode == "add" ? "Add" : "Edit",
-                busy: false,
-                mPainterKey: mKey,
-                addBannerImage: {
-                    Url: "",
-                    StartTime: null,
-                    EndTime: null
-                }
+                Url: "",
+                StartTime: null,
+                EndTime: null
             });
 
             if (mParMode == "add") {
-                this._showFormFragment("AddBannerForm");
+                this._showFormFragment("BannerImageForm");
                 this.getView().unbindElement();
             } else {
             }
@@ -80,7 +75,9 @@ sap.ui.define([
             var oDataControl = {
                 StartTime: "",
                 EndTime: "",
-                showPreviewImageButton: false
+                showPreviewImageButton: false,
+                busy: false,
+                mode: "add"
             };
 
             var oModelControl = new JSONModel(oDataControl);
@@ -149,13 +146,13 @@ sap.ui.define([
         },
 
         _fnAddFile: function (oItem) {
-            this.getModel("oModelView").setProperty("/oImage", {
+            this.getModel("oModelControl").setProperty("/oImage", {
                 Image: oItem.Image, //.slice(iIndex),
                 FileName: oItem.name,
                 IsArchived: false
             });
             this.getModel("oModelControl").setProperty("/showPreviewImageButton", true);
-            this.getModel("oModelView").refresh();
+            this.getModel("oModelControl").refresh();
         },
 
         _showFormFragment: function (sFragmentName) {
@@ -166,7 +163,6 @@ sap.ui.define([
             this._getFormFragment(sFragmentName).then(function (oVBox) {
                 oView.addDependent(oVBox);
                 objSection.addItem(oVBox);
-                // othat._setUploadCollectionMethod.call(othat);
             });
         },
 
@@ -180,8 +176,6 @@ sap.ui.define([
             }).then(function (oFragament) {
                 return oFragament;
             });
-            // }
-
             return this._formFragments;
         },
 
@@ -209,14 +203,12 @@ sap.ui.define([
         },
 
         onPressSave: function () {
-            this.sServiceURI = this.getOwnerComponent(this)
-                .getManifestObject()
-                .getEntry("/sap.app").dataSources.mainService.uri;
+            // this.sServiceURI = this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
             var oModel = this.getView().getModel("oModelView");
             var oValidator = new Validator();
             var oVbox = this.getView().byId("idVbx");
             var bValidation = oValidator.validate(oVbox, true);
-            // var oModelContrl = oView.getModel("oModelControl");
+            var oModelContrl = this.getView().getModel("oModelControl");
 
             if (bValidation == false) {
                 MessageToast.show(
@@ -224,7 +216,7 @@ sap.ui.define([
                 );
             }
             if (bValidation) {
-                if (oModel.getProperty("/oImage")) {
+                if (oModelContrl.getProperty("/oImage")) {
                     this._postDataToSave();
                 } else {
                     MessageToast.show(
@@ -238,12 +230,11 @@ sap.ui.define([
         _postDataToSave: function () {
             var oView = this.getView();
             var oViewModel = oView.getModel("oModelView");
-            var oAddData = oViewModel.getProperty("/addBannerImage");
-
+            var oAddData = oViewModel.getData();
+            debugger;
             var oPayLoad = this._ReturnObjects(oAddData);
             var othat = this;
             var oData = this.getView().getModel();
-            debugger;
             var c1, c2;
             c1 = this._postCreateData(oPayLoad);
             c1.then(function (oData) {
@@ -258,15 +249,11 @@ sap.ui.define([
             debugger;
             var that = this;
             var promise = jQuery.Deferred();
-            var oImage = this.getView().getModel("oModelView").getProperty("/oImage");
+            var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
+            var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
             return new Promise(function (res, rej) {
-            //     if (!oImage) {
-            //         res();
-            //         return;
-            //     }
-
                 var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + oData.Id + "/$value",
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
                     data: oImage.Image,
                     method: "PUT",
                     headers: that.getModel().getHeaders(),
@@ -280,8 +267,8 @@ sap.ui.define([
                     }
                 };
 
-                $.ajax(settings);
-                // return promise;
+                // $.ajax(settings);
+                return promise;
             });
         },
 
@@ -291,7 +278,7 @@ sap.ui.define([
             var othat = this;
             oData.create("/MobileBannerImageSet", oPayLoad, {
                 success: function (oData) {
-                    MessageToast.show("Banner Image Successfully Created");
+                    // MessageToast.show("Banner Image Successfully Created");
                     promise.resolve(oData);
                 },
                 error: function (a) {

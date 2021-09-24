@@ -1,9 +1,0 @@
-/node_modules/
-/dist/
-
-# auto generated wildcard
-knpl-influencer-web/MDM/.env1
-# auto generated wildcard
-MDM/.env1
-# auto generated wildcard
-MasterDataManagement/.env18

@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.knpl.pragati.MDM.controller.BannerDetail" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:uxap="sap.uxap" height="100%">
-    <Page busy="{oModelView>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
+    <Page busy="{oModelControl2>/busy}" busyIndicatorDelay="0" showNavButton="false" showHeader="true" navButtonPress="navPressBack">
         <headerContent>
             <Bar>
                 <contentLeft>
@@ -16,8 +16,8 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="navPressBackBanner"/>
-                <Button width="7%" text="{i18n>Edit}" type="Accept" press="handleEditPress"/>
-                <Button width="7%" text="{i18n>Save}" type="Emphasized" press="handleSavePress"/>
+                <Button width="7%" text="{i18n>Edit}" type="Accept" press="handleEditPress" visible="{= (${oModelControl2>/mode} === 'Display') }"/>
+                <Button width="7%" text="{i18n>Save}" type="Emphasized" press="handleSavePress" visible="{= (${oModelControl2>/mode} === 'Edit') }"/>
             </Toolbar>
         </footer>
     </Page>

@@ -3,8 +3,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
-    "sap/m/library"
-], function (Controller, UIComponent, mobileLibrary) {
+    "sap/m/library",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (Controller, UIComponent, mobileLibrary,MessageToast,MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -72,7 +74,36 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailSubject"),
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
+        },
+
+        showWarning: function (sMsgTxt, _fnYes) {
+            var that = this;
+            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        _fnYes && _fnYes.apply(that);
+                    }
+                }
+            });
+        },
+
+        showError: function (sMsg) {
+            var that = this;
+            MessageBox.error(sMsg, {
+                title: that.getResourceBundle().getText("TtlError")
+            });
+
+        },
+
+		/*
+		 * Common function for showing toast messages
+		 * @param sMsgTxt: i18n Key string
+		 */
+        showToast: function (sMsgTxt) {
+            MessageToast.show(this.getResourceBundle().getText(sMsgTxt));
         }
+
     });
 
 });

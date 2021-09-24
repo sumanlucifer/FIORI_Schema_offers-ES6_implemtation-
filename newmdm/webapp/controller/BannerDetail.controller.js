@@ -35,11 +35,6 @@ sap.ui.define(
             formatter: formatter,
 
             onInit: function () {
-                var oViewModel = new JSONModel({
-                    busy: false,
-                    editable: false,
-                });
-                this.getView().setModel(oViewModel, "oModelView");
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.getRoute("bannerDetail").attachMatched(this._onRouteMatched, this);
                 sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -62,7 +57,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                debugger;
+                // To display or View details use bindElement
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/MobileBannerImageSet(" + oProp + ")"
@@ -74,17 +69,18 @@ sap.ui.define(
 
             _initData: function (oProp) {
                 var oData = {
-                    modeEdit: false,
-                    bindProp: "MobileBannerImageSet('" + oProp + "')",
+                    mode: "Display",
+                    bindProp: "MobileBannerImageSet(" + oProp + ")",
                 };
                 var oModel = new JSONModel(oData);
-                this.getView().setModel(oModel, "oModelControl");
+                this.getView().setModel(oModel, "oModelControl2");
                 var othat = this;
 
                 othat._showFormFragment("DetailBannerImage");
             },
 
             _showFormFragment: function (sFragmentName) {
+                debugger;
                 var objSection = this.getView().byId("oVbxSmtTbl");
                 var oView = this.getView();
                 objSection.destroyItems();
@@ -105,13 +101,159 @@ sap.ui.define(
                 }).then(function (oFragament) {
                     return oFragament;
                 });
-                // }
-
                 return this._formFragments;
             },
 
             handleCancelPress: function () {
                 this.onNavBack();
+            },
+
+            handleEditPress: function (oEvent) {
+                var oView = this.getView();
+                var oCtrl2Model = oView.getModel("oModelControl2");
+                oCtrl2Model.setProperty("/mode", "Edit");
+                var oProp = oCtrl2Model.getProperty("/bindProp");
+                var c1, c2, c3;
+                debugger;
+                var othat = this;
+                c1 = othat._initEditData(oProp);
+                c1.then(function () {
+                    c2 = othat._showFormFragment("BannerImageForm");
+                });
+            },
+
+            _initEditData: function (oProp) {
+                debugger;
+                var promise = jQuery.Deferred();
+                var oView = this.getView();
+                var oDataValue = "";
+                var othat = this;
+
+                oView.getModel("oModelControl2").setProperty("/busy", true);
+                // return new Promise((resolve, reject) => {
+                    oView.getModel().read("/" + oProp, {
+                        success: function (data) {
+                            var oViewModel = new JSONModel(data);
+                            oView.getModel("oModelControl2").setProperty("/busy", false);
+                            oView.setModel(oViewModel, "oModelView");
+                            promise.resolve(data);
+                        },
+                        error: function (a) {
+                            oView.getModel("oModelControl2").setProperty("/busy", false);
+                            promise.reject(a);
+                        },
+                    });
+                    return promise;
+                // })
+
+            },
+
+            handleSavePress: function () {
+                var oModel = this.getView().getModel("oModelView");
+                var oValidator = new Validator();
+                var oVbox = this.getView().byId("idVbx");
+                var bValidation = oValidator.validate(oVbox, true);
+                var oModelContrl = this.getView().getModel("oModelControl");
+                debugger;
+                if (bValidation == false) {
+                    MessageToast.show(
+                        "Kindly input all the mandatory(*) fields to continue."
+                    );
+                }
+                if (bValidation) {
+                    // if (oModelContrl.getProperty("/oImage")) {
+                        this._postDataToSave();
+                    // } else {
+                    //     MessageToast.show(
+                    //         "Kindly upload Banner Image to continue."
+                    //     );
+                    // }
+
+                }
+            },
+
+            _postDataToSave: function () {
+                var oView = this.getView();
+                var oViewModel = oView.getModel("oModelView");
+                var oAddData = oViewModel.getData();
+                debugger;
+                var oPayLoad = this._ReturnObjects(oAddData);
+                var othat = this;
+                var oData = this.getView().getModel();
+                var c1, c2;
+                c1 = this._postCreateData(oPayLoad);
+                c1.then(function (oData) {
+                    c2 = othat._ImageUpload(oData);
+                    c2.then(function () {
+                        othat.navPressBack();
+                    });
+                });
+            },
+
+            _ImageUpload: function (oData) {
+                debugger;
+                var that = this;
+                var promise = jQuery.Deferred();
+                var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
+                var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
+                return new Promise(function (res, rej) {
+                    var settings = {
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                        data: oImage.Image,
+                        method: "PUT",
+                        headers: that.getModel().getHeaders(),
+                        contentType: "image/png",
+                        processData: false,
+                        success: function (x) {
+                            promise.resolve(x);
+                        },
+                        error: function (a) {
+                            promise.reject(a);
+                        }
+                    };
+
+                    // $.ajax(settings);
+                    return promise;
+                });
+            },
+
+            _postCreateData: function (oPayLoad) {
+                var promise = jQuery.Deferred();
+                var oData = this.getView().getModel();
+                var othat = this;
+                oData.create("/MobileBannerImageSet", oPayLoad, {
+                    success: function (oData) {
+                        // MessageToast.show("Banner Image Successfully Created");
+                        promise.resolve(oData);
+                    },
+                    error: function (a) {
+                        MessageBox.error(
+                            "Unable to create Banner Image due to server issues",
+                            {
+                                title: "Error Code: " + a.statusCode,
+                            }
+                        );
+                        promise.reject(a);
+                    },
+                });
+                return promise;
+            },
+
+            _ReturnObjects: function (mParam) {
+                var obj = Object.assign({}, mParam);
+                var oNew = Object.entries(obj).reduce(
+                    (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
+                    {}
+                );
+
+                var patt1 = /Id/g;
+
+                for (var i in oNew) {
+                    if (i.match(patt1) !== null) {
+                        oNew[i] = parseInt(oNew[i]);
+                    }
+                }
+                return oNew;
             },
 
             // _setDisplayData: function (oProp) {
@@ -141,32 +283,21 @@ sap.ui.define(
             // },
 
             // _initEditData: function (oProp) {
-            //     var promise = jQuery.Deferred();
-            //     var oView = this.getView();
-            //     var oDataValue = "";
+            //     var oViewModel = new JSONModel({
+            //         busy: false,
+            //         editable: false,
+            //     });
+            //     this.getView().setModel(oViewModel, "oModelView");
+
+            //     var oData = {
+            //         mode: "Display",
+            //         bindProp: "MobileBannerImageSet('" + oProp + "')",
+            //     };
+            //     var oModel = new JSONModel(oData);
+            //     this.getView().setModel(oModel, "oModelControl");
             //     var othat = this;
-            //     //var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
 
-            //     oView.getModel("oModelControl").setProperty("/bBusy", true);
-            //     return new Promise((resolve, reject) => {
-            //         oView.getModel().read("/" + oProp, {
-
-            //             success: function (data) {
-            //                 var oViewModel = new JSONModel(data);
-            //                 oView.getModel("oModelControl").setProperty("/bBusy", false);
-            //                 oViewModel.setProperty("/Remark", "")
-            //                 oView.setModel(oViewModel, "oModelView");
-            //                 resolve(data)
-
-            //             },
-            //             error: function () {
-            //                 oView.getModel("oModelControl").setProperty("/bBusy", false);
-
-            //             },
-            //         });
-            //     })
-
-
+            //     othat._showFormFragment("BannerImageForm");
             // },
 
         }
