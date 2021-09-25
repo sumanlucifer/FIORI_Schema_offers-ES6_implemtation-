@@ -12,6 +12,12 @@
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
                         </buttons>
                     </RadioButtonGroup>
+
+
+
+
+
+                    
                     <Table  visible="{oModelControl>/addInfoEditible}" items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
