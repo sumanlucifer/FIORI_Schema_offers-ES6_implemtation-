@@ -6,7 +6,7 @@
     <VBox>
     <items>
                 <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
-                <RadioButtonGroup columns="2" select=".onRbRRDialogAddInfo" selectedIndex="{oModelView>/InputType}">
+                <RadioButtonGroup columns="2" select="onRbRRDialogAddInfo"  >
                         <buttons>
                             <RadioButton text="{i18n>All}"/>
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
@@ -18,7 +18,7 @@
 
 
                     
-                    <Table  visible="{oModelControl>/addInfoEditible}" items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                    <Table id="tableId"  visible="{oModelControl>/OfferType/AddInformation}"   items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Slab}"/> -->

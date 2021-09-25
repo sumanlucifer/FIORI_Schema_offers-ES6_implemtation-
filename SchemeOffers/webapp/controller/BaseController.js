@@ -195,7 +195,6 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
-        
             onpressfrag: function (itemModel) {
                 this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
@@ -227,6 +226,19 @@ sap.ui.define(
                     oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", true);
                 else
                     oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", false);
+            },
+            onRbRRDialogAddInfo: function (oEvent) {
+                var oView = this.getView();
+               oView.getModel("oModelControl").setProperty("/Table/Table8",[]);
+                var oselected = oEvent.getSource().getSelectedIndex();
+                if (oselected === 1) {
+                    oView.getModel("oModelControl").setProperty("/IsSpecificAchieverCount", true);
+                    oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", true);
+                   
+                } else {
+                    oView.getModel("oModelControl").setProperty("/IsSpecificAchieverCount", false);
+                    oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", false);
+                }
             },
             // created for painter specipic //
             onSavePaitner: function (oEvent) {
@@ -3956,7 +3968,7 @@ sap.ui.define(
                     IsSpecificBonusProduct: "AppProd4",
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
-                    IsMultiRewardAllowed:"MultiReward"
+                    IsMultiRewardAllowed: "MultiReward"
                 };
                 var oModelControl = oView.getModel("oModelControl");
                 var oPropRbtn = oModelControl.getProperty("/Rbtn");
@@ -4632,7 +4644,6 @@ sap.ui.define(
                                     ele[aCheckProp4[a]] = parseInt(ele[aCheckProp4[a]]);
                                 }
                             }
-                           
                             if (aCheckProp4[a] === "EndDate") {
                                 if (ele[aCheckProp4[a]]) {
                                     ele[aCheckProp4[a]] = new Date(
@@ -4661,7 +4672,6 @@ sap.ui.define(
                 oTable.splice(sPath[sPath.length - 1], 1);
                 oModel.refresh(true);
             },
-
             onStartDateAddInfo: function (oEvent) {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
@@ -4684,10 +4694,8 @@ sap.ui.define(
                         return;
                     }
                 }
-               
             },
-
-            	 onEndDateAddInfo: function (oEvent) {
+            onEndDateAddInfo: function (oEvent) {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
                 var oEndDate1 = oEvent.getSource().getDateValue();
@@ -4695,7 +4703,6 @@ sap.ui.define(
                     .getSource()
                     .getBindingContext("oModelControl")
                     .getObject();
-                
                 var sPath2 = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -4710,7 +4717,6 @@ sap.ui.define(
                         return;
                     }
                 }
-                
             },
             onPressSaveAddInfo: function (oEvent) {
                 var oView = this.getView();
@@ -4826,21 +4832,19 @@ sap.ui.define(
                 this.onpressfrag();
             },
             /*SlbSample radio buttons*/
-             onRbChnageSlbSample: function (oEvent) {
+            onRbChnageSlbSample: function (oEvent) {
                 var oView = this.getView();
                 var oSource = oEvent.getSource();
                 var sKey = oSource.getSelectedIndex();
                 var sPath = oSource.getBinding("selectedIndex").getPath();
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
-               
                 oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
                 // if (sKey == 1) {
                 //     oModelControl.setProperty("/Rbtn/" + sPathArray[2], true);
                 // } else {
                 //     oModelControl.setProperty("/Rbtn/" + sPathArray[2], false);
                 // }
-               
             },
             /**
              * Adds a history entry in the FLP page history

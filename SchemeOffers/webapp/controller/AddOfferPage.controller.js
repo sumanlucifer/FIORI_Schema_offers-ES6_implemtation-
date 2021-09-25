@@ -100,6 +100,7 @@ sap.ui.define(
                         EarnedPointsCondition: false,
                         ProductValueCondition: false,
                         RedemptionCycleCondition: false,
+                        AddInformation:false
                     },
                     Search: {
                         PainterVh: {
