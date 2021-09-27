@@ -930,8 +930,73 @@
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
             <Title titleStyle="H3" text="6. {i18n>AdditionalInformation}"/>
         </Toolbar>
-        <MessageStrip visible="{= ${OfferTypeId}!==1 }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
-        <f:Form editable="false">
+        <!-- <MessageStrip visible="{= ${OfferTypeId}!==1 }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/> -->
+          <VBox>
+    <items>
+                <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
+                <RadioButtonGroup  editable="false" columns="2" select="onRbRRDialogAddInfo"  selectedIndex="{= ${IsSpecificAchieverCount} === false ? 0 : 1 }">
+                        <buttons>
+                            <RadioButton text="{i18n>All}"/>
+                            <RadioButton text="{i18n>SpecificPaintercount}"/>
+                        </buttons>
+                    </RadioButtonGroup>
+                    <Table id="tableId"  visible="{IsSpecificAchieverCount}"   items="{path: 'oModelControl2>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+            <headerToolbar>
+                <Toolbar>
+                    <!-- <Title text="{i18n>Slab}"/> -->
+                    <!-- <ToolbarSpacer />
+                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddInformation('add')"/> -->
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <!-- <Column visible="{= ${oModelView>/InputType}===0 }"> -->
+                  <Column>
+                    <Label text="{i18n>tblColStartDate}" visible="true" required="true"/>
+                </Column>
+                <Column>
+                    <Label text="{i18n>EndDate}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>count}" />
+                </Column>
+                <!-- <Column>
+                    <Text text="{i18n>tblColAction}"/>
+                </Column> -->
+            </columns>
+            <items>
+                <ColumnListItem press="onListItemPress">
+                    <cells>
+                        <VBox>
+                            <!-- <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
+               <Label  visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>              
+                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
+                   <DatePicker  editable="false" visible="{= ${oModelControl>editable} === true }" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl2>StartDate}"/>       
+                        </VBox>
+                        <!-- <VBox visible="{= ${oModelView>/InputType}===1 }"> -->
+                         <VBox >
+                            <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
+                   <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />          
+                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" value="{path:'oModelControl>EndDate'}" /> -->
+                    <DatePicker editable="false" visible="{= ${oModelControl>editable} === true }" required="true" change= ".onEndDateAddInfo" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl2>EndDate}" />     
+                        </VBox>
+                        <VBox >
+                            <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>AchieverCount'}" /> -->
+                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>AchieverCount'}" />
+                            <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>AchieverCount'}" /> -->
+                        <Text visible="{= ${oModelControl>editable} === true }"  width="100%" text="{path:'oModelControl2>AchieverCount'}" /> 
+                        </VBox>
+                        <!-- <HBox>
+                            <Button  visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddInformation"></Button>
+                            <Button  visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveAddInfo"></Button>
+                            <Button  icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedAddInfo"></Button>
+                        </HBox> -->
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+                </items>
+    </VBox>
+        <!-- <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
             </f:layout>
@@ -946,6 +1011,6 @@
                     </f:formElements>
                 </f:FormContainer>
             </f:formContainers>
-        </f:Form>
+        </f:Form> -->
     </VBox>
 </core:FragmentDefinition>
