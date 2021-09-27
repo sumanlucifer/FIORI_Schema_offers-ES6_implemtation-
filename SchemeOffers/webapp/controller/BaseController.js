@@ -229,19 +229,19 @@ sap.ui.define(
             },
             onRbRRDialogAddInfo: function (oEvent) {
                 var oView = this.getView();
-               oView.getModel("oModelControl").setProperty("/Table/Table8",[]);
-                var oselected = oEvent.getSource().getSelectedIndex();
-                if (oselected === 1) {
-                    oView.getModel("oModelView").setProperty("/IsSpecificAchieverCount", true);
+                oView.getModel("oModelControl").setProperty("/Table/Table8", []);
+                var oSource = oEvent.getSource();
+                var sKey = oSource.getSelectedIndex();
+                var sPath = oSource.getBinding("selectedIndex").getPath();
+                var sPathArray = sPath.split("/");
+                var oModelControl = oView.getModel("oModelControl");
+                if (sKey === 1) {
                     oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", true);
-                   
                 } else {
-                    oView.getModel("oModelView").setProperty("/IsSpecificAchieverCount", false);
                     oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", false);
                 }
+                oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
             },
-
-            
             // created for painter specipic //
             onSavePaitner: function (oEvent) {
                 var oView = this.getView();
@@ -1476,6 +1476,9 @@ sap.ui.define(
                 oModel.setProperty("/Table/Table2", []);
                 oModel.setProperty("/Table/Table5", []);
             },
+
+           
+
             onRbRRDialogVolume2: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3971,7 +3974,7 @@ sap.ui.define(
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
                     IsMultiRewardAllowed: "MultiReward",
-                    IsSpecificAchieverCount:"AddFlag"
+                    IsSpecificAchieverCount: "AddFlag"
                 };
                 var oModelControl = oView.getModel("oModelControl");
                 var oPropRbtn = oModelControl.getProperty("/Rbtn");

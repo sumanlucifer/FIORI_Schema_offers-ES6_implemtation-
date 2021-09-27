@@ -1184,7 +1184,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition";
+                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
@@ -1344,7 +1344,7 @@ sap.ui.define(
                             Table5: [],
                             Table6: [],
                             Table7: [],
-                             Table8: []
+                            Table8: []
                         },
                         oData: {
                             Products: [],
@@ -1529,7 +1529,9 @@ sap.ui.define(
                         IsSpecificBonusPack: "AppPacks4",
                         IsSpecificBonusRewardRatio: "BRewards",
                         IsSpecificPainter: "AppPainter",
-                        IsMultiRewardAllowed: "MultiReward"
+                        IsMultiRewardAllowed: "MultiReward",
+                        IsSpecificAchieverCount:"AddFlag"
+
                     };
                     for (var a in aBoleanProps) {
                         oMultiEnabled[aBoleanProps[a]] = oData[a];
