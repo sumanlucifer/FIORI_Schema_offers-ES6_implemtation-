@@ -274,7 +274,9 @@ sap.ui.define(
                             Table4: [],
                             Table5: [],
                             Table6: [],
-                            Table7: []
+                            Table7: [],
+                            Table8: []
+
                         },
                         OfferType: {
                             BasicInformation: true,
@@ -487,7 +489,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition";
+                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + sPath, {
                             urlParameters: {
@@ -572,6 +574,12 @@ sap.ui.define(
                         oModelControl2.setProperty(
                             "/Table/Table7",
                             oData["OfferRedemptionCycleCondition"]["results"]
+                        );
+                    }
+                    if (oData["OfferAchiever"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table8",
+                            oData["OfferAchiever"]["results"]
                         );
                     }
 
@@ -1335,7 +1343,8 @@ sap.ui.define(
                             Table4: [],
                             Table5: [],
                             Table6: [],
-                            Table7: []
+                            Table7: [],
+                             Table8: []
                         },
                         oData: {
                             Products: [],
@@ -1479,6 +1488,12 @@ sap.ui.define(
                         oModelControl2.setProperty(
                             "/Table/Table7",
                             oData["OfferRedemptionCycleCondition"]["results"]
+                        );
+                    }
+                    if (oData["OfferAchiever"]["results"].length > 0) {
+                        oModelControl2.setProperty(
+                            "/Table/Table8",
+                            oData["OfferAchiever"]["results"]
                         );
                     }
 

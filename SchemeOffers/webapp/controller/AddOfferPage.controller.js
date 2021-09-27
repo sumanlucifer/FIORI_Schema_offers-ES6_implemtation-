@@ -186,7 +186,10 @@ sap.ui.define(
                         BrReqCash: 0,
                         BrReqPercent: 0,
                         Bns2ReqPercent: 0,
-                        MultiReward:0
+                        MultiReward:0,
+                        AddFlag:0
+                       
+
                     },
                     MultiEnabled: {
                         PCat1: false,
@@ -410,6 +413,8 @@ sap.ui.define(
                 //oSteps.goToStep(cView.byId("idStep1"));
                 //oSteps.setShowNextButton(false);
             },
+
+            
 
             _getFormFragment: function (sFragmentName) {
                 var oView = this.getView();

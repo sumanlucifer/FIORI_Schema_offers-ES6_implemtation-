@@ -232,14 +232,16 @@ sap.ui.define(
                oView.getModel("oModelControl").setProperty("/Table/Table8",[]);
                 var oselected = oEvent.getSource().getSelectedIndex();
                 if (oselected === 1) {
-                    oView.getModel("oModelControl").setProperty("/IsSpecificAchieverCount", true);
+                    oView.getModel("oModelView").setProperty("/IsSpecificAchieverCount", true);
                     oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", true);
                    
                 } else {
-                    oView.getModel("oModelControl").setProperty("/IsSpecificAchieverCount", false);
+                    oView.getModel("oModelView").setProperty("/IsSpecificAchieverCount", false);
                     oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", false);
                 }
             },
+
+            
             // created for painter specipic //
             onSavePaitner: function (oEvent) {
                 var oView = this.getView();
@@ -3968,7 +3970,8 @@ sap.ui.define(
                     IsSpecificBonusProduct: "AppProd4",
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
-                    IsMultiRewardAllowed: "MultiReward"
+                    IsMultiRewardAllowed: "MultiReward",
+                    IsSpecificAchieverCount:"AddFlag"
                 };
                 var oModelControl = oView.getModel("oModelControl");
                 var oPropRbtn = oModelControl.getProperty("/Rbtn");
