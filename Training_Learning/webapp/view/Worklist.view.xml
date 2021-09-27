@@ -133,7 +133,14 @@
                                         <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{TotalEnrollments}"/>
-                                        <Link text="{TotalQuizSubmissions}" press="onPressCount"/>
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
+
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
@@ -185,7 +192,13 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Text text="{PainterAttendanceCount}"/>
                                         <!-- <Text text="{RewardPoints}"/> -->
-                                        <Link text="{TotalQuizSubmissions}" press="onPressCount"/>
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
 									</cells>
 								</ColumnListItem>
 							</items>
@@ -248,7 +261,13 @@
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{UniqueViewCounts}"/>
                                         <Text text="{TotalViewCounts}"/>
-                                        <Link text="{TotalQuizSubmissions}" press="onPressCount"/>
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>

@@ -791,7 +791,11 @@ sap.ui.define([
         /*Training attented count*/
         onPressCount: function (oEvent) {
             var trainingId=oEvent.getSource().getBindingContext().getObject('Id');
-            console.log(trainingId); 
+            console.log(trainingId);  
+                this.getRouter().navTo("PainterList",{
+                     trainingId:trainingId
+                });
+
             //set training-id in oCtrlModel and pass in frag view  
             // var oButton = oEvent.getSource(),
             //     oView = this.getView();

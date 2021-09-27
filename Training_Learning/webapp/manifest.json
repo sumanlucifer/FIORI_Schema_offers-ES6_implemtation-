@@ -130,7 +130,15 @@
                     "target": [
                         "TargetTrainingTab"
                     ]
+                },
+                {
+                    "name": "PainterList",
+                    "pattern": "PainterList/{trainingId}",
+                    "target": [
+                        "TargetPainterList"
+                    ]
                 }
+
             ],
             "targets": {
                 "worklist": {
@@ -152,6 +160,12 @@
                     "clearControlAggregation": false,
                     "viewId": "TrainingTab",
                     "viewName": "TrainingTab"
+                },
+                "TargetPainterList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "PainterList",
+                    "viewId": "painterList"
                 },
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",
