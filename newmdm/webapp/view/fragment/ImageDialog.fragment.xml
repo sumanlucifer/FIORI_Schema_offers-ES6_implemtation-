@@ -2,7 +2,7 @@
     <Dialog title="{i18n>banerImage}" afterClose="onDialogClose">
         <content>
             <Carousel class="sapUiContentPadding" loop="true">
-                <Image src="{ parts : [{path : 'oModelControl>/__metadata'}, { path : 'oModelControl>/oImage' } ] , formatter : '.formatter.giveImage' }" alt="No Banner Image found"/>
+                <Image src="{path : 'oModelControl2>/oImage' }" alt="No Banner Image found"/>
             </Carousel>
         </content>
         <endButton>

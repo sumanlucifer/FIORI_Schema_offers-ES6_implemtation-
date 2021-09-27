@@ -23,10 +23,10 @@ sap.ui.define([
         /* lifecycle methods                                           */
         /* =========================================================== */
 
-		/**
-		 * Called when the worklist controller is instantiated.
-		 * @public
-		 */
+        /**
+         * Called when the worklist controller is instantiated.
+         * @public
+         */
         onInit: function () {
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
@@ -57,7 +57,7 @@ sap.ui.define([
             this._initData("add", "", sId);
         },
 
-        _GetServiceData: function () { },
+        _GetServiceData: function () {},
 
         _initData: function (mParMode) {
             var oViewModel = new JSONModel({
@@ -69,8 +69,7 @@ sap.ui.define([
             if (mParMode == "add") {
                 this._showFormFragment("BannerImageForm");
                 this.getView().unbindElement();
-            } else {
-            }
+            } else {}
 
             var oDataControl = {
                 StartTime: "",
@@ -184,12 +183,12 @@ sap.ui.define([
         /* =========================================================== */
 
 
-		/**
-		 * Event handler  for navigating back.
-		 * It there is a history entry we go one step back in the browser history
-		 * If not, it will replace the current entry of the browser history with the worklist route.
-		 * @public
-		 */
+        /**
+         * Event handler  for navigating back.
+         * It there is a history entry we go one step back in the browser history
+         * If not, it will replace the current entry of the browser history with the worklist route.
+         * @public
+         */
         navPressBack: function () {
             var oHistory = History.getInstance();
             var sPreviousHash = oHistory.getPreviousHash();
@@ -231,7 +230,7 @@ sap.ui.define([
             var oView = this.getView();
             var oViewModel = oView.getModel("oModelView");
             var oAddData = oViewModel.getData();
-            debugger;
+            //debugger;
             var oPayLoad = this._ReturnObjects(oAddData);
             var othat = this;
             var oData = this.getView().getModel();
@@ -240,35 +239,40 @@ sap.ui.define([
             c1.then(function (oData) {
                 c2 = othat._ImageUpload(oData);
                 c2.then(function () {
-                    othat.navPressBack();
+                    othat.navPressBackBanner();
                 });
             });
         },
 
         _ImageUpload: function (oData) {
-            debugger;
+            //debugger;
             var that = this;
             var promise = jQuery.Deferred();
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
             var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
             // return new Promise(function (res, rej) {
-            var settings = {
-                url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
-                data: oImage.Image,
-                method: "PUT",
-                headers: that.getModel().getHeaders(),
-                contentType: "image/png",
-                processData: false,
-                success: function (x) {
-                    promise.resolve(x);
-                },
-                error: function (a) {
-                    promise.reject(a);
-                }
-            };
+            return new Promise(function (resolve, reject) {
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                    data: oImage.Image,
+                    method: "PUT",
+                    headers: that.getModel().getHeaders(),
+                    contentType: "image/png",
+                    processData: false,
+                    success: function (x) {
+                        resolve(x);
+                        MessageToast.show("Banner Image Successfully Uploaded");
+                    },
+                    error: function (a) {
+                        reject(a);
+                        MessageToast.show("Banner Image creation failed");
+                    }
+                };
 
-            // $.ajax(settings);
-            return promise;
+                $.ajax(settings);
+            })
+
+
             // });
         },
 
@@ -276,29 +280,30 @@ sap.ui.define([
             var promise = jQuery.Deferred();
             var oData = this.getView().getModel();
             var othat = this;
-            oData.create("/MobileBannerImageSet", oPayLoad, {
-                success: function (oData) {
-                    // MessageToast.show("Banner Image Successfully Created");
-                    promise.resolve(oData);
-                },
-                error: function (a) {
-                    MessageBox.error(
-                        "Unable to create Banner Image due to server issues",
-                        {
-                            title: "Error Code: " + a.statusCode,
-                        }
-                    );
-                    promise.reject(a);
-                },
-            });
-            return promise;
+            return new Promise(function (resolve, reject) {
+                oData.create("/MobileBannerImageSet", oPayLoad, {
+                    success: function (oData) {
+                        // MessageToast.show("Banner Image Successfully Created");
+                        resolve(oData);
+                    },
+                    error: function (a) {
+                        MessageBox.error(
+                            "Unable to create Banner Image due to server issues", {
+                                title: "Error Code: " + a.statusCode,
+                            }
+                        );
+                        reject(a);
+                    },
+                });
+            })
+
+
         },
 
         _ReturnObjects: function (mParam) {
             var obj = Object.assign({}, mParam);
             var oNew = Object.entries(obj).reduce(
-                (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)),
-                {}
+                (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
             );
 
             var patt1 = /Id/g;

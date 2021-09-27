@@ -39,10 +39,10 @@
                             <Text text="{Title}"/>
                             <Text text="{parts: [ {path: 'StartTime'} ], formatter : '.formatter.formatDateTime' }"/>
                             <Text text="{parts: [ {path: 'EndTime'} ], formatter : '.formatter.formatDateTime' }"/>
-                            <HBox>
-                                <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit"/>
+                            <!-- <HBox> -->
+                                <!-- <Button icon="sap-icon://edit" press="onEdit" type="Transparent" tooltip="Edit"/> -->
                                 <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="Delete"/>
-                            </HBox>
+                            <!-- </HBox> -->
 						</cells> 
                     </ColumnListItem>
                 </items>

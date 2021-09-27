@@ -7,9 +7,9 @@
                 <Text text="{Title}" />
 
                 <Label text="{i18n>banerImage}" />
-                <VBox>
-                    <Button id="imageBtn" icon="sap-icon://attachment-photo" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
-                </VBox>
+               
+                    <Link   press="onImageView" text="View Image" />
+            
                 
                 <core:Title text="   " />
                 <Label text="{i18n>colStartTime}" />
