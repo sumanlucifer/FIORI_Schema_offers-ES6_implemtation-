@@ -20,7 +20,7 @@
                 </headerToolbar>
                 <columns>
                     <Column width="40%">
-						<Text text="{i18n>colUrl}"/>
+						<Text text="{i18n>colTitle}"/>
 					</Column>
                     <Column width="20%">
 						<Text text="{i18n>colStartTime}"/>
@@ -36,7 +36,7 @@
                 <items>
                     <ColumnListItem type="Navigation" press="onListItemPress" >
                        <cells>
-                            <Text text="{Url}"/>
+                            <Text text="{Title}"/>
                             <Text text="{parts: [ {path: 'StartTime'} ], formatter : '.formatter.formatDateTime' }"/>
                             <Text text="{parts: [ {path: 'EndTime'} ], formatter : '.formatter.formatDateTime' }"/>
                             <HBox>

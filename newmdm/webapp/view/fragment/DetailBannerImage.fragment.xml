@@ -1,18 +1,22 @@
 <core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox id="idVbx" width="100%">
-        <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>ViewBImage}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>TtlViewBImage}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>BannerImageDetails}" />
-                <Label text="{i18n>colUrl}" />
-                <Text text="{Url}" />
+                <Label text="{i18n>colTitle}" />
+                <Text text="{Title}" />
 
-                <Label text="{i18n>colStartTime}" />
-                <Text text="{StartTime}" />
-
+                <Label text="{i18n>banerImage}" />
+                <VBox>
+                    <Button id="imageBtn" icon="sap-icon://attachment-photo" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                </VBox>
+                
                 <core:Title text="   " />
+                <Label text="{i18n>colStartTime}" />
+                <Text text="{StartTime}" /> 
+
                 <Label  text="{i18n>colEndTime}"/>
                 <Text text="{EndTime}" />
-
             </f:content>
         </f:SimpleForm>
     </VBox>

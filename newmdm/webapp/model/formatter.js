@@ -48,6 +48,7 @@ sap.ui.define([], function () {
         },
 
         giveImage: function (oMetadata, ImageData) {
+            debugger;
             if (ImageData && ImageData.Image) {
                 return URL.createObjectURL(ImageData.Image);
             }

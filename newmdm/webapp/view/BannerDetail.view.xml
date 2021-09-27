@@ -3,7 +3,7 @@
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>ViewBImage}">
+                    <Breadcrumbs currentLocationText="{= ${oModelControl2>/mode} === 'Display' ? ${i18n>TtlViewBImage} : ${i18n>TtlEditBImage} }">
                         <Link text="{i18n>worklistTitle}" press="navPressBackBanner"/>
                     </Breadcrumbs>
                 </contentLeft>
