@@ -42,7 +42,7 @@
 				</columns>
 			</Table>
           <m:buttons>
-            <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
+            <m:Button text="Cancel" type="Ghost" press="onSaveUploadPainterClose" />
             <m:Button  text="Save" type="Ghost" press="onSaveUploadPainter"/>
         </m:buttons>
     </m:Dialog>

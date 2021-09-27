@@ -100,12 +100,13 @@ sap.ui.define([
             //console.log(oEvent);
             var oFileUploder = oEvent.getSource();
             if (oEvent.getParameter("newValue")) {
+                this.getView().getModel("oModelView").setProperty("/busy", true)
                 this._uploadPainterFile(oEvent.mParameters.files[0]);
             }
         },
         _uploadPainterFile: function (mParam1) {
             //console.log(mParam1);
-            console.log(mParam1)
+
             var oModelView = this.getView().getModel("oModelView");
             var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
             jQuery.ajax({
@@ -153,10 +154,11 @@ sap.ui.define([
                     function (oDialog) {
                         this._CsvDialoge = oDialog;
                         oView.addDependent(this._CsvDialoge);
-                        
+
                         oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
                         oView.byId("idUploadedPainterTbl").selectAll();
                         this._CsvDialoge.open();
+                        oModelView.setProperty("/busy", false);
 
                     }.bind(this)
                 );
@@ -164,6 +166,7 @@ sap.ui.define([
                 this._CsvDialoge.open();
                 oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
                 oView.byId("idUploadedPainterTbl").selectAll();
+                oModelView.setProperty("/busy", false);
 
             }
 
@@ -186,8 +189,15 @@ sap.ui.define([
                 }
             }
             oModelView.setProperty("/TrainingDetails/TrainingPainters", aSetPainter);
-           
+
             this._CsvDialoge.close();
+        },
+        onSaveUploadPainterClose: function () {
+            if (this._CsvDialoge) {
+                this._CsvDialoge.close();
+                this._CsvDialoge.destroy();
+                delete this._CsvDialoge;
+            }
         },
 
 
