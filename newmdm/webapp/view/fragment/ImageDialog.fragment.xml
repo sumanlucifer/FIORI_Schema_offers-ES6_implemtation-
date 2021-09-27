@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="{i18n>colThumbnailImage}" afterClose="onDialogClose">
+    <Dialog title="{i18n>banerImage}" afterClose="onDialogClose">
         <content>
             <Carousel class="sapUiContentPadding" loop="true">
-                <Image src="{ parts : [{path : 'oModelView>__metadata'}, { path : 'oModelControl>/oImage' } ] , formatter : '.formatter.giveImage' }" alt="No Thumbnail Image found"/>
+                <Image src="{ parts : [{path : 'oModelControl>/__metadata'}, { path : 'oModelControl>/oImage' } ] , formatter : '.formatter.giveImage' }" alt="No Banner Image found"/>
             </Carousel>
         </content>
         <endButton>

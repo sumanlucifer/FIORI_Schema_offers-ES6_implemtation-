@@ -59,9 +59,9 @@ sap.ui.define([
 
         _GetServiceData: function () { },
 
-        _initData: function (mParMode, mKey, mPainterId) {
+        _initData: function (mParMode) {
             var oViewModel = new JSONModel({
-                Url: "",
+                Title: "",
                 StartTime: null,
                 EndTime: null
             });
@@ -77,7 +77,7 @@ sap.ui.define([
                 EndTime: "",
                 showPreviewImageButton: false,
                 busy: false,
-                mode: "add"
+                mode: "Add"
             };
 
             var oModelControl = new JSONModel(oDataControl);
@@ -251,25 +251,25 @@ sap.ui.define([
             var promise = jQuery.Deferred();
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
             var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
-            return new Promise(function (res, rej) {
-                var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
-                    data: oImage.Image,
-                    method: "PUT",
-                    headers: that.getModel().getHeaders(),
-                    contentType: "image/png",
-                    processData: false,
-                    success: function (x) {
-                        promise.resolve(x);
-                    },
-                    error: function (a) {
-                        promise.reject(a);
-                    }
-                };
+            // return new Promise(function (res, rej) {
+            var settings = {
+                url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                data: oImage.Image,
+                method: "PUT",
+                headers: that.getModel().getHeaders(),
+                contentType: "image/png",
+                processData: false,
+                success: function (x) {
+                    promise.resolve(x);
+                },
+                error: function (a) {
+                    promise.reject(a);
+                }
+            };
 
-                // $.ajax(settings);
-                return promise;
-            });
+            // $.ajax(settings);
+            return promise;
+            // });
         },
 
         _postCreateData: function (oPayLoad) {

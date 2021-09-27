@@ -68,6 +68,13 @@ sap.ui.define(
             },
 
             _initData: function (oProp) {
+                var oDataControl = {
+                    showPreviewImageButton: true,
+                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value",
+                };
+                var oModelControl = new JSONModel(oDataControl);
+                this.getView().setModel(oModelControl, "oModelControl");
+
                 var oData = {
                     mode: "Display",
                     bindProp: "MobileBannerImageSet(" + oProp + ")",
@@ -76,11 +83,21 @@ sap.ui.define(
                 this.getView().setModel(oModel, "oModelControl2");
                 var othat = this;
 
-                othat._showFormFragment("DetailBannerImage");
+                var sPath = "/MobileBannerImageSet(" + oProp + ")";
+                this.getModel().read(sPath, {
+                    success: function (data) {
+                        debugger;
+                        var oModelControl = othat.getModel("oModelControl");
+                        oModelControl.setProperty("/__metadata", data.__metadata);
+                        othat.getView().setModel(oModelControl, "oModelControl");
+                        othat._showFormFragment("DetailBannerImage");
+                     }
+                });
             },
 
             _showFormFragment: function (sFragmentName) {
                 debugger;
+                var meta = this.getView().getModel("oModelControl").getProperty("/__metadata");
                 var objSection = this.getView().byId("oVbxSmtTbl");
                 var oView = this.getView();
                 objSection.destroyItems();
@@ -131,21 +148,86 @@ sap.ui.define(
 
                 oView.getModel("oModelControl2").setProperty("/busy", true);
                 // return new Promise((resolve, reject) => {
-                    oView.getModel().read("/" + oProp, {
-                        success: function (data) {
-                            var oViewModel = new JSONModel(data);
-                            oView.getModel("oModelControl2").setProperty("/busy", false);
-                            oView.setModel(oViewModel, "oModelView");
-                            promise.resolve(data);
-                        },
-                        error: function (a) {
-                            oView.getModel("oModelControl2").setProperty("/busy", false);
-                            promise.reject(a);
-                        },
-                    });
-                    return promise;
+                oView.getModel().read("/" + oProp, {
+                    success: function (data) {
+                        var oViewModel = new JSONModel(data);
+                        oView.getModel("oModelControl2").setProperty("/busy", false);
+                        oView.setModel(oViewModel, "oModelView");
+                        promise.resolve(data);
+                    },
+                    error: function (a) {
+                        oView.getModel("oModelControl2").setProperty("/busy", false);
+                        promise.reject(a);
+                    },
+                });
+                return promise;
                 // })
 
+            },
+
+            onUpload: function (oEvent) {
+                var oFile = oEvent.getSource().FUEl.files[0];
+                this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+            },
+
+            handleTypeMissmatch: function () {
+
+            },
+
+            onImageView: function (oEvent) {
+                var oButton = oEvent.getSource();
+                var oView = this.getView();
+                var oThat = this;
+                if (!oThat.ImageDialog) {
+                    Fragment.load({
+                        name: "com.knpl.pragati.MDM.view.fragment.ImageDialog",
+                        controller: oThat,
+                    }).then(
+                        function (oDialog) {
+                            oView.addDependent(oDialog);
+                            oThat.ImageDialog = oDialog;
+                            oDialog.open();
+                        });
+                } else {
+                    oThat.ImageDialog.open();
+                }
+            },
+
+            onPressCloseImageDialog: function () {
+                this.ImageDialog.close();
+            },
+
+            getImageBinary: function (oFile) {
+                var oFileReader = new FileReader();
+                var sFileName = oFile.name;
+                return new Promise(function (res, rej) {
+
+                    if (!(oFile instanceof File)) {
+                        res(oFile);
+                        return;
+                    }
+
+                    oFileReader.onload = function () {
+                        res({
+                            Image: oFileReader.result,
+                            name: sFileName
+                        });
+                    };
+                    res({
+                        Image: oFile,
+                        name: sFileName
+                    });
+                });
+            },
+
+            _fnAddFile: function (oItem) {
+                this.getModel("oModelControl").setProperty("/oImage", {
+                    Image: oItem.Image, //.slice(iIndex),
+                    FileName: oItem.name,
+                    IsArchived: false
+                });
+                this.getModel("oModelControl").setProperty("/showPreviewImageButton", true);
+                this.getModel("oModelControl").refresh();
             },
 
             handleSavePress: function () {
@@ -161,18 +243,18 @@ sap.ui.define(
                     );
                 }
                 if (bValidation) {
-                    // if (oModelContrl.getProperty("/oImage")) {
-                        this._postDataToSave();
-                    // } else {
-                    //     MessageToast.show(
-                    //         "Kindly upload Banner Image to continue."
-                    //     );
-                    // }
+                    if (oModelContrl.getProperty("/oImage")) {
+                        this._putDataToSave();
+                    } else {
+                        MessageToast.show(
+                            "Kindly upload Banner Image to continue."
+                        );
+                    }
 
                 }
             },
 
-            _postDataToSave: function () {
+            _putDataToSave: function () {
                 var oView = this.getView();
                 var oViewModel = oView.getModel("oModelView");
                 var oAddData = oViewModel.getData();
@@ -181,7 +263,7 @@ sap.ui.define(
                 var othat = this;
                 var oData = this.getView().getModel();
                 var c1, c2;
-                c1 = this._postCreateData(oPayLoad);
+                c1 = this._postUpdateData(oPayLoad);
                 c1.then(function (oData) {
                     c2 = othat._ImageUpload(oData);
                     c2.then(function () {
@@ -217,18 +299,19 @@ sap.ui.define(
                 });
             },
 
-            _postCreateData: function (oPayLoad) {
+            _postUpdateData: function (oPayLoad) {
                 var promise = jQuery.Deferred();
                 var oData = this.getView().getModel();
                 var othat = this;
-                oData.create("/MobileBannerImageSet", oPayLoad, {
+                var path = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
+                oData.update(path, oPayLoad, {
                     success: function (oData) {
                         // MessageToast.show("Banner Image Successfully Created");
                         promise.resolve(oData);
                     },
                     error: function (a) {
                         MessageBox.error(
-                            "Unable to create Banner Image due to server issues",
+                            "Unable to update Banner Image due to server issues",
                             {
                                 title: "Error Code: " + a.statusCode,
                             }

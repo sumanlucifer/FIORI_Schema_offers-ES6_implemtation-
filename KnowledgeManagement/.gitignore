@@ -8,3 +8,7 @@ package-lock.json
 knpl-influencer-web/Catelogue/.env1
 # auto generated wildcard
 knpl-influencer-web/CompanySettings/.env2
+# auto generated wildcard
+knpl-influencer-web/newmdm/.env1
+# auto generated wildcard
+knpl-influencer-web/newmdm/.env2
