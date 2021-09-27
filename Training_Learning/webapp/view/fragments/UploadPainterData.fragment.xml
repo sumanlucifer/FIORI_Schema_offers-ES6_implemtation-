@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+    xmlns:m="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+    xmlns="sap.ui.table"
+    	xmlns:u="sap.ui.unified">
+	  <m:Dialog id="idP" showHeader="false" >
+           	<Table id="idUploadedPainterTbl"
+				rows="{oModelView>/TrainingDetails/TrainingPainters}"
+			  selectionMode="MultiToggle"
+                enableSelectAll="true"
+				
+				ariaLabelledBy="title">
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Painter"/>
+					</m:OverflowToolbar>
+				</extension>
+				<columns>
+                
+					<Column >
+						<m:Label text="Painter Name" />
+						<template>
+							<m:Text text="{oModelView>Name}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column >
+						<m:Label text="Painter Mobile" />
+						<template>
+							<m:Text text="{oModelView>PainterMobile}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column >
+						<m:Label text="Painter Id" />
+						<template>
+							<m:Text text="{oModelView>Id}" wrapping="false" />
+						</template>
+					</Column>
+				
+              
+				</columns>
+			</Table>
+          <m:buttons>
+            <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
+            <m:Button  text="Save" type="Ghost" press="onSaveUploadPainter"/>
+        </m:buttons>
+    </m:Dialog>
+</core:FragmentDefinition>

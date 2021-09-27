@@ -1014,7 +1014,7 @@ sap.ui.define(
                             xUnique.add(ele.getKey());
                         }
                     });
-
+                    console.log(oData)
                     this.getView().getModel("oModelView").setProperty("/TrainingDetails/TrainingPainters", oData);
                     this._oValueHelpDialogP.close();
                 },

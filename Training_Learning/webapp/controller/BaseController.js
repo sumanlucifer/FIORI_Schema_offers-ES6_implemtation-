@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/m/library",
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
-], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment"
+], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox, Fragment) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -80,7 +81,6 @@ sap.ui.define([
             });
         },
         onModelPropertyChange: function (oEvent, sModel) {
-            debugger;
             this.getModel(sModel).setProperty("/bChange", true);
         },
 
@@ -105,18 +105,34 @@ sap.ui.define([
         },
         _uploadPainterFile: function (mParam1) {
             //console.log(mParam1);
-            var sUrl =  "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
+            console.log(mParam1)
+            var oModelView = this.getView().getModel("oModelView");
+            var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
             jQuery.ajax({
                 method: "PUT",
                 url: sUrl,
                 cache: false,
-                contentType: false,
+                contentType: "text/csv",
                 processData: false,
                 data: mParam1,
-                success: function (data) {
-                    console.log(data);
-                    MessageToast.show("Painter Data succesfully uploaded")
-                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.ValidPainter.length > 0) {
+                        var selectedItems = result.ValidPainter;
+                        var itemModel = selectedItems.map(function (item) {
+                            return {
+                                Name: item.PainterName,
+                                PainterId: item.Id,
+                                Id: item.Id,
+                                PainterMobile: item.PainterMobile
+                            };
+                        });
+                        MessageToast.show("Painter Data succesfully uploaded");
+
+                        this._onpressfrag(itemModel);
+                    }
+
+                }.bind(this),
                 error: function (data) {
                     console.log(data)
                 },
@@ -124,6 +140,56 @@ sap.ui.define([
 
 
         },
+        _onpressfrag: function (itemModel) {
+            this._PainterMultiDialoge = this.getView().byId("Painters1");
+            var oView = this.getView();
+            var oModelView = oView.getModel("oModelView");
+            if (!this._CsvDialoge) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "com.knpl.pragati.Training_Learning.view.fragments.UploadPainterData",
+                    controller: this,
+                }).then(
+                    function (oDialog) {
+                        this._CsvDialoge = oDialog;
+                        oView.addDependent(this._CsvDialoge);
+                        
+                        oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
+                        oView.byId("idUploadedPainterTbl").selectAll();
+                        this._CsvDialoge.open();
+
+                    }.bind(this)
+                );
+            } else {
+                this._CsvDialoge.open();
+                oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
+                oView.byId("idUploadedPainterTbl").selectAll();
+
+            }
+
+
+        },
+        onSaveUploadPainter: function () {
+            var oView = this.getView();
+            var oModelView = oView.getModel("oModelView");
+            var oTable = oView.byId("idUploadedPainterTbl");
+            var aSelections = oTable.getSelectedIndices();
+            var oRows = oTable.getRows();
+            var aSetPainter = [];
+            var oBindingContext, obj;
+            for (var x of aSelections) {
+                oBindingContext = oRows[x].getBindingContext("oModelView");
+                if (oBindingContext) {
+                    obj = oBindingContext.getObject();
+                    aSetPainter.push(obj)
+
+                }
+            }
+            oModelView.setProperty("/TrainingDetails/TrainingPainters", aSetPainter);
+           
+            this._CsvDialoge.close();
+        },
+
 
         /*
          * Common function for showing toast messages
