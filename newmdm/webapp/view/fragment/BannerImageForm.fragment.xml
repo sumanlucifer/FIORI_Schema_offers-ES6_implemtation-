@@ -6,12 +6,6 @@
                 <Label text="{i18n>colTitle}" />
                 <Input required="true" value="{path:'oModelView>/Title',type:'sap.ui.model.type.String',constraints:{minLength:1}}" />
 
-                <Label text="{i18n>colStartTime}" />
-                <DateTimePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartTime'}" value="{path:'oModelControl>/StartTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy hh:mm a'},pattern:'dd/MM/yyyy hh:mm a',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="startTime" placeholder="DD/MM/YYYY HH:mm:ss" required="true"/>
-
-                <Label  text="{i18n>colEndTime}"/>
-                <DateTimePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndTime'}" value="{path:'oModelControl>/EndTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy hh:mm a'},pattern:'dd/MM/yyyy hh:mm a',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="endTime" placeholder="DD/MM/YYYY HH:mm:ss" required="true"/>
-
                 <Label text="Upload Banner Image"/>
                 <HBox>
                     <VBox>
@@ -32,12 +26,18 @@
                                 <HBox>
                                     <ObjectAttribute title="File Type" text=".png, .jpg, .jpeg" class="sapUiSmallMarginEnd"/>
                                     <ObjectAttribute title="Max Size" text="2 MB" class="sapUiSmallMarginEnd"/>
-                                    <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelControl>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
+                                    <!-- <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${oModelControl>/showPreviewImageButton} === true}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/> -->
                                 </HBox>
                         </VBox>
                     </VBox>                  
                 </HBox>
 
+                <core:Title text=" " />
+                <Label text="{i18n>colStartTime}" />
+                <DateTimePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartTime'}" value="{path:'oModelControl>/StartTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy hh:mm a'},pattern:'dd/MM/yyyy hh:mm a',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="startTime" placeholder="DD/MM/YYYY HH:mm:ss" required="true"/>
+
+                <Label  text="{i18n>colEndTime}"/>
+                <DateTimePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndTime'}" value="{path:'oModelControl>/EndTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy hh:mm a'},pattern:'dd/MM/yyyy hh:mm a',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="endTime" placeholder="DD/MM/YYYY HH:mm:ss" required="true"/>
             </f:content>
         </f:SimpleForm>
     </VBox>

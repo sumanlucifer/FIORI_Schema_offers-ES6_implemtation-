@@ -47,8 +47,8 @@ sap.ui.define(
                 sap.ui.getCore().attachValidationSuccess(function (oEvent) {
                     oEvent.getParameter("element").setValueState(ValueState.None);
                 });
-
             },
+
             _onRouteMatched: function (oEvent) {
                 var oProp = window.decodeURIComponent(
                     oEvent.getParameter("arguments").prop
@@ -63,42 +63,21 @@ sap.ui.define(
                         path: "/MobileBannerImageSet(" + oProp + ")"
                     });
                 }
-
                 this._initData(oProp);
             },
 
             _initData: function (oProp) {
-                var oDataControl = {
-                    mode: "Display",
-                    showPreviewImageButton: true,
-                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value",
-                };
-                var oModelControl = new JSONModel(oDataControl);
-                this.getView().setModel(oModelControl, "oModelControl");
-
                 var oData = {
                     mode: "Display",
                     bindProp: "MobileBannerImageSet(" + oProp + ")",
+                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value"
                 };
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl2");
-                var othat = this;
-
-                var sPath = "/MobileBannerImageSet(" + oProp + ")";
-                this.getModel().read(sPath, {
-                    success: function (data) {
-                        debugger;
-                        var oModelControl = othat.getModel("oModelControl");
-                        oModelControl.setProperty("/__metadata", data.__metadata);
-                        othat.getView().setModel(oModelControl, "oModelControl");
-                        othat._showFormFragment("DetailBannerImage");
-                    }
-                });
+                this._showFormFragment("DetailBannerImage");
             },
 
             _showFormFragment: function (sFragmentName) {
-                debugger;
-                var meta = this.getView().getModel("oModelControl").getProperty("/__metadata");
                 var objSection = this.getView().byId("oVbxSmtTbl");
                 var oView = this.getView();
                 objSection.destroyItems();
@@ -135,36 +114,47 @@ sap.ui.define(
                 debugger;
                 var othat = this;
                 c1 = othat._initEditData(oProp);
-                c1.then(function () {
-                    c2 = othat._showFormFragment("BannerImageForm");
+                c1.then(function (data) {
+                    c2 = othat._editControllerData(data);
+                    c2.then(function () {
+                        c2 = othat._showFormFragment("BannerImageForm");
+                    });
                 });
             },
 
+            _editControllerData: function (data) {
+                debugger;
+                var oView = this.getView();
+                var oDataValue = "";
+                var othat = this;
+
+                var oDataControl = {
+                    mode: "Edit",
+                };
+                var oModelControl = new JSONModel(oDataControl);
+                this.getView().setModel(oModelControl, "oModelControl");
+                oModelControl.setProperty("/StartTime", data.StartTime);
+                oModelControl.setProperty("/EndTime", data.EndTime);
+                othat.getModel("oModelControl").refresh();
+
+                oView.getModel("oModelControl2").setProperty("/busy", false);
+                othat.getModel("oModelControl2").refresh();
+            },
+
             _initEditData: function (oProp) {
-                
+
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oDataValue = "";
                 var othat = this;
 
-                oView.getModel("oModelControl2").setProperty("/busy", true);
                 // return new Promise((resolve, reject) => {
                 oView.getModel().read("/" + oProp, {
                     success: function (data) {
                         debugger;
                         var oViewModel = new JSONModel(data);
-                        oView.getModel("oModelControl2").setProperty("/busy", false);
-                        othat.getModel("oModelControl2").refresh();
-
                         oView.setModel(oViewModel, "oModelView");
                         othat.getModel("oModelView").refresh();
-
-                        var oModelControl = othat.getModel("oModelControl");
-                        oModelControl.setProperty("/StartTime", data.StartTime);
-                        oModelControl.setProperty("/EndTime", data.EndTime);
-                        oModelControl.setProperty("/mode", "Add");
-                        othat.getModel("oModelControl").refresh();
-
                         promise.resolve(data);
                     },
                     error: function (a) {
