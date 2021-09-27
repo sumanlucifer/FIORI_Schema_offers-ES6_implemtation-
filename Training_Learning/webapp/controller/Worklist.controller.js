@@ -3,8 +3,10 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/Fragment",
+    "sap/ui/core/syncStyleClass"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,syncStyleClass) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Training_Learning.controller.Worklist", {
@@ -164,29 +166,29 @@ sap.ui.define([
         },
 
         onZoneChange: function (oEvent) {
-          var sId = oEvent.getSource().getSelectedKey();
-          var oView = this.getView();
-        //   var oModelView = oView.getModel("worklistView");
-          var oDivision = oView.byId("idDivision");
-          var oDivItems = oDivision.getBinding("items");
-        //   var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
-          oDivision.clearSelection();
-          oDivision.setValue("");
-          oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
-          //setting the data for depot;
-          var oDepot = oView.byId("idDepot");
-          oDepot.clearSelection();
-          oDepot.setValue("");
+            var sId = oEvent.getSource().getSelectedKey();
+            var oView = this.getView();
+            //   var oModelView = oView.getModel("worklistView");
+            var oDivision = oView.byId("idDivision");
+            var oDivItems = oDivision.getBinding("items");
+            //   var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+            oDivision.clearSelection();
+            oDivision.setValue("");
+            oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+            //setting the data for depot;
+            var oDepot = oView.byId("idDepot");
+            oDepot.clearSelection();
+            oDepot.setValue("");
         },
 
         onDivisionChange: function (oEvent) {
-          var sKey = oEvent.getSource().getSelectedKey();
-          var oView = this.getView();
-          var oDepot = oView.byId("idDepot");
-          var oDepBindItems = oDepot.getBinding("items");
-          oDepot.clearSelection();
-          oDepot.setValue("");
-          oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
+            var sKey = oEvent.getSource().getSelectedKey();
+            var oView = this.getView();
+            var oDepot = oView.byId("idDepot");
+            var oDepBindItems = oDepot.getBinding("items");
+            oDepot.clearSelection();
+            oDepot.setValue("");
+            oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
         },
 
 		/**
@@ -360,7 +362,7 @@ sap.ui.define([
                         aCurrentFilterValues2.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter2[prop])
                         );
-                    } 
+                    }
                     // else if (prop === "RewardPoints") {
                     //     aFlaEmpty2 = false;
                     //     aCurrentFilterValues2.push(
@@ -785,7 +787,65 @@ sap.ui.define([
         onRefreshView: function () {
             var oModel = this.getModel();
             oModel.refresh(true);
-        }
+        },
+        /*Training attented count*/
+        onPressCount: function (oEvent) {
+            var trainingId=oEvent.getSource().getBindingContext().getObject('Id');
+            console.log(trainingId); 
+            //set training-id in oCtrlModel and pass in frag view  
+            // var oButton = oEvent.getSource(),
+            //     oView = this.getView();
+
+            // if (!this._pDialog) {
+            //     this._pDialog = Fragment.load({
+            //         id: oView.getId(),
+            //         name: "com.knpl.pragati.Training_Learning.view.fragments.CompletedPainterDialog",
+            //         controller: this
+            //     }).then(function (oDialog) {
+            //         oView.addDependent(oDialog);
+            //         return oDialog;
+            //     });
+            // }
+
+            // this._pDialog.then(function (oDialog) {
+            //     this._configDialog(oButton, oDialog);
+            //     oDialog.open();
+            // }.bind(this));
+
+        },
+        _configDialog: function (oButton, oDialog) {
+			// Set draggable property
+			var bDraggable = oButton.data("draggable");
+			oDialog.setDraggable(bDraggable == "true");
+
+			// Set resizable property
+			var bResizable = oButton.data("resizable");
+			oDialog.setResizable(bResizable == "true");
+
+			// Multi-select if required
+			var bMultiSelect = !!oButton.data("multi");
+			oDialog.setMultiSelect(bMultiSelect);
+
+			// Remember selections if required
+			var bRemember = !!oButton.data("remember");
+			oDialog.setRememberSelections(bRemember);
+
+			var sResponsivePadding = oButton.data("responsivePadding");
+			var sResponsiveStyleClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer";
+
+			if (sResponsivePadding) {
+				oDialog.addStyleClass(sResponsiveStyleClasses);
+			} else {
+				oDialog.removeStyleClass(sResponsiveStyleClasses);
+			}
+
+			// Set custom text for the confirmation button
+			var sCustomConfirmButtonText = oButton.data("confirmButtonText");
+			oDialog.setConfirmButtonText(sCustomConfirmButtonText);
+
+			// toggle compact style
+			syncStyleClass("sapUiSizeCompact", this.getView(), oDialog);
+		},
 
         /* =========================================================== */
         /* internal methods                                            */
