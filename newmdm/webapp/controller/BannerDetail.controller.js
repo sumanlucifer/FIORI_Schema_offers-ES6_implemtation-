@@ -69,6 +69,7 @@ sap.ui.define(
 
             _initData: function (oProp) {
                 var oDataControl = {
+                    mode: "Display",
                     showPreviewImageButton: true,
                     oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value",
                 };
@@ -91,7 +92,7 @@ sap.ui.define(
                         oModelControl.setProperty("/__metadata", data.__metadata);
                         othat.getView().setModel(oModelControl, "oModelControl");
                         othat._showFormFragment("DetailBannerImage");
-                     }
+                    }
                 });
             },
 
@@ -140,7 +141,7 @@ sap.ui.define(
             },
 
             _initEditData: function (oProp) {
-                debugger;
+                
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oDataValue = "";
@@ -150,9 +151,20 @@ sap.ui.define(
                 // return new Promise((resolve, reject) => {
                 oView.getModel().read("/" + oProp, {
                     success: function (data) {
+                        debugger;
                         var oViewModel = new JSONModel(data);
                         oView.getModel("oModelControl2").setProperty("/busy", false);
+                        othat.getModel("oModelControl2").refresh();
+
                         oView.setModel(oViewModel, "oModelView");
+                        othat.getModel("oModelView").refresh();
+
+                        var oModelControl = othat.getModel("oModelControl");
+                        oModelControl.setProperty("/StartTime", data.StartTime);
+                        oModelControl.setProperty("/EndTime", data.EndTime);
+                        oModelControl.setProperty("/mode", "Add");
+                        othat.getModel("oModelControl").refresh();
+
                         promise.resolve(data);
                     },
                     error: function (a) {
@@ -263,48 +275,57 @@ sap.ui.define(
                 var othat = this;
                 var oData = this.getView().getModel();
                 var c1, c2;
-                c1 = this._postUpdateData(oPayLoad);
+                c1 = this._putUpdateData(oPayLoad);
                 c1.then(function (oData) {
-                    c2 = othat._ImageUpload(oData);
+                    c2 = othat._ImageUpload(oPayLoad);
                     c2.then(function () {
-                        othat.navPressBack();
+                        othat.onNavBack();
                     });
                 });
             },
 
-            _ImageUpload: function (oData) {
+            _ImageUpload: function (oPayLoad) {
                 debugger;
                 var that = this;
                 var promise = jQuery.Deferred();
                 var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-                var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
-                return new Promise(function (res, rej) {
-                    var settings = {
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
-                        data: oImage.Image,
-                        method: "PUT",
-                        headers: that.getModel().getHeaders(),
-                        contentType: "image/png",
-                        processData: false,
-                        success: function (x) {
-                            promise.resolve(x);
-                        },
-                        error: function (a) {
-                            promise.reject(a);
-                        }
-                    };
+                var newSpath = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
+                // return new Promise(function (res, rej) {
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                    data: oImage.Image,
+                    method: "PUT",
+                    headers: that.getModel().getHeaders(),
+                    contentType: "image/png",
+                    processData: false,
+                    success: function (x) {
+                        // promise.resolve(x);
+                        MessageToast.show("Banner Image Successfully Updated");
+                        that.onNavBack();
+                    },
+                    error: function (a) {
+                        // promise.reject(a);
+                        MessageToast.show(
+                            "Error in updating Banner Image"
+                        );
+                    }
+                };
 
-                    // $.ajax(settings);
-                    return promise;
-                });
+                $.ajax(settings);
+                // return promise;
+                // });
             },
 
-            _postUpdateData: function (oPayLoad) {
+            _putUpdateData: function (oPayLoad) {
                 var promise = jQuery.Deferred();
                 var oData = this.getView().getModel();
                 var othat = this;
-                var path = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
-                oData.update(path, oPayLoad, {
+                // var path = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
+                debugger;
+                var sKey = othat.getModel().createKey("/MobileBannerImageSet", {
+                    Id: oPayLoad.Id
+                });
+                oData.update(sKey, oPayLoad, {
                     success: function (oData) {
                         // MessageToast.show("Banner Image Successfully Created");
                         promise.resolve(oData);
@@ -337,52 +358,7 @@ sap.ui.define(
                     }
                 }
                 return oNew;
-            },
-
-            // _setDisplayData: function (oProp) {
-            //     var promise = jQuery.Deferred();
-            //     var oView = this.getView();
-
-            //     var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
-            //     var othat = this;
-            //     if (oProp.trim() !== "") {
-            //         oView.bindElement({
-            //             path: "/" + oProp,
-            //             parameters: {
-            //                 expand: exPand,
-            //             },
-            //             events: {
-            //                 dataRequested: function (oEvent) {
-            //                     //  oView.setBusy(true);
-            //                 },
-            //                 dataReceived: function (oEvent) {
-            //                     //  oView.setBusy(false);
-            //                 },
-            //             },
-            //         });
-            //     }
-            //     promise.resolve();
-            //     return promise;
-            // },
-
-            // _initEditData: function (oProp) {
-            //     var oViewModel = new JSONModel({
-            //         busy: false,
-            //         editable: false,
-            //     });
-            //     this.getView().setModel(oViewModel, "oModelView");
-
-            //     var oData = {
-            //         mode: "Display",
-            //         bindProp: "MobileBannerImageSet('" + oProp + "')",
-            //     };
-            //     var oModel = new JSONModel(oData);
-            //     this.getView().setModel(oModel, "oModelControl");
-            //     var othat = this;
-
-            //     othat._showFormFragment("BannerImageForm");
-            // },
-
+            }
         }
 
         );

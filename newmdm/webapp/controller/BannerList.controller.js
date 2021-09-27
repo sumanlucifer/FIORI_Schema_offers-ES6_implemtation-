@@ -305,10 +305,6 @@ sap.ui.define(
                     }.bind(this));
                 },
 
-                onEdit: function (oEvent) {
-                    this._showObject(oEvent.getSource());
-                },
-
                 onDelete: function (oEvent) {
                     var sPath = oEvent.getSource().getBindingContext().getPath();
 

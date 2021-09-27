@@ -260,10 +260,12 @@ sap.ui.define([
                 contentType: "image/png",
                 processData: false,
                 success: function (x) {
-                    promise.resolve(x);
+                    // promise.resolve(x);
+                    MessageToast.show("Banner Image Successfully Created");
                 },
                 error: function (a) {
                     promise.reject(a);
+                    MessageToast.show("Banner Image creation failed");
                 }
             };
 
