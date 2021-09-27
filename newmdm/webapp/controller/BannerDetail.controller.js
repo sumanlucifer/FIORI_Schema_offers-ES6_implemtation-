@@ -117,7 +117,7 @@ sap.ui.define(
                     c1 = othat._LoadEditFragment("BannerImageForm");
                     c1.then(function () {
                         c2 = othat._initEditData(oProp);
-                        c2.then(function () {
+                        c2.then(function (data) {
                             c3 = othat._editControllerData(data);
                         });
                     });
