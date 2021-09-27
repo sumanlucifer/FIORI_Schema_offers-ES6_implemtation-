@@ -86,6 +86,7 @@
                     <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
                     <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
                     <RadioButton id="RB3" text="Painter Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
+                     
                 </RadioButtonGroup>
 
                 <Label text="{i18n>colPainter}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
@@ -93,7 +94,11 @@
                     <tokens>
                         <Token editable="false" text="{oModelView>Name}" key="{oModelView>Id}"/>
                     </tokens>
+                    <layoutData>
+						<l:GridData span="XL12 L12 M12 S12" />
+					</layoutData>
                 </MultiInput>
+                <u:FileUploader  visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}" id="idPainterFileUploader" sameFilenameAllowed="false" change=".onFileUploadPainter"   buttonOnly="true" buttonText="{i18n>UploadPainterdata}" placeholder="{i18n>UploadPainterdata}" fileType="text,csv" />
 
                 <Label text="{i18n>colZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
                 <MultiComboBox id="idZone" selectedKeys="{oModelView>/TrainingDetails/TrainingZone}" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2' &amp;&amp; ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" selectionChange="onMultyZoneChange" items="{ path : '/MasterZoneSet'}">

@@ -1,0 +1,46 @@
+<mvc:View
+	controllerName="com.knpl.pragati.Training_Learning.controller.PainterList"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+     xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:semantic="sap.f.semantic"
+    xmlns:smartTable="sap.ui.comp.smarttable">
+
+<f:DynamicPage headerExpanded="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                 <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="Painters List">
+                        <Link press="onPressBreadcrumbLink" text="Trainings" />
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+         <f:content>
+                    <smartTable:SmartTable
+                    id="idPainterTable"
+                    editable="false"
+                    beforeRebindTable="fnrebindTable"                    
+                    entitySet="ProductCatalogueViewerSet"
+                    tableType="ResponsiveTable"
+                    showRowCount="true"
+                    useExportToExcel="true"
+                    useVariantManagement="false"
+                    useTablePersonalisation="true"
+                    ignoredFields="IsArchived,IsSelected,Id"
+                    demandPopin="true"
+                    enableAutoBinding="false"
+                    placeToolbarInTable="true" 
+                    persistencyKey="PainterListSmartTableKey"
+                  >
+                 </smartTable:SmartTable>
+        </f:content>
+    </f:DynamicPage>
+
+</mvc:View>

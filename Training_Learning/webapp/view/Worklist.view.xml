@@ -108,8 +108,11 @@
                                 <Column width="9%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column>
-                                  <Column width="9%">
+                                  <Column width="8%">
 									<Text text="{i18n>EnrolledCount}"/>
+								</Column>
+                                <Column width="10%">
+									<Text text="{i18n>CompletedCount}"/>
 								</Column>
                                 <Column width="8%">
 									<Text text="{i18n>colLink}"/>
@@ -130,6 +133,14 @@
                                         <Text text="{parts: [ {path: 'EndDate'} ], formatter : '.formatter.formatDateTime' }"/>
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{TotalEnrollments}"/>
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
+
                                         <Text text="{= ${Url} === '' ? 'No' : 'Yes'}"/>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Warning"/>
@@ -170,6 +181,9 @@
                                 <!-- <Column width="10%">
 									<Text text="{i18n>colRewardPoints}"/>
 								</Column> -->
+                                <Column width="9%">
+									<Text text="{i18n>CompletedCount}"/>
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem press="onListItemPressOfflineTraining" type="Navigation">
@@ -178,6 +192,13 @@
                                         <Text text="{TrainingSubTypeDetails/TrainingSubType}"/>
                                         <Text text="{PainterAttendanceCount}"/>
                                         <!-- <Text text="{RewardPoints}"/> -->
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
 									</cells>
 								</ColumnListItem>
 							</items>
@@ -220,6 +241,9 @@
                                 <Column width="10%">
                                     <Text text="{i18n>colViewCount}"/>
                                 </Column>
+                                <Column width="9%">
+									<Text text="{i18n>CompletedCount}"/>
+								</Column>
                                 <Column width="7%">
                                     <Text text="{i18n>colStatus}"/>
                                 </Column>
@@ -237,6 +261,13 @@
                                         <Text text="{RewardPoints}"/>
                                         <Text text="{UniqueViewCounts}"/>
                                         <Text text="{TotalViewCounts}"/>
+                                        <FlexBox >
+                                            <Text text="{path:'TotalQuizSubmissions'}" visible="{=${TotalQuizSubmissions} === 0}"/>
+                                            <Link
+                                            visible="{=${TotalQuizSubmissions} !== 0 }"
+                                                text="{path:'TotalQuizSubmissions'}"
+                                                press="onPressCount"/>
+                                        </FlexBox>
                                         <HBox>
                                             <ObjectStatus text="{i18n>inActive}" visible="{= ${Status} === 0}" state="Warning"/>
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1}" state="Success"/>
