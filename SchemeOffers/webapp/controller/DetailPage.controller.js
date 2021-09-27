@@ -1490,12 +1490,12 @@ sap.ui.define(
                             oData["OfferRedemptionCycleCondition"]["results"]
                         );
                     }
-                    if (oData["OfferAchiever"]["results"].length > 0) {
-                        oModelControl2.setProperty(
-                            "/Table/Table8",
-                            oData["OfferAchiever"]["results"]
-                        );
-                    }
+                    // if (oData["OfferAchiever"]["results"].length > 0) {
+                    //     oModelControl2.setProperty(
+                    //         "/Table/Table8",
+                    //         oData["OfferAchiever"]["results"]
+                    //     );
+                    // }
 
                     promise.resolve(oData);
                     return promise;
