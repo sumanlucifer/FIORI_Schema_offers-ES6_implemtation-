@@ -1,0 +1,146 @@
+<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.painterrequests.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+    
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
+                        <fb:filterGroupItems>
+                       
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
+                                        <core:Item text="{Id} " key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                      <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
+                                        <core:Item text="{Id}" key="{Id}" />
+                                     </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Enter} {i18n>Depot}" selectionChange="onDepotChange"  items="{/MasterDepotSet}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
+                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/Status}.length>1}" id="idStatus" placeholder="{i18n>Enter} {i18n>Status}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
+                                        <core:Item text="Pending" key="PENDING" />
+                                        <core:Item text="Inprogress" key="INPROGRESS" />
+                                        <core:Item text="Completed" key="COMPLETED" />
+                                        <core:Item text="Rejected" key="REJECTED" />
+                                        <core:Item text="Approved" key="APPROVED" />
+                                        <core:Item text="Initiated" key="INITIATED" />
+                                        <core:Item text="Failed" key="FAILED" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
+            filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails/Depot,MasterSlabBankRedemptionDetails'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{worklistView>/worklistTableTitle}"/>
+                        <ToolbarSpacer/>
+                        <!-- <Button icon="sap-icon://add" text="{i18n>AddRedemption}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button> -->
+                        <Button icon="sap-icon://add" text="{i18n>AddRedemption}" visible="{parts:['LoginInfo>/UserTypeId'],formatter:'.formatter.btnAddRedemption'}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button>
+                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="{i18n>PainterName}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>MembershipId}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>RedeemCode}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>PrimaryMobileNo}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>Zone}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Division}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Depot}"/>
+                    </Column>
+                     <Column>
+                        <Text text="{i18n>slabPoints}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>slabAmt}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Remark}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Status}"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>DateAndTime}"/>
+                    </Column>
+                    <!-- <Column>
+                        <Text text="{i18n>Points}"/>
+                    </Column> -->
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation" press="onListItemPress" >
+                        <cells>
+                            <Text text="{PainterDetails/Name}"/>
+                            <Text text="{PainterDetails/MembershipCard}"/>
+                            <Text text="{RedemptionCode}"/>
+                            <Text text="{PainterDetails/Mobile}"/>
+                            <Text text="{PainterDetails/ZoneId}"/>
+                            <Text text="{PainterDetails/DivisionId}"/>
+                            <Text text="{PainterDetails/DepotId}"/>
+                            <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}"/>
+                            <Text text="{MasterSlabBankRedemptionDetails/RedemptionAmount}"/>
+                            <Text text="{Remark}"/>
+                            <FlexBox >
+                            <ObjectStatus  visible="{=${Status} === 'COMPLETED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'APPROVED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'INPROGRESS'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'PENDING'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'INITIATED'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'REJECTED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            <ObjectStatus  visible="{=${Status} === 'FAILED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
+                            </FlexBox>
+                            
+                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                            <!-- <ObjectStatus text="{path:'PainterComplainProducts',formatter:'.fmtPoints'}" /> -->
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

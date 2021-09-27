@@ -9,7 +9,7 @@
     xmlns:vm="sap.ui.comp.variants"
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" busy="{oModelView>/busy}">
         <!-- <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -143,7 +143,17 @@
                         <Title text="{oModelView>/pageTitle}"/>
                         <ToolbarSpacer/>
                         <Button icon="sap-icon://add" text="{i18n>AddPainter}" type="Emphasized" press=".onPressAddPainter" tooltip="{i18n>AddPainter}"></Button>
-                        <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
+                     
+                        <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>DownloadReports}" type="Ghost" text="{i18n>DownloadReports}" buttonMode="Regular" useDefaultActionOnly="false">
+                            <menu>
+                                <Menu itemSelected="onMenuAction">
+                                    <MenuItem text="{i18n>PainterDataDump}" icon="sap-icon://save" />
+                                    <MenuItem text="{i18n>ProductPurchaseHistory}" icon="sap-icon://save" />
+                                      <MenuItem text="{i18n>DealerMappedWithPainter}" icon="sap-icon://save" />
+                                </Menu>
+                            </menu>
+		                </MenuButton>
+                           <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
                 </headerToolbar>
                 <columns>

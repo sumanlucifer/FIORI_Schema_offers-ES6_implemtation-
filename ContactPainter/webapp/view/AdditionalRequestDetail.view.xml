@@ -1,0 +1,124 @@
+<mvc:View controllerName="com.knpl.pragati.ContactPainter.controller.AdditionalRequestDetail" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <f:DynamicPage headerExpanded="true" class="sapUiNoContentPadding" showFooter="true" busy="false" busyIndicatorDelay="0">
+        <f:title>
+            <f:DynamicPageTitle>
+                <!-- <f:heading>
+                    <Title text="{path:'PointTransactionType',formatter:'.formatter.requestType'} Request"/>
+                </f:heading> -->
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="Additional Request Details">
+                        <Link press="onPressBreadcrumbLink" text="Additional Requests"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+                <f:expandedContent>
+                    <Label text="Request Id :{oModelView>/UUID}"/>
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label text="Request Id :{oModelView>/UUID}"/>
+                </f:snappedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <!-- <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <ObjectAttribute title="Type of {path:'PointTransactionType',formatter:'.formatter.requestType'}"/>
+                        <ObjectStatus text="{path:'PointType',formatter:'.formatter.accuralType'}" />
+                    </layout:VerticalLayout>
+
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader> -->
+        </f:header>
+
+        <f:content>
+            <VBox class="formContainer sapUiSmallMargin">
+                <form:Form id="idDetailForm"
+                    editable="true">
+                    <form:layout>
+                        <form:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="12"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="2"
+                            columnsM="2"
+                            singleContainerFullSize="false" />
+                    </form:layout>
+                    <form:formContainers>
+                        <form:FormContainer >
+                        
+                            <form:formElements>
+                                <form:FormElement label="Title">
+                                    <form:fields>
+                                        <Text  text="{path:'oModelView>/masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Description">
+                                    <form:fields>
+                                        <Text   text="{path:'oModelView>/masterAdditionalBenifit/Description'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Criteria">
+                                    <form:fields>
+                                        <Text  text="{path:'oModelView>/masterAdditionalBenifit/Criteria'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                
+                            </form:formElements>
+                        </form:FormContainer>
+
+                        <form:FormContainer >
+                        
+                            <form:formElements>
+                                <form:FormElement label="Remark">
+                                    <form:fields>
+                                        <Text   text="{path:'oModelView>/Remark'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Status">
+                                    <form:fields>
+                                        <Text  text="{path:'oModelView>/Status',formatter:'.formatter.fmtStatus'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Date">
+                                    <form:fields>
+                                        <Text  text="{path:'oModelView>/CreatedAt',formatter:'.formatter.dateFormatter'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        
+                    </form:formContainers>
+                </form:Form>
+            </VBox>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar visible="true">
+            
+                <ToolbarSpacer/>
+                    <HBox justifyContent="SpaceBetween" >
+                    <Button  text="Cancel" type="Ghost" press="onPressBreadcrumbLink" class="sapUiTinyMarginEnd" />
+                    <Button press="onApproveReject('REJECTED')" visible="{=${oModelView>/Status}!=='REJECTED'}" text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
+                    <Button press="onApproveReject('APPROVED')" visible="{=${oModelView>/Status}!=='APPROVED'}" text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
+                    </HBox>
+
+                
+                
+            </OverflowToolbar>
+        </f:footer>
+
+    </f:DynamicPage>
+    
+</mvc:View>

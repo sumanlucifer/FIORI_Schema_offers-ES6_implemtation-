@@ -1,0 +1,206 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "com.knpl.pragati.MDM",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "resources": "resources.json",
+        "dataSources": {
+            "mainService": {
+                "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+           "tabData_alias": {
+                "uri": "model/data.json",
+                "type": "JSON"
+            }
+
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Manage",
+                    "action": "MDM",
+                    "title": "Master Data Management",
+                    "subTitle": "",
+                    "icon": ""
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://task",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "com.knpl.pragati.MDM.view.App",
+            "type": "XML",
+            "async": false,
+            "id": "fcl"
+        },
+        "dependencies": {
+            "minUI5Version": "1.66.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.f": {}
+            }
+        },
+        "config": {
+            "fullWidth": true
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.f.routing.Router",
+                "viewType": "XML",
+                "viewPath": "com.knpl.pragati.MDM.view",
+                "controlId": "flexibleColumnLayout",
+                "transition": "slide",
+
+                "async": true
+            },
+            "routes": [{
+                    "pattern": ":layout:",
+                    "name": "master",
+                    "target": [
+                        "master",
+                        "detail"
+                    ]
+                },
+               {
+					"pattern": "detail/{tab}/{layout}",
+					"name": "detail",
+					"target": [
+						"master",
+						"detail"
+					]
+                },
+                 {
+					"pattern": "bannerlist/{tab}/{layout}",
+					"name": "bannerList",
+					"target": [
+						"master",
+						"bannerList"
+					]
+                },
+                 {
+					"pattern": "addbanner/{layout}",
+					"name": "addBanner",
+					"target": [
+						"master",
+						"addBanner"
+					]
+                },
+                 {
+					"pattern": "bannerdetail/{prop}/{layout}",
+					"name": "bannerDetail",
+					"target": [
+						"master",
+						"bannerDetail"
+					]
+				},
+                {
+					"pattern": "detailDetail/{name}/{prop}/{fields}/{mode}/{tab}/{layout}",
+					"name": "detailDetail",
+					"target": [
+						"master",
+						"detailDetail"
+					]
+				}
+            ],
+            "targets": {
+                "master": {
+                    "viewName": "Master",
+                    "controlAggregation": "beginColumnPages"
+                },
+               "detail": {
+					"viewName": "Detail",
+					"controlAggregation": "midColumnPages"
+                },
+                "detailDetail": {
+					"viewName": "DetailDetail",
+					"controlAggregation": "midColumnPages"
+                },
+                "bannerList": {
+					"viewName": "BannerList",
+					"controlAggregation": "midColumnPages"
+                },
+                "addBanner":{
+                    "viewName": "AddBanner",
+					"controlAggregation": "midColumnPages"
+                },
+                 "bannerDetail":{
+                    "viewName": "BannerDetail",
+					"controlAggregation": "midColumnPages"
+                }
+
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.knpl.pragati.MDM.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "defaultUpdateMethod": "Put",
+                    "useBatch": false
+                }
+            },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "tabData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "tabData_alias"
+            }
+
+        },
+        "services": {
+            "ShellUIService": {
+                "factoryName": "sap.ushell.ui5service.ShellUIService",
+                "lazy": false,
+                "settings": {
+                    "setTitle": "auto"
+                }
+            }
+        }
+    }
+}

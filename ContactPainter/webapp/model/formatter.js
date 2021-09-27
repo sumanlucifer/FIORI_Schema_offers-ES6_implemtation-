@@ -1,4 +1,6 @@
-sap.ui.define([], function () {
+sap.ui.define([
+    "sap/ui/core/format/DateFormat"
+], function (DateFormat) {
     "use strict";
 
     return {
@@ -153,6 +155,15 @@ sap.ui.define([], function () {
             }
             return "NA";
         },
+         fmtCheckAsssetType: function (mParam) {
+            var sPath = "/MasterVehicleTypeSet(" + mParam + ")";
+            var oData = this.getView().getModel().getProperty(sPath);
+            if (oData !== undefined && oData !== null) {
+                if (oData["VehicleType"] === "None") {
+                    return false;
+                }
+            }
+        },
         fmtOfferProgressStatus:function(mParam1){
             if(mParam1==="COMPLETED"){
                 return "Completed"
@@ -163,7 +174,14 @@ sap.ui.define([], function () {
             if(mParam1==="STARTED"){
                 return "In Progress"
             }
-        }
+        },
+        dateFormatter: function (jsonDateString) {
+            const dt = DateFormat.getDateTimeInstance({ pattern: "dd/MM/yyyy" });
+            // var date= new Date(parseInt(jsonDateString.replace('/Date(', '')));
+            const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
+            return dayMonthYear;
+        },
+
 
     };
 

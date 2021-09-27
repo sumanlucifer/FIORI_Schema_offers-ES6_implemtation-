@@ -1621,7 +1621,59 @@ sap.ui.define(
                     });
                     this.getModel("oModelView").setProperty("/showPreviewImageButton", true);
                     this.getModel("oModelView").refresh();
-                }
+                },
+                // //CR changes
+                // onPressUpload: function (){
+                //     console.log("Hit!");
+                //     var oViewModel = this.getModel("oModelView");
+                //     var oPayload = {};
+                //     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
+                //     var trainingType = this.getModel("appView").getProperty("/trainingType");
+                //     this._UploadAttendanceLiveVidTr(oPayload);
+                //     debugger;
+
+                // },
+                // _UploadAttendanceLiveVidTr: function (oPayload) {
+                  
+                //     var that = this;
+                //     var fU = this.getView().byId("idAttendanceLiveFileUploader");
+                //     var domRef = fU.getFocusDomRef();
+                //     var file = domRef.files[0];
+                //     var oViewModel = this.getModel("oModelView");
+                 
+                //     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
+                //     //     oPayload.RewardPoints = 0;
+                //     // }
+
+                //     var settings = {
+                //         url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + oPayload.TrainingSubTypeId + ")/$value?Points=" + oPayload.RewardPoints,
+                //         data: file,
+                //         method: "PUT",
+                //         headers: that.getModel().getHeaders(),
+                //         contentType: "text/csv",
+                //         processData: false,
+                //         statusCode: {
+                //             206: function (result) {
+                //                 that._SuccessOffline(result, 206);
+                //             },
+                //             200: function (result) {
+                //                 that._SuccessOffline(result, 200);
+                //             },
+                //             202: function (result) {
+                //                 that._SuccessOffline(result, 202);
+                //             },
+                //             400: function (result) {
+                //                 that._SuccessOffline(result, 400);
+                //             }
+                //         },
+                //         error: function (error) {
+                //             that._Error(error);
+                //         }
+                //     };
+
+                //     $.ajax(settings);
+                //     // });
+                // },
 
             }
         );
