@@ -6,7 +6,7 @@
     <VBox>
     <items>
                 <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
-                <RadioButtonGroup columns="2" select="onRbRRDialogAddInfo">
+                <RadioButtonGroup columns="2" select="onRbRRDialogAddInfo" selectedIndex="{oModelControl>/Rbtn/AddFlag}">
                         <buttons>
                             <RadioButton text="{i18n>All}"/>
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
