@@ -256,7 +256,7 @@ sap.ui.define(
                 var oVbox = this.getView().byId("idVbx");
                 var bValidation = oValidator.validate(oVbox, true);
                 var oModelContrl = this.getView().getModel("oModelControl");
-                this.getView().getModel("oModelControl2").setProperty("/busy", true);
+                
                 if (bValidation == false) {
                     MessageToast.show(
                         "Kindly input all the mandatory(*) fields to continue."
@@ -264,6 +264,7 @@ sap.ui.define(
                 }
                 if (bValidation) {
                     if (oModelContrl.getProperty("/oImage")) {
+                        this.getView().getModel("oModelControl2").setProperty("/busy", true);
                         this._putDataToSave();
                     } else {
                         MessageToast.show(

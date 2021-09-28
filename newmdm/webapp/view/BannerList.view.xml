@@ -9,7 +9,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/MobileBannerImageSet',  sorter:{path:'CreatedAt',descending:true}, parameters: { custom: {Mobile: false}}, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/MobileBannerImageSet',  sorter:{path:'Id',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
