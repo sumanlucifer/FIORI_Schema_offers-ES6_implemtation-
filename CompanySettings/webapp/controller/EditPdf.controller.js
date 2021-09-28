@@ -190,9 +190,10 @@ sap.ui.define([
                 var http = "https://" + location.host + "/";
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 var success = false;
-                oModel.setProperty("/bBusy", true);
+                
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {
+                        oModel.setProperty("/bBusy", true);
                         var that = this;
                         jQuery.ajax({
                             method: "PUT",
@@ -224,9 +225,10 @@ sap.ui.define([
                 var propertySet = this._property;
                 var http = "https://" + location.host + "/";
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oModel.setProperty("/bBusy", true);
+                
                 catalogue.forEach(function (ele) {
                     if (ele.bNew) {
+                        oModel.setProperty("/bBusy", true);
                         var that = this;
                         jQuery.ajax({
                             method: "PUT",
