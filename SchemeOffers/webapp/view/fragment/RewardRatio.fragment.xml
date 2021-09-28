@@ -89,7 +89,7 @@
             </headerToolbar>
             <infoToolbar>
 					<OverflowToolbar >
-                    <Label text="{i18n>sample}"/>
+                    <Label text="{i18n>IsMultiRewardAllowed}"/>
                     	<!-- <Select
                         change="onSelection"
                         selectedKey="1"

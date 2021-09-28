@@ -185,6 +185,7 @@ sap.ui.define(
                             return {
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
+                                Id:item.Id,
                                 isSelected: true
                             };
                         });
@@ -243,7 +244,7 @@ sap.ui.define(
                 oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
             },
             // created for painter specipic //
-            onSavePaitner: function (oEvent) {
+            onSaveUploadPaitner: function (oEvent) {
                 var oView = this.getView();
                 var fragmentData = oView.getModel("oModelControl").getProperty("/ofragmentModel");
                 var selectedItems = fragmentData.filter(function (item) {
@@ -254,13 +255,15 @@ sap.ui.define(
                 var itemModel = selectedItems.map(function (item) {
                     return {
                         PainterMobile: item.PainterMobile,
-                        PainterName: item.PainterName
+                        PainterName: item.PainterName,
+                        PainterId:item.Id
                     };
                 });
                 oView.getModel("oModelControl")
                     .setProperty("/MultiCombo/Painters", itemModel);
+                console.log(itemModel);
                 this._CsvDialoge.close();
-                console.log(selectedItems);
+                
             },
             onSelectAll: function (oeve) {
                 var isSelected = oeve.getSource().getSelected();

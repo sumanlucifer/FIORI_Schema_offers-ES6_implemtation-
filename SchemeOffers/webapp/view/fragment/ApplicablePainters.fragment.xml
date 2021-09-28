@@ -15,7 +15,7 @@
                     <RadioButton text="{i18n>formApplicableLbl1}"/>
                     <RadioButton text="{i18n>formApplicableLbl2}"/>
                     <RadioButton text="{i18n>formApplicableLbl16}"/>
-                    <RadioButton text="{i18n>formApplicableLbl17}"/>
+
                 </RadioButtonGroup>
             </Toolbar>
         </f:toolbar>
@@ -29,8 +29,11 @@
                                 <tokens>
                                     <Token editable="false" text="{oModelControl>PainterName}" key="{oModelControl>PainterId}"/>
                                 </tokens>
+                                <layoutData>
+                                    <l:GridData span="XL12 L12 M12 S12" />
+                                </layoutData>
                             </MultiInput>
-
+                             <u:FileUploader id="idOfferFileUploader" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onFileUploadChange1" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
                             <!-- <Button text="Open Dialouge" id="Painters1" press="onpressfrag"/> -->
 
 
@@ -41,31 +44,11 @@
                 </f:formElements>
 
 
-                
+
             </f:FormContainer>
 
 
-             <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}===3 }">
-                <f:formElements>
-
-                    <f:FormElement >
-                       <f:fields>
-                           <VBox>
-                          <!-- <Button text="Open" id="Painters2" press="onpressfrag"/> -->
-                           <MultiInput placeholder="{i18n>placeHolder1}" showValueHelp="false" enabled="true" id="Painters2" tokens="{oModelControl>/MultiCombo/Painters}">
-                                <tokens>
-                                    <Token editable="false" text="{oModelControl>PainterName}-{oModelControl>PainterMobile}" key="{oModelControl>PainterMobile}"/>
-                                </tokens>
-                            </MultiInput>
-        <u:FileUploader id="idOfferFileUploader" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onFileUploadChange1"   buttonOnly="true" placeholder="{i18n>UploadNewExcel}"   typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
-                          </VBox>
-                        </f:fields>
-                    </f:FormElement>
-
-                </f:formElements>
-
-                
-            </f:FormContainer>
+         
             <f:FormContainer title="  " visible="{= ${oModelControl>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl>/Rbtn/AppPainter}!==2 }">
                 <f:formElements>
 
