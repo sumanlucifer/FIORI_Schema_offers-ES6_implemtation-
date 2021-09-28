@@ -155,11 +155,6 @@
           "name": "RouteProfile",
           "pattern": "Profile/{mode}/{prop}",
           "target": ["TargetProfile"]
-        },
-        {
-          "name": "RouteAdditionalRequestDetail",
-          "pattern": "AdditionalRequestDetail/{Id}/{Pid}",
-          "target": ["TargetAdditionalRequestDetail"]
         }
       ],
       "targets": {
@@ -183,13 +178,6 @@
           "clearControlAggregation": false,
           "viewId": "ProfilePainter",
           "viewName": "ProfilePainter"
-        },
-        "TargetAdditionalRequestDetail": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "AdditionalRequestDetail",
-          "viewName": "AdditionalRequestDetail"
         }
       }
     }

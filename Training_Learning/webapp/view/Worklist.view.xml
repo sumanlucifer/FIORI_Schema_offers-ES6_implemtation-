@@ -199,7 +199,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-                                <Column width="16%">
+                                <Column width="18%">
                                     <Text text="{i18n>colTrTitle}"/>
                                 </Column>
                                 <Column width="15%">
@@ -223,7 +223,7 @@
                                 <Column width="7%">
                                     <Text text="{i18n>colStatus}"/>
                                 </Column>
-                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                <Column width="5%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                     <Text text="{i18n>colAction}"/>
                                 </Column>
                             </columns>

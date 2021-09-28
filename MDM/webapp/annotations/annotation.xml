@@ -1,0 +1,48 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="/KNPL_PAINTER_API/api/v2/odata.svc/$metadata">
+        <edmx:Include Alias="Metadata" Namespace="com.knpl.pragati.entity"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.knpl.pragati.entity">
+            <Annotations Target="Metadata.MasterKycTypeModel/KycType">
+                <Annotation Term="Common.Label" String="KYC Type"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterComplaintTypeModel/ComplaintType">
+                <Annotation Term="Common.Label" String="Complaint Type"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterArcheTypeModel/ArcheType">
+                <Annotation Term="Common.Label" String="Arche Type"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterBusinessCategoryModel/BusinessCategory">
+                <Annotation Term="Common.Label" String="Sales Category"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterBusinessGroupModel/BusinessGroup">
+                <Annotation Term="Common.Label" String="Sales Group"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterFAQCategoryModel/FAQCategory">
+                <Annotation Term="Common.Label" String="FAQ Category"/>
+            </Annotations>
+             <Annotations Target="Metadata.MasterMaritalStatusModel/MaritalStatus">
+                <Annotation Term="Common.Label" String="Marital Status"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterSecurityQuestionModel/Question">
+                <Annotation Term="Common.Label" String="Security Question"/>
+            </Annotations>
+             <Annotations Target="Metadata.MasterTrainingTypeModel/TrainingType">
+                <Annotation Term="Common.Label" String="Training Type"/>
+            </Annotations>
+             <Annotations Target="Metadata.MasterLanguageModel/LanguageCode">
+                <Annotation Term="Common.Label" String="Language Code"/>
+            </Annotations>
+            <Annotations Target="Metadata.MasterLanguageModel/LanguageDescription">
+                <Annotation Term="Common.Label" String="Language Description"/>
+            </Annotations>
+             <Annotations Target="Metadata.MasterPainterTypeModel/PainterType">
+                <Annotation Term="Common.Label" String="Painter Type"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

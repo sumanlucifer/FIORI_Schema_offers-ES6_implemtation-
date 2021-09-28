@@ -169,15 +169,6 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection id="additionalrequest" titleUppercase="false" title="{i18n>additionalrequest}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <VBox renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.AdditionalRequest" type="XML"/>
-                        </VBox>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
             <Bar visible="{= ${IsArchived} === false}">

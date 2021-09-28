@@ -1,23 +1,15 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Dialog class="sapUiContentPadding" title="{i18n>OfferRedeemDialogTitle}" busy="{oModelControl2>/ProfilePageBuzy}" titleAlignment="Center">
+    <Dialog class="sapUiContentPadding" title="{i18n>OfferRedeemDialogTitle}" titleAlignment="Center">
         <content>
             <VBox width="100%">
-                <VBox width="100%"  visible="{= !${oModelControl2>/OfferRedeemDlg/IsMultiRewardAllowed}}" >
-                     <RadioButtonGroup id="GroupA" width="100%" selectedIndex="{oModelControl2>/OfferRedeemDlg/RbtnRedeemType}">
+                <RadioButtonGroup id="GroupA" width="100%" selectedIndex="{oModelControl2>/OfferRedeemDlg/RbtnRedeemType}">
                     <RadioButton text="{i18n>RedeemPoints} - {RewardPoints} {oModelControl2>/OfferRedeemDlg/AddPoints}" width="100%" visible="{= ${RewardPoints}!==null }" />
                     <RadioButton text="{i18n>RedeemCash} - Rs.{RewardCash} {oModelControl2>/OfferRedeemDlg/AddCash}" width="100%" visible="{= ${RewardCash}!==null }" />
                     <RadioButton text="{i18n>RedeemGift} - {RewardGift/RewardGift}" width="100%" visible="{= ${RewardGiftId}!==null }" />
-                     </RadioButtonGroup>
-                </VBox>
-                 <VBox width="100%" visible="{oModelControl2>/OfferRedeemDlg/IsMultiRewardAllowed}">
-                     	<CheckBox text="{i18n>RedeemPoints} - {RewardPoints} {oModelControl2>/OfferRedeemDlg/AddPoints}" selected="true" visible="{= ${RewardPoints}!==null }" editable="false"/>
-                         	<CheckBox text="{i18n>RedeemCash} - Rs.{RewardCash} {oModelControl2>/OfferRedeemDlg/AddCash}" selected="true" visible="{= ${RewardCash}!==null }"  editable="false"/>
-                             	<CheckBox text="{i18n>RedeemGift} - {RewardGift/RewardGift}" selected="true"  visible="{= ${RewardGiftId}!==null }" editable="false"/>
+                </RadioButtonGroup>
 
-                </VBox>
-               
             </VBox>
 
             <!-- <f:SimpleForm layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">

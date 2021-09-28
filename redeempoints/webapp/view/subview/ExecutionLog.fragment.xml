@@ -14,11 +14,11 @@
             showIcons="true"
             showSearch="false"
             enableScroll="false"
-            sortOldestFirst="true"
+            sortOldestFirst="false"
 			content="{wfmodel>/}">
 		<content>
            <!-- formatter required datetime, title icon -->
-			<TimelineItem	dateTime="{ path :'wfmodel>timestamp', formatter :'.formatter.ExecutionLogDateTime' }"
+			<TimelineItem	dateTime="{ path :'wfmodel>timestamp', formatOptions:{pattern:'dd/MM/YYYY hh:mm a'} }"
 					title="{ parts :['wfmodel>subject' , 'wfmodel>type' ], formatter : '.formatter.ExecutionLogTitle'}"
 					text="{ path : 'wfmodel>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
                     filterValue="{wfmodel>type}"

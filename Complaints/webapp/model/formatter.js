@@ -96,20 +96,6 @@ sap.ui.define([], function () {
 
         ExecutionLogUserName: function(aEmails){
             return  !!(aEmails) ? aEmails.join(" ") : " ";
-        },
-
-        ExecutionLogDateTime: function (dValue) {
-            if (!dValue) {
-                return "";
-            }
-            var localDate = new Date(dValue);
-            var pattern = "dd/MM/yyyy hh:mm a";
-            var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-                pattern: pattern
-            });
-
-            var oNow = new Date(localDate);
-            return oDateFormat.format(oNow); 
         }
     
 	};

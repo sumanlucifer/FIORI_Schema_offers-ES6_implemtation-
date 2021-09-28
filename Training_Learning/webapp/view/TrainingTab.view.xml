@@ -84,15 +84,6 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-             <uxap:ObjectPageSection titleUppercase="false" title="{i18n>attendance}" visible="{= ${appView>/trainingType} === 'ONLINE'}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <VBox id="idVbAttendanceLiveVid" renderType="Bare">
-                            <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.AttendanceLiveVid" type="XML"/>
-                        </VBox>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
         </uxap:sections>
         <uxap:footer>
             <Bar visible="{= ${oModelView>/TrainingDetails/StartDate} > ${oModelView>/currDate} || ${appView>/flgViewOnVd} === true }">

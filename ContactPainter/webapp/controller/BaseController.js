@@ -2,9 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/ui/core/BusyIndicator',
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
+	"sap/m/MessageBox"
 
-], function (Controller, BusyIndicator, MessageToast, MessageBox) {
+], function (Controller, BusyIndicator,MessageToast,MessageBox) {
     "use strict";
 
     return Controller.extend("com.knpl.pragati.ContactPainter.controller.BaseController", {
@@ -17,16 +17,13 @@ sap.ui.define([
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
 
-        sActivationStatus: function (sStatus) {
+         sActivationStatus : function(sStatus){
 
-            switch (sStatus) {
+            switch(sStatus){
 
-                case "ACTIVATED":
-                    return "Activated";
-                case "DEACTIVATED":
-                    return "Deactivated";
-                case "NOT_CONTACTABLE":
-                    return "Not Contactable";
+                case "ACTIVATED" : return "Activated" ;
+                case "DEACTIVATED"  : return "Deactivated";
+                case "NOT_CONTACTABLE" : return "Not Contactable";
 
             }
 
@@ -67,7 +64,7 @@ sap.ui.define([
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
-
+        
         //for controlling global busy indicator        
         presentBusyDialog: function () {
             BusyIndicator.show();
@@ -77,85 +74,60 @@ sap.ui.define([
             BusyIndicator.hide();
         },
         showWarning: function (sMsgTxt, _fnYes) {
-            var that = this;
-            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
-                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                onClose: function (sAction) {
-                    if (sAction === "YES") {
-                        _fnYes && _fnYes.apply(that);
-                    }
-                }
-            });
+			var that = this;
+			MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+				actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+				onClose: function (sAction) {
+					if (sAction === "YES") {
+						_fnYes && _fnYes.apply(that);
+					}
+				}
+			});
         },
 
-        fnCheckProfileCompleted: function (oData) {
+        fnCheckProfileCompleted: function(oData){
             console.log("Function Called");
-            //check if aleady completed
-
-            if (oData.ProfileCompleted) return;
-
-            if (!oData.PainterFamily || oData.PainterFamily.length == 0) {
-                return;
-            }
-
-            if (!oData.Vehicles || oData.Vehicles.length == 0) {
-                return;
-            }
-
-            if (!oData.PainterSegmentation) {
-                return;
-            }
-
-            if (!oData.PainterKycDetails || oData.PainterKycDetails.Status !== "APPROVED") {
-                return;
-            }
-
-            if (!oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED") {
-                return;
-            }
-
-            if (!oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED") {
-                return;
-            }
-
-            if (!oData.PainterAddress) {
-                return;
-            }
-
-            this.getViewModel().callFunction("/MarkProfileCompletedByAdmin", {
-                urlParameters: {
-                    PainterId: oData.Id
-                }
-            });
-
-
-
-        },
-        // assets change
-        onAssetChange: function (oEvent) {
-             var oView = this.getView();
-            var oModel = oView.getModel("oModelView");
-            var oObject = oEvent
-                .getSource()
-                .getBindingContext("oModelView")
-                .getObject();
+          //check if aleady completed
             
-            if (oObject["VehicleTypeId"] === 5) {
-                oObject["VehicleName"] = "None";
-            }
-            if(oObject["VehicleTypeId"] !== 5 && oObject["VehicleName"] == "None" ){
-                oObject["VehicleName"] = "";
-            }
+          if(oData.ProfileCompleted) return;
+
+          if( !oData.PainterFamily  ||  oData.PainterFamily.length == 0)
+          {return;}
+
+          if( !oData.Vehicles  ||  oData.Vehicles.length == 0 )
+          {return;}
+           
+          if( !oData.PainterSegmentation )
+          {return;}
+
+          if( !oData.PainterKycDetails || oData.PainterKycDetails.Status !== "APPROVED" )
+          {return;}
+        
+          if( !oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED" )
+          {return;}
+
+          if( !oData.PainterBankDetails || oData.PainterBankDetails.Status !== "APPROVED" )
+          {return;}
+
+           if( !oData.PainterAddress )
+          {return;}
+
+         this.getViewModel().callFunction("/MarkProfileCompletedByAdmin", {
+              urlParameters : {
+                  PainterId : oData.Id
+              }
+          });
+
 
 
         },
 
         /**
-         * Adds a history entry in the FLP page history
-         * @public
-         * @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
-         * @param {boolean} bReset If true resets the history before the new entry is added
-         */
+        * Adds a history entry in the FLP page history
+        * @public
+        * @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
+        * @param {boolean} bReset If true resets the history before the new entry is added
+        */
         addHistoryEntry: (function () {
             var aHistoryEntries = [];
 
@@ -178,4 +150,5 @@ sap.ui.define([
         })()
     });
 
-});
+}
+);

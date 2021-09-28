@@ -40,7 +40,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <ComboBox id="idStatus" placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{path:'oModelControl>/filterBar/Status' }">
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/Status}.length>1}" id="idStatus" placeholder="{i18n>Enter} {i18n>Status}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
                                         <core:Item text="Pending" key="PENDING" />
                                         <core:Item text="Inprogress" key="INPROGRESS" />
                                         <core:Item text="Completed" key="COMPLETED" />

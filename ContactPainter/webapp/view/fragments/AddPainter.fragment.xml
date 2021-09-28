@@ -84,11 +84,11 @@
                     <core:Item text="{Id}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>Division}" />
-                <ComboBox id="idDivision" editable="{= ${oModelView>/PainterDetails/ZoneId}!=='' }" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
+                <ComboBox id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
                     <core:Item text="{Id}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>Depot}" />
-                <ComboBox selectionChange="onDepotChange" editable="{= ${oModelView>/PainterDetails/DivisionId}!=='' }" id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
+                <ComboBox selectionChange="onDepotChange" id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
                     <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}" />
@@ -239,7 +239,7 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <VBox>
-                            <Select change="onAssetChange" items="{path:'/MasterVehicleTypeSet',sorter:{path:'VehicleType'},templateShareable:false, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>VehicleTypeId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                            <Select items="{path:'/MasterVehicleTypeSet',sorter:{path:'VehicleType'},templateShareable:false, filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" visible="{= ${oModelView>editable} === true }" selectedKey="{path:'oModelView>VehicleTypeId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
                                 <items>
                                     <core:Item text="{VehicleType}" key="{Id}" />
                                 </items>
@@ -247,7 +247,7 @@
                             <ObjectIdentifier title="{path:'oModelView>VehicleTypeId',formatter:'.fmtAsset'}" titleActive="true" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <VBox>
-                            <Input  enabled="{path:'oModelView>VehicleTypeId',formatter:'.formatter.fmtCheckAsssetType'}" maxLength="25" width="70%" required="true" value="{path:'oModelView>VehicleName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }" />
+                            <Input maxLength="25" width="70%" required="true" value="{path:'oModelView>VehicleName',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= ${oModelView>editable} === true }" />
                             <Text text="{oModelView>VehicleName}" visible="{= ${oModelView>editable} !== true }" />
                         </VBox>
                         <Text />
@@ -328,7 +328,7 @@
                     <RadioButton text="{i18n>Approved}" />
                 </RadioButtonGroup>
                 <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
-                <UploadCollection selectionChange=".onUploadCollection" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <UploadCollection typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
                 <Label text="" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" ></Label>
                 <Text visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" text="{i18n>FileUploadMessage}"/>
 
