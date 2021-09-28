@@ -42,12 +42,12 @@
                                 <Text text="{Title}"/>
                             </f:fields>
                         </f:FormElement>
-                       <!-- <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField1'}">
+                        <!-- <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField1'}">
                             <f:fields>
                                 <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}" visible="true"/>
                             </f:fields>
                         </f:FormElement> -->
-                       <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField'}" >
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField'}">
                             <f:fields>
                                 <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
                             </f:fields>
@@ -234,24 +234,21 @@
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
-              <infoToolbar>
-					<OverflowToolbar >
+            <infoToolbar>
+                <OverflowToolbar >
                     <Label text="{i18n>sample}"/>
-                    <!-- <Select editable="false"
-                        change="onSelection"
-                        selectedKey="{= ${IsMultiRewardAllowed} === false ? '1' : '0' }"
-                        >
+                    <!-- <Select editable="false" change="onSelection" selectedKey="{= ${IsMultiRewardAllowed} === false ? '1' : '0' }">
 					<core:Item key="0" text="Yes" />
                     <core:Item key="1" text="No" />
 				</Select> -->
-                <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl>/Rbtn/MultiReward}">
-                    <buttons>
-                        <RadioButton text="{i18n>No}"/>
-                        <RadioButton text="{i18n>Yes}"/>
-                    </buttons>
-                </RadioButtonGroup>
-					</OverflowToolbar>
-				</infoToolbar>
+                    <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl>/Rbtn/MultiReward}">
+                        <buttons>
+                            <RadioButton text="{i18n>No}"/>
+                            <RadioButton text="{i18n>Yes}"/>
+                        </buttons>
+                    </RadioButtonGroup>
+                </OverflowToolbar>
+            </infoToolbar>
             <columns>
                 <!-- <Column>
                     <Text text="{i18n>ProductsPacks}" />
@@ -325,9 +322,9 @@
                     <items>
                         <ColumnListItem >
                             <cells>
-                                 <Label text="{path:'oModelDisplay>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                                <Label text="{path:'oModelDisplay>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
                                 <VBox >
-                                   <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.fnEndDateContion1Display'}"  minDate="{oModelDisplay>StartDate}"  change="onEndDateCndtDisplay"  width="50%" dateValue="{oModelDisplay>EndDate}" placeholder="DD/MM/YYYY"   required="true"/>
+                                    <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelDisplay>StartDate}" change="onEndDateCndtDisplay" width="50%" dateValue="{oModelDisplay>EndDate}" placeholder="DD/MM/YYYY" required="true"/>
                                 </VBox>
                                 <VBox visible="{= ${InputType}===0 }">
                                     <Label text="{path:'oModelDisplay>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
@@ -402,7 +399,7 @@
                         <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-                <Table id="Table7" visible="{OfferConditions/IsRedemptionCycleCondition}"  items="{path: 'oModelControl2>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                <Table id="Table7" visible="{OfferConditions/IsRedemptionCycleCondition}" items="{path: 'oModelControl2>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
                             <Title text="{i18n>RedemptionCycle}"/>
@@ -937,86 +934,54 @@
             <Title titleStyle="H3" text="6. {i18n>AdditionalInformation}"/>
         </Toolbar>
         <!-- <MessageStrip visible="{= ${OfferTypeId}!==1 }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/> -->
-          <VBox>
-    <items>
+        <VBox>
+            <items>
                 <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
-                <RadioButtonGroup  editable="false" columns="2" select="onRbRRDialogAddInfo"  selectedIndex="{= ${IsSpecificAchieverCount} === false ? 0 : 1 }">
-                        <buttons>
-                            <RadioButton text="{i18n>All}"/>
-                            <RadioButton text="{i18n>SpecificPaintercount}"/>
-                        </buttons>
-                    </RadioButtonGroup>
-                    <Table id="tableId"  visible="{IsSpecificAchieverCount}"   items="{path: 'oModelControl2>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
-            <headerToolbar>
-                <Toolbar>
-                    <!-- <Title text="{i18n>Slab}"/> -->
-                    <!-- <ToolbarSpacer />
+                <RadioButtonGroup editable="false" columns="2" select="onRbRRDialogAddInfo" selectedIndex="{= ${IsSpecificAchieverCount} === false ? 0 : 1 }">
+                    <buttons>
+                        <RadioButton text="{i18n>All}"/>
+                        <RadioButton text="{i18n>SpecificPaintercount}"/>
+                    </buttons>
+                </RadioButtonGroup>
+                <Table id="tableId" visible="{IsSpecificAchieverCount}" items="{path: 'oModelControl2>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                    <headerToolbar>
+                        <Toolbar>
+                            <!-- <Title text="{i18n>Slab}"/> -->
+                            <!-- <ToolbarSpacer />
                     <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddInformation('add')"/> -->
-                </Toolbar>
-            </headerToolbar>
-            <columns>
-                <!-- <Column visible="{= ${oModelView>/InputType}===0 }"> -->
-                  <Column>
-                    <Label text="{i18n>tblColStartDate}" visible="true" required="true"/>
-                </Column>
-                <Column>
-                    <Label text="{i18n>EndDate}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>count}" />
-                </Column>
-                <!-- <Column>
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <!-- <Column visible="{= ${oModelView>/InputType}===0 }"> -->
+                        <Column>
+                            <Label text="{i18n>tblColStartDate}" visible="true" required="true"/>
+                        </Column>
+                        <Column>
+                            <Label text="{i18n>EndDate}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>count}" />
+                        </Column>
+                        <!-- <Column>
                     <Text text="{i18n>tblColAction}"/>
                 </Column> -->
-            </columns>
-            <items>
-                <ColumnListItem press="onListItemPress">
-                    <cells>
-                        <VBox>
-                            <!-- <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
-               <Label  visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>              
-                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
-                   <DatePicker  editable="false" visible="{= ${oModelControl>editable} === true }" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl2>StartDate}"/>       
-                        </VBox>
-                        <!-- <VBox visible="{= ${oModelView>/InputType}===1 }"> -->
-                         <VBox >
-                            <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
-                   <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />          
-                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" value="{path:'oModelControl>EndDate'}" /> -->
-                    <DatePicker editable="false" visible="{= ${oModelControl>editable} === true }" required="true" change= ".onEndDateAddInfo" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl2>EndDate}" />     
-                        </VBox>
-                        <VBox >
-                            <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>AchieverCount'}" /> -->
-                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>AchieverCount'}" />
-                            <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>AchieverCount'}" /> -->
-                        <Text visible="{= ${oModelControl>editable} === true }"  width="100%" text="{path:'oModelControl2>AchieverCount'}" /> 
-                        </VBox>
-                        <!-- <HBox>
-                            <Button  visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddInformation"></Button>
-                            <Button  visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveAddInfo"></Button>
-                            <Button  icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedAddInfo"></Button>
-                        </HBox> -->
-                    </cells>
-                </ColumnListItem>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+
+                                <Label text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+
+                                <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
+
+                                <Label text="{path:'oModelControl2>AchieverCount'}" />
+
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
             </items>
-        </Table>
-                </items>
-    </VBox>
-        <!-- <f:Form editable="false">
-            <f:layout>
-                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
-            </f:layout>
-            <f:formContainers>
-                <f:FormContainer title="{i18n>RedemtionCycle}" visible="{= ${OfferTypeId}===1 }">
-                    <f:formElements>
-                        <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
-                            <f:fields>
-                                <Text text="{RedemptionCycle}"/>
-                            </f:fields>
-                        </f:FormElement>
-                    </f:formElements>
-                </f:FormContainer>
-            </f:formContainers>
-        </f:Form> -->
+        </VBox>
+     
     </VBox>
 </core:FragmentDefinition>

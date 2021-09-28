@@ -5,11 +5,11 @@
 	xmlns:core="sap.ui.core"
     xmlns="sap.ui.table"
     	xmlns:u="sap.ui.unified">
-	  <m:Dialog id="idP" showHeader="false"  contentHeight="1000px" contentWidth="2000px">
+	  <m:Dialog id="idP" showHeader="false"  >
            	<Table id="idPainterDialog"
 				rows="{oModelControl>/ofragmentModel}"
 			  selectionMode="None"
-			
+               width="100%"
 				paste="onPaste"
 				ariaLabelledBy="title">
 				<extension>
@@ -18,59 +18,30 @@
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
-                 <Column width="4rem">
+                 <Column >
 						<m:CheckBox select="onSelectAll" ></m:CheckBox> 
 						<template>
 							<m:CheckBox  selected="{oModelControl>isSelected}"  />
 						</template>
 					</Column>
-					<Column width="11rem">
+					<Column >
 						<m:Label text="Painter Name" />
 						<template>
 							<m:Text text="{oModelControl>PainterName}" wrapping="false" />
 						</template>
 					</Column>
-                    <Column width="11rem">
+                    <Column >
 						<m:Label text="Painter Mobile" />
 						<template>
 							<m:Text text="{oModelControl>PainterMobile}" wrapping="false" />
 						</template>
 					</Column>
-					<Column width="9rem">
-						<m:Label text="Zone" />
-						<template>
-								<m:Text text="{oModelControl>Zone}" wrapping="false" />
-						</template>
-					</Column>
-					<Column width="9rem">
-						<m:Label text="Division" />
-						<template>
-							<m:Text text="{oModelControl>Division}" wrapping="false" />
-						</template>
-					</Column>
-					<Column width="9rem">
-						<m:Label text="Depot" />
-						<template>
-								<m:Text text="{oModelControl>Depot}" wrapping="false" />
-						</template>
-					</Column>
-                <Column width="9rem">
-						<m:Label text="Painter Type" />
-						<template>
-							<m:Text text="{oModelControl>PainterType}" wrapping="false" />
-						</template>
-					</Column>
-                    <Column width="9rem">
-						<m:Label text="Painter ArcheType" />
-						<template>
-							<m:Text text="{oModelControl>PainterArcheType}" wrapping="false" />
-						</template>
-					</Column>
+					
 				</columns>
 			</Table>
           <m:buttons>
             <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
-            <m:Button  text="Save" type="Ghost" press="onSavePaitner"/>
+            <m:Button  text="Save" type="Ghost" press="onSaveUploadPaitner"/>
         </m:buttons>
     </m:Dialog>
 </core:FragmentDefinition>
