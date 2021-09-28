@@ -57,7 +57,7 @@ sap.ui.define([
             this._initData("add", "", sId);
         },
 
-        _GetServiceData: function () {},
+        _GetServiceData: function () { },
 
         _initData: function (mParMode) {
             var oViewModel = new JSONModel({
@@ -69,7 +69,7 @@ sap.ui.define([
             if (mParMode == "add") {
                 this._showFormFragment("BannerImageForm");
                 this.getView().unbindElement();
-            } else {}
+            } else { }
 
             var oDataControl = {
                 StartTime: "",
@@ -202,12 +202,12 @@ sap.ui.define([
         },
 
         onPressSave: function () {
-            // this.sServiceURI = this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri;
             var oModel = this.getView().getModel("oModelView");
             var oValidator = new Validator();
             var oVbox = this.getView().byId("idVbx");
             var bValidation = oValidator.validate(oVbox, true);
             var oModelContrl = this.getView().getModel("oModelControl");
+            oModelContrl.setProperty("/busy", true);
 
             if (bValidation == false) {
                 MessageToast.show(
@@ -230,7 +230,6 @@ sap.ui.define([
             var oView = this.getView();
             var oViewModel = oView.getModel("oModelView");
             var oAddData = oViewModel.getData();
-            //debugger;
             var oPayLoad = this._ReturnObjects(oAddData);
             var othat = this;
             var oData = this.getView().getModel();
@@ -245,12 +244,10 @@ sap.ui.define([
         },
 
         _ImageUpload: function (oData) {
-            //debugger;
             var that = this;
-            var promise = jQuery.Deferred();
+            var oModelContrl = this.getView().getModel("oModelControl");
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
             var newSpath = "/MobileBannerImageSet(" + oData.Id + ")";
-            // return new Promise(function (res, rej) {
             return new Promise(function (resolve, reject) {
                 var settings = {
                     url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
@@ -260,44 +257,38 @@ sap.ui.define([
                     contentType: "image/png",
                     processData: false,
                     success: function (x) {
-                        resolve(x);
+                        oModelContrl.setProperty("/busy", false);
                         MessageToast.show("Banner Image Successfully Uploaded");
+                        resolve(x);
                     },
                     error: function (a) {
-                        reject(a);
+                        oModelContrl.setProperty("/busy", false);
                         MessageToast.show("Banner Image creation failed");
+                        reject(a);
                     }
                 };
-
                 $.ajax(settings);
             })
-
-
-            // });
         },
 
         _postCreateData: function (oPayLoad) {
-            var promise = jQuery.Deferred();
             var oData = this.getView().getModel();
             var othat = this;
             return new Promise(function (resolve, reject) {
                 oData.create("/MobileBannerImageSet", oPayLoad, {
                     success: function (oData) {
-                        // MessageToast.show("Banner Image Successfully Created");
                         resolve(oData);
                     },
                     error: function (a) {
                         MessageBox.error(
                             "Unable to create Banner Image due to server issues", {
-                                title: "Error Code: " + a.statusCode,
-                            }
+                            title: "Error Code: " + a.statusCode,
+                        }
                         );
                         reject(a);
                     },
                 });
             })
-
-
         },
 
         _ReturnObjects: function (mParam) {

@@ -23,11 +23,10 @@
                 
                 <core:Title text=" " />
                 <Label text="{i18n>colStartTime}" />
-                 <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartTime'}" value="{path:'oModelControl>/StartTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
-
+                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartTime'}" value="{path:'oModelControl>/StartTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
 
                 <Label text="{i18n>colEndTime}"/>
-                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndTime'}" value="{path:'oModelControl>/EndTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy hh:mm a'},pattern:'dd/MM/yyyy hh:mm a',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="endTime" placeholder="DD/MM/YYYY HH:mm:ss" required="true"/>
+                <DatePicker valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndTime'}" value="{path:'oModelControl>/EndTime', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
             </f:content>
         </f:SimpleForm>
     </VBox>
