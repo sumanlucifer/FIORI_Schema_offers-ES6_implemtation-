@@ -59,14 +59,15 @@ sap.ui.define([], function () {
                 return "";
             }
             var dateValue = dValue.toDateString();
-            var timeValue = dValue.toLocaleTimeString();
-            var pattern = "dd/MM/yyyy hh:mm a";
+            // var timeValue = dValue.toLocaleTimeString();
+            // var pattern = "dd/MM/yyyy hh:mm a";
+            var pattern = "dd/MM/yyyy";
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
 
-            var oDateTime = dateValue + " " + timeValue;
-            var oNow = new Date(oDateTime);
+            // var oDateTime = dateValue + " " + timeValue;
+            var oNow = new Date(dateValue);
             return oDateFormat.format(oNow); //string in the same format as "Thu, Jan 29, 2017"
 
         }

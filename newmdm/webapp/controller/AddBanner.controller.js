@@ -207,7 +207,6 @@ sap.ui.define([
             var oVbox = this.getView().byId("idVbx");
             var bValidation = oValidator.validate(oVbox, true);
             var oModelContrl = this.getView().getModel("oModelControl");
-            oModelContrl.setProperty("/busy", true);
 
             if (bValidation == false) {
                 MessageToast.show(
@@ -216,6 +215,7 @@ sap.ui.define([
             }
             if (bValidation) {
                 if (oModelContrl.getProperty("/oImage")) {
+                    oModelContrl.setProperty("/busy", true);
                     this._postDataToSave();
                 } else {
                     MessageToast.show(
