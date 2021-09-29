@@ -141,13 +141,13 @@ sap.ui.define([
         },
         fmtCheckBonusPoints: function (m1) {
             if (m1) {
-               
+
                 var obj;
                 for (var i in m1) {
                     obj = this.getView().getModel().getData("/" + m1[i]);
-                  
+
                     if (obj["RedemptionStatus"] === "REDEEMED") {
-                       
+
                         return obj["TotalBonusPoints"];
                     }
                 }
@@ -155,7 +155,7 @@ sap.ui.define([
             }
             return "NA";
         },
-         fmtCheckAsssetType: function (mParam) {
+        fmtCheckAsssetType: function (mParam) {
             var sPath = "/MasterVehicleTypeSet(" + mParam + ")";
             var oData = this.getView().getModel().getProperty(sPath);
             if (oData !== undefined && oData !== null) {
@@ -164,19 +164,48 @@ sap.ui.define([
                 }
             }
         },
-        fmtOfferProgressStatus:function(mParam1){
-            if(mParam1==="COMPLETED"){
+        fmtBtnRedeemOfferTbl: function (m1, m2) {
+            if (m1 === "REDEEMABLE") {
+                if (m2 == 1) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        fmtTxtRedmtOfferTbl: function (m1, m2) {
+          
+            if (m1 === "REDEEMABLE") {
+                if (m2 == 2 || m2 == 3) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        fmtTxtMsgOfferTable1:function(m1){
+            if(m1==2){
+                return "Not allowed as total achiever limit exhausted"
+            }
+            if(m1==3){
+                return "not allowed as painter deselected"
+            }
+            return "NA";
+
+        },
+        fmtOfferProgressStatus: function (mParam1) {
+            if (mParam1 === "COMPLETED") {
                 return "Completed"
             }
-             if(mParam1==="NOT_STARTED"){
+            if (mParam1 === "NOT_STARTED") {
                 return "Not completed"
             }
-            if(mParam1==="STARTED"){
+            if (mParam1 === "STARTED") {
                 return "In Progress"
             }
         },
         dateFormatter: function (jsonDateString) {
-            const dt = DateFormat.getDateTimeInstance({ pattern: "dd/MM/yyyy" });
+            const dt = DateFormat.getDateTimeInstance({
+                pattern: "dd/MM/yyyy"
+            });
             // var date= new Date(parseInt(jsonDateString.replace('/Date(', '')));
             const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
             return dayMonthYear;

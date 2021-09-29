@@ -62,7 +62,8 @@
                         <HBox>
                             <items>
                                 <Text visible="{= ${RedemptionStatus}!=='REDEEMABLE' }" text="{path:'RedemptionStatus',formatter:'.formatter.fmtLowerCase2'}" />
-                                <Button visible="{= ${RedemptionStatus}==='REDEEMABLE' }" text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" enabled="{=!${Painter/IsArchived} &amp;&amp; ${Painter/ActivationStatus}!=='DEACTIVATED' }"/>
+                                <Button visible="{parts:['RedemptionStatus','RedemptionAllowed'],formatter:'.formatter.fmtBtnRedeemOfferTbl' }" text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" enabled="{=!${Painter/IsArchived} &amp;&amp; ${Painter/ActivationStatus}!=='DEACTIVATED' }"/>
+                                <Text visible="{parts:['RedemptionStatus','RedemptionAllowed'],formatter:'.formatter.fmtTxtRedmtOfferTbl' }" text="{parts:['RedemptionAllowed'],formatter:'.formatter.fmtTxtMsgOfferTable1' }" />
                                 <!-- <Button text="{i18n>Redeem}" type="Ghost" press="onOfferReedeme" />  -->
                             </items>
                         </HBox>
