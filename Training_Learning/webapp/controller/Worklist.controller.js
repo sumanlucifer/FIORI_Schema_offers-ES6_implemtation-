@@ -791,65 +791,16 @@ sap.ui.define([
         /*Training attented count*/
         onPressCount: function (oEvent) {
             var trainingId=oEvent.getSource().getBindingContext().getObject('Id');
-            console.log(trainingId);  
+            var trainingTypeId=oEvent.getSource().getBindingContext().getObject('TrainingTypeId');
                 this.getRouter().navTo("PainterList",{
-                     trainingId:trainingId
+                    trtype:trainingTypeId,
+                    trainingId:trainingId
                 });
 
-            //set training-id in oCtrlModel and pass in frag view  
-            // var oButton = oEvent.getSource(),
-            //     oView = this.getView();
-
-            // if (!this._pDialog) {
-            //     this._pDialog = Fragment.load({
-            //         id: oView.getId(),
-            //         name: "com.knpl.pragati.Training_Learning.view.fragments.CompletedPainterDialog",
-            //         controller: this
-            //     }).then(function (oDialog) {
-            //         oView.addDependent(oDialog);
-            //         return oDialog;
-            //     });
-            // }
-
-            // this._pDialog.then(function (oDialog) {
-            //     this._configDialog(oButton, oDialog);
-            //     oDialog.open();
-            // }.bind(this));
+           
 
         },
-        _configDialog: function (oButton, oDialog) {
-			// Set draggable property
-			var bDraggable = oButton.data("draggable");
-			oDialog.setDraggable(bDraggable == "true");
-
-			// Set resizable property
-			var bResizable = oButton.data("resizable");
-			oDialog.setResizable(bResizable == "true");
-
-			// Multi-select if required
-			var bMultiSelect = !!oButton.data("multi");
-			oDialog.setMultiSelect(bMultiSelect);
-
-			// Remember selections if required
-			var bRemember = !!oButton.data("remember");
-			oDialog.setRememberSelections(bRemember);
-
-			var sResponsivePadding = oButton.data("responsivePadding");
-			var sResponsiveStyleClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer";
-
-			if (sResponsivePadding) {
-				oDialog.addStyleClass(sResponsiveStyleClasses);
-			} else {
-				oDialog.removeStyleClass(sResponsiveStyleClasses);
-			}
-
-			// Set custom text for the confirmation button
-			var sCustomConfirmButtonText = oButton.data("confirmButtonText");
-			oDialog.setConfirmButtonText(sCustomConfirmButtonText);
-
-			// toggle compact style
-			syncStyleClass("sapUiSizeCompact", this.getView(), oDialog);
-		},
+       
 
         /* =========================================================== */
         /* internal methods                                            */
