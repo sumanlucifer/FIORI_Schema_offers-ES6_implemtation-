@@ -26,10 +26,10 @@
                     <Label text="{i18n>tblColStartDate}" visible="true" required="true"/>
                 </Column>
                 <Column>
-                    <Label text="{i18n>EndDate}" />
+                    <Label text="{i18n>EndDate}" required="true"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>count}" />
+                    <Label text="{i18n>count}" required="true"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>

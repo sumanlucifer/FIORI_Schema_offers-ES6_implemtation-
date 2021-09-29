@@ -99,11 +99,11 @@
 				</Select> -->
                 <RadioButtonGroup columns="2" select=".onRbChnageSlbSample" selectedIndex="{oModelControl>/Rbtn/MultiReward}">
                     <buttons>
-                        <RadioButton text="{i18n>No}"/>
-                        <RadioButton text="{i18n>Yes}"/>
+                     <RadioButton text="{i18n>No}"/>
+                    <RadioButton text="{i18n>Yes}"/>
                     </buttons>
                 </RadioButtonGroup>
-											</OverflowToolbar>
+				</OverflowToolbar>
 				</infoToolbar>
             <columns>
                 <Column visible="{= ${oModelView>/InputType}===0 }">
