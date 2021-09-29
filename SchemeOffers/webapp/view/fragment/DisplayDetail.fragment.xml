@@ -47,7 +47,7 @@
                                 <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}" visible="true"/>
                             </f:fields>
                         </f:FormElement> -->
-                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField'}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}">
                             <f:fields>
                                 <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
                             </f:fields>

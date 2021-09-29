@@ -1,7 +1,6 @@
 // @ts-ignore
 sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
     "use strict";
-
     var wfIcons = {
         WORKFLOW_STARTED: "sap-icon://initiative",
         WORKFLOW_COMPLETED: "sap-icon://stop",
@@ -41,7 +40,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         REFERENCED_SUBFLOW_COMPLETED: "sap-icon://process",
         REFERENCED_SUBFLOW_FAILED: "sap-icon://process",
     };
-
     return {
         /**
          * Rounds the number unit value to 2 digits
@@ -73,7 +71,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             });
             return oDateFormat.format(date);
         },
-
         fmtLowerCase: function (mParam) {
             var sStatus = "";
             if (mParam) {
@@ -89,11 +86,8 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 aCharStatus[0] = aCharStatus[0].toUpperCase();
                 sStatus = aCharStatus.join("");
             }
-
             return sStatus;
         },
-
-
         fmtOfferStatus: function (mParam1) {
             if (mParam1 === "DRAFT") {
                 return "Draft"
@@ -113,10 +107,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             if (mParam1 === "PUBLISHED") {
                 return "Published"
             }
-
             return mParam1;
-
-
         },
         fmtOfferStateColor: function (mParam) {
             if (mParam === "APPROVED") {
@@ -177,7 +168,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                     return m3["RewardGift"]
                 }
             }
-
             return "NA"
         },
         // List view workflow changes
@@ -191,7 +181,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         //List View Workflow changes
         btnEditOfferTable: function (m1, m2, m3) {
             //m1 edit applicable; m2 login information; m3 offer status
-
             //first check is only admin,HOM,HOM1,HOD, is allowed to edit or add offers
             if (m2 !== 5 && m2 !== 6 && m2 !== 7) {
                 return false;
@@ -205,23 +194,18 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return m1;
         },
-
         // all formatters for the button in the display and also for the workflow
         // user id HOM-5, HOM1-6, HOD- 7
         btnRedeemCheck: function (m1, m2) {
             //m1 Redemption Status
-
             if (m1 === "REDEEMABLE") {
                 if (!m2) {
                     return true;
                 }
-
             }
             if (m1 === "REDEEMING") {
-
                 return true;
             }
-
             return false;
         },
         btnSendForApprovalCheck: function (m1, m2) {
@@ -250,7 +234,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false;
         },
         btnEscalate: function (m1, m2, m3) {
-
             if (m1 === "PENDING") {
                 if (m2 === 6) {
                     if (m3 === "HO_MARKETING_1") {
@@ -272,7 +255,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 case "REJECTED":
                     return "Offer Rejected";
             }
-
             switch (sType) {
                 case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
                     return "Auto Escalation";
@@ -285,13 +267,11 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 case "USERTASK_COMPLETED":
                     return "Offer Approved.";
             }
-
             return sSubject;
         },
         ExecutionLogUserName: function (aEmails) {
             return !!aEmails ? aEmails.join(" ") : " ";
         },
-
         ExecutionLogDateTime: function (dValue) {
             if (!dValue) {
                 return "";
@@ -301,11 +281,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
-
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow);
         },
-
         ExecutionLogIcon: function (sStatus) {
             return wfIcons[sStatus];
         },
@@ -324,7 +302,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "No";
         },
-
         checkPainterReward: function (m1, m2, m3, m4, m5) {
             //m1 RedemptionStatus
             //m2 RedemptionType
@@ -332,12 +309,26 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m4 RedeemRewardCash
             //m5 RewardGift
             if (m1 === 'REDEEMED') {
-                if (m2 === "POINTS_TRANSFER") {
-                    return "Points - " + m3;
-                } else if (m2 === "BANK_TRANSFER") {
-                    return "Cash - Rs. " + m4;
-                } else if (m2 === "GIFT_REDEMPTION") {
-                    return "Gift - " + m5;
+                if (m2 === null) {
+                    if (m2 === "POINTS_TRANSFER") {
+                        return "Points - " + m3;
+                    } else if (m2 === "BANK_TRANSFER") {
+                        return "Cash - Rs. " + m4;
+                    } else if (m2 === "GIFT_REDEMPTION") {
+                        return "Gift - " + m5;
+                    }
+                    // else if (m2 === "MULTI_REWARDS") {
+                    //     return "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
+                    // }
+                }
+            }
+            if (m2 === "MULTI_REWARDS") {
+                if (m3 !== null) {
+                    if (m4 !== null) {
+                        if (m5 !== null) {
+                            return "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
+                        }
+                    }
                 }
             }
             if (m1 === "REDEEMABLE") {
@@ -356,7 +347,6 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         fmtGetProductName: function (mParam1) {
             var sPath = "/MasterProductSet('" + mParam1 + "')";
             var oData = this.getView().getModel().getData(sPath);
-
             if (oData) {
                 return oData["ProductName"];
             }
@@ -369,43 +359,35 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return false;
         },
-
         // btn republishoffer 
         btnRepublishOffer: function (m1, m2) {
             //
-            if(m1 ==="EXPIRED"){
-                if(m2===6){
+            if (m1 === "EXPIRED") {
+                if (m2 === 6) {
                     return true;
                 }
             }
-
             return false;
         },
-
-
         // enddate field visible
-
         endDateField: function (m1, m2) {
             if (m1 === "EXPIRED") {
                 if (m2 === 6) {
                     return true;
-
                 }
             }
             if (m1 !== "EXPIRED") {
                 if (m2 === 6 || m2 === 7) {
                     return true;
                 }
-
             }
-
             return false;
         },
-        btnRedeenAllEnable: function (m1,m2) {
-            if(m1==="REEDEMING"){
+        btnRedeenAllEnable: function (m1, m2) {
+            if (m1 === "REEDEMING") {
                 return false;
             }
-            if(m2===false){
+            if (m2 === false) {
                 return false;
             }
             return true;
