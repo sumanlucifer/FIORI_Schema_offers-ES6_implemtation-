@@ -185,7 +185,7 @@ sap.ui.define(
                             return {
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
-                                Id:item.Id,
+                                Id: item.Id,
                                 isSelected: true
                             };
                         });
@@ -256,14 +256,13 @@ sap.ui.define(
                     return {
                         PainterMobile: item.PainterMobile,
                         PainterName: item.PainterName,
-                        PainterId:item.Id
+                        PainterId: item.Id
                     };
                 });
                 oView.getModel("oModelControl")
                     .setProperty("/MultiCombo/Painters", itemModel);
                 console.log(itemModel);
                 this._CsvDialoge.close();
-                
             },
             onSelectAll: function (oeve) {
                 var isSelected = oeve.getSource().getSelected();
@@ -833,6 +832,35 @@ sap.ui.define(
                 //         break;
                 //     }
                 // }
+                if (bFlag && cFlag) {
+                    oObject["editable"] = false;
+                    oModel.refresh(true);
+                }
+                //oModel.refresh(true);
+            },
+            onPressSaveAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var oCells = oEvent.getSource().getParent().getParent().getCells();
+                var oValidator = new Validator();
+                var cFlag = oValidator.validate(oCells);
+                var bFlag = true;
+                if (!oObject["StartDate"]) {
+                    MessageToast.show("Kindly Input Start Date Fields to Continue");
+                    return;
+                }
+                if (!oObject["EndDate"]) {
+                    MessageToast.show("Kindly Input End Date Fields to Continue");
+                    return;
+                }
+                if (!oObject["AchieverCount"]) {
+                    MessageToast.show("Kindly Input Achiever Account Fields to Continue.");
+                    return;
+                }
                 if (bFlag && cFlag) {
                     oObject["editable"] = false;
                     oModel.refresh(true);
@@ -1479,9 +1507,6 @@ sap.ui.define(
                 oModel.setProperty("/Table/Table2", []);
                 oModel.setProperty("/Table/Table5", []);
             },
-
-           
-
             onRbRRDialogVolume2: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3740,6 +3765,30 @@ sap.ui.define(
                     ];
                 }
             },
+            _CheckTableCondition4: function () {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oModelData = oModel.getData();
+                var oDataTable = oModelData["Table"]["Table8"];
+                var bFlag = true;
+                if (oDataTable.length > 0) {
+                    oDataTable.forEach(function (a) {
+                        if (a.hasOwnProperty("editable")) {
+                            if (a["editable"]) {
+                                bFlag = false;
+                            }
+                        }
+                    });
+                }
+                if (bFlag) {
+                    return [true, ""];
+                } else {
+                    return [
+                        false,
+                        "Kindly Save the data in the Additional Info Table to Continue.",
+                    ];
+                }
+            },
             onAttachDialogClose: function (oEvent) {
                 oEvent.getSource().getParent().close();
             },
@@ -4697,7 +4746,7 @@ sap.ui.define(
                 if (oEndDateAddInfo) {
                     if (oStartDateAddInfo > oEndDateAddInfo) {
                         MessageToast.show(
-                            "Kindly select a date less than Bonus Validity To date."
+                            "Kindly select a date less than End Date."
                         );
                         oModelControl.setProperty(sPath1 + "/StartDate", null);
                         return;
@@ -4720,51 +4769,51 @@ sap.ui.define(
                 if (oStartDate1) {
                     if (oStartDate1 > oEndDate1) {
                         MessageToast.show(
-                            "Kindly select a date more than Bonus Validity From date."
+                            "Kindly select a date more than Start date."
                         );
                         oModelControl.setProperty(sPath2 + "/EndDate", null);
                         return;
                     }
                 }
             },
-            onPressSaveAddInfo: function (oEvent) {
-                var oView = this.getView();
-                var oModel = oView.getModel("oModelControl");
-                var oObject = oEvent
-                    .getSource()
-                    .getBindingContext("oModelControl")
-                    .getObject();
-                var oCells = oEvent.getSource().getParent().getParent().getCells();
-                var oValidator = new Validator();
-                var cFlag = oValidator.validate(oCells);
-                var bFlag = true;
-                if (!cFlag) {
-                    MessageToast.show(
-                        "Kindly Input Mandatory Fields In Proper Format To Continue."
-                    );
-                    return;
-                }
-                if (
-                    !oObject["StartDate"] &&
-                    !oObject["EndDate"] &&
-                    !oObject["AchieverCount"]
-                ) {
-                    MessageToast.show(
-                        "Kindly Enter Either start Date  Or End Date Cash or Count."
-                    );
-                    return;
-                }
-                if (bFlag && cFlag) {
-                    oObject["editable"] = false;
-                    if (!oObject["RewardGiftName"]) {
-                        if (oObject.hasOwnProperty("RewardGiftId")) {
-                            oObject["RewardGiftId"] = null;
-                        }
-                    }
-                    oModel.refresh(true);
-                }
-                //oModel.refresh(true);
-            },
+            // onPressSaveAddInfo: function (oEvent) {
+            //     var oView = this.getView();
+            //     var oModel = oView.getModel("oModelControl");
+            //     var oObject = oEvent
+            //         .getSource()
+            //         .getBindingContext("oModelControl")
+            //         .getObject();
+            //     var oCells = oEvent.getSource().getParent().getParent().getCells();
+            //     var oValidator = new Validator();
+            //     var cFlag = oValidator.validate(oCells);
+            //     var bFlag = true;
+            //     if (!cFlag) {
+            //         MessageToast.show(
+            //             "Kindly Input Mandatory Fields In Proper Format To Continue."
+            //         );
+            //         return;
+            //     }
+            //     if (
+            //         !oObject["StartDate"] &&
+            //         !oObject["EndDate"] &&
+            //         !oObject["AchieverCount"]
+            //     ) {
+            //         MessageToast.show(
+            //             "Kindly Enter Either start Date  Or End Date Cash or Count."
+            //         );
+            //         return;
+            //     }
+            //     if (bFlag && cFlag) {
+            //         oObject["editable"] = false;
+            //         if (!oObject["RewardGiftName"]) {
+            //             if (oObject.hasOwnProperty("RewardGiftId")) {
+            //                 oObject["RewardGiftId"] = null;
+            //             }
+            //         }
+            //         oModel.refresh(true);
+            //     }
+            //     //oModel.refresh(true);
+            // },
             onPressAddInformation: function (oEvent) {
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
