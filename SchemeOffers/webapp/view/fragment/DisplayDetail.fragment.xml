@@ -969,19 +969,16 @@
                     <items>
                         <ColumnListItem>
                             <cells>
-
                                 <Label text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-
-                                <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
-
+ <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],
+									formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelControl2>StartDate}" change="onEndDateCndtAddInfo" width="50%" dateValue="{oModelControl2>EndDate}" placeholder="DD/MM/YYYY" required="true"/>
+                                <!-- <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                                 <Label text="{path:'oModelControl2>AchieverCount'}" />
-
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
             </items>
         </VBox>
-     
     </VBox>
 </core:FragmentDefinition>
