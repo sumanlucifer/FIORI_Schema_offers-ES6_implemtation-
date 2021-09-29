@@ -4634,7 +4634,7 @@ sap.ui.define(
                         delete ele["editable"];
                         return ele;
                     });
-                    oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
+                    oPayLoad["OfferEarnedEarnedPointsCondition"] = aFinalArray;
                 }
                 var aTable6 = oModel.getProperty("/Table/Table6");
                 var aFinalArray3 = [];
