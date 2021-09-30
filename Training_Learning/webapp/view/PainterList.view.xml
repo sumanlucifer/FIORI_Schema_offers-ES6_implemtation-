@@ -23,23 +23,15 @@
             </f:DynamicPageTitle>
         </f:title>
          <f:content>
-                    <smartTable:SmartTable
-                    id="idPainterTable"
-                    editable="false"
-                    beforeRebindTable="fnrebindTable"                    
-                    entitySet="ProductCatalogueViewerSet"
-                    tableType="ResponsiveTable"
-                    showRowCount="true"
-                    useExportToExcel="true"
-                    useVariantManagement="false"
-                    useTablePersonalisation="true"
-                    ignoredFields="IsArchived,IsSelected,Id"
-                    demandPopin="true"
-                    enableAutoBinding="false"
-                    placeToolbarInTable="true" 
-                    persistencyKey="PainterListSmartTableKey"
-                  >
-                 </smartTable:SmartTable>
+            <VBox>
+                <VBox id="idVbLearning" renderType="Bare"  visible="{oModelControl>/t1Visible}">
+                    <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.PainterListLearning" type="XML"/>
+                </VBox>
+                 <VBox id="idVbTraining" renderType="Bare"  visible="{oModelControl>/t2Visible}">
+                    <core:Fragment fragmentName="com.knpl.pragati.Training_Learning.view.fragments.PainterListTraining" type="XML"/>
+                </VBox>
+             </VBox>
+            
         </f:content>
     </f:DynamicPage>
 
