@@ -182,7 +182,7 @@ sap.ui.define(
                     }
                 },
 
-                onClearPainterSearch: function () {
+                onClearPainterSearchonClearPainterSearch: function () {
                     var aCurrentFilterValues = [];
                     var oDataFilter = {
                         ZoneId: "",
@@ -348,6 +348,7 @@ sap.ui.define(
                     var oTrainingQuestionnaire = [];
                     this.getModel("oModelView").setProperty("/oAddTraining", {
                         Question: "",
+                        LanguageCode: "",
                         TrainingQuestionnaireOptions: [],
                         IsArchived: false
                     });
@@ -396,52 +397,61 @@ sap.ui.define(
                         var iIndex = this.getModel("oModelView").getProperty("/iIndex");
                         addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
                     }
-                    if (addTr.Question === "") {
-                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
-                    } else {
-                        if (addTr.TrainingQuestionnaireOptions.length >= 2) {
-                            if (addTr.TrainingQuestionnaireOptions.length <= 4) {
-                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                        selectCorrectFlag = true;
-                                    }
-                                }
-                                if (selectCorrectFlag === false) {
-                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                                } else {
+                    if (!addTr.LanguageCode) {
+                        this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
+                    }
+                    else {
+                        if (addTr.Question === "") {
+                            this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                        } else {
+                            if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                                if (addTr.TrainingQuestionnaireOptions.length <= 4) {
                                     for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                        if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
-                                            blankOption = false;
-                                            this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                                        if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                                            selectCorrectFlag = true;
                                         }
                                     }
-                                    if (blankOption === true) {
-                                        if (addQsFlag === true) {
-                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                                Question: addTr.Question,
-                                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                                IsArchived: false
-                                            });
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
-                                        } else {
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
+                                    if (selectCorrectFlag === false) {
+                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                                    } else {
+                                        for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                                            if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
+                                                blankOption = false;
+                                                this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                                            }
+                                        }
+                                        if (blankOption === true) {
+                                            if (addQsFlag === true) {
+                                                this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                                this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                                                    Question: addTr.Question,
+                                                    TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                                                    IsArchived: false
+                                                });
+                                                this.byId("QuestionnaireOptionsDialog").close();
+                                                this.getModel("oModelView").refresh();
+                                            } else {
+                                                this.byId("QuestionnaireOptionsDialog").close();
+                                                this.getModel("oModelView").refresh();
+                                            }
                                         }
                                     }
+                                } else {
+                                    this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                                 }
                             } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
+                                this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                             }
-                        } else {
-                            this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                         }
                     }
                 },
 
                 closeOptionsDialog: function () {
                     this.byId("QuestionnaireOptionsDialog").close();
+                },
+
+                onAddMore: function (oEvent) {
+                    
                 },
 
                 onEditQuestionnaire: function (oEvent) {
@@ -544,7 +554,7 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                    
+
                     oViewModel.setProperty("/busy", true);
                     if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
@@ -1245,7 +1255,7 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-              
+
                     var oViewModel = this.getModel("oModelView");
                     if (oPayload.Url === "") {
                         oPayload.Url = "";
@@ -1261,7 +1271,7 @@ sap.ui.define(
 
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
-                       
+
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1337,7 +1347,7 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
-                   
+
                     var oViewModel = this.getModel("oModelView");
 
                     oPayload.Duration = parseInt(oPayload.Duration);
@@ -1361,7 +1371,7 @@ sap.ui.define(
 
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (createddata) {
-                        
+
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1399,13 +1409,13 @@ sap.ui.define(
                 },
 
                 _UploadAttendanceOfflineTr: function (oPayload) {
-                  
+
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
                     var oViewModel = this.getModel("oModelView");
-                 
+
                     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                     //     oPayload.RewardPoints = 0;
                     // }
@@ -1506,20 +1516,20 @@ sap.ui.define(
                 },
 
                 _Error: function (error) {
-                    this.getModel("oModelView").setProperty("/busy",false);
+                    this.getModel("oModelView").setProperty("/busy", false);
                     MessageToast.show(error.toString());
                 },
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                     var oModelView = that.getModel("oModelView");
-                     oModelView.setProperty("/busy",false);
+                    var oModelView = that.getModel("oModelView");
+                    oModelView.setProperty("/busy", false);
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
                         } else {
                             var oView = that.getView();
-                           
+
                             oModelView.setProperty("/oResult", result);
                             if (!that.AttendanceUploadedStatusMsg) {
                                 // load asynchronous XML fragment
@@ -1544,13 +1554,13 @@ sap.ui.define(
                 },
 
                 _SuccessAdd: function () {
-                    this.getModel("oModelView").setProperty("/busy",false);
+                    this.getModel("oModelView").setProperty("/busy", false);
                     this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
-                
-                
+
+
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;
@@ -1634,13 +1644,13 @@ sap.ui.define(
 
                 // },
                 // _UploadAttendanceLiveVidTr: function (oPayload) {
-                  
+
                 //     var that = this;
                 //     var fU = this.getView().byId("idAttendanceLiveFileUploader");
                 //     var domRef = fU.getFocusDomRef();
                 //     var file = domRef.files[0];
                 //     var oViewModel = this.getModel("oModelView");
-                 
+
                 //     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                 //     //     oPayload.RewardPoints = 0;
                 //     // }

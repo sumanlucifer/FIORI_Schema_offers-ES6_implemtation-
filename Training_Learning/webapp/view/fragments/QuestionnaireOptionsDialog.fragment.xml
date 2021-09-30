@@ -1,9 +1,14 @@
 <core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-<Dialog id="QuestionnaireOptionsDialog" title="{i18n>TitleAddQuestionnaireOptions}" contentHeight="500px" contentWidth="600px">
+<Dialog id="QuestionnaireOptionsDialog" title="{i18n>TitleAddQuestionnaireOptions}" contentHeight="800px" contentWidth="600px">
     <VBox id="idVbxQ" width="100%">
-        <f:SimpleForm id="QuestionOptions" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
+        <f:SimpleForm id="QuestionOptions" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+                <Label required="true" text="{i18n>colLanguage}"/>
+                <ComboBox width="20%" selectionChange="onLanguageChange" selectedKey="{oModelView>LanguageCode}" items="{ path: '/MasterLanguageSet'}">
+					<core:Item key="{LanguageCode}" text="{LanguageDescription}"/>
+				</ComboBox>
+
                 <Label text="{i18n>colQuestion}" required="true"/>
-                <TextArea maxLength="300" value="{oModelView>Question}" rows="3"/>
+                <TextArea maxLength="300" value="{oModelView>Question}" rows="2"/>
                 <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
 					items="{path: 'oModelView>TrainingQuestionnaireOptions/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
@@ -18,6 +23,7 @@
                         <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
 					</CustomListItem>
 				</List>
+                <Button text="{i18n>addMore}" width="20%" press="onAddMore" type="Emphasized" tooltip="{i18n>addMore}"/>
         </f:SimpleForm>
     </VBox>
     <buttons>
