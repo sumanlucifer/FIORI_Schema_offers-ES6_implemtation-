@@ -182,7 +182,7 @@ sap.ui.define(
                     }
                 },
 
-                onClearPainterSearchonClearPainterSearch: function () {
+                onClearPainterSearch: function () {
                     var aCurrentFilterValues = [];
                     var oDataFilter = {
                         ZoneId: "",
@@ -1010,6 +1010,7 @@ sap.ui.define(
                 },
 
                 onValueHelpOkPressPainter: function (oEvent) {
+                    debugger;
                     var oData = [];
                     var xUnique = new Set();
                     var aTokens = oEvent.getParameter("tokens");
