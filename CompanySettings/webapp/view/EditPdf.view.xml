@@ -188,7 +188,7 @@
                        
                             
                              <Button id="cancel" text="Cancel" press="handleCancelPress" />
-                            <Button id="save" text="Save" type="Emphasized"  press="onPressSave" />
+                            <Button id="save" text="Save" type="Emphasized"  press="onPressSave" enabled="{local>/bChanged}"/>
                         
                         
                     </OverflowToolbar>

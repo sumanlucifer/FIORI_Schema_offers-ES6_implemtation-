@@ -51,6 +51,7 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 var sTableId = oEvent.getParameter("arguments").tableId;
                 var oLocalModel = this.getView().getModel("local");
+                 oLocalModel.setProperty("/bChanged", false);
                 oLocalModel.setProperty("/t1Visible", false);
                 oLocalModel.setProperty("/t2Visible", false);
                 if (sTableId == "Table1") {
@@ -132,11 +133,13 @@ sap.ui.define([
             },
             onChangePdf: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext("local");
+                var saveBtn=this.getView().byId("save");
                 if (oEvent.getParameter("files").length > 0) {
                     //this.pdfName = this.oFileUploaderPdf.getValue();
                     this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     this.getView().getModel("local").setProperty("bNew", true, oContext);
+                    this.getView().getModel("local").setProperty("/bChanged", true);
                 }
             },
             onChangePdf2: function (oEvent) {
@@ -146,6 +149,7 @@ sap.ui.define([
                     this.getView().getModel("local").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     this.getView().getModel("local").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     this.getView().getModel("local").setProperty("bNew", true, oContext);
+                    this.getView().getModel("local").setProperty("/bChanged", true);
                 }
             },
             // onPressSave: function (){
