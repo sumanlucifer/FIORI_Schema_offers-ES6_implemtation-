@@ -149,11 +149,11 @@ sap.ui.define(
                 var othat = this;
 
                 var oDataControl = {
-                    mode: "Edit",
                     StartTime: "",
                     EndTime: "",
-                    //showPreviewImageButton: false,
+                    currDate: new Date(),
                     busy: false,
+                    mode: "Edit",
 
                 };
                 var oModelControl = new JSONModel(oDataControl);
@@ -246,7 +246,6 @@ sap.ui.define(
                     FileName: oItem.name,
                     IsArchived: false
                 });
-                this.getModel("oModelControl").setProperty("/showPreviewImageButton", true);
                 this.getModel("oModelControl").refresh();
             },
 
@@ -256,22 +255,14 @@ sap.ui.define(
                 var oVbox = this.getView().byId("idVbx");
                 var bValidation = oValidator.validate(oVbox, true);
                 var oModelContrl = this.getView().getModel("oModelControl");
-                
+
                 if (bValidation == false) {
                     MessageToast.show(
                         "Kindly input all the mandatory(*) fields to continue."
                     );
                 }
                 if (bValidation) {
-                    if (oModelContrl.getProperty("/oImage")) {
-                        this.getView().getModel("oModelControl2").setProperty("/busy", true);
-                        this._putDataToSave();
-                    } else {
-                        MessageToast.show(
-                            "Kindly upload Banner Image to continue."
-                        );
-                    }
-
+                    this._putDataToSave();
                 }
             },
 
@@ -283,13 +274,20 @@ sap.ui.define(
                 var othat = this;
                 var oData = this.getView().getModel();
                 var c1, c2;
-                c1 = this._putUpdateData(oPayLoad);
-                c1.then(function (oData) {
-                    c2 = othat._ImageUpload(oPayLoad);
-                    c2.then(function () {
-                        othat.navPressBackBanner();
+                if (oPayLoad.EndTime <= oPayLoad.StartTime) {
+                    MessageToast.show(
+                        "End date should be greater than Start date."
+                    );
+                } else {
+                    this.getView().getModel("oModelControl2").setProperty("/busy", true);
+                    c1 = this._putUpdateData(oPayLoad);
+                    c1.then(function (oData) {
+                        c2 = othat._ImageUpload(oPayLoad);
+                        c2.then(function () {
+                            othat.navPressBackBanner();
+                        });
                     });
-                });
+                }
             },
 
             _ImageUpload: function (oPayLoad) {
@@ -297,6 +295,10 @@ sap.ui.define(
                 var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
                 var newSpath = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
                 return new Promise(function (resolve, reject) {
+                    if (!oImage) {
+                        resolve();
+                        return;
+                    };
                     var settings = {
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
                         data: oImage.Image,
