@@ -7,16 +7,14 @@
                 <Text text="{Title}" />
 
                 <Label text="{i18n>banerImage}" />
-               
-                    <Link   press="onImageView" text="View Image" />
+                <Link   press="onImageView" text="View Image" />
             
-                
                 <core:Title text="   " />
                 <Label text="{i18n>colStartTime}" />
-                <Text text="{StartTime}" /> 
+                <Text text="{parts: [ {path: 'StartTime'} ], formatter : '.formatter.formatDateTime' }"/>
 
                 <Label  text="{i18n>colEndTime}"/>
-                <Text text="{EndTime}" />
+                <Text text="{parts: [ {path: 'EndTime'} ], formatter : '.formatter.formatDateTime' }"/>
             </f:content>
         </f:SimpleForm>
     </VBox>

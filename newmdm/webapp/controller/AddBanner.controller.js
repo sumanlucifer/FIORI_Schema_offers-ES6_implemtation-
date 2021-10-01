@@ -74,7 +74,7 @@ sap.ui.define([
             var oDataControl = {
                 StartTime: "",
                 EndTime: "",
-                showPreviewImageButton: false,
+                currDate: new Date(),
                 busy: false,
                 mode: "Add"
             };
@@ -150,7 +150,6 @@ sap.ui.define([
                 FileName: oItem.name,
                 IsArchived: false
             });
-            this.getModel("oModelControl").setProperty("/showPreviewImageButton", true);
             this.getModel("oModelControl").refresh();
         },
 
@@ -213,9 +212,9 @@ sap.ui.define([
                     "Kindly input all the mandatory(*) fields to continue."
                 );
             }
+
             if (bValidation) {
                 if (oModelContrl.getProperty("/oImage")) {
-                    oModelContrl.setProperty("/busy", true);
                     this._postDataToSave();
                 } else {
                     MessageToast.show(
@@ -234,13 +233,20 @@ sap.ui.define([
             var othat = this;
             var oData = this.getView().getModel();
             var c1, c2;
-            c1 = this._postCreateData(oPayLoad);
-            c1.then(function (oData) {
-                c2 = othat._ImageUpload(oData);
-                c2.then(function () {
-                    othat.navPressBackBanner();
+            if (oPayLoad.EndTime <= oPayLoad.StartTime) {
+                MessageToast.show(
+                    "End date should be greater than Start date."
+                );
+            } else {
+                this.getView().getModel("oModelControl").setProperty("/busy", true);
+                c1 = this._postCreateData(oPayLoad);
+                c1.then(function (oData) {
+                    c2 = othat._ImageUpload(oData);
+                    c2.then(function () {
+                        othat.navPressBackBanner();
+                    });
                 });
-            });
+            }
         },
 
         _ImageUpload: function (oData) {
