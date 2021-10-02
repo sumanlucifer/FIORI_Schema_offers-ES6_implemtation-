@@ -308,33 +308,66 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m3 RedeemRewardPoints
             //m4 RedeemRewardCash
             //m5 RewardGift
+            var concatString = "NA";
             if (m1 === 'REDEEMED') {
-                if (m2 === null) {
+                if (m2 !== null) {
                     if (m2 === "POINTS_TRANSFER") {
-                        return "Points - " + m3;
+                        concatString = "Points - " + m3;
                     } else if (m2 === "BANK_TRANSFER") {
-                        return "Cash - Rs. " + m4;
+                        concatString = "Cash - Rs. " + m4;
                     } else if (m2 === "GIFT_REDEMPTION") {
-                        return "Gift - " + m5;
+                        concatString = "Gift - " + m5;
                     }
-                    // else if (m2 === "MULTI_REWARDS") {
-                    //     return "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
-                    // }
                 }
             }
+            // if (m2 === "MULTI_REWARDS") {
+            //     if (m3 !== null) {
+            //         if (m4 !== null) {
+            //             if (m5 !== null) {
+            //                 return "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
+            //             }
+            //         }
+            //     }
+            // }
             if (m2 === "MULTI_REWARDS") {
+                if (m3 !== null) {
+                    concatString = " Points - " + m3;
+                }
+                if (m4 !== null) {
+                    concatString = " Cash - Rs. " + m4;
+                }
+                if (m5 !== null) {
+                    concatString = "Gift - " + m5;
+                }
+                if (m3 !== null) {
+                    if (m4 !== null) {
+                        concatString = " Cash - Rs. " + m4 + " Points - " + m3;
+                    }
+                }
+
+                if (m4 !== null) {
+                    if (m5 !== null) {
+                        concatString = " Cash - Rs. " + m4 + " Gift - " + m5;
+                    }
+                }
+
+                if (m3 !== null) {
+                    if (m5 !== null) {
+                        concatString = " Points - " + m3 + " Gift - " + m5;
+                    }
+                }
                 if (m3 !== null) {
                     if (m4 !== null) {
                         if (m5 !== null) {
-                            return "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
+                            concatString = "Gift - " + m5 + " Cash - Rs. " + m4 + " Points - " + m3;
                         }
                     }
                 }
             }
             if (m1 === "REDEEMABLE") {
-                return "Not Redeemed"
+                concatString = "Not Redeemed"
             }
-            return "NA";
+            return concatString;
         },
         btnSaveCheckDetail: function (m1, m2) {
             if (m1 !== "EXPIRED") {
