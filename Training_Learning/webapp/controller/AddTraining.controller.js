@@ -347,8 +347,9 @@ sap.ui.define(
 
                     var oTrainingQuestionnaire = [];
                     this.getModel("oModelView").setProperty("/oAddTraining", {
-                        Question: "",
-                        LanguageCode: "",
+                        // Question: "",
+                        // LanguageCode: "",
+                        TrainingQuestionnaireLocalized: [],
                         TrainingQuestionnaireOptions: [],
                         IsArchived: false
                     });
@@ -359,11 +360,11 @@ sap.ui.define(
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
 
-                    if (!this.byId("QuestionnaireOptionsDialog")) {
+                    if (!this.byId("QuestionnaireOptionsDialogAdd")) {
                         // load asynchronous XML fragment
                         Fragment.load({
                             id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
+                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialogAdd",
                             controller: this
                         }).then(function (oDialog) {
                             // connect dialog to the root view 
@@ -376,11 +377,11 @@ sap.ui.define(
                             oDialog.open();
                         });
                     } else {
-                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
+                        oThat.byId("QuestionnaireOptionsDialogAdd").bindElement({
                             path: sPath,
                             model: "oModelView"
                         });
-                        oThat.byId("QuestionnaireOptionsDialog").open();
+                        oThat.byId("QuestionnaireOptionsDialogAdd").open();
                     }
                 },
 
@@ -447,11 +448,27 @@ sap.ui.define(
                 },
 
                 closeOptionsDialog: function () {
-                    this.byId("QuestionnaireOptionsDialog").close();
+                    this.byId("QuestionnaireOptionsDialogAdd").close();
                 },
 
                 onAddMore: function (oEvent) {
-                    
+                    debugger;
+                    var sPath = this.getView().byId("QuestionnaireOptionsDialogAdd").getElementBinding("oModelView").getPath();
+                    var oObjectLocal = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireLocalized");
+                    var oObjectOption = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
+
+                    oObjectLocal.push({
+                        LanguageCode: "",
+                        Question: "",
+                        IsArchived: false
+                    });
+
+                    oObjectOption.push({
+                        isCorrect: false,
+                        IsArchived: false,
+                        TrainingQuestionnaireOptionsLocalized: []
+                    });
+                    this.getModel("oModelView").refresh();
                 },
 
                 onEditQuestionnaire: function (oEvent) {
@@ -493,8 +510,9 @@ sap.ui.define(
                     var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
                     var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
                     oObject.push({
-                        Option: "",
+                        // Option: "",
                         IsCorrect: false,
+                        TrainingQuestionnaireOptionsLocalized: [],
                         IsArchived: false
                     });
                     this.getModel("oModelView").refresh();
