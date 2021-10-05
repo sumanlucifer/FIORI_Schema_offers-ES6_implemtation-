@@ -11,6 +11,7 @@
             <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED' || ${PainterBankDetails} === null}">
                 <Button visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
                 <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
+                 <Button class="sapUiTinyMarginBegin" id="addpennydropId"   visible="{= ${PainterBankDetails/Status} === 'REJECTED' ? true :false }" tooltip="{i18n>addpennydrop}" text="{i18n>addpennydrop}" type="Emphasized" enabled="true" press="addPennyDrop"/>
             </FlexBox>
             </OverflowToolbar>
 		</headerToolbar>
