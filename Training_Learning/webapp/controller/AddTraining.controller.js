@@ -429,10 +429,10 @@ sap.ui.define(
                                                     TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
                                                     IsArchived: false
                                                 });
-                                                this.byId("QuestionnaireOptionsDialog").close();
+                                                this.byId("QuestionnaireOptionsDialogAdd").close();
                                                 this.getModel("oModelView").refresh();
                                             } else {
-                                                this.byId("QuestionnaireOptionsDialog").close();
+                                                this.byId("QuestionnaireOptionsDialogAdd").close();
                                                 this.getModel("oModelView").refresh();
                                             }
                                         }
@@ -507,12 +507,10 @@ sap.ui.define(
                 },
 
                 onAddQuestionnaireOptions: function () {
-                    var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
-                    var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
+                    var sPath = this.getView().byId("QuestionnaireOptionsDialogAdd").getElementBinding("oModelView").getPath();
+                    var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized");
                     oObject.push({
-                        // Option: "",
-                        IsCorrect: false,
-                        TrainingQuestionnaireOptionsLocalized: [],
+                        Option: "",
                         IsArchived: false
                     });
                     this.getModel("oModelView").refresh();
