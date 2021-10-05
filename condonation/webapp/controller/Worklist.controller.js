@@ -26,8 +26,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.condonation.controller.Worklist",
-            {
+            "com.knpl.pragati.condonation.controller.Worklist", {
                 formatter: formatter,
 
                 /* =========================================================== */
@@ -73,7 +72,7 @@ sap.ui.define(
                             }
                         }
                     }
-                   
+
                 },
                 _onRouteMatched: function (mParam1) {
                     this._InitData();
@@ -130,6 +129,55 @@ sap.ui.define(
                     this.getView().getModel().refresh();
                     //this._fiterBarSort();
                     this._addSearchFieldAssociationToFB();
+                },
+                onPressInrevew: function (oEvent) {
+                    var oView = this.getView();
+                    var oObj = oEvent.getSource().getBindingContext().getObject();
+
+                    var c1, c2, c3;
+                    var othat = this;
+                    c1 = this._getComplainsDataForReview(oObj);
+                    c1.then(function (mParam1) {
+                        c2 = othat._SendRepairCondonationData(mParam1);
+                        c2.then(function () {
+
+                        })
+                    })
+                },
+                _getComplainsDataForReview: function (mParam1) {
+                    var sId = mParam1["Id"];
+                    var sPath = "PainterComplainsSet(" + sId + ")";
+                    var oData = this.getView().getModel();
+                    return new Promise(function (resolve, reject) {
+                        oData.read("/" + sPath, {
+                            success: function (oResp) {
+                                oResp["Source"] = "CONDONATION";
+                                oResp["ResolutionType"] = 2;
+                                oResp["ComplaintStatus"] = "RESOLVED";
+                                 oResp["ApprovalStatus"] = "APPROVED";
+                                resolve(oResp);
+                            },
+                            error: function (oResp) {
+
+                            }
+                        })
+                    })
+                },
+                _SendRepairCondonationData: function (mParam1) {
+                    var sId = mParam1["Id"];
+                    var sPath = "PainterComplainsSet(" + sId + ")";
+                    var oData = this.getView().getModel();
+                    return new Promise(function (resolve, reject) {
+                        oData.update("/" + sPath, mParam1, {
+                            success: function (oResp) {
+                                MessageToast.show("Data Duccessfully Updated.")
+                                resolve(oResp);
+                            }.bind(this),
+                            error: function (oResp) {
+
+                            }
+                        })
+                    })
                 },
                 _fiterBarSort: function () {
                     if (this._ViewSortDialog) {
@@ -205,22 +253,18 @@ sap.ui.define(
                                 aCurrentFilterValues.push(
                                     new Filter(
                                         [
-                                            new Filter(
-                                                {
-                                                    path: "Painter/Name",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
-                                            new Filter(
-                                                {
-                                                    path: "Painter/MembershipCard",
-                                                    operator: "Contains",
-                                                    value1: oViewFilter[prop].trim(),
-                                                    caseSensitive: false
-                                                }
-                                            ),
+                                            new Filter({
+                                                path: "Painter/Name",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "Painter/MembershipCard",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
                                             new Filter(
                                                 "Painter/Mobile",
                                                 FilterOperator.Contains,
@@ -288,7 +332,10 @@ sap.ui.define(
                     var oTable = this.byId("table");
                     var oBinding = oTable.getBinding("items");
                     oBinding.filter([]);
-                    oBinding.sort(new Sorter({ path: "CreatedAt", descending: true }));
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
                     //reset the sort order of the dialog box
                     this._fiterBarSort()
                 },
@@ -374,7 +421,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                   
+
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -505,7 +552,9 @@ sap.ui.define(
                         target: {
                             semanticObject: "Manage",
                             action: sAction,
-                            params: { PainterId: "Id1" }
+                            params: {
+                                PainterId: "Id1"
+                            }
                         }
                     });
                 },
@@ -514,7 +563,10 @@ sap.ui.define(
                     if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
                         var oCrossAppNav = sap.ushell.Container.getService("CrossApplicationNavigation");
                         oCrossAppNav.toExternal({
-                            target: { semanticObject: oSemAct.target.semanticObject, action: oSemAct.target.action },
+                            target: {
+                                semanticObject: oSemAct.target.semanticObject,
+                                action: oSemAct.target.action
+                            },
                             params: oSemAct.target.params
                         })
                     }
