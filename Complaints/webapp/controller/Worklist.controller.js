@@ -53,7 +53,8 @@ sap.ui.define(
                             ZoneId: "",
                             DivisionId: "",
                             DepotId: "",
-                            Escalate: ""
+                            Escalate: "",
+                            ApprovalStatus:""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -178,6 +179,16 @@ sap.ui.define(
                                         FilterOperator.EQ,
                                         oViewFilter[prop]
                                     )
+                                );
+                            } else if (prop === "ApprovalStatus") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter(
+                                        "ApprovalStatus",
+                                        FilterOperator.EQ,
+                                        oViewFilter[prop]
+                                    )
+                                    //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
                             } else if (prop === "ComplaintSubTypeId") {
                                 aFlaEmpty = false;
@@ -350,7 +361,8 @@ sap.ui.define(
                         ZoneId: "",
                         DivisionId: "",
                         DepotId: "",
-                        Escalate: ""
+                        Escalate: "",
+                        ApprovalStatus:""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);

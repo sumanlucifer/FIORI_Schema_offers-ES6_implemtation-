@@ -46,6 +46,15 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="ApprovalStatus" label="{i18n>ApprovalStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ApprovalStatus}">
+                                        <core:Item text="Pending" key="PENDING"/>
+                                        <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                               <fb:FilterGroupItem groupName="__$INTERNAL$" name="Escalate" label="{i18n>LblEscalationLevel}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>Enter} {i18n>LblEscalationLevel}" selectedKey="{oModelControl>/filterBar/Escalate}">
@@ -83,7 +92,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="15" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'ComplaintSubtypeId',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype',select:'Id,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'ComplaintSubtypeId',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype',select:'Id,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
