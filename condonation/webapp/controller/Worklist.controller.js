@@ -154,6 +154,7 @@ sap.ui.define(
                                 oResp["Source"] = "CONDONATION";
                                 oResp["ResolutionType"] = 2;
                                 oResp["ComplaintStatus"] = "RESOLVED";
+                                 oResp["ApprovalStatus"] = "APPROVED";
                                 resolve(oResp);
                             },
                             error: function (oResp) {
