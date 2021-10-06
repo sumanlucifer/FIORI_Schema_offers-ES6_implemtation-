@@ -9,9 +9,11 @@
                 state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
 			<ToolbarSpacer/>
             <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED' || ${PainterBankDetails} === null}">
+               <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
+ <Button class="sapUiTinyMarginEnd"   visible="{= ${PainterBankDetails/Status} === 'REJECTED' ? true :false }" tooltip="{i18n>addpennydrop}" text="{i18n>addpennydrop}" type="Ghost" enabled="true" press="addPennyDrop"/>
+</HBox>
                 <Button visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
                 <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
-                 <Button class="sapUiTinyMarginBegin" id="addpennydropId"   visible="{= ${PainterBankDetails/Status} === 'REJECTED' ? true :false }" tooltip="{i18n>addpennydrop}" text="{i18n>addpennydrop}" type="Emphasized" enabled="true" press="addPennyDrop"/>
             </FlexBox>
             </OverflowToolbar>
 		</headerToolbar>
@@ -43,7 +45,6 @@
                     <ComboBox id="IdDocumentType" editable="{=${oModelControl>/AddBankDoc}}" required="{=${oModelControl>/AddBankDoc}}" items="{oModelControl>/DocumentType}" change="onEditField" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
-        
                         </items>
                     </ComboBox>
                 <core:Title text=""/>
@@ -62,7 +63,6 @@
                         </items>
                     </ComboBox>
                 </VBox>
-
                 <Label text="{i18n>AccountNumber}" required="{= ${oModelControl>/AddNewBank} }"/>
                 <VBox>
                     <Input editable="{=${oModelControl>/EditBank} }" liveChange="onEditField" required="{=${oModelControl>/EditField} }" valueStateText="Kindly enter account number of 18 digits" type="Number" value="{path:'oModelView>/PainterBankDetails/AccountNumber',type : 'sap.ui.model.type.String', constraints:{ minLength:8,maxLength:18, search: '^[0-9]*$' }}" visible="{= !${oModelControl>/AddNewBank} }"/>
@@ -75,8 +75,6 @@
                     <UploadCollection typeMissmatch="onUploadFileTypeMis" change="onEditField" fileType="jpg,jpeg,png" id="idUploadCollectionBank" visible="{=${oModelControl>/AddBankDoc} }" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
                     <Label text="" visible="{=${oModelControl>/AddBankDoc} }"/>
                     <Text  text="{i18n>FileUploadMessage}" visible="{=${oModelControl>/AddBankDoc} }"/>
-               
-                
                 <core:Title text=""/>
                  <!--Aditya changes start-->
                  <Label text="{i18n>AccountHolderName}" required="{= ${oModelControl>/AddNewBank} }"/>
@@ -85,28 +83,40 @@
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
                 <Label text="Actions" visible="{= ${PainterBankDetails} === null? false: true }" />
-                
                 <FlexBox>
                 <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View Document" press="onBankView" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" />
                 </FlexBox>
-                
             </f:content>
         </f:SimpleForm>
 		</content>
-	</Panel>
-    
-			
-	
+        <f:SimpleForm>
+        <!--Deepanjali changes start-->
+        <f:content>
+               
+                <HBox   visible="{= ${oModelView>/PainterBankDetails/PaymentTransactionId}!== null}">
+                                <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
+   <Label   text="{i18n>TransactionId:}" design="Bold"/>
+   <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionId}"/>
+    <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionRefId:}"/>
+     <Text  class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentReferenceId}"/>
+     <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionStatus:}"/>
+      <Text  class="sapUiTinyMarginBegin" text= "{path:'oModelControl>/PaymentTransactionStatus',formatter:'.fmtLowerCase'}"/>
+      <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionMessage:}"/>
+       <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionMessage}"/>
+  </HBox>
+                  </HBox>
+</f:content>
+      <!--Deepanjali changes end-->
+	  </f:SimpleForm>
+    </Panel>
          <!--Aditya changes start-->
 			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
             <Text text="Pending for SCB Penny Drop Validation" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
 				<ToolbarSpacer/>
                 <Button text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'||${PainterBankDetails/Status} === 'PENDING'}"/>
 				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
-				
-
 			</Toolbar>
 		<!--Aditya changes end-->
     </VBox>
