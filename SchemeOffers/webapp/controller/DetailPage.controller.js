@@ -110,7 +110,29 @@ sap.ui.define(
                     },
                     oData: {
                         Painters: []
-                    }
+                    },
+                    Rbtn:{
+                        AddPainter:0
+                    },
+                    ValuehelpDel:{
+                        Painters:[]
+                    },
+                    Search: {
+                        PainterVh: {
+                            ZoneId: "",
+                            DivisionId: "",
+                            DepotId: "",
+                            PainterType: "",
+                            ArcheType: "",
+                            MembershipCard: "",
+                            Name: "",
+                            Mobile: ""
+                        },
+                        DepotVh: {
+                            DepotId: "",
+                            Division: ""
+                        }
+                    },
                 };
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl3");
@@ -2405,6 +2427,10 @@ sap.ui.define(
                     this._LoadPainterData(aPaintLength, aPaintLength + 15)
                 }
                 //_LoadPainterData
+            },
+            //Deleted painter code start
+            onPressAddPList: function () {
+
             }
         } // end 
         );

@@ -1,0 +1,47 @@
+<core:FragmentDefinition
+    xmlns:m="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+    xmlns="sap.ui.table"
+    	xmlns:u="sap.ui.unified">
+	  <m:Dialog id="idP" showHeader="false"  >
+           	<Table id="idDelPainterDialog"
+				rows="{oModelControl3>/ofragmentModel}"
+			  selectionMode="None"
+               width="100%"
+				paste="onPaste"
+				ariaLabelledBy="title">
+				<extension>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="title" text="Painter"/>
+					</m:OverflowToolbar>
+				</extension>
+				<columns>
+                 <Column >
+						<m:CheckBox select="onSelectAll" ></m:CheckBox> 
+						<template>
+							<m:CheckBox  selected="{oModelControl3>isSelected}"  />
+						</template>
+					</Column>
+					<Column >
+						<m:Label text="Painter Name" />
+						<template>
+							<m:Text text="{oModelControl3>PainterName}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column >
+						<m:Label text="Painter Mobile" />
+						<template>
+							<m:Text text="{oModelControl3>PainterMobile}" wrapping="false" />
+						</template>
+					</Column>
+					
+				</columns>
+			</Table>
+          <m:buttons>
+            <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
+            <m:Button  text="Save" type="Ghost" press="onSaveUploadDelPaitner"/>
+        </m:buttons>
+    </m:Dialog>
+</core:FragmentDefinition>

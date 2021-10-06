@@ -83,6 +83,9 @@
                     <IconTabFilter text="{i18n>ExecutionLog}" key="4">
                         <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ExecutionLog" type="XML"/>
                     </IconTabFilter>
+                    <IconTabFilter text="{i18n>delPainters}" key="4">
+                        <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.DeletedPainters" type="XML"/>
+                    </IconTabFilter>
 
 
                 </items>

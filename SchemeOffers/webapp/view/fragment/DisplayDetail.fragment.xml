@@ -980,5 +980,23 @@
                 </Table>
             </items>
         </VBox>
+
+         <f:Form id="FormDisplay2" editable="false">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer title="{i18n>RedemtionCycle}" visible="{oModelControl2>/OfferType/BasicInformation}">
+                    <f:formElements>
+                        <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
+                            <f:fields>
+                                <Text text="{path:'oModelDisplay>/RedemptionCycle'}"/>
+                            </f:fields>
+                        </f:FormElement>
+                         </f:formElements>
+                </f:FormContainer>
+                </f:formContainers>
+        </f:Form>
     </VBox>
+    
 </core:FragmentDefinition>
