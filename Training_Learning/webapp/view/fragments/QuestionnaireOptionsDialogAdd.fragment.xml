@@ -16,20 +16,31 @@
                             <TextArea maxLength="300" width="80%" value="{oModelView>Question}" rows="2"/>
                         </HBox>
                     </VBox>
-                <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
+                </CustomListItem>
+            </List>
+            <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
                 items="{path: 'oModelView>TrainingQuestionnaireOptions/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-                    <headerToolbar>
-                        <Toolbar>
-                            <ToolbarSpacer/>
-                            <Button press="onAddQuestionnaireOptions" icon="sap-icon://add" type="Emphasized" text="{i18n>AddOptions}"/>
-                        </Toolbar>
-                    </headerToolbar>
-                    <CustomListItem>
-                        <RadioButton groupName="GroupA" selected = "{oModelView>IsCorrect}"/>
-                        <Input width="80%" maxLength="100" value="{oModelView>TrainingQuestionnaireOptionsLocalized/Option}"/>
-                        <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
-                    </CustomListItem>
-                </List>
+                <headerToolbar>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button press="onAddQuestionnaireOptions" icon="sap-icon://add" type="Emphasized" text="{i18n>AddOptions}"/>
+                    </Toolbar>
+                </headerToolbar>
+                <CustomListItem>
+                    <List id="ListMultyOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
+                        items="{path: 'oModelView>TrainingQuestionnaireOptionsLocalized/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+                        <headerToolbar>
+                            <Toolbar>
+                                <ToolbarSpacer/>
+                                <Button press="onAddQuestionnaireOptions" icon="sap-icon://add" type="Emphasized" text="{i18n>AddOptions}"/>
+                            </Toolbar>
+                        </headerToolbar>
+                        <CustomListItem>
+                            <RadioButton groupName = "GroupA" selected = "{oModelView>IsCorrect}"/>
+                            <Input width="80%" maxLength="100" value="{oModelView>Option}"/>
+                            <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
+                        </CustomListItem>
+                    </List>
                 </CustomListItem>
             </List>
             <Button text="{i18n>addMore}" width="20%" press="onAddMore" type="Emphasized" tooltip="{i18n>addMore}"/>
