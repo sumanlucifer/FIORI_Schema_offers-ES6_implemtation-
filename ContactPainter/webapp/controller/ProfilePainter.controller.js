@@ -389,6 +389,12 @@ sap.ui.define(
                     oControlModel.setProperty("/InitialBankHoldName", oBankData["AccountHolderName"]);
                     oControlModel.setProperty("/InitialBankId", oBankData["BankNameId"]);
                     oControlModel.setProperty("/InitialAccNo", oBankData["AccountNumber"]);
+                    /*deepanjali changes start*/
+                    oControlModel.setProperty("/PaymentTransactionId", oBankData["PaymentTransactionId"]);
+                    oControlModel.setProperty("/PaymentReferenceId", oBankData["PaymentReferenceId"]);
+                    oControlModel.setProperty("/PaymentTransactionStatus", oBankData["PaymentTransactionStatus"]);
+                    oControlModel.setProperty("/PaymentTransactionMessage", oBankData["PaymentTransactionMessage"]);
+                    /*deepanjali changes end*/
                     if (oBankData.hasOwnProperty("Id")) {
                         if (oBankData["DocumentType"] == 0) {
                             var sBankImageUrl1 =
@@ -1589,6 +1595,7 @@ sap.ui.define(
                 oModelCtrl.setProperty("/EditBank", true);
                 oModelCtrl.setProperty("/EditBankButton", true);
                 oModelCtrl.setProperty("/AddBankDocButton", true);
+                oModelCtrl.setProperty("/PennyDropVisible", false);
                 oModelCtrl.setProperty("/AddNewBank", false);
                 var oModelView = this.getView().getModel("oModelView");
                 this.docType = oModelView.getProperty("PainterBankDetails/DocumentType");
@@ -1609,6 +1616,7 @@ sap.ui.define(
                 oModelCtrl.setProperty("/EditField", false);
                 oModelCtrl.setProperty("/AddBankDoc", false);
                 oModelCtrl.setProperty("/AddBankDocButton", false);
+                oModelCtrl.setProperty("/PennyDropVisible", true);
                 var InitialDocType = oModelCtrl.getProperty("/InitialDocType");
                 var InitialIfsc = oModelCtrl.getProperty("/InitialIfsc");
                 var InitialAcTypeId = oModelCtrl.getProperty("/InitialAcTypeId");

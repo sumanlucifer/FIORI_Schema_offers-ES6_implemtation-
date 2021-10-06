@@ -10,7 +10,7 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<content>
-        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="4" columnsL="4" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text=""/>
                 <Label text="{i18n>RegistrationDate}"/>
@@ -31,6 +31,17 @@
                 <Text text="{path:'PainterBankDetails/DocumentType',formatter:'.fmtDocumentType'}" visible="{= ${oModelView>/profileEdit} !== true }"/>
                 <Label text="{i18n>BankDetailsStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
+                   <!--Deepanjali changes start-->
+                  <Label text="{i18n>TransactionId}"/>
+                <Text text= "{PainterBankDetails/PaymentTransactionId}"/>
+                 <core:Title text=""/>
+                <Label text="{i18n>TransactionStatus}" design="Bold"/>
+                <Text text="{path:'PainterBankDetails/PaymentTransactionStatus',formatter:'.fmtLowerCase'}" />
+                <Label text="{i18n>TransactionRefId}"/>
+                <Text text="{PainterBankDetails/PaymentReferenceId}" />
+                <Label text="{i18n>TransactionMessage}"/>
+                <Text text="{PainterBankDetails/PaymentTransactionMessage}" />
+                 <!--Deepanjali changes end-->
                 <!-- <core:Title text="{i18n>KYCDetails}"/>
                 <Label text="{i18n>SelectedKYCDocument}"/>
                 <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
@@ -38,7 +49,6 @@
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Label text="{i18n>Status}"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
                 <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/> -->
-                
             </f:content>
         </f:SimpleForm>
     </content>
