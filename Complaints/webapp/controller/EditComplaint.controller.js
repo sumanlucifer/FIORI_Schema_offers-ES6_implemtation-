@@ -953,7 +953,7 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var sPath = oView.getElementBinding().getPath();
                     var oViewData = oView.getModel("oModelView").getData();
-                    oViewData.Remark = oViewData.Remark.replace(/(\n|\r|\t)/g, ' ');
+                    // oViewData.Remark = oViewData.Remark.replace(/(\n|\r|\t)/g, ' ');
                     var oPayload = {};
                     //cloning
                     jQuery.extend(true, oPayload, oViewData);
