@@ -386,6 +386,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return false;
         },
+
+
+       
         btnRedeenAllEnable: function (m1, m2) {
             if (m1 === "REEDEMING") {
                 return false;
