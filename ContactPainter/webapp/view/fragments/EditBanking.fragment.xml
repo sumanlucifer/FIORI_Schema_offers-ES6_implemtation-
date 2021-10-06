@@ -97,13 +97,13 @@
                
                 <HBox   visible="{= ${oModelView>/PainterBankDetails/PaymentTransactionId}!== null}">
                                 <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
-   <Label   text="{i18n>TransactionId:}" design="Bold"/>
+   <Label   text="{i18n>TransactionId}:" design="Bold"/>
    <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionId}"/>
-    <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionRefId:}"/>
+    <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionRefId}:"/>
      <Text  class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentReferenceId}"/>
-     <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionStatus:}"/>
+     <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionStatus}:"/>
       <Text  class="sapUiTinyMarginBegin" text= "{path:'oModelControl>/PaymentTransactionStatus',formatter:'.fmtLowerCase'}"/>
-      <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionMessage:}"/>
+      <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionMessage}:"/>
        <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionMessage}"/>
   </HBox>
                   </HBox>
