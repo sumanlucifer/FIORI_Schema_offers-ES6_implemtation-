@@ -10,13 +10,16 @@
       "csrfProtection": false,
       "source": "^/KNPL_PAINTER_API/(.*)$",
       "destination": "KNPL_PAINTER_API",
-      "target": "$1"
+      "target": "$1",
+     "cacheControl":"public,max-age=1000,must-revalidate"
     },
     {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",
-      "authenticationType": "xsuaa"
+      "authenticationType": "xsuaa",
+      "cacheControl":"public,max-age=1000,must-revalidate"
+      
     }
   ]
 }
