@@ -155,6 +155,7 @@ sap.ui.define(
                                 oResp["ResolutionType"] = 2;
                                 oResp["ComplaintStatus"] = "RESOLVED";
                                  oResp["ApprovalStatus"] = "APPROVED";
+                                 oResp["ResolutionId"] = 11;
                                 resolve(oResp);
                             },
                             error: function (oResp) {
