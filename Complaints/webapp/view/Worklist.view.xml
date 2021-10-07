@@ -48,7 +48,7 @@
                             </fb:FilterGroupItem>
                               <fb:FilterGroupItem groupName="__$INTERNAL$" name="ApprovalStatus" label="{i18n>ApprovalStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ApprovalStatus}">
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>ApprovalStatus}" selectedKey="{oModelControl>/filterBar/ApprovalStatus}">
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Approved" key="APPROVED"/>
                                         <core:Item text="Rejected" key="REJECTED"/>
