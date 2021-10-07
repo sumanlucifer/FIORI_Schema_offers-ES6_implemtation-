@@ -76,8 +76,8 @@
         </content>
         <buttons>
             <Button text="Close" press="onDialogCloseAllReq" />
-            <Button press="onApproveReject('REJECTED')" visible="{=${Status}!=='REJECTED'}" text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
-            <Button press="onApproveReject('APPROVED')" visible="{=${Status}!=='APPROVED'}" text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
+            <Button press="onApproveReject('REJECTED')" visible="{= ${Status} === 'REJECTED' ? false : ${Status} === 'APPROVED'  ? false: true}"  text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
+            <Button press="onApproveReject('APPROVED')" visible="{= ${Status} === 'REJECTED' ? false : ${Status} === 'APPROVED'  ? false: true}"  text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
