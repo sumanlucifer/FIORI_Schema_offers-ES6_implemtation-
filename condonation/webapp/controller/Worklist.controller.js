@@ -40,6 +40,7 @@ sap.ui.define(
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
                     var oDataControl = {
+                        PageBusy: false,
                         filterBar: {
                             ComplaintTypeId: "",
                             ComplaintSubTypeId: "",
@@ -133,18 +134,21 @@ sap.ui.define(
                 onPressInrevew: function (oEvent) {
                     var oView = this.getView();
                     var oObj = oEvent.getSource().getBindingContext().getObject();
-
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/PageBusy", true)
                     var c1, c2, c3;
                     var othat = this;
                     c1 = this._getComplainsDataForReview(oObj);
                     c1.then(function (mParam1) {
                         c2 = othat._SendRepairCondonationData(mParam1);
                         c2.then(function () {
-
+                            oModelControl.setProperty("/PageBusy", false)
                         })
                     })
                 },
                 _getComplainsDataForReview: function (mParam1) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
                     var sId = mParam1["Id"];
                     var sPath = "PainterComplainsSet(" + sId + ")";
                     var oData = this.getView().getModel();
@@ -154,28 +158,30 @@ sap.ui.define(
                                 oResp["Source"] = "CONDONATION";
                                 oResp["ResolutionType"] = 2;
                                 oResp["ComplaintStatus"] = "RESOLVED";
-                                 oResp["ApprovalStatus"] = "APPROVED";
-                                 oResp["ResolutionId"] = 11;
+                                oResp["ApprovalStatus"] = "APPROVED";
+                                oResp["ResolutionId"] = 11;
                                 resolve(oResp);
                             },
                             error: function (oResp) {
-
+                                oModelControl.setProperty("/PageBusy", false)
                             }
                         })
                     })
                 },
                 _SendRepairCondonationData: function (mParam1) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
                     var sId = mParam1["Id"];
                     var sPath = "PainterComplainsSet(" + sId + ")";
                     var oData = this.getView().getModel();
                     return new Promise(function (resolve, reject) {
                         oData.update("/" + sPath, mParam1, {
                             success: function (oResp) {
-                                MessageToast.show("Data Duccessfully Updated.")
+                                MessageToast.show("Data Successfully Updated.")
                                 resolve(oResp);
                             }.bind(this),
                             error: function (oResp) {
-
+                                oModelControl.setProperty("/PageBusy", false);
                             }
                         })
                     })
