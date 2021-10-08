@@ -155,7 +155,7 @@ sap.ui.define([
             
            oData.create("/PainterComplainsSet", oPayLoad, {
                 success: function () {      
-                    MessageToast.show("Condonation request Sucessfully Submitted.")
+                    MessageToast.show("Condonation request Successfully Submitted.")
                     othat.onNavBack();
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                 },

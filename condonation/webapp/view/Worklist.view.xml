@@ -38,16 +38,24 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-
-
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ComplaintStatus}">
+                                        <!-- <core:Item text="Registered" key="REGISTERED"/> -->
+                                        <core:Item text="In Review" key="INREVIEW"/>
+                                        <core:Item text="Resolved" key="RESOLVED"/>
+                                        <!-- <core:Item text="Withdrawn" key="WITHDRAWN"/> -->
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,ComplaintStatus,Painter/Name,Painter/MembershipCard,Painter/Mobile,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+        <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, 
+            filters:[{path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'Painter,PainterComplainProducts',select:'Id,ComplaintStatus,Painter/Name,Painter/MembershipCard,Painter/Mobile,Painter/Name,Painter/MembershipCard,Painter/Mobile,Painter/ZoneId,Painter/DivisionId,Painter/DepotId,ComplaintCode,CreatedAt,PainterComplainProducts' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
@@ -57,34 +65,34 @@
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column>
+                    <Column width="14%">
                         <Text text="{i18n>PainterName}"/>
                     </Column>
-                    <Column>
+                    <Column width="12%">
                         <Text text="{i18n>MembershipId}"/>
                     </Column>
-                    <Column>
+                    <Column width="14%">
                         <Text text="{i18n>PrimaryMobileNo}"/>
                     </Column>
-                    <Column>
+                    <Column width="6%">
                         <Text text="{i18n>Zone}"/>
                     </Column>
-                    <Column>
+                    <Column width="6%">
                         <Text text="{i18n>Division}"/>
                     </Column>
-                    <Column>
+                    <Column width="6%">
                         <Text text="{i18n>Depot}"/>
                     </Column>
-                    <Column>
+                    <Column width="14%">
                         <Text text="{i18n>CondonationId}"/>
                     </Column>
-                    <Column>
+                    <Column width="14%">
                         <Text text="{i18n>DateAndTime}"/>
                     </Column>
-                    <Column>
+                    <Column width="6%">
                         <Text text="{i18n>Points}"/>
                     </Column>
-                      <Column>
+                    <Column width="8%">
                         
                     </Column>
                 </columns>
