@@ -1,9 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/UIComponent",
-    "sap/m/library",
-    'sap/m/MessageBox'
-], function (Controller, UIComponent, mobileLibrary,MessageBox) {
+	"sap/m/library"
+], function (Controller, UIComponent, mobileLibrary) {
 	"use strict";
 
 	// shortcut for sap.m.URLHelper
@@ -64,17 +63,6 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
         
-        showSuccessDialog: function(sMessage){
-         	var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
-			MessageBox.information(
-				sMessage,
-				{
-					styleClass: bCompact ? "sapUiSizeCompact" : ""
-				}
-			);
-
-
-        },
          _getRoleLevel: function (sRole) {
                     switch (sRole) {
                         case "AGENT":
