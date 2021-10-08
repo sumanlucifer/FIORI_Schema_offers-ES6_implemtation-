@@ -9,11 +9,8 @@
     <VBox width="100%">
         <Table id="idTblOffersNew2" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
-
             </headerToolbar>
-
             <columns>
-
                 <Column>
                     <Text text="{i18n>OfferCode}" />
                 </Column>
@@ -51,7 +48,6 @@
             <dependents >
                 <ColumnListItem id="idTblOffersNew2Template">
                     <cells>
-
                         <Text text="{Offer/OfferCode}" />
                         <Text text="{Offer/Title}" />
                         <Text text="{Offer/OfferType/OfferType}" />
@@ -68,7 +64,7 @@
                             </items>
                         </HBox>
                         <HBox>
-                            <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
+                            <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.checkOfferPainterReward'}" />
                         </HBox>
                         <Text text="{Remark}" />
                         <Text text="{parts:['PainterOfferRedemption'],formatter:'.formatter.fmtCheckBonusPoints'}" />
@@ -76,6 +72,5 @@
                 </ColumnListItem>
             </dependents>
         </Table>
-
     </VBox>
 </core:FragmentDefinition>

@@ -2,9 +2,7 @@ sap.ui.define([
     "sap/ui/core/format/DateFormat"
 ], function (DateFormat) {
     "use strict";
-
     return {
-
         /**
          * Rounds the number unit value to 2 digits
          * @public
@@ -17,14 +15,11 @@ sap.ui.define([
             }
             return parseFloat(sValue).toFixed(2);
         },
-
         formatURL: function (sURL) {
-
             if (sURL) {
                 return ("https://").concat(location.host, "/KNPL_PAINTER_API", new URL(sURL).pathname);
             }
         },
-
         RegStatusIcon: function (sRegStatus) {
             switch (sRegStatus) {
                 case "PENDING":
@@ -33,17 +28,13 @@ sap.ui.define([
                     return "sap-icon://message-success"
             }
         },
-
         RegStatusColor: function (sRegStatus) {
-
             switch (sRegStatus) {
                 case "PENDING":
                     return sap.ui.core.IconColor.Critical;
                 case "REGISTERED":
                     return sap.ui.core.IconColor.Positive;
-
             }
-
         },
         ProductProperty: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath);
@@ -53,10 +44,8 @@ sap.ui.define([
                 return "NA"
             }
             switch (sProperty) {
-
                 case "Product Name":
                     return oPackDetails.Description;
-
                 case "Total Points":
                     return oProduct.ProductQuantity * oProduct.Points;
                 case "Category":
@@ -66,15 +55,11 @@ sap.ui.define([
                     return oProduct.ProductQuantity;
                 case "Reward Points":
                     return oProduct.Points;
-
             }
-
-
             return "NA"
         },
         PackDetails: function (sPath, sProperty) {
             var oProduct = this.getView().getModel().getData("/" + sPath)
-
         },
         CallbackReqTblStatus: function (mParam1) {
             if (mParam1 === "REGISTERED") {
@@ -99,41 +84,34 @@ sap.ui.define([
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(" ");
             }
-
             return sLetter;
         },
         fmtLowerCase2: function (mParam1) {
             if (mParam1) {
                 var aReplce = mParam1.replace(/_/gi, " ");
-
                 var sResult = aReplce.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
-
                 return sResult
-
             }
             return mParam1
-
         },
-
         // Added by Debasisa Pradhan for GiftRedeemed column with offers table
         fmtOfferGiftRedeemed: function (mParam1, mParam2) {
             if (mParam1 = "REDEEMED") {
                 if (mParam2) {
                     if (mParam2.length > 0) {
                         var pointData = this.getView().getModel().getData("/" + mParam2[0]);
-
                         if (pointData.RedemptionType === "POINTS_TRANSFER" && pointData["RewardPoints"]) {
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                            return "Gift - " + giftData.RewardGiftName;
-                        } else
-                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                            var cash = "Cash - Rs. " + pointData["RewardCash"];
-                            return cash;
-                        }
+                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                                return "Gift - " + giftData.RewardGiftName;
+                            } else
+                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
+                                    return cash;
+                                }
                     }
                 }
             }
@@ -141,17 +119,13 @@ sap.ui.define([
         },
         fmtCheckBonusPoints: function (m1) {
             if (m1) {
-
                 var obj;
                 for (var i in m1) {
                     obj = this.getView().getModel().getData("/" + m1[i]);
-
                     if (obj["RedemptionStatus"] === "REDEEMED") {
-
                         return obj["TotalBonusPoints"];
                     }
                 }
-
             }
             return "NA";
         },
@@ -173,7 +147,6 @@ sap.ui.define([
             return false;
         },
         fmtTxtRedmtOfferTbl: function (m1, m2) {
-          
             if (m1 === "REDEEMABLE") {
                 if (m2 == 2 || m2 == 3) {
                     return true;
@@ -181,15 +154,50 @@ sap.ui.define([
             }
             return false;
         },
-        fmtTxtMsgOfferTable1:function(m1){
-            if(m1==2){
+        fmtTxtMsgOfferTable1: function (m1) {
+            if (m1 == 2) {
                 return "Not allowed as total achiever limit exhausted"
             }
-            if(m1==3){
+            if (m1 == 3) {
                 return "not allowed as painter deselected"
             }
             return "NA";
-
+        },
+        checkOfferPainterReward: function (m1, m2) {
+            //m1 RedemptionStatus
+            //m2 RedemptionType
+            //m3 RedeemRewardPoints
+            //m4 RedeemRewardCash
+            //m5 RewardGift
+            if (m2) {
+                if (m2.length > 0) {
+                    var multiRewardData = this.getView().getModel().getData("/" + m2[0]);
+                    if (multiRewardData.GiftRedemption !== null) {
+                        var rewardGift = this.getView().getModel().getData("/" + multiRewardData.GiftRedemption.__ref),
+                        m2 = multiRewardData.RedemptionType,
+                        m3 = multiRewardData.RewardPoints,
+                        m4 = multiRewardData.RewardCash,
+                        m5 = rewardGift.RewardGiftName;
+                        if (m2 === 'MULTI_REWARDS' && m1 === 'REDEEMED') {
+                            var aString = [];
+                            if (m3) {
+                                aString.push("Points - " + m3)
+                            }
+                            if (m4) {
+                                aString.push("Cash - Rs. " + m4)
+                            }
+                            if (m5) {
+                                aString.push("Gift - " + m5)
+                            }
+                            return aString.join(", ");
+                        }
+                    }
+                }
+            }
+            if (m1 === "REDEEMABLE") {
+                return "Not Redeemed"
+            }
+            return "NA";
         },
         fmtOfferProgressStatus: function (mParam1) {
             if (mParam1 === "COMPLETED") {
@@ -210,8 +218,5 @@ sap.ui.define([
             const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
             return dayMonthYear;
         },
-
-
     };
-
 });
