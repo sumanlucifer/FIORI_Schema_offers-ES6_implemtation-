@@ -136,7 +136,7 @@
                                     </Column> -->
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnIndex": 9 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey":"Remark","columnIndex": 9 }'/>
                                         </customData>
                                           <Text text="{i18n>Remark}"/>
                                     </Column>
@@ -257,13 +257,13 @@
                                     </Column>
                                  <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnIndex": 8 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey":"RewardGiftCash","columnIndex": 8 }'/>
                                         </customData>
                                           <Text text="{i18n>RewardGiftCash}"/>
                                     </Column>
                                     <Column hAlign="Center">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnIndex": 9 }'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey":"Remark","columnIndex": 9 }'/>
                                         </customData>
                                           <Text text="{i18n>Remark}"/>
                                     </Column>
