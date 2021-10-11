@@ -10,8 +10,8 @@
   },
   "scripts": {
     "build": "npm run clean && ui5 build --include-task=generateManifestBundle generateCachebusterInfo && npm run zip",
-    "zip": "cd dist && npx bestzip ../mdm-content.zip *",
-    "clean": "npx rimraf mdm-content.zip dist"
+    "zip": "cd dist && npx bestzip ../MDM-content.zip *",
+    "clean": "npx rimraf MDM-content.zip dist"
   },
   "ui5": {
     "dependencies": [
