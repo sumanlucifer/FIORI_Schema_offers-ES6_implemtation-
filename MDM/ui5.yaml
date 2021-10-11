@@ -1,6 +1,6 @@
 specVersion: '1.0'
 metadata:
-  name: 'mdm'
+  name: 'MDM'
 type: application
 resources:
   configuration:
