@@ -955,9 +955,7 @@ sap.ui.define(
                         custom: {
                             PainterId: "" + oPainterId + ""
                             //  PainterId: "" + 289 + ""
-                        },
-                        select: "Painter/IsArchived,Painter/ActivationStatus,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,UUID,RedemptionAllowed,RedemptionAllowed," +
-                            "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,PainterOfferRedemption/TotalBonusPoints,PainterOfferRedemption/RedemptionStatus,Remark"
+                        }
                     },
                     filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                     sorter: new Sorter("CreatedAt", true)
@@ -3396,10 +3394,14 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                         }
                         if (m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")) {
+                            
                             //m1["Offer"]["IsMultiRewardAllowed"]=true
                             if (m1["Offer"]["IsMultiRewardAllowed"]) {
                                 oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
                                 oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 3);
+                            }else {
+                                oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", false);
+                                oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
                             }
                         }
                         oModelControl.setProperty("/ProfilePageBuzy", false);
