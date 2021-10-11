@@ -3394,7 +3394,7 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                         }
                         if (m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")) {
-                            debugger;
+                            
                             //m1["Offer"]["IsMultiRewardAllowed"]=true
                             if (m1["Offer"]["IsMultiRewardAllowed"]) {
                                 oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
