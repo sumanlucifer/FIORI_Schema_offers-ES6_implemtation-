@@ -104,14 +104,14 @@ sap.ui.define([
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                                return "Gift - " + giftData.RewardGiftName;
-                            } else
-                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
-                                    return cash;
-                                }
+                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                            return "Gift - " + giftData.RewardGiftName;
+                        } else
+                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                            var cash = "Cash - Rs. " + pointData["RewardCash"];
+                            return cash;
+                        }
                     }
                 }
             }
@@ -139,14 +139,16 @@ sap.ui.define([
             }
         },
         fmtBtnRedeemOfferTbl: function (m1, m2) {
+           
             if (m1 === "REDEEMABLE") {
-                if (m2 == 1) {
+                if (m2 == 1 || m2 == 0) {
                     return true;
                 }
             }
             return false;
         },
         fmtTxtRedmtOfferTbl: function (m1, m2) {
+           
             if (m1 === "REDEEMABLE") {
                 if (m2 == 2 || m2 == 3) {
                     return true;
@@ -159,7 +161,7 @@ sap.ui.define([
                 return "Not allowed as total achiever limit exhausted"
             }
             if (m1 == 3) {
-                return "not allowed as painter deselected"
+                return "Not allowed as painter deselected."
             }
             return "NA";
         },
@@ -174,10 +176,10 @@ sap.ui.define([
                     var multiRewardData = this.getView().getModel().getData("/" + m2[0]);
                     if (multiRewardData.GiftRedemption !== null) {
                         var rewardGift = this.getView().getModel().getData("/" + multiRewardData.GiftRedemption.__ref),
-                        m2 = multiRewardData.RedemptionType,
-                        m3 = multiRewardData.RewardPoints,
-                        m4 = multiRewardData.RewardCash,
-                        m5 = rewardGift.RewardGiftName;
+                            m2 = multiRewardData.RedemptionType,
+                            m3 = multiRewardData.RewardPoints,
+                            m4 = multiRewardData.RewardCash,
+                            m5 = rewardGift.RewardGiftName;
                         if (m2 === 'MULTI_REWARDS' && m1 === 'REDEEMED') {
                             var aString = [];
                             if (m3) {
