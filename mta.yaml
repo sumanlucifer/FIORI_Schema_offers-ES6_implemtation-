@@ -34,8 +34,8 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - newmdm-content.zip
-      name: newmdm
+      - MDM-content.zip
+      name: MDM
       target-path: resources/
     - artifacts:
       - ContactPainter-content.zip
@@ -101,9 +101,9 @@ modules:
       - redeempoints-content.zip
       name: redeempoints
       target-path: resources/
-- name: newmdm
+- name: MDM
   type: html5
-  path: newmdm
+  path: MDM
   build-parameters:
     builder: custom
     commands:
