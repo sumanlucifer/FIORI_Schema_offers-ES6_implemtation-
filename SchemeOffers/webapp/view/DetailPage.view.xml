@@ -123,7 +123,7 @@
                     <!-- SAVE Button -->
                     <!-- <Button press="onDetailPageSave" enabled="{= ${OfferStatus}!=='EXPIRED'}" visible="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" /> -->
                 
-    <Button press="onDetailPageSave"  enabled="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" visible="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" />           
+                     <Button press="onDetailPageSave" visible="{parts: ['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.bntSaveDetailsOfferVisible' }" text="{i18n>saveBtnText}" type="Emphasized" class="sapUiTinyMarginEnd" />           
                 </HBox>
 
 
