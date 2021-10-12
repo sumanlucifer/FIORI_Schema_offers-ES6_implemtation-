@@ -42,7 +42,8 @@
                     </ComboBox>
                 </VBox>
                 <Label text="{i18n>DocumentType}"/>
-                    <ComboBox id="IdDocumentType" editable="{=${oModelControl>/AddBankDoc}}" required="{=${oModelControl>/AddBankDoc}}" items="{oModelControl>/DocumentType}" change="onEditField" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <ComboBox id="IdDocumentType" 
+                    editable="{=${oModelControl>/AddBankDoc}}" required="{=${oModelControl>/AddBankDoc}}" items="{oModelControl>/DocumentType}" change="onEditField" selectedKey="{path:'oModelView>/PainterBankDetails/DocumentType', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                         <items>
                             <core:Item text="{oModelControl>Name}" key="{oModelControl>Id}"></core:Item>
                         </items>
@@ -85,8 +86,8 @@
                 <Label text="Actions" visible="{= ${PainterBankDetails} === null? false: true }" />
                 <FlexBox>
                 <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View Document" press="onBankView" />
-                <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
-                <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" />
+                <!-- <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
+                <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" /> -->
                 </FlexBox>
             </f:content>
         </f:SimpleForm>
