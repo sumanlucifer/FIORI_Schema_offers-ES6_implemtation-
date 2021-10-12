@@ -1595,6 +1595,8 @@ sap.ui.define(
                 oModelCtrl.setProperty("/AddBankDocButton", true);
                 oModelCtrl.setProperty("/PennyDropVisible", false);
                 oModelCtrl.setProperty("/AddNewBank", false);
+                //added by deepanjali //////
+                oModelCtrl.setProperty("/AddBankDoc", true);
                 var oModelView = this.getView().getModel("oModelView");
                 this.docType = oModelView.getProperty("PainterBankDetails/DocumentType");
             },
@@ -3394,12 +3396,11 @@ sap.ui.define(
                             oModelControl.setProperty("/OfferRedeemDlg/AddCash", null);
                         }
                         if (m1["Offer"].hasOwnProperty("IsMultiRewardAllowed")) {
-                            
                             //m1["Offer"]["IsMultiRewardAllowed"]=true
                             if (m1["Offer"]["IsMultiRewardAllowed"]) {
                                 oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", true);
                                 oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", 3);
-                            }else {
+                            } else {
                                 oModelControl.setProperty("/OfferRedeemDlg/IsMultiRewardAllowed", false);
                                 oModelControl.setProperty("/OfferRedeemDlg/RbtnRedeemType", -1);
                             }

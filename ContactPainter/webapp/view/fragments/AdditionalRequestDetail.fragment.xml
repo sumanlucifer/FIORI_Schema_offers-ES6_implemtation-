@@ -4,7 +4,6 @@
     xmlns:core="sap.ui.core">
     <Dialog class="sapUiContentPadding" title="{i18n>AdditionalRequestDetails}" stretch="true">
         <content>
-        
             <VBox>
                 <form:Form id="idDetailForm"
                     editable="true" >
@@ -26,14 +25,29 @@
                     </form:layout>
                     <form:formContainers>
                         <form:FormContainer >
-                        
                             <form:formElements>
                                 <form:FormElement label="Title">
                                     <form:fields>
                                         <Text  text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Description">
+                             <form:FormElement label="Remark">
+                                    <form:fields>
+                                        <!-- <Text  class="sapUiSmallMarginBegin" text="{path:'Remark'}" /> -->
+                                        <Input value="{path:'Remark'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Status">
+                                    <form:fields>
+                                        <Text  text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Date">
+                                    <form:fields>
+                                        <Text  text="{path:'CreatedAt',formatter:'.formatter.dateFormatter'}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <!-- <form:FormElement label="Description">
                                     <form:fields>
                                         <Text   text="{path:'masterAdditionalBenifit/Description'}" />
                                     </form:fields>
@@ -42,17 +56,15 @@
                                     <form:fields>
                                         <Text  text="{path:'masterAdditionalBenifit/Criteria'}" />
                                     </form:fields>
-                                </form:FormElement>
-                                
+                                </form:FormElement> -->
                             </form:formElements>
                         </form:FormContainer>
-
-                        <form:FormContainer >
-                        
+                        <!-- <form:FormContainer >
                             <form:formElements>
                                 <form:FormElement label="Remark">
                                     <form:fields>
-                                        <Text   text="{path:'Remark'}" />
+                                        <Text  text="{path:'Remark'}" />
+                                        <Input value="{path:'Remark'}" ></Input>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Status">
@@ -66,13 +78,10 @@
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
-                        </form:FormContainer>
-                        
+                        </form:FormContainer> -->
                     </form:formContainers>
                 </form:Form>
             </VBox>
-        
-       
         </content>
         <buttons>
             <Button text="Close" press="onDialogCloseAllReq" />
