@@ -111,11 +111,8 @@ sap.ui.define(
                     oData: {
                         Painters: []
                     },
-                    Rbtn:{
-                        AddPainter:0
-                    },
-                    ValuehelpDel:{
-                        Painters:[]
+                    Rbtn: {
+                        AddPainter: 0
                     },
                     Search: {
                         PainterVh: {
@@ -147,6 +144,7 @@ sap.ui.define(
                 } else {
                     this._initData(oProp);
                 }
+                this.onfilterOfferPainter();
             },
             _LoadPainterData(mSkip, mTop) {
                 var oView = this.getView();
@@ -339,6 +337,7 @@ sap.ui.define(
                         ParentOfferTitle: "",
                         RewardRationCount: 1,
                     },
+                    OfferDeselectedPainter:[]
                 };
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl2");
@@ -491,7 +490,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever";
+                    "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
@@ -581,6 +580,13 @@ sap.ui.define(
                         oData["OfferAchiever"]["results"]
                     );
                 }
+                //deleted painters
+                if (oData["OfferDeselectedPainter"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/TableDelPainters",
+                        oData["OfferDeselectedPainter"]["results"]
+                    );
+                }
                 promise.resolve(oData);
                 return promise;
             },
@@ -614,7 +620,8 @@ sap.ui.define(
                     PClass4 = [],
                     AppProd4 = [],
                     AppPacks4 = [],
-                    Painters = [];
+                    Painters = [],
+                    DelPainters=[];
                 //setting zone data
                 if (oData["OfferZone"]["results"].length > 0) {
                     for (var x of oData["OfferZone"]["results"]) {
@@ -790,6 +797,15 @@ sap.ui.define(
                         });
                     }
                 }
+                // oModelControl2.setProperty("/OfferDeselectedPainter", DelPainters);
+                // if (oData["OfferDeselectedPainter"]["results"].length > 0) {
+                //     for (var x of oData["OfferDeselectedPainter"]["results"]) {
+                //         DelPainters.push({
+                //             PainterId: x["PainterId"],
+                //             PainterName: x["Painter"]["Name"],
+                //         });
+                //     }
+                // }
                 oModelControl2.setProperty("/MultiCombo/Painters", Painters);
                 promise.resolve(oData);
                 return promise;
@@ -1142,7 +1158,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever";
+                    "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter";
                 oView.getModel().read("/" + sPath, {
                     urlParameters: {
                         $expand: exPand,
@@ -2281,7 +2297,18 @@ sap.ui.define(
             _postDetailSave: function () {
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
+                var oModelControl2 = oView.getModel("oModelControl2");
                 var oViewData = oModelView.getData();
+                var delPainters = oModelControl2.getProperty("/OfferDeselectedPainter");
+                // if (delPainters != null) {
+                //     delPainters.forEach(function (ele) {
+                //         console.log(ele);
+                //         delete ele["PainterName"];
+                //         ele["OfferId"] = oViewData.Id.toString();
+                //     })
+                // }
+                // console.log(delPainters);
+                //debugger;
                 //1. Detail Page End Date Change
                 oViewData["EndDate"] = new Date(
                     oViewData["EndDate"].setHours(23, 59, 59, 999)
@@ -2295,6 +2322,20 @@ sap.ui.define(
                             );
                         })
                     }
+                }
+                //3. Delete painters 
+                if (oViewData["OfferDeselectedPainter"].hasOwnProperty("results")) {
+                    delPainters.forEach(function (ele) {
+                        //console.log(ele);
+                        delete ele["PainterName"];
+                        ele["PainterId"]=parseInt(ele["PainterId"]);
+                        ele["OfferId"] = oViewData.Id;
+                        oViewData["OfferDeselectedPainter"]["results"].push(ele)
+                    })
+                   // if (oViewData["OfferDeselectedPainter"]["results"].length > 0) {
+                        //oViewData["OfferDeselectedPainter"]["results"].push(delPainters);
+                   // }
+
                 }
                 var oModelC = oView.getModel("oModelControl3");
                 oModelC.setProperty("/PageBusy", true);
@@ -2429,9 +2470,77 @@ sap.ui.define(
                 //_LoadPainterData
             },
             //Deleted painter code start
-            onPressAddPList: function () {
+            onRemovePainter: function (oEvent) {
+               
+                var oView = this.getView();
+                var oBject = oEvent.getSource().getBindingContext().getObject();
+                var sPath = oEvent.getSource().getBindingContext().getPath();
+                var othat = this;
+                var oData = oView.getModel();
+                //console.log(oData);
+                    MessageBox.warning(
+                        "Are you sure you want to remove the painter? ", {
+                            actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction == "OK") {
+                                    othat._Deactivate(oData, sPath, oBject);
+                                }
+                            },
+                        }
+                    );
+                },
+                _Deactivate: function (oData, sPath, oBject) {
+                    var oPayload = {
+                        IsArchived: true,
+                    };
+                    oData.update(sPath + "/IsArchived", oPayload, {
+                        success: function (mData) {
+                            MessageToast.show(" Sucessfully Removed.");
+                            oData.refresh();
+                        },
+                        error: function (data) {
+                            var oRespText = JSON.parse(data.responseText);
+                            MessageBox.error(oRespText["error"]["message"]["value"]);
+                        },
+                    });
+                },
+
+            onfilterOfferPainter:function (){
+                var oModel=this.getView().getModel("oModelControl3");
+                var offerId=oModel.getProperty("/OfferId");
+                var aFilters=[];
+                aFilters.push(new Filter([
+                                new Filter({ path: "OfferId", operator: FilterOperator.EQ, value1:offerId }),
+                                new Filter({ path: "IsArchived", operator: FilterOperator.EQ, value1:false})
+                            ], true));
+
+                var oTable = this.getView().byId("idDelPainterTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter(aFilters);
 
             }
+        //     fnrebindTable: function (oEvent) {
+
+        //     var oBindingParams = oEvent.getParameter("bindingParams");
+        //     oBindingParams.sorter.push(new sap.ui.model.Sorter('Id', true));
+        //     oBindingParams.parameters["expand"] = "OfferDeselectedPainter,OfferDeselectedPainter/Painter,OfferDeselectedPainter/Painter/Depot";
+        //     var oView = this.getView();
+        //     var oModel = oView.getModel("oModelDisplay")
+        //     var OfferId = oModel.getProperty("/Id");
+        //     console.log(OfferId);
+        //     var filter=new Filter({
+        //             filters: [
+        //                 new Filter({
+        //                     filters: [
+        //                         new Filter("Id", sap.ui.model.FilterOperator.EQ,OfferId)
+        //                     ], and: false
+        //                 })
+        //             ]
+        //         });
+        //         oBindingParams.filters.push(filter);
+        // },
+
         } // end 
         );
     }

@@ -37,33 +37,65 @@
             </f:FormContainer>
         </f:formContainers>
     </f:Form> -->
-    <VBox>
+    <VBox class="sapUiMediumMargin">
+                <Table id="idDelPainterTable" width="auto" items="{ path: '/OfferDeselectedPainterSet', sorter: { path: 'CreatedAt', descending: false }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
+                            <headerToolbar>
+                                <Toolbar visible="{=${oModelControl3>/mode} === 'display'}">
+                                    <ToolbarSpacer/> 
+                                            <MultiInput width="50%" placeholder="{i18n>UpdatePainterList}" id="Painters2" tokens="{oModelControl2>/OfferDeselectedPainter}" valueHelpRequest="onValueHelpRequestedPainter2">
+                                                <tokens>
+                                                    <Token editable="false" text="{oModelControl2>PainterId}" key="{oModelControl2>PainterId}"/>
+                                                </tokens>
+                                                <layoutData>
+                                                    <l:GridData span="XL12 L12 M12 S12" />
+                                                </layoutData>
+                                            </MultiInput>
+                                                <u:FileUploader id="idOfferFileUploader2" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
+                                    
+                                </Toolbar>
+                            </headerToolbar>
 
-        <smartTable:SmartTable
-                    id="idDelPainterTable"
-                    editable="false"
-                    beforeRebindTable="fnrebindTable"                    
-                    entitySet="PainterTrainingSet"
-                    tableType="ResponsiveTable"
-                    showRowCount="true"
-                    useExportToExcel="true"
-                    useVariantManagement="false"
-                    useTablePersonalisation="true"
-                    ignoredFields="IsArchived,IsSelected,Id"
-                    demandPopin="true"
-                    enableAutoBinding="false"
-                    placeToolbarInTable="true" 
-                    persistencyKey="PainterListSmartTableKey"
-                    header="{i18n>deletedPainterList}">
-                    <smartTable:customToolbar>
-			            <OverflowToolbar>
-                            <ToolbarSpacer />
-                                <Button icon="sap-icon://add" type="Emphasized" text="{i18n>UpdatePainterList}" press="onValueHelpRequestedPainter2"/>
-                                 <u:FileUploader id="idOfferFileUploader2" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
-                            </OverflowToolbar>
-		            </smartTable:customToolbar>
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>colPainterName}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>colMembershipId}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>colMobileNumber}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>colZone}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>colDivision}"/>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>colDepot}"/>
+                                </Column>
+                            
+                                <Column>
+                                    <Text text="{i18n>tblColAction}"/>
+                                </Column> 
+                            </columns>
 
-        </smartTable:SmartTable>
-
+                            <items>
+                                <ColumnListItem press="onListItemPress">
+                                    <cells>
+                                        <Text text="{Painter/Name}"/>
+                                        <Text text="{Painter/MembershipCard}"/>
+                                        <Text text="{Painter/Mobile}"/>
+                                        <Text text="{Painter/ZoneId}"/>
+                                        <Text text="{Painter/DivisionId}"/>
+                                        <Text text="{Painter/DepotId}"/>
+                                        <Button tooltip="{i18n>Delete}" icon="sap-icon://delete" type="Transparent" press="onRemovePainter"></Button>
+                                        <!-- <Text text="{Painter/PrimaryDealerDetails/DealerName}"/>
+                                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                                        <Text text="{EarnedPoints}"/> -->
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                </Table>
     </VBox>
 </core:FragmentDefinition>

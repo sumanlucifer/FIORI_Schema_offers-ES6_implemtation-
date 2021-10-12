@@ -24,6 +24,11 @@
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
                 </content>
             </WizardStep>
+            <WizardStep id="ContributionCndtn" title="{i18n>formApplicableLbl18}" activate="onActivate">
+                <content>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ContributionCondition" type="XML"/>
+                </content>
+            </WizardStep>
             <WizardStep id="wzdStep4" title="{i18n>formApplicablepainter}" activate="onActivate">
                 <content>
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML"/>
