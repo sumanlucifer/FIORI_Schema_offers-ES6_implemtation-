@@ -43,7 +43,7 @@
                     </List>
                 </CustomListItem>
             </List>
-            <Button text="{i18n>addMore}" width="20%" press="onAddMore" type="Emphasized" tooltip="{i18n>addMore}"/>
+            <Button text="{i18n>addMore}" width="20%" press="addMoreLanguage" type="Emphasized" tooltip="{i18n>addMore}"/>
         </f:SimpleForm>
     </VBox>
     <buttons>

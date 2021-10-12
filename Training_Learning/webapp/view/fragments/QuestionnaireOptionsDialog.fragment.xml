@@ -1,34 +1,37 @@
-<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-<Dialog id="QuestionnaireOptionsDialog" title="{i18n>TitleAddQuestionnaireOptions}" contentHeight="800px" contentWidth="600px">
-    <VBox id="idVbxQ" width="100%">
-        <f:SimpleForm id="QuestionOptions" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
-                <Label required="true" text="{i18n>colLanguage}"/>
-                <ComboBox width="20%" selectionChange="onLanguageChange" selectedKey="{oModelView>LanguageCode}" items="{ path: '/MasterLanguageSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
-					<core:Item key="{LanguageCode}" text="{LanguageDescription}"/>
-				</ComboBox>
-
-                <Label text="{i18n>colQuestion}" required="true"/>
-                <TextArea maxLength="300" value="{oModelView>Question}" rows="2"/>
-                <List id="ListOptions" enableBusyIndicator="true" headerText="{i18n>colQuestionnaireOptions}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
-					items="{path: 'oModelView>TrainingQuestionnaireOptions/' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
-					<headerToolbar>
-						<Toolbar>
-							<ToolbarSpacer/>
-				    		<Button press="onAddQuestionnaireOptions" icon="sap-icon://add" type="Emphasized" enabled="{= ${oModelView>TrainingQuestionnaireOptions/length} &lt; 4 }" text="{i18n>AddOptions}"/>
-						</Toolbar>
-					</headerToolbar>
-                    <CustomListItem>
-                        <RadioButton groupName="GroupA" selected = "{oModelView>IsCorrect}"/>
-						<Input width="80%" maxLength="100" value="{oModelView>Option}"/>
-                        <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
-					</CustomListItem>
-				</List>
-                <Button text="{i18n>addMore}" width="20%" press="onAddMore" type="Emphasized" tooltip="{i18n>addMore}"/>
-        </f:SimpleForm>
-    </VBox>
-    <buttons>
-		<Button text="{i18n>btnClose}" press="closeOptionsDialog"/>
-        <Button text="{i18n>btnUpdateOptions}" type="Emphasized" press="updateOptions"/>
-	</buttons>
-</Dialog>
+<core:FragmentDefinition xmlns:upload="sap.m.upload"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog id="QuestionnaireOptionsDialog" title="Training Question" contentHeight="1200px" contentWidth="1200px">
+        <VBox id="idVbxQ" width="100%" items="{oModelView>/oAddTraining}">
+            <items>
+                <VBox class="sapUiSmallMarginBeginEnd">
+                    <Select  items="{ path: '/MasterLanguageSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}" width="12%" selectedKey="{oModelView>LanguageCode}">
+                        <core:Item key="{LanguageCode}" text="{LanguageDescription}"/>
+                    </Select>
+                    <TextArea value="{oModelView>Question}" width="100%" ></TextArea>
+                    <HBox justifyContent="End">
+                        <Button press="onAddQuestionnaireOptions" type="Emphasized" text="Add Options"/>
+                    </HBox>
+                    <List items="{oModelView>Options}">
+                        <CustomListItem>
+                            <!-- <HBox><RadioButton  groupName="{oModelView>LanguageCode}" selected="false" /><Input value="{oModelView>Option}" /></HBox> -->
+                            <RadioButton groupName="{oModelView>LanguageCode}" selected = "{oModelView>IsCorrect}" select="onSelectOption"/>
+                            <Input width="80%" maxLength="100" value="{oModelView>Option}"/>
+                            <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
+                        </CustomListItem>
+                    </List>
+                    <Button text="{i18n>addMore}" width="20%" press="addMoreLanguage" type="Emphasized" tooltip="{i18n>addMore}"/>
+                </VBox>
+            </items>
+        </VBox>
+        <buttons>
+            <Button text="Close" press="closeOptionsDialog"/>
+            <Button text="Save" type="Emphasized" press="updateOptions"/>
+        </buttons>
+    </Dialog>
 </core:FragmentDefinition>

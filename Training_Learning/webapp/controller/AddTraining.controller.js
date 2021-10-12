@@ -345,14 +345,21 @@ sap.ui.define(
                     var addQsFlag = true;
                     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
 
+                    debugger;
                     var oTrainingQuestionnaire = [];
-                    this.getModel("oModelView").setProperty("/oAddTraining", {
+                    var clientQuestionId = this.generateId();
+                    this.getModel("oModelView").setProperty("/oAddTraining", [{
                         // Question: "",
-                        // LanguageCode: "",
-                        TrainingQuestionnaireLocalized: [],
-                        TrainingQuestionnaireOptions: [],
+                        // LanguageCode: ""
+                        // TrainingQuestionnaireOptions: [],
+                        QuestionId: null,
+                        ClientQuestionId: clientQuestionId,
+                        LanguageCode: "EN",
+                        Question: null,
+                        QuestionLocalizedId: null,
+                        Options: [],
                         IsArchived: false
-                    });
+                    }]);
 
                     var sPath = "/oAddTraining";
                     var oButton = oEvent.getSource();
@@ -360,11 +367,11 @@ sap.ui.define(
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
 
-                    if (!this.byId("QuestionnaireOptionsDialogAdd")) {
+                    if (!this.byId("QuestionnaireOptionsDialog")) {
                         // load asynchronous XML fragment
                         Fragment.load({
                             id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialogAdd",
+                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
                             controller: this
                         }).then(function (oDialog) {
                             // connect dialog to the root view 
@@ -377,109 +384,186 @@ sap.ui.define(
                             oDialog.open();
                         });
                     } else {
-                        oThat.byId("QuestionnaireOptionsDialogAdd").bindElement({
+                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
                             path: sPath,
                             model: "oModelView"
                         });
-                        oThat.byId("QuestionnaireOptionsDialogAdd").open();
+                        oThat.byId("QuestionnaireOptionsDialog").open();
                     }
                 },
 
+                // onPressOpenDialog: function (oEvent) {
+                //     var addQsFlag = true;
+                //     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+
+                //     var oTrainingQuestionnaire = [];
+                //     var clientQuestionId = this.generateId();
+                //     this.getModel("oModelView").setProperty("/oAddTraining", [{
+                //         // Question: "",
+                //         // LanguageCode: ""
+                //         // TrainingQuestionnaireOptions: [],
+                //         QuestionId: null,
+                //         ClientQuestionId: clientQuestionId,
+                //         LanguageCode: "EN",
+                //         Question: null,
+                //         QuestionLocalizedId: null,
+                //         Options: [],
+                //         IsArchived: false
+                //     }]);
+
+                //     var oView = this.getView();
+                //     if (!this._CsvDialoge) {
+                //         Fragment.load({
+                //             id: oView.getId(),
+                //             name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
+                //             controller: this,
+                //         }).then(
+                //             function (oDialog) {
+                //                 this._CsvDialoge = oDialog;
+                //                 oView.addDependent(this._CsvDialoge);
+                //                 this._CsvDialoge.open();
+                //                 resolve();
+                //             }.bind(this)
+                //         );
+                //     } else {
+                //         this._CsvDialoge.open();
+
+                //     }
+                // },
+
                 updateOptions: function () {
-                    var selectCorrectFlag,
-                        blankOption,
-                        addTr;
-                    selectCorrectFlag = false;
-                    blankOption = true;
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                    if (addQsFlag === true) {
-                        addTr = this.getModel("oModelView").getProperty("/oAddTraining");
-                    } else {
-                        var iIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
+                    // var selectCorrectFlag,
+                    //     blankOption,
+                    //     addTr;
+                    // selectCorrectFlag = false;
+                    // blankOption = true;
+                    // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                    // if (addQsFlag === true) {
+                    //     addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    // } else {
+                    //     var iIndex = this.getModel("oModelView").getProperty("/iIndex");
+                    //     addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
+                    // }
+                    // if (!addTr.LanguageCode) {
+                    //     this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
+                    // }
+                    // else {
+                    //     if (addTr.Question === "") {
+                    //         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                    //     } else {
+                    //         if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                    //             if (addTr.TrainingQuestionnaireOptions.length <= 4) {
+                    //                 for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                    //                     if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                    //                         selectCorrectFlag = true;
+                    //                     }
+                    //                 }
+                    //                 if (selectCorrectFlag === false) {
+                    //                     this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                    //                 } else {
+                    //                     for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                    //                         if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
+                    //                             blankOption = false;
+                    //                             this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                    //                         }
+                    //                     }
+                    //                     if (blankOption === true) {
+                    //                         if (addQsFlag === true) {
+                    //                             this.getModel("oModelView").setProperty("/addQsFlag", false);
+                    //                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                    //                                 Question: addTr.Question,
+                    //                                 TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                    //                                 IsArchived: false
+                    //                             });
+                    //                             this.byId("QuestionnaireOptionsDialog").close();
+                    //                             this.getModel("oModelView").refresh();
+                    //                         } else {
+                    //                             this.byId("QuestionnaireOptionsDialog").close();
+                    //                             this.getModel("oModelView").refresh();
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             } else {
+                    //                 this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
+                    //             }
+                    //         } else {
+                    //             this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
+                    //         }
+                    //     }
+                    // }
+
+                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                    var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+
+                    for (var i = 0; i < addTr.length; i++) {
+                        TrainingQuestionnaire.push(addTr[i]);
                     }
-                    if (!addTr.LanguageCode) {
-                        this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
-                    }
-                    else {
-                        if (addTr.Question === "") {
-                            this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
-                        } else {
-                            if (addTr.TrainingQuestionnaireOptions.length >= 2) {
-                                if (addTr.TrainingQuestionnaireOptions.length <= 4) {
-                                    for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                        if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                            selectCorrectFlag = true;
-                                        }
-                                    }
-                                    if (selectCorrectFlag === false) {
-                                        this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                                    } else {
-                                        for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                            if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
-                                                blankOption = false;
-                                                this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
-                                            }
-                                        }
-                                        if (blankOption === true) {
-                                            if (addQsFlag === true) {
-                                                this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                                this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                                    Question: addTr.Question,
-                                                    TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                                    IsArchived: false
-                                                });
-                                                this.byId("QuestionnaireOptionsDialogAdd").close();
-                                                this.getModel("oModelView").refresh();
-                                            } else {
-                                                this.byId("QuestionnaireOptionsDialogAdd").close();
-                                                this.getModel("oModelView").refresh();
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
-                                }
-                            } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
-                            }
-                        }
-                    }
+
+                    // TrainingQuestionnaire.push(addTr);
+                    this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
+                    this.byId("QuestionnaireOptionsDialog").close();
+                    this.getModel("oModelView").refresh();
+
                 },
 
                 closeOptionsDialog: function () {
-                    this.byId("QuestionnaireOptionsDialogAdd").close();
+                    this.byId("QuestionnaireOptionsDialog").close();
                 },
 
-                onAddMore: function (oEvent) {
-                    debugger;
-                    var sPath = this.getView().byId("QuestionnaireOptionsDialogAdd").getElementBinding("oModelView").getPath();
-                    var oObjectLocal = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireLocalized");
-                    var oObjectOption = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
-
-                    oObjectLocal.push({
-                        LanguageCode: "",
-                        Question: "",
-                        IsArchived: false
+                addMoreLanguage: function (oEvent) {
+                    // debugger;
+                    var languageCode = "ZP";
+                    var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
+                    var lang = Object.assign({}, clientObject[0], true);
+                    lang.Question = null;
+                    lang.IsArchived = false,
+                        lang.LanguageCode = languageCode;
+                    lang.QuestionLocalizedId = null;
+                    lang.Options = clientObject[0].Options.map(option => {
+                        var op = Object.assign({}, option, true);
+                        op.Option = null;
+                        op.IsArchived = false,
+                            op.LanguageCode = languageCode;
+                        op.OptionLocalizedId = null;
+                        return op;
                     });
-
-                    oObjectOption.push({
-                        isCorrect: false,
-                        IsArchived: false,
-                        TrainingQuestionnaireOptionsLocalized: []
-                    });
+                    clientObject.push(lang);
+                    this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
+                    return lang;
                     this.getModel("oModelView").refresh();
+                    // var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
+                    // var oObjectLocal = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireLocalized");
+                    // var oObjectOption = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
+
+                    // oObjectLocal.push({
+                    //     LanguageCode: "",
+                    //     Question: "",
+                    //     IsArchived: false
+                    // });
+
+                    // oObjectOption.push({
+                    //     isCorrect: false,
+                    //     IsArchived: false,
+                    //     TrainingQuestionnaireOptionsLocalized: []
+                    // });
                 },
 
                 onEditQuestionnaire: function (oEvent) {
                     var addQsFlag = false;
                     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
-                    var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
+                    // var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
+                    var sPath = "/oAddTraining",
                         oButton = oEvent.getSource();
+
+                    debugger;
+                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                    var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+
                     var oView = this.getView();
                     var oModelView = this.getModel("oModelView"),
                         oThat = this;
-                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+
                     this.getModel("oModelView").setProperty("/iIndex", iIndex);
                     if (!this.byId("QuestionnaireOptionsDialog")) {
                         // load asynchronous XML fragment
@@ -506,14 +590,34 @@ sap.ui.define(
                     }
                 },
 
-                onAddQuestionnaireOptions: function () {
-                    var sPath = this.getView().byId("QuestionnaireOptionsDialogAdd").getElementBinding("oModelView").getPath();
-                    var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized");
-                    oObject.push({
-                        Option: "",
-                        IsArchived: false
+                generateId: function () {
+                    return btoa(new Date().getTime());
+                },
+
+                onAddQuestionnaireOptions: function (oEvent) {
+                    // debugger;
+                    var clientOptionId = this.generateId();
+                    var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
+                    clientObject.forEach(translation => {
+                        var Option = {
+                            OptionId: null,
+                            ClientOptionId: clientOptionId,
+                            LanguageCode: translation.LanguageCode,
+                            Option: null,
+                            QuestionId: translation.QuestionId,
+                            OptionLocalizedId: null,
+                            IsArchived: false,
+                            IsCorrect: false
+                        };
+                        translation.Options.push(Option);
                     });
                     this.getModel("oModelView").refresh();
+                    // var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
+                    // var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized");
+                    // oObject.push({
+                    //     Option: "",
+                    //     IsArchived: false
+                    // });
                 },
 
                 onDeleteQuestionnaire: function (oEvent) {
@@ -530,22 +634,45 @@ sap.ui.define(
                 },
 
                 onDeleteQuestionnaireOptions: function (oEvent) {
-                    var oView = this.getView();
+                    // var oView = this.getView();
                     var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                    // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                    var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
 
-                    if (addQsFlag === true) {
-                        var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    } else {
-                        var iQuestionIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex].TrainingQuestionnaireOptions[iOptionIndex].IsArchived = true;
-                        var oAddTrain = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex];
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    }
+                    clientObject.forEach(translation => {
+                        if (translation.Options[iOptionIndex].OptionId) {
+                            translation.Options[iOptionIndex].IsArchived = true;
+                        } else {
+                            // console.log(translation.Options);
+                            translation.Options.splice(iOptionIndex, 1);
+                        }
+                    });
                     this.getModel("oModelView").refresh();
+
+                    // if (addQsFlag === true) {
+                    //     var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
+                    //     oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
+                    // } else {
+                    //     var iQuestionIndex = this.getModel("oModelView").getProperty("/iIndex");
+                    //     this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex].TrainingQuestionnaireOptions[iOptionIndex].IsArchived = true;
+                    //     var oAddTrain = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex];
+                    //     oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
+                    // }
                 },
 
+                onSelectOption: function (oEvent) {
+                    debugger;
+                    var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
+                    var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+
+                    clientObject.forEach(translation => {
+                        translation.Options.forEach(op => { op.IsCorrect = false; });
+                        translation.Options[iOptionIndex].IsCorrect = true;
+                    });
+
+                    this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
+                    this.getModel("oModelView").refresh();
+                },
                 /* 
                  * @function
                  * Save edit or create Training details 
@@ -558,6 +685,13 @@ sap.ui.define(
                     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
                     var trainingType = this.getModel("appView").getProperty("/trainingType");
                     var oValid;
+                    if (oPayload.TrainingQuestionnaire) {
+                        oPayload.TrainingQuestionnaire = oPayload.TrainingQuestionnaire.map(clientObject => {
+                            var serviceObject = this.convertToServiceObject(clientObject);
+                            return serviceObject;
+                        });;
+                    }
+                    debugger;
                     if (trainingType === 'VIDEO') {
                         oValid = this._fnValidationVideo(oPayload);
                     } else if (trainingType === 'ONLINE') {
@@ -579,6 +713,142 @@ sap.ui.define(
                     } else if (trainingType === 'OFFLINE') {
                         this._UploadAttendanceOfflineTr(oPayload);
                     }
+                },
+
+                convertToClientObject: function (serviceObject) {
+                    debugger;
+                    var clientObject = {};
+                    var que = serviceObject;
+                    clientObject.Id = que.QuestionId;
+                    clientObject.Index = que.Index || null;
+                    clientObject.CreatedAt = que.CreatedAt || null;
+                    clientObject.CreatedBy = que.CreatedBy || null;
+                    clientObject.UpdatedAt = que.UpdatedAt || null;
+                    clientObject.UpdatedBy = que.UpdatedBy || null;
+                    clientObject.IsArchived = que.IsArchived || false;
+                    // serviceObject.ClientQuestionId = que.ClientQuestionId;
+                    serviceObject.TrainingId = que.TrainingId || null;
+                    serviceObject.Question = que.Question;
+                    serviceObject.TrainingQuestionnaireLocalized = clientObject.map(o => {
+                        return {
+                            Id: o.QuestionLocalizedId,
+                            LanguageCode: o.LanguageCode,
+                            Question: o.Question,
+                            TrainingQuestionnaireId: o.QuestionId
+                            // ClientTrainingQuestionnaireId: o.ClientQuestionId
+                        };
+                    });
+
+                    var options = {};
+                    for (var i = 0; i < que.Options.length; i++) {
+                        var option = que.Options[i];
+                        options[option.ClientOptionId] = {
+                            Id: option.OptionId,
+                            Index: option.Index || null,
+                            CreatedAt: option.CreatedAt || null,
+                            CreatedBy: option.CreatedBy || null,
+                            UpdatedAt: option.UpdatedAt || null,
+                            UpdatedBy: option.UpdatedBy || null,
+                            IsArchived: option.IsArchived || false,
+                            ClientOptionId: option.ClientOptionId,
+                            QuestionnaireId: option.QuestionnaireId || null,
+                            Option: option.Option,
+                            IsCorrect: option.IsCorrect,
+                            TrainingQuestionnaireOptionsLocalized: []
+                        };
+                    }
+
+                    serviceObject.TrainingQuestionnaireOptions = Object.values(options);
+
+                    for (var i = 0; i < clientObject.length; i++) {
+                        var que = clientObject[i];
+                        serviceObject.TrainingQuestionnaireOptions.forEach(op => {
+                            for (var i = 0; i < que.Options.length; i++) {
+                                var option = que.Options[i];
+                                if (op.ClientOptionId == option.ClientOptionId) {
+                                    var opLocalized = {
+                                        Id: option.OptionLocalizedId,
+                                        LanguageCode: option.LanguageCode,
+                                        Option: option.Option,
+                                        TrainingOptionId: option.OptionId,
+                                        // ClientTrainingOptionId: option.ClientOptionId
+                                    };
+                                    op.TrainingQuestionnaireOptionsLocalized.push(opLocalized);
+                                    delete op.ClientOptionId;
+                                }
+                            }
+                        });
+                    }
+
+                    return serviceObject;
+                },
+
+                convertToServiceObject: function (clientObject) {
+                    debugger;
+                    var serviceObject = {};
+                    var que = clientObject;
+                    serviceObject.Id = que.QuestionId;
+                    serviceObject.Index = que.Index || null;
+                    serviceObject.CreatedAt = que.CreatedAt || null;
+                    serviceObject.CreatedBy = que.CreatedBy || null;
+                    serviceObject.UpdatedAt = que.UpdatedAt || null;
+                    serviceObject.UpdatedBy = que.UpdatedBy || null;
+                    serviceObject.IsArchived = que.IsArchived || false;
+                    // serviceObject.ClientQuestionId = que.ClientQuestionId;
+                    serviceObject.TrainingId = que.TrainingId || null;
+                    serviceObject.Question = que.Question;
+                    serviceObject.TrainingQuestionnaireLocalized = clientObject.map(o => {
+                        return {
+                            Id: o.QuestionLocalizedId,
+                            LanguageCode: o.LanguageCode,
+                            Question: o.Question,
+                            TrainingQuestionnaireId: o.QuestionId
+                            // ClientTrainingQuestionnaireId: o.ClientQuestionId
+                        };
+                    });
+
+                    var options = {};
+                    for (var i = 0; i < que.Options.length; i++) {
+                        var option = que.Options[i];
+                        options[option.ClientOptionId] = {
+                            Id: option.OptionId,
+                            Index: option.Index || null,
+                            CreatedAt: option.CreatedAt || null,
+                            CreatedBy: option.CreatedBy || null,
+                            UpdatedAt: option.UpdatedAt || null,
+                            UpdatedBy: option.UpdatedBy || null,
+                            IsArchived: option.IsArchived || false,
+                            ClientOptionId: option.ClientOptionId,
+                            QuestionnaireId: option.QuestionnaireId || null,
+                            Option: option.Option,
+                            IsCorrect: option.IsCorrect,
+                            TrainingQuestionnaireOptionsLocalized: []
+                        };
+                    }
+
+                    serviceObject.TrainingQuestionnaireOptions = Object.values(options);
+
+                    for (var i = 0; i < clientObject.length; i++) {
+                        var que = clientObject[i];
+                        serviceObject.TrainingQuestionnaireOptions.forEach(op => {
+                            for (var i = 0; i < que.Options.length; i++) {
+                                var option = que.Options[i];
+                                if (op.ClientOptionId == option.ClientOptionId) {
+                                    var opLocalized = {
+                                        Id: option.OptionLocalizedId,
+                                        LanguageCode: option.LanguageCode,
+                                        Option: option.Option,
+                                        TrainingOptionId: option.OptionId,
+                                        // ClientTrainingOptionId: option.ClientOptionId
+                                    };
+                                    op.TrainingQuestionnaireOptionsLocalized.push(opLocalized);
+                                    delete op.ClientOptionId;
+                                }
+                            }
+                        });
+                    }
+
+                    return serviceObject;
                 },
 
                 onTrainingModeChange: function (trType) {
@@ -1026,7 +1296,6 @@ sap.ui.define(
                 },
 
                 onValueHelpOkPressPainter: function (oEvent) {
-                    debugger;
                     var oData = [];
                     var xUnique = new Set();
                     var aTokens = oEvent.getParameter("tokens");
@@ -1120,15 +1389,15 @@ sap.ui.define(
                                                     target: "/TrainingDetails/RewardPoints"
                                                 });
                                             }
-                                            else
-                                                if (data.TrainingQuestionnaire.length < 3) {
-                                                    oReturn.IsNotValid = true;
-                                                    oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
-                                                    aCtrlMessage.push({
-                                                        message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
-                                                        target: "/TrainingDetails/TrainingQuestionnaire"
-                                                    });
-                                                }
+                                            // else
+                                            //     if (data.TrainingQuestionnaire.length < 3) {
+                                            //         oReturn.IsNotValid = true;
+                                            //         oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
+                                            //         aCtrlMessage.push({
+                                            //             message: "MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS",
+                                            //             target: "/TrainingDetails/TrainingQuestionnaire"
+                                            //         });
+                                            //     }
 
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return oReturn;
