@@ -125,7 +125,8 @@ sap.ui.define(
                         Key2: "",
                         ProdVH: "",
                         PackVH: "",
-                        ProdVH2: ""
+                        ProdVH2: "",
+                        ProdVH3: ""
                     },
                     MultiCombo: {
                         Zones: [],
@@ -224,7 +225,8 @@ sap.ui.define(
                         Table5: [],
                         Table6: [],
                         Table7: [],
-                        Table8: []
+                        Table8: [],
+                        TableCndtn:[]
 
                     },
                     oData: {
@@ -327,6 +329,9 @@ sap.ui.define(
                     ParentOfferId: 0,
                     BonusDescription: "",
                     InputType: 0,
+                    //InputType3:0,//added for contribution-condition
+                   // ConditionType:0,//added for contribution-condition
+                   // ConditionTableType:0,//added for contribution-condition
                     IsMultiRewardAllowed: false,
                     OfferStatus: null,
                     OfferApplicableProductCategory: [],

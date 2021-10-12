@@ -838,7 +838,7 @@ sap.ui.define(
                 }
                 //oModel.refresh(true);
             },
-            onPressSaveAddInfo: function (oEvent) {
+            verveAddInfo: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 var oObject = oEvent
@@ -1512,6 +1512,11 @@ sap.ui.define(
                 var oModel = oView.getModel("oModelControl");
                 oModel.setProperty("/Table/Table3", []);
                 oModel.setProperty("/Table/Table4", []);
+            },
+            onRbRRDialogVolume3: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                oModel.setProperty("/Table/Cndtn", []);
             },
             onPressAddRewards: function (oEvent) {
                 // var oView = this.getView();
@@ -3218,7 +3223,7 @@ sap.ui.define(
                 var oSelected = oEvent.getParameter("selectedItems");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-                var aField = oModel.getProperty("/Dialog/ProdVH");
+                var aField = oModel.getProperty("/Dialog/ProdVH3");
                 var aNumber = aField.match(/\d+$/)[0];
                 var aProds = [],
                     oBj;
@@ -3249,6 +3254,10 @@ sap.ui.define(
                 if (this._ProdValueHelpDialog2) {
                     this._ProdValueHelpDialog2.destroy();
                     delete this._ProdValueHelpDialog2;
+                }
+                if (this._ProdValueHelpDialog3) {
+                    this._ProdValueHelpDialog2.destroy();
+                    delete this._ProdValueHelpDialog3;
                 }
             },
             _FilterForProds1: function (mParam1) {
@@ -4905,7 +4914,7 @@ sap.ui.define(
                 // }
             },
             onValueHelpRequestedPainter2: function () {
-                //this._PainterMulti = this.getView().byId("Painters");
+                this._PainterMulti = this.getView().byId("Painters2");//valuehelp
                 this.oColModel = new JSONModel({
                     cols: [{
                         label: "Membership ID",
@@ -4997,7 +5006,7 @@ sap.ui.define(
                             this._PainterValueHelp.update();
                         }.bind(this)
                     );
-                    //this._PainterValueHelp.setTokens(this._PainterMulti.getTokens());
+                    this._PainterValueHelp.setTokens(this._PainterMulti.getTokens());
                     this._PainterValueHelp.open();
                 } else {
                     //this._PainterValueHelp.setTokens(this._PainterMulti.getTokens());
@@ -5018,9 +5027,10 @@ sap.ui.define(
                     }
                 });
                 this.getView()
-                    .getModel("oModelControl3")
-                    .setProperty("/ValuehelpDel/Painters", oData);
+                    .getModel("oModelControl2")
+                    .setProperty("/OfferDeselectedPainter", oData);
                 this._PainterValueHelp.close();
+                //console.log(oData);
             },
             onFilterBarSearchDelPainter: function (oEvent) {
                 var afilterBar = oEvent.getParameter("selectionSet");
@@ -5270,6 +5280,253 @@ sap.ui.define(
                 console.log(itemModel);
                 this._CsvDialoge.close();
             },
+            onRbRRDialogCndtn: function (){
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                oModel.setProperty("/Table/TableCndtn", []);
+                //oModel.setProperty("/Table/Table5", []);
+            },
+            onPressAddCndtnV1: function (oEvent) {
+               
+                if (oEvent !== "add") {
+                    
+                } else {
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oFamiDtlMdl = oModel.getProperty("/Table/TableCndtn");
+                    var bFlag = true;
+                    if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length < 15) {
+                        for (var prop of oFamiDtlMdl) {
+                            if (prop["editable"] == true) {
+                                bFlag = false;
+                                MessageToast.show(
+                                    "Save or delete the existing data in the table before adding a new data."
+                                );
+                                return;
+                                break;
+                            }
+                        }
+                    }
+                    if (oFamiDtlMdl.length >= 15) {
+                        MessageToast.show("We can only add 15 items");
+                        bFlag = false;
+                        return;
+                    }
+                    if (bFlag == true) {
+                        oFamiDtlMdl.push({
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            Min: "",
+                            Max: "",
+                            editable: true,
+                        });
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
+                    oModel.refresh();
+                    
+                }
+            },
+            onRemovedCndtn: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var oTable = oModel.getProperty("/Table/TableCndtn");
+                oTable.splice(sPath[sPath.length - 1], 1);
+                oModel.refresh(true);
+            },
+            onPressSaveCndtn: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var oCells = oEvent.getSource().getParent().getParent().getCells();
+                var oValidator = new Validator();
+                var cFlag = oValidator.validate(oCells);
+                var bFlag = true;
+                if (!cFlag) {
+                    MessageToast.show(
+                        "Kindly Input Mandatory Fields In Proper Format To Continue."
+                    );
+                    return;
+                }
+                if (
+                    !oObject["RewardPoints"] &&
+                    !oObject["Min"] &&
+                    !oObject["Max"]
+                ) {
+                    MessageToast.show(
+                        "Kindly Entee Min & Max fields To Continue."
+                    );
+                    return;
+                }
+                
+                // if (bFlag && cFlag) {
+                //     oObject["editable"] = false;
+                //     if (!oObject["RewardGiftName"]) {
+                //         if (oObject.hasOwnProperty("RewardGiftId")) {
+                //             oObject["RewardGiftId"] = null;
+                //         }
+                //     }
+                //     oModel.refresh(true);
+                // }
+                //oModel.refresh(true);
+            },
+            onRbTableCndtn: function(oEvent){
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelView");
+                
+            },
+            onValueHelpProductsTable3: function (oEvent) {
+                var oView = this.getView();
+                var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath()
+                var oModelControl = oView.getModel("oModelControl");
+                oModelControl.setProperty("/Dialog/ProdVH3", sPath);
+                // create value help dialog
+                if (!this._ProdValueHelpDialog3) {
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.SchemeOffers.view.fragment.AppProdValuehelp3",
+                        controller: this,
+                    }).then(
+                        function (oValueHelpDialog) {
+                            this._ProdValueHelpDialog3 = oValueHelpDialog;
+                            this.getView().addDependent(this._ProdValueHelpDialog3);
+                            this._openPValueHelpDialog3(sPath);
+                        }.bind(this)
+                    );
+                } else {
+                    this._openPValueHelpDialog3(sPath);
+                }
+            },
+            _handlePValueHelpSearch3: function (oEvent) {
+                var sValue = oEvent.getParameter("value").trim();
+                if (sValue.length > 0) {
+                    var aFilter = new Filter({
+                        path: "ProductName",
+                        operator: "Contains",
+                        value1: sValue,
+                        caseSensitive: false,
+                    });
+                    this._ProdValueHelpDialog3
+                        .getBinding("items")
+                        .filter(aFilter, "Application");
+                }
+            },
+            _handleProdValueHelpConfirm3: function (oEvent) {
+                var oSelected = oEvent.getParameter("selectedItem").getBindingContext().getObject()["Id"];
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var sPath = oModel.getProperty("/Dialog/ProdVH3");
+                var oTable = oModel.getProperty("/Table/TableCndtn");
+                var aNumber = sPath.match(/\d+$/)[0];
+                var bCheckExistProd = false
+                for (var ele in oTable) {
+                    if (ele == aNumber) {
+                        continue;
+                    }
+                    if (oTable[ele]["ProductCode"] === oSelected) {
+                        MessageToast.show(
+                            "Product Already Selected, Kindly select a different Product."
+                        );
+                        oModel.setProperty(sPath + "/ProductCode", "");
+                        bCheckExistProd = true
+                        break;
+                    }
+                }
+                if (!bCheckExistProd) {
+                    oModel.setProperty(sPath + "/ProductCode", oSelected);
+                }
+            },
+            _openPValueHelpDialog3: function (mParam1) {
+                this._FilterForProds3("AppProd1");
+            },
+            _FilterForProds3: function (mParam1) {
+                var oView = this.getView(),
+                    oModel = oView.getModel("oModelControl");
+                var aNumber = mParam1.match(/\d+$/)[0];
+                var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
+                var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                var aFilter1 = [];
+                var aFilter2 = [];
+                var aFilter1A = [];
+                for (var a of aCat) {
+                    aFilter1.push(
+                        new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                    );
+                }
+                for (var b of aClass) {
+                    aFilter2.push(
+                        new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                    );
+                }
+                // Prod Filters
+                var aProdMapped = aProd.map(function (elem) {
+                    return parseInt(elem["Id"]);
+                });
+                var aProdSort = aProdMapped.sort(function (el1, el2) {
+                    return el1 - el2;
+                })
+                var aProdLimitArray = []
+                for (var x of aProdSort) {
+                    if (aProdSort.indexOf(x - 1) < 0 && aProdSort.indexOf(x + 1) < 0) {
+                        aProdLimitArray.push(x);
+                        continue;
+                    }
+                    if (aProdSort.indexOf(x - 1) < 0) {
+                        aProdLimitArray.push([x]);
+                        continue;
+                    }
+                    if (aProdSort.indexOf(x + 1) < 0) {
+                        aProdLimitArray[aProdLimitArray.length - 1].push(x);
+                        continue;
+                    }
+                }
+                for (var a1 of aProdLimitArray) {
+                    if (Array.isArray(a1)) {
+                        aFilter1A.push(new Filter([
+                            new Filter("Id", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                            new Filter("Id", FilterOperator.LE, ('000' + a1[1]).slice(-3))
+                        ], true))
+                    } else {
+                        aFilter1A.push(
+                            new Filter("Id", FilterOperator.EQ, ('000' + a1).slice(-3))
+                        );
+                    }
+                }
+                var aFilterProd = new Filter({
+                    filters: aFilter1A,
+                    and: false,
+                });
+                var aFilterCat = new Filter({
+                    filters: aFilter1,
+                    and: false,
+                });
+                var aFilterClass = new Filter({
+                    filters: aFilter2,
+                    and: false,
+                });
+                var aFinalFilter = [];
+                if (aFilter1.length > 0) {
+                    aFinalFilter.push(aFilterCat);
+                }
+                if (aFilter2.length > 0) {
+                    aFinalFilter.push(aFilterClass);
+                }
+                if (aFilter1A.length > 0) {
+                    aFinalFilter = aFilterProd;
+                }
+                this._ProdValueHelpDialog3
+                    .getBinding("items")
+                    .filter(aFinalFilter, "Control");
+                this._ProdValueHelpDialog3.open();
+            },
+            
             /**
              * Adds a history entry in the FLP page history
              * @public
