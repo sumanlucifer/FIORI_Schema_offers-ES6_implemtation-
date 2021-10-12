@@ -3,7 +3,7 @@
     displayBlock="true"
     xmlns="sap.m">
  
-    <App id="app"
+    <App id="app" width="100%"
          busy="{appView>/busy}"
          busyIndicatorDelay="0"/>
  
