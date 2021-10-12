@@ -1,11 +1,11 @@
 <mvc:View controllerName="com.knpl.pragati.CompanySettings.controller.Home" class="sapUiSizeCompact" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+height="100%"
 xmlns:l="sap.ui.layout"
 xmlns:core="sap.ui.core"
 xmlns:u="sap.ui.unified"
 xmlns:f="sap.ui.layout.form">
-	<Shell id="shell" >
-		<App id="app">
-			<pages>
+	
+	
             <Page busyIndicatorDelay="0" busy="{local>/bBusy}">
             <content>
             <VBox visible="{=!${local>/bEdit}}">
@@ -141,7 +141,5 @@ xmlns:f="sap.ui.layout.form">
             </content>
 		</Page>
 				
-			</pages>
-		</App>
-	</Shell>
+	
 </mvc:View>
