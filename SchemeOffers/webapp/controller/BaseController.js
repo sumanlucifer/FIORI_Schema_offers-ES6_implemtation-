@@ -3256,8 +3256,12 @@ sap.ui.define(
                     delete this._ProdValueHelpDialog2;
                 }
                 if (this._ProdValueHelpDialog3) {
-                    this._ProdValueHelpDialog2.destroy();
+                    this._ProdValueHelpDialog3.destroy();
                     delete this._ProdValueHelpDialog3;
+                }
+                 if (this._PackValueHelpDialog2) {
+                    this._PackValueHelpDialog2.destroy();
+                    delete this._PackValueHelpDialog2;
                 }
             },
             _FilterForProds1: function (mParam1) {
@@ -5283,7 +5287,7 @@ sap.ui.define(
             onRbRRDialogCndtn: function (){
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-                oModel.setProperty("/Table/TableCndtn", []);
+                oModel.setProperty("/Table/Table9", []);
                 //oModel.setProperty("/Table/Table5", []);
             },
             onPressAddCndtnV1: function (oEvent) {
@@ -5292,7 +5296,7 @@ sap.ui.define(
                     
                 } else {
                     var oModel = this.getView().getModel("oModelControl");
-                    var oFamiDtlMdl = oModel.getProperty("/Table/TableCndtn");
+                    var oFamiDtlMdl = oModel.getProperty("/Table/Table9");
                     var bFlag = true;
                     if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length < 15) {
                         for (var prop of oFamiDtlMdl) {
@@ -5313,10 +5317,10 @@ sap.ui.define(
                     }
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
-                            RequiredVolume: "",
-                            RequiredPoints: "",
-                            Min: "",
-                            Max: "",
+                            ProductCode:"",
+                            SkuCode:"",
+                            MinPercentage: "",
+                            MaxPercentage: "",
                             editable: true,
                         });
                         //relvalue and editable properties are added here and will be removed in the postsave function
@@ -5333,13 +5337,16 @@ sap.ui.define(
                     .getBindingContext("oModelControl")
                     .getPath()
                     .split("/");
-                var oTable = oModel.getProperty("/Table/TableCndtn");
+                var oTable = oModel.getProperty("/Table/Table9");
                 oTable.splice(sPath[sPath.length - 1], 1);
                 oModel.refresh(true);
             },
-            onPressSaveCndtn: function (oEvent) {
+            onPressSaveCndtn1: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
+                var oModelView = oView.getModel("oModelView");
+               var ContributionCondition= oModelView.getProperty("/ContributionCondition");
+                
                 var oObject = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -5354,27 +5361,95 @@ sap.ui.define(
                     );
                     return;
                 }
-                if (
-                    !oObject["RewardPoints"] &&
-                    !oObject["Min"] &&
-                    !oObject["Max"]
+                if(ContributionCondition === 1){
+                    if (
+                    !oObject["ProductCode"]&&
+                   // !oObject["RewardPoints"] &&
+                    !oObject["MinPercentage"] &&
+                    !oObject["MaxPercentage"]
                 ) {
                     MessageToast.show(
-                        "Kindly Entee Min & Max fields To Continue."
+                        "Kindly Enter Product,Min & Max fields To Continue."
                     );
                     return;
                 }
+
+                }else if(ContributionCondition === 2){
+                    if (
+                    !oObject["SkuCode"]&&
+                   // !oObject["RewardPoints"] &&
+                    !oObject["MinPercentage"] &&
+                    !oObject["MaxPercentage"]
+                ) {
+                    MessageToast.show(
+                        "Kindly Enter Pack,Min & Max fields To Continue."
+                    );
+                    return;
+
+                }
+            }
                 
-                // if (bFlag && cFlag) {
-                //     oObject["editable"] = false;
-                //     if (!oObject["RewardGiftName"]) {
-                //         if (oObject.hasOwnProperty("RewardGiftId")) {
-                //             oObject["RewardGiftId"] = null;
-                //         }
-                //     }
-                //     oModel.refresh(true);
-                // }
-                //oModel.refresh(true);
+                
+                if (bFlag && cFlag) {
+                    oObject["editable"] = false;
+                    // if (!oObject["RewardGiftName"]) {
+                    //     if (oObject.hasOwnProperty("RewardGiftId")) {
+                    //         oObject["RewardGiftId"] = null;
+                    //     }
+                    // }
+                    oModel.refresh(true);
+                }
+            },
+            onPressCndtnV1: function (oEvent) {
+                var oView = this.getView();
+                var oModel = this.getView().getModel("oModelControl");
+                var oRewardDtl = oModel.getProperty("/Table/Table9");
+                if (oEvent !== "add") {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getObject();
+                    oObject["editable"] = true;
+                    oModel.refresh();
+                } else {
+                    var bFlag = true;
+                    var sLength = oModel.getProperty("/Fields/ContriCondition");
+                    if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                        for (var prop of oRewardDtl) {
+                            if (prop["editable"] == true) {
+                                bFlag = false;
+                                MessageToast.show(
+                                    "Save or delete the existing data in the table before adding a new data"
+                                );
+                                return;
+                                break;
+                            }
+                        }
+                    }
+                    if (oRewardDtl.length >= sLength) {
+                        MessageToast.show(
+                            "For the current Offer type we can add only " +
+                            sLength +
+                            " item(s)."
+                        );
+                        bFlag = false;
+                        return;
+                    }
+                    if (bFlag == true) {
+                        oRewardDtl.push({
+                            ProductCode: null,
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            Min: "",
+                            Max: "",
+                            editable: true,
+                        });
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
+                    oModel.refresh();
+                }
             },
             onRbTableCndtn: function(oEvent){
                 var oView = this.getView();
@@ -5422,7 +5497,7 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 var sPath = oModel.getProperty("/Dialog/ProdVH3");
-                var oTable = oModel.getProperty("/Table/TableCndtn");
+                var oTable = oModel.getProperty("/Table/Table9");
                 var aNumber = sPath.match(/\d+$/)[0];
                 var bCheckExistProd = false
                 for (var ele in oTable) {
@@ -5526,6 +5601,315 @@ sap.ui.define(
                     .filter(aFinalFilter, "Control");
                 this._ProdValueHelpDialog3.open();
             },
+            _CreatePayLoadPartContriCndtn: function (oPayLoad) {
+                var promise = jQuery.Deferred();
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelView");
+                var oModelCtrl = oView.getModel("oModelControl");
+                var bRewardSelected = oModel.getProperty("/ContributionCondition");
+                var bContributionType = oModel.getProperty("/ContributionType");
+                var aFinalArray = [];
+                if ((bRewardSelected === 1 ||bRewardSelected === 2) && (bContributionType === 0)) {
+                    var oDataTbl = oModelCtrl
+                        .getProperty("/Table/Table9")
+                        .map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                    var aCheckProp = [
+                        "ProductCode",
+                        "SkuCode",
+                        "MinPercentage",
+                        "MaxPercentage",
+                    ];
+                    aFinalArray = oDataTbl.filter(function (ele) {
+                        for (var a in aCheckProp) {
+                            if (ele[aCheckProp[a]] === "") {
+                                ele[aCheckProp[a]] = null;
+                            }
+                            if (aCheckProp[a] === "ProductCode") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            if (aCheckProp[a] === "SkuCode") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            if (aCheckProp[a] === "MinPercentage") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            if (aCheckProp[a] === "MaxPercentage") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            
+                        }
+                        delete ele["editable"];
+                        return ele;
+                    });
+                    oPayLoad["OfferContributionRatio"] = aFinalArray;
+                    promise.resolve(oPayLoad);
+                    return promise;
+                }
+            },
+            handlePackValueHelp2: function (oEvent) {
+                var oView = this.getView();
+                var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath()
+                var oModelControl = oView.getModel("oModelControl");
+                oModelControl.setProperty("/Dialog/PackVH2", sPath);
+                // create value help dialog
+                if (!this._PackValueHelpDialog2) {
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.SchemeOffers.view.fragment.AppPackValueHelp2",
+                        controller: this,
+                    }).then(
+                        function (oValueHelpDialog) {
+                            this._PackValueHelpDialog2 = oValueHelpDialog;
+                            this.getView().addDependent(this._PackValueHelpDialog2);
+                            this._OpenPackValueHelp2(sPath);
+                        }.bind(this)
+                    );
+                 }else {
+                    this._OpenPackValueHelp2(sPath);
+                }
+            },
+            _OpenPackValueHelp2:function(mParam1){
+                 this._FilterForPack2("AppProd1");
+            },
+            _FilterForPack2: function (mParam1) {
+                var oView = this.getView(),
+                    oModel = oView.getModel("oModelControl");
+                var aNumber = mParam1.match(/\d+$/)[0];
+                var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
+                var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
+                var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                var aFilter1 = [];
+                var aFilter2 = [];
+                var aFilter1A = [];
+                for (var a of aCat) {
+                    aFilter1.push(
+                        new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                    );
+                }
+                for (var b of aClass) {
+                    aFilter2.push(
+                        new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                    );
+                }
+                // Prod Filters
+                var aProdMapped = aProd.map(function (elem) {
+                    return parseInt(elem["Id"]);
+                });
+                var aProdSort = aProdMapped.sort(function (el1, el2) {
+                    return el1 - el2;
+                })
+                var aProdLimitArray = []
+                for (var x of aProdSort) {
+                    if (aProdSort.indexOf(x - 1) < 0 && aProdSort.indexOf(x + 1) < 0) {
+                        aProdLimitArray.push(x);
+                        continue;
+                    }
+                    if (aProdSort.indexOf(x - 1) < 0) {
+                        aProdLimitArray.push([x]);
+                        continue;
+                    }
+                    if (aProdSort.indexOf(x + 1) < 0) {
+                        aProdLimitArray[aProdLimitArray.length - 1].push(x);
+                        continue;
+                    }
+                }
+                for (var a1 of aProdLimitArray) {
+                    if (Array.isArray(a1)) {
+                        aFilter1A.push(new Filter([
+                            new Filter("Id", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                            new Filter("Id", FilterOperator.LE, ('000' + a1[1]).slice(-3))
+                        ], true))
+                    } else {
+                        aFilter1A.push(
+                            new Filter("Id", FilterOperator.EQ, ('000' + a1).slice(-3))
+                        );
+                    }
+                }
+                var aFilterProd = new Filter({
+                    filters: aFilter1A,
+                    and: false,
+                });
+                var aFilterCat = new Filter({
+                    filters: aFilter1,
+                    and: false,
+                });
+                var aFilterClass = new Filter({
+                    filters: aFilter2,
+                    and: false,
+                });
+                var aFinalFilter = [];
+                if (aFilter1.length > 0) {
+                    aFinalFilter.push(aFilterCat);
+                }
+                if (aFilter2.length > 0) {
+                    aFinalFilter.push(aFilterClass);
+                }
+                if (aFilter1A.length > 0) {
+                    aFinalFilter = aFilterProd;
+                }
+                this._PackValueHelpDialog2
+                    .getBinding("items")
+                    .filter(aFinalFilter, "Control");
+                this._PackValueHelpDialog2.open();
+            },
+             _handlePackValueHelpSearch2: function (oEvent) {
+                var sValue = oEvent.getParameter("value").trim();
+                if (sValue.length > 0) {
+                    var aFilter = new Filter({
+                        path: "Description",
+                        operator: "Contains",
+                        value1: sValue,
+                        caseSensitive: false,
+                    });
+                    this._PackValueHelpDialog2
+                        .getBinding("items")
+                        .filter(aFilter, "Application");
+                }
+            },
+            _handlePackValueHelpConfirm2: function (oEvent) {
+                var oSelected = oEvent.getParameter("selectedItem").getBindingContext().getObject()["SkuCode"];
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var sPath = oModel.getProperty("/Dialog/PackVH2");
+                var oTable = oModel.getProperty("/Table/Table9");
+                var aNumber = sPath.match(/\d+$/)[0];
+                var bCheckExistProd = false
+                for (var ele in oTable) {
+                    if (ele == aNumber) {
+                        continue;
+                    }
+                    if (oTable[ele]["SkuCode"] === oSelected) {
+                        MessageToast.show(
+                            "Product Already Selected, Kindly select a different Product."
+                        );
+                        oModel.setProperty(sPath + "/SkuCode", "");
+                        bCheckExistProd = true
+                        break;
+                    }
+                }
+                if (!bCheckExistProd) {
+                    oModel.setProperty(sPath + "/SkuCode", oSelected);
+                }
+            },
+            onPressAddCndtnV2: function (oEvent) {
+               
+                if (oEvent !== "add") {
+                    
+                } else {
+                    var oModel = this.getView().getModel("oModelControl");
+                    var oFamiDtlMdl = oModel.getProperty("/Table/Table10");
+                    var bFlag = true;
+                    if (oFamiDtlMdl.length > 0 && oFamiDtlMdl.length < 15) {
+                        for (var prop of oFamiDtlMdl) {
+                            if (prop["editable"] == true) {
+                                bFlag = false;
+                                MessageToast.show(
+                                    "Save or delete the existing data in the table before adding a new data."
+                                );
+                                return;
+                                break;
+                            }
+                        }
+                    }
+                    if (oFamiDtlMdl.length >= 15) {
+                        MessageToast.show("We can only add 15 items");
+                        bFlag = false;
+                        return;
+                    }
+                    if (bFlag == true) {
+                        oFamiDtlMdl.push({
+                            ProductCode:"",
+                            // SkuCode:"",
+                            // MinPercentage: "",
+                            // MaxPercentage: "",
+                            editable: true,
+                        });
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
+                    oModel.refresh();
+                    
+                }
+            },
+            onRemovedCndtn2: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var oTable = oModel.getProperty("/Table/Table10");
+                oTable.splice(sPath[sPath.length - 1], 1);
+                oModel.refresh(true);
+            },
+            onPressSaveCndtn2: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var oCells = oEvent.getSource().getParent().getParent().getCells();
+                var oValidator = new Validator();
+                var cFlag = oValidator.validate(oCells);
+                var bFlag = true;
+                if (!cFlag) {
+                    MessageToast.show(
+                        "Kindly Input Mandatory Fields In Proper Format To Continue."
+                    );
+                    return;
+                }
+                if (
+                    !oObject["ProductCode"]
+                ) {
+                    MessageToast.show(
+                        "Kindly Enter ProductCode,Min & Max fields To Continue."
+                    );
+                    return;
+                }
+                
+                if (bFlag && cFlag) {
+                    oObject["editable"] = false;
+                    // if (!oObject["RewardGiftName"]) {
+                    //     if (oObject.hasOwnProperty("RewardGiftId")) {
+                    //         oObject["RewardGiftId"] = null;
+                    //     }
+                    // }
+                    oModel.refresh(true);
+                }
+            },
+            // handlePackValueHelp2: function (oEvent) {
+            //    var oView = this.getView();
+            //     var sPath = oEvent.getSource().getBindingContext("oModelControl").getPath()
+            //     var oModelControl = oView.getModel("oModelControl");
+            //     oModelControl.setProperty("/Dialog/PackVH2", sPath);
+            //     // create value help dialog
+            //     if (!this._PackValueHelpDialog) {
+            //         Fragment.load({
+            //             id: oView.getId(),
+            //             name: "com.knpl.pragati.SchemeOffers.view.fragment.AppPackValueHelp2",
+            //             controller: this,
+            //         }).then(
+            //             function (oValueHelpDialog) {
+            //                 this._PackValueHelpDialog = oValueHelpDialog;
+            //                 this.getView().addDependent(this._PackValueHelpDialog);
+            //                 this._OpenPackValueHelp(sParam1);
+            //             }.bind(this)
+            //         );
+            //     } else {
+            //         this._OpenPackValueHelp(sParam1);
+            //     }
+            // },
             
             /**
              * Adds a history entry in the FLP page history

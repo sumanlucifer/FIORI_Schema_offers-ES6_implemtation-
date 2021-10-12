@@ -4,22 +4,23 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <l:VerticalLayout>
-                    <RadioButtonGroup columns="2" select=".onRbTableCndtn" selectedIndex="{oModelView>/ConditionTableType}">
-                        <buttons>
-                            <RadioButton text="{i18n>SeperateCndtn}"/>
-                            <RadioButton text="{i18n>CombinationCndtn}"/>
-                        </buttons>
-                    </RadioButtonGroup>
-        <VBox >
-             <Table id="TableContri" items="{path: 'oModelControl>/Table/TableCndtn',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ConditionTableType}===0}">
-            <headerToolbar>
-                <Toolbar>
-                    <!-- <Title text="{i18n>Conditions}"/> -->
-                    <RadioButtonGroup columns="3" select=".onRbRRDialogCndtn" selectedIndex="{oModelView>/ConditionType}">
+                   <RadioButtonGroup columns="3" select=".onRbRRDialogCndtn" selectedIndex="{oModelView>/ContributionCondition}">
                         <buttons>
                             <RadioButton text="{i18n>DefaultCondLabel}"/>
                             <RadioButton text="{i18n>ConditionLabel1}"/>
                             <RadioButton text="{i18n>ConditionLabel2}"/>
+                        </buttons>
+                    </RadioButtonGroup>
+        <VBox visible="{=${oModelView>/ContributionCondition}!==0}">
+             <Table id="TableContri" items="{path: 'oModelControl>/Table/Table9',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===0}">
+            <headerToolbar>
+                <Toolbar>
+                    <!-- <Title text="{i18n>Conditions}"/> -->
+                    
+                     <RadioButtonGroup columns="2" select=".onRbTableCndtn" selectedIndex="{oModelView>/ContributionType}">
+                        <buttons>
+                            <RadioButton text="{i18n>SeperateCndtn}"/>
+                            <RadioButton text="{i18n>CombinationCndtn}"/>
                         </buttons>
                     </RadioButtonGroup>
                     <ToolbarSpacer />
@@ -29,7 +30,7 @@
             <infoToolbar>
 					<OverflowToolbar >
                     <Label  text="{i18n>Slab}"/>
-                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume3" selectedIndex="{oModelView>/InputType3}">
+                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume3" selectedIndex="{oModelView>/InputType}" editable="false">
                         <buttons>
                             <RadioButton text="{i18n>RequiredVolume}"/>
                             <RadioButton text="{i18n>Table1Label2}"/>
@@ -39,14 +40,18 @@
 				</infoToolbar>
             <columns>
                  <Column>
-                    <Text text="{i18n>Product}"/>
+                 <VBox>
+                  <Text text="{i18n>Product}" visible="{=${oModelView>/ContributionCondition}===1}"/>
+                   <Text text="{i18n>Pack}" visible="{=${oModelView>/ContributionCondition}===2}"/>
+                 </VBox>
+                   
                 </Column>
-                <Column visible="{= ${oModelView>/InputType3}===0 }">
+                <!-- <Column visible="{= ${oModelView>/InputType3}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="true"/>
                 </Column>
                 <Column visible="{= ${oModelView>/InputType3}===1 }">
                     <Label text="{i18n>Table1Label2}" required="true" />
-                </Column>
+                </Column> -->
                 <Column>
                     <Label text="{i18n>Min}" />
                 </Column>
@@ -62,30 +67,40 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                          <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="Demo" />
-                            <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            
+                            <VBox visible="{=${oModelView>/ContributionCondition}===1}">
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                             <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            </VBox>
+                            
+                            <VBox visible="{=${oModelView>/ContributionCondition}===2}">
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            </VBox>
+                           
+                            
                         </VBox>
-                        <VBox visible="{= ${oModelView>/InputType3}===0 }">
+                        <!-- <VBox visible="{= ${oModelView>/InputType3}===0 }">
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox visible="{= ${oModelView>/InputType3}===1 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                        </VBox> -->
+                        <VBox >
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Min',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>Min',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
-                        </VBox>
-                        <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Max',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>Max',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         
                         
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressCndtnV1"></Button>
-                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn1"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCndtn"></Button>
                         </HBox>
                     </cells>
@@ -95,25 +110,24 @@
         
         </VBox>
         <VBox >
-             <Table id="TableContri2" items="{path: 'oModelControl>/Table/TableCndtn',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ConditionTableType}===1}">
+             <Table id="TableContri2" items="{path: 'oModelControl>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Conditions}"/> -->
-                    <RadioButtonGroup columns="3" select=".onRbRRDialogCndtn" selectedIndex="{oModelView>/ConditionType}">
+                    <RadioButtonGroup columns="2" select=".onRbTableCndtn" selectedIndex="{oModelView>/ContributionType}">
                         <buttons>
-                            <RadioButton text="{i18n>DefaultCondLabel}"/>
-                            <RadioButton text="{i18n>ConditionLabel1}"/>
-                            <RadioButton text="{i18n>ConditionLabel2}"/>
+                            <RadioButton text="{i18n>SeperateCndtn}"/>
+                            <RadioButton text="{i18n>CombinationCndtn}"/>
                         </buttons>
                     </RadioButtonGroup>
                     <ToolbarSpacer />
-                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV1('add')"/>
+                    <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV2('add')"/>
                 </Toolbar>
             </headerToolbar>
             <infoToolbar>
 					<OverflowToolbar >
                     <Label  text="{i18n>Slab}"/>
-                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume3" selectedIndex="{oModelView>/InputType3}">
+                <RadioButtonGroup columns="2" select=".onRbRRDialogVolume3" selectedIndex="{oModelView>/InputType}">
                         <buttons>
                             <RadioButton text="{i18n>RequiredVolume}"/>
                             <RadioButton text="{i18n>Table1Label2}"/>
@@ -122,11 +136,13 @@
 				</OverflowToolbar>
 				</infoToolbar>
             <columns>
-                
-                <Column visible="{= ${oModelView>/InputType3}===0 }">
+                <Column>
+                  <Text text="{i18n>Product}"/>
+                </Column>
+                <!-- <Column visible="{= ${oModelView>/InputType}===0 }">
                     <Label text="{i18n>RequiredVolume}" visible="true" required="true"/>
                 </Column>
-                <Column visible="{= ${oModelView>/InputType3}===1 }">
+                <Column visible="{= ${oModelView>/InputType}===1 }">
                     <Label text="{i18n>Table1Label2}" required="true" />
                 </Column>
                 <Column>
@@ -134,7 +150,7 @@
                 </Column>
                 <Column>
                     <Text text="{i18n>Max}" />
-                </Column>
+                </Column>-->
                 <Column>
                     <Text text="{i18n>tblColAction}" />
                 </Column>
@@ -144,28 +160,30 @@
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         
-                        <VBox visible="{= ${oModelView>/InputType3}===0 }">
-                            <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>RequiredVolume',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
-                        </VBox>
-                        <VBox visible="{= ${oModelView>/InputType3}===1 }">
+                          <VBox>
+                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                            <VBox>
+                             <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            </VBox>
+                             </VBox>
+                        <!-- <VBox visible="{= ${oModelView>/InputType}===1 }">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>RequiredPoints',formatter:'.formatter.fmtCheckNull'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" required="true" placeholder="{i18n>placeHolder3}" type="Number" width="100%" value="{path:'oModelControl>RequiredPoints',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Min',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>Min',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>Max',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>Max',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
-                        </VBox>
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                        </VBox> -->
                         
                         
                         <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressCndtnV1"></Button>
-                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn"></Button>
-                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCndtn"></Button>
+                            <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn2"></Button>
+                            <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCndtn2"></Button>
                         </HBox>
                     </cells>
                 </ColumnListItem>

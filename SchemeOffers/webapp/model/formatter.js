@@ -360,6 +360,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return oData["ProductName"];
             }
         },
+        fmtGetPackName: function (mParam1) {
+            var sPath = "/MasterRepProductSkuSet('" + mParam1 + "')";
+            var oData = this.getView().getModel().getData(sPath);
+            if (oData) {
+                return oData["Description"];
+            }
+        },
         fnEndDateContion1Display: function (m1, m2) {
             if (m1 !== "EXPIRED") {
                 if (m2 == 6 || m2 === 7) {

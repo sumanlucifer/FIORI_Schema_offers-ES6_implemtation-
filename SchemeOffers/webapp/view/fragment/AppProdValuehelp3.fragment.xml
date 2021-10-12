@@ -10,7 +10,7 @@
 	    search="_handlePValueHelpSearch3"
 		confirm="_handleProdValueHelpConfirm3"
         cancel="_handleProdValueHelpClose3"
-		multiSelect="true">
+		multiSelect="false">
 		<StandardListItem
 			iconDensityAware="false"
 			iconInset="false"

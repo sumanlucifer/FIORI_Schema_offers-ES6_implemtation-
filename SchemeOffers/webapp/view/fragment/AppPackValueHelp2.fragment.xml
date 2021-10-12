@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+		<SelectDialog
+		title="Packs"
+        growing="true"
+        growingThreshold="10"
+		class="sapUiPopupWithPadding"
+		items="{path:'/MasterRepProductSkuSet',parameters:{select:'SkuCode,Description'} }"
+	    search="_handlePackValueHelpSearch2"
+		confirm="_handlePackValueHelpConfirm2"
+        cancel="_handleProdValueHelpClose2"
+		multiSelect="false">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+            title="{Description}"
+			 />
+	</SelectDialog>
+</core:FragmentDefinition>
