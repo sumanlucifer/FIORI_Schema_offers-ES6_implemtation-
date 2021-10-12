@@ -90,7 +90,7 @@
               <Button press=".onApproval(false)"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
               <Button press=".onApproval(true)"  visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
              <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
-             <!-- <Button press="handleReopenPress"  text="{i18n>Reopen}"/> -->
+             <!-- <Button press="onReopeFrag"  text="{i18n>Reopen}"/> -->
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
