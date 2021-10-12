@@ -42,15 +42,15 @@
                             <headerToolbar>
                                 <Toolbar visible="{=${oModelControl3>/mode} === 'display'}">
                                     <ToolbarSpacer/> 
-                                            <MultiInput width="50%" placeholder="{i18n>UpdatePainterList}" id="Painters2" tokens="{oModelControl2>/OfferDeselectedPainter}" valueHelpRequest="onValueHelpRequestedPainter2">
+                                            <!-- <MultiInput width="50%" placeholder="{i18n>UpdatePainterList}" id="Painters2" tokens="{oModelControl2>/OfferDeselectedPainter}" valueHelpRequest="onValueHelpRequestedPainter2">
                                                 <tokens>
                                                     <Token editable="false" text="{oModelControl2>PainterId}" key="{oModelControl2>PainterId}"/>
                                                 </tokens>
                                                 <layoutData>
                                                     <l:GridData span="XL12 L12 M12 S12" />
                                                 </layoutData>
-                                            </MultiInput>
-                                                <u:FileUploader id="idOfferFileUploader2" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
+                                            </MultiInput> -->
+                                                <u:FileUploader id="idOfferFileUploader2" iconFirst="true" icon="sap-icon://upload" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
                                     
                                 </Toolbar>
                             </headerToolbar>

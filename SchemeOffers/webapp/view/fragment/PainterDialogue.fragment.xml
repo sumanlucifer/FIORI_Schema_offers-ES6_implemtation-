@@ -18,20 +18,20 @@
 					</m:OverflowToolbar>
 				</extension>
 				<columns>
-                 <Column >
+                 <Column width="5%">
 						<m:CheckBox select="onSelectAll" ></m:CheckBox> 
 						<template>
 							<m:CheckBox  selected="{oModelControl>isSelected}"  />
 						</template>
 					</Column>
 					<Column >
-						<m:Label text="Painter Name" />
+						<m:Label text="{i18n>PainterName}" />
 						<template>
 							<m:Text text="{oModelControl>PainterName}" wrapping="false" />
 						</template>
 					</Column>
                     <Column >
-						<m:Label text="Painter Mobile" />
+						<m:Label text="{i18n>Mobile}" />
 						<template>
 							<m:Text text="{oModelControl>PainterMobile}" wrapping="false" />
 						</template>

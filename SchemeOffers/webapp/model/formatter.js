@@ -288,16 +288,16 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return wfIcons[sStatus];
         },
         //painter offer table
-        chkEligibleForGift: function (m1,m2) {
+        chkEligibleForGift: function (m1, m2) {
             //m1 RedemptionStatus
             //m2 RedemptionType
             //m3 RewardPoints
             //m4 RewardCash
             //m5 RewardGift
-            if (m2 == 2 ){
-                 return "Not allowed as painter deselected";
+            if (m2 == 2) {
+                return "Not allowed as painter deselected";
             }
-            if (m2 == 3 ){
+            if (m2 == 3) {
                 return "Not allowed as painter deselected";
             }
             if (m1 === 'REDEEMED') {
@@ -315,7 +315,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m4 RedeemRewardCash
             //m5 RewardGift
 
-            if (m1 === 'REDEEMED' ) {
+            if (m1 === 'REDEEMED') {
                 if (m2 === "POINTS_TRANSFER") {
                     return "Points - " + m3;
                 } else if (m2 === "BANK_TRANSFER") {
@@ -360,6 +360,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return oData["ProductName"];
             }
         },
+        fmtGetPackName: function (mParam1) {
+            var sPath = "/MasterRepProductSkuSet('" + mParam1 + "')";
+            var oData = this.getView().getModel().getData(sPath);
+            if (oData) {
+                return oData["Description"];
+            }
+        },
         fnEndDateContion1Display: function (m1, m2) {
             if (m1 !== "EXPIRED") {
                 if (m2 == 6 || m2 === 7) {
@@ -372,7 +379,15 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         btnRepublishOffer: function (m1, m2) {
             //
             if (m1 === "EXPIRED") {
-                if (m2 === 6) {
+                if (m2 === 5 || m2 === 6 || m2 === 7) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        bntSaveDetailsOfferVisible: function (m1, m2) {
+            if (m1 === "PUBLISHED") {
+                if (m2 === 6 || m2 === 7) {
                     return true;
                 }
             }
@@ -394,7 +409,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
 
 
-       
+
         btnRedeenAllEnable: function (m1, m2) {
             if (m1 === "REEDEMING") {
                 return false;

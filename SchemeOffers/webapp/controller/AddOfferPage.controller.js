@@ -126,7 +126,8 @@ sap.ui.define(
                         ProdVH: "",
                         PackVH: "",
                         ProdVH2: "",
-                        ProdVH3: ""
+                        ProdVH3: "",
+                        PackVH2:""
                     },
                     MultiCombo: {
                         Zones: [],
@@ -226,7 +227,8 @@ sap.ui.define(
                         Table6: [],
                         Table7: [],
                         Table8: [],
-                        TableCndtn:[]
+                        Table9: [],
+                        Table10:[]
 
                     },
                     oData: {
@@ -267,7 +269,8 @@ sap.ui.define(
                         Date2: null,
                         ParentOfferTitle: "",
                         RewardRationCount: 1,
-                        PainterCount: ""
+                        PainterCount: "",
+                        ContriCondition:1
                     },
                     Hash: {
                         PCat1: {},
@@ -330,8 +333,9 @@ sap.ui.define(
                     BonusDescription: "",
                     InputType: 0,
                     //InputType3:0,//added for contribution-condition
-                   // ConditionType:0,//added for contribution-condition
-                   // ConditionTableType:0,//added for contribution-condition
+                    ContributionCondition:0,//added for contribution-condition
+                    ContributionType:0,//added for contribution-condition
+                    OfferContributionRatio:[],
                     IsMultiRewardAllowed: false,
                     OfferStatus: null,
                     OfferApplicableProductCategory: [],
@@ -510,7 +514,7 @@ sap.ui.define(
 
            
             _postDataToSave: function (bFileFlag) {
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c6, c7;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1,c5A2, c6, c7;
                 var othat = this;
 
                 c1 = othat._CreatePayloadPart1();
@@ -529,18 +533,23 @@ sap.ui.define(
                                 c4 = othat._CreatePayLoadPart4(oPayLoad);
                                 c4.then(function (oPayLoad) {
                                     c5 = othat._CreatePayLoadPart5(oPayLoad);
-                                    c5.then(function (oPayLoad) {
-                                        c5A1 = othat._CreatePayLoadConditions(oPayLoad);
-                                        c5A1.then(function () {
-                                            c5A = othat._CreateWorkFlowData(oPayLoad);
-                                            c5A.then(function () {
-                                                c6 = othat._CreateOffer(oPayLoad);
-                                                c6.then(function (oData) {
-                                                    c7 = othat._UploadFile(oData, bFileFlag);
-                                                });
-                                            })
-                                        })
-                                    });
+                                     c5.then(function (oPayLoad) {
+                                         c5A2=othat._CreatePayLoadPartContriCndtn(oPayLoad);
+                                         c5A2.then(function (){
+                                                c5A1 = othat._CreatePayLoadConditions(oPayLoad);
+                                                    c5A1.then(function () {
+                                                    c5A = othat._CreateWorkFlowData(oPayLoad);
+                                                    c5A.then(function () {
+                                                        c6 = othat._CreateOffer(oPayLoad);
+                                                        c6.then(function (oData) {
+                                                            c7 = othat._UploadFile(oData, bFileFlag);
+                                                        });
+                                                    })
+                                                })
+                                         });
+                                         
+                                        
+                                     });
                                 });
                             });
                         });
