@@ -120,7 +120,7 @@ sap.ui.define([
                                 aString.push("Gift - " + pointData["RewardGiftName"]);
                             }
                             if (pointData["RewardCash"]) {
-                                aString.push("Gift - " + pointData["RewardCash"]);
+                                aString.push("Cash - Rs." + pointData["RewardCash"]);
                             }
                             return aString.join(", ")
                         }
