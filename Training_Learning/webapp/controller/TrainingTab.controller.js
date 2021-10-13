@@ -114,9 +114,9 @@ sap.ui.define(
                     var sPath = "/" + oProp;
                     var params;
                     if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire, TrainingQuestionnaire/TrainingQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire/TrainingQuestionnaireLocalized,TrainingQuestionnaire/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized ";
                     } else {
-                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire, LearningQuestionnaire/LearningQuestionnaireOptions";
+                        params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire/LearningQuestionnaireLocalized,LearningQuestionnaire/LearningQuestionnaireOptions/LearningQuestionnaireOptionsLocalized";
                     }
                     oViewModel.setProperty("/sPath", sPath);
                     that.getModel().read(sPath, {
@@ -129,9 +129,24 @@ sap.ui.define(
                                 if (data.TrainingQuestionnaire) {
                                     data.TrainingQuestionnaire.results.forEach(function (ele) {
                                         if (ele.TrainingQuestionnaireOptions && ele.TrainingQuestionnaireOptions.results.length) {
+
+                                            ele.TrainingQuestionnaireOptions.results.forEach(function (ele) {
+                                                if (ele.TrainingQuestionnaireOptionsLocalized.results && ele.TrainingQuestionnaireOptionsLocalized.results.length) {
+
+                                                    ele.TrainingQuestionnaireOptionsLocalized = ele.TrainingQuestionnaireOptionsLocalized.results;
+                                                } else {
+                                                    ele.TrainingQuestionnaireOptionsLocalized = [];
+                                                }
+                                            })
+
                                             ele.TrainingQuestionnaireOptions = ele.TrainingQuestionnaireOptions.results;
                                         } else {
                                             ele.TrainingQuestionnaireOptions = [];
+                                        }
+                                        if (ele.TrainingQuestionnaireLocalized && ele.TrainingQuestionnaireLocalized.results.length) {
+                                            ele.TrainingQuestionnaireLocalized = ele.TrainingQuestionnaireLocalized.results;
+                                        } else {
+                                            ele.TrainingQuestionnaireLocalized = [];
                                         }
                                     })
 
@@ -165,9 +180,24 @@ sap.ui.define(
                                 if (data.LearningQuestionnaire) {
                                     data.LearningQuestionnaire.results.forEach(function (ele) {
                                         if (ele.LearningQuestionnaireOptions && ele.LearningQuestionnaireOptions.results.length) {
+
+                                            ele.LearningQuestionnaireOptions.results.forEach(function (ele) {
+                                                if (ele.LearningQuestionnaireOptionsLocalized.results && ele.LearningQuestionnaireOptionsLocalized.results.length) {
+
+                                                    ele.TrainingQuestionnaireOptionsLocalized = ele.LearningQuestionnaireOptionsLocalized.results;
+                                                } else {
+                                                    ele.TrainingQuestionnaireOptionsLocalized = [];
+                                                }
+                                            })
+
                                             ele.TrainingQuestionnaireOptions = ele.LearningQuestionnaireOptions.results;
                                         } else {
                                             ele.TrainingQuestionnaireOptions = [];
+                                        }
+                                        if (ele.LearningQuestionnaireLocalized && ele.LearningQuestionnaireLocalized.results.length) {
+                                            ele.TrainingQuestionnaireLocalized = ele.LearningQuestionnaireLocalized.results;
+                                        } else {
+                                            ele.TrainingQuestionnaireLocalized = [];
                                         }
                                     })
 
@@ -879,18 +909,6 @@ sap.ui.define(
                     oTable.getBinding("items").filter(endFilter);
                 },
 
-                // fmtStatus: function (mParam) {
-                //     var sLetter = "";
-                //     if (mParam) {
-                //         sLetter = mParam
-                //             .toLowerCase()
-                //             .split(" ")
-                //             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                //             .join(" ");
-                //     }
-                //     return sLetter;
-                // },
-
                 _fnChangeDivDepot: function (oChgdetl) {
                     var aSource = this.getModel("oModelView").getProperty(oChgdetl.src.path),
                         oSourceSet = new Set(aSource);
@@ -1434,186 +1452,137 @@ sap.ui.define(
                     this._oMessageManager.registerMessageProcessor(oMessageProcessor);
                 },
 
-                onAddQuestionnaire: function (oEvent) {
-                    var addQsFlag = true;
-                    this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+                // onAddQuestionnaire: function (oEvent) {
+                //     var addQsFlag = true;
+                //     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
 
-                    var oTrainingQuestionnaire = [];
-                    this.getModel("oModelView").setProperty("/oAddTraining", {
-                        Question: "",
-                        TrainingQuestionnaireOptions: [],
-                        IsArchived: false
-                    });
+                //     var oTrainingQuestionnaire = [];
+                //     this.getModel("oModelView").setProperty("/oAddTraining", {
+                //         Question: "",
+                //         TrainingQuestionnaireOptions: [],
+                //         IsArchived: false
+                //     });
 
-                    var sPath = "/oAddTraining";
-                    var oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    var oModelView = this.getModel("oModelView"),
-                        oThat = this;
+                //     var sPath = "/oAddTraining";
+                //     var oButton = oEvent.getSource();
+                //     var oView = this.getView();
+                //     var oModelView = this.getModel("oModelView"),
+                //         oThat = this;
 
-                    if (!this.byId("QuestionnaireOptionsDialog")) {
-                        // load asynchronous XML fragment
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
-                            controller: this
-                        }).then(function (oDialog) {
-                            // connect dialog to the root view 
-                            //of this component (models, lifecycle)
-                            oView.addDependent(oDialog);
-                            oDialog.bindElement({
-                                path: sPath,
-                                model: "oModelView"
-                            });
-                            oDialog.open();
-                        });
-                    } else {
-                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
-                            path: sPath,
-                            model: "oModelView"
-                        });
-                        oThat.byId("QuestionnaireOptionsDialog").open();
-                    }
+                //     if (!this.byId("QuestionnaireOptionsDialog")) {
+                //         // load asynchronous XML fragment
+                //         Fragment.load({
+                //             id: oView.getId(),
+                //             name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
+                //             controller: this
+                //         }).then(function (oDialog) {
+                //             // connect dialog to the root view 
+                //             //of this component (models, lifecycle)
+                //             oView.addDependent(oDialog);
+                //             oDialog.bindElement({
+                //                 path: sPath,
+                //                 model: "oModelView"
+                //             });
+                //             oDialog.open();
+                //         });
+                //     } else {
+                //         oThat.byId("QuestionnaireOptionsDialog").bindElement({
+                //             path: sPath,
+                //             model: "oModelView"
+                //         });
+                //         oThat.byId("QuestionnaireOptionsDialog").open();
+                //     }
 
-                },
+                // },
 
-                updateOptions: function () {
-                    var selectCorrectFlag,
-                        blankOption,
-                        addTr;
-                    selectCorrectFlag = false;
-                    blankOption = true;
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                    if (addQsFlag === true) {
-                        addTr = this.getModel("oModelView").getProperty("/oAddTraining");
-                    } else {
-                        var iIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
-                    }
-                    if (addTr.Question === "") {
-                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
-                    } else {
-                        if (addTr.TrainingQuestionnaireOptions.length >= 2) {
-                            if (addTr.TrainingQuestionnaireOptions.length <= 4) {
-                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                        selectCorrectFlag = true;
-                                    }
-                                }
-                                if (selectCorrectFlag === false) {
-                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                                } else {
-                                    for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                        if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
-                                            blankOption = false;
-                                            this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
-                                        }
-                                    }
-                                    if (blankOption === true) {
-                                        if (addQsFlag === true) {
-                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                                Question: addTr.Question,
-                                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                                IsArchived: false
-                                            });
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
-                                        } else {
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
-                                        }
-                                    }
-                                }
-                            } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
-                            }
-                        } else {
-                            this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
-                        }
-                    }
-                },
+                // updateOptions: function () {
+                //     var selectCorrectFlag,
+                //         blankOption,
+                //         addTr;
+                //     selectCorrectFlag = false;
+                //     blankOption = true;
+                //     var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                //     if (addQsFlag === true) {
+                //         addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                //     } else {
+                //         var iIndex = this.getModel("oModelView").getProperty("/iIndex");
+                //         addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
+                //     }
+                //     if (addTr.Question === "") {
+                //         this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                //     } else {
+                //         if (addTr.TrainingQuestionnaireOptions.length >= 2) {
+                //             if (addTr.TrainingQuestionnaireOptions.length <= 4) {
+                //                 for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                //                     if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
+                //                         selectCorrectFlag = true;
+                //                     }
+                //                 }
+                //                 if (selectCorrectFlag === false) {
+                //                     this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
+                //                 } else {
+                //                     for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
+                //                         if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
+                //                             blankOption = false;
+                //                             this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                //                         }
+                //                     }
+                //                     if (blankOption === true) {
+                //                         if (addQsFlag === true) {
+                //                             this.getModel("oModelView").setProperty("/addQsFlag", false);
+                //                             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
+                //                                 Question: addTr.Question,
+                //                                 TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
+                //                                 IsArchived: false
+                //                             });
+                //                             this.byId("QuestionnaireOptionsDialog").close();
+                //                             this.getModel("oModelView").refresh();
+                //                         } else {
+                //                             this.byId("QuestionnaireOptionsDialog").close();
+                //                             this.getModel("oModelView").refresh();
+                //                         }
+                //                     }
+                //                 }
+                //             } else {
+                //                 this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
+                //             }
+                //         } else {
+                //             this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
+                //         }
+                //     }
+                // },
 
-                closeOptionsDialog: function () {
-                    this.byId("QuestionnaireOptionsDialog").close();
-                },
+                // closeOptionsDialog: function () {
+                //     this.byId("QuestionnaireOptionsDialog").close();
+                // },
 
-                onEditQuestionnaire: function (oEvent) {
-                    var addQsFlag = false;
-                    this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
-                    var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
-                        oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    var oModelView = this.getModel("oModelView"),
-                        oThat = this;
-                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    this.getModel("oModelView").setProperty("/iIndex", iIndex);
+                // onAddQuestionnaireOptions: function () {
+                //     var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
+                //     var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
+                //     oObject.push({
+                //         Option: "",
+                //         IsCorrect: false,
+                //         IsArchived: false
+                //     });
+                //     this.getModel("oModelView").refresh();
+                // },
 
-                    if (!this.byId("QuestionnaireOptionsDialog")) {
-                        // load asynchronous XML fragment
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
-                            controller: this
-                        }).then(function (oDialog) {
-                            // connect dialog to the root view 
-                            //of this component (models, lifecycle)
-                            oView.addDependent(oDialog);
-                            oDialog.bindElement({
-                                path: sPath,
-                                model: "oModelView"
-                            });
-                            oDialog.open();
-                        });
-                    } else {
-                        oThat.byId("QuestionnaireOptionsDialog").open();
-                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
-                            path: sPath,
-                            model: "oModelView"
-                        });
-                    }
-                },
+                // onDeleteQuestionnaireOptions: function (oEvent) {
+                //     var oView = this.getView();
+                //     var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                //     var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
 
-                onAddQuestionnaireOptions: function () {
-                    var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
-                    var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
-                    oObject.push({
-                        Option: "",
-                        IsCorrect: false,
-                        IsArchived: false
-                    });
-                    this.getModel("oModelView").refresh();
-                },
-
-                onDeleteQuestionnaire: function (oEvent) {
-                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    function onYes() {
-                        if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
-                        } else {
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].IsArchived = true;
-                        }
-                        this.getModel("oModelView").refresh();
-                    }
-                    this.showWarning("MSG_CONFIRM_QUESTION_DELETE", onYes);
-                },
-
-                onDeleteQuestionnaireOptions: function (oEvent) {
-                    var oView = this.getView();
-                    var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-
-                    if (addQsFlag === true) {
-                        var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    } else {
-                        var iQuestionIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex].TrainingQuestionnaireOptions[iOptionIndex].IsArchived = true;
-                        var oAddTrain = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex];
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    }
-                    this.getModel("oModelView").refresh();
-                },
+                //     if (addQsFlag === true) {
+                //         var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
+                //         oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
+                //     } else {
+                //         var iQuestionIndex = this.getModel("oModelView").getProperty("/iIndex");
+                //         this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex].TrainingQuestionnaireOptions[iOptionIndex].IsArchived = true;
+                //         var oAddTrain = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex];
+                //         oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
+                //     }
+                //     this.getModel("oModelView").refresh();
+                // },
 
                 /* 
                  * @function
@@ -2372,16 +2341,12 @@ sap.ui.define(
                     oView.byId("idTblAttendanceLiveVid").getBinding("items").filter(aFilters);
                 },
                 onFileUploadChange: function (oEvent) {
-                //console.log(oEvent);
-                var oFileUploder = oEvent.getSource();
-                if (oEvent.getParameter("newValue")) {
-                    this.onPressUpload();
-                }
-            },
-
-
-
-
+                    //console.log(oEvent);
+                    var oFileUploder = oEvent.getSource();
+                    if (oEvent.getParameter("newValue")) {
+                        this.onPressUpload();
+                    }
+                },
 
             }
         );

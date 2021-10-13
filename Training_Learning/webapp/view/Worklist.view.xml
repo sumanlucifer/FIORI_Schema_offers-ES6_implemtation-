@@ -93,7 +93,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="31%">
+								<Column width="29%">
 									<Text text="{i18n>colTrTitle}"/>
 								</Column>
                                 <Column width="15%">
@@ -120,7 +120,7 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                <Column width="9%">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
@@ -147,7 +147,7 @@
                                             <ObjectStatus text="{i18n>active}" visible="{= ${Status} === 1 &amp;&amp; ${EndDate} > ${worklistView>/currDate}}" state="Success"/>
                                             <ObjectStatus text="{i18n>Expired}" visible="{= ${Status} === 2 &amp;&amp; ${worklistView>/currDate} > ${EndDate}}" state="Error"/>
                                         </HBox>
-                                        <HBox visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                        <HBox>
                                             <Button icon="sap-icon://edit" press="onEditOnlineTraining" type="Transparent" tooltip="{i18n>Edit}" enabled="{= ${StartDate} > ${worklistView>/currDate} &amp;&amp; ${Status} === 0 }"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
