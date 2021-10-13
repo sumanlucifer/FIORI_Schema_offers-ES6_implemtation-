@@ -3223,7 +3223,7 @@ sap.ui.define(
                 var oSelected = oEvent.getParameter("selectedItems");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-                var aField = oModel.getProperty("/Dialog/ProdVH3");
+                var aField = oModel.getProperty("/Dialog/ProdVH");
                 var aNumber = aField.match(/\d+$/)[0];
                 var aProds = [],
                     oBj;
@@ -4789,44 +4789,44 @@ sap.ui.define(
                     }
                 }
             },
-            // onPressSaveAddInfo: function (oEvent) {
-            //     var oView = this.getView();
-            //     var oModel = oView.getModel("oModelControl");
-            //     var oObject = oEvent
-            //         .getSource()
-            //         .getBindingContext("oModelControl")
-            //         .getObject();
-            //     var oCells = oEvent.getSource().getParent().getParent().getCells();
-            //     var oValidator = new Validator();
-            //     var cFlag = oValidator.validate(oCells);
-            //     var bFlag = true;
-            //     if (!cFlag) {
-            //         MessageToast.show(
-            //             "Kindly Input Mandatory Fields In Proper Format To Continue."
-            //         );
-            //         return;
-            //     }
-            //     if (
-            //         !oObject["StartDate"] &&
-            //         !oObject["EndDate"] &&
-            //         !oObject["AchieverCount"]
-            //     ) {
-            //         MessageToast.show(
-            //             "Kindly Enter Either start Date  Or End Date Cash or Count."
-            //         );
-            //         return;
-            //     }
-            //     if (bFlag && cFlag) {
-            //         oObject["editable"] = false;
-            //         if (!oObject["RewardGiftName"]) {
-            //             if (oObject.hasOwnProperty("RewardGiftId")) {
-            //                 oObject["RewardGiftId"] = null;
-            //             }
-            //         }
-            //         oModel.refresh(true);
-            //     }
-            //     //oModel.refresh(true);
-            // },
+            onPressSaveAddInfo: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                var oCells = oEvent.getSource().getParent().getParent().getCells();
+                var oValidator = new Validator();
+                var cFlag = oValidator.validate(oCells);
+                var bFlag = true;
+                if (!cFlag) {
+                    MessageToast.show(
+                        "Kindly Input Mandatory Fields In Proper Format To Continue."
+                    );
+                    return;
+                }
+                if (
+                    !oObject["StartDate"] &&
+                    !oObject["EndDate"] &&
+                    !oObject["AchieverCount"]
+                ) {
+                    MessageToast.show(
+                        "Kindly Enter Either start Date  Or End Date Cash or Count."
+                    );
+                    return;
+                }
+                if (bFlag && cFlag) {
+                    oObject["editable"] = false;
+                    if (!oObject["RewardGiftName"]) {
+                        if (oObject.hasOwnProperty("RewardGiftId")) {
+                            oObject["RewardGiftId"] = null;
+                        }
+                    }
+                    oModel.refresh(true);
+                }
+                //oModel.refresh(true);
+             },
             onPressAddInformation: function (oEvent) {
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
@@ -5288,7 +5288,7 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 oModel.setProperty("/Table/Table9", []);
-                //oModel.setProperty("/Table/Table5", []);
+                oModel.setProperty("/Table/Table10", []);
             },
             onPressAddCndtnV1: function (oEvent) {
                
@@ -5606,10 +5606,10 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelView");
                 var oModelCtrl = oView.getModel("oModelControl");
-                var bRewardSelected = oModel.getProperty("/ContributionCondition");
+                var bContributionCondition = oModel.getProperty("/ContributionCondition");
                 var bContributionType = oModel.getProperty("/ContributionType");
                 var aFinalArray = [];
-                if ((bRewardSelected === 1 ||bRewardSelected === 2) && (bContributionType === 0)) {
+                if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 0)) {
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table9")
                         .map(function (a) {
@@ -5651,6 +5651,11 @@ sap.ui.define(
                         delete ele["editable"];
                         return ele;
                     });
+                    oPayLoad["OfferContributionRatio"] = aFinalArray;
+                    promise.resolve(oPayLoad);
+                    return promise;
+                }
+                if(bContributionCondition==0){
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     promise.resolve(oPayLoad);
                     return promise;

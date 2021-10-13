@@ -124,7 +124,6 @@ sap.ui.define(
                         Bonus2: {},
                         Key2: "",
                         ProdVH: "",
-                        PackVH: "",
                         ProdVH2: "",
                         ProdVH3: "",
                         PackVH2:""
