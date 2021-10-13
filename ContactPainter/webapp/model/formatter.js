@@ -115,6 +115,34 @@ sap.ui.define([
                     }
                 }
             }
+               if (mParam2) {
+                if (mParam2.length > 0) {
+                    var multiRewardData = this.getView().getModel().getData("/" + mParam2[0]);
+                    if (multiRewardData.GiftRedemption !== null) {
+                        var rewardGift = this.getView().getModel().getData("/" + multiRewardData.GiftRedemption.__ref),
+                            mParam2 = multiRewardData.RedemptionType,
+                            m3 = multiRewardData.RewardPoints,
+                            m4 = multiRewardData.RewardCash,
+                            m5 = rewardGift.RewardGiftName;
+                        if (mParam2 === 'MULTI_REWARDS' && mParam1 === 'REDEEMED') {
+                            var aString = [];
+                            if (m3) {
+                                aString.push("Points - " + m3)
+                            }
+                            if (m4) {
+                                aString.push("Cash - Rs. " + m4)
+                            }
+                            if (m5) {
+                                aString.push("Gift - " + m5)
+                            }
+                            return aString.join(", ");
+                        }
+                    }
+                }
+            }
+            if (mParam1 === "REDEEMABLE") {
+                return "Not Redeemed"
+            }
             return "NA";
         },
         fmtCheckBonusPoints: function (m1) {
@@ -139,7 +167,6 @@ sap.ui.define([
             }
         },
         fmtBtnRedeemOfferTbl: function (m1, m2) {
-           
             if (m1 === "REDEEMABLE") {
                 if (m2 == 1 || m2 == 0) {
                     return true;
@@ -148,7 +175,6 @@ sap.ui.define([
             return false;
         },
         fmtTxtRedmtOfferTbl: function (m1, m2) {
-           
             if (m1 === "REDEEMABLE") {
                 if (m2 == 2 || m2 == 3) {
                     return true;
@@ -165,42 +191,7 @@ sap.ui.define([
             }
             return "NA";
         },
-        checkOfferPainterReward: function (m1, m2) {
-            //m1 RedemptionStatus
-            //m2 RedemptionType
-            //m3 RedeemRewardPoints
-            //m4 RedeemRewardCash
-            //m5 RewardGift
-            if (m2) {
-                if (m2.length > 0) {
-                    var multiRewardData = this.getView().getModel().getData("/" + m2[0]);
-                    if (multiRewardData.GiftRedemption !== null) {
-                        var rewardGift = this.getView().getModel().getData("/" + multiRewardData.GiftRedemption.__ref),
-                            m2 = multiRewardData.RedemptionType,
-                            m3 = multiRewardData.RewardPoints,
-                            m4 = multiRewardData.RewardCash,
-                            m5 = rewardGift.RewardGiftName;
-                        if (m2 === 'MULTI_REWARDS' && m1 === 'REDEEMED') {
-                            var aString = [];
-                            if (m3) {
-                                aString.push("Points - " + m3)
-                            }
-                            if (m4) {
-                                aString.push("Cash - Rs. " + m4)
-                            }
-                            if (m5) {
-                                aString.push("Gift - " + m5)
-                            }
-                            return aString.join(", ");
-                        }
-                    }
-                }
-            }
-            if (m1 === "REDEEMABLE") {
-                return "Not Redeemed"
-            }
-            return "NA";
-        },
+      
         fmtOfferProgressStatus: function (mParam1) {
             if (mParam1 === "COMPLETED") {
                 return "Completed"

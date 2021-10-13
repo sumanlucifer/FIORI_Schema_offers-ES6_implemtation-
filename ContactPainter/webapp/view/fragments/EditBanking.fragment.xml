@@ -83,9 +83,9 @@
                     <Input  editable="{=${oModelControl>/EditBank} }" change="onEditField" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="{=${oModelControl>/EditField} }" value="{path:'oModelView>/PainterBankDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }" visible="{= !${oModelControl>/AddNewBank} }"/>
                     <Input id="IdPrAbAccountHolderName" visible="{= ${oModelControl>/AddNewBank} }" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path:'oModelControl>/PainterAddBanDetails/AccountHolderName',type : 'sap.ui.model.type.String', constraints : {minLength:1, maxLength:50, search:'^[a-zA-Z]{1}[wW]*'} }"/>
                 </VBox>
-                <Label text="Actions" visible="{= ${PainterBankDetails} === null? false: true }" />
+                <Label text="{i18n>Actions}" visible="{= ${PainterBankDetails} === null? false: true }" />
                 <FlexBox>
-                <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="View Document" press="onBankView" />
+                <Button visible="{= ${PainterBankDetails} === null? false: true }" type="Emphasized" text="{i18n>ViewDocument}" press="onBankView" />
                 <!-- <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDocButton} }" type="Emphasized" text="Update Document"  press="onAddBankDoc" />
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddBankDoc} }" text="Cancel" press="onCancelBankDoc" /> -->
                 </FlexBox>
@@ -95,9 +95,9 @@
         <f:SimpleForm>
         <!--Deepanjali changes start-->
         <f:content>
-               
-                <HBox   visible="{= ${oModelView>/PainterBankDetails/PaymentTransactionId}!== null}">
-                                <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
+                <!-- <HBox  visible="{= ${PainterBankDetails} !== null}"> -->
+                 <HBox  visible="{= !${oModelControl>/InitialBankNull}}">
+                <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
    <Label   text="{i18n>TransactionId}:" design="Bold"/>
    <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionId}"/>
     <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionRefId}:"/>
@@ -114,10 +114,10 @@
     </Panel>
          <!--Aditya changes start-->
 			<Toolbar id="idToolbarBanking" visible="{= ${PainterBankDetails} !== null}">
-            <Text text="Pending for SCB Penny Drop Validation" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
+            <Text text="{i18n>PendingforSCBPennyDropValidation}" visible="{= ${PainterBankDetails/Status} === 'PENDING'}"/>
 				<ToolbarSpacer/>
                 <Button text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'||${PainterBankDetails/Status} === 'PENDING'}"/>
-				<Button text="Approve" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
+				<Button text="{i18n>approve}" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}"/>
 			</Toolbar>
 		<!--Aditya changes end-->
     </VBox>

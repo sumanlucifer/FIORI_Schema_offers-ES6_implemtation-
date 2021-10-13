@@ -26,23 +26,23 @@
                     <form:formContainers>
                         <form:FormContainer >
                             <form:formElements>
-                                <form:FormElement label="Title">
+                                <form:FormElement label="{i18n>Title}">
                                     <form:fields>
                                         <Text  text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
                                     </form:fields>
                                 </form:FormElement>
-                             <form:FormElement label="Remark">
+                             <form:FormElement label="{i18n>Remark}">
                                     <form:fields>
                                         <!-- <Text  class="sapUiSmallMarginBegin" text="{path:'Remark'}" /> -->
                                         <Input value="{path:'Remark'}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Status">
+                                <form:FormElement label="{i18n>Status}">
                                     <form:fields>
                                         <Text  text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Date">
+                                <form:FormElement label="{i18n>Date}">
                                     <form:fields>
                                         <Text  text="{path:'CreatedAt',formatter:'.formatter.dateFormatter'}" />
                                     </form:fields>
@@ -84,7 +84,7 @@
             </VBox>
         </content>
         <buttons>
-            <Button text="Close" press="onDialogCloseAllReq" />
+            <Button text="{i18n>Close}" press="onDialogCloseAllReq" />
             <Button press="onApproveReject('REJECTED')" visible="{= ${Status} === 'REJECTED' ? false : ${Status} === 'APPROVED'  ? false: true}"  text="{i18n>reject}" type="Reject" class="sapUiTinyMarginEnd"  />
             <Button press="onApproveReject('APPROVED')" visible="{= ${Status} === 'REJECTED' ? false : ${Status} === 'APPROVED'  ? false: true}"  text="{i18n>approve}" type="Accept" class="sapUiTinyMarginEnd"/>
         </buttons>

@@ -64,7 +64,7 @@
                             </items>
                         </HBox>
                         <HBox>
-                            <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.checkOfferPainterReward'}" />
+                            <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
                         </HBox>
                         <Text text="{Remark}" />
                         <Text text="{parts:['PainterOfferRedemption'],formatter:'.formatter.fmtCheckBonusPoints'}" />
