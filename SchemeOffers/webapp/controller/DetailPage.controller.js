@@ -144,7 +144,7 @@ sap.ui.define(
                 } else {
                     this._initData(oProp);
                 }
-                this.onfilterOfferPainter();
+                
             },
             _LoadPainterData(mSkip, mTop) {
                 var oView = this.getView();
@@ -1984,6 +1984,9 @@ sap.ui.define(
                     //oView.byId("PainteTable2").rebindTable();
                 } else if (sKey == "3") {
                     oView.byId("OfferHistory").rebindTable();
+                }
+                else if (sKey == "5") {
+                    this.onfilterOfferPainter();
                 }
             },
             onBeforeBindPainterTable1: function (oEvent) {

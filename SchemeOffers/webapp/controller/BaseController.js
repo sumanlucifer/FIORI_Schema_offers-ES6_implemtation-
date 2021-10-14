@@ -5188,7 +5188,7 @@ sap.ui.define(
                 var oView = that.getView();
                 var dataModel = oView.getModel("oModelControl3");
                 var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value",
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value?offerId="+840,
                     data: file,
                     method: "PUT",
                     headers: that.getView().getModel().getHeaders(),
@@ -5221,10 +5221,10 @@ sap.ui.define(
                 var oModelView = oView.getModel("oModelControl3");
                 oModelView.setProperty("/busy", false);
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
-                    if (result.ValidPainter.length == 0) {
+                    if (result.ApplicablePainter.length == 0) {
                         that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
                     } else {
-                        var selectedItems = result.ValidPainter;
+                        var selectedItems = result.ApplicablePainter;
                         var itemModel = selectedItems.map(function (item) {
                             return {
                                 PainterMobile: item.PainterMobile,
@@ -5270,19 +5270,53 @@ sap.ui.define(
                 var selectedItems = fragmentData.filter(function (item) {
                     return item.isSelected === true;
                 });
+                var oData = [];
+                var xUnique = new Set();
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
-                var itemModel = selectedItems.map(function (item) {
-                    return {
-                        PainterMobile: item.PainterMobile,
-                        PainterName: item.PainterName,
-                        PainterId: item.Id
-                    };
+                // var itemModel = selectedItems.map(function (item) {
+                //     return {
+                //         PainterName: item.PainterName,
+                //         PainterId: item.Id
+                //     };
+                // });
+                // oView.getModel("oModelControl3")
+                //     .setProperty("/ValuehelpDel/Painters", itemModel);
+                 selectedItems.forEach(function (ele) {
+                    if (xUnique.has(ele.Id) == false) {
+                        oData.push({
+                            PainterName: ele.PainterName,
+                            PainterId:  ele.Id,
+                        });
+                        xUnique.add(ele.Id);
+                    }
                 });
-                oView.getModel("oModelControl3")
-                    .setProperty("/ValuehelpDel/Painters", itemModel);
-                console.log(itemModel);
+                oView.getModel("oModelControl2")
+                    .setProperty("/OfferDeselectedPainter",oData);
+                //console.log(oData);
+                this._UpdateOfferDelPainters(oData);
                 this._CsvDialoge.close();
+            },
+            _UpdateOfferDelPainters: function (oPayLoad) {
+                var promise = jQuery.Deferred();
+                var othat = this;
+                var oView = this.getView();
+                var oDataModel = oView.getModel();
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                //console.log(oPayLoad);
+                return new Promise((resolve, reject) => {
+                    oDataModel.update("/" + oProp+"/OfferDeselectedPainter", oPayLoad, {
+                        success: function (data) {
+                            MessageToast.show("Painters Successfully Uploaded.");
+                            //othat._navToHome();
+                            resolve(data);
+                        },
+                        error: function (data) {
+                            MessageToast.show("Error Uploading Painters.");
+                            reject(data);
+                        },
+                    });
+                });
             },
             onRbRRDialogCndtn: function (){
                 var oView = this.getView();
@@ -5610,6 +5644,7 @@ sap.ui.define(
                 var bContributionType = oModel.getProperty("/ContributionType");
                 var aFinalArray = [];
                 if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 0)) {
+                    console.log("Table9");
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table9")
                         .map(function (a) {
@@ -5652,14 +5687,15 @@ sap.ui.define(
                         return ele;
                     });
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
-                    promise.resolve(oPayLoad);
-                    return promise;
+                    
                 }
-                if(bContributionCondition==0){
-                    oPayLoad["OfferContributionRatio"] = aFinalArray;
-                    promise.resolve(oPayLoad);
-                    return promise;
-                }
+                promise.resolve(oPayLoad);
+                return promise;
+                // if(bContributionCondition==0){
+                //     oPayLoad["OfferContributionRatio"] = aFinalArray;
+                //     promise.resolve(oPayLoad);
+                //     return promise;
+                // }
             },
             handlePackValueHelp2: function (oEvent) {
                 var oView = this.getView();
@@ -5891,6 +5927,30 @@ sap.ui.define(
                     //     }
                     // }
                     oModel.refresh(true);
+                }
+            },
+            _CheckTableCondition5: function () {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oModelData = oModel.getData();
+                var oDataTable = oModelData["Table"]["Table9"];
+                var bFlag = true;
+                if (oDataTable.length > 0) {
+                    oDataTable.forEach(function (a) {
+                        if (a.hasOwnProperty("editable")) {
+                            if (a["editable"]) {
+                                bFlag = false;
+                            }
+                        }
+                    });
+                }
+                if (bFlag) {
+                    return [true, ""];
+                } else {
+                    return [
+                        false,
+                        "Kindly Save the data in the Contribution Conditions Table to Continue.",
+                    ];
                 }
             },
             // handlePackValueHelp2: function (oEvent) {
