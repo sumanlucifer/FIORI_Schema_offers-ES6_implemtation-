@@ -6,6 +6,7 @@
         <content>
             <VBox>
                 <form:Form id="idDetailForm"
+                
                     editable="true" >
                     <form:layout>
                         <form:ResponsiveGridLayout
@@ -33,8 +34,10 @@
                                 </form:FormElement>
                              <form:FormElement label="{i18n>Remark}">
                                     <form:fields>
-                                        <!-- <Text  class="sapUiSmallMarginBegin" text="{path:'Remark'}" /> -->
-                                        <Input value="{path:'Remark'}" />
+                                    <VBox>
+                                        <Text  visible="{= ${Status} === 'REJECTED' ? true : ${Status} === 'APPROVED'  ? true: false}" text="{oModelControl2>/AdditionalReqDlg_Remark}" />
+                                        <Input visible="{= ${Status} === 'REJECTED' ? false : ${Status} === 'APPROVED'  ? false: true}" value="{oModelControl2>/AdditionalReqDlg_Remark}" />
+                                    </VBox>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="{i18n>Status}">
