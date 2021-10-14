@@ -341,184 +341,61 @@ sap.ui.define(
                     this._oMessageManager.registerMessageProcessor(oMessageProcessor);
                 },
 
-                onAddQuestionnaire: function (oEvent) {
-                    var addQsFlag = true;
-                    this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+                // onEditQuestionnaire: function (oEvent) {
+                //     var addQsFlag = false;
+                //     this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+                //     // var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
+                //     var sPath = "/oAddTraining",
+                //         oButton = oEvent.getSource();
 
-                    var oTrainingQuestionnaire = [];
-                    this.getModel("oModelView").setProperty("/oAddTraining", {
-                        Question: "",
-                        TrainingQuestionnaireOptions: [],
-                        IsArchived: false
-                    });
+                //     debugger;
+                //     // var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                //     var Questionnaire = oEvent.getSource().getBindingContext("oModelView").getObject();
+                //     var clientObject = this.convertToClientObject(Questionnaire);
+                //     this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
 
-                    var sPath = "/oAddTraining";
-                    var oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    var oModelView = this.getModel("oModelView"),
-                        oThat = this;
+                //     var oView = this.getView();
+                //     var oModelView = this.getModel("oModelView"),
+                //         oThat = this;
 
-                    if (!this.byId("QuestionnaireOptionsDialog")) {
-                        // load asynchronous XML fragment
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
-                            controller: this
-                        }).then(function (oDialog) {
-                            // connect dialog to the root view 
-                            //of this component (models, lifecycle)
-                            oView.addDependent(oDialog);
-                            oDialog.bindElement({
-                                path: sPath,
-                                model: "oModelView"
-                            });
-                            oDialog.open();
-                        });
-                    } else {
-                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
-                            path: sPath,
-                            model: "oModelView"
-                        });
-                        oThat.byId("QuestionnaireOptionsDialog").open();
-                    }
-                },
+                //     // this.getModel("oModelView").setProperty("/iIndex", iIndex);
+                //     if (!this.byId("QuestionnaireOptionsDialog")) {
+                //         // load asynchronous XML fragment
+                //         Fragment.load({
+                //             id: oView.getId(),
+                //             name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
+                //             controller: this
+                //         }).then(function (oDialog) {
+                //             // connect dialog to the root view 
+                //             //of this component (models, lifecycle)
+                //             oView.addDependent(oDialog);
+                //             oDialog.bindElement({
+                //                 path: sPath,
+                //                 model: "oModelView"
+                //             });
+                //             oDialog.open();
+                //         });
+                //     } else {
+                //         oThat.byId("QuestionnaireOptionsDialog").open();
+                //         oThat.byId("QuestionnaireOptionsDialog").bindElement({
+                //             path: sPath,
+                //             model: "oModelView"
+                //         });
+                //     }
+                // },
 
-                updateOptions: function () {
-                    var selectCorrectFlag,
-                        blankOption,
-                        addTr;
-                    selectCorrectFlag = false;
-                    blankOption = true;
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-                    if (addQsFlag === true) {
-                        addTr = this.getModel("oModelView").getProperty("/oAddTraining");
-                    } else {
-                        var iIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        addTr = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex];
-                    }
-                    if (addTr.Question === "") {
-                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
-                    } else {
-                        if (addTr.TrainingQuestionnaireOptions.length >= 2) {
-                            if (addTr.TrainingQuestionnaireOptions.length <= 4) {
-                                for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                    if (addTr.TrainingQuestionnaireOptions[i].IsCorrect === true) {
-                                        selectCorrectFlag = true;
-                                    }
-                                }
-                                if (selectCorrectFlag === false) {
-                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                                } else {
-                                    for (var i = 0; i < addTr.TrainingQuestionnaireOptions.length; i++) {
-                                        if (addTr.TrainingQuestionnaireOptions[i].Option === "") {
-                                            blankOption = false;
-                                            this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
-                                        }
-                                    }
-                                    if (blankOption === true) {
-                                        if (addQsFlag === true) {
-                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
-                                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.push({
-                                                Question: addTr.Question,
-                                                TrainingQuestionnaireOptions: addTr.TrainingQuestionnaireOptions,
-                                                IsArchived: false
-                                            });
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
-                                        } else {
-                                            this.byId("QuestionnaireOptionsDialog").close();
-                                            this.getModel("oModelView").refresh();
-                                        }
-                                    }
-                                }
-                            } else {
-                                this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
-                            }
-                        } else {
-                            this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
-                        }
-                    }
-                },
-
-                closeOptionsDialog: function () {
-                    this.byId("QuestionnaireOptionsDialog").close();
-                },
-
-                onEditQuestionnaire: function (oEvent) {
-                    var addQsFlag = false;
-                    this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
-                    var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
-                        oButton = oEvent.getSource();
-                    var oView = this.getView();
-                    var oModelView = this.getModel("oModelView"),
-                        oThat = this;
-                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    this.getModel("oModelView").setProperty("/iIndex", iIndex);
-                    if (!this.byId("QuestionnaireOptionsDialog")) {
-                        // load asynchronous XML fragment
-                        Fragment.load({
-                            id: oView.getId(),
-                            name: "com.knpl.pragati.Training_Learning.view.fragments.QuestionnaireOptionsDialog",
-                            controller: this
-                        }).then(function (oDialog) {
-                            // connect dialog to the root view 
-                            //of this component (models, lifecycle)
-                            oView.addDependent(oDialog);
-                            oDialog.bindElement({
-                                path: sPath,
-                                model: "oModelView"
-                            });
-                            oDialog.open();
-                        });
-                    } else {
-                        oThat.byId("QuestionnaireOptionsDialog").open();
-                        oThat.byId("QuestionnaireOptionsDialog").bindElement({
-                            path: sPath,
-                            model: "oModelView"
-                        });
-                    }
-                },
-
-                onAddQuestionnaireOptions: function () {
-                    var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
-                    var oObject = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
-                    oObject.push({
-                        Option: "",
-                        IsCorrect: false,
-                        IsArchived: false
-                    });
-                    this.getModel("oModelView").refresh();
-                },
-
-                onDeleteQuestionnaire: function (oEvent) {
-                    var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    function onYes() {
-                        if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
-                        } else {
-                            this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].IsArchived = true;
-                        }
-                        this.getModel("oModelView").refresh();
-                    }
-                    this.showWarning("MSG_CONFIRM_QUESTION_DELETE", onYes);
-                },
-
-                onDeleteQuestionnaireOptions: function (oEvent) {
-                    var oView = this.getView();
-                    var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-                    var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-
-                    if (addQsFlag === true) {
-                        var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    } else {
-                        var iQuestionIndex = this.getModel("oModelView").getProperty("/iIndex");
-                        this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex].TrainingQuestionnaireOptions[iOptionIndex].IsArchived = true;
-                        var oAddTrain = this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iQuestionIndex];
-                        oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
-                    }
-                    this.getModel("oModelView").refresh();
-                },
+                // onDeleteQuestionnaire: function (oEvent) {
+                //     var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+                //     function onYes() {
+                //         if (!this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].Id) {
+                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(iIndex, 1);
+                //         } else {
+                //             this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[iIndex].IsArchived = true;
+                //         }
+                //         this.getModel("oModelView").refresh();
+                //     }
+                //     this.showWarning("MSG_CONFIRM_QUESTION_DELETE", onYes);
+                // },
 
                 /* 
                  * @function
@@ -544,7 +421,7 @@ sap.ui.define(
                         this.showError(this._fnMsgConcatinator(oValid.sMsg));
                         return;
                     }
-                    
+
                     oViewModel.setProperty("/busy", true);
                     if (trainingType === 'VIDEO') {
                         this.CUOperationVideo(oPayload, oEvent);
@@ -1245,7 +1122,7 @@ sap.ui.define(
                 },
 
                 CUOperationOnlineTraining: function (oPayload, oEvent) {
-              
+
                     var oViewModel = this.getModel("oModelView");
                     if (oPayload.Url === "") {
                         oPayload.Url = "";
@@ -1261,7 +1138,7 @@ sap.ui.define(
 
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
-                       
+
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1337,7 +1214,7 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
-                   
+
                     var oViewModel = this.getModel("oModelView");
 
                     oPayload.Duration = parseInt(oPayload.Duration);
@@ -1361,7 +1238,7 @@ sap.ui.define(
 
                     that.getModel().create("/LearningSet", oClonePayload, {
                         success: function (createddata) {
-                        
+
                             var newSpath = sPath + "(" + createddata.Id + ")";
                             that._UploadImageTr(newSpath, oViewModel.getProperty("/oImage")).then(that._SuccessAdd.bind(that, oEvent), that._Error
                                 .bind(
@@ -1399,13 +1276,13 @@ sap.ui.define(
                 },
 
                 _UploadAttendanceOfflineTr: function (oPayload) {
-                  
+
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
                     var domRef = fU.getFocusDomRef();
                     var file = domRef.files[0];
                     var oViewModel = this.getModel("oModelView");
-                 
+
                     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
                     //     oPayload.RewardPoints = 0;
                     // }
@@ -1506,20 +1383,20 @@ sap.ui.define(
                 },
 
                 _Error: function (error) {
-                    this.getModel("oModelView").setProperty("/busy",false);
+                    this.getModel("oModelView").setProperty("/busy", false);
                     MessageToast.show(error.toString());
                 },
 
                 _SuccessOffline: function (result, oStatus) {
                     var that = this;
-                     var oModelView = that.getModel("oModelView");
-                     oModelView.setProperty("/busy",false);
+                    var oModelView = that.getModel("oModelView");
+                    oModelView.setProperty("/busy", false);
                     if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                         if (result.length == 0) {
                             that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
                         } else {
                             var oView = that.getView();
-                           
+
                             oModelView.setProperty("/oResult", result);
                             if (!that.AttendanceUploadedStatusMsg) {
                                 // load asynchronous XML fragment
@@ -1544,13 +1421,13 @@ sap.ui.define(
                 },
 
                 _SuccessAdd: function () {
-                    this.getModel("oModelView").setProperty("/busy",false);
+                    this.getModel("oModelView").setProperty("/busy", false);
                     this.getRouter().navTo("worklist", true);
                     MessageToast.show(this.getResourceBundle().getText("MSG_SUCCESS_TRAINING_CREATE"));
                     var oModel = this.getModel();
                     oModel.refresh(true);
-                
-                
+
+
                     if (this._oValueHelpDialogP) {
                         this._oValueHelpDialogP.destroy();
                         delete this._oValueHelpDialogP;
@@ -1621,59 +1498,7 @@ sap.ui.define(
                     });
                     this.getModel("oModelView").setProperty("/showPreviewImageButton", true);
                     this.getModel("oModelView").refresh();
-                },
-                // //CR changes
-                // onPressUpload: function (){
-                //     console.log("Hit!");
-                //     var oViewModel = this.getModel("oModelView");
-                //     var oPayload = {};
-                //     $.extend(true, oPayload, oViewModel.getProperty("/TrainingDetails"));
-                //     var trainingType = this.getModel("appView").getProperty("/trainingType");
-                //     this._UploadAttendanceLiveVidTr(oPayload);
-                //     debugger;
-
-                // },
-                // _UploadAttendanceLiveVidTr: function (oPayload) {
-                  
-                //     var that = this;
-                //     var fU = this.getView().byId("idAttendanceLiveFileUploader");
-                //     var domRef = fU.getFocusDomRef();
-                //     var file = domRef.files[0];
-                //     var oViewModel = this.getModel("oModelView");
-                 
-                //     // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
-                //     //     oPayload.RewardPoints = 0;
-                //     // }
-
-                //     var settings = {
-                //         url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadAttendanceSet(" + oPayload.TrainingSubTypeId + ")/$value?Points=" + oPayload.RewardPoints,
-                //         data: file,
-                //         method: "PUT",
-                //         headers: that.getModel().getHeaders(),
-                //         contentType: "text/csv",
-                //         processData: false,
-                //         statusCode: {
-                //             206: function (result) {
-                //                 that._SuccessOffline(result, 206);
-                //             },
-                //             200: function (result) {
-                //                 that._SuccessOffline(result, 200);
-                //             },
-                //             202: function (result) {
-                //                 that._SuccessOffline(result, 202);
-                //             },
-                //             400: function (result) {
-                //                 that._SuccessOffline(result, 400);
-                //             }
-                //         },
-                //         error: function (error) {
-                //             that._Error(error);
-                //         }
-                //     };
-
-                //     $.ajax(settings);
-                //     // });
-                // },
+                }
 
             }
         );

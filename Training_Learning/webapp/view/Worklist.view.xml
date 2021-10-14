@@ -93,7 +93,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-								<Column width="31%">
+								<Column width="29%">
 									<Text text="{i18n>colTrTitle}"/>
 								</Column>
                                 <Column width="15%">
@@ -120,7 +120,7 @@
                                 <Column width="7%">
 									<Text text="{i18n>colStatus}"/>
 								</Column>
-                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                <Column width="9%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
 									<Text text="{i18n>colAction}"/>
 								</Column>
 							</columns>
@@ -220,7 +220,7 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<columns>
-                                <Column width="16%">
+                                <Column width="14%">
                                     <Text text="{i18n>colTrTitle}"/>
                                 </Column>
                                 <Column width="15%">
@@ -247,7 +247,7 @@
                                 <Column width="7%">
                                     <Text text="{i18n>colStatus}"/>
                                 </Column>
-                                <Column width="7%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
+                                <Column width="9%" visible="{= (${appView>/loggedUserRoleId} !== 2) }">
                                     <Text text="{i18n>colAction}"/>
                                 </Column>
                             </columns>
