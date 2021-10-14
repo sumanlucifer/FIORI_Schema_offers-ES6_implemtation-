@@ -300,6 +300,7 @@ sap.ui.define([
 
         onDeleteQuestionnaire: function (oEvent) {
             var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+
             function onYes() {
                 this.deleteQuestionnaire(questionnaireIndex);
             }
@@ -324,7 +325,7 @@ sap.ui.define([
             // To check Blank Language Code
             var LanguageCodeBlank = false;
             for (var i = 0; i < addTr.length; i++) {
-                var optionLength = addTr[i].Options.length;   //To check length of Options
+                var optionLength = addTr[i].Options.length; //To check length of Options
                 if (addTr[i].LanguageCode === "") {
                     LanguageCodeBlank = true;
                 }
@@ -358,8 +359,7 @@ sap.ui.define([
 
             if (LanguageCodeBlank) {
                 this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
-            }
-            else {
+            } else {
                 if (QuestionBlank) {
                     this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
                 } else {
@@ -370,8 +370,7 @@ sap.ui.define([
                             } else {
                                 if (blankOption) {
                                     this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
-                                }
-                                else {
+                                } else {
                                     if (addQsFlag === true) {
                                         this.getModel("oModelView").setProperty("/addQsFlag", false);
                                     } else {
@@ -403,13 +402,15 @@ sap.ui.define([
         },
 
         onLanguageCodeChange: function (oEvent) {
-            debugger;  //need to check with Manik
+
             var selectedLanguageCode = oEvent.getSource().getSelectedKey();
             var selectedLanguageCodeIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
             var selectedObject = oEvent.getSource().getBindingContext("oModelView").getObject();
             var aleadySelected = false;
-
+            var oModel = this.getView().getModel("oModelView");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
+            console.log(clientObject)
+            var sPath = oEvent.getSource().getBindingContext("oModelView").getPath()
             for (var i = 0; i < clientObject.length; i++) {
                 if (i !== parseInt(selectedLanguageCodeIndex)) {
                     if (clientObject[i].LanguageCode === selectedLanguageCode) {
@@ -417,6 +418,8 @@ sap.ui.define([
                         selectedObject.LanguageCode = "";
                         clientObject[selectedLanguageCodeIndex].LanguageCode = "";
                         this.showToast.call(this, "ALREADY_LANGUAGE_SELECTED");
+                        break;
+
                     }
                 }
             }
@@ -426,8 +429,17 @@ sap.ui.define([
                     op.LanguageCode = selectedLanguageCode;
                 });
             }
-        },
 
+        },
+        fmtCheckLanguage: function (mParam1, mParam2) {
+
+            for (var x in mParam2) {
+                if (mParam2[x]["LanguageCode"] === mParam1) {
+
+                    return false
+                }
+            }
+        },
         addMoreLanguage: function (oEvent) {
             var languageCode = "";
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
@@ -446,8 +458,9 @@ sap.ui.define([
             });
             clientObject.push(lang);
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
-            return lang;
             this.getModel("oModelView").refresh();
+            return lang;
+
             // var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
             // var oObjectLocal = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireLocalized");
             // var oObjectOption = this.getModel("oModelView").getProperty(sPath + "/TrainingQuestionnaireOptions");
@@ -503,24 +516,28 @@ sap.ui.define([
             } else {
                 clientObject.splice(translationIndex, 1);
             }
-            this.getModel("oModelView").refresh();
+            this.getModel("oModelView").refresh(true);
 
         },
 
         onDeleteQuestionnaireOptions: function (oEvent) {
             // var oView = this.getView();
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            console.log(iOptionIndex)
             // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
-
-            clientObject.forEach(translation => {
-                if (translation.Options[iOptionIndex].OptionId) {
-                    translation.Options[iOptionIndex].IsArchived = true;
-                } else {
-                    translation.Options.splice(iOptionIndex, 1);
-                }
-            });
-            this.getModel("oModelView").refresh();
+          
+            // clientObject.forEach(translation => {
+            //     if (translation.Options[iOptionIndex].OptionId) {
+            //         translation.Options[iOptionIndex].IsArchived = true;
+            //     } else {
+            //         translation.Options.splice(iOptionIndex, 1);
+            //     }
+            // });
+            for(var i in clientObject){
+                clientObject[i]["Options"].splice(parseInt(iOptionIndex),1)
+            }
+            this.getModel("oModelView").refresh(true);
 
             // if (addQsFlag === true) {
             //     var oAddTrain = this.getModel("oModelView").getProperty("/oAddTraining");
@@ -532,18 +549,34 @@ sap.ui.define([
             //     oAddTrain.TrainingQuestionnaireOptions.splice(iOptionIndex, 1);
             // }
         },
-
+        select1: function () {
+            console.log("Manik")
+        },
         onSelectOption: function (oEvent) {
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            console.log(oEvent.getSource().getBindingContext("oModelView").getObject(), iOptionIndex);
 
-            clientObject.forEach(translation => {
-                translation.Options.forEach(op => { op.IsCorrect = false; });
-                translation.Options[iOptionIndex].IsCorrect = true;
-            });
-
+            // clientObject.forEach(translation => {
+            //     translation.Options.forEach(op => {
+            //         op.IsCorrect = false;
+            //     });
+            //     translation.Options[iOptionIndex].IsCorrect = true;
+            // });
+            for (var i in clientObject) {
+                for (var x in clientObject[i]["Options"]) {
+                    if (x == iOptionIndex) {
+                        clientObject[i]["Options"][x]["IsCorrect"] = true;
+                    } else {
+                        clientObject[i]["Options"][x]["IsCorrect"] = false;
+                    }
+                }
+            }
+            //this.getView().getModel("oModelView").refresh(true);
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
-            this.getModel("oModelView").refresh();
+            this.getView().getModel("oModelView").refresh();
+
+            console.log(clientObject);
         },
 
         convertToClientObject: function (serviceObject) {

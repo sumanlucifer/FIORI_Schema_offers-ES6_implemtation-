@@ -10,8 +10,8 @@
         <VBox id="idVbxQ" width="100%" items="{path: 'oModelView>/oAddTraining', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
             <items>
                 <VBox class="sapUiSmallMarginBeginEnd">
-                    <ComboBox items="{ path: '/MasterLanguageSet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}" width="12%" selectedKey="{oModelView>LanguageCode}" selectionChange="onLanguageCodeChange" editable="{= ${oModelView>LanguageCode} !== 'EN'}">
-                        <core:Item key="{LanguageCode}" text="{LanguageDescription}"/>
+                    <ComboBox items="{ path: '/MasterLanguageSet'}" width="12%" selectedKey="{oModelView>LanguageCode}" selectionChange="onLanguageCodeChange" editable="{= ${oModelView>LanguageCode} !== 'EN'}">
+                        <core:Item key="{LanguageCode}" text="{LanguageDescription} - {Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
                     </ComboBox>
                     <TextArea value="{oModelView>Question}" width="100%" ></TextArea>
                     <HBox justifyContent="End">
@@ -19,7 +19,13 @@
                     </HBox>
                     <List items="{path: 'oModelView>Options' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
                         <CustomListItem>
-                            <RadioButton groupName="{oModelView>LanguageCode}" selected = "{oModelView>IsCorrect}" select="onSelectOption"/>
+                            <RadioButtonGroup editable="{= ${oModelView>LanguageCode} === 'EN'}" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" select="onSelectOption">
+                                <buttons>
+                                   
+                                        <RadioButton  />
+                                </buttons>
+                            </RadioButtonGroup>
+                          
                             <Input width="80%" maxLength="100" value="{oModelView>Option}"/>
                             <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
                         </CustomListItem>

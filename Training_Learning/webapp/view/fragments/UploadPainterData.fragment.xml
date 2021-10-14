@@ -20,23 +20,23 @@
 				<columns>
                 
 					<Column >
-						<m:Label text="Painter Name" />
+						<m:Label text="{i18n>colPainterName}" />
 						<template>
 							<m:Text text="{oModelView>Name}" wrapping="false" />
 						</template>
 					</Column>
                     <Column >
-						<m:Label text="Painter Mobile" />
+						<m:Label text="{i18n>colMobileNumber}" />
 						<template>
 							<m:Text text="{oModelView>PainterMobile}" wrapping="false" />
 						</template>
 					</Column>
-                    <Column >
+                    <!-- <Column >
 						<m:Label text="Painter Id" />
 						<template>
 							<m:Text text="{oModelView>Id}" wrapping="false" />
 						</template>
-					</Column>
+					</Column> -->
 				
               
 				</columns>

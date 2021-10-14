@@ -65,7 +65,8 @@ sap.ui.define(
                         currDate: new Date(),
                         Search: {
                             Attendance: "",
-                            Enrollment: ""
+                            Enrollment: "",
+                            AttendanceLive:""
                         },
                         TrainingDetails: {
                         }
@@ -674,6 +675,21 @@ sap.ui.define(
                 },
 
                 onTablesSearch: function (oEvent) {
+                    var oView = this.getView();
+                    var sPath = oEvent.getSource().getBinding("value").getPath();
+                    var sValue = oEvent.getSource().getValue();
+                    var sTrainingId = oView
+                        .getModel("oModelView")
+                        .getProperty("/trainingId");
+                    if (sPath.match("Attendance")) {
+                        this._SearchAttendance(sValue, sTrainingId);
+                    } else if (sPath.match("Enrollment")) {
+                        this._SearchEnrollment(sValue, sTrainingId);
+                    }else if (sPath.match("AttendenceLive")) {
+                        this._SearchAttendance(sValue, sTrainingId);
+                    }
+                },
+                  onTablesSearchlivAttend: function (oEvent) {
                     var oView = this.getView();
                     var sPath = oEvent.getSource().getBinding("value").getPath();
                     var sValue = oEvent.getSource().getValue();
