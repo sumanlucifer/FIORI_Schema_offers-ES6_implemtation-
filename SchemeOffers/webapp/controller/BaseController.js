@@ -4647,7 +4647,7 @@ sap.ui.define(
                         delete ele["editable"];
                         return ele;
                     });
-                    oPayLoad["OfferEarnedEarnedPointsCondition"] = aFinalArray;
+                    oPayLoad["OfferEarnedPointsCondition"] = aFinalArray;
                 }
                 var aTable6 = oModel.getProperty("/Table/Table6");
                 var aFinalArray3 = [];
@@ -5187,8 +5187,9 @@ sap.ui.define(
                 var file = domRef.files[0];
                 var oView = that.getView();
                 var dataModel = oView.getModel("oModelControl3");
+                var OfferId=dataModel.getProperty("/OfferId");
                 var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value?offerId="+840,
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value?offerId="+OfferId,
                     data: file,
                     method: "PUT",
                     headers: that.getView().getModel().getHeaders(),
@@ -5229,6 +5230,7 @@ sap.ui.define(
                             return {
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
+                                UploadMessage:item.UploadMessage,
                                 Id: item.Id,
                                 isSelected: true
                             };

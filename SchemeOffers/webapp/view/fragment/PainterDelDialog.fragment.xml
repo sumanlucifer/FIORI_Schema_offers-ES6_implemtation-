@@ -36,6 +36,12 @@
 							<m:Text text="{oModelControl3>PainterMobile}" wrapping="false" />
 						</template>
 					</Column>
+                    <Column >
+						<m:Label text="{i18n>Status}" />
+						<template>
+							<m:Text text="{oModelControl3>UploadMessage}" wrapping="false" />
+						</template>
+					</Column>
 					
 				</columns>
 			</Table>
