@@ -111,31 +111,18 @@ sap.ui.define([
                         if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
                             var cash = "Cash - Rs. " + pointData["RewardCash"];
                             return cash;
-                        }
-                    }
-                }
-            }
-               if (mParam2) {
-                if (mParam2.length > 0) {
-                    var multiRewardData = this.getView().getModel().getData("/" + mParam2[0]);
-                    if (multiRewardData.GiftRedemption !== null) {
-                        var rewardGift = this.getView().getModel().getData("/" + multiRewardData.GiftRedemption.__ref),
-                            mParam2 = multiRewardData.RedemptionType,
-                            m3 = multiRewardData.RewardPoints,
-                            m4 = multiRewardData.RewardCash,
-                            m5 = rewardGift.RewardGiftName;
-                        if (mParam2 === 'MULTI_REWARDS' && mParam1 === 'REDEEMED') {
+                        } else if (pointData.RedemptionType === "MULTI_REWARDS") {
                             var aString = [];
-                            if (m3) {
-                                aString.push("Points - " + m3)
+                            if (pointData["RewardPoints"]) {
+                                aString.push("Points - " + pointData["RewardPoints"]);
                             }
-                            if (m4) {
-                                aString.push("Cash - Rs. " + m4)
+                            if (pointData["GiftRedemptionId"]) {
+                                aString.push("Gift - " + pointData["RewardGiftName"]);
                             }
-                            if (m5) {
-                                aString.push("Gift - " + m5)
+                            if (pointData["RewardCash"]) {
+                                aString.push("Cash - Rs." + pointData["RewardCash"]);
                             }
-                            return aString.join(", ");
+                            return aString.join(", ")
                         }
                     }
                 }
@@ -191,7 +178,7 @@ sap.ui.define([
             }
             return "NA";
         },
-      
+
         fmtOfferProgressStatus: function (mParam1) {
             if (mParam1 === "COMPLETED") {
                 return "Completed"

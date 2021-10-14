@@ -142,7 +142,9 @@ sap.ui.define(
                     ProfilePageBuzy: true,
                     QRCodeData: {},
                     AdditionalReqDlg: {
-                    }
+                    },
+                    ////////////deepanjali added/////////////////
+                    AdditionalReqDlg_Remark: ""
                 };
                 var oView = this.getView();
                 var oModel = new JSONModel(oData);
@@ -3481,8 +3483,8 @@ sap.ui.define(
                         function (oValueHelpDialog) {
                             this._DialogUpdateRequest = oValueHelpDialog;
                             this.getView().addDependent(this._DialogUpdateRequest);
-                            this._DialogUpdateRequest.open();
                             this._BeforeAllReqOpen(obj);
+                            this._DialogUpdateRequest.open();
                         }.bind(this)
                     );
                 } else {
@@ -3497,6 +3499,7 @@ sap.ui.define(
             _BeforeAllReqOpen: function (obj) {
                 var oModelC2 = this.getView().getModel("oModelControl2");
                 oModelC2.setProperty("/AdditionalReqDlg", obj);
+                this.getView().getModel("oModelControl2").setProperty("/AdditionalReqDlg_Remark", obj.Remark);
                 var UUID = obj.UUID;
                 this._DialogUpdateRequest.bindElement("/PainterAdditionalBenifitSet('" + UUID + "')", {
                     expand: "masterAdditionalBenifit"
@@ -3505,6 +3508,7 @@ sap.ui.define(
             onApproveReject: function (mParam1) {
                 var oModelC2 = this.getView().getModel("oModelControl2");
                 var oPayload = oModelC2.getProperty("/AdditionalReqDlg");
+                oPayload.Remark = oModelC2.getProperty("/AdditionalReqDlg_Remark");
                 var oNewPayLoad = Object.assign({}, oPayload);
                 //oModelControl.setProperty("/bBusy", true);
                 var othat = this;
@@ -3523,6 +3527,8 @@ sap.ui.define(
                         if (sAction == "OK") {
                             var c1;
                             c1 = othat._UpdateRequest(oNewPayLoad);
+                            ////added by deepanjali////
+                            othat.onDialogCloseAllReq();
                             // c1.then(function (oNewPayLoad) {
                             //    // oModelControl.setProperty("/bBusy", false);
                             //     othat.onPressBreadcrumbLink();
@@ -3562,6 +3568,7 @@ sap.ui.define(
                     oDataModel.update("/" + oProp, oPayload, {
                         success: function (data) {
                             MessageToast.show("Status Successfully Updated.");
+                            oView.getModel().refresh(true);
                             //othat._navToHome();
                             resolve(data);
                         },
