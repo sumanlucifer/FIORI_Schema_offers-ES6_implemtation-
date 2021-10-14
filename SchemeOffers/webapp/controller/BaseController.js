@@ -165,7 +165,7 @@ sap.ui.define(
                         }
                     },
                     error: function (error) {
-                        // that._Error(error);
+                         that._Error(error);
                     }
                 };
                 $.ajax(settings);
@@ -196,6 +196,11 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
+            _Error: function (error) {
+                var oView = this.getView();
+                    oView.getModel("oModelControl").setProperty("/busy", false);
+                    MessageToast.show(error.responseText.toString());
+                },
             onpressfrag: function (itemModel) {
                 this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
@@ -5269,8 +5274,12 @@ sap.ui.define(
             onSaveUploadDelPaitner: function (oEvent) {
                 var oView = this.getView();
                 var fragmentData = oView.getModel("oModelControl3").getProperty("/ofragmentModel");
+                var OfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
                 var selectedItems = fragmentData.filter(function (item) {
-                    return item.isSelected === true;
+                    //return item.isSelected === true;
+                    if(item.isSelected === true && item.UploadMessage ==="Applicable"){
+                        return item.isSelected === true;
+                    }
                 });
                 var oData = [];
                 var xUnique = new Set();
@@ -5287,8 +5296,9 @@ sap.ui.define(
                  selectedItems.forEach(function (ele) {
                     if (xUnique.has(ele.Id) == false) {
                         oData.push({
-                            PainterName: ele.PainterName,
+                            //PainterName: ele.PainterName,
                             PainterId:  ele.Id,
+                            OfferId:OfferId
                         });
                         xUnique.add(ele.Id);
                     }
@@ -5306,6 +5316,7 @@ sap.ui.define(
                 var oDataModel = oView.getModel();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 //console.log(oPayLoad);
+                delete oPayLoad.PainterName
                 return new Promise((resolve, reject) => {
                     oDataModel.update("/" + oProp+"/OfferDeselectedPainter", oPayLoad, {
                         success: function (data) {
@@ -5645,6 +5656,7 @@ sap.ui.define(
                 var bContributionCondition = oModel.getProperty("/ContributionCondition");
                 var bContributionType = oModel.getProperty("/ContributionType");
                 var aFinalArray = [];
+                ///for seperate condition
                 if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 0)) {
                     console.log("Table9");
                     var oDataTbl = oModelCtrl
@@ -5679,6 +5691,41 @@ sap.ui.define(
                                 }
                             }
                             if (aCheckProp[a] === "MaxPercentage") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            
+                        }
+                        delete ele["editable"];
+                        return ele;
+                    });
+                    oPayLoad["OfferContributionRatio"] = aFinalArray;
+                    
+                }
+                ///for combination condition
+                if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 1)) {
+                    console.log("Table9");
+                    var oDataTbl = oModelCtrl
+                        .getProperty("/Table/Table10")
+                        .map(function (a) {
+                            return Object.assign({}, a);
+                        });
+                    var aCheckProp = [
+                        "ProductCode",
+                        "SkuCode"
+                    ];
+                    aFinalArray = oDataTbl.filter(function (ele) {
+                        for (var a in aCheckProp) {
+                            if (ele[aCheckProp[a]] === "") {
+                                ele[aCheckProp[a]] = null;
+                            }
+                            if (aCheckProp[a] === "ProductCode") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = ele[aCheckProp[a]];
+                                }
+                            }
+                            if (aCheckProp[a] === "SkuCode") {
                                 if (ele[aCheckProp[a]]) {
                                     ele[aCheckProp[a]] = ele[aCheckProp[a]];
                                 }
