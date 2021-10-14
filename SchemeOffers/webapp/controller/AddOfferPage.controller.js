@@ -464,6 +464,7 @@ sap.ui.define(
                 var bTableCondition2 = this._CheckTableCondition2();
                 var bTableCondition3 = this._CheckTableCondition3();
                 var bTableCondition4 = this._CheckTableCondition4();
+                var bTableCondition5 = this._CheckTableCondition5();
                 if (bFlagValidate == false) {
                     MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                     return;
@@ -500,6 +501,10 @@ sap.ui.define(
                     MessageToast.show(bTableCondition4[1]);
                     return;
                 }
+                if (!bTableCondition5[0]) {
+                    MessageToast.show(bTableCondition5[1]);
+                    return;
+                }
 
                 //validate the data
 
@@ -534,7 +539,7 @@ sap.ui.define(
                                     c5 = othat._CreatePayLoadPart5(oPayLoad);
                                      c5.then(function (oPayLoad) {
                                          c5A2=othat._CreatePayLoadPartContriCndtn(oPayLoad);
-                                         c5A2.then(function (){
+                                         c5A2.then(function (oPayLoad){
                                                 c5A1 = othat._CreatePayLoadConditions(oPayLoad);
                                                     c5A1.then(function () {
                                                     c5A = othat._CreateWorkFlowData(oPayLoad);
@@ -556,6 +561,7 @@ sap.ui.define(
                 });
             },
             _CreateOffer: function (oPayLoad) {
+                console.log(oPayLoad);
                 var promise = jQuery.Deferred();
                 var othat = this;
                 var oView = this.getView();
