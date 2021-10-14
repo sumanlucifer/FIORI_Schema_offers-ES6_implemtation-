@@ -5,7 +5,7 @@
 	xmlns:core="sap.ui.core"
     xmlns="sap.ui.table"
     	xmlns:u="sap.ui.unified">
-	  <m:Dialog id="idP" showHeader="false"  >
+	  <m:Dialog id="idP" showHeader="false" >
            	<Table id="idPainterDialog"
 				rows="{oModelControl>/ofragmentModel}"
 			  selectionMode="None"

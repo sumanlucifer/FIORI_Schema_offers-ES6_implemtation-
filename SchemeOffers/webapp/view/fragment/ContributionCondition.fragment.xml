@@ -109,7 +109,7 @@
         </Table>
         
         </VBox>
-        <VBox >
+        <VBox visible="{=${oModelView>/ContributionCondition}!==0}">
              <Table id="TableContri2" items="{path: 'oModelControl>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
             <headerToolbar>
                 <Toolbar>
@@ -195,6 +195,19 @@
                 </ColumnListItem>
             </items>
         </Table>
+        <HBox visible="false">
+        <Input
+			value="220"
+			description="Min"
+			width="200px"
+			class="sapUiSmallMarginBottom" />
+            <Input
+			value="220"
+			description="Max"
+			width="200px"
+			class="sapUiSmallMarginBottom" />
+            
+        </HBox>
         
         </VBox>
        

@@ -295,7 +295,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             //m4 RewardCash
             //m5 RewardGift
             if (m2 == 2) {
-                return "Not allowed as painter deselected";
+                return "Not allowed as total achiever limit exhausted";
             }
             if (m2 == 3) {
                 return "Not allowed as painter deselected";
