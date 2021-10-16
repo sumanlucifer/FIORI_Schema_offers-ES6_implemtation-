@@ -4,9 +4,9 @@
         <content>
             <form:SimpleForm  layout="ResponsiveGridLayout"	
            	singleContainerFullSize="false"  >
-                	<ComboBox id="idcombo"
+                	<ComboBox id="idcombo" selectedKey="{oModelControl>/ComplainReopenReasonId}"
 				items="{path: 'oModelControl>/ReopenReasonList'}">
-				<core:Item key="{oModelControl>id}" text="{oModelControl>text}" />
+				<core:Item key="{oModelControl>Id}" text="{oModelControl>Reason}" />
 			</ComboBox>
             </form:SimpleForm>
         </content>

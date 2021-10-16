@@ -126,7 +126,8 @@ sap.ui.define(
                         ProductCode: "",
                         CategoryCode: "",
                         QRCodeData2: {},
-                        TokenCode2: ""
+                        TokenCode2: "",
+                        ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0
                         PainterId: 182
@@ -392,6 +393,10 @@ sap.ui.define(
                     // }
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
+
+                    //// added by deepanjali///////////
+                    oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
+
                     var oHistoryTable = oView.byId("smartHistory")
                     if (oHistoryTable) {
                         oHistoryTable.rebindTable();
@@ -925,13 +930,25 @@ sap.ui.define(
                     var sComplainCode = oView
                         .getModel("oModelControl")
                         .getProperty("/ComplainCode");
+                        
+                        ///// added by deepanjali///
+                    var sComplainReopenReasonId = oView
+                        .getModel("oModelControl")
+                        .getProperty("/ComplainReopenReasonId");
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     var oFilter = new Filter(
                         "ComplaintCode",
                         FilterOperator.EQ,
-                        sComplainCode
+                        sComplainCode,
                     );
-                    oBindingParams.filters.push(oFilter);
+                    ///// added by deepanjali///
+                      var oFilter1 = new Filter(
+                        "ComplainReopenReasonId",
+                        FilterOperator.EQ,
+                        sComplainReopenReasonId,
+                    );
+                    oBindingParams.filters.push(oFilter, oFilter1);
+                     
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
                 },
                 onPressEscalate: function (oEvent) {
@@ -1044,11 +1061,21 @@ sap.ui.define(
                             }));
                     });
                 },
+                onReopeFrag: function (oEvent) {
+                    var that = this;
+                    this.getModel().read("/MasterComplainReopenReasonSet", {
+                        success: function (oData, oResponse) {
+                            this.onOpenDialog(oData.results);
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error("Data Not Found");
+                        }
+                    });
+                },
                 ///// Reopen functinality /////////////////
-                onReopeFrag: function () {
-                    var oreason = [{ "id": "id1", text: "Test1" }, { "id": "id2", text: "Test2" }];
+                onOpenDialog: function (itemData) {
                     var oView = this.getView();
-                    oView.getModel("oModelControl").setProperty("/ReopenReasonList", oreason);
+                    oView.getModel("oModelControl").setProperty("/ReopenReasonList", itemData);
                     return new Promise(function (resolve, reject) {
                         if (!this._ReopenDialoge) {
                             Fragment.load({
@@ -1072,7 +1099,8 @@ sap.ui.define(
                 //// reopen complains ////////////
                 onReopenSave: function () {
                     var oModelView = this.getModel("oModelView");
-                    var selectedKey = this.getView().byId("idcombo").getSelectedKey();
+                    var selectedKey = this.getModel("oModelControl").getProperty("/ComplainReopenReasonId");
+                    oModelView.setProperty("/ComplainReopenReasonId", parseInt(selectedKey));
                     oModelView.setProperty("/ComplaintStatus", "REOPEN");
                     this._postDataToSave();
                     this._ReopenDialoge.close();
