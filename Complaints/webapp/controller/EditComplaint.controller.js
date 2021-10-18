@@ -394,8 +394,8 @@ sap.ui.define(
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
 
-                    //// added by deepanjali///////////
-                    oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
+                    // //// added by deepanjali for painterComplianHistorySet///////////
+                    // oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
 
                     var oHistoryTable = oView.byId("smartHistory")
                     if (oHistoryTable) {
@@ -931,23 +931,24 @@ sap.ui.define(
                         .getModel("oModelControl")
                         .getProperty("/ComplainCode");
                         
-                        ///// added by deepanjali///
-                    var sComplainReopenReasonId = oView
-                        .getModel("oModelControl")
-                        .getProperty("/ComplainReopenReasonId");
+                        ///// added by deepanjali for painterComplianHistorySet///
+                    // var sComplainReopenReasonId = oView
+                    //     .getModel("oModelControl")
+                    //     .getProperty("/ComplainReopenReasonId");
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     var oFilter = new Filter(
                         "ComplaintCode",
                         FilterOperator.EQ,
                         sComplainCode,
                     );
-                    ///// added by deepanjali///
-                      var oFilter1 = new Filter(
-                        "ComplainReopenReasonId",
-                        FilterOperator.EQ,
-                        sComplainReopenReasonId,
-                    );
-                    oBindingParams.filters.push(oFilter, oFilter1);
+                    // added by deepanjali for painterComplianHistorySet///
+                    //   var oFilter1 = new Filter(
+                    //     "ComplainReopenReasonId",
+                    //     FilterOperator.EQ,
+                    //     sComplainReopenReasonId,
+                    // );
+                    // oBindingParams.filters.push(oFilter, oFilter1);
+                     oBindingParams.filters.push(oFilter);
                      
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
                 },
@@ -1096,7 +1097,7 @@ sap.ui.define(
                         }
                     }.bind(this));
                 },
-                //// reopen complains ////////////
+                //// reopen complains added by deepanjali ////////////
                 onReopenSave: function () {
                     var oModelView = this.getModel("oModelView");
                     var selectedKey = this.getModel("oModelControl").getProperty("/ComplainReopenReasonId");
