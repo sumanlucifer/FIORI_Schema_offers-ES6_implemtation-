@@ -5281,7 +5281,7 @@ sap.ui.define(
                         return item.isSelected === true;
                     }
                 });
-                var oData = [];
+                var oData = {"OfferDeselectedPainter":[]};
                 var xUnique = new Set();
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
@@ -5295,7 +5295,7 @@ sap.ui.define(
                 //     .setProperty("/ValuehelpDel/Painters", itemModel);
                  selectedItems.forEach(function (ele) {
                     if (xUnique.has(ele.Id) == false) {
-                        oData.push({
+                        oData["OfferDeselectedPainter"].push({
                             //PainterName: ele.PainterName,
                             PainterId:  ele.Id,
                             OfferId:OfferId
@@ -5306,6 +5306,8 @@ sap.ui.define(
                 oView.getModel("oModelControl2")
                     .setProperty("/OfferDeselectedPainter",oData);
                 //console.log(oData);
+                // var oPayload={"OfferDeselectedPainter":[]};
+                // oPayload["OfferDeselectedPainter"].push(oData)
                 this._UpdateOfferDelPainters(oData);
                 this._CsvDialoge.close();
             },
@@ -5318,10 +5320,10 @@ sap.ui.define(
                 //console.log(oPayLoad);
                 delete oPayLoad.PainterName
                 return new Promise((resolve, reject) => {
-                    oDataModel.update("/" + oProp+"/OfferDeselectedPainter", oPayLoad, {
+                    oDataModel.create("/OfferDeselectedPainterList", oPayLoad, {
                         success: function (data) {
                             MessageToast.show("Painters Successfully Uploaded.");
-                            //othat._navToHome();
+                            othat._navToHome();
                             resolve(data);
                         },
                         error: function (data) {

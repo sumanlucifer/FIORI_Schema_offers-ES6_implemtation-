@@ -285,7 +285,8 @@ sap.ui.define(
                         Table5: [],
                         Table6: [],
                         Table7: [],
-                        Table8: []
+                        Table8: [],
+                        Table9: []
                     },
                     OfferType: {
                         BasicInformation: true,

@@ -525,7 +525,7 @@
         
         </VBox>
         <VBox  visible="{=${oModelDisplay>/ContributionType}===1}">
-             <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
+             <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table9',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Conditions}"/> -->
@@ -552,7 +552,10 @@
 				</infoToolbar> -->
             <columns>
                 <Column>
-                  <Text text="{i18n>Product}"/>
+                  <VBox>
+                  <Text text="{i18n>Product}" visible="{=${oModelDisplay>/ContributionCondition}===1}"/>
+                   <Text text="{i18n>Pack}" visible="{=${oModelDisplay>/ContributionCondition}===2}"/>
+                 </VBox>
                 </Column>
                
                 <!-- <Column>
@@ -565,10 +568,11 @@
                     <cells>
                         
                           <VBox>
-                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
-                            <VBox>
+                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>SkuCode',formatter:'.formatter.fmtGetPackName'}" />
+                            <!-- <VBox>
                              <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
-                            </VBox>
+                            </VBox> -->
                              </VBox>
                       
                         
