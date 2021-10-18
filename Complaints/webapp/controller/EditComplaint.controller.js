@@ -126,7 +126,8 @@ sap.ui.define(
                         ProductCode: "",
                         CategoryCode: "",
                         QRCodeData2: {},
-                        TokenCode2: ""
+                        TokenCode2: "",
+                        ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0
                         PainterId: 182
@@ -392,6 +393,10 @@ sap.ui.define(
                     // }
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
+
+                    // //// added by deepanjali for painterComplianHistorySet///////////
+                    // oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
+
                     var oHistoryTable = oView.byId("smartHistory")
                     if (oHistoryTable) {
                         oHistoryTable.rebindTable();
@@ -925,13 +930,26 @@ sap.ui.define(
                     var sComplainCode = oView
                         .getModel("oModelControl")
                         .getProperty("/ComplainCode");
+                        
+                        ///// added by deepanjali for painterComplianHistorySet///
+                    // var sComplainReopenReasonId = oView
+                    //     .getModel("oModelControl")
+                    //     .getProperty("/ComplainReopenReasonId");
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     var oFilter = new Filter(
                         "ComplaintCode",
                         FilterOperator.EQ,
-                        sComplainCode
+                        sComplainCode,
                     );
-                    oBindingParams.filters.push(oFilter);
+                    // added by deepanjali for painterComplianHistorySet///
+                    //   var oFilter1 = new Filter(
+                    //     "ComplainReopenReasonId",
+                    //     FilterOperator.EQ,
+                    //     sComplainReopenReasonId,
+                    // );
+                    // oBindingParams.filters.push(oFilter, oFilter1);
+                     oBindingParams.filters.push(oFilter);
+                     
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
                 },
                 onPressEscalate: function (oEvent) {
@@ -1044,41 +1062,53 @@ sap.ui.define(
                             }));
                     });
                 },
-                // onReopeFrag: function () {
-                //     var oreason = [{ "id": "id1", text: "Test1" }, { "id": "id2", text: "Test2" }];
-                //     var oView = this.getView();
-                //     oView.getModel("oModelControl").setProperty("/ReopenReasonList", oreason);
-                //     return new Promise(function (resolve, reject) {
-                //         if (!this._ReopenDialoge) {
-                //             Fragment.load({
-                //                 id: oView.getId(),
-                //                 name: "com.knpl.pragati.Complaints.view.fragments.openReopn",
-                //                 controller: this,
-                //             }).then(
-                //                 function (oDialog) {
-                //                     this._ReopenDialoge = oDialog;
-                //                     oView.addDependent(this._ReopenDialoge);
-                //                     this._ReopenDialoge.open();
-                //                     resolve();
-                //                 }.bind(this)
-                //             );
-                //         } else {
-                //             this._ReopenDialoge.open();
-                //             resolve();
-                //         }
-                //     }.bind(this));
-                // },
-                // //// reopen complains ////////////
-                // onReopenSave: function () {
-                //     var oModelView = this.getModel("oModelView");
-                //     var selectedKey = this.getView().byId("idcombo").getSelectedKey();
-                //     oModelView.setProperty("/ComplaintStatus", "REOPEN");
-                //     this._postDataToSave();
-                //     this._ReopenDialoge.close();
-                // },
-                // onReopenClose: function () {
-                //     this._ReopenDialoge.close();
-                // },
+                onReopeFrag: function (oEvent) {
+                    var that = this;
+                    this.getModel().read("/MasterComplainReopenReasonSet", {
+                        success: function (oData, oResponse) {
+                            this.onOpenDialog(oData.results);
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error("Data Not Found");
+                        }
+                    });
+                },
+                ///// Reopen functinality /////////////////
+                onOpenDialog: function (itemData) {
+                    var oView = this.getView();
+                    oView.getModel("oModelControl").setProperty("/ReopenReasonList", itemData);
+                    return new Promise(function (resolve, reject) {
+                        if (!this._ReopenDialoge) {
+                            Fragment.load({
+                                id: oView.getId(),
+                                name: "com.knpl.pragati.Complaints.view.fragments.openReopn",
+                                controller: this,
+                            }).then(
+                                function (oDialog) {
+                                    this._ReopenDialoge = oDialog;
+                                    oView.addDependent(this._ReopenDialoge);
+                                    this._ReopenDialoge.open();
+                                    resolve();
+                                }.bind(this)
+                            );
+                        } else {
+                            this._ReopenDialoge.open();
+                            resolve();
+                        }
+                    }.bind(this));
+                },
+                //// reopen complains added by deepanjali ////////////
+                onReopenSave: function () {
+                    var oModelView = this.getModel("oModelView");
+                    var selectedKey = this.getModel("oModelControl").getProperty("/ComplainReopenReasonId");
+                    oModelView.setProperty("/ComplainReopenReasonId", parseInt(selectedKey));
+                    oModelView.setProperty("/ComplaintStatus", "REOPEN");
+                    this._postDataToSave();
+                    this._ReopenDialoge.close();
+                },
+                onReopenClose: function () {
+                    this._ReopenDialoge.close();
+                },
                 _initMessage: function () {
                     //MessageProcessor could be of two type, Model binding based and Control based
                     //we are using Model-binding based here

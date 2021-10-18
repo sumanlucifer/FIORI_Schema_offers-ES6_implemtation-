@@ -32,13 +32,10 @@
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
                     </layout:VerticalLayout>
-
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
                         <Label  text="{i18n>ComplaintDetails}:"  />
                         <ObjectAttribute  text="{ComplaintSubtype/ComplaintSubtype}"/>
                     </layout:VerticalLayout>
-               
-                 
                     <layout:VerticalLayout  class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }" >
                          <Label text="{i18n>LblEscalationLevel}:" />
                          <Text  text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }"  />
@@ -58,7 +55,6 @@
                           </VBox>
                           <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ResolutionDetails" type="XML"/>
                           <VBox id="idProducts">
-                            
                           </VBox>
                         </IconTabFilter>
                          <IconTabFilter  text="{i18n>History}" key="1" >
@@ -69,11 +65,9 @@
                            <VBox height="100%" width="100%">
                                  <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
                           </VBox>
-                               
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
-         
         </f:content>
         <f:footer>
             <!-- <Toolbar>
@@ -90,7 +84,9 @@
               <Button press=".onApproval(false)"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
               <Button press=".onApproval(true)"  visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
              <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
-             <!-- <Button press="onReopeFrag"  text="{i18n>Reopen}"/> -->
+             <!-- <Button text="{i18n>Reopen}" press="onReopeFrag"/> -->
+              <Button visible="{= ${IsReopenAllowed} ? true: false}" text="{i18n>Reopen}" press="onReopeFrag"/>
+            <!-- <Button visible="{= ${ComplaintStatus} === 'RESOLVED' ? true &amp;&amp; ${IsReopenAllowed} === true ? true: false }" text="{i18n>Reopen}" press="onReopeFrag"/> -->
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
