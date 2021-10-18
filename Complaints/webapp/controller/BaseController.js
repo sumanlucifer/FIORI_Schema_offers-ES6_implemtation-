@@ -49,10 +49,14 @@ sap.ui.define([
                         newStatus = "Resolved";
                     } else if (sStatus === "WITHDRAWN") {
                         newStatus = "Withdrawn";
+                    }///// aaded by Deepanjali for REOPEN////
+                    else if (sStatus === "REOPEN") {
+                        newStatus = "Re Open";
                     }
 
                     return newStatus;
                 },
+                
 
 		/**
 		 * Getter for the resource bundle.
