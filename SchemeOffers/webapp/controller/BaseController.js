@@ -5281,7 +5281,7 @@ sap.ui.define(
                         return item.isSelected === true;
                     }
                 });
-                var oData = [];
+                var oData = {"OfferDeselectedPainter":[]};
                 var xUnique = new Set();
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
@@ -5295,7 +5295,7 @@ sap.ui.define(
                 //     .setProperty("/ValuehelpDel/Painters", itemModel);
                  selectedItems.forEach(function (ele) {
                     if (xUnique.has(ele.Id) == false) {
-                        oData.push({
+                        oData["OfferDeselectedPainter"].push({
                             //PainterName: ele.PainterName,
                             PainterId:  ele.Id,
                             OfferId:OfferId
@@ -5306,6 +5306,8 @@ sap.ui.define(
                 oView.getModel("oModelControl2")
                     .setProperty("/OfferDeselectedPainter",oData);
                 //console.log(oData);
+                // var oPayload={"OfferDeselectedPainter":[]};
+                // oPayload["OfferDeselectedPainter"].push(oData)
                 this._UpdateOfferDelPainters(oData);
                 this._CsvDialoge.close();
             },
@@ -5318,10 +5320,10 @@ sap.ui.define(
                 //console.log(oPayLoad);
                 delete oPayLoad.PainterName
                 return new Promise((resolve, reject) => {
-                    oDataModel.update("/" + oProp+"/OfferDeselectedPainter", oPayLoad, {
+                    oDataModel.create("/OfferDeselectedPainterList", oPayLoad, {
                         success: function (data) {
                             MessageToast.show("Painters Successfully Uploaded.");
-                            //othat._navToHome();
+                            othat._navToHome();
                             resolve(data);
                         },
                         error: function (data) {
@@ -5702,15 +5704,18 @@ sap.ui.define(
                     });
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     
+                    
                 }
                 ///for combination condition
                 if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 1)) {
-                    console.log("Table9");
+                    console.log("Table10");
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table10")
                         .map(function (a) {
                             return Object.assign({}, a);
                         });
+                    var Min=oModelCtrl.getProperty("/MinPercentage");
+                    var Max=oModelCtrl.getProperty("/MaxPercentage");
                     var aCheckProp = [
                         "ProductCode",
                         "SkuCode"
@@ -5735,7 +5740,11 @@ sap.ui.define(
                         delete ele["editable"];
                         return ele;
                     });
+                    oPayLoad["MinPercentage"] = Min;
+                    oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
+                     //console.log(oPayLoad);
+                     //debugger;
                     
                 }
                 promise.resolve(oPayLoad);
@@ -5945,6 +5954,7 @@ sap.ui.define(
             onPressSaveCndtn2: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
+                var ContributionType = oModel.getProperty("/ContributionType");
                 var oObject = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -5959,15 +5969,24 @@ sap.ui.define(
                     );
                     return;
                 }
-                if (
-                    !oObject["ProductCode"]
-                ) {
+                if(ContributionType===0){
+
+                if (!oObject["ProductCode"]) {
                     MessageToast.show(
-                        "Kindly Enter ProductCode,Min & Max fields To Continue."
+                        "Kindly Enter Product,Min & Max fields To Continue."
                     );
                     return;
                 }
-                
+                }
+                if(ContributionType===1){
+
+                if (!oObject["SkuCode"]) {
+                    MessageToast.show(
+                        "Kindly Enter Pack,Min & Max fields To Continue."
+                    );
+                    return;
+                }
+                }
                 if (bFlag && cFlag) {
                     oObject["editable"] = false;
                     // if (!oObject["RewardGiftName"]) {
@@ -5983,6 +6002,30 @@ sap.ui.define(
                 var oModel = oView.getModel("oModelControl");
                 var oModelData = oModel.getData();
                 var oDataTable = oModelData["Table"]["Table9"];
+                var bFlag = true;
+                if (oDataTable.length > 0) {
+                    oDataTable.forEach(function (a) {
+                        if (a.hasOwnProperty("editable")) {
+                            if (a["editable"]) {
+                                bFlag = false;
+                            }
+                        }
+                    });
+                }
+                if (bFlag) {
+                    return [true, ""];
+                } else {
+                    return [
+                        false,
+                        "Kindly Save the data in the Contribution Conditions Table to Continue.",
+                    ];
+                }
+            },
+            _CheckTableCondition6: function () {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oModelData = oModel.getData();
+                var oDataTable = oModelData["Table"]["Table10"];
                 var bFlag = true;
                 if (oDataTable.length > 0) {
                     oDataTable.forEach(function (a) {

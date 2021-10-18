@@ -465,6 +465,7 @@ sap.ui.define(
                 var bTableCondition3 = this._CheckTableCondition3();
                 var bTableCondition4 = this._CheckTableCondition4();
                 var bTableCondition5 = this._CheckTableCondition5();
+                var bTableCondition6 = this._CheckTableCondition6();
                 if (bFlagValidate == false) {
                     MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                     return;
@@ -503,6 +504,10 @@ sap.ui.define(
                 }
                 if (!bTableCondition5[0]) {
                     MessageToast.show(bTableCondition5[1]);
+                    return;
+                }
+                 if (!bTableCondition6[0]) {
+                    MessageToast.show(bTableCondition6[1]);
                     return;
                 }
 
