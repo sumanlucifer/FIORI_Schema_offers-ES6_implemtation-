@@ -147,12 +147,12 @@
                 </Column>
                 <Column visible="{= ${oModelView>/InputType}===1 }">
                     <Label text="{i18n>Table1Label2}" required="true" />
-                </Column>
+                </Column> 
                 <Column>
                     <Label text="{i18n>Min}" />
                 </Column>
                 <Column>
-                    <Text text="{i18n>Max}" />
+                    <Label text="{i18n>Max}" />
                 </Column>-->
                 <Column>
                     <Text text="{i18n>tblColAction}" />
@@ -195,17 +195,15 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <HBox visible="false">
+        <HBox visible="{=${oModelView>/ContributionType}===1}" class="sapUiSmallMarginBegin">
         <Input
-			value="220"
-			description="Min"
-			width="200px"
-			class="sapUiSmallMarginBottom" />
+			value="{path:'oModelControl>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			description="{i18n>Min}"
+			width="200px"/>
             <Input
-			value="220"
-			description="Max"
-			width="200px"
-			class="sapUiSmallMarginBottom" />
+			value="{path:'oModelControl>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			description="{i18n>Max}"
+			width="200px"/>
             
         </HBox>
         
