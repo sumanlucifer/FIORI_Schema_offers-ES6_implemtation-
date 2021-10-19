@@ -176,6 +176,7 @@ sap.ui.define(
                 var oView = that.getView();
                 var oModelView = oView.getModel("oModelControl");
                 oModelView.setProperty("/busy", false);
+                var aPainters=[];
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
                     if (result.ValidPainter.length == 0) {
                         that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
@@ -186,7 +187,8 @@ sap.ui.define(
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
                                 Id: item.Id,
-                                isSelected: true
+                                isSelected: true,
+                                Message:item.UploadMessage
                             };
                         });
                         that.onpressfrag(itemModel);
@@ -252,9 +254,10 @@ sap.ui.define(
             onSaveUploadPaitner: function (oEvent) {
                 var oView = this.getView();
                 var fragmentData = oView.getModel("oModelControl").getProperty("/ofragmentModel");
-                var selectedItems = fragmentData.filter(function (item) {
+                var Items = fragmentData.filter(function (item) {
                     return item.isSelected === true;
                 });
+                var selectedItems = Items.filter(item => item.Message !=="Invalid Painter");
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
                 var itemModel = selectedItems.map(function (item) {
