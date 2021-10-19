@@ -393,10 +393,8 @@ sap.ui.define(
                     // }
                     //set data for the smart table
                     oModelControl.setProperty("/ComplainCode", oModelView.getProperty("/ComplaintCode"));
-
                     // //// added by deepanjali for painterComplianHistorySet///////////
                     // oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
-
                     var oHistoryTable = oView.byId("smartHistory")
                     if (oHistoryTable) {
                         oHistoryTable.rebindTable();
@@ -930,8 +928,7 @@ sap.ui.define(
                     var sComplainCode = oView
                         .getModel("oModelControl")
                         .getProperty("/ComplainCode");
-                        
-                        ///// added by deepanjali for painterComplianHistorySet///
+                    ///// added by deepanjali for painterComplianHistorySet///
                     // var sComplainReopenReasonId = oView
                     //     .getModel("oModelControl")
                     //     .getProperty("/ComplainReopenReasonId");
@@ -948,8 +945,7 @@ sap.ui.define(
                     //     sComplainReopenReasonId,
                     // );
                     // oBindingParams.filters.push(oFilter, oFilter1);
-                     oBindingParams.filters.push(oFilter);
-                     
+                    oBindingParams.filters.push(oFilter);
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
                 },
                 onPressEscalate: function (oEvent) {
@@ -1066,20 +1062,11 @@ sap.ui.define(
                     });
                 },
                 onReopeFrag: function (oEvent) {
-                    var that = this;
-                    this.getModel().read("/MasterComplainReopenReasonSet", {
-                        success: function (oData, oResponse) {
-                            this.onOpenDialog(oData.results);
-                        }.bind(this),
-                        error: function (oError) {
-                            sap.m.MessageBox.error("Data Not Found");
-                        }
-                    });
+                    this.onOpenDialog();
                 },
                 ///// Reopen functinality /////////////////
-                onOpenDialog: function (itemData) {
+                onOpenDialog: function () {
                     var oView = this.getView();
-                    oView.getModel("oModelControl").setProperty("/ReopenReasonList", itemData);
                     return new Promise(function (resolve, reject) {
                         if (!this._ReopenDialoge) {
                             Fragment.load({
@@ -1100,11 +1087,37 @@ sap.ui.define(
                         }
                     }.bind(this));
                 },
+                onReopenValiadtion: function (data) {
+                    debugger;
+                    var s = data.ComplainReopenReasonId;
+                    this._oMessageManager.removeAllMessages();
+                    var aCtrlMessage = [],
+                        sMsg = "";
+                    //Required Field Validations
+                    if (!(data.ComplainReopenReasonId)) {
+                        sMsg = this.getResourceBundle().getText("MSG_REQUIRED")
+                        aCtrlMessage.push({
+                            message: "MSG_CTRL_RESOLUTION",
+                            target: "/ComplainReopenReasonId"
+                        });
+                    }
+                    if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
+                    return sMsg;
+                },
                 //// reopen complains added by deepanjali ////////////
                 onReopenSave: function () {
+                    var validation = this.onReopenValiadtion(this.getModel("oModelControl").getData());
+                    //Validations
+                    if (validation.length > 0) {
+                        MessageToast.show(validation);
+                        return;
+                    }
                     var oModelView = this.getModel("oModelView");
                     var selectedKey = this.getModel("oModelControl").getProperty("/ComplainReopenReasonId");
-                    oModelView.setProperty("/ComplainReopenReasonId", parseInt(selectedKey));
+                    var sResonId = selectedKey.split("-")[0];
+                    var sReson = selectedKey.split("-")[1];
+                    oModelView.setProperty("/ComplainReopenReasonId", parseInt(sResonId));
+                    oModelView.setProperty("/Remark", sReson);
                     oModelView.setProperty("/ComplaintStatus", "REOPEN");
                     this._postDataToSave();
                     this._ReopenDialoge.close();
