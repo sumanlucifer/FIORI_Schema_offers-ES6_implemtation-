@@ -5,8 +5,12 @@
                 <List id="ViewTrainingListQuestionnaire" enableBusyIndicator="true" growing="true" growingThreshold="15" growingScrollToLoad="false" noDataText="No data available" items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
                     <CustomListItem>
                         <VBox renderType="Bare" class="sapUiTinyMargin">
-                            <HBox renderType="Bare">
+                            <HBox renderType="Bare" justifyContent="SpaceBetween">
                                 <Title text="0{= Object.values(${oModelView>/TrainingDetails/TrainingQuestionnaire}).indexOf(${oModelView>}) + 1 }. {oModelView>Question}" class="sapUiSmallMarginBeginEnd" wrapping="true"/>
+                                 <FlexBox alignItems="Start" justifyContent="End">
+				                    <Button icon="sap-icon://display-more" press="onEditQuestionnaire2" type="Transparent" tooltip="{i18n>Details}" class="sapUiSmallMarginEnd" />
+				                 
+			                    </FlexBox>
                             </HBox>
                             <Text text=""/>
                             <VBox items="{oModelView>TrainingQuestionnaireOptions}">

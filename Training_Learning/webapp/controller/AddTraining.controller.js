@@ -971,7 +971,7 @@ sap.ui.define(
                                                 });
                                             }
                                             else
-                                                if (data.TrainingQuestionnaire.length < 3) {
+                                                if (data.TrainingQuestionnaire.length < 2) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
                                                     aCtrlMessage.push({
@@ -1135,7 +1135,7 @@ sap.ui.define(
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this,
                         sPath = "/TrainingSet";
-
+                    console.log(oClonePayload);
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
 
