@@ -29,7 +29,7 @@
                     <Label text="{i18n>EndDate}" required="true"/>
                 </Column>
                 <Column>
-                    <Label text="{i18n>count}" required="true"/>
+                    <Label text="{i18n>AchieverLimit}" required="true"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>tblColAction}"/>

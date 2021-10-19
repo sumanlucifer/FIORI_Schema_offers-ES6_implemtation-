@@ -1122,7 +1122,7 @@
                             <Label text="{i18n>EndDate}" />
                         </Column>
                         <Column>
-                            <Text text="{i18n>count}" />
+                            <Text text="{i18n>AchieverLimit}" />
                         </Column>
                         <!-- <Column>
                     <Text text="{i18n>tblColAction}"/>

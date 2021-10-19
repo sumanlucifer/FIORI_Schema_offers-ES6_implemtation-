@@ -2274,6 +2274,7 @@ sap.ui.define(
             onEndDateCndtAddInfo: function (oEvent) {
                 var oSource = oEvent.getSource()
                 var oModelDisplay = this.getView().getModel("oModelControl2");
+                var OfferEndDate=this.getView().getModel("oModelDisplay").getProperty("/EndDate");
                 var iInitialValue = oSource.data("dataValue");
                 var newValue = oSource.getDateValue();
                 var oEndDate = oModelDisplay.getProperty("/EndDate")
@@ -2286,6 +2287,12 @@ sap.ui.define(
                     oSource.setDateValue(iInitialValue)
                     MessageToast.show("Date cannot be more than Offer End Date.");
                     return;
+                }
+                if(newValue > OfferEndDate){
+                    oSource.setDateValue(iInitialValue)
+                    MessageToast.show("Date cannot be more than Offer End Date.");
+                    return;
+
                 }
             },
             onNavEndDtDspCnd1: function (oEvent) {
