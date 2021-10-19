@@ -6,8 +6,9 @@
             <headerToolbar>
               <Toolbar>
                     <ToolbarSpacer/>
-                         <u:FileUploader visible="{= ${oModelView/TrainingDetails/Status}===1 }" icon="sap-icon://upload" buttonText="{i18n>UploadAttendence}" class="sapUiTinyMarginEnd" id="idAttendanceLiveFileUploader" fileType="csv" buttonOnly="true" change="onFileUploadChange" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
+                         <u:FileUploader visible="{= ${oModelView>/TrainingDetails/Status} === 1 }" icon="sap-icon://upload" buttonText="{i18n>UploadAttendence}" class="sapUiTinyMarginEnd" id="idAttendanceLiveFileUploader" fileType="csv" buttonOnly="true" change="onFileUploadChange" sameFilenameAllowed="false" placeholder="Choose a CSV file" style="Emphasized"></u:FileUploader>
                               <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onExportAttendenceLive" type="Emphasized"/> 
+                       
                         <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelView>/Search/AttendanceLive}"></SearchField>
                 </Toolbar>
             </headerToolbar>

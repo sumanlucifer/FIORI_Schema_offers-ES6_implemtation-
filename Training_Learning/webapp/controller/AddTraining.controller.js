@@ -1135,7 +1135,7 @@ sap.ui.define(
                     var oClonePayload = $.extend(true, {}, oPayload),
                         that = this,
                         sPath = "/TrainingSet";
-
+                    console.log(oClonePayload);
                     that.getModel().create("/TrainingSet", oClonePayload, {
                         success: function (createddata) {
 

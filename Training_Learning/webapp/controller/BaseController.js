@@ -297,6 +297,47 @@ sap.ui.define([
                 });
             }
         },
+        onEditQuestionnaire2: function (oEvent) {
+            var addQsFlag = false;
+            this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+            var sPath = oEvent.getSource().getBindingContext("oModelView").getPath(),
+                oButton = oEvent.getSource();
+            var oView = this.getView();
+            var oModelView = this.getModel("oModelView"),
+                oThat = this;
+            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            this.getModel("oModelView").setProperty("/questionnaireIndex", questionnaireIndex);
+
+            var Questionnaire = oEvent.getSource().getBindingContext("oModelView").getObject();
+            // var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+            var clientObject = this.convertToClientObject(Questionnaire);
+            // var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+            this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
+
+            if (!this.byId("QuestionnaireOptionsDialog2")) {
+                // load asynchronous XML fragment
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "com.knpl.pragati.Training_Learning.view.fragments.DisplayQuestionDetails",
+                    controller: this
+                }).then(function (oDialog) {
+                    // connect dialog to the root view 
+                    //of this component (models, lifecycle)
+                    oView.addDependent(oDialog);
+                    oDialog.bindElement({
+                        path: sPath,
+                        model: "oModelView"
+                    });
+                    oDialog.open();
+                });
+            } else {
+                oThat.byId("QuestionnaireOptionsDialog2").open();
+                oThat.byId("QuestionnaireOptionsDialog2").bindElement({
+                    path: sPath,
+                    model: "oModelView"
+                });
+            }
+        },
 
         onDeleteQuestionnaire: function (oEvent) {
             var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
@@ -317,7 +358,7 @@ sap.ui.define([
         },
 
         updateOptions: function () {
-            debugger;
+
             var addTr;
             var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             addTr = this.getModel("oModelView").getProperty("/oAddTraining");
@@ -380,6 +421,7 @@ sap.ui.define([
                                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                                     var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
                                     var serviceObject = this.convertToServiceObject(addTr);
+                                    console.log(serviceObject)
                                     TrainingQuestionnaire.push(serviceObject);
 
                                     this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
@@ -400,6 +442,10 @@ sap.ui.define([
         closeOptionsDialog: function () {
             this.byId("QuestionnaireOptionsDialog").close();
         },
+        closeOptionsDialog2: function () {
+            this.byId("QuestionnaireOptionsDialog").close();
+            this.byId("QuestionnaireOptionsDialog").destroy();
+        },
 
         onLanguageCodeChange: function (oEvent) {
 
@@ -409,7 +455,7 @@ sap.ui.define([
             var aleadySelected = false;
             var oModel = this.getView().getModel("oModelView");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
-            console.log(clientObject)
+
             var sPath = oEvent.getSource().getBindingContext("oModelView").getPath()
             for (var i = 0; i < clientObject.length; i++) {
                 if (i !== parseInt(selectedLanguageCodeIndex)) {
@@ -495,8 +541,10 @@ sap.ui.define([
                     QuestionId: translation.QuestionId,
                     OptionLocalizedId: null,
                     IsArchived: false,
-                    IsCorrect: false
+                    IsCorrect: false,
+                    QuestionnaireId: translation.Id
                 };
+
                 translation.Options.push(Option);
             });
             this.getModel("oModelView").refresh();
@@ -526,7 +574,7 @@ sap.ui.define([
             console.log(iOptionIndex)
             // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
-          
+
             // clientObject.forEach(translation => {
             //     if (translation.Options[iOptionIndex].OptionId) {
             //         translation.Options[iOptionIndex].IsArchived = true;
@@ -534,8 +582,8 @@ sap.ui.define([
             //         translation.Options.splice(iOptionIndex, 1);
             //     }
             // });
-            for(var i in clientObject){
-                clientObject[i]["Options"].splice(parseInt(iOptionIndex),1)
+            for (var i in clientObject) {
+                clientObject[i]["Options"].splice(parseInt(iOptionIndex), 1)
             }
             this.getModel("oModelView").refresh(true);
 
@@ -589,7 +637,8 @@ sap.ui.define([
                 CreatedAt: serviceObject.CreatedAt,
                 CreatedBy: serviceObject.CreatedBy,
                 UpdatedAt: serviceObject.UpdatedAt,
-                UpdatedBy: serviceObject.UpdatedBy
+                UpdatedBy: serviceObject.UpdatedBy,
+                TrainingId: serviceObject.TrainingId,
             };
 
             clientObject = serviceObject.TrainingQuestionnaireLocalized.map(o => {
@@ -619,7 +668,8 @@ sap.ui.define([
                         CreatedAt: optionServiceObject.CreatedAt,
                         CreatedBy: optionServiceObject.CreatedBy,
                         UpdatedAt: optionServiceObject.UpdatedAt,
-                        UpdatedBy: optionServiceObject.UpdatedBy
+                        UpdatedBy: optionServiceObject.UpdatedBy,
+                        QuestionnaireId: optionServiceObject.QuestionnaireId,
                     };
 
                     optionServiceObject.TrainingQuestionnaireOptionsLocalized.forEach(o => {
@@ -634,12 +684,12 @@ sap.ui.define([
                     });
                 }
             });
-
+            console.log(clientObject)
             return clientObject;
         },
 
         convertToServiceObject: function (clientObject) {
-            debugger;
+            console.log(clientObject)
             var serviceObject = {};
             var que = clientObject[0];
             serviceObject.Id = que.QuestionId;
@@ -712,7 +762,7 @@ sap.ui.define([
                 });
             }
 
-            debugger;
+
             return serviceObject;
         }
 
