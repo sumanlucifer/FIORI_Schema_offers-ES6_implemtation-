@@ -85,7 +85,7 @@
               <Button press=".onApproval(true)"  visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
              <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
              <!-- <Button text="{i18n>Reopen}" press="onReopeFrag"/> -->
-              <Button visible="{= ${IsReopenAllowed} ? true: false}" text="{i18n>Reopen}" press="onReopeFrag"/>
+              <Button  type="Emphasized" visible="{= ${IsReopenAllowed} ? true: false}" text="{i18n>Reopen}" press="onReopeFrag"/>
             <!-- <Button visible="{= ${ComplaintStatus} === 'RESOLVED' ? true &amp;&amp; ${IsReopenAllowed} === true ? true: false }" text="{i18n>Reopen}" press="onReopeFrag"/> -->
             </OverflowToolbar>
         </f:footer>

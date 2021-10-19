@@ -3,10 +3,13 @@
         <Dialog  contentHeight="50%"  class="sapUiContentPadding" title="{i18n>ReopenReason}" >
         <content>
             <form:SimpleForm  layout="ResponsiveGridLayout"	
-           	singleContainerFullSize="false"  >
-                	<ComboBox id="idcombo" selectedKey="{oModelControl>/ComplainReopenReasonId}"
-				items="{path: 'oModelControl>/ReopenReasonList'}">
-				<core:Item key="{oModelControl>Id}" text="{oModelControl>Reason}" />
+           	singleContainerFullSize="false">
+                	<ComboBox id="idcombo"  required="true"
+                    selectedKey="{oModelControl>/ComplainReopenReasonId}"
+				items="{path:'/MasterComplainReopenReasonSet'}">
+				<core:Item 
+                key="{Id}-{Reason}"
+                text="{Reason}" />
 			</ComboBox>
             </form:SimpleForm>
         </content>
