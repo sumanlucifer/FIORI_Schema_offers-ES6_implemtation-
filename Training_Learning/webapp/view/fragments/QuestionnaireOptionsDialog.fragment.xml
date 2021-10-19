@@ -11,7 +11,7 @@
             <items>
                 <VBox class="sapUiSmallMarginBeginEnd">
                     <ComboBox items="{ path: '/MasterLanguageSet'}" width="12%" selectedKey="{oModelView>LanguageCode}" selectionChange="onLanguageCodeChange" editable="{= ${oModelView>LanguageCode} !== 'EN'}">
-                        <core:Item key="{LanguageCode}" text="{LanguageDescription} - {Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
+                        <core:Item key="{LanguageCode}" text="{Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
                     </ComboBox>
                     <TextArea value="{oModelView>Question}" width="100%" ></TextArea>
                     <HBox justifyContent="End">

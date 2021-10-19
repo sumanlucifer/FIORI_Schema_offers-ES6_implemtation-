@@ -10,8 +10,8 @@
         <VBox  width="100%" items="{path: 'oModelView>/oAddTraining', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
             <items>
                 <VBox class="sapUiSmallMarginBeginEnd">
-                    <ComboBox  items="{ path: '/MasterLanguageSet'}" width="12%" selectedKey="{oModelView>LanguageCode}" selectionChange="onLanguageCodeChange" editable="false">
-                        <core:Item key="{LanguageCode}" text="{LanguageDescription} - {Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
+                    <ComboBox  items="{ path: '/MasterLanguageSet'}" width="12%" selectedKey="{oModelView>LanguageCode}"  editable="false">
+                        <core:Item key="{LanguageCode}" text="{Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
                     </ComboBox>
                     <Text text="{oModelView>Question}" width="100%" />
                     <!-- <HBox justifyContent="End">
@@ -19,7 +19,7 @@
                     </HBox> -->
                     <List items="{path: 'oModelView>Options' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
                         <CustomListItem>
-                            <RadioButtonGroup editable="false" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" select="onSelectOption">
+                            <RadioButtonGroup editable="false" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" >
                                 <buttons>
                                    
                                         <RadioButton  class="sapUiSmallMarginTop"  />

@@ -443,8 +443,9 @@ sap.ui.define([
             this.byId("QuestionnaireOptionsDialog").close();
         },
         closeOptionsDialog2: function () {
-            this.byId("QuestionnaireOptionsDialog").close();
-            this.byId("QuestionnaireOptionsDialog").destroy();
+            var oDialog = this.byId("QuestionnaireOptionsDialog2");
+            oDialog.close();
+            oDialog.destroy();
         },
 
         onLanguageCodeChange: function (oEvent) {
