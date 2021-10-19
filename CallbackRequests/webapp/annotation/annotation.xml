@@ -20,7 +20,7 @@
                 <Annotation Term="Common.Label" String="Painter Name"/> 
             </Annotations>
 
-            <Annotations Target="Metadata.PainterRequestModel/PainterMobile"> 
+            <Annotations Target="Metadata.PainterRequestModel/PainterDetails/Mobile"> 
                 <Annotation Term="Common.Label" String="Painter Mobile Number"/> 
             </Annotations>
 
@@ -49,7 +49,7 @@
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Painter Mobile Number"/>
-                            <PropertyValue Property="Value" Path="PainterMobile"/>
+                            <PropertyValue Property="Value" Path="PainterDetails/Mobile"/>
                         </Record>
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Request Type"/>
