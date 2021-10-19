@@ -165,7 +165,7 @@ sap.ui.define(
                         }
                     },
                     error: function (error) {
-                         that._Error(error);
+                        that._Error(error);
                     }
                 };
                 $.ajax(settings);
@@ -198,9 +198,9 @@ sap.ui.define(
             },
             _Error: function (error) {
                 var oView = this.getView();
-                    oView.getModel("oModelControl").setProperty("/busy", false);
-                    MessageToast.show(error.responseText.toString());
-                },
+                oView.getModel("oModelControl").setProperty("/busy", false);
+                MessageToast.show(error.responseText.toString());
+            },
             onpressfrag: function (itemModel) {
                 this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
@@ -3264,7 +3264,7 @@ sap.ui.define(
                     this._ProdValueHelpDialog3.destroy();
                     delete this._ProdValueHelpDialog3;
                 }
-                 if (this._PackValueHelpDialog2) {
+                if (this._PackValueHelpDialog2) {
                     this._PackValueHelpDialog2.destroy();
                     delete this._PackValueHelpDialog2;
                 }
@@ -4751,7 +4751,9 @@ sap.ui.define(
             onStartDateAddInfo: function (oEvent) {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
+                var oModelView = oView.getModel("oModelView");
                 var oStartDateAddInfo = oEvent.getSource().getDateValue();
+                var offerDate = oModelView.getProperty("/StartDate");
                 var oBject1 = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -4768,13 +4770,29 @@ sap.ui.define(
                         );
                         oModelControl.setProperty(sPath1 + "/StartDate", null);
                         return;
-                    }
+                    } 
                 }
+                if (oStartDateAddInfo) {
+                    if (oStartDateAddInfo.valueOf() === offerDate.valueOf()) {
+                        return;
+                    } else {
+                        MessageToast.show(
+                            "Start Date Should Be Same As Offer Start Date."
+                        );
+                        oModelControl.setProperty(sPath1 + "/StartDate", null);
+                        return;
+
+                    }
+
+                }
+                return;
             },
             onEndDateAddInfo: function (oEvent) {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
+                var oModelView = oView.getModel("oModelView");
                 var oEndDate1 = oEvent.getSource().getDateValue();
+                var offerEndDate = oModelView.getProperty("/EndDate");
                 var oBject2 = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -4792,6 +4810,16 @@ sap.ui.define(
                         oModelControl.setProperty(sPath2 + "/EndDate", null);
                         return;
                     }
+                }
+                if (oEndDate1) {
+                    if (oEndDate1.valueOf() > offerEndDate.valueOf()) {
+                            MessageToast.show(
+                                "Kindly select a date less than Offer End Date."
+                            );
+                            oModelControl.setProperty(sPath2 + "/EndDate", null);
+                            return;
+
+                        }
                 }
             },
             onPressSaveAddInfo: function (oEvent) {
@@ -4831,7 +4859,7 @@ sap.ui.define(
                     oModel.refresh(true);
                 }
                 //oModel.refresh(true);
-             },
+            },
             onPressAddInformation: function (oEvent) {
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
@@ -5192,9 +5220,9 @@ sap.ui.define(
                 var file = domRef.files[0];
                 var oView = that.getView();
                 var dataModel = oView.getModel("oModelControl3");
-                var OfferId=dataModel.getProperty("/OfferId");
+                var OfferId = dataModel.getProperty("/OfferId");
                 var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value?offerId="+OfferId,
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value?offerId=" + OfferId,
                     data: file,
                     method: "PUT",
                     headers: that.getView().getModel().getHeaders(),
@@ -5235,7 +5263,7 @@ sap.ui.define(
                             return {
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
-                                UploadMessage:item.UploadMessage,
+                                UploadMessage: item.UploadMessage,
                                 Id: item.Id,
                                 isSelected: true
                             };
@@ -5277,11 +5305,11 @@ sap.ui.define(
                 var OfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
                 var selectedItems = fragmentData.filter(function (item) {
                     //return item.isSelected === true;
-                    if(item.isSelected === true && item.UploadMessage ==="Applicable"){
+                    if (item.isSelected === true && item.UploadMessage === "Applicable") {
                         return item.isSelected === true;
                     }
                 });
-                var oData = {"OfferDeselectedPainter":[]};
+                var oData = { "OfferDeselectedPainter": [] };
                 var xUnique = new Set();
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
@@ -5293,18 +5321,18 @@ sap.ui.define(
                 // });
                 // oView.getModel("oModelControl3")
                 //     .setProperty("/ValuehelpDel/Painters", itemModel);
-                 selectedItems.forEach(function (ele) {
+                selectedItems.forEach(function (ele) {
                     if (xUnique.has(ele.Id) == false) {
                         oData["OfferDeselectedPainter"].push({
                             //PainterName: ele.PainterName,
-                            PainterId:  ele.Id,
-                            OfferId:OfferId
+                            PainterId: ele.Id,
+                            OfferId: OfferId
                         });
                         xUnique.add(ele.Id);
                     }
                 });
                 oView.getModel("oModelControl2")
-                    .setProperty("/OfferDeselectedPainter",oData);
+                    .setProperty("/OfferDeselectedPainter", oData);
                 //console.log(oData);
                 // var oPayload={"OfferDeselectedPainter":[]};
                 // oPayload["OfferDeselectedPainter"].push(oData)
@@ -5333,16 +5361,16 @@ sap.ui.define(
                     });
                 });
             },
-            onRbRRDialogCndtn: function (){
+            onRbRRDialogCndtn: function () {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 oModel.setProperty("/Table/Table9", []);
                 oModel.setProperty("/Table/Table10", []);
             },
             onPressAddCndtnV1: function (oEvent) {
-               
+
                 if (oEvent !== "add") {
-                    
+
                 } else {
                     var oModel = this.getView().getModel("oModelControl");
                     var oFamiDtlMdl = oModel.getProperty("/Table/Table9");
@@ -5366,8 +5394,8 @@ sap.ui.define(
                     }
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
-                            ProductCode:"",
-                            SkuCode:"",
+                            ProductCode: "",
+                            SkuCode: "",
                             MinPercentage: "",
                             MaxPercentage: "",
                             editable: true,
@@ -5375,7 +5403,7 @@ sap.ui.define(
                         //relvalue and editable properties are added here and will be removed in the postsave function
                     }
                     oModel.refresh();
-                    
+
                 }
             },
             onRemovedCndtn: function (oEvent) {
@@ -5394,8 +5422,8 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 var oModelView = oView.getModel("oModelView");
-               var ContributionCondition= oModelView.getProperty("/ContributionCondition");
-                
+                var ContributionCondition = oModelView.getProperty("/ContributionCondition");
+
                 var oObject = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -5410,35 +5438,35 @@ sap.ui.define(
                     );
                     return;
                 }
-                if(ContributionCondition === 1){
+                if (ContributionCondition === 1) {
                     if (
-                    !oObject["ProductCode"]&&
-                   // !oObject["RewardPoints"] &&
-                    !oObject["MinPercentage"] &&
-                    !oObject["MaxPercentage"]
-                ) {
-                    MessageToast.show(
-                        "Kindly Enter Product,Min & Max fields To Continue."
-                    );
-                    return;
+                        !oObject["ProductCode"] &&
+                        // !oObject["RewardPoints"] &&
+                        !oObject["MinPercentage"] &&
+                        !oObject["MaxPercentage"]
+                    ) {
+                        MessageToast.show(
+                            "Kindly Enter Product,Min & Max fields To Continue."
+                        );
+                        return;
+                    }
+
+                } else if (ContributionCondition === 2) {
+                    if (
+                        !oObject["SkuCode"] &&
+                        // !oObject["RewardPoints"] &&
+                        !oObject["MinPercentage"] &&
+                        !oObject["MaxPercentage"]
+                    ) {
+                        MessageToast.show(
+                            "Kindly Enter Pack,Min & Max fields To Continue."
+                        );
+                        return;
+
+                    }
                 }
 
-                }else if(ContributionCondition === 2){
-                    if (
-                    !oObject["SkuCode"]&&
-                   // !oObject["RewardPoints"] &&
-                    !oObject["MinPercentage"] &&
-                    !oObject["MaxPercentage"]
-                ) {
-                    MessageToast.show(
-                        "Kindly Enter Pack,Min & Max fields To Continue."
-                    );
-                    return;
 
-                }
-            }
-                
-                
                 if (bFlag && cFlag) {
                     oObject["editable"] = false;
                     // if (!oObject["RewardGiftName"]) {
@@ -5500,10 +5528,10 @@ sap.ui.define(
                     oModel.refresh();
                 }
             },
-            onRbTableCndtn: function(oEvent){
+            onRbTableCndtn: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelView");
-                
+
             },
             onValueHelpProductsTable3: function (oEvent) {
                 var oView = this.getView();
@@ -5659,7 +5687,7 @@ sap.ui.define(
                 var bContributionType = oModel.getProperty("/ContributionType");
                 var aFinalArray = [];
                 ///for seperate condition
-                if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 0)) {
+                if ((bContributionCondition === 1 || bContributionCondition === 2) && (bContributionType === 0)) {
                     console.log("Table9");
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table9")
@@ -5697,25 +5725,25 @@ sap.ui.define(
                                     ele[aCheckProp[a]] = ele[aCheckProp[a]];
                                 }
                             }
-                            
+
                         }
                         delete ele["editable"];
                         return ele;
                     });
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
-                    
-                    
+
+
                 }
                 ///for combination condition
-                if ((bContributionCondition === 1 ||bContributionCondition === 2) && (bContributionType === 1)) {
+                if ((bContributionCondition === 1 || bContributionCondition === 2) && (bContributionType === 1)) {
                     console.log("Table10");
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table10")
                         .map(function (a) {
                             return Object.assign({}, a);
                         });
-                    var Min=oModelCtrl.getProperty("/MinPercentage");
-                    var Max=oModelCtrl.getProperty("/MaxPercentage");
+                    var Min = oModelCtrl.getProperty("/MinPercentage");
+                    var Max = oModelCtrl.getProperty("/MaxPercentage");
                     var aCheckProp = [
                         "ProductCode",
                         "SkuCode"
@@ -5735,7 +5763,7 @@ sap.ui.define(
                                     ele[aCheckProp[a]] = ele[aCheckProp[a]];
                                 }
                             }
-                            
+
                         }
                         delete ele["editable"];
                         return ele;
@@ -5743,9 +5771,9 @@ sap.ui.define(
                     oPayLoad["MinPercentage"] = Min;
                     oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
-                     //console.log(oPayLoad);
-                     //debugger;
-                    
+                    //console.log(oPayLoad);
+                    //debugger;
+
                 }
                 promise.resolve(oPayLoad);
                 return promise;
@@ -5773,12 +5801,12 @@ sap.ui.define(
                             this._OpenPackValueHelp2(sPath);
                         }.bind(this)
                     );
-                 }else {
+                } else {
                     this._OpenPackValueHelp2(sPath);
                 }
             },
-            _OpenPackValueHelp2:function(mParam1){
-                 this._FilterForPack2("AppProd1");
+            _OpenPackValueHelp2: function (mParam1) {
+                this._FilterForPack2("AppProd1");
             },
             _FilterForPack2: function (mParam1) {
                 var oView = this.getView(),
@@ -5861,7 +5889,7 @@ sap.ui.define(
                     .filter(aFinalFilter, "Control");
                 this._PackValueHelpDialog2.open();
             },
-             _handlePackValueHelpSearch2: function (oEvent) {
+            _handlePackValueHelpSearch2: function (oEvent) {
                 var sValue = oEvent.getParameter("value").trim();
                 if (sValue.length > 0) {
                     var aFilter = new Filter({
@@ -5901,9 +5929,9 @@ sap.ui.define(
                 }
             },
             onPressAddCndtnV2: function (oEvent) {
-               
+
                 if (oEvent !== "add") {
-                    
+
                 } else {
                     var oModel = this.getView().getModel("oModelControl");
                     var oFamiDtlMdl = oModel.getProperty("/Table/Table10");
@@ -5927,7 +5955,7 @@ sap.ui.define(
                     }
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
-                            ProductCode:"",
+                            ProductCode: "",
                             // SkuCode:"",
                             // MinPercentage: "",
                             // MaxPercentage: "",
@@ -5936,7 +5964,7 @@ sap.ui.define(
                         //relvalue and editable properties are added here and will be removed in the postsave function
                     }
                     oModel.refresh();
-                    
+
                 }
             },
             onRemovedCndtn2: function (oEvent) {
@@ -5969,23 +5997,23 @@ sap.ui.define(
                     );
                     return;
                 }
-                if(ContributionType===0){
+                if (ContributionType === 0) {
 
-                if (!oObject["ProductCode"]) {
-                    MessageToast.show(
-                        "Kindly Enter Product,Min & Max fields To Continue."
-                    );
-                    return;
+                    if (!oObject["ProductCode"]) {
+                        MessageToast.show(
+                            "Kindly Enter Product,Min & Max fields To Continue."
+                        );
+                        return;
+                    }
                 }
-                }
-                if(ContributionType===1){
+                if (ContributionType === 1) {
 
-                if (!oObject["SkuCode"]) {
-                    MessageToast.show(
-                        "Kindly Enter Pack,Min & Max fields To Continue."
-                    );
-                    return;
-                }
+                    if (!oObject["SkuCode"]) {
+                        MessageToast.show(
+                            "Kindly Enter Pack,Min & Max fields To Continue."
+                        );
+                        return;
+                    }
                 }
                 if (bFlag && cFlag) {
                     oObject["editable"] = false;
@@ -6067,7 +6095,7 @@ sap.ui.define(
             //         this._OpenPackValueHelp(sParam1);
             //     }
             // },
-            
+
             /**
              * Adds a history entry in the FLP page history
              * @public
