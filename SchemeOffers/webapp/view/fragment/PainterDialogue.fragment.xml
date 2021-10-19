@@ -36,6 +36,12 @@
 							<m:Text text="{oModelControl>PainterMobile}" wrapping="false" />
 						</template>
 					</Column>
+                    <Column >
+						<m:Label text="{i18n>Message}" />
+						<template>
+							<m:Text text="{oModelControl>Message}" wrapping="false" />
+						</template>
+					</Column>
 					
 				</columns>
 			</Table>
