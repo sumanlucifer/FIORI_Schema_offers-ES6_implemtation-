@@ -1,0 +1,14 @@
+<mvc:View
+	controllerName="com.knpl.pragati.downloadreports.controller.App"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+
+	<App
+		id="app"
+		busy="{appView>/busy}"
+		busyIndicatorDelay="0"/>
+	
+
+</mvc:View>

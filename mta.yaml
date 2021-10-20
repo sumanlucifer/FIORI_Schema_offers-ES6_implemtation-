@@ -101,6 +101,10 @@ modules:
       - redeempoints-content.zip
       name: redeempoints
       target-path: resources/
+    - artifacts:
+      - reports-content.zip
+      name: reports
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -250,6 +254,14 @@ modules:
 - name: redeempoints
   type: html5
   path: redeempoints
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: reports
+  type: html5
+  path: reports
   build-parameters:
     builder: custom
     commands:
