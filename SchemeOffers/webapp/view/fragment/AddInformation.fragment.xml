@@ -12,7 +12,7 @@
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
                         </buttons>
                     </RadioButtonGroup>
-                    <Table id="tableId"  visible="{oModelControl>/OfferType/AddInformation}"   items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                    <Table id="tableId"  visible="{oModelControl>/AddInfoTable}"   items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Slab}"/> -->

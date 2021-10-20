@@ -90,6 +90,7 @@ sap.ui.define(
                     EndDate: "",
                     MinDate: new Date(),
                     LoggedInUser: {},
+                    AddInfoTable:false,
                     OfferType: {
                         BasicInformation: true,
                         ApplicableProducts: true,
