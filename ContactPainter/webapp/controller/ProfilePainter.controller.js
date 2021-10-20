@@ -1542,7 +1542,7 @@ sap.ui.define(
                 var statusText = oEvent.getSource().getProperty('text');
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                } else if (statusText == 'Reject') {
+                } else if (statusText == 'Reject'  || statusText == 'Reject Forcefully') {
                     oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
                 }
                 function onYes() {

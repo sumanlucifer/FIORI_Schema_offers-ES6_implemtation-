@@ -88,6 +88,11 @@ sap.ui.define([
             });
         },
 
+        _showMessageToast:function(mTexts){
+            MessageToast.show(this.getResourceBundle.getText(mTexts));
+
+        },
+
         fnCheckProfileCompleted: function (oData) {
             console.log("Function Called");
             //check if aleady completed
