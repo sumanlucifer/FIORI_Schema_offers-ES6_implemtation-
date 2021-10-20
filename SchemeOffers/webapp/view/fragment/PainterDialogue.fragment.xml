@@ -1,11 +1,10 @@
 <core:FragmentDefinition
-    xmlns:m="sap.m"
+    xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
-    xmlns="sap.ui.table"
-    	xmlns:u="sap.ui.unified">
-	  <m:Dialog id="idP" showHeader="false" >
+    xmlns:u="sap.ui.unified">
+	  <!-- <m:Dialog id="idP" showHeader="false" >
            	<Table id="idPainterDialog"
 				rows="{oModelControl>/ofragmentModel}"
 			  selectionMode="None"
@@ -49,5 +48,46 @@
             <m:Button text="Cancel" type="Ghost" press="onSavePaitnerClose" />
             <m:Button  text="Save" type="Ghost" press="onSaveUploadPaitner"/>
         </m:buttons>
-    </m:Dialog>
+    </m:Dialog> -->
+    <Dialog title="{i18n>TitleUploadedMsg}" contentHeight="500px" contentWidth="600px">
+    <VBox id="idVbxAttendanceStatusMsg" width="100%">
+        <f:SimpleForm id="idFormAttendanceStatusMsg" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">                
+        <Table id="idPainterDialog" width="auto" items="{ path: 'oModelControl>/ofragmentModel'}" growingScrollToLoad="false" growing="true" growingThreshold="15">
+            <columns>
+                <Column width="10%">
+                    <Text text="{i18n>Row}"/>
+                </Column>
+                <Column width="20%">
+                    <Text text="{i18n>Mobile}"/>
+                </Column>
+                <Column width="37%">
+                    <Text text="{i18n>Message}"/>
+                </Column>
+                <Column width="13%">
+                    <Text text="{i18n>Status}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{oModelControl>Row}"/>
+                        <Text text="{oModelControl>PainterMobile}"/>
+                        <Text text="{oModelControl>UploadMessage}"/>
+                        <HBox>
+                        <ObjectStatus text="{i18n>Success}" visible="{= ${oModelControl>UploadStatus} === true}" state="{= ${oModelControl>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                        <ObjectStatus text="{i18n>Failure}" visible="{= ${oModelControl>UploadStatus} === false}" state="{= ${oModelControl>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+            </Table>
+        </f:SimpleForm>
+    </VBox>
+    <buttons>
+		<Button text="{i18n>btnClose}" press="onSaveUploadPaitner"/>
+        <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/>
+	</buttons>
+</Dialog>
+
 </core:FragmentDefinition>

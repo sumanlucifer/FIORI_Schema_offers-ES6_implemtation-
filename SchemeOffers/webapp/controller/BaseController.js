@@ -11,6 +11,10 @@ sap.ui.define(
         "sap/m/MessageBox",
         "sap/m/MessageToast",
         "com/knpl/pragati/SchemeOffers/controller/Validator",
+        "sap/ui/core/util/Export",
+        "sap/ui/core/util/ExportTypeCSV",
+        "../model/formatter"
+
     ],
     function (
         Controller,
@@ -22,7 +26,10 @@ sap.ui.define(
         Fragment,
         MessageBox,
         MessageToast,
-        Validator
+        Validator,
+        Export,
+        ExportTypeCSV,
+        formatter
     ) {
         "use strict";
         return Controller.extend(
@@ -187,8 +194,9 @@ sap.ui.define(
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
                                 Id: item.Id,
-                                isSelected: true,
-                                Message:item.UploadMessage
+                                UploadMessage:item.UploadMessage,
+                                UploadStatus:item.UploadStatus,
+                                Row:item.Row
                             };
                         });
                         that.onpressfrag(itemModel);
@@ -254,10 +262,10 @@ sap.ui.define(
             onSaveUploadPaitner: function (oEvent) {
                 var oView = this.getView();
                 var fragmentData = oView.getModel("oModelControl").getProperty("/ofragmentModel");
-                var Items = fragmentData.filter(function (item) {
-                    return item.isSelected === true;
-                });
-                var selectedItems = Items.filter(item => item.Message ==="Valid Painter");
+                // var Items = fragmentData.filter(function (item) {
+                //     return item.isSelected === true;
+                // });
+                var selectedItems = fragmentData.filter(item => item.UploadMessage ==="Valid Painter");
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
                 var itemModel = selectedItems.map(function (item) {
@@ -272,6 +280,59 @@ sap.ui.define(
                 console.log(itemModel);
                 this._CsvDialoge.close();
             },
+            onDataExport: function (oEvent) {
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: ";"
+                        }),
+
+                        // Pass in the model created above
+                        models: this.getView().getModel("oModelControl"),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/ofragmentModel"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [
+                            {
+                            name: "Row",
+                            template: {
+                                content: "{Row}"
+                            }
+                        },
+                         {
+                            name: "MobileNumber",
+                            template: {
+                                content: "{PainterMobile}"
+                            }
+                        }, {
+                            name: "Message",
+                            template: {
+                                content: "{UploadMessage}"
+                            }
+                        }, {
+                            name: "Status",
+                            template: {
+                                content: {
+                                    parts: ["UploadStatus"],
+                                    formatter: formatter.UploadStatus
+                                }
+                            }
+                        }]
+                    });
+
+                    // download exported file
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+                },
+
             onSelectAll: function (oeve) {
                 var isSelected = oeve.getSource().getSelected();
                 var oView = this.getView();
