@@ -78,6 +78,41 @@ sap.ui.define([
             }
 
         },
+        onBannerImageFileChange: function (oEvent) {
+            //console.log(oEvent);
+            var oFileUploder = oEvent.getSource();
+            if (oEvent.getParameter("newValue")) {
+                this._verifyImages(oEvent.mParameters.files[0], oFileUploder);
+            }
+        },
+        _verifyImages: function (files, oFileUploder) {
+            var file = files; //I'm doing just for one element (Iterato over it and do for many)
+            var obj = this; // to get access of the methods inside the other functions
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    var info = {
+                        image: this,
+                        height: this.height,
+                        width: this.width
+                    };
+                    //console.log("Imagem", info); //Just to see the info of the image
+                    obj._removeImageOrNot(info, oFileUploder); //Here you will validate if 
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file); //Iterate here if you need
+        },
+        _removeImageOrNot: function (imgInfo, oFileUploder) {
+            //get the UploadColection files and remove if is needed
+            //console.log(imgInfo)
+            if (imgInfo["height"] < 1400 || imgInfo["width"] < 2800) {
+                oFileUploder.setValue("");
+                MessageToast.show("Kindly Upload a file greater than dimension 2800 X 1400.");
+            }
+        },
+
         onEndDateChange: function (oEvent) {
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl");
@@ -106,6 +141,7 @@ sap.ui.define([
             console.log(oPayLoad)
             return oPromise;
         },
+
         /**
          * Event handler when the share by E-Mail button has been clicked
          * @public

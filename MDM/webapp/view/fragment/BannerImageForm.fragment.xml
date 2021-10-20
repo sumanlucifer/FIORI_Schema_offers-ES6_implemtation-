@@ -15,9 +15,9 @@
                 <Label text="{i18n>colTitle}" />
                 <Input required="true" value="{path:'oModelView>/Title',type:'sap.ui.model.type.String',constraints:{minLength:1}}" />
 
-                <Label text="Upload Banner Image"/>
+                <Label text="{i18n>uploadBannerImage}" required="true"/>
 
-                <unified:FileUploader id="idImageUploader" width="100%" tooltip="{i18n>fileUploaderTrainingtip}" typeMissmatch="handleTypeMissmatch" fileType="png,jpg,jpeg" maximumFileSize="2.1" fileSizeExceed="onFileSizeExceed" useMultipart="false" sendXHR="true" fileAllowed="onUpload"/>
+                <unified:FileUploader change="onBannerImageFileChange" id="idImageUploader" width="100%" tooltip="{i18n>fileUploaderTrainingtip}" typeMissmatch="handleTypeMissmatch" fileType="png,jpg,jpeg" maximumFileSize="2.1" fileSizeExceed="onFileSizeExceed" useMultipart="false" sendXHR="true" fileAllowed="onUpload"/>
                 <Label text="{i18n>ViewExistingImgae}" visible="{= ${oModelControl>/mode}==='Edit'}"/>
                 <Link   press="onImageView" visible="{= ${oModelControl>/mode}==='Edit'}" text="View Image" />
                 
