@@ -244,9 +244,9 @@ sap.ui.define(
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
                 if (sKey === 1) {
-                    oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", true);
+                    oView.getModel("oModelControl").setProperty("/AddInfoTable", true);
                 } else {
-                    oView.getModel("oModelControl").setProperty("/OfferType/AddInformation", false);
+                    oView.getModel("oModelControl").setProperty("/AddInfoTable", false);
                 }
                 oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
             },
@@ -4844,11 +4844,16 @@ sap.ui.define(
                 }
                 if (
                     !oObject["StartDate"] &&
-                    !oObject["EndDate"] &&
-                    !oObject["AchieverCount"]
+                    !oObject["EndDate"]
                 ) {
                     MessageToast.show(
                         "Kindly Enter Either start Date  Or End Date Cash or Count."
+                    );
+                    return;
+                }
+                if(oObject["AchieverCount"] ===""){
+                    MessageToast.show(
+                        "Kindly Enter Achiever Limit."
                     );
                     return;
                 }
