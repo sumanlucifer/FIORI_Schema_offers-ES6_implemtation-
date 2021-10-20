@@ -257,7 +257,7 @@ sap.ui.define(
                 var Items = fragmentData.filter(function (item) {
                     return item.isSelected === true;
                 });
-                var selectedItems = Items.filter(item => item.Message !=="Invalid Painter");
+                var selectedItems = Items.filter(item => item.Message ==="Valid Painter");
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
                 var itemModel = selectedItems.map(function (item) {

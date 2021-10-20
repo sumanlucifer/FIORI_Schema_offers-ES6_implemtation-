@@ -55,7 +55,7 @@
                             <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>AchieverCount'}" /> -->
                              <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>AchieverCount'}" />
                             <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>AchieverCount'}" /> -->
-                        <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>AchieverCount'}" /> 
+                        <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>AchieverCount'}" /> 
                         </VBox>
                         <HBox>
                             <Button  visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddInformation"></Button>
