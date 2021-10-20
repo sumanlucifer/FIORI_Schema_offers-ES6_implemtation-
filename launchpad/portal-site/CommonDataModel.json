@@ -83,6 +83,10 @@
 					"id": "com.knpl.pragati.redeempoints-14-1626786489348",
 					"appId": "com.knpl.pragati.redeempoints",
 					"vizId": "Manage-REDEEMPoints"
+				}, {
+					"id": "com.knpl.pragati.downloadreports-15-1634733502280",
+					"appId": "com.knpl.pragati.downloadreports",
+					"vizId": "Manage-REPORTS"
 				}]
 			}
 		}, {

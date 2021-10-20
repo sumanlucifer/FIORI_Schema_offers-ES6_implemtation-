@@ -28,8 +28,8 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "REDEEMPoints",
-                    "title": "Redeem Points",
+                    "action": "REPORTS",
+                    "title": "Download Reports",
                     "subTitle": "",
                     "icon": ""
                 }
