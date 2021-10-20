@@ -1520,8 +1520,24 @@ sap.ui.define(
                 var statusText = oEvent.getSource().getProperty('text');
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                } else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
-                    oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
+                } 
+                else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
+
+                    var oData = this.getView().getModel("oModelView").getData();
+                    console.log(oData);
+                    var sBankId = oData["PainterBankDetails"]["Id"];
+                    var sPath = "/PainterBankDetails(" + sBankId + ")";
+                    var sStatus=  oModelView.getProperty("/PainterBankDetails/Status");
+                       this.getView().getModel().update(sPath, {
+                        Status: sStatus
+                    }, {
+                    success: function () {
+                       this.handleCancelPress();
+                    },
+                    error: function (a) {
+                    },
+                });
+                   
                 }
                 function onYes() {
                     this.handleSavePress();
@@ -1542,7 +1558,7 @@ sap.ui.define(
                 var statusText = oEvent.getSource().getProperty('text');
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                } else if (statusText == 'Reject'  || statusText == 'Reject Forcefully') {
+                } else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
                     oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
                 }
                 function onYes() {
@@ -3508,7 +3524,8 @@ sap.ui.define(
             onApproveReject: function (mParam1) {
                 var oModelC2 = this.getView().getModel("oModelControl2");
                 var oPayload = oModelC2.getProperty("/AdditionalReqDlg");
-                oPayload.Remark = oModelC2.getProperty("/AdditionalReqDlg_Remark");
+                var sRemark = oModelC2.getProperty("/AdditionalReqDlg_Remark");
+                // oPayload.Remark = oModelC2.getProperty("/AdditionalReqDlg_Remark");
                 var oNewPayLoad = Object.assign({}, oPayload);
                 //oModelControl.setProperty("/bBusy", true);
                 var othat = this;
@@ -3519,24 +3536,31 @@ sap.ui.define(
                 if (mParam1 === "REJECTED") {
                     oNewPayLoad.Status = "REJECTED";
                 }
-                MessageBox.confirm(
-                    "Kindly confirm to change the status.", {
-                    actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
-                    emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (sAction) {
-                        if (sAction == "OK") {
-                            var c1;
-                            c1 = othat._UpdateRequest(oNewPayLoad);
-                            ////added by deepanjali////
-                            othat.onDialogCloseAllReq();
-                            // c1.then(function (oNewPayLoad) {
-                            //    // oModelControl.setProperty("/bBusy", false);
-                            //     othat.onPressBreadcrumbLink();
-                            // })
-                        }
-                    },
+                if (!sRemark) {
+                    var remarkText = "remarkText";
+                    othat.showMessageToast(remarkText);
+                    return;
+                } else {
+                    oNewPayLoad.Remark = sRemark;
+                    MessageBox.confirm(
+                        "Kindly confirm to change the status.", {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                var c1;
+                                c1 = othat._UpdateRequest(oNewPayLoad);
+                                ////added by deepanjali////
+                                othat.onDialogCloseAllReq();
+                                // c1.then(function (oNewPayLoad) {
+                                //    // oModelControl.setProperty("/bBusy", false);
+                                //     othat.onPressBreadcrumbLink();
+                                // })
+                            }
+                        },
+                    }
+                    );
                 }
-                );
             },
             ///// calling penny drop Api//////////////
             addPennyDrop: function () {

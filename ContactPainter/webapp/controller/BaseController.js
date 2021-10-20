@@ -88,8 +88,9 @@ sap.ui.define([
             });
         },
 
-        _showMessageToast:function(mTexts){
-            MessageToast.show(this.getResourceBundle.getText(mTexts));
+        showMessageToast:function(remarkText){
+             
+            MessageToast.show(this.getResourceBundle().getText(remarkText));
 
         },
 
