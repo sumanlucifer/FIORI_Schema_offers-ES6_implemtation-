@@ -3,7 +3,7 @@
         <f:SimpleForm id="EditTrainingQuestion" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
             <f:content>
                 <List id="EditTrainingListQuestionnaire" enableBusyIndicator="true" headerText="{i18n>Questionnaire}" noDataText="{i18n>tableNoData}" growingThreshold="15" growingScrollToLoad="false" growing="true"
-					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+					items="{path: 'oModelView>/TrainingDetails/TrainingQuestionnaire' , templateShareable: false, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
 					<headerToolbar>
 						<Toolbar>
 							<ToolbarSpacer/>
@@ -20,7 +20,7 @@
 				                    <Button icon="sap-icon://delete" press="onDeleteQuestionnaire" type="Transparent" tooltip="{i18n>Delete}" />
 			                    </FlexBox>
                             </HBox>
-                            <VBox items="{oModelView>TrainingQuestionnaireOptions}">
+                            <VBox items="{path:'oModelView>TrainingQuestionnaireOptions', templateShareable: false}">
                                 <ObjectStatus  text="o {oModelView>Option}" state="{= ${oModelView>IsCorrect} ? 'Success' : 'None' }" visible="{= ${oModelView>IsArchived} === false }" class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin"/>
                             </VBox>
                             <Text text=""/>

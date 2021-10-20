@@ -629,6 +629,18 @@ sap.ui.define([
         },
 
         convertToClientObject: function (serviceObject) {
+            var sTrainingType = this.getView().getModel("appView").getProperty("/trainingType");
+            console.log(sTrainingType)
+            if (sTrainingType === "ONLINE") {
+                return this._converToClientObjOnlineT(serviceObject);
+            } else if (sTrainingType === "VIDEO") {
+                return this._converToClientObjVideoT(serviceObject);
+            }
+
+
+        },
+        _converToClientObjOnlineT: function (serviceObject) {
+            console.log("object online")
             var clientObject = [];
 
             var question = {
@@ -690,7 +702,15 @@ sap.ui.define([
         },
 
         convertToServiceObject: function (clientObject) {
-            console.log(clientObject)
+            var sTrainingType = this.getView().getModel("appView").getProperty("/trainingType");
+            if (sTrainingType === "ONLINE") {
+                return this._converToServiceObjOnlineT(clientObject);
+            } else if (sTrainingType === "VIDEO") {
+                return this._converToServiceObjVideoT(clientObject);
+            }
+        },
+        _converToServiceObjOnlineT: function (clientObject) {
+           
             var serviceObject = {};
             var que = clientObject[0];
             serviceObject.Id = que.QuestionId;
@@ -765,6 +785,7 @@ sap.ui.define([
 
 
             return serviceObject;
+
         }
 
     });

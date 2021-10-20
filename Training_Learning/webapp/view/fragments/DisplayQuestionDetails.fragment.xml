@@ -7,17 +7,17 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <Dialog id="QuestionnaireOptionsDialog2" title="Training Question" contentHeight="1200px" contentWidth="1200px">
-        <VBox  width="100%" items="{path: 'oModelView>/oAddTraining', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
+        <VBox  width="100%" items="{path: 'oModelView>/oAddTraining',  templateShareable: false, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
             <items>
                 <VBox class="sapUiSmallMarginBeginEnd">
-                    <ComboBox  items="{ path: '/MasterLanguageSet'}" width="12%" selectedKey="{oModelView>LanguageCode}"  editable="false">
+                    <ComboBox  items="{ path: '/MasterLanguageSet', templateShareable: false}" width="12%" selectedKey="{oModelView>LanguageCode}"  editable="false">
                         <core:Item key="{LanguageCode}" text="{Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
                     </ComboBox>
                     <Text text="{oModelView>Question}" width="100%" />
                     <!-- <HBox justifyContent="End">
                         <Button press="onAddQuestionnaireOptions" type="Emphasized" enabled="{= ${oModelView>Options/length} &lt; 4 }" text="Add Options" icon="sap-icon://add" visible="{= ${oModelView>LanguageCode} === 'EN'}"/>
                     </HBox> -->
-                    <List items="{path: 'oModelView>Options' , filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
+                    <List items="{path: 'oModelView>Options' ,  templateShareable: false, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
                         <CustomListItem>
                             <RadioButtonGroup editable="false" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" >
                                 <buttons>
@@ -26,7 +26,7 @@
                                 </buttons>
                             </RadioButtonGroup>
                           
-                            <Text width="80%"  text="{oModelView>Option}" />
+                            <Text width="80%"  text="{oModelView>Option}" class=""/>
                             <!-- <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/> -->
                         </CustomListItem>
                     </List>
