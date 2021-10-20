@@ -47,9 +47,15 @@
                                 <Text text="{path:'EndDate',formatter:'.formatter.fmtDate2'}" visible="true"/>
                             </f:fields>
                         </f:FormElement> -->
-                        <f:FormElement label="{i18n>formBasicInfoLbl4}">
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}==='EXPIRED'}">
                             <f:fields>
-                                <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7 }" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
+                             <Text visible="{=${OfferStatus}==='EXPIRED'}" text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/>
+                            <DatePicker visible="{=${OfferStatus}!=='EXPIRED'}" editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}!=='EXPIRED'}">
+                            <f:fields>
+                            <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -1124,6 +1130,9 @@
                         <Column>
                             <Text text="{i18n>AchieverLimit}" />
                         </Column>
+                        <Column>
+                            <Text text="{i18n>AchievedPainterCount}" />
+                        </Column>
                         <!-- <Column>
                     <Text text="{i18n>tblColAction}"/>
                 </Column> -->
@@ -1136,6 +1145,7 @@
 									formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelControl2>StartDate}" change="onEndDateCndtAddInfo" width="50%" dateValue="{oModelControl2>EndDate}" placeholder="DD/MM/YYYY" required="true"/>
                                 <!-- <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                                 <Label text="{path:'oModelControl2>AchieverCount'}" />
+                                <Label text="{= ${oModelControl2>/AchievedPainterCount} !==null? 0:${oModelControl2>/AchievedPainterCount}}" />
                             </cells>
                         </ColumnListItem>
                     </items>
