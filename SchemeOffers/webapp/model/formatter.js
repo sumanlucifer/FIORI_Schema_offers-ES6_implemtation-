@@ -418,6 +418,14 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
                 return false;
             }
             return true;
+        },
+        UploadStatus: function (fValue) {
+            if (fValue === true) {
+                return "Success";
+            } else {
+                return "Failure";
+            }
         }
+
     };
 });
