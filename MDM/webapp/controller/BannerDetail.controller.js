@@ -32,334 +32,340 @@ sap.ui.define(
 
         return BaseController.extend(
             "com.knpl.pragati.MDM.controller.BannerDetail", {
-            formatter: formatter,
+                formatter: formatter,
 
-            onInit: function () {
-                var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.getRoute("bannerDetail").attachMatched(this._onRouteMatched, this);
-                sap.ui.getCore().attachValidationError(function (oEvent) {
-                    if (oEvent.getParameter("element").getRequired()) {
-                        oEvent.getParameter("element").setValueState(ValueState.Error);
-                    } else {
+                onInit: function () {
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.getRoute("bannerDetail").attachMatched(this._onRouteMatched, this);
+                    sap.ui.getCore().attachValidationError(function (oEvent) {
+                        if (oEvent.getParameter("element").getRequired()) {
+                            oEvent.getParameter("element").setValueState(ValueState.Error);
+                        } else {
+                            oEvent.getParameter("element").setValueState(ValueState.None);
+                        }
+                    });
+                    sap.ui.getCore().attachValidationSuccess(function (oEvent) {
                         oEvent.getParameter("element").setValueState(ValueState.None);
+                    });
+                },
+
+                _onRouteMatched: function (oEvent) {
+                    var oProp = window.decodeURIComponent(
+                        oEvent.getParameter("arguments").prop
+                    );
+                    var sMode = window.decodeURIComponent(
+                        oEvent.getParameter("arguments").mode
+                    );
+                    var oView = this.getView();
+                    // To display or View details use bindElement
+                    if (oProp.trim() !== "") {
+                        oView.bindElement({
+                            path: "/MobileBannerImageSet(" + oProp + ")"
+                        });
                     }
-                });
-                sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-                    oEvent.getParameter("element").setValueState(ValueState.None);
-                });
-            },
+                    this._initData(oProp, sMode);
+                },
 
-            _onRouteMatched: function (oEvent) {
-                var oProp = window.decodeURIComponent(
-                    oEvent.getParameter("arguments").prop
-                );
-                var sMode = window.decodeURIComponent(
-                    oEvent.getParameter("arguments").mode
-                );
-                var oView = this.getView();
-                // To display or View details use bindElement
-                if (oProp.trim() !== "") {
-                    oView.bindElement({
-                        path: "/MobileBannerImageSet(" + oProp + ")"
+                _initData: function (oProp, sMode) {
+                    var oData = {
+                        mode: "Display",
+                        bindProp: "MobileBannerImageSet(" + oProp + ")",
+                        oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value"
+                    };
+                    var oModel = new JSONModel(oData);
+                    this.getView().setModel(oModel, "oModelControl2");
+
+                    if (sMode === "detail") {
+                        this._showFormFragment("DetailBannerImage");
+                    } else if (sMode === "edit") {
+                        this.handleEditPress();
+                    }
+
+                },
+
+                _showFormFragment: function (sFragmentName) {
+                    var objSection = this.getView().byId("oVbxSmtTbl");
+                    var oView = this.getView();
+                    objSection.destroyItems();
+                    var othat = this;
+                    this._getFormFragment(sFragmentName).then(function (oVBox) {
+                        oView.addDependent(oVBox);
+                        objSection.addItem(oVBox);
                     });
-                }
-                this._initData(oProp);
-            },
+                },
 
-            _initData: function (oProp) {
-                var oData = {
-                    mode: "Display",
-                    bindProp: "MobileBannerImageSet(" + oProp + ")",
-                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/MobileBannerImageSet(" + oProp + ")/$value"
-                };
-                var oModel = new JSONModel(oData);
-                this.getView().setModel(oModel, "oModelControl2");
-                this._showFormFragment("DetailBannerImage");
-            },
-
-            _showFormFragment: function (sFragmentName) {
-                var objSection = this.getView().byId("oVbxSmtTbl");
-                var oView = this.getView();
-                objSection.destroyItems();
-                var othat = this;
-                this._getFormFragment(sFragmentName).then(function (oVBox) {
-                    oView.addDependent(oVBox);
-                    objSection.addItem(oVBox);
-                });
-            },
-
-            _getFormFragment: function (sFragmentName) {
-                var oView = this.getView();
-                var othat = this;
-                this._formFragments = Fragment.load({
-                    id: oView.getId(),
-                    name: "com.knpl.pragati.MDM.view.fragment." + sFragmentName,
-                    controller: othat,
-                }).then(function (oFragament) {
-                    return oFragament;
-                });
-                return this._formFragments;
-            },
-
-            handleCancelPress: function () {
-                this.onNavBack();
-            },
-
-            handleEditPress: function (oEvent) {
-                var oView = this.getView();
-                var oCtrl2Model = oView.getModel("oModelControl2");
-                oCtrl2Model.setProperty("/mode", "Edit");
-                oCtrl2Model.setProperty("/busy", true);
-                var oProp = oCtrl2Model.getProperty("/bindProp");
-                var c1, c2, c3;
-
-                var othat = this;
-                c1 = othat._LoadEditFragment("BannerImageForm");
-                c1.then(function () {
-                    c2 = othat._initEditData(oProp);
-                    c2.then(function (data) {
-                        c3 = othat._editControllerData(data);
+                _getFormFragment: function (sFragmentName) {
+                    var oView = this.getView();
+                    var othat = this;
+                    this._formFragments = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.MDM.view.fragment." + sFragmentName,
+                        controller: othat,
+                    }).then(function (oFragament) {
+                        return oFragament;
                     });
-                });
-            },
-            _LoadEditFragment: function () {
-                var oView = this.getView();
-                var promise = jQuery.Deferred();
-                var othat = this;
-                var oVboxProfile = oView.byId("oVbxSmtTbl");
-                var sFragName = "BannerImageForm";
-                oVboxProfile.destroyItems();
-                return Fragment.load({
-                    id: oView.getId(),
-                    controller: othat,
-                    name: "com.knpl.pragati.MDM.view.fragment." + sFragName,
-                }).then(function (oControlProfile) {
-                    oView.addDependent(oControlProfile);
-                    oVboxProfile.addItem(oControlProfile);
+                    return this._formFragments;
+                },
+
+                handleCancelPress: function () {
+                    this.onNavBack();
+                },
+
+                handleEditPress: function (oEvent) {
+                    var oView = this.getView();
+                    var oCtrl2Model = oView.getModel("oModelControl2");
+                    oCtrl2Model.setProperty("/mode", "Edit");
+                    oCtrl2Model.setProperty("/busy", true);
+                    var oProp = oCtrl2Model.getProperty("/bindProp");
+                    var c1, c2, c3;
+
+                    var othat = this;
+                    c1 = othat._LoadEditFragment("BannerImageForm");
+                    c1.then(function () {
+                        c2 = othat._initEditData(oProp);
+                        c2.then(function (data) {
+                            c3 = othat._editControllerData(data);
+                        });
+                    });
+                },
+                _LoadEditFragment: function () {
+                    var oView = this.getView();
+                    var promise = jQuery.Deferred();
+                    var othat = this;
+                    var oVboxProfile = oView.byId("oVbxSmtTbl");
+                    var sFragName = "BannerImageForm";
+                    oVboxProfile.destroyItems();
+                    return Fragment.load({
+                        id: oView.getId(),
+                        controller: othat,
+                        name: "com.knpl.pragati.MDM.view.fragment." + sFragName,
+                    }).then(function (oControlProfile) {
+                        oView.addDependent(oControlProfile);
+                        oVboxProfile.addItem(oControlProfile);
+                        promise.resolve();
+                        return promise;
+                    });
+
+                },
+                _editControllerData: function (data) {
+                    console.log(data)
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oDataValue = "";
+                    var othat = this;
+
+                    var oDataControl = {
+                        StartTime: "",
+                        EndTime: "",
+                        currDate: new Date(),
+                        busy: false,
+                        mode: "Edit",
+
+                    };
+                    var oModelControl = new JSONModel(oDataControl);
+                    this.getView().setModel(oModelControl, "oModelControl");
+
+                    var oViewModel = new JSONModel(data);
+                    oView.setModel(oViewModel, "oModelView");
+
+                    oView.getModel("oModelControl2").setProperty("/busy", false);
                     promise.resolve();
                     return promise;
-                });
+                },
 
-            },
-            _editControllerData: function (data) {
-                console.log(data)
-                var promise = jQuery.Deferred();
-                var oView = this.getView();
-                var oDataValue = "";
-                var othat = this;
+                _initEditData: function (oProp) {
+                    var oView = this.getView();
+                    var oDataValue = "";
+                    var othat = this;
 
-                var oDataControl = {
-                    StartTime: "",
-                    EndTime: "",
-                    currDate: new Date(),
-                    busy: false,
-                    mode: "Edit",
-
-                };
-                var oModelControl = new JSONModel(oDataControl);
-                this.getView().setModel(oModelControl, "oModelControl");
-
-                var oViewModel = new JSONModel(data);
-                oView.setModel(oViewModel, "oModelView");
-
-                oView.getModel("oModelControl2").setProperty("/busy", false);
-                promise.resolve();
-                return promise;
-            },
-
-            _initEditData: function (oProp) {
-                var oView = this.getView();
-                var oDataValue = "";
-                var othat = this;
-
-                return new Promise(function (resolve, reject) {
-                    oView.getModel().read("/" + oProp, {
-                        success: function (data) {
-                            resolve(data);
-                        },
-                        error: function (a) {
-                            oView.getModel("oModelControl2").setProperty("/busy", false);
-                            reject(a);
-                        },
-                    });
-                })
-            },
-
-            onUpload: function (oEvent) {
-                var oFile = oEvent.getSource().FUEl.files[0];
-                this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
-            },
-
-            handleTypeMissmatch: function () {
-
-            },
-
-            onImageView: function (oEvent) {
-                var oButton = oEvent.getSource();
-                var oView = this.getView();
-                var oThat = this;
-                if (!oThat.ImageDialog) {
-                    Fragment.load({
-                        name: "com.knpl.pragati.MDM.view.fragment.ImageDialog",
-                        controller: oThat,
-                    }).then(
-                        function (oDialog) {
-                            oView.addDependent(oDialog);
-                            oThat.ImageDialog = oDialog;
-                            oDialog.open();
+                    return new Promise(function (resolve, reject) {
+                        oView.getModel().read("/" + oProp, {
+                            success: function (data) {
+                                resolve(data);
+                            },
+                            error: function (a) {
+                                oView.getModel("oModelControl2").setProperty("/busy", false);
+                                reject(a);
+                            },
                         });
-                } else {
-                    oThat.ImageDialog.open();
-                }
-            },
+                    })
+                },
 
-            onPressCloseImageDialog: function () {
-                this.ImageDialog.close();
-            },
+                onUpload: function (oEvent) {
+                    var oFile = oEvent.getSource().FUEl.files[0];
+                    this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+                },
 
-            getImageBinary: function (oFile) {
-                var oFileReader = new FileReader();
-                var sFileName = oFile.name;
-                return new Promise(function (res, rej) {
+                handleTypeMissmatch: function () {
 
-                    if (!(oFile instanceof File)) {
-                        res(oFile);
-                        return;
+                },
+
+                onImageView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    var oThat = this;
+                    if (!oThat.ImageDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.MDM.view.fragment.ImageDialog",
+                            controller: oThat,
+                        }).then(
+                            function (oDialog) {
+                                oView.addDependent(oDialog);
+                                oThat.ImageDialog = oDialog;
+                                oDialog.open();
+                            });
+                    } else {
+                        oThat.ImageDialog.open();
                     }
+                },
 
-                    oFileReader.onload = function () {
+                onPressCloseImageDialog: function () {
+                    this.ImageDialog.close();
+                },
+
+                getImageBinary: function (oFile) {
+                    var oFileReader = new FileReader();
+                    var sFileName = oFile.name;
+                    return new Promise(function (res, rej) {
+
+                        if (!(oFile instanceof File)) {
+                            res(oFile);
+                            return;
+                        }
+
+                        oFileReader.onload = function () {
+                            res({
+                                Image: oFileReader.result,
+                                name: sFileName
+                            });
+                        };
                         res({
-                            Image: oFileReader.result,
+                            Image: oFile,
                             name: sFileName
                         });
-                    };
-                    res({
-                        Image: oFile,
-                        name: sFileName
                     });
-                });
-            },
+                },
 
-            _fnAddFile: function (oItem) {
-                this.getModel("oModelControl").setProperty("/oImage", {
-                    Image: oItem.Image, //.slice(iIndex),
-                    FileName: oItem.name,
-                    IsArchived: false
-                });
-                this.getModel("oModelControl").refresh();
-            },
-
-            handleSavePress: function () {
-                var oModel = this.getView().getModel("oModelView");
-                var oValidator = new Validator();
-                var oVbox = this.getView().byId("idVbx");
-                var bValidation = oValidator.validate(oVbox, true);
-                var oModelContrl = this.getView().getModel("oModelControl");
-
-                if (bValidation == false) {
-                    MessageToast.show(
-                        "Kindly input all the mandatory(*) fields to continue."
-                    );
-                }
-                if (bValidation) {
-                    this._putDataToSave();
-                }
-            },
-
-            _putDataToSave: function () {
-                var oView = this.getView();
-                var oViewModel = oView.getModel("oModelView");
-                var oAddData = oViewModel.getData();
-                var oPayLoad = this._ReturnObjects(oAddData);
-                var othat = this;
-                var oData = this.getView().getModel();
-                var c1, c2;
-                if (oPayLoad.EndTime <= oPayLoad.StartTime) {
-                    MessageToast.show(
-                        "End date should be greater than Start date."
-                    );
-                } else {
-                    this.getView().getModel("oModelControl2").setProperty("/busy", true);
-                    c1 = this._putUpdateData(oPayLoad);
-                    c1.then(function (oData) {
-                        c2 = othat._ImageUpload(oPayLoad);
-                        c2.then(function () {
-                            othat.navPressBackBanner();
-                        });
+                _fnAddFile: function (oItem) {
+                    this.getModel("oModelControl").setProperty("/oImage", {
+                        Image: oItem.Image, //.slice(iIndex),
+                        FileName: oItem.name,
+                        IsArchived: false
                     });
-                }
-            },
+                    this.getModel("oModelControl").refresh();
+                },
 
-            _ImageUpload: function (oPayLoad) {
-                var that = this;
-                var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-                var newSpath = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
-                return new Promise(function (resolve, reject) {
-                    if (!oImage) {
-                        resolve();
-                        return;
-                    };
-                    var settings = {
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
-                        data: oImage.Image,
-                        method: "PUT",
-                        headers: that.getModel().getHeaders(),
-                        contentType: "image/png",
-                        processData: false,
-                        success: function (x) {
-                            that.getView().getModel("oModelControl2").setProperty("/busy", false);
-                            MessageToast.show("Banner Image Successfully Updated");
-                            resolve(x);
-                        },
-                        error: function (a) {
-                            that.getView().getModel("oModelControl2").setProperty("/busy", false);
-                            MessageToast.show(
-                                "Error in updating Banner Image"
-                            );
-                            reject(a);
-                        }
-                    };
-                    $.ajax(settings);
-                });
-            },
+                handleSavePress: function () {
+                    var oModel = this.getView().getModel("oModelView");
+                    var oValidator = new Validator();
+                    var oVbox = this.getView().byId("idVbx");
+                    var bValidation = oValidator.validate(oVbox, true);
+                    var oModelContrl = this.getView().getModel("oModelControl");
 
-            _putUpdateData: function (oPayLoad) {
-                var oData = this.getView().getModel();
-                var othat = this;
-                var path = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
-                return new Promise(function (resolve, reject) {
-                    oData.update(path, oPayLoad, {
-                        success: function (oData) {
-                            resolve(oData);
-                        },
-                        error: function (a) {
-                            MessageBox.error(
-                                "Unable to update Banner Image due to server issues", {
-                                title: "Error Code: " + a.statusCode,
-                            }
-                            );
-                            reject(a);
-                        },
-                    });
-                })
-            },
-
-            _ReturnObjects: function (mParam) {
-                var obj = Object.assign({}, mParam);
-                var oNew = Object.entries(obj).reduce(
-                    (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
-                );
-
-                var patt1 = /Id/g;
-
-                for (var i in oNew) {
-                    if (i.match(patt1) !== null) {
-                        oNew[i] = parseInt(oNew[i]);
+                    if (bValidation == false) {
+                        MessageToast.show(
+                            "Kindly input all the mandatory(*) fields to continue."
+                        );
                     }
+                    if (bValidation) {
+                        this._putDataToSave();
+                    }
+                },
+
+                _putDataToSave: function () {
+                    var oView = this.getView();
+                    var oViewModel = oView.getModel("oModelView");
+                    var oAddData = oViewModel.getData();
+                    var oPayLoad = this._ReturnObjects(oAddData);
+                    var othat = this;
+                    var oData = this.getView().getModel();
+                    var cA, c1, c2;
+
+                    this.getView().getModel("oModelControl2").setProperty("/busy", true);
+                    cA = this._BannerEndDateCheck(oPayLoad);
+                    cA.then(function (oPayLoad) {
+                        c1 = othat._putUpdateData(oPayLoad);
+                        c1.then(function (oData) {
+                            c2 = othat._ImageUpload(oPayLoad);
+                            c2.then(function () {
+                                othat.navPressBackBanner();
+                            });
+                        });
+                    })
+
+
+                },
+
+                _ImageUpload: function (oPayLoad) {
+                    var that = this;
+                    var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
+                    var newSpath = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
+                    return new Promise(function (resolve, reject) {
+                        if (!oImage) {
+                            resolve();
+                            return;
+                        };
+                        var settings = {
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                            data: oImage.Image,
+                            method: "PUT",
+                            headers: that.getModel().getHeaders(),
+                            contentType: "image/png",
+                            processData: false,
+                            success: function (x) {
+                                that.getView().getModel("oModelControl2").setProperty("/busy", false);
+                                MessageToast.show("Banner Image Successfully Updated");
+                                resolve(x);
+                            },
+                            error: function (a) {
+                                that.getView().getModel("oModelControl2").setProperty("/busy", false);
+                                MessageToast.show(
+                                    "Error in updating Banner Image"
+                                );
+                                reject(a);
+                            }
+                        };
+                        $.ajax(settings);
+                    });
+                },
+
+                _putUpdateData: function (oPayLoad) {
+                    var oData = this.getView().getModel();
+                    var othat = this;
+                    var path = "/MobileBannerImageSet(" + oPayLoad.Id + ")";
+                    return new Promise(function (resolve, reject) {
+                        oData.update(path, oPayLoad, {
+                            success: function (oData) {
+                                resolve(oData);
+                            },
+                            error: function (a) {
+                                MessageBox.error(
+                                    "Unable to update Banner Image due to server issues", {
+                                        title: "Error Code: " + a.statusCode,
+                                    }
+                                );
+                                reject(a);
+                            },
+                        });
+                    })
+                },
+
+                _ReturnObjects: function (mParam) {
+                    var obj = Object.assign({}, mParam);
+                    var oNew = Object.entries(obj).reduce(
+                        (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
+                    );
+
+                    var patt1 = /Id/g;
+
+                    for (var i in oNew) {
+                        if (i.match(patt1) !== null) {
+                            oNew[i] = parseInt(oNew[i]);
+                        }
+                    }
+                    return oNew;
                 }
-                return oNew;
             }
-        }
 
         );
     }

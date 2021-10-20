@@ -16,7 +16,7 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="navPressBackBanner"/>
-                <Button width="7%" text="{i18n>Edit}" type="Emphasized" press="handleEditPress" visible="{= (${oModelControl2>/mode} === 'Display') }"/>
+                <!-- <Button width="7%" text="{i18n>Edit}" type="Emphasized" press="handleEditPress" visible="{= (${oModelControl2>/mode} === 'Display') }"/> -->
                 <Button width="7%" text="{i18n>Save}" type="Emphasized" press="handleSavePress" visible="{= (${oModelControl2>/mode} === 'Edit') }"/>
             </Toolbar>
         </footer>

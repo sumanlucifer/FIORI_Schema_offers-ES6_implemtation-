@@ -6,7 +6,7 @@ sap.ui.define([
     "sap/m/library",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-], function (Controller, UIComponent, mobileLibrary,MessageToast,MessageBox) {
+], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -62,7 +62,50 @@ sap.ui.define([
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
+        onStartDateChange: function (oEvent) {
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl");
+            var oModelView = oView.getModel("oModelView");
+            var oStartDate = oEvent.getSource().getDateValue();
+            var oEndDate = oModelView.getProperty("/EndTime");
+            if (oEndDate) {
+                if (oStartDate > oEndDate) {
+                    MessageToast.show("Kindly select a date less than or equal to end date.");
+                    oModelControl.setProperty("/StartTime", "");
+                    oModelView.setProperty("/StartTime", null);
+                    return;
+                }
+            }
 
+        },
+        onEndDateChange: function (oEvent) {
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl");
+            var oModelView = oView.getModel("oModelView");
+            var oEndDate = oEvent.getSource().getDateValue();
+            var oStartDate = oModelView.getProperty("/StartTime");
+            if (oStartDate) {
+                if (oStartDate > oEndDate) {
+                    MessageToast.show("Kindly select a date more than or equal to start date.");
+                    oModelControl.setProperty("/EndTime", "");
+                    oModelView.setProperty("/EndTime", null);
+                    return;
+                }
+            }
+
+        },
+        _BannerEndDateCheck: function (oPayLoad) {
+            var oPromise = jQuery.Deferred();
+            if (oPayLoad.hasOwnProperty("EndTime")) {
+                oPayLoad["EndTime"] = new Date(
+                    oPayLoad["EndTime"].setHours(23, 59, 59, 999)
+                    //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
+                );
+            }
+            oPromise.resolve(oPayLoad);
+            console.log(oPayLoad)
+            return oPromise;
+        },
         /**
          * Event handler when the share by E-Mail button has been clicked
          * @public
@@ -96,10 +139,10 @@ sap.ui.define([
 
         },
 
-		/*
-		 * Common function for showing toast messages
-		 * @param sMsgTxt: i18n Key string
-		 */
+        /*
+         * Common function for showing toast messages
+         * @param sMsgTxt: i18n Key string
+         */
         showToast: function (sMsgTxt) {
             MessageToast.show(this.getResourceBundle().getText(sMsgTxt));
         }
