@@ -66,7 +66,16 @@
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
                         <!-- <Button icon="sap-icon://add" text="{i18n>AddRedemption}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button> -->
-                        <Button icon="sap-icon://add" text="{i18n>AddRedemption}" visible="{parts:['LoginInfo>/UserTypeId'],formatter:'.formatter.btnAddRedemption'}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button>
+                              <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>GenerateReports}" type="Ghost" text="{i18n>GenerateReports}" buttonMode="Regular" useDefaultActionOnly="false">
+                            <menu>
+                                <Menu itemSelected="onMenuAction">
+                                    <MenuItem text="{i18n>PainterDataDump}" icon="sap-icon://save" />
+                                    <MenuItem text="{i18n>ProductPurchaseHistory}" icon="sap-icon://save" />
+                                      <MenuItem text="{i18n>DealerMappedWithPainter}" icon="sap-icon://save" />
+                                </Menu>
+                            </menu>
+		                </MenuButton>
+
                         <!-- <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button> -->
                     </Toolbar>
                 </headerToolbar>
