@@ -118,7 +118,7 @@
 					]
                 },
                  {
-					"pattern": "bannerdetail/{prop}/{layout}",
+					"pattern": "bannerdetail/{prop}/{mode}/{layout}",
 					"name": "bannerDetail",
 					"target": [
 						"master",

@@ -288,12 +288,31 @@ sap.ui.define(
                     this.getOwnerComponent().getHelper().then(function (oHelper) {
                         oNextUIState = oHelper.getNextUIState(1);
                         oRouter.navTo("bannerDetail", {
-                            prop:oObject["Id"],
+                            prop: oObject["Id"],
+                            mode: "detail",
                             layout: oNextUIState.layout
                         });
                     }.bind(this));
                 },
+                onListEditPress: function (oEvent) {
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    var oObject = oEvent.getSource().getBindingContext().getObject();
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext()
+                        .getPath()
+                        .substr(1);
 
+                    var oNextUIState;
+                    this.getOwnerComponent().getHelper().then(function (oHelper) {
+                        oNextUIState = oHelper.getNextUIState(1);
+                        oRouter.navTo("bannerDetail", {
+                            prop: oObject["Id"],
+                            mode: "edit",
+                            layout: oNextUIState.layout
+                        });
+                    }.bind(this));
+                },
                 onAdd: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
                     var oNextUIState;

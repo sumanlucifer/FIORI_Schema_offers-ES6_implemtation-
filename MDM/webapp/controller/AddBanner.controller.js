@@ -57,7 +57,7 @@ sap.ui.define([
             this._initData("add", "", sId);
         },
 
-        _GetServiceData: function () { },
+        _GetServiceData: function () {},
 
         _initData: function (mParMode) {
             var oViewModel = new JSONModel({
@@ -69,7 +69,7 @@ sap.ui.define([
             if (mParMode == "add") {
                 this._showFormFragment("BannerImageForm");
                 this.getView().unbindElement();
-            } else { }
+            } else {}
 
             var oDataControl = {
                 StartTime: "",
@@ -232,23 +232,22 @@ sap.ui.define([
             var oPayLoad = this._ReturnObjects(oAddData);
             var othat = this;
             var oData = this.getView().getModel();
-            var c1, c2;
-            if (oPayLoad.EndTime <= oPayLoad.StartTime) {
-                MessageToast.show(
-                    "End date should be greater than Start date."
-                );
-            } else {
-                this.getView().getModel("oModelControl").setProperty("/busy", true);
-                c1 = this._postCreateData(oPayLoad);
+            var c1, c2, cA;
+
+            this.getView().getModel("oModelControl").setProperty("/busy", true);
+            cA = this._BannerEndDateCheck(oPayLoad);
+            cA.then(function (oPayLoad) {
+                c1 = othat._postCreateData(oPayLoad);
                 c1.then(function (oData) {
                     c2 = othat._ImageUpload(oData);
                     c2.then(function () {
                         othat.navPressBackBanner();
                     });
                 });
-            }
-        },
+            });
 
+
+        },
         _ImageUpload: function (oData) {
             var that = this;
             var oModelContrl = this.getView().getModel("oModelControl");
@@ -288,8 +287,8 @@ sap.ui.define([
                     error: function (a) {
                         MessageBox.error(
                             "Unable to create Banner Image due to server issues", {
-                            title: "Error Code: " + a.statusCode,
-                        }
+                                title: "Error Code: " + a.statusCode,
+                            }
                         );
                         reject(a);
                     },

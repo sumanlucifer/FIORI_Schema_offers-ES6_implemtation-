@@ -12,7 +12,6 @@
                 <core:Title text="   " />
                 <Label text="{i18n>colStartTime}" />
                 <Text text="{parts: [ {path: 'StartTime'} ], formatter : '.formatter.formatDateTime' }"/>
-
                 <Label  text="{i18n>colEndTime}"/>
                 <Text text="{parts: [ {path: 'EndTime'} ], formatter : '.formatter.formatDateTime' }"/>
             </f:content>
