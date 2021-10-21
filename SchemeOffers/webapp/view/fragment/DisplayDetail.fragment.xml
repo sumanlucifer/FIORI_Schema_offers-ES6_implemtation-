@@ -592,7 +592,19 @@
                 </ColumnListItem>
             </items>
         </Table>
-        
+         <HBox visible="{=${oModelDisplay>/ContributionType}===1}" class="sapUiSmallMarginBegin">
+        <Input
+            editable="false"
+			value="{path:'oModelDisplay>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			description="{i18n>Min}"
+			width="200px"/>
+            <Input
+            editable="false"
+			value="{path:'oModelDisplay>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			description="{i18n>Max}"
+			width="200px"/>
+            
+        </HBox>
         </VBox>
        </VBox>
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
