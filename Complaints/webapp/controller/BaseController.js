@@ -82,6 +82,10 @@ sap.ui.define([
                     }
          },
 
+         MessageToast:function(reopenText){
+             
+         }
+
 		/**
 		 * Event handler when the share by E-Mail button has been clicked
 		 * @public

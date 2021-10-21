@@ -1,16 +1,23 @@
 <core:FragmentDefinition xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
 <!-- <Dialog   binding="{oModelControl>/QRCodeData}" class="sapUiContentPadding" title="{i18n>TokenCodeDetails}" titleAlignment="Center" > -->
-        <Dialog  contentHeight="50%"  class="sapUiContentPadding" title="{i18n>ReopenReason}" >
+        <Dialog  contentHeight="30%" stretch="false" class="sapUiContentPadding" title="{i18n>ReopenReason}" >
         <content>
             <form:SimpleForm  layout="ResponsiveGridLayout"	
            	singleContainerFullSize="false">
-                	<ComboBox id="idcombo"  required="true"
+               <ComboBox id="idcombo"  required="true"  value="{oModelControl>/ComplainReopenDialoge/ComplainReopenReason}"
+                    selectedKey="{oModelControl>/ComplainReopenDialoge/ComplainReopenReasonId}"
+				items="{path:'/MasterComplainReopenReasonSet'}"> 
+				<core:Item 
+                key="{Id}"
+                text="{Reason}" />
+			</ComboBox>
+                	<!-- <ComboBox id="idcombo"  required="true"
                     selectedKey="{oModelControl>/ComplainReopenReasonId}"
 				items="{path:'/MasterComplainReopenReasonSet'}">
 				<core:Item 
                 key="{Id}-{Reason}"
                 text="{Reason}" />
-			</ComboBox>
+			</ComboBox> -->
             </form:SimpleForm>
         </content>
 <beginButton>
