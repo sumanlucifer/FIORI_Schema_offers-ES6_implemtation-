@@ -1194,6 +1194,7 @@ sap.ui.define(
                     modeEdit: false,
                     StartDate: "",
                     EndDate: "",
+                    AddInfoTable:false,
                     MinDate: new Date(),
                     LoggedInUser: {},
                     OfferType: {

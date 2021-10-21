@@ -265,7 +265,7 @@ sap.ui.define(
                 // var Items = fragmentData.filter(function (item) {
                 //     return item.isSelected === true;
                 // });
-                var selectedItems = fragmentData.filter(item => item.UploadMessage ==="Valid Painter");
+                var selectedItems = fragmentData.filter(item => item.UploadStatus === true);
                 // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
                 // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
                 var itemModel = selectedItems.map(function (item) {
@@ -407,6 +407,7 @@ sap.ui.define(
                 var oModelView = oView.getModel("oModelView");
                 var oStartDate = oEvent.getSource().getDateValue();
                 var oEndDate = oModelView.getProperty("/EndDate");
+               oModelControl.setProperty("/StartDate",oStartDate);
                 if (oEndDate) {
                     if (oStartDate > oEndDate) {
                         MessageToast.show("Kindly select a date less than end date.");
@@ -430,6 +431,7 @@ sap.ui.define(
                 var oModelView = oView.getModel("oModelView");
                 var oEndDate = oEvent.getSource().getDateValue();
                 var oStartDate = oModelView.getProperty("/StartDate");
+                 oModelControl.setProperty("/EndDate",oEndDate);
                 if (oStartDate) {
                     if (oStartDate > oEndDate) {
                         MessageToast.show("Kindly select a date more than or equal start date.");
@@ -5312,7 +5314,7 @@ sap.ui.define(
                         }
                     },
                     error: function (error) {
-                        // that._Error(error);
+                         MessageToast.show(error.responseText.toString());
                     }
                 };
                 $.ajax(settings);
@@ -5333,8 +5335,9 @@ sap.ui.define(
                                 PainterMobile: item.PainterMobile,
                                 PainterName: item.PainterName,
                                 UploadMessage: item.UploadMessage,
+                                UploadStatus: item.UploadStatus,
                                 Id: item.Id,
-                                isSelected: true
+                                //isSelected: true
                             };
                         });
                         that.onpressfrag2(itemModel);
@@ -5373,10 +5376,10 @@ sap.ui.define(
                 var fragmentData = oView.getModel("oModelControl3").getProperty("/ofragmentModel");
                 var OfferId = oView.getModel("oModelControl3").getProperty("/OfferId");
                 var selectedItems = fragmentData.filter(function (item) {
-                    //return item.isSelected === true;
-                    if (item.isSelected === true && item.UploadMessage === "Applicable") {
-                        return item.isSelected === true;
-                    }
+                    return item.UploadStatus === true;
+                    // if (item.isSelected === true && item.UploadMessage === "Applicable") {
+                    //     return item.isSelected === true;
+                    // }
                 });
                 var oData = { "OfferDeselectedPainter": [] };
                 var xUnique = new Set();
@@ -5425,6 +5428,7 @@ sap.ui.define(
                         },
                         error: function (data) {
                             MessageToast.show("Error Uploading Painters.");
+                            
                             reject(data);
                         },
                     });
