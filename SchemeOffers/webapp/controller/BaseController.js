@@ -407,7 +407,6 @@ sap.ui.define(
                 var oModelView = oView.getModel("oModelView");
                 var oStartDate = oEvent.getSource().getDateValue();
                 var oEndDate = oModelView.getProperty("/EndDate");
-               oModelControl.setProperty("/StartDate",oStartDate);
                 if (oEndDate) {
                     if (oStartDate > oEndDate) {
                         MessageToast.show("Kindly select a date less than end date.");
@@ -431,7 +430,6 @@ sap.ui.define(
                 var oModelView = oView.getModel("oModelView");
                 var oEndDate = oEvent.getSource().getDateValue();
                 var oStartDate = oModelView.getProperty("/StartDate");
-                 oModelControl.setProperty("/EndDate",oEndDate);
                 if (oStartDate) {
                     if (oStartDate > oEndDate) {
                         MessageToast.show("Kindly select a date more than or equal start date.");
