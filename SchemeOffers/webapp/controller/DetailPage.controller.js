@@ -1165,7 +1165,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter";
+                    "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio";
                 oView.getModel().read("/" + sPath, {
                     urlParameters: {
                         $expand: exPand,
@@ -1471,6 +1471,21 @@ sap.ui.define(
                         "/Table/Table8",
                         oData["OfferAchiever"]["results"]
                     );
+                }
+                if (oData["OfferContributionRatio"]["results"].length > 0) {
+                    if(oData["ContributionCondition"]===0){
+                        oModelControl2.setProperty(
+                        "/Table/Table9",
+                        oData["OfferContributionRatio"]["results"]
+                    );
+                    }
+                    else if(oData["ContributionCondition"]===1){
+                        oModelControl2.setProperty(
+                        "/Table/Table10",
+                        oData["OfferContributionRatio"]["results"]
+                    );
+                    }
+                    
                 }
                 promise.resolve(oData);
                 return promise;
