@@ -1506,63 +1506,99 @@ sap.ui.define(
                 }
             },
             onRbBankStatus: function (oEvent) {
-                // var iIndex = oEvent.getSource().getSelectedIndex();
-                // var oView = this.getView();
-                // var oModelView = oView.getModel("oModelView");
-                // if (iIndex == 0) {
-                //     oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                // } else if (iIndex == 1) {
-                //     oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
-                // }
                 /*Aditya changes start*/
                 var oView = this.getView();
+                var othat = this;
                 var oModelView = oView.getModel("oModelView");
                 var statusText = oEvent.getSource().getProperty('text');
-                if (statusText == 'Approve') {
-                    oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
-                } 
-                else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
-
-                    var oData = this.getView().getModel("oModelView").getData();
-                    console.log(oData);
-                    var sBankId = oData["PainterBankDetails"]["Id"];
-                    var sPath = "/PainterBankDetails(" + sBankId + ")";
-                    var sStatus=  oModelView.getProperty("/PainterBankDetails/Status");
-                       this.getView().getModel().update(sPath, {
-                        Status: sStatus
-                    }, {
-                    success: function () {
-                       this.handleCancelPress();
-                    },
-                    error: function (a) {
-                    },
-                });
-                   
-                }
                 function onYes() {
-                    this.handleSavePress();
+                    othat.onReject(statusText);
                 }
                 this.showWarning("Do you want to " + " " + statusText + "?", onYes);
                 /*Aditya changes end*/
             },
-            onRbKycStatus: function (oEvent) {
-                // var iIndex = oEvent.getSource().getSelectedIndex();
-                // if (iIndex == 0) {
-                //     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                // } else if (iIndex == 1) {
-                //     oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
-                // }
-                /*Aditya changes start*/
+            onReject: function (statusText) {
                 var oView = this.getView();
+                var othat = this;
                 var oModelView = oView.getModel("oModelView");
-                var statusText = oEvent.getSource().getProperty('text');
+                if (statusText == 'Approve') {
+                    oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
+                    var oData = this.getView().getModel("oModelView").getData();
+                    var sBankId = oData["PainterBankDetails"]["Id"];
+                    var sPath = "/PainterBankDetailsSet(" + sBankId + ")" + "/Status";
+                    var sStatus = oModelView.getProperty("/PainterBankDetails/Status");
+                    this.getView().getModel().update(sPath, {
+                        Status: sStatus
+                    }, {
+                        success: function () {
+                            othat.handleCancelPress();
+                        },
+                        error: function (a) {
+                        },
+                    });
+                }
+                else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
+                    oModelView.setProperty("/PainterBankDetails/Status", "REJECTED");
+                    var oData = this.getView().getModel("oModelView").getData();
+                    var sBankId = oData["PainterBankDetails"]["Id"];
+                    var sPath = "/PainterBankDetailsSet(" + sBankId + ")" + "/Status";
+                    var sStatus = oModelView.getProperty("/PainterBankDetails/Status");
+                    this.getView().getModel().update(sPath, {
+                        Status: sStatus
+                    }, {
+                        success: function () {
+                            othat.handleCancelPress();
+                        },
+                        error: function (a) {
+                        },
+                    });
+                }
+            },
+            onRejectKYC: function (statusText) {
+                var oView = this.getView();
+                var othat = this;
+                var oModelView = oView.getModel("oModelView");
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
-                } else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
-                    oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
+                    var oData = this.getView().getModel("oModelView").getData();
+                    var sBankId = oData["PainterKycDetails"]["Id"];
+                    var sPath = "/PainterKycDetailsSet(" + sBankId + ")" + "/Status";
+                    var sStatus = oModelView.getProperty("/PainterKycDetails/Status");
+                    this.getView().getModel().update(sPath, {
+                        Status: sStatus
+                    }, {
+                        success: function () {
+                            othat.handleCancelPress();
+                        },
+                        error: function (a) {
+                        },
+                    });
                 }
+                else if (statusText == 'Reject' || statusText == 'Reject Forcefully') {
+                    oModelView.setProperty("/PainterKycDetails/Status", "REJECTED");
+                    var oData = this.getView().getModel("oModelView").getData();
+                    var sBankId = oData["PainterKycDetails"]["Id"];
+                    var sPath = "/PainterKycDetailsSet(" + sBankId + ")" + "/Status";
+                    var sStatus = oModelView.getProperty("/PainterKycDetails/Status");
+                    this.getView().getModel().update(sPath, {
+                        Status: sStatus
+                    }, {
+                        success: function () {
+                            othat.handleCancelPress();
+                        },
+                        error: function (a) {
+                        },
+                    });
+                }
+            },
+            onRbKycStatus: function (oEvent) {
+                /*Aditya changes start*/
+                var oView = this.getView();
+                var othat = this;
+                var oModelView = oView.getModel("oModelView");
+                var statusText = oEvent.getSource().getProperty('text');
                 function onYes() {
-                    this.handleSavePress();
+                    othat.onRejectKYC(statusText);
                 }
                 this.showWarning("Do you want to " + " " + statusText + "?", onYes);
                 /*Aditya changes end*/

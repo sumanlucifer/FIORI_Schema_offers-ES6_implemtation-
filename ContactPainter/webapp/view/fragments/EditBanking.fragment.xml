@@ -95,7 +95,7 @@
         <f:SimpleForm>
         <!--Deepanjali changes start-->
         <f:content>
-                <!-- <HBox  visible="{= ${PainterBankDetails} !== null}"> -->
+                <HBox  visible="{= ${oModelControl>/PaymentReferenceId} !== null}">
                  <HBox  visible="{= !${oModelControl>/InitialBankNull}}">
                 <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
    <Label   text="{i18n>TransactionId}:" design="Bold"/>
@@ -107,6 +107,8 @@
       <Label class="sapUiSmallMarginBegin" design="Bold" text="{i18n>TransactionMessage}:"/>
        <Text class="sapUiTinyMarginBegin" text= "{oModelControl>/PaymentTransactionMessage}"/>
   </HBox>
+   </HBox>
+  
                   </HBox>
 </f:content>
       <!--Deepanjali changes end-->
