@@ -40,7 +40,7 @@
 
                 <RadioButtonGroup id="rbg1" columns="3" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" select="onRadioBtnChange">
                     <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}" editable="false"/>
-                    <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false"/>
+                    <RadioButton id="RB2" text="Market Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}" editable="false"/>
                     <RadioButton id="RB3" text="Painter Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}" editable="false"/>
                 </RadioButtonGroup>
 

@@ -84,7 +84,7 @@
                 <Label text="Select Target Group" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}"/>
                 <RadioButtonGroup id="rbg1" columns="3" visible="{= ${oModelView>/TrainingDetails/TrainingTypeId} !== '2'}" select="onRadioBtnChange">
                     <RadioButton id="RB1" text="All Painters" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'ALL'}"/>
-                    <RadioButton id="RB2" text="Group Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
+                    <RadioButton id="RB2" text="Market Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'GROUP'}"/>
                     <RadioButton id="RB3" text="Painter Specific" selected="{= ${oModelView>/TrainingDetails/TrainingFilterType} === 'PAINTER'}"/>
                      
                 </RadioButtonGroup>
