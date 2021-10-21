@@ -41,8 +41,9 @@
                             <Text text="{parts: [ {path: 'EndTime'} ], formatter : '.formatter.formatDateTime' }"/>
                             <HBox>
                                 <items>
+                                 <Button icon="sap-icon://edit" press="onListEditPress" type="Transparent" tooltip="{i18n>Edit}"/> 
                                     <Button icon="sap-icon://delete" press="onDelete" type="Transparent" tooltip="{i18n>colDelete}"/>
-                                    <Button icon="sap-icon://edit" press="onListEditPress" type="Transparent" tooltip="{i18n>Edit}"/> 
+                                   
                                 </items>
                             </HBox>
 						</cells> 
