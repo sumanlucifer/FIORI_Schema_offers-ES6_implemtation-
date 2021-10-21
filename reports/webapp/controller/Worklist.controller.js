@@ -421,7 +421,7 @@ sap.ui.define(
                     }
                 },
                 onRefreshButton: function () {
-                    console.log("this is the refresh");
+                
                     location.reload();
 
                 },
@@ -442,7 +442,7 @@ sap.ui.define(
 
                         }
                     })
-                    console.log(obj)
+                  
                 },
                 onDowloadFile: function (oEvent) {
                     var oView = this.getView();
