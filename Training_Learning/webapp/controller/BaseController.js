@@ -4,8 +4,12 @@ sap.ui.define([
     "sap/m/library",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "sap/ui/core/Fragment"
-], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox, Fragment) {
+    "sap/ui/core/Fragment",
+    "sap/ui/core/util/Export",
+    "sap/ui/core/util/ExportTypeCSV",
+    "../model/formatter"
+
+], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox, Fragment, Export, ExportTypeCSV, formatter) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -97,108 +101,302 @@ sap.ui.define([
         },
         // upload painter Data by @manik 
         onFileUploadPainter: function (oEvent) {
+            // //console.log(oEvent);
+            // var oFileUploder = oEvent.getSource();
+            // if (oEvent.getParameter("newValue")) {
+            //     this.getView().getModel("oModelView").setProperty("/busy", true)
+            //     this._uploadPainterFile(oEvent.mParameters.files[0]);
+            // }
+
             //console.log(oEvent);
             var oFileUploder = oEvent.getSource();
             if (oEvent.getParameter("newValue")) {
-                this.getView().getModel("oModelView").setProperty("/busy", true)
-                this._uploadPainterFile(oEvent.mParameters.files[0]);
+                this.onUploadPainter1();
             }
         },
-        _uploadPainterFile: function (mParam1) {
-            //console.log(mParam1);
 
-            var oModelView = this.getView().getModel("oModelView");
-            var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
-            jQuery.ajax({
+        /// calling upload api///
+        onUploadPainter1: function () {
+            var that = this;
+            var fU = this.getView().byId("idPainterFileUploader");
+            var domRef = fU.getFocusDomRef();
+            var file = domRef.files[0];
+            var oView = that.getView();
+            var dataModel = oView.getModel("oModelView");
+            var settings = {
+                url: "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value",
+                data: file,
                 method: "PUT",
-                url: sUrl,
-                cache: false,
+                headers: that.getView().getModel().getHeaders(),
                 contentType: "text/csv",
                 processData: false,
-                data: mParam1,
-                success: function (result) {
-                    console.log(result);
-                    if (result.ValidPainter.length > 0) {
-                        var selectedItems = result.ValidPainter;
-                        var itemModel = selectedItems.map(function (item) {
-                            return {
-                                Name: item.PainterName,
-                                PainterId: item.Id,
-                                Id: item.Id,
-                                PainterMobile: item.PainterMobile
-                            };
-                        });
-                        MessageToast.show("Painter Data succesfully uploaded");
-
-                        this._onpressfrag(itemModel);
-                    }
-
-                }.bind(this),
-                error: function (data) {
-                    console.log(data)
+                statusCode: {
+                    206: function (result) {
+                        that._SuccessPainter(result, 206);
+                    },
+                    200: function (result) {
+                        that._SuccessPainter(result, 200);
+                    },
+                    202: function (result) {
+                        that._SuccessPainter(result, 202);
+                    },
+                    // 400: function (result) {
+                    //     debugger;
+                    //     that._SuccessPainter(result, 400);
+                    // }
                 },
-            });
-
-
+                error: function (error) {
+                    debugger;
+                    // that._Error(error);
+                    MessageToast.show(error.responseText.toString());
+                }
+            };
+            $.ajax(settings);
         },
-        _onpressfrag: function (itemModel) {
+        // upload csv file ///
+        _SuccessPainter: function (result, oStatus) {
+            var that = this;
+            var oView = that.getView();
+            var oModelView = oView.getModel("oModelView");
+            oModelView.setProperty("/busy", false);
+            var aPainters = [];
+            if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
+                if (result.ValidPainter.length == 0) {
+                    that.showToast.call(that, "MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
+                } else {
+                    var selectedItems = result.ValidPainter;
+                    var itemModel = selectedItems.map(function (item) {
+                        return {
+                            PainterMobile: item.PainterMobile,
+                            PainterName: item.PainterName,
+                            Id: item.Id,
+                            UploadMessage: item.UploadMessage,
+                            UploadStatus: item.UploadStatus,
+                            Row: item.Row
+                        };
+                    });
+                    that.onpressfrag(itemModel);
+                    that.getView().byId("idPainterFileUploader").setValue("");
+                }
+                // oView.getModel("oModelControl")
+                //         .setProperty("/MultiCombo/Painters", itemModel);
+            }
+        },
+        // _Error: function (error) {
+        //     this.getView().getModel("oModelView").setProperty("/busy", false);
+        //     MessageToast.show(error.responseText.toString());
+        // },
+
+        onpressfrag: function (itemModel) {
             this._PainterMultiDialoge = this.getView().byId("Painters1");
             var oView = this.getView();
-            var oModelView = oView.getModel("oModelView");
-            if (!this._CsvDialoge) {
-                Fragment.load({
-                    id: oView.getId(),
-                    name: "com.knpl.pragati.Training_Learning.view.fragments.UploadPainterData",
-                    controller: this,
-                }).then(
-                    function (oDialog) {
-                        this._CsvDialoge = oDialog;
-                        oView.addDependent(this._CsvDialoge);
-
-                        oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
-                        oView.byId("idUploadedPainterTbl").selectAll();
-                        this._CsvDialoge.open();
-                        oModelView.setProperty("/busy", false);
-
-                    }.bind(this)
-                );
-            } else {
-                this._CsvDialoge.open();
-                oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
-                oView.byId("idUploadedPainterTbl").selectAll();
-                oModelView.setProperty("/busy", false);
-
-            }
-
-
-        },
-        onSaveUploadPainter: function () {
-            var oView = this.getView();
-            var oModelView = oView.getModel("oModelView");
-            var oTable = oView.byId("idUploadedPainterTbl");
-            var aSelections = oTable.getSelectedIndices();
-            var oRows = oTable.getRows();
-            var aSetPainter = [];
-            var oBindingContext, obj;
-            for (var x of aSelections) {
-                oBindingContext = oRows[x].getBindingContext("oModelView");
-                if (oBindingContext) {
-                    obj = oBindingContext.getObject();
-                    aSetPainter.push(obj)
-
+            oView.getModel("oModelView").setProperty("/ofragmentModel", itemModel);
+            return new Promise(function (resolve, reject) {
+                if (!this._CsvDialoge) {
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "com.knpl.pragati.Training_Learning.view.fragments.PainterUploadedStatus",
+                        controller: this,
+                    }).then(
+                        function (oDialog) {
+                            this._CsvDialoge = oDialog;
+                            oView.addDependent(this._CsvDialoge);
+                            this._CsvDialoge.open();
+                            resolve();
+                        }.bind(this)
+                    );
+                } else {
+                    this._CsvDialoge.open();
+                    resolve();
                 }
-            }
-            oModelView.setProperty("/TrainingDetails/TrainingPainters", aSetPainter);
+            }.bind(this));
+        },
 
+        onSaveUploadPaitner: function (oEvent) {
+            var oView = this.getView();
+            var fragmentData = oView.getModel("oModelView").getProperty("/ofragmentModel");
+            // var Items = fragmentData.filter(function (item) {
+            //     return item.isSelected === true;
+            // });
+            var selectedItems = fragmentData.filter(item => item.UploadStatus === true);
+            // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
+            // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
+            var itemModel = selectedItems.map(function (item) {
+                return {
+                    // PainterMobile: item.PainterMobile,
+                    // PainterName: item.PainterName,
+                    // PainterId: item.Id
+
+                    Name: item.PainterName,
+                    PainterId: item.Id,
+                    Id: item.Id,
+                    PainterMobile: item.PainterMobile
+                };
+            });
+            // oView.getModel("oModelControl").setProperty("/MultiCombo/Painters", itemModel);
+            this.getView().getModel("oModelView").setProperty("/TrainingDetails/TrainingPainters", itemModel);
+            this.getView().getModel("oModelView").setProperty("/busy", false);
+            console.log(itemModel);
             this._CsvDialoge.close();
         },
-        onSaveUploadPainterClose: function () {
-            if (this._CsvDialoge) {
-                this._CsvDialoge.close();
-                this._CsvDialoge.destroy();
-                delete this._CsvDialoge;
-            }
+
+
+        onDataPainterExport: function (oEvent) {
+            var oExport = new Export({
+                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                exportType: new ExportTypeCSV({
+                    separatorChar: ";"
+                }),
+
+                // Pass in the model created above
+                models: this.getView().getModel("oModelView"),
+
+                // binding information for the rows aggregation
+                rows: {
+                    path: "/ofragmentModel"
+                },
+
+                // column definitions with column name and binding info for the content
+
+                columns: [
+                    {
+                        name: "Row",
+                        template: {
+                            content: "{Row}"
+                        }
+                    },
+                    {
+                        name: "Name",
+                        template: {
+                            content: "{PainterName}"
+                        }
+                    },
+                    {
+                        name: "MobileNumber",
+                        template: {
+                            content: "{PainterMobile}"
+                        }
+                    }, {
+                        name: "Message",
+                        template: {
+                            content: "{UploadMessage}"
+                        }
+                    }, {
+                        name: "Status",
+                        template: {
+                            content: {
+                                parts: ["UploadStatus"],
+                                formatter: formatter.UploadStatus
+                            }
+                        }
+                    }]
+            });
+
+            // download exported file
+            oExport.saveFile().catch(function (oError) {
+                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+            }).then(function () {
+                oExport.destroy();
+            });
         },
+
+
+        // _uploadPainterFile: function (mParam1) {
+        //     //console.log(mParam1);
+
+        //     var oModelView = this.getView().getModel("oModelView");
+        //     var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
+        //     jQuery.ajax({
+        //         method: "PUT",
+        //         url: sUrl,
+        //         cache: false,
+        //         contentType: "text/csv",
+        //         processData: false,
+        //         data: mParam1,
+        //         success: function (result) {
+        //             console.log(result);
+        //             if (result.ValidPainter.length > 0) {
+        //                 var selectedItems = result.ValidPainter;
+        //                 var itemModel = selectedItems.map(function (item) {
+        //                     return {
+        //                         Name: item.PainterName,
+        //                         PainterId: item.Id,
+        //                         Id: item.Id,
+        //                         PainterMobile: item.PainterMobile
+        //                     };
+        //                 });
+        //                 MessageToast.show("Painter Data succesfully uploaded");
+
+        //                 this._onpressfrag(itemModel);
+        //             }
+
+        //         }.bind(this),
+        //         error: function (data) {
+        //             console.log(data)
+        //         },
+        //     });
+
+
+        // },
+        // _onpressfrag: function (itemModel) {
+        //     this._PainterMultiDialoge = this.getView().byId("Painters1");
+        //     var oView = this.getView();
+        //     var oModelView = oView.getModel("oModelView");
+        //     if (!this._CsvDialoge) {
+        //         Fragment.load({
+        //             id: oView.getId(),
+        //             name: "com.knpl.pragati.Training_Learning.view.fragments.UploadPainterData",
+        //             controller: this,
+        //         }).then(
+        //             function (oDialog) {
+        //                 this._CsvDialoge = oDialog;
+        //                 oView.addDependent(this._CsvDialoge);
+
+        //                 oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
+        //                 oView.byId("idUploadedPainterTbl").selectAll();
+        //                 this._CsvDialoge.open();
+        //                 oModelView.setProperty("/busy", false);
+
+        //             }.bind(this)
+        //         );
+        //     } else {
+        //         this._CsvDialoge.open();
+        //         oModelView.setProperty("/TrainingDetails/TrainingPainters", itemModel);
+        //         oView.byId("idUploadedPainterTbl").selectAll();
+        //         oModelView.setProperty("/busy", false);
+
+        //     }
+
+
+        // },
+
+        // onSaveUploadPainter: function () {
+        //     var oView = this.getView();
+        //     var oModelView = oView.getModel("oModelView");
+        //     var oTable = oView.byId("idUploadedPainterTbl");
+        //     var aSelections = oTable.getSelectedIndices();
+        //     var oRows = oTable.getRows();
+        //     var aSetPainter = [];
+        //     var oBindingContext, obj;
+        //     for (var x of aSelections) {
+        //         oBindingContext = oRows[x].getBindingContext("oModelView");
+        //         if (oBindingContext) {
+        //             obj = oBindingContext.getObject();
+        //             aSetPainter.push(obj)
+
+        //         }
+        //     }
+        //     oModelView.setProperty("/TrainingDetails/TrainingPainters", aSetPainter);
+
+        //     this._CsvDialoge.close();
+        // },
+        // onSaveUploadPainterClose: function () {
+        //     if (this._CsvDialoge) {
+        //         this._CsvDialoge.close();
+        //         this._CsvDialoge.destroy();
+        //         delete this._CsvDialoge;
+        //     }
+        // },
 
 
         /*
@@ -663,7 +861,7 @@ sap.ui.define([
                     learningQuestionnaireOptionsLocalized.push({
                         Id: trainingQuestionnaireObject.TrainingQuestionnaireOptions[i].TrainingQuestionnaireOptionsLocalized[j].Id,
                         Option: trainingQuestionnaireObject.TrainingQuestionnaireOptions[i].TrainingQuestionnaireOptionsLocalized[j].Option,
-                        LearningOptionId: trainingQuestionnaireObject.TrainingQuestionnaireOptions[i].TrainingQuestionnaireOptionsLocalized[j].TrainingOptionId,
+                        LearningOptionId: learningOptionId,
                         LanguageCode: trainingQuestionnaireObject.TrainingQuestionnaireOptions[i].TrainingQuestionnaireOptionsLocalized[j].LanguageCode,
                     });
                 }
@@ -950,14 +1148,21 @@ sap.ui.define([
                 });
             }
 
-            for (var i = 0; i < clientObject.length; i++) {
-                var que = clientObject[i];
-                serviceObject.TrainingQuestionnaireOptions.forEach(op => {
-                    for (var i = 0; i < que.Options.length; i++) {
-                        delete op.ClientOptionId;
-                    }
-                });
+            // for (var i = 0; i < clientObject.length; i++) {
+            //     var que = clientObject[i];
+            //     serviceObject.TrainingQuestionnaireOptions.forEach(op => {
+            //         for (var i = 0; i < que.Options.length; i++) {
+            //             delete op.ClientOptionId;
+            //         }
+            //     });
+            // }
+
+            if (serviceObject.hasOwnProperty("TrainingQuestionnaireOptions")) {
+                for (var x in serviceObject["TrainingQuestionnaireOptions"]) {
+                    delete serviceObject["TrainingQuestionnaireOptions"][x]["ClientOptionId"]
+                }
             }
+
             console.log(serviceObject);
             return serviceObject;
         }
