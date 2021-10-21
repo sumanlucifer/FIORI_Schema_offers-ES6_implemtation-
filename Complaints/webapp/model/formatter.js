@@ -1,7 +1,6 @@
 sap.ui.define([], function () {
-	"use strict";
-
-  var wfIcons = {
+    "use strict";
+    var wfIcons = {
         WORKFLOW_STARTED: "sap-icon://initiative",
         WORKFLOW_COMPLETED: "sap-icon://stop",
         WORKFLOW_CANCELED: "sap-icon://sys-cancel-2",
@@ -40,64 +39,49 @@ sap.ui.define([], function () {
         REFERENCED_SUBFLOW_COMPLETED: "sap-icon://process",
         REFERENCED_SUBFLOW_FAILED: "sap-icon://process"
     }
-
-
-	return {
-
+    return {
 		/**
 		 * Rounds the number unit value to 2 digits
 		 * @public
 		 * @param {string} sValue the number string to be rounded
 		 * @returns {string} sValue with 2 digits rounded
 		 */
-		numberUnit : function (sValue) {
-			if (!sValue) {
-				return "";
-			}
-			return parseFloat(sValue).toFixed(2);
+        numberUnit: function (sValue) {
+            if (!sValue) {
+                return "";
+            }
+            return parseFloat(sValue).toFixed(2);
         },
-        
-        formatURL: function(sURL){
-
-            if(sURL)
-            {
-                return ("https://").concat(location.host, "/KNPL_PAINTER_API" ,new URL(sURL).pathname);
+        formatURL: function (sURL) {
+            if (sURL) {
+                return ("https://").concat(location.host, "/KNPL_PAINTER_API", new URL(sURL).pathname);
             }
         },
-        
-        formatLogIcon : function(sStatus){
+        formatLogIcon: function (sStatus) {
             return wfIcons[sStatus];
         },
-
-        ExecutionLogTitle: function(sSubject, sType) {
-         //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
-         //   if("FORCETAT" == sSubject) return "Manual Escalation";
-            switch(sSubject){
-                case "FORCETAT" : return "Manual Escalation";
-                case "PENDING_FOR_APPROVAL" : return "Pending for Approval"
+        ExecutionLogTitle: function (sSubject, sType) {
+            //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
+            //   if("FORCETAT" == sSubject) return "Manual Escalation";
+            switch (sSubject) {
+                case "FORCETAT": return "Manual Escalation";
+                case "PENDING_FOR_APPROVAL": return "Pending for Approval"
             }
-
-            switch(sType)
-            {
-                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT" : return "Auto Escalation" ;
-                case "WORKFLOW_STARTED" : return "Complaint raised" ;
-                case "WORKFLOW_COMPLETED" : return "Complaint closed" ;
-                case "WORKFLOW_CANCELED" : return "Complaint withdrawn" ;
-                case "USERTASK_COMPLETED" : return "Complaint resolved" ;
-                
+            switch (sType) {
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT": return "Auto Escalation";
+                case "WORKFLOW_STARTED": return "Complaint raised";
+                case "WORKFLOW_COMPLETED": return "Complaint closed";
+                case "WORKFLOW_CANCELED": return "Complaint withdrawn";
+                case "USERTASK_COMPLETED": return "Complaint resolved";
             }
-            
             return sSubject;
         },
-
-        AssigneUser: function(sAssignUser){
-           return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sAssignUser);
+        AssigneUser: function (sAssignUser) {
+            return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sAssignUser);
         },
-
-        ExecutionLogUserName: function(aEmails){
-            return  !!(aEmails) ? aEmails.join(" ") : " ";
+        ExecutionLogUserName: function (aEmails) {
+            return !!(aEmails) ? aEmails.join(" ") : " ";
         },
-
         ExecutionLogDateTime: function (dValue) {
             if (!dValue) {
                 return "";
@@ -107,11 +91,28 @@ sap.ui.define([], function () {
             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                 pattern: pattern
             });
-
             var oNow = new Date(localDate);
-            return oDateFormat.format(oNow); 
-        }
-    
-	};
-
+            return oDateFormat.format(oNow);
+        },
+        fmtCmbxResolutionType: function (m1, m2) {
+            console.log(m1, m2);
+            if (m2 == "RESOLVED" || m2 == "WITHDRAW") {
+                return false
+            }
+            if (m1 === "PENDING") {
+                return false;
+            }
+            return true
+        },
+        fmtCmbxResolvedButton: function (m1, m2) {
+            console.log(m1, m2);
+            if (m2 == "RESOLVED" || m2 == "WITHDRAW") {
+                return false
+            }
+            if (m1 === "PENDING") {
+                return false;
+            }
+            return true
+        },
+    };
 });

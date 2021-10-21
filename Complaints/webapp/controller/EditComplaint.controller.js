@@ -127,7 +127,11 @@ sap.ui.define(
                         CategoryCode: "",
                         QRCodeData2: {},
                         TokenCode2: "",
-                        ComplainReopenReasonId: null ///added by deepanjali
+                        ComplainReopenDialoge: {
+                            ComplainReopenReasonId: "",///added by deepanjali
+                            ComplainReopenReason: ""    ///added by deepanjali
+                        }
+                        // ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0
                         PainterId: 182
@@ -1087,40 +1091,28 @@ sap.ui.define(
                         }
                     }.bind(this));
                 },
-                onReopenValiadtion: function (data) {
-                    debugger;
-                    var s = data.ComplainReopenReasonId;
-                    this._oMessageManager.removeAllMessages();
-                    var aCtrlMessage = [],
-                        sMsg = "";
-                    //Required Field Validations
-                    if (!(data.ComplainReopenReasonId)) {
-                        sMsg = this.getResourceBundle().getText("MSG_REQUIRED")
-                        aCtrlMessage.push({
-                            message: "MSG_CTRL_RESOLUTION",
-                            target: "/ComplainReopenReasonId"
-                        });
-                    }
-                    if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
-                    return sMsg;
-                },
                 //// reopen complains added by deepanjali ////////////
                 onReopenSave: function () {
-                    var validation = this.onReopenValiadtion(this.getModel("oModelControl").getData());
-                    //Validations
-                    if (validation.length > 0) {
-                        MessageToast.show(validation);
-                        return;
-                    }
+                    // var validation = this.onReopenValiadtion(this.getModel("oModelControl").getData());
+                    // //Validations
+                    // if (validation.length > 0) {
+                    //     MessageToast.show(validation);
+                    //     return;
+                    // }
                     var oModelView = this.getModel("oModelView");
-                    var selectedKey = this.getModel("oModelControl").getProperty("/ComplainReopenReasonId");
-                    var sResonId = selectedKey.split("-")[0];
-                    var sReson = selectedKey.split("-")[1];
-                    oModelView.setProperty("/ComplainReopenReasonId", parseInt(sResonId));
+                    var sResonId = this.getModel("oModelControl").getProperty("/ComplainReopenDialoge/ComplainReopenReasonId");
+                    var sReson = this.getModel("oModelControl").getProperty("/ComplainReopenDialoge/ComplainReopenReason");
+                    oModelView.setProperty("/ComplainReopenDialoge/ComplainReopenReasonId", parseInt(sResonId));
                     oModelView.setProperty("/Remark", sReson);
                     oModelView.setProperty("/ComplaintStatus", "REOPEN");
-                    this._postDataToSave();
-                    this._ReopenDialoge.close();
+                    if (!sResonId) {
+                        var remarkText = "reopenText";
+                        this.showMessageToast(remarkText);
+                        return;
+                    } else {
+                        this._postDataToSave();
+                        this._ReopenDialoge.close();
+                    }
                 },
                 onReopenClose: function () {
                     this._ReopenDialoge.close();
