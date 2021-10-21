@@ -1836,7 +1836,7 @@ sap.ui.define(
                         //     });
                         // }
                         // else
-                        if (data.TrainingQuestionnaire.length < 2) {
+                        if (data.TrainingQuestionnaire.length < 1) {
                             oReturn.IsNotValid = true;
                             oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
                             aCtrlMessage.push({
