@@ -19,14 +19,16 @@
                     </HBox> -->
                     <List items="{path: 'oModelView>Options' ,  templateShareable: false, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ]}">
                         <CustomListItem>
-                            <RadioButtonGroup editable="false" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" >
-                                <buttons>
-                                   
-                                        <RadioButton  class="sapUiSmallMarginTop"  />
-                                </buttons>
-                            </RadioButtonGroup>
-                          
-                            <Text width="80%"  text="{oModelView>Option}" class=""/>
+                            <HBox>
+                                <RadioButtonGroup editable="false" selectedIndex="{= ${oModelView>IsCorrect} === true ? 0 : -1}" >
+                                    <buttons>
+
+                                        <RadioButton  />
+                                    </buttons>
+                                </RadioButtonGroup>
+                            
+                                <Text width="100%"  text="{oModelView>Option}" />
+                            </HBox>
                             <!-- <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/> -->
                         </CustomListItem>
                     </List>

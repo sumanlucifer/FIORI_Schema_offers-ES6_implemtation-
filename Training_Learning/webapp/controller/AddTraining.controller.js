@@ -1086,7 +1086,7 @@ sap.ui.define(
                                                 });
                                             }
                                             else
-                                                if (data.TrainingQuestionnaire.length < 3) {
+                                                if (data.TrainingQuestionnaire.length < 2) {
                                                     oReturn.IsNotValid = true;
                                                     oReturn.sMsg.push("MSG_PLEASE_ENTER_ATLEAST_THREE_QUESTIONS");
                                                     aCtrlMessage.push({
@@ -1214,19 +1214,13 @@ sap.ui.define(
                 },
 
                 CUOperationVideo: function (oPayload, oEvent) {
-
                     var oViewModel = this.getModel("oModelView");
-
                     oPayload.Duration = parseInt(oPayload.Duration);
+                    console.log(oPayload.TrainingQuestionnaire);
                     for (var i = 0; i < oPayload.TrainingQuestionnaire.length; i++) {
-                        oPayload.LearningQuestionnaire.push(
-                            {
-                                Question: oPayload.TrainingQuestionnaire[i].Question,
-                                IsArchived: oPayload.TrainingQuestionnaire[i].IsArchived,
-                                LearningQuestionnaireOptions: oPayload.TrainingQuestionnaire[i].TrainingQuestionnaireOptions
-                            }
-                        );
+                        oPayload = this.convertToLearningQuestionnairePayload(oPayload.TrainingQuestionnaire[i], oPayload);
                     }
+                    console.log(oPayload.LearningQuestionnaire);
 
                     oPayload = this.trainingFilter(oPayload);
                     delete oPayload.StartDate;
