@@ -21,10 +21,10 @@
             </form:SimpleForm>
         </content>
 <beginButton>
-  <Button text="Close" press="onReopenClose" />
+  <Button text="{i18n>Close}" press="onReopenClose" />
 </beginButton>
         <endButton>
-            <Button text="Save" press="onReopenSave" />
+            <Button text="{i18n>Save}" press="onReopenSave" type="Emphasized" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>
