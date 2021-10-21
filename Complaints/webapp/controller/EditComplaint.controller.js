@@ -128,8 +128,8 @@ sap.ui.define(
                         QRCodeData2: {},
                         TokenCode2: "",
                         ComplainReopenDialoge: {
-                            ComplainReopenReasonId: "",
-                            ComplainReopenReason: ""
+                            ComplainReopenReasonId: "",///added by deepanjali
+                            ComplainReopenReason: ""    ///added by deepanjali
                         }
                         // ComplainReopenReasonId: null ///added by deepanjali
                     };
@@ -1093,7 +1093,6 @@ sap.ui.define(
                 },
                 //// reopen complains added by deepanjali ////////////
                 onReopenSave: function () {
-                    
                     // var validation = this.onReopenValiadtion(this.getModel("oModelControl").getData());
                     // //Validations
                     // if (validation.length > 0) {
@@ -1106,8 +1105,14 @@ sap.ui.define(
                     oModelView.setProperty("/ComplainReopenDialoge/ComplainReopenReasonId", parseInt(sResonId));
                     oModelView.setProperty("/Remark", sReson);
                     oModelView.setProperty("/ComplaintStatus", "REOPEN");
-                    this._postDataToSave();
-                    this._ReopenDialoge.close();
+                    if (!sResonId) {
+                        var remarkText = "reopenText";
+                        this.showMessageToast(remarkText);
+                        return;
+                    } else {
+                        this._postDataToSave();
+                        this._ReopenDialoge.close();
+                    }
                 },
                 onReopenClose: function () {
                     this._ReopenDialoge.close();
