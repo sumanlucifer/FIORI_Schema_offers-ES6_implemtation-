@@ -329,33 +329,6 @@ sap.ui.define(
                     }
                     return this._ViewSortDialog;
                 },
-                onZoneChange: function (oEvent) {
-                    var sId = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oModelView = oView.getModel("oModelView");
-
-                    var oDivision = oView.byId("idDivision");
-                    var oDivItems = oDivision.getBinding("items");
-                    var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
-                    oDivision.clearSelection();
-                    oDivision.setValue("");
-                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
-                    //setting the data for depot;
-                    var oDepot = oView.byId("idDepot");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                    // clearning data for dealer
-
-                },
-                onDivisionChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
-                    var oDepot = oView.byId("idDepot");
-                    var oDepBindItems = oDepot.getBinding("items");
-                    oDepot.clearSelection();
-                    oDepot.setValue("");
-                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
-                },
 
                 handleSortDialogConfirm: function (oEvent) {
                     var oTable = this.byId("table"),
@@ -447,24 +420,25 @@ sap.ui.define(
                         this._applySearch(aTableSearchState);
                     }
                 },
-                onRefresh: function () {
+                onRefreshButton: function () {
                     console.log("this is the refresh");
-                    this.getView().getModel().refresh(true);
+                    location.reload();
+
                 },
-                onMenuAction:function(oEvent){
+                onMenuAction: function (oEvent) {
                     var obj = oEvent.getParameter("item").getBindingContext().getObject();
                     var oView = this.getView();
                     var othat = this;
                     var oDataModel = oView.getModel();
                     var oPayload = {
-                        ReportType:obj["Key"]
+                        ReportType: obj["Key"]
                     }
-                    oDataModel.create("/PragatiReportSet",oPayload,{
-                        success:function(){
+                    oDataModel.create("/PragatiReportSet", oPayload, {
+                        success: function () {
                             othat._showToast("MSG_1");
                             othat.getView().getModel().refresh()
                         },
-                        error:function(){
+                        error: function () {
 
                         }
                     })
