@@ -1,6 +1,5 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" >
     <VBox width="100%">
-      
         <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
 		<headerToolbar>
 			<OverflowToolbar>
@@ -17,7 +16,6 @@
 		<content>
             <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
                 <f:content>
-              
                 <core:Title text=""/>
                 <Label text="{i18n>SelectedKYCDocument}" required="{=${oModelControl>/EditKyc}}"/>
                 <FlexBox >
@@ -32,18 +30,13 @@
                     </items>
                 </ComboBox>
                 </FlexBox>
-                
-               
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }"/>
                 <Input id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]'} }" />
                 <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}"/>
                 <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]' } }" visible="{= ${PainterKycDetails} === null}"/>
-               
-               
                 <!-- <Input change="onEditFieldKyc" editable="{=${oModelControl>/EditKyc}}" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" /> -->
                 <core:Title text=""/>
                 <!-- <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" /> -->
-                
                 <Label class="sapUiTinyMarginBegin" text="KYC Documents"/>
                 <FlexBox >
                 <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView"/>
@@ -54,11 +47,6 @@
                 <UploadCollection typeMissmatch="onUploadFileTypeMis"  fileType="jpg,jpeg,png" id="idUploadCollection" visible="{=${oModelControl>/AddKycDoc}}" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
                 <Label text="" visible="{=${oModelControl>/AddKycDoc}}" ></Label>
                 <Text visible="{=${oModelControl>/AddKycDoc}}" text="{i18n>FileUploadMessage}"/>
-                
-
-                
-                
-               
             </f:content>
         </f:SimpleForm>
 		</content>
@@ -66,10 +54,9 @@
             <!--Aditya changes start-->
 			<Toolbar visible="{= ${PainterKycDetails} !== null}">
 				<ToolbarSpacer/>
-                <Button text="Reject" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-				<Button text="Approve" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-				
-
+                <Button text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+				<Button text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+    <Button text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
 			</Toolbar>
 		<!--Aditya changes end-->
     </VBox>

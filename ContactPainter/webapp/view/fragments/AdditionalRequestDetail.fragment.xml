@@ -2,7 +2,7 @@
     xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Dialog class="sapUiContentPadding" title="{i18n>AdditionalRequestDetails}" stretch="true">
+    <Dialog class="sapUiContentPadding" title="{i18n>AdditionalRequestDetails}" stretch="false">
         <content>
             <VBox>
                 <form:Form id="idDetailForm"

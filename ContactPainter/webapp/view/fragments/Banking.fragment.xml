@@ -32,12 +32,12 @@
                 <Label text="{i18n>BankDetailsStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtLowerCase'}" />
                    <!--Deepanjali changes start-->
-                  <Label text="{i18n>TransactionId}"/>
+                <Label text="{i18n>TransactionId}"/>
                 <Text text= "{PainterBankDetails/PaymentTransactionId}"/>
                  <core:Title text=""/>
                 <Label text="{i18n>TransactionStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/PaymentTransactionStatus',formatter:'.fmtLowerCase'}" />
-                <Label text="{i18n>TransactionRefId}"/>
+                <Label text="{i18n>TrasnsactionRefId}"/>
                 <Text text="{PainterBankDetails/PaymentReferenceId}" />
                 <Label text="{i18n>TransactionMessage}"/>
                 <Text text="{PainterBankDetails/PaymentTransactionMessage}" />
