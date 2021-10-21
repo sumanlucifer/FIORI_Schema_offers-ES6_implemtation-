@@ -58,6 +58,9 @@
                     <Text text="{i18n>Row}"/>
                 </Column>
                 <Column width="20%">
+                    <Text text="{i18n>Name}"/>
+                </Column>
+                <Column width="20%">
                     <Text text="{i18n>Mobile}"/>
                 </Column>
                 <Column width="37%">
@@ -72,6 +75,7 @@
                 <ColumnListItem>
                     <cells>
                         <Text text="{oModelControl>Row}"/>
+                        <Text text="{oModelControl>PainterName}"/>
                         <Text text="{oModelControl>PainterMobile}"/>
                         <Text text="{oModelControl>UploadMessage}"/>
                         <HBox>
