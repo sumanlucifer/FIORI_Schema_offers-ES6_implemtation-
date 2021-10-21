@@ -59,19 +59,18 @@
             </f:DynamicPageHeader>
         </f:header> -->
         <f:content>
-            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
-            filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails/Depot,MasterSlabBankRedemptionDetails'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
+            filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
-                        <!-- <Button icon="sap-icon://add" text="{i18n>AddRedemption}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddRedemption}"></Button> -->
+                           <Button press="onRefreshButton"  type="Ghost" icon="sap-icon://refresh" />
                               <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>GenerateReports}" type="Ghost" text="{i18n>GenerateReports}" buttonMode="Regular" useDefaultActionOnly="false">
                             <menu>
-                                <Menu itemSelected="onMenuAction">
-                                    <MenuItem text="{i18n>PainterDataDump}" icon="sap-icon://save" />
-                                    <MenuItem text="{i18n>ProductPurchaseHistory}" icon="sap-icon://save" />
-                                      <MenuItem text="{i18n>DealerMappedWithPainter}" icon="sap-icon://save" />
+                                <Menu itemSelected="onMenuAction" items="{path:'/MasterReportTypeSet'}">
+                                    <MenuItem text="{Value}" icon="sap-icon://save" />
+                                  
                                 </Menu>
                             </menu>
 		                </MenuButton>
@@ -81,70 +80,41 @@
                 </headerToolbar>
                 <columns>
                     <Column>
-                        <Text text="{i18n>PainterName}"/>
+                        <Text text="{i18n>ReportName}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>MembershipId}"/>
+                        <Text text="{i18n>ReportType}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>RedeemCode}"/>
+                        <Text text="{i18n>GeneratedBy}"/>
                     </Column>
                     <Column>
-                        <Text text="{i18n>PrimaryMobileNo}"/>
+                        <Text text="{i18n>UpdatedAt}"/>
                     </Column>
                      <Column>
-                        <Text text="{i18n>Zone}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>Division}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>Depot}"/>
-                    </Column>
-                     <Column>
-                        <Text text="{i18n>slabPoints}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>slabAmt}"/>
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>Remark}"/>
-                    </Column>
-                    <Column>
                         <Text text="{i18n>Status}"/>
                     </Column>
-                    <Column>
-                        <Text text="{i18n>DateAndTime}"/>
+                       <Column>
+                        <Text text="{i18n>Action}"/>
                     </Column>
-                    <!-- <Column>
-                        <Text text="{i18n>Points}"/>
-                    </Column> -->
+                    
                 </columns>
 
                 <items>
-                    <ColumnListItem type="Navigation" press="onListItemPress" >
+                    <ColumnListItem  >
                         <cells>
-                            <Text text="{PainterDetails/Name}"/>
-                            <Text text="{PainterDetails/MembershipCard}"/>
-                            <Text text="{RedemptionCode}"/>
-                            <Text text="{PainterDetails/Mobile}"/>
-                            <Text text="{PainterDetails/ZoneId}"/>
-                            <Text text="{PainterDetails/DivisionId}"/>
-                            <Text text="{PainterDetails/DepotId}"/>
-                            <Text text="{MasterSlabBankRedemptionDetails/SlabPoints}"/>
-                            <Text text="{MasterSlabBankRedemptionDetails/RedemptionAmount}"/>
-                            <Text text="{Remark}"/>
-                            <FlexBox >
-                            <ObjectStatus  visible="{=${Status} === 'COMPLETED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'APPROVED'}" state="Success" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'INPROGRESS'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'PENDING'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'INITIATED'}" state="Warning" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'REJECTED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            <ObjectStatus  visible="{=${Status} === 'FAILED'}" state="Error" text="{path:'Status',formatter:'.formatter.fmtStatus'}"/>
-                            </FlexBox>
-                            
-                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                            <Text text="{path:'ReportName',formatter:'.formatter.fmtLowerCase'}"/>
+                            <Text text="{path:'ReportType',formatter:'.formatter.fmtLowerCase'}"/>
+                          
+                            <Text text="{path:'GeneratedByName',formatter:'.formatter.fmtLowerCase'}"/>
+                              <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                              <Text text="{path:'ReportStatus',formatter:'.formatter.fmtLowerCase'}"/>
+                              <HBox>
+                                <items>
+                                    <Button icon="sap-icon://download" visible="{= ${ReportStatus} === 'AVAILABLE'}" press="onDowloadFile" />
+                                </items>
+                              </HBox>
+                          
                             <!-- <ObjectStatus text="{path:'PainterComplainProducts',formatter:'.fmtPoints'}" /> -->
                         </cells>
                     </ColumnListItem>
