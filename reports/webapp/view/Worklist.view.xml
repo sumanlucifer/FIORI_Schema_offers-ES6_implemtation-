@@ -114,7 +114,7 @@
                                 </items>
                               </HBox>
                           
-                            <!-- <ObjectStatus text="{path:'PainterComplainProducts',formatter:'.fmtPoints'}" /> -->
+                          
                         </cells>
                     </ColumnListItem>
                 </items>
