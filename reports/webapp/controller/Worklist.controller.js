@@ -45,7 +45,7 @@ sap.ui.define(
                             ComplaintSubTypeId: "",
                             StartDate: null,
                             EndDate: null,
-                            ComplaintStatus: "",
+                            Status: "",
                             Name: "",
                             ZoneId: "",
                             DivisionId: "",
@@ -197,7 +197,7 @@ sap.ui.define(
                             } else if (prop === "Status") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("Status", FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("ReportStatus", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(

@@ -1,13 +1,13 @@
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.downloadreports.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true">
     
-        <!-- <f:header>
+        <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilter" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                        
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
@@ -37,17 +37,16 @@
                                         <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
-                            </fb:FilterGroupItem>
+                            </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <ComboBox id="idStatus" placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{path:'oModelControl>/filterBar/Status' }">
+                                     <ComboBox id="idStatus" placeholder="{i18n>Select} {i18n>Status}" selectedKey="{path:'oModelControl>/filterBar/Status' }">
                                         <core:Item text="Pending" key="PENDING" />
-                                        <core:Item text="Inprogress" key="INPROGRESS" />
-                                        <core:Item text="Completed" key="COMPLETED" />
-                                        <core:Item text="Rejected" key="REJECTED" />
-                                        <core:Item text="Approved" key="APPROVED" />
-                                        <core:Item text="Initiated" key="INITIATED" />
-                                        <core:Item text="Failed" key="FAILED" />
+                                        <core:Item text="Preparing" key="PREPARING" />
+                                        <core:Item text="Available" key="AVAILABLE" />
+                                        <core:Item text="Error" key="ERROR" />
+                                        <core:Item text="Deleted" key="DELETED" />
+                                       
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -57,7 +56,7 @@
                     </fb:FilterBar>
                 </f:content>
             </f:DynamicPageHeader>
-        </f:header> -->
+        </f:header>
         <f:content>
             <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
             filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
