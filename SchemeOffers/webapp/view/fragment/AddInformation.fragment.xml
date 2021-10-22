@@ -12,7 +12,7 @@
                             <RadioButton text="{i18n>SpecificPaintercount}"/>
                         </buttons>
                     </RadioButtonGroup>
-                    <Table id="tableId"  visible="{oModelControl>/AddInfoTable}"   items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+                    <Table id="tableId"  visible="{=${oModelControl>/Rbtn/AddFlag}===1}"   items="{path: 'oModelControl>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Slab}"/> -->
@@ -42,7 +42,7 @@
                             <!-- <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                <Label  visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>              
                             <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
-                   <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl>StartDate}"/>       
+                   <DatePicker visible="{= ${oModelControl>editable} === true }" editable="false" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl>StartDate}"/>       
                         </VBox>
                         <!-- <VBox visible="{= ${oModelView>/InputType}===1 }"> -->
                          <VBox >
