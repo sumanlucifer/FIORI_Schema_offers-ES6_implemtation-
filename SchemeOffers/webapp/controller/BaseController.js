@@ -182,6 +182,7 @@ sap.ui.define(
                 var that = this;
                 var oView = that.getView();
                 var oModelView = oView.getModel("oModelControl");
+               
                 oModelView.setProperty("/busy", false);
                 var aPainters=[];
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
@@ -3066,7 +3067,9 @@ sap.ui.define(
                     var mParam1 = aSpath[aSpath.length - 1];
                     var aNumber = mParam1.match(/\d+$/)[0];
                     //console.log(aNumber);
-                    if (aNumber == "1") { } else if (aNumber == "4") {
+                    if (aNumber == "1") {
+                        
+                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
                 }
@@ -5887,9 +5890,12 @@ sap.ui.define(
                 var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                 var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                 var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                var aPacks = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
+                console.log(aPacks);
                 var aFilter1 = [];
                 var aFilter2 = [];
                 var aFilter1A = [];
+                var aFilter3=[];
                 for (var a of aCat) {
                     aFilter1.push(
                         new Filter("ProductCategory/Id", FilterOperator.EQ, a)
@@ -5899,6 +5905,9 @@ sap.ui.define(
                     aFilter2.push(
                         new Filter("ProductClassification/Id", FilterOperator.EQ, b)
                     );
+                }
+                for (var c of aPacks){
+                    aFilter3.push(new Filter("SkuCode",FilterOperator.EQ,c["Id"]));
                 }
                 // Prod Filters
                 var aProdMapped = aProd.map(function (elem) {
@@ -5946,6 +5955,10 @@ sap.ui.define(
                     filters: aFilter2,
                     and: false,
                 });
+                var aFilterPacks = new Filter({
+                    filters:aFilter3,
+                    and:false
+                })
                 var aFinalFilter = [];
                 if (aFilter1.length > 0) {
                     aFinalFilter.push(aFilterCat);
@@ -5955,6 +5968,9 @@ sap.ui.define(
                 }
                 if (aFilter1A.length > 0) {
                     aFinalFilter = aFilterProd;
+                }
+                if(aFilter3.length > 0){
+                    aFinalFilter = aFilterPacks
                 }
                 this._PackValueHelpDialog2
                     .getBinding("items")
