@@ -101,16 +101,14 @@ sap.ui.define([
         },
         // upload painter Data by @manik 
         onFileUploadPainter: function (oEvent) {
-            // //console.log(oEvent);
             // var oFileUploder = oEvent.getSource();
             // if (oEvent.getParameter("newValue")) {
             //     this.getView().getModel("oModelView").setProperty("/busy", true)
             //     this._uploadPainterFile(oEvent.mParameters.files[0]);
             // }
-
-            //console.log(oEvent);
             var oFileUploder = oEvent.getSource();
             if (oEvent.getParameter("newValue")) {
+                this.getView().getModel("oModelView").setProperty("/busy", true);
                 this.onUploadPainter1();
             }
         },
@@ -140,15 +138,16 @@ sap.ui.define([
                     202: function (result) {
                         that._SuccessPainter(result, 202);
                     },
-                    // 400: function (result) {
-                    //     debugger;
-                    //     that._SuccessPainter(result, 400);
-                    // }
+                    400: function (result) {
+                        // that._SuccessPainter(result, 400);
+                        MessageToast.show(result.responseText.toString());
+                        that.getView().getModel("oModelView").setProperty("/busy", false);
+                    }
                 },
                 error: function (error) {
-                    debugger;
                     // that._Error(error);
                     MessageToast.show(error.responseText.toString());
+                    that.getView().getModel("oModelView").setProperty("/busy", false);
                 }
             };
             $.ajax(settings);
@@ -178,8 +177,6 @@ sap.ui.define([
                     that.onpressfrag(itemModel);
                     that.getView().byId("idPainterFileUploader").setValue("");
                 }
-                // oView.getModel("oModelControl")
-                //         .setProperty("/MultiCombo/Painters", itemModel);
             }
         },
         // _Error: function (error) {
@@ -223,20 +220,14 @@ sap.ui.define([
             // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
             var itemModel = selectedItems.map(function (item) {
                 return {
-                    // PainterMobile: item.PainterMobile,
-                    // PainterName: item.PainterName,
-                    // PainterId: item.Id
-
                     Name: item.PainterName,
                     PainterId: item.Id,
                     Id: item.Id,
                     PainterMobile: item.PainterMobile
                 };
             });
-            // oView.getModel("oModelControl").setProperty("/MultiCombo/Painters", itemModel);
             this.getView().getModel("oModelView").setProperty("/TrainingDetails/TrainingPainters", itemModel);
             this.getView().getModel("oModelView").setProperty("/busy", false);
-            console.log(itemModel);
             this._CsvDialoge.close();
         },
 
@@ -302,7 +293,6 @@ sap.ui.define([
 
 
         // _uploadPainterFile: function (mParam1) {
-        //     //console.log(mParam1);
 
         //     var oModelView = this.getView().getModel("oModelView");
         //     var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/UploadPainterSet(1)/$value";
@@ -314,7 +304,6 @@ sap.ui.define([
         //         processData: false,
         //         data: mParam1,
         //         success: function (result) {
-        //             console.log(result);
         //             if (result.ValidPainter.length > 0) {
         //                 var selectedItems = result.ValidPainter;
         //                 var itemModel = selectedItems.map(function (item) {
@@ -332,7 +321,6 @@ sap.ui.define([
 
         //         }.bind(this),
         //         error: function (data) {
-        //             console.log(data)
         //         },
         //     });
 
@@ -620,7 +608,6 @@ sap.ui.define([
                                     var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
                                     var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
                                     var serviceObject = this.convertToServiceObject(addTr);
-                                    console.log(serviceObject);
 
                                     if (addQsFlag === true) {
                                         TrainingQuestionnaire.push(serviceObject);
@@ -777,7 +764,6 @@ sap.ui.define([
         onDeleteQuestionnaireOptions: function (oEvent) {
             // var oView = this.getView();
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-            console.log(iOptionIndex)
             // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
 
@@ -804,12 +790,11 @@ sap.ui.define([
             // }
         },
         select1: function () {
-            console.log("Manik")
         },
         onSelectOption: function (oEvent) {
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
-            console.log(oEvent.getSource().getBindingContext("oModelView").getObject(), iOptionIndex);
+            // console.log(oEvent.getSource().getBindingContext("oModelView").getObject(), iOptionIndex);
 
             // clientObject.forEach(translation => {
             //     translation.Options.forEach(op => {
@@ -829,13 +814,10 @@ sap.ui.define([
             //this.getView().getModel("oModelView").refresh(true);
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
             this.getView().getModel("oModelView").refresh();
-
-            console.log(clientObject);
         },
 
         // convertToClientObject: function (serviceObject) {
         //     var sTrainingType = this.getView().getModel("appView").getProperty("/trainingType");
-        //     console.log(sTrainingType)
         //     // if (sTrainingType === "ONLINE") {
         //         return this._converToClientObjOnlineT(serviceObject);
         //     // } else if (sTrainingType === "VIDEO") {
@@ -922,7 +904,6 @@ sap.ui.define([
         },
 
         // convertToClientObject1: function (serviceObject) {
-        //     console.log("object online")
         //     var clientObject = [];
         //     var question = {
         //         Id: serviceObject.Id,
@@ -978,12 +959,10 @@ sap.ui.define([
         //             });
         //         }
         //     });
-        //     console.log(clientObject)
         //     return clientObject;
         // },
 
         convertToClientObject: function (serviceObject) {
-            console.log("object online")
             var clientObject = [];
 
             var trainingType = this.getModel("appView").getProperty("/trainingType");
@@ -1069,7 +1048,6 @@ sap.ui.define([
                     });
                 }
             });
-            console.log(clientObject)
             return clientObject;
         },
 
@@ -1162,8 +1140,6 @@ sap.ui.define([
                     delete serviceObject["TrainingQuestionnaireOptions"][x]["ClientOptionId"]
                 }
             }
-
-            console.log(serviceObject);
             return serviceObject;
         }
 
