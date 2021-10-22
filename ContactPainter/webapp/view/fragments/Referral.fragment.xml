@@ -1,14 +1,18 @@
 <core:FragmentDefinition xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="Referral" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'},{path:'ReferralStatus',operator:'EQ',value1:'PENDINGSCAN'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Referral" 
+        updateFinished="onUpdateFinishedReferralTable" 
+        width="auto" 
+    items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'},{path:'ReferralStatus',operator:'EQ',value1:'PENDINGSCAN'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer/>
+                
+                        <Text text="{oModelControl2>/ReferralMessage}"  />
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
                     <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Emphasized" press="onPressAddReferral" enabled="{=!${IsArchived} &amp;&amp; ${ActivationStatus}!=='DEACTIVATED' }"/>
                 </Toolbar>
             </headerToolbar>
-
             <columns>
                 <Column>
                     <Text text="{i18n>Name}"/>
@@ -29,7 +33,6 @@
                     <Text text="{i18n>PointsReceived}"/>
                 </Column>
             </columns>
-
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
@@ -43,7 +46,5 @@
                 </ColumnListItem>
             </items>
         </Table>
-
-
     </VBox>
 </core:FragmentDefinition>
