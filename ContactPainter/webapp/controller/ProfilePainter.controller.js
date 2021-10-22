@@ -144,7 +144,8 @@ sap.ui.define(
                     AdditionalReqDlg: {
                     },
                     ////////////deepanjali added/////////////////
-                    AdditionalReqDlg_Remark: ""
+                    AdditionalReqDlg_Remark: "",
+                    ReferralMessage: ""
                 };
                 var oView = this.getView();
                 var oModel = new JSONModel(oData);
@@ -231,6 +232,7 @@ sap.ui.define(
                 var sPath = oControlModel2.getProperty("/bindProp");
                 var iPainterId = parseInt(oControlModel2.getProperty("/PainterId"));
                 var oDataCtrl = {
+                    TotalMaxRegistrations: null,
                     modeEdit: false,
                     bindProp: sPath,
                     PainterId: iPainterId,
@@ -2324,6 +2326,32 @@ sap.ui.define(
                     and: true,
                 });
                 oTable.getBinding("items").filter(endFilter);
+            },
+            ///// refeeral fragment ///////
+            onUpdateFinishedReferralTable: function (oEvent) {
+                var oView = this.getView();
+                // var iTotalMaxReg = this.getView().byId("Referral").getItems()[0].getBindingContext().getObject().TotalMaxRegistrations;
+          var aItems = this.getView().byId("Referral").getItems();
+          if(aItems.length>0){
+              
+              var object = aItems[0].getBindingContext().getObject();
+              var smaxReg = object["TotalMaxRegistrations"];
+              var sTotalReg= object["TotalRegistrations"];
+
+              if(sTotalReg >=smaxReg){
+                  var sString= "You have reached the maximum rewards limit on referrals (" + smaxReg +"). You will not be able to earn points on new referral";
+              oView.getModel("oModelControl2").setProperty("/ReferralMessage", sString);
+                
+                }
+                else{
+                  oView.getModel("oModelControl2").setProperty("/ReferralMessage", "");
+                  
+                }
+          
+            } else{
+                 oView.getModel("oModelControl2").setProperty("/ReferralMessage", "");
+            }
+             
             },
             onPressOpenTokenDialog: function (oEvent) {
                 var othat = this;
