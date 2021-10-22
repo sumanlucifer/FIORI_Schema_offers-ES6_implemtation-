@@ -96,7 +96,7 @@ sap.ui.define([], function () {
         },
         fmtCmbxResolutionType: function (m1, m2) {
             console.log(m1, m2);
-            if (m2 == "RESOLVED" || m2 == "WITHDRAW") {
+            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
                 return false
             }
             if (m1 === "PENDING") {
@@ -105,8 +105,9 @@ sap.ui.define([], function () {
             return true
         },
         fmtCmbxResolvedButton: function (m1, m2) {
-            console.log(m1, m2);
-            if (m2 == "RESOLVED" || m2 == "WITHDRAW") {
+            // m1 = approvalstatus
+            // m2 = complianstatus
+            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
                 return false
             }
             if (m1 === "PENDING") {
@@ -114,5 +115,41 @@ sap.ui.define([], function () {
             }
             return true
         },
+        fmtCmbxCategoryType: function (m1, m2) {
+            // m1 = approvalstatus
+            // m2 = complianstatus
+            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
+                return false
+            }
+            if (m1 === "PENDING") {
+                return false;
+            }
+            return true
+        },
+        fmtProductCmbx: function (m1, m2, m3) {
+            // m1 = approvalstatus
+            // m2 = complianstatus
+            // m3 = categorycode
+            console.log(m1, m2, m3);
+            if (m2 == "INREVIEW" && m3 == null) {
+                return true
+            }
+            if (m2 == "INREVIEW" && m1 !== "PENDING") {
+                return true;
+            }
+            return false
+        },
+        fmtPacksCmbx: function (m1, m2, m3) {
+            // m1 = Approvalstatus
+            // m2 = Complianstatus
+            // m3 = ProductCode
+            if (m2 == "INREVIEW" && m3 == null) {
+                return true
+            }
+            if (m2 == "INREVIEW" && m1 !== "PENDING") {
+                return true;
+            }
+            return false
+        }
     };
 });
