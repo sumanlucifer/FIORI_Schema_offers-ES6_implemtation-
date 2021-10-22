@@ -4932,6 +4932,7 @@ sap.ui.define(
             onPressAddInformation: function (oEvent) {
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
+                var oStartDate = this.getView().getModel("oModelView").getProperty("/StartDate");
                 var oRewardDt12 = oModel.getProperty("/Table/Table8");
                 if (oEvent !== "add") {
                     var oView = this.getView();
@@ -4969,7 +4970,7 @@ sap.ui.define(
                     if (bFlag == true) {
                         oRewardDt12.push({
                             editable: true,
-                            StartDate: null,
+                            StartDate: oStartDate,
                             EndDate: null,
                             AchieverCount: ""
                         });
