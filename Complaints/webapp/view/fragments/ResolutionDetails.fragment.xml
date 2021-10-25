@@ -53,6 +53,7 @@
         </HBox>
        </VBox>
 </l:Grid>
+
 <!-- Product code scenerio -->
 <Label  visible="{= ${oModelView>/ResolutionType} === 2  }" text="{i18n>TtlRewardPointDetails}" design="Bold" />
 <l:Grid visible="{= ${oModelView>/ResolutionType} === 2  }"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
@@ -90,8 +91,10 @@
         </VBox>
       <VBox>
             <Label required="true" text="{i18n>LblQuantity}" />
+            <!-- <ComboBox change="onPointsChange"
+            editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" -->
             <ComboBox change="onPointsChange"
-            editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"
+           editable="{parts:['ApprovalStatus','ComplaintStatus','ProductSKUCode'], formatter:'.formatter.fmtQuantiyInp' }"
             selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}" >
                  <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
             </ComboBox>
