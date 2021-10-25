@@ -7,6 +7,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <Dialog id="QuestionnaireOptionsDialog" title="Training Question" contentHeight="1200px" contentWidth="1200px">
+    <Label text="{i18n>sameLanguageTranslations}" width="100%" class="sapUiSmallMarginBeginEnd"/>
         <VBox id="idVbxQ" width="100%" items="{path: 'oModelView>/oAddTraining',  templateShareable: false,filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }">
             <items>
                 <VBox class="sapUiSmallMarginBeginEnd">

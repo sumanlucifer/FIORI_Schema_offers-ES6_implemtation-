@@ -547,93 +547,100 @@ sap.ui.define([
 
         updateOptions: function () {
 
-            var addTr;
-            var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
-            addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+            function onYes() {
+                var addTr;
+                var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                addTr = this.getModel("oModelView").getProperty("/oAddTraining");
 
-            // To check Blank Language Code
-            var LanguageCodeBlank = false;
-            for (var i = 0; i < addTr.length; i++) {
-                var optionLength = addTr[i].Options.length; //To check length of Options
-                if (addTr[i].LanguageCode === "") {
-                    LanguageCodeBlank = true;
-                }
-            }
-
-            // To check Blank Question
-            var QuestionBlank = false;
-            for (var i = 0; i < addTr.length; i++) {
-                if (addTr[i].Question === null) {
-                    QuestionBlank = true;
-                }
-            }
-
-            // To check whether at least one option is selected or not
-            var selectCorrectFlag = false;
-            for (var i = 0; i < addTr[0].Options.length; i++) {
-                if (addTr[0].Options[i].IsCorrect === true) {
-                    selectCorrectFlag = true;
-                }
-            }
-
-            // To check blank option
-            var blankOption = false;
-            for (var i = 0; i < addTr.length; i++) {
-                for (var j = 0; j < addTr[i].Options.length; j++) {
-                    if (addTr[i].Options[j].Option === null) {
-                        blankOption = true;
+                // To check Blank Language Code
+                var LanguageCodeBlank = false;
+                for (var i = 0; i < addTr.length; i++) {
+                    var optionLength = addTr[i].Options.length; //To check length of Options
+                    if (addTr[i].LanguageCode === "") {
+                        LanguageCodeBlank = true;
                     }
                 }
-            }
 
-            if (LanguageCodeBlank) {
-                this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
-            } else {
-                if (QuestionBlank) {
-                    this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                // To check Blank Question
+                var QuestionBlank = false;
+                for (var i = 0; i < addTr.length; i++) {
+                    if (addTr[i].Question === null) {
+                        QuestionBlank = true;
+                    }
+                }
+
+                // To check whether at least one option is selected or not
+                var selectCorrectFlag = false;
+                for (var i = 0; i < addTr[0].Options.length; i++) {
+                    if (addTr[0].Options[i].IsCorrect === true) {
+                        selectCorrectFlag = true;
+                    }
+                }
+
+                // To check blank option
+                var blankOption = false;
+                for (var i = 0; i < addTr.length; i++) {
+                    for (var j = 0; j < addTr[i].Options.length; j++) {
+                        if (addTr[i].Options[j].Option === null) {
+                            blankOption = true;
+                        }
+                    }
+                }
+
+                if (LanguageCodeBlank) {
+                    this.showToast.call(this, "MSG_PLS_SELECT_LANGUAGE");
                 } else {
-                    if (optionLength >= 2) {
-                        if (optionLength <= 4) {
-                            if (selectCorrectFlag === false) {
-                                this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
-                            } else {
-                                if (blankOption) {
-                                    this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
+                    if (QuestionBlank) {
+                        this.showToast.call(this, "MSG_PLS_ENTER_ERR_QUESTION");
+                    } else {
+                        if (optionLength >= 2) {
+                            if (optionLength <= 4) {
+                                if (selectCorrectFlag === false) {
+                                    this.showToast.call(this, "MSG_PLS_SELECT_ONE_CORRECT_OPTION");
                                 } else {
-                                    if (addQsFlag === true) {
-                                        this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                    if (blankOption) {
+                                        this.showToast.call(this, "MSG_DONT_ENTER_BLANK_OPTION");
                                     } else {
-                                        var questionnaireIndex = this.getModel("oModelView").getProperty("/questionnaireIndex");
+                                        if (addQsFlag === true) {
+                                            this.getModel("oModelView").setProperty("/addQsFlag", false);
+                                        } else {
+                                            var questionnaireIndex = this.getModel("oModelView").getProperty("/questionnaireIndex");
+                                        }
+
+                                        var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
+                                        var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+                                        var serviceObject = this.convertToServiceObject(addTr);
+
+                                        if (addQsFlag === true) {
+                                            TrainingQuestionnaire.push(serviceObject);
+                                        } else {
+                                            TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
+                                        }
+
+                                        this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
+                                        this.byId("QuestionnaireOptionsDialog").close();
+                                        this.getModel("oModelView").refresh();
                                     }
-
-                                    var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
-                                    var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
-                                    var serviceObject = this.convertToServiceObject(addTr);
-
-                                    if (addQsFlag === true) {
-                                        TrainingQuestionnaire.push(serviceObject);
-                                    } else {
-                                        TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
-                                    }
-
-                                    this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
-                                    this.byId("QuestionnaireOptionsDialog").close();
-                                    this.getModel("oModelView").refresh();
                                 }
+                            } else {
+                                this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
                             }
                         } else {
-                            this.showToast.call(this, "MSG_PLS_ENTER_MAXIMUM_FOUR_OPTIONS");
+                            this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                         }
-                    } else {
-                        this.showToast.call(this, "MSG_PLS_ENTER_MINIMUM_TWO_OPTIONS");
                     }
                 }
             }
+            this.showWarning("MSG_CONFIRM_SAVE_DIALOG", onYes);
         },
 
         closeOptionsDialog: function () {
-            this.byId("QuestionnaireOptionsDialog").close();
+            function onYes() {
+                this.byId("QuestionnaireOptionsDialog").close();
+            }
+            this.showWarning("MSG_CONFIRM_CLOSE_DIALOG", onYes);
         },
+
         closeOptionsDialog2: function () {
             var oDialog = this.byId("QuestionnaireOptionsDialog2");
             oDialog.close();
