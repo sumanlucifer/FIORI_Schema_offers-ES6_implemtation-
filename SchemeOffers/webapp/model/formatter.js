@@ -376,18 +376,20 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false;
         },
         // btn republishoffer 
-        btnRepublishOffer: function (m1, m2) {
+        btnRepublishOffer: function (m1, m2, m3) {
             //
             if (m1 === "EXPIRED") {
                 if (m2 === 5 || m2 === 6 || m2 === 7) {
-                    return true;
+                    if (m3 !== 6) {
+                        return true;
+                    }
                 }
             }
             return false;
         },
         bntSaveDetailsOfferVisible: function (m1, m2) {
             if (m1 === "PUBLISHED") {
-                if (m2 === 6 || m2 === 7) {
+                if (m2 === 5 || m2 === 6 || m2 === 7) {
                     return true;
                 }
             }
