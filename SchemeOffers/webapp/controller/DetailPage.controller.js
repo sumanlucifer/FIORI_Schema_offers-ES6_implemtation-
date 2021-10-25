@@ -179,7 +179,7 @@ sap.ui.define(
                     modeEdit: false,
                     bindProp: "OfferSet(" + oProp + ")",
                     HasTillDate: true,
-                    ImageLoaded: false,
+                    ImageLoaded: true,
                     mode: "display",
                     EndDate: "",
                     EndDate2: "",
@@ -367,10 +367,10 @@ sap.ui.define(
                                                     c7.then(function (data) {
                                                         c7B = othat._getExecLogData(data);
                                                         c7B.then(function (data) {
-                                                            c8 = othat._CheckAttachment();
-                                                            c8.then(function () {
+                                                            //c8 = othat._CheckAttachment();
+                                                           // c8.then(function () {
                                                                 c9 = othat._RemovePageBusy();
-                                                            });
+                                                           // });
                                                         });
                                                     });
                                                 });
@@ -895,8 +895,8 @@ sap.ui.define(
                                     c6.then(function (oData) {
                                         c7 = othat._OfferTypeValidation2(data);
                                         c7.then(function (data) {
-                                            c8 = othat._CheckEditImage(data);
-                                            c8.then(function (data) {
+                                            //c8 = othat._CheckEditImage(data);
+                                            //c8.then(function (data) {
                                                 c9 = othat._getLoggedInUserDeatils(data);
                                                 c9.then(function (data) {
                                                     // no data required from the previous steop
@@ -921,7 +921,7 @@ sap.ui.define(
                                                         });
                                                     });
                                                 });
-                                            });
+                                            //});
                                         });
                                     });
                                 });
@@ -1188,7 +1188,7 @@ sap.ui.define(
                 var oDataControl = {
                     HasTillDate: false,
                     FormTitle: "",
-                    ImageLoaded: false,
+                    ImageLoaded: true,
                     mode: "edit",
                     BonusValidity: oBonusValidity,
                     modeEdit: false,

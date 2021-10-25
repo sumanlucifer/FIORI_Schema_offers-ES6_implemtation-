@@ -4907,7 +4907,7 @@ sap.ui.define(
                     return;
                 }
                 if (
-                    !oObject["StartDate"] &&
+                    !oObject["StartDate"] ||
                     !oObject["EndDate"]
                 ) {
                     MessageToast.show(
