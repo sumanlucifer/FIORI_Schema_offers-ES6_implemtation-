@@ -388,7 +388,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return false;
         },
         bntSaveDetailsOfferVisible: function (m1, m2) {
-            if (m1 === "PUBLISHED") {
+            if (m1 === "PUBLISHED" || m1 === "EXPIRED") {
                 if (m2 === 5 || m2 === 6 || m2 === 7) {
                     return true;
                 }
