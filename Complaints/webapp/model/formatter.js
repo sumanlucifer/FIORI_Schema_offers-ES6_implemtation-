@@ -94,6 +94,7 @@ sap.ui.define([], function () {
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow);
         },
+        ////////// Resolution Type//////////
         fmtCmbxResolutionType: function (m1, m2) {
             console.log(m1, m2);
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
@@ -104,6 +105,7 @@ sap.ui.define([], function () {
             }
             return true
         },
+         ////////// Resolved Button //////////
         fmtCmbxResolvedButton: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
@@ -115,6 +117,7 @@ sap.ui.define([], function () {
             }
             return true
         },
+         ////////// Category Type//////////
         fmtCmbxCategoryType: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
@@ -126,6 +129,7 @@ sap.ui.define([], function () {
             }
             return true
         },
+         ////////// Product Type//////////
         fmtProductCmbx: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
@@ -139,6 +143,7 @@ sap.ui.define([], function () {
             }
             return false
         },
+         ////////// Pack Type//////////
         fmtPacksCmbx: function (m1, m2, m3) {
             // m1 = Approvalstatus
             // m2 = Complianstatus
@@ -150,6 +155,18 @@ sap.ui.define([], function () {
                 return true;
             }
             return false
+        },
+         ////////// Token Type//////////
+        fmtTokenCmbx: function (m1, m2) {
+            // m1 = approvalstatus
+            // m2 = complianstatus
+            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
+                return false
+            }
+            if (m1 === "PENDING") {
+                return false;
+            }
+            return true
         }
     };
 });

@@ -44,8 +44,10 @@
     <VBox >
            <Label  text="{i18n>TokenCode}"  />
            <HBox renderType="Bare" >
-           <Input  value="{oModelView>/TokenCode}" 
-            editable="{= ${ComplaintStatus} === 'INREVIEW' &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />  
+            <Input  value="{oModelView>/TokenCode}" 
+           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtTokenCmbx'}" />  
+           <!-- <Input  value="{oModelView>/TokenCode}" 
+            editable="{= ${ComplaintStatus} === 'INREVIEW' &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />   -->
             <Button class="sapUiTinyMarginBeginEnd" visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' }" 
               icon="sap-icon://reset" tooltip="{i18n>Reset}" press="onResetToken" />
             <Button  class="sapUiTinyMarginBeginEnd"  visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW'  }" 
