@@ -450,7 +450,7 @@ sap.ui.define([
             var oView = this.getView();
             var oModelView = this.getModel("oModelView"),
                 oThat = this;
-            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             this.getModel("oModelView").setProperty("/questionnaireIndex", questionnaireIndex);
 
             var Questionnaire = oEvent.getSource().getBindingContext("oModelView").getObject();
@@ -492,7 +492,7 @@ sap.ui.define([
             var oView = this.getView();
             var oModelView = this.getModel("oModelView"),
                 oThat = this;
-            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             this.getModel("oModelView").setProperty("/questionnaireIndex", questionnaireIndex);
 
             var Questionnaire = oEvent.getSource().getBindingContext("oModelView").getObject();
@@ -527,7 +527,7 @@ sap.ui.define([
         },
 
         onDeleteQuestionnaire: function (oEvent) {
-            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var questionnaireIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
 
             function onYes() {
                 this.deleteQuestionnaire(questionnaireIndex);
@@ -540,6 +540,7 @@ sap.ui.define([
                 this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(questionnaireIndex, 1);
             } else {
                 this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire[questionnaireIndex].IsArchived = true;
+                this.getModel("oModelView").getData().TrainingDetails.TrainingQuestionnaire.splice(questionnaireIndex, 1);
             }
             this.getModel("oModelView").refresh();
         },
@@ -642,7 +643,7 @@ sap.ui.define([
         onLanguageCodeChange: function (oEvent) {
 
             var selectedLanguageCode = oEvent.getSource().getSelectedKey();
-            var selectedLanguageCodeIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var selectedLanguageCodeIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             var selectedObject = oEvent.getSource().getBindingContext("oModelView").getObject();
             var aleadySelected = false;
             var oModel = this.getView().getModel("oModelView");
@@ -749,7 +750,7 @@ sap.ui.define([
         },
 
         onDeleteTranslation: function (oEvent) {
-            var translationIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var translationIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
             if (clientObject[translationIndex].QuestionId) {
                 // clientObject[translationIndex].IsArchived = true;
@@ -763,7 +764,7 @@ sap.ui.define([
 
         onDeleteQuestionnaireOptions: function (oEvent) {
             // var oView = this.getView();
-            var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
 
@@ -793,7 +794,7 @@ sap.ui.define([
         },
         onSelectOption: function (oEvent) {
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
-            var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
+            var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
             // console.log(oEvent.getSource().getBindingContext("oModelView").getObject(), iOptionIndex);
 
             // clientObject.forEach(translation => {
