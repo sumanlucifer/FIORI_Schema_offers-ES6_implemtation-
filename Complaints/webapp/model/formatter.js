@@ -119,6 +119,7 @@ sap.ui.define([], function () {
         },
          ////////// Category Type//////////
         fmtCmbxCategoryType: function (m1, m2) {
+
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
@@ -128,6 +129,7 @@ sap.ui.define([], function () {
                 return false;
             }
             return true
+            console.log(m1,m2);
         },
          ////////// Product Type//////////
         fmtProductCmbx: function (m1, m2, m3) {
@@ -167,6 +169,21 @@ sap.ui.define([], function () {
                 return false;
             }
             return true
+        },
+
+         ////////// Quantiy//////////
+        fmtQuantiyInp: function (m1, m2 ,m3) {
+           // m1 = approvalstatus
+            // m2 = complianstatus
+            // m3 = categorycode
+            console.log(m1, m2, m3);
+            if (m2 == "INREVIEW" && m3 == null) {
+                return true
+            }
+            if (m2 == "INREVIEW" && m1 !== "PENDING") {
+                return true;
+            }
+            return false
         }
     };
 });
