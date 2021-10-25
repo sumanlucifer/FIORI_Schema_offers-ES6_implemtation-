@@ -45,7 +45,7 @@
            <Label  text="{i18n>TokenCode}"  />
            <HBox renderType="Bare" >
             <Input  value="{oModelView>/TokenCode}" 
-           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtTokenCmbx'}" />  
+           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtTokenInput'}" />  
            <!-- <Input  value="{oModelView>/TokenCode}" 
             editable="{= ${ComplaintStatus} === 'INREVIEW' &amp;&amp;  ${oModelView>/RewardPoints} === '' ? true : false  }"   />   -->
             <Button class="sapUiTinyMarginBeginEnd" visible="{=  ${ComplaintStatus} === 'REGISTERED' ||  ${ComplaintStatus} === 'INREVIEW' }" 

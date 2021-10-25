@@ -98,92 +98,89 @@ sap.ui.define([], function () {
         fmtCmbxResolutionType: function (m1, m2) {
             console.log(m1, m2);
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false
+                return false;
             }
             if (m1 === "PENDING") {
                 return false;
             }
-            return true
+            return true;
         },
-         ////////// Resolved Button //////////
+        ////////// Resolved Button //////////
         fmtCmbxResolvedButton: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false
+                return false;
             }
             if (m1 === "PENDING") {
                 return false;
             }
-            return true
+            return true;
         },
-         ////////// Category Type//////////
+        ////////// Category Type//////////
         fmtCmbxCategoryType: function (m1, m2) {
-
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false
+                return false;
             }
             if (m1 === "PENDING") {
                 return false;
             }
-            return true
-            console.log(m1,m2);
+            return true;
         },
-         ////////// Product Type//////////
+        ////////// Product Type//////////
         fmtProductCmbx: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
             // m3 = categorycode
             console.log(m1, m2, m3);
             if (m2 == "INREVIEW" && m3 == null) {
-                return true
+                return true;
             }
             if (m2 == "INREVIEW" && m1 !== "PENDING") {
                 return true;
             }
-            return false
+            return false;
         },
-         ////////// Pack Type//////////
+        ////////// Pack Type//////////
         fmtPacksCmbx: function (m1, m2, m3) {
             // m1 = Approvalstatus
             // m2 = Complianstatus
             // m3 = ProductCode
             if (m2 == "INREVIEW" && m3 == null) {
-                return true
+                return true;
             }
             if (m2 == "INREVIEW" && m1 !== "PENDING") {
                 return true;
             }
-            return false
+            return false;
         },
-         ////////// Token Type//////////
-        fmtTokenCmbx: function (m1, m2) {
+        ////////// Token Type//////////
+        fmtTokenInput: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false
+                return false;
             }
             if (m1 === "PENDING") {
                 return false;
             }
-            return true
+            return true;
         },
-
-         ////////// Quantiy//////////
-        fmtQuantiyInp: function (m1, m2 ,m3) {
-           // m1 = approvalstatus
+        ////////// Quantiy//////////
+        fmtQuantiyInp: function (m1, m2, m3) {
+            // m1 = approvalstatus
             // m2 = complianstatus
-            // m3 = categorycode
+            // m3 = pack
             console.log(m1, m2, m3);
             if (m2 == "INREVIEW" && m3 == null) {
-                return true
+                return true;
             }
             if (m2 == "INREVIEW" && m1 !== "PENDING") {
                 return true;
             }
-            return false
+            return false;
         }
     };
 });
