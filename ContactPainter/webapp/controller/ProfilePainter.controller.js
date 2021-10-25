@@ -2339,7 +2339,7 @@ sap.ui.define(
               var sTotalReg= object["TotalRegistrations"];
 
               if(sTotalReg >=smaxReg){
-                  var sString= "You have reached the maximum rewards limit on referrals (" + smaxReg +"). You will not be able to earn points on new referral";
+                  var sString= "You have reached the maximum rewards limit on referrals (" + smaxReg +"). You will not be able to earn points on new referral.";
               oView.getModel("oModelControl2").setProperty("/ReferralMessage", sString);
                 
                 }

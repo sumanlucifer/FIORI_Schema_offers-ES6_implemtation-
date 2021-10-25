@@ -6,12 +6,13 @@
     items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'},{path:'ReferralStatus',operator:'EQ',value1:'PENDINGSCAN'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                    <ToolbarSpacer/>
+                
                 <MessageStrip
-text="{oModelControl2>/ReferralMessage}"
-showIcon="true"
->
-</MessageStrip>
+            text="{oModelControl2>/ReferralMessage}"
+            showIcon="true">
+
+             </MessageStrip>
+                 <ToolbarSpacer/>
                     <SearchField width="20%" showSearchButton="true" search="onTablesSearch" value="{oModelControl2>/Search/Referral}"></SearchField>
                     <Button icon="sap-icon://add" text="{i18n>AddReferral}" type="Emphasized" press="onPressAddReferral" enabled="{=!${IsArchived} &amp;&amp; ${ActivationStatus}!=='DEACTIVATED' }"/>
                 </Toolbar>
