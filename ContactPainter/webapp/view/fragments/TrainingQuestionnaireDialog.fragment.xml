@@ -37,7 +37,7 @@
             </Table>
         </content>
         <endButton>
-            <Button type="Ghost" text="Close" press="onPressCloseDialog"/>
+            <Button text="Close" press="onPressCloseDialog"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

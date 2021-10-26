@@ -6,7 +6,7 @@
     items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'},{path:'ReferralStatus',operator:'EQ',value1:'PENDINGSCAN'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
-                <MessageStrip visible="{= ${oModelControl2>/ReferralMessage}.length > 0 }"
+                <MessageStrip visible="{= !${oModelControl2>/ReferralMessage} === null}"
             text="{oModelControl2>/ReferralMessage}"
             showIcon="true">
              </MessageStrip>

@@ -3259,9 +3259,9 @@ sap.ui.define(
             },
             onQuestinaireDialogClose: function () {
                 this._pQuestionaireDialog.destroy();
-             fmtTrainStatus   delete this._pQuestionaireDialog;
+                delete this._pQuestionaireDialog;
             },
-            : function (mParam) {
+            fmtTrainStatus: function (mParam) {
                 if (mParam.replace(/\s/g, "").toLowerCase() === "offlinetraining") {
                     return "NA";
                 }

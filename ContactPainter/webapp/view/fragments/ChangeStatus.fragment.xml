@@ -31,7 +31,7 @@
 
         </content>
         <buttons>
-            <Button type="Ghost" text="{i18n>Close}" press="onCloseStatus" />
+            <Button text="{i18n>Close}" press="onCloseStatus" />
             <Button press="onConfirmStatus" type="Emphasized" text="{i18n>Save}" />
         </buttons>
     </Dialog>
