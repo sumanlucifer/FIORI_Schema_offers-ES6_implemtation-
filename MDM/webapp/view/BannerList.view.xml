@@ -14,7 +14,7 @@
                     <Toolbar>
                         <Title text="{i18n>banerImage}"/>
                         <ToolbarSpacer/>
-                        <Button icon="sap-icon://add" text="{i18n>btnAdd}" type="Emphasized" press="onAdd" tooltip="{i18n>AddBannerImage}"></Button>
+                        <Button icon="sap-icon://add" text="{i18n>AddBannerImage}" type="Emphasized" press="onAdd" tooltip="{i18n>AddBannerImage}"></Button>
                         <!-- <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button> -->
                     </Toolbar>
                 </headerToolbar>
@@ -29,7 +29,7 @@
 						<Text text="{i18n>colEndTime}"/>
 					</Column>
                     <Column width="20%">
-						<Text text="{i18n>colDelete}"/>
+						<Text text="{i18n>colAction}"/>
 					</Column>
                 </columns>
 
