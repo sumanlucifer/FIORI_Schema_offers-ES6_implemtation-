@@ -62,6 +62,9 @@ sap.ui.define([
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
+        onFileSizeExceed: function () {
+            MessageToast.show("Kindly Select A file size less than 2 Mb.")
+        },
         onStartDateChange: function (oEvent) {
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl");
@@ -69,17 +72,18 @@ sap.ui.define([
             var oStartDate = oEvent.getSource().getDateValue();
             var oEndDate = oModelView.getProperty("/EndTime");
             var oCurrentDate = new Date();
-            if (oEndDate) {
-                if (oStartDate > oEndDate) {
-                    MessageToast.show("Kindly select a date less than or equal to end date.");
+            if (oStartDate) {
+                oCurrentDate.setHours(0, 0, 0, 0);
+                if (oStartDate < oCurrentDate) {
+                    MessageToast.show("Kindly select a date greater than or equal to current date.");
                     oModelControl.setProperty("/StartTime", "");
                     oModelView.setProperty("/StartTime", null);
                     return;
                 }
             } else if (oStartDate) {
-                oCurrentDate.setHours(0, 0, 0, 0);
-                if (oStartDate < oCurrentDate) {
-                    MessageToast.show("Kindly select a date greater than or equal to current date.");
+
+                if (oStartDate > oEndDate) {
+                    MessageToast.show("Kindly select a date less than or equal to end date.");
                     oModelControl.setProperty("/StartTime", "");
                     oModelView.setProperty("/StartTime", null);
                     return;
@@ -95,12 +99,22 @@ sap.ui.define([
             var oModelView = oView.getModel("oModelView");
             var oEndDate = oEvent.getSource().getDateValue();
             var oStartDate = oModelView.getProperty("/StartTime");
-            if (oStartDate) {
-                if (oStartDate > oEndDate) {
+            var oCurrentDate = new Date();
+            if (oEndDate) {
+                if (oEndDate) {
+                    oCurrentDate.setHours(0, 0, 0, 0);
+                    if (oEndDate < oCurrentDate) {
+                        MessageToast.show("Kindly select a date greater than or equal to current date.");
+                        oModelControl.setProperty("/EndTime", "");
+                        oModelView.setProperty("/EndTime", null);
+                        return;
+                    }
+                } else if (oStartDate > oEndDate) {
                     MessageToast.show("Kindly select a date more than or equal to start date.");
                     oModelControl.setProperty("/EndTime", "");
                     oModelView.setProperty("/EndTime", null);
                     return;
+
                 }
             }
 

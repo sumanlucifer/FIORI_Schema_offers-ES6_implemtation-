@@ -18,7 +18,7 @@
                 <Label text="{i18n>uploadBannerImage}" required="true"/>
                 <VBox>
                     <items>
-                        <unified:FileUploader change="onBannerImageFileChange" id="idImageUploader" width="100%" tooltip="{i18n>fileUploaderTrainingtip}" typeMissmatch="handleTypeMissmatch" fileType="png,jpg,jpeg" maximumFileSize="2.1" fileSizeExceed="onFileSizeExceed" useMultipart="false" sendXHR="true" fileAllowed="onUpload"/>
+                        <unified:FileUploader  change="onBannerImageFileChange" id="idImageUploader" width="100%" tooltip="{i18n>fileUploaderTrainingtip}" typeMissmatch="handleTypeMissmatch" fileType="png,jpg,jpeg" maximumFileSize="2.1" fileSizeExceed="onFileSizeExceed" useMultipart="false" sendXHR="true" fileAllowed="onUpload"/>
                           <Text text="{i18n>FileUploadMessage}"/>
                     </items>
                 </VBox>
