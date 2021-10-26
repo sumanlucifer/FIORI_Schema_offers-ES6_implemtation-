@@ -99,6 +99,7 @@ sap.ui.define(
                     selectedKey: 0,
                     LoggedInUser: {},
                     PageBusy: true,
+                    MinDate:new Date(),//for min date selection
                     Buttons: {
                         Redeem: false, // check if its already redeemed
                         SendForApproval: false,
