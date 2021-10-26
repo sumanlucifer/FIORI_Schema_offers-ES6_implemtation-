@@ -389,7 +389,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         },
         bntSaveDetailsOfferVisible: function (m1, m2) {
             if (m1 !== "EXPIRED") {
-                if (m2 === 6 || m2 === 7) {
+                if (m2 === 5 || m2 === 6 || m2 === 7) {
                     return true;
                 }
             }
@@ -405,6 +405,17 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             if (m1 !== "EXPIRED") {
                 if (m2 === 6 || m2 === 7) {
                     return true;
+                }
+            }
+            return false;
+        },
+        endDateField1: function (m1, m2, m3) {
+            //
+            if (m1 === "EXPIRED") {
+                if (m2 === 5 || m2 === 6 || m2 === 7) {
+                    if (m3 !== 6) {
+                        return true;
+                    }
                 }
             }
             return false;
