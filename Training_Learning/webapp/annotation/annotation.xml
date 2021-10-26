@@ -45,6 +45,10 @@
                             <PropertyValue Property="Label" String="Depot"/>
                             <PropertyValue Property="Value" Path="PainterDetails/Depot/Depot"/>
                         </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Earned Points"/>
+                            <PropertyValue Property="Value" Path="EarnedPoints"/>
+                        </Record>
                     </Collection>
                 </Annotation>
             </Annotations>
@@ -75,6 +79,10 @@
                         <Record Type="com.sap.vocabularies.UI.v1.DataField">
                             <PropertyValue Property="Label" String="Depot"/>
                             <PropertyValue Property="Value" Path="PainterDetails/Depot/Depot"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.UI.v1.DataField">
+                            <PropertyValue Property="Label" String="Earned Points"/>
+                            <PropertyValue Property="Value" Path="EarnedPoints"/>
                         </Record>
                     </Collection>
                 </Annotation>

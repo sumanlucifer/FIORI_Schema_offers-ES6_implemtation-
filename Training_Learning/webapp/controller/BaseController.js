@@ -677,6 +677,7 @@ sap.ui.define([
             }
 
         },
+
         fmtCheckLanguage: function (mParam1, mParam2) {
 
             for (var x in mParam2) {
@@ -686,6 +687,7 @@ sap.ui.define([
                 }
             }
         },
+
         addMoreLanguage: function (oEvent) {
             var languageCode = "";
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
@@ -770,18 +772,8 @@ sap.ui.define([
         },
 
         onDeleteQuestionnaireOptions: function (oEvent) {
-            // var oView = this.getView();
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
-            // var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
-
-            // clientObject.forEach(translation => {
-            //     if (translation.Options[iOptionIndex].OptionId) {
-            //         translation.Options[iOptionIndex].IsArchived = true;
-            //     } else {
-            //         translation.Options.splice(iOptionIndex, 1);
-            //     }
-            // });
             for (var i in clientObject) {
                 clientObject[i]["Options"].splice(parseInt(iOptionIndex), 1)
             }
@@ -802,14 +794,7 @@ sap.ui.define([
         onSelectOption: function (oEvent) {
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
-            // console.log(oEvent.getSource().getBindingContext("oModelView").getObject(), iOptionIndex);
-
-            // clientObject.forEach(translation => {
-            //     translation.Options.forEach(op => {
-            //         op.IsCorrect = false;
-            //     });
-            //     translation.Options[iOptionIndex].IsCorrect = true;
-            // });
+            
             for (var i in clientObject) {
                 for (var x in clientObject[i]["Options"]) {
                     if (x == iOptionIndex) {
@@ -819,21 +804,9 @@ sap.ui.define([
                     }
                 }
             }
-            //this.getView().getModel("oModelView").refresh(true);
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
             this.getView().getModel("oModelView").refresh();
         },
-
-        // convertToClientObject: function (serviceObject) {
-        //     var sTrainingType = this.getView().getModel("appView").getProperty("/trainingType");
-        //     // if (sTrainingType === "ONLINE") {
-        //         return this._converToClientObjOnlineT(serviceObject);
-        //     // } else if (sTrainingType === "VIDEO") {
-        //     //     return this._converToClientObjVideoT(serviceObject);
-        //     // }
-
-
-        // },
 
         convertToLearningQuestionnairePayload: function (trainingQuestionnaireObject, oPayload) {
             var learningQuestionnaireOptions = [];
@@ -910,65 +883,6 @@ sap.ui.define([
             );
             return oPayload;
         },
-
-        // convertToClientObject1: function (serviceObject) {
-        //     var clientObject = [];
-        //     var question = {
-        //         Id: serviceObject.Id,
-        //         ClientQuestionId: this.generateId(),
-        //         IsArchived: serviceObject.IsArchived,
-        //         CreatedAt: serviceObject.CreatedAt,
-        //         CreatedBy: serviceObject.CreatedBy,
-        //         UpdatedAt: serviceObject.UpdatedAt,
-        //         UpdatedBy: serviceObject.UpdatedBy,
-        //         TrainingId: serviceObject.TrainingId,
-        //     };
-
-        //     clientObject = serviceObject.TrainingQuestionnaireLocalized.map(o => {
-        //         var que = Object.assign({}, question);
-        //         que.QuestionLocalizedId = o.Id;
-        //         que.LanguageCode = o.LanguageCode;
-        //         que.Question = o.Question;
-        //         que.QuestionId = o.TrainingQuestionnaireId;
-        //         return que;
-        //     });
-
-        //     serviceObject.TrainingQuestionnaireOptions.forEach(o => {
-        //         o.ClientOptionId = this.generateId();
-        //     });
-
-        //     clientObject.forEach(que => {
-        //         que.Options = [];
-
-        //         for (var i = 0; i < serviceObject.TrainingQuestionnaireOptions.length; i++) {
-
-        //             var optionServiceObject = serviceObject.TrainingQuestionnaireOptions[i];
-        //             var option = {
-        //                 Id: optionServiceObject.Id,
-        //                 ClientOptionId: optionServiceObject.ClientOptionId,
-        //                 IsCorrect: optionServiceObject.IsCorrect,
-        //                 IsArchived: optionServiceObject.IsArchived,
-        //                 CreatedAt: optionServiceObject.CreatedAt,
-        //                 CreatedBy: optionServiceObject.CreatedBy,
-        //                 UpdatedAt: optionServiceObject.UpdatedAt,
-        //                 UpdatedBy: optionServiceObject.UpdatedBy,
-        //                 QuestionnaireId: optionServiceObject.QuestionnaireId,
-        //             };
-
-        //             optionServiceObject.TrainingQuestionnaireOptionsLocalized.forEach(o => {
-        //                 if (que.LanguageCode == o.LanguageCode) {
-        //                     var op = Object.assign({}, option);
-        //                     op.OptionLocalizedId = o.Id;
-        //                     op.LanguageCode = o.LanguageCode;
-        //                     op.Option = o.Option;
-        //                     op.OptionId = o.TrainingOptionId;
-        //                     que.Options.push(op);
-        //                 }
-        //             });
-        //         }
-        //     });
-        //     return clientObject;
-        // },
 
         convertToClientObject: function (serviceObject) {
             var clientObject = [];
@@ -1059,17 +973,7 @@ sap.ui.define([
             return clientObject;
         },
 
-        // convertToServiceObject: function (clientObject) {
-        //     var sTrainingType = this.getView().getModel("appView").getProperty("/trainingType");
-        //     if (sTrainingType === "ONLINE") {
-        //         return this._converToServiceObjOnlineT(clientObject);
-        //     } else if (sTrainingType === "VIDEO") {
-        //         return this._converToServiceObjVideoT(clientObject);
-        //     }
-        // },
-
         convertToServiceObject: function (clientObject) {
-
             var serviceObject = {};
             var que = clientObject[0];
             serviceObject.Id = que.QuestionId;
@@ -1133,15 +1037,6 @@ sap.ui.define([
                     }
                 });
             }
-
-            // for (var i = 0; i < clientObject.length; i++) {
-            //     var que = clientObject[i];
-            //     serviceObject.TrainingQuestionnaireOptions.forEach(op => {
-            //         for (var i = 0; i < que.Options.length; i++) {
-            //             delete op.ClientOptionId;
-            //         }
-            //     });
-            // }
 
             if (serviceObject.hasOwnProperty("TrainingQuestionnaireOptions")) {
                 for (var x in serviceObject["TrainingQuestionnaireOptions"]) {

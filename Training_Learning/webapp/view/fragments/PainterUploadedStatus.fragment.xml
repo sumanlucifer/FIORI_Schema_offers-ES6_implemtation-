@@ -34,8 +34,8 @@
                         <Text text="{oModelView>PainterMobile}"/>
                         <Text text="{oModelView>UploadMessage}"/>
                         <HBox>
-                            <ObjectStatus text="{i18n>Success}" visible="{= ${oModelView>UploadStatus} === true}" state="{= ${oModelControl>UploadStatus} === false ? 'Error' : 'Success' }"/>
-                            <ObjectStatus text="{i18n>Failure}" visible="{= ${oModelView>UploadStatus} === false}" state="{= ${oModelControl>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                            <ObjectStatus text="{i18n>Success}" visible="{= ${oModelView>UploadStatus} === true}" state="{= ${oModelView>UploadStatus} === false ? 'Error' : 'Success' }"/>
+                            <ObjectStatus text="{i18n>Failure}" visible="{= ${oModelView>UploadStatus} === false}" state="{= ${oModelView>UploadStatus} === false ? 'Error' : 'Success' }"/>
                         </HBox>
                     </cells>
                 </ColumnListItem>
