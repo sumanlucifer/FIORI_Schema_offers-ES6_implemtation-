@@ -12,6 +12,9 @@
                 <Column>
                     <Text text="{i18n>ScanTokenNo}" />
                 </Column>
+                 <Column>
+                    <Text text="{i18n>ProductName}" />
+                </Column>
                 <Column>
                     <Text text="{i18n>MobileNumber}" />
                 </Column>
@@ -24,23 +27,20 @@
                  <Column>
                     <Text text="{i18n>AppliedBy}" />
                 </Column>
-                <Column>
-                    <Text text="{i18n>ProductName}" />
-                </Column>
-                 <Column>
+                 <!-- <Column>
                     <Text text="{i18n>ProductCategory}" />
-                </Column>
+                </Column> -->
             </columns>
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
                         <Text text="{TokenCode}" />
+                        <Text text="{ProductName}" />
                         <Text text="{Painter/Mobile}" />
                         <Text text="{RewardPoints}" />
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                         <Text text="{path:'Channel', formatter:'.fmtLowerCase'}" />
-                        <Text text="{ProductName}" />
-                        <Text text="{ProductCategory}" />
+                        <!-- <Text text="{ProductCategory}" /> -->
                     </cells>
                 </ColumnListItem>
             </items>
