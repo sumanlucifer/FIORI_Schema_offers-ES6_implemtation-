@@ -15,7 +15,7 @@
                     enableAutoBinding="false"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
-                    requestAtLeastFields="IsQuestionnaireSubmitted"
+                    requestAtLeastFields="Id,IsQuestionnaireSubmitted,Status,TrainingDetails/TrainingType/TrainingType,EarnedPoints"
                     header="{i18n>submittedPainterList}">
 
         <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoData}">
@@ -32,7 +32,7 @@
                     <cells>
                         <HBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
-                            <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewTrainingQuestionaire"/>
+                            <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press=".onViewTrainingQuestionaire"/>
                         </HBox>
                     </cells>
                 </ColumnListItem>

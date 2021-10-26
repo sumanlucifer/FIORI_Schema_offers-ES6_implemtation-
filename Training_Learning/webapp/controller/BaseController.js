@@ -5,11 +5,12 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/core/Fragment",
+    "sap/m/ObjectStatus",
     "sap/ui/core/util/Export",
     "sap/ui/core/util/ExportTypeCSV",
     "../model/formatter"
 
-], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox, Fragment, Export, ExportTypeCSV, formatter) {
+], function (Controller, UIComponent, mobileLibrary, MessageToast, MessageBox, Fragment, ObjectStatus, Export, ExportTypeCSV, formatter) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -44,6 +45,177 @@ sap.ui.define([
          */
         setModel: function (oModel, sName) {
             return this.getView().setModel(oModel, sName);
+        },
+
+        onViewTrainingQuestionaire: function (oEvent) {
+            var object = oEvent.getSource().getBindingContext().getObject();
+            this._TrainingQuestionaire(object);
+        },
+
+        _TrainingQuestionaire: function (mParam) {
+            var oView = this.getView();
+            var othat = this;
+            if (!this._pTrainingQuestionaireDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "com.knpl.pragati.Training_Learning.view.fragments.ViewTrainingQuestionnaireDialog",
+                    controller: this,
+                }).then(
+                    function (oDialog) {
+                        this._pTrainingQuestionaireDialog = oDialog;
+                        othat._setTrainingQuestData(mParam);
+                    }.bind(this)
+                );
+            } else {
+                othat._setTrainingQuestData(mParam);
+            }
+        },
+
+        _setTrainingQuestData: function (sPath) {
+            var oView = this.getView();
+            var oTable = oView.byId("Questionnaire");
+            this._pTrainingQuestionaireDialog.bindElement({
+                path: "/PainterTrainingSet(" + sPath["Id"] + ")",
+                parameters: {
+                    expand: "SubmittedQuestionnaire",
+                },
+            });
+            oView.addDependent(this._pTrainingQuestionaireDialog);
+            this._pTrainingQuestionaireDialog.open();
+        },
+
+        onTrainingQuestionnaireDialogClose: function () {
+            this._pTrainingQuestionaireDialog.destroy();
+            delete this._pTrainingQuestionaireDialog;
+        },
+
+        onPressCloseDialog: function (oEvent) {
+            oEvent.getSource().getParent().close();
+        },
+
+        TrainingQuestionnaireFactory: function (sId, oContext) {
+            var oBject = oContext.getObject();
+            var oColumnListItem = new sap.m.ColumnListItem();
+            oColumnListItem.addCell(
+                new sap.m.Text({
+                    text: "{Question/Question}",
+                })
+            );
+            var oOptionsObjet = this.getView().getModel().getProperty("/" + oBject["Question"]["__ref"]);
+            oOptionsObjet["TrainingQuestionnaireOptions"]["__list"].forEach(
+                function (z) {
+                    oColumnListItem.addCell(
+                        new ObjectStatus({
+                            text: "{/" + z + "/Option}",
+                            state: {
+                                parts: [
+                                    "/" + z + "/IsCorrect",
+                                    "/" + z + "/Id",
+                                    "SelectedOptionId",
+                                ],
+                                formatter: function (mPram1, mPram2, mPram3) {
+                                    if (mPram1) {
+                                        return "Success";
+                                    }
+                                    if (mPram2 == mPram3) {
+                                        return "Error";
+                                    }
+                                },
+                            },
+                        })
+                    );
+                }
+            );
+            return oColumnListItem;
+        },
+
+        onViewLearningQuestionaire: function (oEvent) {
+            var object = oEvent.getSource().getBindingContext().getObject();
+            this._LearningQuestionaire(object);
+        },
+
+        _LearningQuestionaire: function (mParam) {
+            var oView = this.getView();
+            var othat = this;
+            if (!this._pLearningQuestionaireDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "com.knpl.pragati.Training_Learning.view.fragments.ViewLearningQuestionnaireDialog",
+                    controller: this,
+                }).then(
+                    function (oDialog) {
+                        this._pLearningQuestionaireDialog = oDialog;
+                        othat._setLearningQuestData(mParam);
+                    }.bind(this)
+                );
+            } else {
+                othat._setLearningQuestData(mParam);
+            }
+        },
+
+        _setLearningQuestData: function (sPath) {
+            var oView = this.getView();
+            var oTable = oView.byId("Questionnaire");
+            this._pLearningQuestionaireDialog.bindElement({
+                path: "/PainterLearningSet(" + sPath["Id"] + ")",
+                parameters: {
+                    expand: "SubmittedQuestionnaire",
+                },
+            });
+            oView.addDependent(this._pLearningQuestionaireDialog);
+            this._pLearningQuestionaireDialog.open();
+        },
+
+        onLearningQuestionnaireDialogClose: function () {
+            this._pLearningQuestionaireDialog.destroy();
+            delete this._pLearningQuestionaireDialog;
+        },
+
+        LearningQuestionnaireFactory: function (sId, oContext) {
+            var oBject = oContext.getObject();
+            //console.log(oBject);
+            var oColumnListItem = new sap.m.ColumnListItem();
+            oColumnListItem.addCell(
+                new sap.m.Text({
+                    text: "{Question/Question}",
+                })
+            );
+            var oOptionsObjet = this.getView().getModel().getProperty("/" + oBject["Question"]["__ref"]);
+            oOptionsObjet["LearningQuestionnaireOptions"]["__list"].forEach(
+                function (z) {
+                    oColumnListItem.addCell(
+                        new ObjectStatus({
+                            text: "{/" + z + "/Option}",
+                            state: {
+                                parts: [
+                                    "/" + z + "/IsCorrect",
+                                    "/" + z + "/Id",
+                                    "SelectedOptionId",
+                                ],
+                                formatter: function (mPram1, mPram2, mPram3) {
+                                    //console.log(mPram1, mPram2, mPram3);
+                                    if (mPram1) {
+                                        return "Success";
+                                    }
+                                    if (mPram2 == mPram3) {
+                                        return "Error";
+                                    }
+                                },
+                            },
+                        })
+                    );
+                }
+            );
+            return oColumnListItem;
+        },
+
+        fmtTrainStatus: function (mParam) {
+            if (mParam) {
+                if (mParam.replace(/\s/g, "").toLowerCase() === "offlinetraining") {
+                    return "NA";
+                }
+            }
+            return "Not Submitted";
         },
 
         /**
@@ -84,6 +256,7 @@ sap.ui.define([
                 }
             });
         },
+        
         onModelPropertyChange: function (oEvent, sModel) {
             this.getModel(sModel).setProperty("/bChange", true);
         },
@@ -794,7 +967,7 @@ sap.ui.define([
         onSelectOption: function (oEvent) {
             var clientObject = this.getModel("oModelView").getProperty("/oAddTraining");
             var iOptionIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d+$/g);
-            
+
             for (var i in clientObject) {
                 for (var x in clientObject[i]["Options"]) {
                     if (x == iOptionIndex) {
