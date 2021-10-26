@@ -50,7 +50,7 @@
                         <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}==='EXPIRED'}">
                             <f:fields>
                              <!-- <Text visible="{=${OfferStatus}==='EXPIRED'}" text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/> -->
-                            <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===5 ||${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" minDate="{path:'oModelDisplay>/EndDate'}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
+                            <DatePicker editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','OfferTypeId'],formatter:'.formatter.endDateField1'}" minDate="{path:'oModelDisplay>/EndDate'}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/YYYY" required="true" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}!=='EXPIRED'}">
@@ -72,7 +72,10 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>Criteria}">
                             <f:fields>
-                                <Text text="{Criteria}"/>
+                            <VBox >
+                                <Text visible="{=${OfferStatus} === 'EXPIRED'}" text="{Criteria}"/>
+                                <TextArea visible="{=${OfferStatus} !== 'EXPIRED'}" editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===5 ||${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" required="false" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                            </VBox>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
