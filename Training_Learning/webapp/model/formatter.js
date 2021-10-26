@@ -75,6 +75,13 @@ sap.ui.define([], function () {
             } else {
                 return "Failure";
             }
+        },
+
+        fmtTrainStatus: function (mParam) {
+            if (mParam.replace(/\s/g, "").toLowerCase() === "offlinetraining") {
+                return "NA";
+            }
+            return "Not Submitted";
         }
 
     };

@@ -39,6 +39,9 @@
                     <Text text="{i18n>colAttendanceDate}"/>
                 </Column>
                 <Column>
+                    <Text text="{i18n>Questionnaire}"/>
+                </Column>
+                <Column>
                     <Text text="{i18n>colEarnedPoint}"/>
                 </Column>
             </columns>
@@ -54,6 +57,10 @@
                         <Text text="{PainterDetails/DepotId}"/>
                         <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
                         <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <VBox>
+                            <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
+                            <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewTrainingQuestionaire"/>
+                        </VBox>
                         <Text text="{EarnedPoints}"/>
                     </cells>
                 </ColumnListItem>
