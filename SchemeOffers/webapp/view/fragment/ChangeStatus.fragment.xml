@@ -6,7 +6,7 @@
             <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
                 <f:content>
                     <Label text="{i18n>Remark}" />
-                    <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelControl3>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                    <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="300" value="{path : 'oModelControl3>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
                 </f:content>
             </f:SimpleForm>
         </content>

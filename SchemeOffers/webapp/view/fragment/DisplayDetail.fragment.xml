@@ -603,12 +603,12 @@
             editable="false"
 			value="{path:'MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
 			description="{i18n>Min}"
-			width="200px"/>
+			width="300px"/>
             <Input
             editable="false"
 			value="{path:'MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
 			description="{i18n>Max}"
-			width="200px"/>
+			width="300px"/>
             
         </HBox>
         </VBox>
