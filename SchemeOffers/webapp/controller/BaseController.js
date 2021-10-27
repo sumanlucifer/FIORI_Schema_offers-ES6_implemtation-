@@ -5813,7 +5813,7 @@ sap.ui.define(
                 }
                 ///for combination condition
                 if ((bContributionCondition === 1 || bContributionCondition === 2) && (bContributionType === 1)) {
-                    console.log("Table10");
+                   
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table10")
                         .map(function (a) {
