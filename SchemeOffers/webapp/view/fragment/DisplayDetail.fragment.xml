@@ -537,7 +537,7 @@
         
         </VBox>
         <VBox  visible="{=${oModelDisplay>/ContributionType}===1}">
-             <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table9',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
+             <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
             <headerToolbar>
                 <Toolbar>
                     <!-- <Title text="{i18n>Conditions}"/> -->
@@ -601,14 +601,14 @@
          <HBox visible="{=${oModelDisplay>/ContributionType}===1}" class="sapUiSmallMarginBegin">
         <Input
             editable="false"
-			value="{path:'oModelDisplay>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			value="{path:'MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
 			description="{i18n>Min}"
-			width="200px"/>
+			width="300px"/>
             <Input
             editable="false"
-			value="{path:'oModelDisplay>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			value="{path:'MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
 			description="{i18n>Max}"
-			width="200px"/>
+			width="300px"/>
             
         </HBox>
         </VBox>

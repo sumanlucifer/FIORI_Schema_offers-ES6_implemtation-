@@ -300,6 +300,9 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             if (m2 == 3) {
                 return "Not allowed as painter deselected";
             }
+            if (m2 == 4) {
+                return "Not allowed as achiever duration expired";
+            }
             if (m1 === 'REDEEMED') {
                 return "Yes";
             }

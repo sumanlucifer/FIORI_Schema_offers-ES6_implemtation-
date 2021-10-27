@@ -4059,6 +4059,8 @@ sap.ui.define(
                     "BonusApplicableTopPainter",
                     "ParentOfferId",
                     "RedemptionCycle",
+                    // "MinPercentage",
+                    // "MaxPercentage"
                 ];
                 for (var y of inTegerProperty) {
                     if (oPayLoad.hasOwnProperty(y)) {
@@ -5811,7 +5813,7 @@ sap.ui.define(
                 }
                 ///for combination condition
                 if ((bContributionCondition === 1 || bContributionCondition === 2) && (bContributionType === 1)) {
-                    console.log("Table10");
+                   
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table10")
                         .map(function (a) {
@@ -5843,8 +5845,8 @@ sap.ui.define(
                         delete ele["editable"];
                         return ele;
                     });
-                    oPayLoad["MinPercentage"] = Min;
-                    oPayLoad["MaxPercentage"] = Max;
+                   // oPayLoad["MinPercentage"] = Min;
+                   // oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     //console.log(oPayLoad);
                     //debugger;

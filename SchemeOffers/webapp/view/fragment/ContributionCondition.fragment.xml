@@ -197,13 +197,13 @@
         </Table>
         <HBox visible="{=${oModelView>/ContributionType}===1}" class="sapUiSmallMarginBegin">
         <Input
-			value="{path:'oModelControl>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			value="{path:'oModelView>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }"
 			description="{i18n>Min}"
-			width="200px"/>
+			width="300px"/>
             <Input
-			value="{path:'oModelControl>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
+			value="{path:'oModelView>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }"
 			description="{i18n>Max}"
-			width="200px"/>
+			width="300px"/>
             
         </HBox>
         
