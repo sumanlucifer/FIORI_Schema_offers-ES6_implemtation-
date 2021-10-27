@@ -589,11 +589,22 @@ sap.ui.define(
                         oData["OfferDeselectedPainter"]["results"]
                     );
                 }
-                if (oData["OfferContributionRatio"]["results"].length > 0) {
-                    oModelControl2.setProperty(
+                 if (oData["OfferContributionRatio"]["results"].length > 0) {
+                    if(oData["ContributionType"]===0){
+                        console.log("table9")
+                        oModelControl2.setProperty(
                         "/Table/Table9",
                         oData["OfferContributionRatio"]["results"]
                     );
+                    }
+                    else if(oData["ContributionType"]===1){
+                        console.log("table10")
+                        oModelControl2.setProperty(
+                        "/Table/Table10",
+                        oData["OfferContributionRatio"]["results"]
+                    );
+                    }
+                    
                 }
                 promise.resolve(oData);
                 return promise;
@@ -1291,7 +1302,8 @@ sap.ui.define(
                         BrReqVol: 0,
                         BrReqCash: 0,
                         Bns2ReqPercent: 0,
-                        MultiReward: 0
+                        MultiReward: 0,
+                        AddFlag:0
                     },
                     MultiEnabled: {
                         PCat1: false,
@@ -1325,7 +1337,9 @@ sap.ui.define(
                         Table5: [],
                         Table6: [],
                         Table7: [],
-                        Table8: []
+                        Table8: [],
+                        Table9: [],
+                        Table10: []
                     },
                     oData: {
                         Products: [],
@@ -1475,13 +1489,13 @@ sap.ui.define(
                     );
                 }
                 if (oData["OfferContributionRatio"]["results"].length > 0) {
-                    if(oData["ContributionCondition"]===0){
+                    if(oData["ContributionType"]===0){
                         oModelControl2.setProperty(
                         "/Table/Table9",
                         oData["OfferContributionRatio"]["results"]
                     );
                     }
-                    else if(oData["ContributionCondition"]===1){
+                    else if(oData["ContributionType"]===1){
                         oModelControl2.setProperty(
                         "/Table/Table10",
                         oData["OfferContributionRatio"]["results"]
@@ -1860,7 +1874,7 @@ sap.ui.define(
                 var oView = this.getView();
                 var oDataModel = oView.getModel();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                //console.log(oPayLoad);
+                console.log(oPayLoad);
                 return new Promise((resolve, reject) => {
                     oDataModel.update("/" + oProp, oPayLoad, {
                         success: function (data) {
