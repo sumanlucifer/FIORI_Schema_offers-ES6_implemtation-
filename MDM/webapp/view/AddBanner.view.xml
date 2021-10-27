@@ -3,7 +3,7 @@
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddNewBImage}">
+                    <Breadcrumbs currentLocationText="{i18n>TtlAddBImage}">
                         <Link text="{i18n>worklistTitle}" press="navPressBack"/>
                     </Breadcrumbs>
                 </contentLeft>
