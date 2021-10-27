@@ -23,25 +23,25 @@
                 <Column>
                     <Text text="{i18n>colMobileNumber}"/>
                 </Column>
-                <Column>
+                <Column width="7%">
                     <Text text="{i18n>colZone}"/>
                 </Column>
-                <Column>
+                <Column width="7%">
                     <Text text="{i18n>colDivision}"/>
                 </Column>
-                <Column>
+                <Column width="7%">
                     <Text text="{i18n>colDepot}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>colPrDealer}"/>
                 </Column>
-                <Column>
+                <Column width="10%">
                     <Text text="{i18n>colAttendanceDate}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>Questionnaire}"/>
                 </Column>
-                <Column>
+                <Column width="7%">
                     <Text text="{i18n>colEarnedPoint}"/>
                 </Column>
             </columns>

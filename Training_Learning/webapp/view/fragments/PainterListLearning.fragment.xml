@@ -16,7 +16,7 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                     header="{i18n>submittedPainterList}">
-
+            
                     <!-- <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoData}">
                         <columns>
                             <Column hAlign="Begin">

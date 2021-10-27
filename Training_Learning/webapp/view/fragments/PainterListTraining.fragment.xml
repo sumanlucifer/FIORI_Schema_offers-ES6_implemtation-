@@ -20,9 +20,15 @@
 
         <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoData}">
             <columns>
+                 <Column hAlign="Begin" width="10%">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "AttendedAt", "type":"date", "leadingProperty": "AttendedAt", "columnIndex": 6 ,"sortProperty": "AttendedAt","filterProperty": "AttendedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>colAttendanceDate}"/>
+                </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Button", "columnIndex": 6 }'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Button", "columnIndex": 7 }'/>
                     </customData>
                     <Text text="{i18n>Questionnaire}"/>
                 </Column>
@@ -30,9 +36,10 @@
             <items>
                 <ColumnListItem>
                     <cells>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
                         <HBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
-                            <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press=".onViewTrainingQuestionaire"/>
+                            <Button tooltip="{i18n>ViewQuestion}" width="92%" visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press=".onViewTrainingQuestionaire"/>
                         </HBox>
                     </cells>
                 </ColumnListItem>
