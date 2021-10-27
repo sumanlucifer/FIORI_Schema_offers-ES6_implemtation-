@@ -74,7 +74,7 @@
               <Label   text="{i18n>LblProduct}" required="true" />
               <!-- <ComboBox id="idProduct" width="100%" change="filterPacks"  editable="{= ${oModelControl>/CategoryCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"   -->
                    <ComboBox id="idProduct" width="100%" change="filterPacks" 
-                   editable="{parts:['ApprovalStatus','ComplaintStatus','CategoryCode'], formatter:'.formatter.fmtProductCmbx' }" 
+                   editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtProductCmbx' }" 
                     selectedKey="{oModelControl>/ProductCode}"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}" 
                     items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
                     <core:Item key="{Id}" text="{ProductName}" />
@@ -83,7 +83,7 @@
         <VBox>
             <Label required="true" text="{i18n>LblPack}" />
             <!-- <ComboBox change="onPackChange" id="idPacks" editable="{= ${oModelControl>/ProductCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" width="100%" -->
-           <ComboBox change="onPackChange" id="idPacks" editable="{parts:['ApprovalStatus','ComplaintStatus','ProductCode'], formatter:'.formatter.fmtPacksCmbx' }"  width="100%"            
+           <ComboBox change="onPackChange" id="idPacks" editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtPacksCmbx' }"  width="100%"            
                       selectedKey="{oModelView>/PainterComplainProducts/ProductSKUCode}"
                     items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
                     <core:Item key="{SkuCode}" text="{Description}" />
@@ -94,7 +94,7 @@
             <!-- <ComboBox change="onPointsChange"
             editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" -->
             <ComboBox change="onPointsChange"
-           editable="{parts:['ApprovalStatus','ComplaintStatus','ProductSKUCode'], formatter:'.formatter.fmtQuantiyInp' }"
+           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtQuantiyInp' }"
             selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}" >
                  <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
             </ComboBox>

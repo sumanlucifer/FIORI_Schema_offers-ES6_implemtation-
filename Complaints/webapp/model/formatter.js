@@ -96,7 +96,6 @@ sap.ui.define([], function () {
         },
         ////////// Resolution Type//////////
         fmtCmbxResolutionType: function (m1, m2) {
-            console.log(m1, m2);
             if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
                 return false;
             }
@@ -121,66 +120,73 @@ sap.ui.define([], function () {
         fmtCmbxCategoryType: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false;
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" ) {
+              if (m1 === null) {
+                    return true;
+                }
+                
             }
-            if (m1 === "PENDING") {
-                return false;
-            }
-            return true;
+            return false;
         },
         ////////// Product Type//////////
         fmtProductCmbx: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
             // m3 = categorycode
-            console.log(m1, m2, m3);
-            if (m2 == "INREVIEW" && m3 == null) {
-                return true;
-            }
-            if (m2 == "INREVIEW" && m1 !== "PENDING") {
-                return true;
+           if (m2 == "REGISTERED" || m2 == "INREVIEW"  ) {
+              if (m1 === null) {
+                    return true;
+                }
+                
             }
             return false;
+            // if (m2 == "INREVIEW" && m3 == null) {
+            //     return true;
+            // }
+            // if (m2  == "INREVIEW" && m1 !== "PENDING") {
+            //     return true;
+            // }
+            // return false;
         },
         ////////// Pack Type//////////
         fmtPacksCmbx: function (m1, m2, m3) {
             // m1 = Approvalstatus
             // m2 = Complianstatus
             // m3 = ProductCode
-            if (m2 == "INREVIEW" && m3 == null) {
-                return true;
-            }
-            if (m2 == "INREVIEW" && m1 !== "PENDING") {
-                return true;
+           if (m2 == "REGISTERED" || m2 == "INREVIEW" ) {
+              if (m1 === null) {
+                    return true;
+                }
+                
             }
             return false;
-        },
-        ////////// Token Type//////////
-        fmtTokenInput: function (m1, m2) {
-            // m1 = approvalstatus
-            // m2 = complianstatus
-            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false;
-            }
-            if (m1 === "PENDING") {
-                return false;
-            }
-            return true;
+            //     if (m2 == "INREVIEW" && m3 == null) {
+            //         return true;
+            //     }
+            //     if (m2 == "INREVIEW" && m1 !== "PENDING") {
+            //         return true;
+            //     }
+            //     return false;
         },
         ////////// Quantiy//////////
         fmtQuantiyInp: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
             // m3 = pack
-            console.log(m1, m2, m3);
-            if (m2 == "INREVIEW" && m3 == null) {
-                return true;
-            }
-            if (m2 == "INREVIEW" && m1 !== "PENDING") {
-                return true;
+            if (m2 == "REGISTERED" || m2 == "INREVIEW"  ) {
+              if (m1 === null) {
+                    return true;
+                }
+                
             }
             return false;
+            //     if (m2 == "INREVIEW" && m3 == null) {
+            //         return true;
+            //     }
+            //     if (m2 == "INREVIEW" && m1 !== "PENDING") {
+            //         return true;
+            //     }
+            //     return false;
         }
     };
 });
