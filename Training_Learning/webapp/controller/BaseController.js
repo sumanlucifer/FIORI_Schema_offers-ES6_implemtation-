@@ -256,7 +256,7 @@ sap.ui.define([
                 }
             });
         },
-        
+
         onModelPropertyChange: function (oEvent, sModel) {
             this.getModel(sModel).setProperty("/bChange", true);
         },
@@ -631,6 +631,7 @@ sap.ui.define([
             var clientObject = this.convertToClientObject(Questionnaire);
             // var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
+            this.getModel("oModelView").setProperty("/oAddTrainingForClose", clientObject);
 
             if (!this.byId("QuestionnaireOptionsDialog")) {
                 // load asynchronous XML fragment
@@ -809,7 +810,24 @@ sap.ui.define([
 
         closeOptionsDialog: function () {
             function onYes() {
+                // this.byId("QuestionnaireOptionsDialog").close();
+
+                var addQsFlag = this.getModel("oModelView").getProperty("/addQsFlag");
+                if (addQsFlag === true) {
+                    this.getModel("oModelView").setProperty("/addQsFlag", false);
+                } else {
+                    var questionnaireIndex = this.getModel("oModelView").getProperty("/questionnaireIndex");
+                    var addTrForClose = this.getModel("oModelView").setProperty("/oAddTrainingForClose");
+                    TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+                    serviceObject = this.convertToServiceObject(addTrForClose);
+
+                    TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
+                if (addQsFlag === true) {
+                //     TrainingQuestionnaire.push(serviceObject);
+                // } else {
+                //                  this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
                 this.byId("QuestionnaireOptionsDialog").close();
+
             }
             this.showWarning("MSG_CONFIRM_CLOSE_DIALOG", onYes);
         },
