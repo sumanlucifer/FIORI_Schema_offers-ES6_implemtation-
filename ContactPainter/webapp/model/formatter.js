@@ -176,6 +176,9 @@ sap.ui.define([
             if (m1 == 3) {
                 return "Not allowed as painter deselected."
             }
+             if (m1 == 4) {
+                return "Not allowed as achiever duration expired."
+            }
             return "NA";
         },
 
