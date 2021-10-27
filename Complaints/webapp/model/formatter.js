@@ -120,7 +120,7 @@ sap.ui.define([], function () {
         fmtCmbxCategoryType: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            if (m2 == "REGISTERED" || m2 == "INREVIEW"  || m2 == "REOPEN") {
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" ) {
               if (m1 === null) {
                     return true;
                 }
@@ -133,7 +133,7 @@ sap.ui.define([], function () {
             // m1 = approvalstatus
             // m2 = complianstatus
             // m3 = categorycode
-           if (m2 == "REGISTERED" || m2 == "INREVIEW"  || m2 == "REOPEN") {
+           if (m2 == "REGISTERED" || m2 == "INREVIEW"  ) {
               if (m1 === null) {
                     return true;
                 }
@@ -153,7 +153,7 @@ sap.ui.define([], function () {
             // m1 = Approvalstatus
             // m2 = Complianstatus
             // m3 = ProductCode
-           if (m2 == "REGISTERED" || m2 == "INREVIEW"  || m2 == "REOPEN") {
+           if (m2 == "REGISTERED" || m2 == "INREVIEW" ) {
               if (m1 === null) {
                     return true;
                 }
@@ -173,7 +173,7 @@ sap.ui.define([], function () {
             // m1 = approvalstatus
             // m2 = complianstatus
             // m3 = pack
-            if (m2 == "REGISTERED" || m2 == "INREVIEW"  || m2 == "REOPEN") {
+            if (m2 == "REGISTERED" || m2 == "INREVIEW"  ) {
               if (m1 === null) {
                     return true;
                 }
