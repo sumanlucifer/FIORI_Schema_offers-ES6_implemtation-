@@ -817,15 +817,13 @@ sap.ui.define([
                     this.getModel("oModelView").setProperty("/addQsFlag", false);
                 } else {
                     var questionnaireIndex = this.getModel("oModelView").getProperty("/questionnaireIndex");
-                    var addTrForClose = this.getModel("oModelView").setProperty("/oAddTrainingForClose");
-                    TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
-                    serviceObject = this.convertToServiceObject(addTrForClose);
+                    var addTrForClose = this.getModel("oModelView").getProperty("/oAddTrainingForClose");
+                    var TrainingQuestionnaire = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingQuestionnaire");
+                    var serviceObject = this.convertToServiceObject(addTrForClose);
 
                     TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
-                if (addQsFlag === true) {
-                //     TrainingQuestionnaire.push(serviceObject);
-                // } else {
-                //                  this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
+                }
+                this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
                 this.byId("QuestionnaireOptionsDialog").close();
 
             }
@@ -870,11 +868,10 @@ sap.ui.define([
         },
 
         fmtCheckLanguage: function (mParam1, mParam2) {
-
+            // debugger;
             for (var x in mParam2) {
                 if (mParam2[x]["LanguageCode"] === mParam1) {
-
-                    return false
+                    return false;
                 }
             }
         },
