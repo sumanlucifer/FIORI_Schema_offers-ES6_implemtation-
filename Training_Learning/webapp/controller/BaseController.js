@@ -822,8 +822,9 @@ sap.ui.define([
                     var serviceObject = this.convertToServiceObject(addTrForClose);
 
                     TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
+                    this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
                 }
-                this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
+                
                 this.byId("QuestionnaireOptionsDialog").close();
 
             }
