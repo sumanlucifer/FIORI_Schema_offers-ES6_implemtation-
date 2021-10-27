@@ -864,6 +864,7 @@ sap.ui.define([
                     op.LanguageCode = selectedLanguageCode;
                 });
             }
+            oModel.refresh(true);
 
         },
 
