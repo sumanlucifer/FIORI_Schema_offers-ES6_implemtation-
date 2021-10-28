@@ -163,21 +163,27 @@ sap.ui.define([
         },
         fmtTxtRedmtOfferTbl: function (m1, m2) {
             if (m1 === "REDEEMABLE") {
-                if (m2 == 2 || m2 == 3) {
+                if (m2 == 2 || m2 == 3 || m2 == 4) {
                     return true;
                 }
             }
             return false;
         },
-        fmtTxtMsgOfferTable1: function (m1) {
-            if (m1 == 2) {
+        fmtTxtMsgOfferTable1: function (m1,m2) {
+           if (m2 == 2) {
                 return "Not allowed as total achiever limit exhausted";
             }
-            if (m1 == 3) {
-                return "Not allowed as painter deselected.";
+            if (m2 == 3) {
+                return "Not allowed as painter deselected";
             }
-             if (m1 == 4) {
-                return "Not allowed as achiever duration expired.";
+            if (m2 == 4) {
+                return "Not allowed as achiever duration expired";
+            }
+            if (m1 === 'REDEEMED') {
+                return "Yes";
+            }
+            if (m1 === 'REDEEMABLE') {
+                return "Yes";
             }
             return "NA";
         },
