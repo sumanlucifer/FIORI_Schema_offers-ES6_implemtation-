@@ -370,7 +370,7 @@ sap.ui.define(
                             }, {
                                 name: "Enrollment Date",
                                 template: {
-                                    content: "{AttendedAt}"
+                                    content: "{CreatedAt}"
                                 }
                             }, {
                                 name: "Earned Points",
@@ -466,7 +466,7 @@ sap.ui.define(
                             }, {
                                 name: "Attendnace Date",
                                 template: {
-                                    content: "{CreatedAt}"
+                                    content: "{AttendedAt}"
                                 }
                             }, {
                                 name: "Earned Points",
@@ -653,7 +653,7 @@ sap.ui.define(
                             }, {
                                 name: "Attendance Date",
                                 template: {
-                                    content: "{CreatedAt}"
+                                    content: "{AttendedAt}"
                                 }
                             }, {
                                 name: "Earned Points",
