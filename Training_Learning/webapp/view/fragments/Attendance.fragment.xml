@@ -11,7 +11,7 @@
 
             <columns>
                 <Column>
-                    <Text text="{i18n>colPainterName}"/>
+                    <Text text="{i18n>colName}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>colMembershipId}"/>

@@ -571,6 +571,7 @@ sap.ui.define([
         onAddQuestionnaire: function (oEvent) {
             var addQsFlag = true;
             this.getModel("oModelView").setProperty("/addQsFlag", addQsFlag);
+            this.getModel("oModelView").setProperty("/matched", true);
 
             var oTrainingQuestionnaire = [];
             var clientQuestionId = this.generateId();
@@ -632,6 +633,15 @@ sap.ui.define([
             // var addTr = this.getModel("oModelView").getProperty("/oAddTraining");
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
             this.getModel("oModelView").setProperty("/oAddTrainingForClose", clientObject);
+
+            // for hide add translation button
+            this.getModel("oModelView").setProperty("/matched", true);
+            var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
+            if (masterLanguageLength === clientObject.length) {
+                this.getModel("oModelView").setProperty("/matched", false);
+            }            
+            // for hide add translation button
+            this.getModel("oModelView").refresh(true);
 
             if (!this.byId("QuestionnaireOptionsDialog")) {
                 // load asynchronous XML fragment
@@ -824,7 +834,7 @@ sap.ui.define([
                     TrainingQuestionnaire[parseInt(questionnaireIndex)] = serviceObject;
                     this.getModel("oModelView").setProperty("/TrainingDetails/TrainingQuestionnaire", TrainingQuestionnaire);
                 }
-                
+
                 this.byId("QuestionnaireOptionsDialog").close();
 
             }
@@ -865,6 +875,7 @@ sap.ui.define([
                     op.LanguageCode = selectedLanguageCode;
                 });
             }
+
             oModel.refresh(true);
 
         },
@@ -876,6 +887,11 @@ sap.ui.define([
                     return false;
                 }
             }
+        },
+
+        languageCodeUpdateFinished: function (oEvent) {
+            var iTotal = oEvent.getParameter("total");
+            console.log(iTotal);
         },
 
         addMoreLanguage: function (oEvent) {
@@ -897,6 +913,16 @@ sap.ui.define([
             clientObject.push(lang);
             this.getModel("oModelView").setProperty("/oAddTraining", clientObject);
             this.getModel("oModelView").refresh();
+
+            // for hide add translation button
+            debugger;
+            this.getModel("oModelView").setProperty("/matched", true);
+            var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
+            if (masterLanguageLength === clientObject.length) {
+                this.getModel("oModelView").setProperty("/matched", false);
+            }            
+            // for hide add translation button
+            this.getModel("oModelView").refresh(true);
             return lang;
 
             // var sPath = this.getView().byId("QuestionnaireOptionsDialog").getElementBinding("oModelView").getPath();
@@ -957,6 +983,15 @@ sap.ui.define([
             } else {
                 clientObject.splice(translationIndex, 1);
             }
+
+            // for hide add translation button
+            this.getModel("oModelView").setProperty("/matched", true);
+            var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
+            if (masterLanguageLength === clientObject.length) {
+                this.getModel("oModelView").setProperty("/matched", false);
+            }            
+            // for hide add translation button
+
             this.getModel("oModelView").refresh(true);
 
         },

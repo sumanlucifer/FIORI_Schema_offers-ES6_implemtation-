@@ -39,7 +39,7 @@
 
             </items>
         </VBox>
-        <Button text="{i18n>addTranslation}" icon="sap-icon://add" press="addMoreLanguage" type="Emphasized" tooltip="{i18n>addTranslation}" class="sapUiSmallMarginBegin"/>
+        <Button text="{i18n>addTranslation}" icon="sap-icon://add" press="addMoreLanguage" type="Emphasized" tooltip="{i18n>addTranslation}" class="sapUiSmallMarginBegin" visible="{= ${oModelView>/matched} === true}"/>
         <buttons>
             <Button text="Close" press="closeOptionsDialog"/>
             <Button text="OK" type="Emphasized" press="updateOptions"/>

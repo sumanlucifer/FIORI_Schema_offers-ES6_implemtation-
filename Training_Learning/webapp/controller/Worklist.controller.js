@@ -6,7 +6,7 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
     "sap/ui/core/syncStyleClass"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,Fragment,syncStyleClass) {
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, syncStyleClass) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.Training_Learning.controller.Worklist", {
@@ -72,9 +72,18 @@ sap.ui.define([
                     success: function (data) {
                         dat.getModel("appView").setProperty("/loggedUserId", data.results[0].Id);
                         dat.getModel("appView").setProperty("/loggedUserRoleId", data.results[0].RoleId);
+
+                        dat.getModel().read("/MasterLanguageSet", {
+                            success: function (data1) {
+                                if (data1.results.length) {
+                                    dat.getModel("appView").setProperty("/masterLanguageLength", data1.results.length);
+                                }
+                            }
+                        })
                     }
                 });
             });
+
             // oTable1.attachEventOnce("updateFinished", function () {
             //     // Restore original busy indicator delay for worklist's table
             //     oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
@@ -790,17 +799,17 @@ sap.ui.define([
         },
         /*Training attented count*/
         onPressCount: function (oEvent) {
-            var trainingId=oEvent.getSource().getBindingContext().getObject('Id');
-            var trainingTypeId=oEvent.getSource().getBindingContext().getObject('TrainingTypeId');
-                this.getRouter().navTo("PainterList",{
-                    trtype:trainingTypeId,
-                    trainingId:trainingId
-                });
+            var trainingId = oEvent.getSource().getBindingContext().getObject('Id');
+            var trainingTypeId = oEvent.getSource().getBindingContext().getObject('TrainingTypeId');
+            this.getRouter().navTo("PainterList", {
+                trtype: trainingTypeId,
+                trainingId: trainingId
+            });
 
-           
+
 
         },
-       
+
 
         /* =========================================================== */
         /* internal methods                                            */
