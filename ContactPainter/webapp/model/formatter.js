@@ -171,13 +171,13 @@ sap.ui.define([
         },
         fmtTxtMsgOfferTable1: function (m1) {
             if (m1 == 2) {
-                return "Not allowed as total achiever limit exhausted"
+                return "Not allowed as total achiever limit exhausted";
             }
             if (m1 == 3) {
-                return "Not allowed as painter deselected."
+                return "Not allowed as painter deselected.";
             }
              if (m1 == 4) {
-                return "Not allowed as achiever duration expired."
+                return "Not allowed as achiever duration expired.";
             }
             return "NA";
         },
