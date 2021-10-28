@@ -503,12 +503,12 @@
                          <VBox >
                             
                             <VBox visible="{=${oModelDisplay>/ContributionCondition}===1}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Product/ProductName'}" />
                              <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
                             </VBox>
                             
                             <VBox visible="{=${oModelDisplay>/ContributionCondition}===2}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>SkuCode',formatter:'.formatter.fmtGetPackName'}" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Pack/Description'}" />
                             <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
                             </VBox>
                            

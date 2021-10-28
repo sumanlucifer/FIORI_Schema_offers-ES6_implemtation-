@@ -286,7 +286,8 @@ sap.ui.define(
                             Table6: [],
                             Table7: [],
                             Table8: [],
-                            Table9: []
+                            Table9: [],
+                            Table10:[]
                         },
                         OfferType: {
                             BasicInformation: true,
@@ -491,7 +492,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio";
+                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + sPath, {
                             urlParameters: {
@@ -1175,7 +1176,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio";
+                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
