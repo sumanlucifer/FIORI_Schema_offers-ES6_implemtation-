@@ -15,9 +15,10 @@
                     enableAutoBinding="false"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
+                    requestAtLeastFields="Id,IsQuestionnaireSubmitted,Status,LearningDetails/TrainingType/TrainingType,EarnedPoints"
                     header="{i18n>submittedPainterList}">
             
-                    <!-- <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoData}">
+                    <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoData}">
                         <columns>
                             <Column hAlign="Begin">
                                 <customData>
@@ -30,14 +31,13 @@
                             <ColumnListItem>
                                 <cells>
                                     <HBox>
-                                        <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'LearningDetails/LearningType/LearningType',formatter:'.fmtTrainStatus'}"/>
+                                        <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'LearningDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
                                         <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press=".onViewLearningQuestionaire"/>
                                     </HBox>
                                 </cells>
                             </ColumnListItem>
                         </items>
-                    </Table> -->
-                    <!-- requestAtLeastFields="Id,IsQuestionnaireSubmitted,Status,LearningDetails/LearningType/LearningType,EarnedPoints" -->
+                    </Table>
 
                  </smartTable:SmartTable>
     </VBox>

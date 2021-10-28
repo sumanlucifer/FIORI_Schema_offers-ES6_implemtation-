@@ -413,7 +413,7 @@ sap.ui.define(
                         oValid = this._fnValidationVideo(oPayload);
                     } else if (trainingType === 'ONLINE') {
                         oValid = this._fnValidationOnline(oPayload);
-                    } else {
+                    } else if (trainingType === 'OFFLINE') {
                         oValid = this._fnValidationOffline(oPayload);
                     }
 

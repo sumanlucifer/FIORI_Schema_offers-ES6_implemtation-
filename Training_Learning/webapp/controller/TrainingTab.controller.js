@@ -312,7 +312,7 @@ sap.ui.define(
                     },
                     filters: [aFilters],
                     success: function (data) {
-                        that.getModel("oModelView").setProperty("/AttendenceLive", data.results);
+                        that.getModel("oModelView").setProperty("/TrainingEnrollments", data.results);
 
                         var oExport = new Export({
                             // Type that will be used to generate the content. Own ExportType's can be created to support other formats
@@ -327,7 +327,7 @@ sap.ui.define(
 
                             // binding information for the rows aggregation
                             rows: {
-                                path: "/AttendenceLive"
+                                path: "/TrainingEnrollments"
                             },
 
                             // column definitions with column name and binding info for the content
@@ -390,6 +390,7 @@ sap.ui.define(
                 });
 
             },
+
             onExportAttendenceLive: function () {
                 var that = this;
                 var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
@@ -406,7 +407,7 @@ sap.ui.define(
                     },
                     filters: [aFilters],
                     success: function (data) {
-                        that.getModel("oModelView").setProperty("/TrainingEnrollments", data.results);
+                        that.getModel("oModelView").setProperty("/AttendenceLive", data.results);
 
                         var oExport = new Export({
                             // Type that will be used to generate the content. Own ExportType's can be created to support other formats
@@ -422,7 +423,7 @@ sap.ui.define(
 
                             // binding information for the rows aggregation
                             rows: {
-                                path: "/TrainingEnrollments"
+                                path: "/AttendenceLive"
                             },
 
                             // column definitions with column name and binding info for the content
@@ -463,7 +464,7 @@ sap.ui.define(
                                     content: "{PainterDetails/PrimaryDealerDetails/DealerName}"
                                 }
                             }, {
-                                name: "Enrollment Date",
+                                name: "Attendnace Date",
                                 template: {
                                     content: "{CreatedAt}"
                                 }
@@ -484,6 +485,7 @@ sap.ui.define(
                     }
                 });
             },
+            
             onExportViews: function (oEvent) {
                 var that = this;
                 var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
