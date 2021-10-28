@@ -370,7 +370,10 @@ sap.ui.define(
                             }, {
                                 name: "Enrollment Date",
                                 template: {
-                                    content: "{CreatedAt}"
+                                    content: {
+                                        parts: ["CreatedAt"],
+                                        formatter: formatter.formatDate,
+                                    }
                                 }
                             }, {
                                 name: "Earned Points",
@@ -464,9 +467,12 @@ sap.ui.define(
                                     content: "{PainterDetails/PrimaryDealerDetails/DealerName}"
                                 }
                             }, {
-                                name: "Attendnace Date",
+                                name: "Attendance Date",
                                 template: {
-                                    content: "{AttendedAt}"
+                                    content: {
+                                        parts: ["AttendedAt"],
+                                        formatter: formatter.formatDate,
+                                    }
                                 }
                             }, {
                                 name: "Earned Points",
@@ -485,7 +491,7 @@ sap.ui.define(
                     }
                 });
             },
-            
+
             onExportViews: function (oEvent) {
                 var that = this;
                 var trainingId = this.getModel("oModelView").getProperty("/TrainingDetails/Id");
@@ -557,7 +563,10 @@ sap.ui.define(
                             }, {
                                 name: "View Date",
                                 template: {
-                                    content: "{CreatedAt}"
+                                    content: {
+                                        parts: ["CreatedAt"],
+                                        formatter: formatter.formatDate,
+                                    }
                                 }
                             }, {
                                 name: "Earned Points",
@@ -653,7 +662,10 @@ sap.ui.define(
                             }, {
                                 name: "Attendance Date",
                                 template: {
-                                    content: "{AttendedAt}"
+                                    content: {
+                                        parts: ["AttendedAt"],
+                                        formatter: formatter.formatDate,
+                                    }
                                 }
                             }, {
                                 name: "Earned Points",
@@ -671,7 +683,6 @@ sap.ui.define(
                         });
                     }
                 });
-
             },
 
             onClearPainterSearch: function () {
