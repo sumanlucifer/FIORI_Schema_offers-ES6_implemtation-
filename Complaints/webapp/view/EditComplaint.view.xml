@@ -83,9 +83,9 @@
               <Button press="onPressEscalate"   visible="{= ${ComplaintTypeId} &lt; 4 &amp;&amp;  !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} &amp;&amp; ${appView>/iUserLevel} &lt; 4 }"   text="{i18n>Escalate}" type="Critical" />
               <Button press=".onApproval(false)"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
               <Button press=".onApproval(true)"  visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
-             <!-- <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ResolutionId} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" /> -->
+             <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ApprovalStatus} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
           
-          <Button press="handleSavePress" visible="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxResolvedButton'}"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
+        
           
              
              <!-- <Button text="{i18n>Reopen}" press="onReopeFrag"/> -->

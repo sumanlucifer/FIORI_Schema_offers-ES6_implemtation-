@@ -96,35 +96,23 @@ sap.ui.define([], function () {
         },
         ////////// Resolution Type//////////
         fmtCmbxResolutionType: function (m1, m2) {
-            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false;
-            }
-            if (m1 === "PENDING") {
-                return false;
-            }
-            return true;
-        },
-        ////////// Resolved Button //////////
-        fmtCmbxResolvedButton: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            if (m2 == "RESOLVED" || m2 == "WITHDRAWN") {
-                return false;
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
+                if (m1 === null) {
+                    return true;
+                }
             }
-            if (m1 === "PENDING") {
-                return false;
-            }
-            return true;
+            return false;
         },
         ////////// Category Type//////////
         fmtCmbxCategoryType: function (m1, m2) {
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
-              if (m1 === null) {
+                if (m1 === null) {
                     return true;
                 }
-                
             }
             return false;
         },
@@ -132,61 +120,34 @@ sap.ui.define([], function () {
         fmtProductCmbx: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            // m3 = categorycode
-           if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN" ) {
-              if (m1 === null) {
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
+                if (m1 === null) {
                     return true;
                 }
-                
             }
             return false;
-            // if (m2 == "INREVIEW" && m3 == null) {
-            //     return true;
-            // }
-            // if (m2  == "INREVIEW" && m1 !== "PENDING") {
-            //     return true;
-            // }
-            // return false;
         },
         ////////// Pack Type//////////
         fmtPacksCmbx: function (m1, m2, m3) {
             // m1 = Approvalstatus
             // m2 = Complianstatus
-            // m3 = ProductCode
-           if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
-              if (m1 === null) {
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
+                if (m1 === null) {
                     return true;
                 }
-                
             }
             return false;
-            //     if (m2 == "INREVIEW" && m3 == null) {
-            //         return true;
-            //     }
-            //     if (m2 == "INREVIEW" && m1 !== "PENDING") {
-            //         return true;
-            //     }
-            //     return false;
         },
         ////////// Quantiy//////////
         fmtQuantiyInp: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            // m3 = pack
-            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN"  ) {
-              if (m1 === null) {
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
+                if (m1 === null) {
                     return true;
                 }
-                
             }
             return false;
-            //     if (m2 == "INREVIEW" && m3 == null) {
-            //         return true;
-            //     }
-            //     if (m2 == "INREVIEW" && m1 !== "PENDING") {
-            //         return true;
-            //     }
-            //     return false;
         }
     };
 });
