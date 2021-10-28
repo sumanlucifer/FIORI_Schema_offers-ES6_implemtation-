@@ -103,7 +103,7 @@
                     entitySet="PainterPointsHistorySet"
                     tableType="ResponsiveTable"
                     showRowCount="true"
-                    useExportToExcel="true"
+                    useExportToExcel="false"
                     useVariantManagement="false"
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
@@ -113,8 +113,12 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                   >
-                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
-                    
+                  	<smartTable:customToolbar>
+		
+		</smartTable:customToolbar>
+                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false" >
+                   
+
                                 <columns>
                                 <Column hAlign="Center">
                                         <customData>
@@ -177,7 +181,7 @@
                     entitySet="PainterPointsHistorySet"
                     tableType="ResponsiveTable"
                     showRowCount="true"
-                    useExportToExcel="true"
+                    useExportToExcel="false"
                     useVariantManagement="false"
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
@@ -187,6 +191,14 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                   >
+                  	<smartTable:customToolbar>
+			<OverflowToolbar design="Transparent">
+				<ToolbarSpacer/>
+				
+				<Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports1" />
+				
+			</OverflowToolbar>
+		</smartTable:customToolbar>
                   <Table growing="true" growingThreshold="10" growingScrollToLoad="false" >
                     
                                 <columns>
@@ -246,6 +258,12 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                   >
+                  	<OverflowToolbar design="Transparent">
+				<ToolbarSpacer/>
+				
+				<Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports2" />
+				
+			</OverflowToolbar>
                    <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
                     
                                 <columns>
