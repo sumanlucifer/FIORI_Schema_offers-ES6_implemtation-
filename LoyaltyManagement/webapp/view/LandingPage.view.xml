@@ -113,9 +113,7 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                   >
-                  	<smartTable:customToolbar>
-		
-		</smartTable:customToolbar>
+                  
                   <Table growing="true" growingThreshold="10" growingScrollToLoad="false" >
                    
 
@@ -258,12 +256,14 @@
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                   >
-                  	<OverflowToolbar design="Transparent">
+                  <smartTable:customToolbar>
+			<OverflowToolbar design="Transparent">
 				<ToolbarSpacer/>
 				
 				<Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports2" />
 				
 			</OverflowToolbar>
+		</smartTable:customToolbar>
                    <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
                     
                                 <columns>
