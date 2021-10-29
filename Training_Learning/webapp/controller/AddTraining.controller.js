@@ -181,7 +181,7 @@ sap.ui.define(
                         oViewModel.attachPropertyChange("oModelView", this.onModelPropertyChange, this);
 
                         this.getModel("oModelView").setProperty("/matched", true);
-                        
+
                     }
                 },
 
@@ -1371,8 +1371,11 @@ sap.ui.define(
                         ]
                     });
 
+                    var createdAt = new Date();
+                    createdAt = formatter.formatDate(createdAt);
+                    var fileName = "Offline Attendance Uploaded Status_" + createdAt;
                     // download exported file
-                    oExport.saveFile().catch(function (oError) {
+                    oExport.saveFile(fileName).catch(function (oError) {
                         MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                     }).then(function () {
                         oExport.destroy();

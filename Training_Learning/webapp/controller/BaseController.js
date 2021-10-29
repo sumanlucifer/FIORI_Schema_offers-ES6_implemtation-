@@ -456,8 +456,11 @@ sap.ui.define([
                     }]
             });
 
+            var createdAt = new Date();
+            createdAt = formatter.formatDate(createdAt);
+            var fileName = "Painter Uploaded Status_" + createdAt;
             // download exported file
-            oExport.saveFile().catch(function (oError) {
+            oExport.saveFile(fileName).catch(function (oError) {
                 MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
             }).then(function () {
                 oExport.destroy();
@@ -639,7 +642,7 @@ sap.ui.define([
             var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
             if (masterLanguageLength === clientObject.length) {
                 this.getModel("oModelView").setProperty("/matched", false);
-            }            
+            }
             // for hide add translation button
             this.getModel("oModelView").refresh(true);
 
@@ -920,7 +923,7 @@ sap.ui.define([
             var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
             if (masterLanguageLength === clientObject.length) {
                 this.getModel("oModelView").setProperty("/matched", false);
-            }            
+            }
             // for hide add translation button
             this.getModel("oModelView").refresh(true);
             return lang;
@@ -989,7 +992,7 @@ sap.ui.define([
             var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
             if (masterLanguageLength === clientObject.length) {
                 this.getModel("oModelView").setProperty("/matched", false);
-            }            
+            }
             // for hide add translation button
 
             this.getModel("oModelView").refresh(true);
