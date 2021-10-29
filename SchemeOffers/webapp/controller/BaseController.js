@@ -2240,6 +2240,7 @@ sap.ui.define(
                 var aChkTblData2 = ["PCat4", "PClass4", "AppProd4", "AppPacks4"];
                 if (aChkTblData.indexOf(sPathArray[2]) >= 0) {
                     this._CheckCondProdTable();
+                    this._CheckCondContriTable();
                 }
                 if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
                     this._CreateBonusRewardTable();
@@ -2247,6 +2248,8 @@ sap.ui.define(
             },
             _CheckCondProdTable: function () {
                 this.getView().getModel("oModelControl").setProperty("/Table/Table6", []);
+            },
+            _CheckCondContriTable: function () {
                 this.getView().getModel("oModelControl").setProperty("/Table/Table9", []);
                 this.getView().getModel("oModelControl").setProperty("/Table/Table10", []);
             },
@@ -3038,6 +3041,7 @@ sap.ui.define(
                 if (aNumber == "1") {
                     this._CreateRewardTableData();
                     this._CheckCondProdTable();
+                    this._CheckCondContriTable();
                 } else if (aNumber == "4") {
                     this._CreateBonusRewardTable();
                 }
@@ -3259,6 +3263,7 @@ sap.ui.define(
                 var aChkTblDataProdData = ["AppProd1"];
                 if (aChkTblDataProdData.indexOf(sPathArray[2]) >= 0) {
                     this._CheckCondProdTable();
+                    this._CheckCondContriTable();
                 }
             },
             handleProdValueHelp: function (oEvent) {
@@ -3312,6 +3317,7 @@ sap.ui.define(
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
                 if (aNumber == "1") {
                     this._CheckCondProdTable();
+                    this._CheckCondContriTable();
                 } else if (aNumber == "4") {
                     this._CreateBonusRewardTable();
                 }
@@ -5893,8 +5899,8 @@ sap.ui.define(
                 var aNumber = mParam1.match(/\d+$/)[0];
                 var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                 var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
-                //var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
-                var aProd = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
+                var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                var aPacks = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
                 //console.log(aPacks);
                 var aFilter1 = [];
                 var aFilter2 = [];
@@ -5910,7 +5916,7 @@ sap.ui.define(
                         new Filter("ProductClassification/Id", FilterOperator.EQ, b)
                     );
                 }
-                for (var c of aProd){
+                for (var c of aPacks){
                     aFilter3.push(new Filter("SkuCode",FilterOperator.EQ,c["Id"]));
                 }
                 // Prod Filters
@@ -5938,12 +5944,12 @@ sap.ui.define(
                 for (var a1 of aProdLimitArray) {
                     if (Array.isArray(a1)) {
                         aFilter1A.push(new Filter([
-                            new Filter("Id", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
-                            new Filter("Id", FilterOperator.LE, ('000' + a1[1]).slice(-3))
+                            new Filter("ProductCode", FilterOperator.GE, ('000' + a1[0]).slice(-3)),
+                            new Filter("ProductCode", FilterOperator.LE, ('000' + a1[1]).slice(-3))
                         ], true))
                     } else {
                         aFilter1A.push(
-                            new Filter("Id", FilterOperator.EQ, ('000' + a1).slice(-3))
+                            new Filter("ProductCode", FilterOperator.EQ, ('000' + a1).slice(-3))
                         );
                     }
                 }
