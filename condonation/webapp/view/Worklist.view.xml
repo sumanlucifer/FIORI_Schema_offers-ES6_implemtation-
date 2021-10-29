@@ -60,7 +60,7 @@
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
-                        <Button text="Check Cache - 3" type="Ghost"/>
+                        <Button text="Check Cache - 4" type="Ghost"/>
                         <Button icon="sap-icon://add" text="{i18n>AddComplaint}" type="Emphasized" press=".onPressAdd" tooltip="{i18n>AddComplaint}"></Button>
                         <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button>
                     </Toolbar>
