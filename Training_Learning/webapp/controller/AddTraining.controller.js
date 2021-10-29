@@ -179,6 +179,9 @@ sap.ui.define(
 
                         //FIX: POP on cancel
                         oViewModel.attachPropertyChange("oModelView", this.onModelPropertyChange, this);
+
+                        this.getModel("oModelView").setProperty("/matched", true);
+                        
                     }
                 },
 

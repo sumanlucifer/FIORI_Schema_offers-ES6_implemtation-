@@ -90,6 +90,7 @@ sap.ui.define(
                 //FIX: Need pop for changes
                 oViewModel.setProperty("/bChange", false);
                 oViewModel.detachPropertyChange(this.onModelPropertyChange, this);
+                oViewModel.setProperty("/matched", true);
 
                 var oData = {
                     modeEdit: false,
@@ -788,15 +789,16 @@ sap.ui.define(
                 var oView = this.getView();
                 var sPath = oEvent.getSource().getBinding("value").getPath();
                 var sValue = oEvent.getSource().getValue();
-                var sTrainingId = oView
-                    .getModel("oModelView")
-                    .getProperty("/trainingId");
+                var sTrainingId = oView.getModel("oModelView").getProperty("/trainingId");
+                var oTable;
                 if (sPath.match("Attendance")) {
-                    this._SearchAttendance(sValue, sTrainingId);
+                    oTable = oView.byId("idTblAttendance");
+                    this._SearchAttendance(oTable, sValue, sTrainingId);
                 } else if (sPath.match("Enrollment")) {
                     this._SearchEnrollment(sValue, sTrainingId);
-                } else if (sPath.match("AttendenceLive")) {
-                    this._SearchAttendance(sValue, sTrainingId);
+                } else if (sPath.match("AttendLive")) {
+                    oTable = oView.byId("idTblAttendanceLiveVid");
+                    this._SearchAttendance(oTable, sValue, sTrainingId);
                 }
             },
             onTablesSearchlivAttend: function (oEvent) {
@@ -822,11 +824,10 @@ sap.ui.define(
                 this._SearchView(sValue, sTrainingId);
             },
 
-            _SearchAttendance: function (sValue, sTrainingId) {
+            _SearchAttendance: function (oTable, sValue, sTrainingId) {
                 var oView = this.getView();
                 var aCurrentFilter = [];
 
-                var oTable = oView.byId("idTblAttendance");
                 if (sValue) {
                     if (/^\+?(0|[1-9]\d*)$/.test(sValue)) {
                         aCurrentFilter.push(
