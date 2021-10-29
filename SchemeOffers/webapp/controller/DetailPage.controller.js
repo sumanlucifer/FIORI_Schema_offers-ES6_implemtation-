@@ -1781,6 +1781,9 @@ sap.ui.define(
                     var bTableCondition1 = this._CheckTableCondition1();
                     var bTableCondition2 = this._CheckTableCondition2();
                     var bTableCondition3 = this._CheckTableCondition3();
+                    var bTableCondition4 = this._CheckTableCondition4();
+                    var bTableCondition5 = this._CheckTableCondition5();
+                    var bTableCondition6 = this._CheckTableCondition6();
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
                     if (bFlagValidate == false) {
@@ -1809,6 +1812,18 @@ sap.ui.define(
                     }
                     if (!bTableCondition3[0]) {
                         MessageToast.show(bTableCondition3[1]);
+                        return;
+                    }
+                    if (!bTableCondition4[0]) {
+                        MessageToast.show(bTableCondition4[1]);
+                        return;
+                    }
+                    if (!bTableCondition5[0]) {
+                        MessageToast.show(bTableCondition5[1]);
+                        return;
+                    }
+                    if (!bTableCondition6[0]) {
+                        MessageToast.show(bTableCondition6[1]);
                         return;
                     }
                     this._postDataToSave(bFileFlag);

@@ -441,6 +441,40 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             } else {
                 return "Failure";
             }
+        },
+        fmtContriProduct: function(mParam1,mParam2){
+            if(mParam1 && mParam1["ProductName"]){
+                return mParam1["ProductName"]
+
+            }else{
+                var sPath = "/MasterProductSet('" + mParam2 + "')";
+                var oData = this.getView().getModel().getData(sPath);
+                if (oData) {
+                    return oData["ProductName"];
+                }
+            }
+
+        },
+        fmtContriPack: function(mParam1,mParam2){
+            if(mParam1 && mParam1["Description"]){
+                return mParam1["Description"]
+
+            }else{
+                var sPath = "/MasterRepProductSkuSet('" + mParam2 + "')";
+                var oData = this.getView().getModel().getData(sPath);
+                if (oData) {
+                    return oData["Description"];
+                }
+            }
+        },
+        fmtInputType:function(mParam){
+            if(mParam===0){
+                return "Litre"
+            }else{
+                return "Points"
+
+            }
+
         }
 
     };
