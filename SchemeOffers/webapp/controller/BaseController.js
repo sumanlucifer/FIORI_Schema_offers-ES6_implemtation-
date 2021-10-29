@@ -5893,9 +5893,9 @@ sap.ui.define(
                 var aNumber = mParam1.match(/\d+$/)[0];
                 var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                 var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
-                var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
-                var aPacks = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
-                console.log(aPacks);
+                //var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                var aProd = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
+                //console.log(aPacks);
                 var aFilter1 = [];
                 var aFilter2 = [];
                 var aFilter1A = [];
@@ -5910,7 +5910,7 @@ sap.ui.define(
                         new Filter("ProductClassification/Id", FilterOperator.EQ, b)
                     );
                 }
-                for (var c of aPacks){
+                for (var c of aProd){
                     aFilter3.push(new Filter("SkuCode",FilterOperator.EQ,c["Id"]));
                 }
                 // Prod Filters
