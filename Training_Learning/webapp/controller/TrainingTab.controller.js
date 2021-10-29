@@ -790,14 +790,13 @@ sap.ui.define(
                 var sPath = oEvent.getSource().getBinding("value").getPath();
                 var sValue = oEvent.getSource().getValue();
                 var sTrainingId = oView.getModel("oModelView").getProperty("/trainingId");
-                debugger;
                 var oTable;
                 if (sPath.match("Attendance")) {
                     oTable = oView.byId("idTblAttendance");
                     this._SearchAttendance(oTable, sValue, sTrainingId);
                 } else if (sPath.match("Enrollment")) {
                     this._SearchEnrollment(sValue, sTrainingId);
-                } else if (sPath.match("AttendanceLive")) {
+                } else if (sPath.match("AttendLive")) {
                     oTable = oView.byId("idTblAttendanceLiveVid");
                     this._SearchAttendance(oTable, sValue, sTrainingId);
                 }
