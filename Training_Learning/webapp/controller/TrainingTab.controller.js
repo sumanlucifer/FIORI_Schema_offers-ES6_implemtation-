@@ -321,7 +321,8 @@ sap.ui.define(
                                 separatorChar: "\t",
                                 mimeType: "application/vnd.ms-excel",
                                 charset: "utf-8",
-                                fileExtension: "xls"
+                                fileExtension: "xls",
+
                             }),
                             // Pass in the model created above
                             models: that.getView().getModel("oModelView"),
@@ -385,7 +386,10 @@ sap.ui.define(
                         });
 
                         // download exported file
-                        oExport.saveFile().catch(function (oError) {
+                        var createdAt = new Date();
+                        createdAt = formatter.formatDate(createdAt);
+                        var fileName = "Live Enrollment_" + that.getModel("oModelView").getProperty("/TrainingDetails/Title") + "_" + createdAt;
+                        oExport.saveFile(fileName).catch(function (oError) {
                             MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                         }).then(function () {
                             oExport.destroy();
@@ -483,8 +487,11 @@ sap.ui.define(
                             }]
                         });
 
+                        var createdAt = new Date();
+                        createdAt = formatter.formatDate(createdAt);
+                        var fileName = "Live Attendance_" + that.getModel("oModelView").getProperty("/TrainingDetails/Title") + "_" + createdAt;
                         // download exported file
-                        oExport.saveFile().catch(function (oError) {
+                        oExport.saveFile(fileName).catch(function (oError) {
                             MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                         }).then(function () {
                             oExport.destroy();
@@ -577,8 +584,11 @@ sap.ui.define(
                             }]
                         });
 
+                        var createdAt = new Date();
+                        createdAt = formatter.formatDate(createdAt);
+                        var fileName = "Video Views_" + that.getModel("oModelView").getProperty("/TrainingDetails/Title") + "_" + createdAt;
                         // download exported file
-                        oExport.saveFile().catch(function (oError) {
+                        oExport.saveFile(fileName).catch(function (oError) {
                             MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                         }).then(function () {
                             oExport.destroy();
@@ -676,8 +686,11 @@ sap.ui.define(
                             }]
                         });
 
+                        var createdAt = new Date();
+                        createdAt = formatter.formatDate(createdAt);
+                        var fileName = "Offline Attendance_" + that.getModel("oModelView").getProperty("/TrainingDetails/Title") + "_" + createdAt;
                         // download exported file
-                        oExport.saveFile().catch(function (oError) {
+                        oExport.saveFile(fileName).catch(function (oError) {
                             MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                         }).then(function () {
                             oExport.destroy();
