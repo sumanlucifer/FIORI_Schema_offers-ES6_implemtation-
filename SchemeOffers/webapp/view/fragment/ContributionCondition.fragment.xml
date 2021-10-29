@@ -69,12 +69,12 @@
                          <VBox >
                             
                             <VBox visible="{=${oModelView>/ContributionCondition}===1}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Product','oModelControl>ProductCode'],formatter:'.formatter.fmtContriProduct'}" />
                              <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                             
                             <VBox visible="{=${oModelView>/ContributionCondition}===2}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" />
+                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Pack','oModelControl>SkuCode'],formatter:'.formatter.fmtContriPack'}" />
                             <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                            
@@ -90,11 +90,11 @@
                         </VBox> -->
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         
                         
@@ -164,11 +164,11 @@
                     <cells>
                         <VBox >
                             <VBox visible="{=${oModelView>/ContributionCondition}===1}">
-                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" />
+                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Product','oModelControl>ProductCode'],formatter:'.formatter.fmtContriProduct'}" />
                                     <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                             <VBox visible="{=${oModelView>/ContributionCondition}===2}">
-                                <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" />
+                                <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Pack','oModelControl>SkuCode'],formatter:'.formatter.fmtContriPack'}" />
                                 <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                         </VBox>

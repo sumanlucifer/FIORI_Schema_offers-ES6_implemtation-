@@ -2247,6 +2247,8 @@ sap.ui.define(
             },
             _CheckCondProdTable: function () {
                 this.getView().getModel("oModelControl").setProperty("/Table/Table6", []);
+                this.getView().getModel("oModelControl").setProperty("/Table/Table9", []);
+                this.getView().getModel("oModelControl").setProperty("/Table/Table10", []);
             },
             onRbBonusRewardChange: function (oEvent) { },
             _CreateRewardTableData: function (oEvent) {
@@ -3870,7 +3872,7 @@ sap.ui.define(
                 } else {
                     return [
                         false,
-                        "Kindly Save the data in the Additional Info Table to Continue.",
+                        "Kindly Save the data in the First Buyer Condition Table to Continue.",
                     ];
                 }
             },

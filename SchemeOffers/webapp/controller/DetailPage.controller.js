@@ -286,7 +286,8 @@ sap.ui.define(
                             Table6: [],
                             Table7: [],
                             Table8: [],
-                            Table9: []
+                            Table9: [],
+                            Table10:[]
                         },
                         OfferType: {
                             BasicInformation: true,
@@ -491,7 +492,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio";
+                        "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + sPath, {
                             urlParameters: {
@@ -1175,7 +1176,7 @@ sap.ui.define(
                         "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                         "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                         "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio";
+                        "OfferBonusRewardRatio,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition,OfferRedemptionCycleCondition,OfferAchiever,OfferDeselectedPainter/Painter,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
                             $expand: exPand,
@@ -1780,6 +1781,9 @@ sap.ui.define(
                     var bTableCondition1 = this._CheckTableCondition1();
                     var bTableCondition2 = this._CheckTableCondition2();
                     var bTableCondition3 = this._CheckTableCondition3();
+                    var bTableCondition4 = this._CheckTableCondition4();
+                    var bTableCondition5 = this._CheckTableCondition5();
+                    var bTableCondition6 = this._CheckTableCondition6();
                     var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
                     if (bFlagValidate == false) {
@@ -1808,6 +1812,18 @@ sap.ui.define(
                     }
                     if (!bTableCondition3[0]) {
                         MessageToast.show(bTableCondition3[1]);
+                        return;
+                    }
+                    if (!bTableCondition4[0]) {
+                        MessageToast.show(bTableCondition4[1]);
+                        return;
+                    }
+                    if (!bTableCondition5[0]) {
+                        MessageToast.show(bTableCondition5[1]);
+                        return;
+                    }
+                    if (!bTableCondition6[0]) {
+                        MessageToast.show(bTableCondition6[1]);
                         return;
                     }
                     this._postDataToSave(bFileFlag);
