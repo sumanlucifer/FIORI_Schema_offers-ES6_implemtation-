@@ -47,7 +47,7 @@ sap.ui.define([
                 newStatus = "Withdrawn";
             }///// aaded by Deepanjali for REOPEN////
             else if (sStatus === "REOPEN") {
-                newStatus = "Re Open";
+                newStatus = "ReOpen";
             }
             return newStatus;
         },
