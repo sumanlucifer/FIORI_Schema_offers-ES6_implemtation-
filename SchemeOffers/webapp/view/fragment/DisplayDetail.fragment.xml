@@ -1163,7 +1163,7 @@
 									formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelControl2>StartDate}" change="onEndDateCndtAddInfo" width="50%" dateValue="{oModelControl2>EndDate}" placeholder="DD/MM/YYYY" required="true"/>
                                 <!-- <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                                 <Label text="{path:'oModelControl2>AchieverCount'}" />
-                                <Label text="{= ${oModelControl2>/AchievedPainterCount} !==null? 0:${oModelControl2>/AchievedPainterCount}}" />
+                                <Label text="{oModelDisplay>/AchievedPainterCount}" />
                             </cells>
                         </ColumnListItem>
                     </items>
