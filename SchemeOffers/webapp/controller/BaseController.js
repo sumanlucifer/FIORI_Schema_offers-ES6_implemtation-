@@ -5908,12 +5908,12 @@ sap.ui.define(
                 var aFilter3=[];
                 for (var a of aCat) {
                     aFilter1.push(
-                        new Filter("ProductCategory/Id", FilterOperator.EQ, a)
+                        new Filter("CategoryCode", FilterOperator.EQ, a)
                     );
                 }
                 for (var b of aClass) {
                     aFilter2.push(
-                        new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                        new Filter("ClassificationCode", FilterOperator.EQ, b)
                     );
                 }
                 for (var c of aPacks){
