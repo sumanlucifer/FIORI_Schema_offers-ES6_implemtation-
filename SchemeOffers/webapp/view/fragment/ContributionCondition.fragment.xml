@@ -90,11 +90,11 @@
                         </VBox> -->
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                         </VBox>
                         
                         
@@ -199,11 +199,13 @@
         <Input
 			value="{path:'oModelView>/MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }"
 			description="{i18n>Min}"
-			width="300px"/>
+			width="300px"
+            required="true"/>
             <Input
 			value="{path:'oModelView>/MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[+-]?([0-9]*[.])?[0-9]+',minLength:1,maxLength:6} }"
 			description="{i18n>Max}"
-			width="300px"/>
+			width="300px"
+            required="true"/>
             
         </HBox>
         
