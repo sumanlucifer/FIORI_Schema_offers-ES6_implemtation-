@@ -5526,7 +5526,7 @@ sap.ui.define(
                 if (ContributionCondition === 1) {
                     if (
                         !oObject["ProductCode"] &&
-                        // !oObject["RewardPoints"] &&
+                        //!oObject["RewardPoints"] &&
                         !oObject["MinPercentage"] &&
                         !oObject["MaxPercentage"]
                     ) {
@@ -5539,7 +5539,7 @@ sap.ui.define(
                 } else if (ContributionCondition === 2) {
                     if (
                         !oObject["SkuCode"] &&
-                        // !oObject["RewardPoints"] &&
+                        //!oObject["RewardPoints"] &&
                         !oObject["MinPercentage"] &&
                         !oObject["MaxPercentage"]
                     ) {
