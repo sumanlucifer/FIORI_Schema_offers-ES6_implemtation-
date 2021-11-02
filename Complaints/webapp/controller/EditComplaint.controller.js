@@ -1032,7 +1032,7 @@ sap.ui.define(
                         newStatus = "Withdrawn";
                     }///// added by deepanjali for History table////
                     else if (sStatus === "REOPEN") {
-                        newStatus = "Re Open";
+                        newStatus = "ReOpen";
                     }
                     return newStatus;
                 },
