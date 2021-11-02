@@ -2028,7 +2028,7 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     if (sKey == "1") {
-                        //oView.byId("PainteTable1").rebindTable();
+                        oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
                         //oView.byId("PainteTable2").rebindTable();
                     } else if (sKey == "3") {

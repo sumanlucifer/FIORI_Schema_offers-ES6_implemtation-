@@ -5449,8 +5449,12 @@ sap.ui.define(
             onRbRRDialogCndtn: function () {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
+                var oModelView = oView.getModel("oModelView");
                 oModel.setProperty("/Table/Table9", []);
                 oModel.setProperty("/Table/Table10", []);
+                oModelView.setProperty("/MinPercentage",null);
+                oModelView.setProperty("/MaxPercentage",null);
+                
             },
             onPressAddCndtnV1: function (oEvent) {
 
@@ -5614,8 +5618,13 @@ sap.ui.define(
                 }
             },
             onRbTableCndtn: function (oEvent) {
-                var oView = this.getView();
-                var oModel = oView.getModel("oModelView");
+                 var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oModelView = oView.getModel("oModelView");
+                oModel.setProperty("/Table/Table9", []);
+                oModel.setProperty("/Table/Table10", []);
+                oModelView.setProperty("/MinPercentage",null);
+                oModelView.setProperty("/MaxPercentage",null);
 
             },
             onValueHelpProductsTable3: function (oEvent) {
