@@ -5547,6 +5547,17 @@ sap.ui.define(
                             );
                             return;
                         }
+                        if(oObject["MinPercentage"] > oObject["MaxPercentage"]){
+                            MessageToast.show(
+                                "Minimum Percentage Should Be Less Than Max percentage."
+                            );
+                            return;
+                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
+                            MessageToast.show(
+                                "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
+                            );
+                            return;
+                        }
 
                     } else if (ContributionCondition === 2) {
                         if (
@@ -5560,6 +5571,17 @@ sap.ui.define(
                             );
                             return;
 
+                        }
+                        if(oObject["MinPercentage"] > oObject["MaxPercentage"]){
+                            MessageToast.show(
+                                "Minimum Percentage Should Be Less Than Max percentage."
+                            );
+                            return;
+                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
+                            MessageToast.show(
+                                "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
+                            );
+                            return;
                         }
                     }
 
@@ -6097,7 +6119,7 @@ sap.ui.define(
                 onPressSaveCndtn2: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
-                    var ContributionType = oModel.getProperty("/ContributionType");
+                    var ContributionCondition = oModel.getProperty("/ContributionCondition");
                     var oObject = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")
@@ -6112,7 +6134,7 @@ sap.ui.define(
                         );
                         return;
                     }
-                    if (ContributionType === 0) {
+                    if (ContributionCondition === 1) {
 
                         if (!oObject["ProductCode"]) {
                             MessageToast.show(
@@ -6121,7 +6143,7 @@ sap.ui.define(
                             return;
                         }
                     }
-                    if (ContributionType === 1) {
+                    if (ContributionCondition === 2) {
 
                         if (!oObject["SkuCode"]) {
                             MessageToast.show(
