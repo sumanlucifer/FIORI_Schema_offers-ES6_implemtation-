@@ -70,12 +70,12 @@
                             
                             <VBox visible="{=${oModelView>/ContributionCondition}===1}">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Product','oModelControl>ProductCode'],formatter:'.formatter.fmtContriProduct'}" />
-                             <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                             <Input visible="{= ${oModelControl>editable} === true }" required="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                             
                             <VBox visible="{=${oModelView>/ContributionCondition}===2}">
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Pack','oModelControl>SkuCode'],formatter:'.formatter.fmtContriPack'}" />
-                            <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                            <Input visible="{= ${oModelControl>editable} === true }" required="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                            
                             
@@ -165,11 +165,11 @@
                         <VBox >
                             <VBox visible="{=${oModelView>/ContributionCondition}===1}">
                                     <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Product','oModelControl>ProductCode'],formatter:'.formatter.fmtContriProduct'}" />
-                                    <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                                    <Input visible="{= ${oModelControl>editable} === true }" required="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                             <VBox visible="{=${oModelView>/ContributionCondition}===2}">
                                 <Label visible="{= ${oModelControl>editable} !== true  }" text="{parts:['oModelControl>Pack','oModelControl>SkuCode'],formatter:'.formatter.fmtContriPack'}" />
-                                <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
+                                <Input visible="{= ${oModelControl>editable} === true }" required="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox>
                         </VBox>
                         <!-- <VBox visible="{= ${oModelView>/InputType}===1 }">

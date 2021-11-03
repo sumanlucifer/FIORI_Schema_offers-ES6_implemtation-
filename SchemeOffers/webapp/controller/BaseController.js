@@ -5537,9 +5537,9 @@ sap.ui.define(
                     }
                     if (ContributionCondition === 1) {
                         if (
-                            !oObject["ProductCode"] &&
+                            !oObject["ProductCode"] ||
                             //!oObject["RewardPoints"] &&
-                            !oObject["MinPercentage"] &&
+                            !oObject["MinPercentage"] ||
                             !oObject["MaxPercentage"]
                         ) {
                             MessageToast.show(
@@ -5555,6 +5555,11 @@ sap.ui.define(
                         }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
+                            );
+                            return;
+                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) < 0){
+                            MessageToast.show(
+                                "Minimum Percentage  and Maximum Percentage Should Be Greater Than 0."
                             );
                             return;
                         }
@@ -6119,7 +6124,10 @@ sap.ui.define(
                 onPressSaveCndtn2: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
-                    var ContributionCondition = oModel.getProperty("/ContributionCondition");
+                    //var ContributionCondition = oModel.getProperty("/ContributionCondition");
+                    var oModelView = oView.getModel("oModelView");
+                    var ContributionCondition = oModelView.getProperty("/ContributionCondition");
+                    console.log(ContributionCondition)
                     var oObject = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")
@@ -6135,6 +6143,7 @@ sap.ui.define(
                         return;
                     }
                     if (ContributionCondition === 1) {
+                        console.log("1")
 
                         if (!oObject["ProductCode"]) {
                             MessageToast.show(
