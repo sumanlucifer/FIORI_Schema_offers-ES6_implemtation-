@@ -167,9 +167,13 @@ sap.ui.define([
                     return true;
                 }
             }
+            if(m1!=="REDEEMABLE"){
+                return true;
+            }
             return false;
         },
         fmtTxtMsgOfferTable1: function (m1,m2) {
+        
            if (m2 == 2) {
                 return "Not allowed as total achiever limit exhausted";
             }
