@@ -5566,9 +5566,9 @@ sap.ui.define(
 
                     } else if (ContributionCondition === 2) {
                         if (
-                            !oObject["SkuCode"] &&
+                            !oObject["SkuCode"] ||
                             //!oObject["RewardPoints"] &&
-                            !oObject["MinPercentage"] &&
+                            !oObject["MinPercentage"] ||
                             !oObject["MaxPercentage"]
                         ) {
                             MessageToast.show(
