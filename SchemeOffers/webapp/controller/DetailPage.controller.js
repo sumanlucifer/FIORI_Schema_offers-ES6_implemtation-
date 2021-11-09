@@ -2028,6 +2028,7 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     if (sKey == "1") {
+                        this._LoadPainterData(0,16);
                         oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
                         //oView.byId("PainteTable2").rebindTable();
