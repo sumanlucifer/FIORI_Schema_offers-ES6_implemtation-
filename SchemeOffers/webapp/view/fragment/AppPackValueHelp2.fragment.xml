@@ -6,7 +6,7 @@
         growing="true"
         growingThreshold="10"
 		class="sapUiPopupWithPadding"
-		items="{path:'/MasterRepProductSkuSet',parameters:{select:'SkuCode,Description'} }"
+		items="{path:'/MasterRepProductSkuSet',parameters:{select:'SkuCode,Description,ProductCode'} }"
 	    search="_handlePackValueHelpSearch2"
 		confirm="_handlePackValueHelpConfirm2"
         cancel="_handleProdValueHelpClose2"
