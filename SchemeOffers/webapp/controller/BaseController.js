@@ -3229,6 +3229,7 @@ sap.ui.define(
                         aProds.push({
                             Name: oBj["Description"],
                             Id: oBj["SkuCode"],
+                            ProductCode:oBj["ProductCode"]
                         });
                     }
                     oView
@@ -5557,7 +5558,7 @@ sap.ui.define(
                                 "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
                             );
                             return;
-                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) < 0){
+                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0){
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Greater Than 0."
                             );
@@ -5585,6 +5586,11 @@ sap.ui.define(
                         }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
+                            );
+                            return;
+                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0){
+                            MessageToast.show(
+                                "Minimum Percentage  and Maximum Percentage Should Be Greater Than 0."
                             );
                             return;
                         }
@@ -5733,8 +5739,11 @@ sap.ui.define(
                     var aCat = oModel.getProperty("/MultiCombo/PCat" + aNumber);
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                     var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
+                    var aPacks = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
+                    console.log(aPacks);
                     var aFilter1 = [];
                     var aFilter2 = [];
+                    var aFilter3 = [];
                     var aFilter1A = [];
                     for (var a of aCat) {
                         aFilter1.push(
@@ -5744,6 +5753,11 @@ sap.ui.define(
                     for (var b of aClass) {
                         aFilter2.push(
                             new Filter("ProductClassification/Id", FilterOperator.EQ, b)
+                        );
+                    }
+                    for (var c of aPacks) {
+                        aFilter2.push(
+                            new Filter("Id", FilterOperator.EQ,c["ProductCode"])
                         );
                     }
                     // Prod Filters
@@ -5792,6 +5806,10 @@ sap.ui.define(
                         filters: aFilter2,
                         and: false,
                     });
+                    var aFilterPacks = new Filter({
+                        filters: aFilter3,
+                        and: false,
+                    });
                     var aFinalFilter = [];
                     if (aFilter1.length > 0) {
                         aFinalFilter.push(aFilterCat);
@@ -5801,6 +5819,9 @@ sap.ui.define(
                     }
                     if (aFilter1A.length > 0) {
                         aFinalFilter = aFilterProd;
+                    }
+                    if (aFilter3.length > 0) {
+                        aFinalFilter.push(aFilterPacks);
                     }
                     this._ProdValueHelpDialog3
                         .getBinding("items")
@@ -6143,7 +6164,7 @@ sap.ui.define(
                         return;
                     }
                     if (ContributionCondition === 1) {
-                        console.log("1")
+                        //console.log("1")
 
                         if (!oObject["ProductCode"]) {
                             MessageToast.show(
