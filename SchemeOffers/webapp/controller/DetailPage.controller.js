@@ -1631,6 +1631,7 @@ sap.ui.define(
                             AppPacks1.push({
                                 Id: x["Pack"]["SkuCode"],
                                 Name: x["Pack"]["Description"],
+                                ProductCode: x["Pack"]["ProductCode"],
                             });
                         }
                     }
