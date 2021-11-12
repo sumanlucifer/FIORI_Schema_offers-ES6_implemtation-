@@ -1584,7 +1584,9 @@ sap.ui.define(
                 var oModel = that.getModel();
                 var filtertype = this.getModel("oModelView").getProperty("/TrainingDetails/TrainingFilterType");
                 if (sData.Status === 0) {
-                    if (sData.TrainingZone.length == 0 && filtertype === "GROUP") {
+                    if (sData.Url === "") {
+                            that.showToast.call(that, "MSG_PLEASE_ADD_URL_BEFORE_ACTIVATING_TRAINING");
+                    } else if (sData.TrainingZone.length == 0 && filtertype === "GROUP") {
                         that.showToast.call(that, "MSG_PLEASE_ADD_ZONE_BEFORE_ACTIVATING_TRAINING");
                     } else if (sData.TrainingDivision.length == 0 && filtertype === "GROUP") {
                         that.showToast.call(that, "MSG_PLEASE_ADD_DIVISION_BEFORE_ACTIVATING_TRAINING");
