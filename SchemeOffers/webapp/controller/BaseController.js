@@ -5741,7 +5741,7 @@ sap.ui.define(
                     var aClass = oModel.getProperty("/MultiCombo/PClass" + aNumber);
                     var aProd = oModel.getProperty("/MultiCombo/AppProd" + aNumber);
                     var aPacks = oModel.getProperty("/MultiCombo/AppPacks" + aNumber);
-                    console.log(aPacks);
+                    //console.log(aPacks);
                     var aFilter1 = [];
                     var aFilter2 = [];
                     var aFilter3 = [];
@@ -5757,7 +5757,7 @@ sap.ui.define(
                         );
                     }
                     for (var c of aPacks) {
-                        aFilter2.push(
+                        aFilter3.push(
                             new Filter("Id", FilterOperator.EQ,c["ProductCode"])
                         );
                     }
@@ -5812,20 +5812,26 @@ sap.ui.define(
                         and: false,
                     });
                     var aFinalFilter = [];
-                    if (aFilter1.length > 0) {
-                        aFinalFilter.push(aFilterCat);
-                    }
-                    if (aFilter2.length > 0) {
-                        aFinalFilter.push(aFilterClass);
-                    }
-                    if (aFilter1A.length > 0) {
-                        aFinalFilter = aFilterProd;
-                    }
-                    if (aFilter3.length > 0) {
-                        //if has specific packs conisder products of only selected packs.Clean rest filters
-                        aFinalFilter=[];
+                    if(aFilter3.length > 0){
                         aFinalFilter.push(aFilterPacks);
                     }
+                    else{
+                        if (aFilter1.length > 0) {
+                            aFinalFilter.push(aFilterCat);
+                        }
+                        if (aFilter2.length > 0) {
+                            aFinalFilter.push(aFilterClass);
+                        }
+                        if (aFilter1A.length > 0) {
+                            aFinalFilter = aFilterProd;
+                        }
+                    }
+                    // if (aFilter3.length > 0) {
+                    //     console.log("filter3")
+                    //     //if has specific packs conisder products of only selected packs.Clean rest filters
+                    //     aFinalFilter.length =0;
+                    //     aFinalFilter.push(aFilterPacks);
+                    // }
                     this._ProdValueHelpDialog3
                         .getBinding("items")
                         .filter(aFinalFilter, "Control");
