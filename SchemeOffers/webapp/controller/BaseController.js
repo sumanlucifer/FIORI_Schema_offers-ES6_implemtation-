@@ -2015,6 +2015,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table7");
+                    var count=oRewardDtl.length;
                     if (oEvent !== "add") {
                         var oObject = oEvent
                             .getSource()
@@ -2025,31 +2026,31 @@ sap.ui.define(
                     } else {
                         var bFlag = true;
                         var sLength = 1;
-                        if (oRewardDtl.length >= sLength) {
-                            MessageToast.show(
-                                "For the scenario we can only add " +
-                                sLength +
-                                " item(s)."
-                            );
-                            bFlag = false;
-                            return;
-                        }
-                        if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
-                            for (var prop of oRewardDtl) {
-                                if (prop["editable"] == true) {
-                                    bFlag = false;
-                                    MessageToast.show(
-                                        "Save or delete the existing data in the table before adding a new data"
-                                    );
-                                    return;
-                                    break;
-                                }
-                            }
-                        }
+                        // if (oRewardDtl.length >= sLength) {
+                        //     MessageToast.show(
+                        //         "For the scenario we can only add " +
+                        //         sLength +
+                        //         " item(s)."
+                        //     );
+                        //     bFlag = false;
+                        //     return;
+                        // }
+                        // if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
+                        //     for (var prop of oRewardDtl) {
+                        //         if (prop["editable"] == true) {
+                        //             bFlag = false;
+                        //             MessageToast.show(
+                        //                 "Save or delete the existing data in the table before adding a new data"
+                        //             );
+                        //             return;
+                        //             break;
+                        //         }
+                        //     }
+                        // }
                         if (bFlag == true) {
                             oRewardDtl.push({
                                 Percentage: "",
-                                RedemptionCycle: 1,
+                                RedemptionCycle: count+1,
                                 editable: true,
                             });
                         }
@@ -5821,6 +5822,8 @@ sap.ui.define(
                         aFinalFilter = aFilterProd;
                     }
                     if (aFilter3.length > 0) {
+                        //if has specific packs conisder products of only selected packs.Clean rest filters
+                        aFinalFilter=[];
                         aFinalFilter.push(aFilterPacks);
                     }
                     this._ProdValueHelpDialog3
