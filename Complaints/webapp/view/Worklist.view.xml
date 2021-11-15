@@ -92,7 +92,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'ComplaintSubtypeId',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype',select:'Id,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'ComplaintSubtypeId',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype',select:'Id,ParentComplaintId,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
@@ -138,7 +138,7 @@
                             <Text text="{ComplaintType/ComplaintType}"/>
                             <Text text="{ComplaintSubtype/ComplaintSubtype}"/>
                             <Text text="{path:'CreatedAt',formatter:'.fmtDate'}"/>
-                            <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
+                            <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatusHeader'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
                         </cells>
                     </ColumnListItem>
                 </items>
