@@ -1059,14 +1059,14 @@ sap.ui.define(
                     // }
                     return newStatus;
                 },
-                onPressHistoryComplaCode:function(oEvent){
+                onPressHistoryCompliantCode:function(oEvent){
                  
                      var oRouter = this.getOwnerComponent().getRouter();
                     var oObject = oEvent.getSource().getBindingContext().getObject();
-                  
+                    console.log(oObject)
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteEditCmp", {
-                        prop: 1503,
+                        prop: oObject["ComplaintId"]
                     });
                 },
                 fmtDate: function (mDate) {
