@@ -1032,9 +1032,42 @@ sap.ui.define(
                         newStatus = "Withdrawn";
                     }///// added by deepanjali for History table////
                     else if (sStatus === "REOPEN") {
-                        newStatus = "ReOpen";
+                        newStatus = "Reopen";
                     }
                     return newStatus;
+                },
+                fmtStatusHeader: function (sStatus, sId) {
+                    var newStatus = "";
+                    if (sStatus === "REGISTERED") {
+                        newStatus = "Registered";
+                    } else if (sStatus === "INREVIEW") {
+                        if (sId > 0) {
+                            newStatus = "In Review (Reopen)";
+                        }else {
+                            newStatus = "In Review"
+                        }
+                    } else if (sStatus === "RESOLVED") {
+                        newStatus = "Resolved";
+                    } else if (sStatus === "WITHDRAWN") {
+                        newStatus = "Withdrawn";
+                    }///// added by deepanjali for History table////
+                    // else if (sStatus === "REOPEN") {
+                    //     newStatus = "Reopen";
+                    // }
+                    // else {
+                    //   newStatus = "In Review (Reopen)";  
+                    // }
+                    return newStatus;
+                },
+                onPressHistoryComplaCode:function(oEvent){
+                 
+                     var oRouter = this.getOwnerComponent().getRouter();
+                    var oObject = oEvent.getSource().getBindingContext().getObject();
+                  
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("RouteEditCmp", {
+                        prop: 1503,
+                    });
                 },
                 fmtDate: function (mDate) {
                     var date = new Date(mDate);

@@ -13,6 +13,7 @@
                             enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="HistoryPersistenceKey"
+                            requestAtLeastFields="ComplaintTypeId"
                              initialNoDataText="{i18n>tableNoDataText}"
                             ignoreFromPersonalisation="Id,SkuCode,TokenCode,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,AssigneUserType,EscalatedAt,InitiateForceTat,EscalationType,InitiateForceTat,UpdatedBy,ComplaintDescription">
 
@@ -55,7 +56,15 @@
             <items>
                 <ColumnListItem>
                     <cells>
-                        <Text text="{ComplaintCode}"/>
+                    <HBox>
+                        <!-- <Text text="{oModelControl>/ComplainCode}"/> -->
+                        <ObjectAttribute
+		
+			text="{ComplaintCode}"
+				active="{= ${oModelControl>/ComplainCode}!== ${ComplaintCode} }"
+				press="onPressHistoryComplaCode" />
+                    </HBox>
+                        	
                        <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                          <Text text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"/>
                            <Text text="{Remark}"/>
