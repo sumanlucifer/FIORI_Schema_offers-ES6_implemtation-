@@ -855,13 +855,14 @@ sap.ui.define([
                     // }))
                     
                    
-
-                    this._FilterPainterValueTable(
-                        new Filter({
-                            filters: aCurrentFilterValues,
-                            and: true,
-                        })
-                    );
+                    if(aCurrentFilterValues.length >0){
+                        this._FilterPainterValueTable(
+                            new Filter({
+                                filters: aCurrentFilterValues,
+                                and: true,
+                            })
+                        );
+                    }
                 },
                 onPVhZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();

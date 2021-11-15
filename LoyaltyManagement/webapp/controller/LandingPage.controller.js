@@ -574,14 +574,68 @@ sap.ui.define([
             },
 
             downLoadReports1: function () {
+                var oViewFilter = this.getView().getModel("oModelControl").getProperty("/filterBar");
+                var AgeGroupId=null,MembershipId=null,DepotId=null,ZoneId=null,DivisionId=null,Point=null,Type=null,StartDate=null,EndDate=null,Name=null;
+                for (let prop in oViewFilter) {
+                    if (oViewFilter[prop]) {
+                            if (prop === "AgeGroupId") {
+                             AgeGroupId=oViewFilter[prop];
+                            } else if (prop === "MembershipId") {
+                             MembershipId=oViewFilter[prop];
+                            } else if (prop === "DepotId") {
+                             DepotId=oViewFilter[prop];
+                            } else if (prop === "ZoneId") {
+                             ZoneId=oViewFilter[prop];
+                            } else if (prop === "DivisionId") {
+                             DivisionId=oViewFilter[prop];
+                            } else if (prop === "Point") {
+                                 Point=oViewFilter[prop];
+                            } else if (prop === "Type") {
+                                 Type=oViewFilter[prop];
+                            } else if (prop === "StartDate") {
+                                 StartDate=oViewFilter[prop];
+                            } else if (prop === "EndDate") {
+                             EndDate=oViewFilter[prop];
+                            } else if (prop === "Name") {
+                                 Name=oViewFilter[prop];                          
+                            }
+                        }
+                    }
                 var oView = this.getView();
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=ACCRUED";
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=ACCRUED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate+"&endDate="+EndDate+"&name="+Name+"&rewardPoints="+Point+"";
                 sap.m.URLHelper.redirect(sSource, true);
             },
             downLoadReports2: function () {
+                var oViewFilter = this.getView().getModel("oModelControl").getProperty("/filterBar");
+                var AgeGroupId=null,MembershipId=null,DepotId=null,ZoneId=null,DivisionId=null,Point=null,Type=null,StartDate=null,EndDate=null,Name=null;
+                for (let prop in oViewFilter) {
+                    if (oViewFilter[prop]) {
+                            if (prop === "AgeGroupId") {
+                             AgeGroupId=oViewFilter[prop];
+                            } else if (prop === "MembershipId") {
+                             MembershipId=oViewFilter[prop];
+                            } else if (prop === "DepotId") {
+                             DepotId=oViewFilter[prop];
+                            } else if (prop === "ZoneId") {
+                             ZoneId=oViewFilter[prop];
+                            } else if (prop === "DivisionId") {
+                             DivisionId=oViewFilter[prop];
+                            } else if (prop === "Point") {
+                                 Point=oViewFilter[prop];
+                            } else if (prop === "Type") {
+                                 Type=oViewFilter[prop];
+                            } else if (prop === "StartDate") {
+                                 StartDate=oViewFilter[prop];
+                            } else if (prop === "EndDate") {
+                             EndDate=oViewFilter[prop];
+                            } else if (prop === "Name") {
+                                 Name=oViewFilter[prop];                          
+                            }
+                        }
+                    }
                 var oView = this.getView();
 
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=REDEEMED";
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=REDEEMED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate+"&endDate="+EndDate+"&name="+Name+"&rewardPoints="+Point+"";
 
                 sap.m.URLHelper.redirect(sSource, true);
             },
