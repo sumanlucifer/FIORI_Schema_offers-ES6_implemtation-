@@ -8,30 +8,30 @@ sap.ui.define([
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
     return Controller.extend("com.knpl.pragati.Complaints.controller.BaseController", {
-		/**
-		 * Convenience method for accessing the router.
-		 * @public
-		 * @returns {sap.ui.core.routing.Router} the router for this component
-		 */
+        /**
+         * Convenience method for accessing the router.
+         * @public
+         * @returns {sap.ui.core.routing.Router} the router for this component
+         */
         getRouter: function () {
             return UIComponent.getRouterFor(this);
         },
-		/**
-		 * Convenience method for getting the view model by name.
-		 * @public
-		 * @param {string} [sName] the model name
-		 * @returns {sap.ui.model.Model} the model instance
-		 */
+        /**
+         * Convenience method for getting the view model by name.
+         * @public
+         * @param {string} [sName] the model name
+         * @returns {sap.ui.model.Model} the model instance
+         */
         getModel: function (sName) {
             return this.getView().getModel(sName);
         },
-		/**
-		 * Convenience method for setting the view model.
-		 * @public
-		 * @param {sap.ui.model.Model} oModel the model instance
-		 * @param {string} sName the model name
-		 * @returns {sap.ui.mvc.View} the view instance
-		 */
+        /**
+         * Convenience method for setting the view model.
+         * @public
+         * @param {sap.ui.model.Model} oModel the model instance
+         * @param {string} sName the model name
+         * @returns {sap.ui.mvc.View} the view instance
+         */
         setModel: function (oModel, sName) {
             return this.getView().setModel(oModel, sName);
         },
@@ -45,17 +45,36 @@ sap.ui.define([
                 newStatus = "Resolved";
             } else if (sStatus === "WITHDRAWN") {
                 newStatus = "Withdrawn";
-            }///// aaded by Deepanjali for REOPEN////
+            } ///// aaded by Deepanjali for REOPEN////
             else if (sStatus === "REOPEN") {
                 newStatus = "Reopen";
             }
             return newStatus;
         },
-		/**
-		 * Getter for the resource bundle.
-		 * @public
-		 * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
-		 */
+        fmtStatusHeader: function (sStatus, sId) {
+            var newStatus = "";
+            if (sStatus === "REGISTERED") {
+                newStatus = "Registered";
+            } else if (sStatus === "INREVIEW") {
+                if (sId > 0) {
+                    newStatus = "In Review (Reopen)";
+                } else {
+                    newStatus = "In Review"
+                }
+            } else if (sStatus === "RESOLVED") {
+                newStatus = "Resolved";
+            } else if (sStatus === "WITHDRAWN") {
+                newStatus = "Withdrawn";
+            } else if (sStatus === "REOPEN") {
+                newStatus = "Reopen";
+            }
+            return newStatus;
+        },
+        /**
+         * Getter for the resource bundle.
+         * @public
+         * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
+         */
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
@@ -76,10 +95,10 @@ sap.ui.define([
         showMessageToast: function (reopenText) {
             MessageToast.show(this.getResourceBundle().getText(reopenText));
         },
-		/**
-		 * Event handler when the share by E-Mail button has been clicked
-		 * @public
-		 */
+        /**
+         * Event handler when the share by E-Mail button has been clicked
+         * @public
+         */
         onShareEmailPress: function () {
             var oViewModel = (this.getModel("objectView") || this.getModel("worklistView"));
             URLHelper.triggerEmail(
