@@ -593,16 +593,16 @@ sap.ui.define([
                             } else if (prop === "Type") {
                                  Type=oViewFilter[prop];
                             } else if (prop === "StartDate") {
-                                 StartDate=oViewFilter[prop];
+                                 StartDate=oViewFilter[prop].toISOString().substring(0,10);
                             } else if (prop === "EndDate") {
-                             EndDate=oViewFilter[prop];
+                             EndDate=oViewFilter[prop].toISOString().substring(0,10);
                             } else if (prop === "Name") {
                                  Name=oViewFilter[prop];                          
                             }
                         }
                     }
                 var oView = this.getView();
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=ACCRUED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate.toISOString().substring(0,10)+"&endDate="+EndDate.toISOString().substring(0,10)+"&name="+Name+"&rewardPoints="+Point+"";
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=ACCRUED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate+"&endDate="+EndDate+"&name="+Name+"&rewardPoints="+Point+"";
                 sap.m.URLHelper.redirect(sSource, true);
             },
             downLoadReports2: function () {
@@ -625,9 +625,9 @@ sap.ui.define([
                             } else if (prop === "Type") {
                                  Type=oViewFilter[prop];
                             } else if (prop === "StartDate") {
-                                 StartDate=oViewFilter[prop];
+                                 StartDate=oViewFilter[prop].toISOString().substring(0,10);
                             } else if (prop === "EndDate") {
-                             EndDate=oViewFilter[prop];
+                             EndDate=oViewFilter[prop].toISOString().substring(0,10);
                             } else if (prop === "Name") {
                                  Name=oViewFilter[prop];                          
                             }
@@ -635,7 +635,7 @@ sap.ui.define([
                     }
                 var oView = this.getView();
 
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=REDEEMED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate.toISOString().substring(0,10)+"&endDate="+EndDate.toISOString().substring(0,10)+"&name="+Name+"&rewardPoints="+Point+"";
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "PainterPointsHistorySet(1)/$value?pointTransactionType=REDEEMED&divisionName="+DivisionId+"&zone="+ZoneId+"&depo="+DepotId+"&pointType="+Type+"&startDate="+StartDate+"&endDate="+EndDate+"&name="+Name+"&rewardPoints="+Point+"";
 
                 sap.m.URLHelper.redirect(sSource, true);
             },
