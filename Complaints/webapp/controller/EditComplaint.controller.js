@@ -1036,13 +1036,15 @@ sap.ui.define(
                     }
                     return newStatus;
                 },
-                fmtStatus1: function (sStatus, sId) {
+                fmtStatusHeader: function (sStatus, sId) {
                     var newStatus = "";
                     if (sStatus === "REGISTERED") {
                         newStatus = "Registered";
                     } else if (sStatus === "INREVIEW") {
-                        if (sId === null || sId === 0) {
-                            newStatus = "In Review";
+                        if (sId > 0) {
+                            newStatus = "In Review (Reopen)";
+                        }else {
+                            newStatus = "In Review"
                         }
                     } else if (sStatus === "RESOLVED") {
                         newStatus = "Resolved";
@@ -1056,6 +1058,16 @@ sap.ui.define(
                     //   newStatus = "In Review (Reopen)";  
                     // }
                     return newStatus;
+                },
+                onPressHistoryComplaCode:function(oEvent){
+                 
+                     var oRouter = this.getOwnerComponent().getRouter();
+                    var oObject = oEvent.getSource().getBindingContext().getObject();
+                  
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("RouteEditCmp", {
+                        prop: 1503,
+                    });
                 },
                 fmtDate: function (mDate) {
                     var date = new Date(mDate);

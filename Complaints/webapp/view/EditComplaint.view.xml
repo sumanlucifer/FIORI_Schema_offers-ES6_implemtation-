@@ -43,7 +43,7 @@
                     <layout:VerticalLayout>
                         <Label  text="{i18n>Status}:"/>
                         <!-- <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/> -->
-                          <ObjectStatus class="sapMObjectStatusLarge" text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatus1'}" state="None"/>
+                          <ObjectStatus class="sapMObjectStatusLarge" text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatusHeader'}" state="None"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
