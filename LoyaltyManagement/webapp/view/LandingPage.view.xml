@@ -246,7 +246,7 @@
                     entitySet="PainterPointsHistorySet"
                     tableType="ResponsiveTable"
                     showRowCount="true"
-                    useExportToExcel="true"
+                    useExportToExcel="false"
                     useVariantManagement="false"
                     useTablePersonalisation="true"
                     ignoredFields="IsArchived,IsSelected,Id"
