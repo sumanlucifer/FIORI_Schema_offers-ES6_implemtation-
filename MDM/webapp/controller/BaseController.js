@@ -157,14 +157,15 @@ sap.ui.define([
 
         _BannerEndDateCheck: function (oPayLoad) {
             var oPromise = jQuery.Deferred();
-            if (oPayLoad.hasOwnProperty("EndTime")) {
-                oPayLoad["EndTime"] = new Date(
-                    oPayLoad["EndTime"].setHours(23, 59, 59, 999)
-                    //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
-                );
+            if (oPayLoad.EndTime) {
+                if (oPayLoad.hasOwnProperty("EndTime")) {
+                    oPayLoad["EndTime"] = new Date(
+                        oPayLoad["EndTime"].setHours(23, 59, 59, 999)
+                        //oPayLoad["EndDate"].setHours(17, 51, 59, 999)
+                    );
+                }
             }
             oPromise.resolve(oPayLoad);
-            console.log(oPayLoad)
             return oPromise;
         },
 
