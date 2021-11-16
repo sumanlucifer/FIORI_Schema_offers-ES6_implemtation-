@@ -58,8 +58,7 @@ sap.ui.define(
     ) {
         "use strict";
         return BaseController.extend(
-            "com.knpl.pragati.Complaints.controller.EditComplaint",
-            {
+            "com.knpl.pragati.Complaints.controller.EditComplaint", {
                 formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter(this);
@@ -103,7 +102,37 @@ sap.ui.define(
                     this._oMessageManager.removeAllMessages();
                     var oData = {
                         modeEdit: false,
-                        aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
+                        aQuantity: [{
+                            value: "1",
+                            key: 1
+                        }, {
+                            value: "2",
+                            key: 2
+                        }, {
+                            value: "3",
+                            key: 3
+                        }, {
+                            value: "4",
+                            key: 4
+                        }, {
+                            value: "5",
+                            key: 5
+                        }, {
+                            value: "6",
+                            key: 6
+                        }, {
+                            value: "7",
+                            key: 7
+                        }, {
+                            value: "8",
+                            key: 8
+                        }, {
+                            value: "9",
+                            key: 9
+                        }, {
+                            value: "10",
+                            key: 10
+                        }],
                         bindProp: "PainterComplainsSet(" + oProp + ")",
                         ResolutionData: {
                             PointsThrough: 0 //
@@ -128,8 +157,8 @@ sap.ui.define(
                         QRCodeData2: {},
                         TokenCode2: "",
                         ComplainReopenDialoge: {
-                            ComplainReopenReasonId: "",///added by deepanjali
-                            ComplainReopenReason: ""    ///added by deepanjali
+                            ComplainReopenReasonId: "", ///added by deepanjali
+                            ComplainReopenReason: "" ///added by deepanjali
                         }
                         // ComplainReopenReasonId: null ///added by deepanjali
                     };
@@ -199,7 +228,7 @@ sap.ui.define(
                             "WORKFLOW_CANCELED",
                             "USERTASK_CREATED",
                             "USERTASK_COMPLETED",
-                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT",//TODO: Change text to TAT triggered
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
                     this.oWorkflowModel.setData(aWfData);
@@ -307,11 +336,15 @@ sap.ui.define(
                                 $expand: exPand,
                             },
                             success: function (data) {
+
                                 //Modding Product data for UI, Should have been a object from backend
                                 if (data.PainterComplainProducts.results.length > 0) {
                                     data.PainterComplainProducts = data.PainterComplainProducts.results[0]
-                                    oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
                                     oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
+                                    oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
+                                    oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
+                                    oView.byId("idPacks").setSelectedKey("");
+                                    oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
                                 } else {
                                     data.PainterComplainProducts = {
                                         PainterId: data.PainterId,
@@ -327,10 +360,11 @@ sap.ui.define(
                                 jQuery.extend(true, othat.oClonePayload, data);
                                 var oViewModel = new JSONModel(data);
                                 oView.setModel(oViewModel, "oModelView");
+                               
                                 othat._setInitData();
                                 resolve();
                             },
-                            error: function () { },
+                            error: function () {},
                         });
                     });
                 },
@@ -492,42 +526,45 @@ sap.ui.define(
                         return;
                     }
                     var oData = oView.getModel();
-                    oData.callFunction("/QRCodeDetailsAdmin",
-                        {
-                            urlParameters: {
-                                qrcode: sTokenCode.toString(),
-                                painterid: oModelView.getProperty("/PainterId")
-                            },
-                            success: function (oData) {
-                                if (oData !== null) {
-                                    if (oData.hasOwnProperty("Status")) {
-                                        if (oData["Status"] == true) {
-                                            oModelView.setProperty("/RewardPoints",
-                                                oData["RewardPoints"]
-                                            );
-                                            oModelView.setProperty(
-                                                "/TokenCode",
-                                                sTokenCode
-                                            );
-                                            // oModelControl.setProperty("/TokenCode", false);
-                                        }
-                                        that.showQRCodedetails.call(that, oData);
-                                        // else if (oData["Status"] == false) {
-                                        //     oModelView.setProperty("/addComplaint/RewardPoints", "");
-                                        //     oModelView.setProperty("/addComplaint/TokenCode", "");
-                                        //     MessageToast.show(oData["Message"]);
-                                        // }
+                    oData.callFunction("/QRCodeDetailsAdmin", {
+                        urlParameters: {
+                            qrcode: sTokenCode.toString(),
+                            painterid: oModelView.getProperty("/PainterId")
+                        },
+                        success: function (oData) {
+                            if (oData !== null) {
+                                if (oData.hasOwnProperty("Status")) {
+                                    if (oData["Status"] == true) {
+                                        oModelView.setProperty("/RewardPoints",
+                                            oData["RewardPoints"]
+                                        );
+                                        oModelView.setProperty(
+                                            "/TokenCode",
+                                            sTokenCode
+                                        );
+                                        // oModelControl.setProperty("/TokenCode", false);
                                     }
+                                    that.showQRCodedetails.call(that, oData);
+                                    // else if (oData["Status"] == false) {
+                                    //     oModelView.setProperty("/addComplaint/RewardPoints", "");
+                                    //     oModelView.setProperty("/addComplaint/TokenCode", "");
+                                    //     MessageToast.show(oData["Message"]);
+                                    // }
                                 }
-                            },
-                            error: function () { },
-                        });
+                            }
+                        },
+                        error: function () {},
+                    });
                 },
                 showQRCodedetails: function (data) {
                     var oModel = this.getView().getModel("oModelControl");
                     oModel.setProperty("/QRCodeData", data);
                     if (!this.oQRCodeDialog) {
-                        Fragment.load({ type: "XML", controller: this, name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails" }).then(function (oDialog) {
+                        Fragment.load({
+                            type: "XML",
+                            controller: this,
+                            name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails"
+                        }).then(function (oDialog) {
                             this.oQRCodeDialog = oDialog;
                             this.getView().addDependent(oDialog);
                             oDialog.open();
@@ -592,27 +629,30 @@ sap.ui.define(
                     }
                     var sTokenCode = oModelControl.getProperty("/TokenCode2").trim();
                     var oData = oView.getModel();
-                    oData.callFunction("/QRCodeDetailsAdmin",
-                        {
-                            urlParameters: {
-                                qrcode: sTokenCode.toString(),
-                                painterid: oModelView.getProperty("/PainterId")
-                            },
-                            success: function (oData) {
-                                if (oData !== null) {
-                                    if (oData.hasOwnProperty("Status")) {
-                                        that.showQRCodedetails2.call(that, oData);
-                                    }
+                    oData.callFunction("/QRCodeDetailsAdmin", {
+                        urlParameters: {
+                            qrcode: sTokenCode.toString(),
+                            painterid: oModelView.getProperty("/PainterId")
+                        },
+                        success: function (oData) {
+                            if (oData !== null) {
+                                if (oData.hasOwnProperty("Status")) {
+                                    that.showQRCodedetails2.call(that, oData);
                                 }
-                            },
-                            error: function () { },
-                        });
+                            }
+                        },
+                        error: function () {},
+                    });
                 },
                 showQRCodedetails2: function (data) {
                     var oModel = this.getView().getModel("oModelControl");
                     oModel.setProperty("/QRCodeData2", data);
                     if (!this.oQRCodeDialog2) {
-                        Fragment.load({ type: "XML", controller: this, name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails2" }).then(function (oDialog) {
+                        Fragment.load({
+                            type: "XML",
+                            controller: this,
+                            name: "com.knpl.pragati.Complaints.view.fragments.QRCodeDetails2"
+                        }).then(function (oDialog) {
                             this.oQRCodeDialog2 = oDialog;
                             this.getView().addDependent(oDialog);
                             oDialog.open();
@@ -630,8 +670,7 @@ sap.ui.define(
                     var oView = this.getView();
                     if (!this._pKycDialog) {
                         Fragment.load({
-                            name:
-                                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+                            name: "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {
@@ -670,8 +709,7 @@ sap.ui.define(
                     }
                     MessageBox.confirm(
                         this.getResourceBundle().getText("MSG_WITHDRAW_CONFIRMATION",
-                            [oModelView.getProperty("/ComplaintCode")]),
-                        {
+                            [oModelView.getProperty("/ComplaintCode")]), {
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
                             styleClass: bCompact ? "sapUiSizeCompact" : "",
@@ -781,8 +819,7 @@ sap.ui.define(
                     if (oModelView.getProperty("/ResolutionType") == 2 && this.getModel("appView").getProperty("/iUserLevel") < 2) {
                         var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                         MessageBox.confirm(
-                            this.getResourceBundle().getText("MSG_APPROVAL_CONFIRMATION", [oModelView.getProperty("/ComplaintCode")]),
-                            {
+                            this.getResourceBundle().getText("MSG_APPROVAL_CONFIRMATION", [oModelView.getProperty("/ComplaintCode")]), {
                                 styleClass: bCompact ? "sapUiSizeCompact" : "",
                                 actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                                 emphasizedAction: MessageBox.Action.OK,
@@ -967,8 +1004,7 @@ sap.ui.define(
                     var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                     MessageBox.confirm(
                         "Kindly confirm to escalate the complain - " +
-                        oBject["ComplaintCode"],
-                        {
+                        oBject["ComplaintCode"], {
                             styleClass: bCompact ? "sapUiSizeCompact" : "",
                             actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
                             emphasizedAction: MessageBox.Action.OK,
@@ -1030,16 +1066,16 @@ sap.ui.define(
                         newStatus = "Resolved";
                     } else if (sStatus === "WITHDRAWN") {
                         newStatus = "Withdrawn";
-                    }///// added by deepanjali for History table////
+                    } ///// added by deepanjali for History table////
                     else if (sStatus === "REOPEN") {
                         newStatus = "Reopen";
                     }
                     return newStatus;
                 },
-               
-                onPressHistoryCompliantCode:function(oEvent){
-                 
-                     var oRouter = this.getOwnerComponent().getRouter();
+
+                onPressHistoryCompliantCode: function (oEvent) {
+
+                    var oRouter = this.getOwnerComponent().getRouter();
                     var oObject = oEvent.getSource().getBindingContext().getObject();
                     console.log(oObject)
                     var oRouter = this.getOwnerComponent().getRouter();
