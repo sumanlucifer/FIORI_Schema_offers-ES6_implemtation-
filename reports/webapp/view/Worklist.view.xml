@@ -1,5 +1,5 @@
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.downloadreports.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage id="dynamicPageId" headerExpanded="true">
+    <f:DynamicPage  busyIndicatorDelay="0" id="dynamicPageId" headerExpanded="true">
     
         <f:header>
             <f:DynamicPageHeader pinnable="true">
@@ -58,7 +58,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
+            <Table  busyIndicatorDelay="0" id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
             filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>

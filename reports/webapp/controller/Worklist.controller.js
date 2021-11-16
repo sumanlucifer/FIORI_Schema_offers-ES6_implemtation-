@@ -471,7 +471,9 @@ sap.ui.define(
                 onRefreshButton: function () {
 
                     var myLocation = window.location;
-                    myLocation.reload(true);
+                   var oView = this.getView();;
+                   var oTable = oView.byId("table")
+                   oTable.getBinding("items").refresh(true);
 
                 },
                 onMenuAction: function (oEvent) {
