@@ -67,27 +67,26 @@ sap.ui.define(
 
                 },
                 _onRouteMatched: function (mParam1) {
-                    
+
                     var a1;
-                    var othat=this;
+                    var othat = this;
                     var oLoginModel = this.getView().getModel("LoginInfo");
-                    a1=this._CheckLoginData();
-                    a1.then(function(data){
+                    a1 = this._CheckLoginData();
+                    a1.then(function (data) {
                         //console.log(data)
-                      var data=oLoginModel.getData();
-                      if(data["UserTypeId"]===2 ||data["UserTypeId"]===3){
-                         MessageBox.information("You are not authorized to access this feature.", {
-                            actions: [MessageBox.Action.OK],
-                            emphasizedAction: MessageBox.Action.OK,
-                            onClose: function (sAction) {
-                                window.history.go(-1);
-                            }
-                        }); 
-                      }
-                      else{
-                       othat._InitData();
-                      }
-                        
+                        var data = oLoginModel.getData();
+                        if (data["UserTypeId"] === 2 || data["UserTypeId"] === 3) {
+                            MessageBox.information("You are not authorized to access this feature.", {
+                                actions: [MessageBox.Action.OK],
+                                emphasizedAction: MessageBox.Action.OK,
+                                onClose: function (sAction) {
+                                    window.history.go(-1);
+                                }
+                            });
+                        } else {
+                            othat._InitData();
+                        }
+
                     })
 
 
@@ -161,7 +160,7 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     oLoginData.setData(data["results"][0]);
-                                   // console.log(oLoginData)
+                                    // console.log(oLoginData)
                                 }
                             }
                         },
@@ -470,9 +469,9 @@ sap.ui.define(
                     }
                 },
                 onRefreshButton: function () {
-                
-                   var myLocation = location;
-                    myLocation.reload();
+
+                    var myLocation = window.location;
+                    myLocation.reload(true);
 
                 },
                 onMenuAction: function (oEvent) {
@@ -492,7 +491,7 @@ sap.ui.define(
 
                         }
                     })
-                  
+
                 },
                 onDowloadFile: function (oEvent) {
                     var oView = this.getView();
