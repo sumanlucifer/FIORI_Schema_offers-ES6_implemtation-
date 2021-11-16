@@ -473,7 +473,7 @@ sap.ui.define(
                     var myLocation = window.location;
                    var oView = this.getView();;
                    var oTable = oView.byId("table")
-                   oTable.getBinding("items").refresh(true);
+                   oTable.getBinding("items").refresh();
 
                 },
                 onMenuAction: function (oEvent) {
