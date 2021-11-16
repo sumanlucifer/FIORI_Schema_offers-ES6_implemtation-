@@ -133,6 +133,11 @@
                                         <Text class="sapUiTinyMarginTop" text="{= ${PaymentTransactionId}=== null ? 'NA' : ${PaymentTransactionId} }"/>
                                     </form:fields>
                                 </form:FormElement>
+                                <form:FormElement label="Token Code" visible="{= ${PainterTokenScanHistory}!== null}">
+                                    <form:fields >
+                                        <Text class="sapUiTinyMarginTop" text="{= ${PainterTokenScanHistory/TokenCode}=== null ? 'NA' : ${PainterTokenScanHistory/TokenCode} }"/>
+                                    </form:fields>
+                                </form:FormElement>
                                 <form:FormElement label="Date">
                                     <form:fields>
                                         <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
