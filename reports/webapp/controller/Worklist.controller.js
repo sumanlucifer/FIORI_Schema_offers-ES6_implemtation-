@@ -67,7 +67,28 @@ sap.ui.define(
 
                 },
                 _onRouteMatched: function (mParam1) {
-                    this._InitData();
+                    
+                    var a1;
+                    var othat=this;
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    a1=this._CheckLoginData();
+                    a1.then(function(data){
+                        //console.log(data)
+                      var data=oLoginModel.getData();
+                      if(data["UserTypeId"]===2 ||data["UserTypeId"]===3){
+                         MessageBox.information("You are not authorized to access this feature.", {
+                            actions: [MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                window.history.go(-1);
+                            }
+                        }); 
+                      }
+                      else{
+                       othat._InitData();
+                      }
+                        
+                    })
 
 
                 },
@@ -140,12 +161,40 @@ sap.ui.define(
                             if (data.hasOwnProperty("results")) {
                                 if (data["results"].length > 0) {
                                     oLoginData.setData(data["results"][0]);
-                                    // console.log(oLoginData)
+                                   // console.log(oLoginData)
                                 }
                             }
                         },
                     });
                 },
+                _CheckLoginData: function () {
+                    var promise = jQuery.Deferred();
+                    var oData = this.getModel();
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var oLoginData = oLoginModel.getData()
+                    if (Object.keys(oLoginData).length === 0) {
+                        return new Promise((resolve, reject) => {
+                            oData.callFunction("/GetLoggedInAdmin", {
+                                method: "GET",
+                                urlParameters: {
+                                    $expand: "UserType",
+                                },
+                                success: function (data) {
+                                    if (data.hasOwnProperty("results")) {
+                                        if (data["results"].length > 0) {
+                                            oLoginModel.setData(data["results"][0]);
+                                        }
+                                    }
+                                    resolve();
+                                },
+                            });
+                        })
+                    } else {
+                        promise.resolve();
+                        return promise;
+                    }
+                },
+
 
 
                 _fiterBarSort: function () {
