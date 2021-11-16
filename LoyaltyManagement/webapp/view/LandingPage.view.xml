@@ -114,7 +114,7 @@
                     persistencyKey="PainterListSmartTableKey"
                   >
                   
-                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false" >
+                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>nodata}">
                    
 
                                 <columns>
@@ -188,6 +188,7 @@
                     enableAutoBinding="true"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
+                    noData="{i18n>nodata}"
                   >
                   	<smartTable:customToolbar>
 			<OverflowToolbar design="Transparent">
@@ -255,6 +256,7 @@
                     enableAutoBinding="true"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
+                    noData="{i18n>nodata}"
                   >
                   <smartTable:customToolbar>
 			<OverflowToolbar design="Transparent">
