@@ -471,7 +471,8 @@ sap.ui.define(
                 },
                 onRefreshButton: function () {
                 
-                    location.reload();
+                   var myLocation = location;
+                    myLocation.reload();
 
                 },
                 onMenuAction: function (oEvent) {
