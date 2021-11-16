@@ -41,11 +41,11 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>Status}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox id="idStatus" placeholder="{i18n>Select} {i18n>Status}" selectedKey="{path:'oModelControl>/filterBar/Status' }">
-                                        <core:Item text="Pending" key="PENDING" />
-                                        <core:Item text="Preparing" key="PREPARING" />
                                         <core:Item text="Available" key="AVAILABLE" />
-                                        <core:Item text="Error" key="ERROR" />
+                                          <core:Item text="Pending" key="PENDING" />
                                         <core:Item text="Deleted" key="DELETED" />
+                                        <core:Item text="Preparing" key="PREPARING" />
+                                          <core:Item text="Error" key="ERROR" />
                                        
                                     </ComboBox>
                                 </fb:control>
