@@ -69,7 +69,8 @@
                 items="{path: '/MasterExternalLinksSet', parameters: { expand: 'CreatedByDetails' }, filters: [{path: 'IsArchived', operator: 'EQ', value1: false}]}"
                 noDataText="{i18n>tblNoDataText}"
                 growing="true"
-                growingScrollToLoad="true"
+                growingScrollToLoad="false"
+                growingThreshold="10"
                 busy="{ViewModel>/busy}"
                 updateFinished="onUpdateFinished">
                 <headerToolbar>
