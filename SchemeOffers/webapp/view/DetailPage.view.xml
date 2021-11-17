@@ -110,7 +110,7 @@
                     <!-- <Button press="onActivate" text="{i18n>Activate}" type="Accept" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== false}" />
                     <Button press="onDeactivate" text="{i18n>Deactivate}" type="Reject" class="sapUiTinyMarginEnd" visible="{= ${oModelControl3>/mode}=== 'display' &amp;&amp; ${IsActive}=== true}" /> -->
                     <!-- Send For Approval -->
-                    <Button press="onOpenRemarksDialog('PENDING')" text="{i18n>SendForApproval}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" />
+                    <Button press="onOpenRemarksDialog('PENDING')" text="{i18n>SendForApproval}" type="Emphasized" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.btnSendForApprovalCheck'}" />
                     <!-- Escalate -->
                     <Button press="onOpenRemarksDialog('ESCALATE')" text="{i18n>Escalate}" type="Critical" class="sapUiTinyMarginEnd" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','AssigneUserType'],formatter:'.formatter.btnEscalate'}" />
                     <!-- Approve Reject -->
