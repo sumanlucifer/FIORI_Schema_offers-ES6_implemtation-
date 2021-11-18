@@ -15,7 +15,7 @@
                     <ComboBox items="{ path: '/MasterLanguageSet', templateShareable: false}" width="12%" selectedKey="{oModelView>LanguageCode}" selectionChange="onLanguageCodeChange" editable="{= ${oModelView>LanguageCode} !== 'EN'}">
                         <core:Item key="{LanguageCode}" text="{Language}" enabled="{parts:['LanguageCode','oModelView>/oAddTraining'],formatter:'.fmtCheckLanguage'}"/>
                     </ComboBox>
-                    <TextArea value="{oModelView>Question}" width="100%" ></TextArea>
+                    <TextArea value="{oModelView>Question}" width="100%" placeholder="Enter Question"></TextArea>
                     <HBox justifyContent="End">
                         <Button press="onAddQuestionnaireOptions" type="Emphasized" enabled="{= ${oModelView>Options/length} &lt; 4 }" text="Add Options" icon="sap-icon://add" visible="{= ${oModelView>LanguageCode} === 'EN'}"/>
                     </HBox>
@@ -28,7 +28,7 @@
                                 </buttons>
                             </RadioButtonGroup>
                           
-                            <Input width="80%" maxLength="100" value="{oModelView>Option}"/>
+                            <Input width="80%" maxLength="100" value="{oModelView>Option}" placeholder="Enter Option"/>
                             <Button icon="sap-icon://delete" press="onDeleteQuestionnaireOptions" type="Transparent" tooltip="{i18n>Delete}"/>
                         </CustomListItem>
                     </List>
