@@ -277,18 +277,22 @@ sap.ui.define(
                     });
                     oView.getModel("oModelControl")
                         .setProperty("/MultiCombo/Painters", itemModel);
-                    console.log(itemModel);
+                    //console.log(itemModel);
                     this._CsvDialoge.close();
                 },
                 onDataExport: function (oEvent) {
+                        var othat = this;
                     var oExport = new Export({
                         // Type that will be used to generate the content. Own ExportType's can be created to support other formats
                         exportType: new ExportTypeCSV({
-                            separatorChar: ";"
-                        }),
+                            separatorChar: "\t",
+                            mimeType: "application/vnd.ms-excel",
+                            charset: "utf-8",
+                            fileExtension: "xls",
 
+                        }),
                         // Pass in the model created above
-                        models: this.getView().getModel("oModelControl"),
+                        models: othat.getView().getModel("oModelControl3"),
 
                         // binding information for the rows aggregation
                         rows: {
@@ -326,6 +330,7 @@ sap.ui.define(
                     });
 
                     // download exported file
+                    
                     oExport.saveFile().catch(function (oError) {
                         MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                     }).then(function () {
@@ -6157,7 +6162,7 @@ sap.ui.define(
                     //var ContributionCondition = oModel.getProperty("/ContributionCondition");
                     var oModelView = oView.getModel("oModelView");
                     var ContributionCondition = oModelView.getProperty("/ContributionCondition");
-                    console.log(ContributionCondition)
+                    //console.log(ContributionCondition)
                     var oObject = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")

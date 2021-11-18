@@ -89,8 +89,8 @@
         </f:SimpleForm>
     </VBox>
     <buttons>
-		<Button text="{i18n>btnClose}" press="onSaveUploadDelPaitner"/>
-        <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/>
+		<Button type="Ghost" text="{i18n>btnClose}" press="onSaveUploadDelPaitner"/>
+        <Button type="Emphasized" text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/>
 	</buttons>
 </Dialog>
 
