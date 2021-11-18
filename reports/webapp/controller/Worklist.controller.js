@@ -68,25 +68,15 @@ sap.ui.define(
                 },
                 _onRouteMatched: function (mParam1) {
 
-                    var a1;
+                    var a1, a2;
                     var othat = this;
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     a1 = this._CheckLoginData();
                     a1.then(function (data) {
-                        //console.log(data)
-                        var data = oLoginModel.getData();
-                        if (data["UserTypeId"] === 2 || data["UserTypeId"] === 3) {
-                            MessageBox.information("You are not authorized to access this feature.", {
-                                actions: [MessageBox.Action.OK],
-                                emphasizedAction: MessageBox.Action.OK,
-                                onClose: function (sAction) {
-                                    window.history.go(-1);
-                                }
-                            });
-                        } else {
+                        a2 = othat._validateLoggedInUser();
+                        a2.then(function () {
                             othat._InitData();
-                        }
-
+                        })
                     })
 
 
@@ -98,6 +88,25 @@ sap.ui.define(
                     });
                     //this.onCrossNavigate("CP")
 
+                },
+                _validateLoggedInUser: function (mParam) {
+                    var promise = jQuery.Deferred();
+                     var othat = this;
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var data = oLoginModel.getData();
+                    //console.log(data);
+                    if (data["UserType"]["UserType"].toUpperCase() === "AGENT") {
+                        var sMessageText = othat.getOwnerComponent().getModel("i18n").getResourceBundle().getText("ValidationMessage1");
+                        MessageBox.information(sMessageText, {
+                            actions: [MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                window.history.go(-1);
+                            }
+                        });
+                    }
+                    promise.resolve();
+                    return promise;
                 },
                 _InitData: function () {
 
@@ -471,9 +480,9 @@ sap.ui.define(
                 onRefreshButton: function () {
 
                     var myLocation = window.location;
-                   var oView = this.getView();;
-                   var oTable = oView.byId("table")
-                   oTable.getBinding("items").refresh();
+                    var oView = this.getView();;
+                    var oTable = oView.byId("table")
+                    oTable.getBinding("items").refresh();
 
                 },
                 onMenuAction: function (oEvent) {
