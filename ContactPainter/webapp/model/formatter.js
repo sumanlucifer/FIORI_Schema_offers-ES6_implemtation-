@@ -137,7 +137,7 @@ sap.ui.define([
                 var obj;
                 for (var i in m1) {
                     obj = this.getView().getModel().getData("/" + m1[i]);
-                    if (obj["RedemptionStatus"] === "REDEEMED") {
+                    if (obj["RedemptionStatus"] === "REDEEMED" || obj["RedemptionStatus"] === "SCHEDULED") {
                         return obj["TotalBonusPoints"];
                     }
                 }
