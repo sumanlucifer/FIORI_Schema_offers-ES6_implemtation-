@@ -272,7 +272,7 @@ sap.ui.define(
                         return {
                             PainterMobile: item.PainterMobile,
                             PainterName: item.PainterName,
-                            PainterId: item.Id
+                            PainterId: item.Id,
                         };
                     });
                     oView.getModel("oModelControl")
@@ -292,7 +292,7 @@ sap.ui.define(
 
                         }),
                         // Pass in the model created above
-                        models: othat.getView().getModel("oModelControl3"),
+                        models: othat.getView().getModel("oModelControl"),
 
                         // binding information for the rows aggregation
                         rows: {
@@ -5344,6 +5344,63 @@ sap.ui.define(
                     };
                     $.ajax(settings);
                 },
+                 onDataExportDeselectPainter: function (oEvent) {
+                        var othat = this;
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: "\t",
+                            mimeType: "application/vnd.ms-excel",
+                            charset: "utf-8",
+                            fileExtension: "xls",
+
+                        }),
+                        // Pass in the model created above
+                        models: othat.getView().getModel("oModelControl3"),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/ofragmentModel"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [{
+                                name: "Row",
+                                template: {
+                                    content: "{Row}"
+                                }
+                            },
+                            {
+                                name: "MobileNumber",
+                                template: {
+                                    content: "{PainterMobile}"
+                                }
+                            }, {
+                                name: "Message",
+                                template: {
+                                    content: "{UploadMessage}"
+                                }
+                            }, {
+                                name: "Status",
+                                template: {
+                                    content: {
+                                        parts: ["UploadStatus"],
+                                        formatter: formatter.UploadStatus
+                                    }
+                                }
+                            }
+                        ]
+                    });
+
+                    // download exported file
+                    
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+                },
                 // upload csv file ///
                 _SuccessPainterDel: function (result, oStatus) {
                     var that = this;
@@ -5362,6 +5419,7 @@ sap.ui.define(
                                     UploadMessage: item.UploadMessage,
                                     UploadStatus: item.UploadStatus,
                                     Id: item.Id,
+                                    Row:item.Row
                                     //isSelected: true
                                 };
                             });
@@ -5372,6 +5430,7 @@ sap.ui.define(
                         //         .setProperty("/MultiCombo/Painters", itemModel);
                     }
                 },
+                
                 onpressfrag2: function (itemModel) {
                     //this._PainterMultiDialoge = this.getView().byId("Painters1");
                     var oView = this.getView();
