@@ -272,23 +272,27 @@ sap.ui.define(
                         return {
                             PainterMobile: item.PainterMobile,
                             PainterName: item.PainterName,
-                            PainterId: item.Id
+                            PainterId: item.Id,
                         };
                     });
                     oView.getModel("oModelControl")
                         .setProperty("/MultiCombo/Painters", itemModel);
-                    console.log(itemModel);
+                    //console.log(itemModel);
                     this._CsvDialoge.close();
                 },
                 onDataExport: function (oEvent) {
+                    var othat = this;
                     var oExport = new Export({
                         // Type that will be used to generate the content. Own ExportType's can be created to support other formats
                         exportType: new ExportTypeCSV({
-                            separatorChar: ";"
-                        }),
+                            separatorChar: "\t",
+                            mimeType: "application/vnd.ms-excel",
+                            charset: "utf-8",
+                            fileExtension: "xls",
 
+                        }),
                         // Pass in the model created above
-                        models: this.getView().getModel("oModelControl"),
+                        models: othat.getView().getModel("oModelControl"),
 
                         // binding information for the rows aggregation
                         rows: {
@@ -326,6 +330,7 @@ sap.ui.define(
                     });
 
                     // download exported file
+
                     oExport.saveFile().catch(function (oError) {
                         MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                     }).then(function () {
@@ -2015,7 +2020,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var oRewardDtl = oModel.getProperty("/Table/Table7");
-                    var count=oRewardDtl.length;
+                    var count = oRewardDtl.length;
                     if (oEvent !== "add") {
                         var oObject = oEvent
                             .getSource()
@@ -2050,7 +2055,7 @@ sap.ui.define(
                         if (bFlag == true) {
                             oRewardDtl.push({
                                 Percentage: "",
-                                RedemptionCycle: count+1,
+                                RedemptionCycle: count + 1,
                                 editable: true,
                             });
                         }
@@ -3230,7 +3235,7 @@ sap.ui.define(
                         aProds.push({
                             Name: oBj["Description"],
                             Id: oBj["SkuCode"],
-                            ProductCode:oBj["ProductCode"]
+                            ProductCode: oBj["ProductCode"]
                         });
                     }
                     oView
@@ -5339,6 +5344,63 @@ sap.ui.define(
                     };
                     $.ajax(settings);
                 },
+                onDataExportDeselectPainter: function (oEvent) {
+                    var othat = this;
+                    var oExport = new Export({
+                        // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                        exportType: new ExportTypeCSV({
+                            separatorChar: "\t",
+                            mimeType: "application/vnd.ms-excel",
+                            charset: "utf-8",
+                            fileExtension: "xls",
+
+                        }),
+                        // Pass in the model created above
+                        models: othat.getView().getModel("oModelControl3"),
+
+                        // binding information for the rows aggregation
+                        rows: {
+                            path: "/ofragmentModel"
+                        },
+
+                        // column definitions with column name and binding info for the content
+
+                        columns: [{
+                                name: "Row",
+                                template: {
+                                    content: "{Row}"
+                                }
+                            },
+                            {
+                                name: "MobileNumber",
+                                template: {
+                                    content: "{PainterMobile}"
+                                }
+                            }, {
+                                name: "Message",
+                                template: {
+                                    content: "{UploadMessage}"
+                                }
+                            }, {
+                                name: "Status",
+                                template: {
+                                    content: {
+                                        parts: ["UploadStatus"],
+                                        formatter: formatter.UploadStatus
+                                    }
+                                }
+                            }
+                        ]
+                    });
+
+                    // download exported file
+
+                    oExport.saveFile().catch(function (oError) {
+                        MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                    }).then(function () {
+                        oExport.destroy();
+                    });
+                },
                 // upload csv file ///
                 _SuccessPainterDel: function (result, oStatus) {
                     var that = this;
@@ -5357,6 +5419,7 @@ sap.ui.define(
                                     UploadMessage: item.UploadMessage,
                                     UploadStatus: item.UploadStatus,
                                     Id: item.Id,
+                                    Row: item.Row
                                     //isSelected: true
                                 };
                             });
@@ -5367,6 +5430,7 @@ sap.ui.define(
                         //         .setProperty("/MultiCombo/Painters", itemModel);
                     }
                 },
+
                 onpressfrag2: function (itemModel) {
                     //this._PainterMultiDialoge = this.getView().byId("Painters1");
                     var oView = this.getView();
@@ -5430,7 +5494,10 @@ sap.ui.define(
                     //console.log(oData);
                     // var oPayload={"OfferDeselectedPainter":[]};
                     // oPayload["OfferDeselectedPainter"].push(oData)
-                    this._UpdateOfferDelPainters(oData);
+                    if (oData["OfferDeselectedPainter"].length > 0) {
+                        this._UpdateOfferDelPainters(oData);
+                    }
+
                     this._CsvDialoge.close();
                 },
                 _UpdateOfferDelPainters: function (oPayLoad) {
@@ -5549,17 +5616,17 @@ sap.ui.define(
                             );
                             return;
                         }
-                        if(oObject["MinPercentage"] > oObject["MaxPercentage"]){
+                        if (oObject["MinPercentage"] > oObject["MaxPercentage"]) {
                             MessageToast.show(
                                 "Minimum Percentage Should Be Less Than Max percentage."
                             );
                             return;
-                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
+                        } else if ((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100) {
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
                             );
                             return;
-                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0){
+                        } else if ((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0) {
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Greater Than 0."
                             );
@@ -5579,17 +5646,17 @@ sap.ui.define(
                             return;
 
                         }
-                        if(oObject["MinPercentage"] > oObject["MaxPercentage"]){
+                        if (oObject["MinPercentage"] > oObject["MaxPercentage"]) {
                             MessageToast.show(
                                 "Minimum Percentage Should Be Less Than Max percentage."
                             );
                             return;
-                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100){
+                        } else if ((oObject["MinPercentage"] || oObject["MaxPercentage"]) > 100) {
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Less Than 100."
                             );
                             return;
-                        }else if((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0){
+                        } else if ((oObject["MinPercentage"] || oObject["MaxPercentage"]) <= 0) {
                             MessageToast.show(
                                 "Minimum Percentage  and Maximum Percentage Should Be Greater Than 0."
                             );
@@ -5758,7 +5825,7 @@ sap.ui.define(
                     }
                     for (var c of aPacks) {
                         aFilter3.push(
-                            new Filter("Id", FilterOperator.EQ,c["ProductCode"])
+                            new Filter("Id", FilterOperator.EQ, c["ProductCode"])
                         );
                     }
                     // Prod Filters
@@ -5812,10 +5879,9 @@ sap.ui.define(
                         and: false,
                     });
                     var aFinalFilter = [];
-                    if(aFilter3.length > 0){
+                    if (aFilter3.length > 0) {
                         aFinalFilter.push(aFilterPacks);
-                    }
-                    else{
+                    } else {
                         if (aFilter1.length > 0) {
                             aFinalFilter.push(aFilterCat);
                         }
@@ -6157,7 +6223,7 @@ sap.ui.define(
                     //var ContributionCondition = oModel.getProperty("/ContributionCondition");
                     var oModelView = oView.getModel("oModelView");
                     var ContributionCondition = oModelView.getProperty("/ContributionCondition");
-                    console.log(ContributionCondition)
+                    //console.log(ContributionCondition)
                     var oObject = oEvent
                         .getSource()
                         .getBindingContext("oModelControl")
