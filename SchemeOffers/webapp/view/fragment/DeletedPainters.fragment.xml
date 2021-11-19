@@ -38,7 +38,7 @@
         </f:formContainers>
     </f:Form> -->
     <VBox class="sapUiMediumMargin">
-                <Table id="idDelPainterTable" width="auto" items="{ path: '/OfferDeselectedPainterSet', sorter: { path: 'CreatedAt', descending: false }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
+                <Table id="idDelPainterTable" width="auto" items="{ path: '/OfferDeselectedPainterSet', sorter: { path: 'CreatedAt', descending: false },parameters:{expand : 'Painter'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
                             <headerToolbar>
                                 <Toolbar visible="{=${oModelControl3>/mode} === 'display'}">
                                     <ToolbarSpacer/> 
