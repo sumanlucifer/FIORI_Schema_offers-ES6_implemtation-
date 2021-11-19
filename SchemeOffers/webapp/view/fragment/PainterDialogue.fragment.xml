@@ -90,7 +90,7 @@
     </VBox>
     <buttons>
 		<Button type="Ghost" text="{i18n>btnClose}" press="onSaveUploadPaitner"/>
-        <Button type="Emphasized" text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/>
+        <Button type="Ghost" text="{i18n>btnDownloadCSV}"  icon="sap-icon://download" press="onDataExport"/>
 	</buttons>
 </Dialog>
 
