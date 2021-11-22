@@ -34,12 +34,12 @@
                             
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
 
