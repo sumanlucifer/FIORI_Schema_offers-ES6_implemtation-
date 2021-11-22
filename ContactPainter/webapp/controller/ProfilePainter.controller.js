@@ -2939,7 +2939,7 @@ sap.ui.define(
                     "/PainterId"
                 );
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "ProductDetails";
+                oBindingParams.parameters["expand"] = "ProductDetails,Offer";
                 var oFinancialYear = this._getfinanceYear(),
                     aFilters = [],
                     //check if CreatedAt is Passed in filter or Not
@@ -3059,7 +3059,7 @@ sap.ui.define(
                     "/PainterId"
                 );
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "Offer,GiftRedemption,PaymentTransaction";
+                oBindingParams.parameters["expand"] = "Offer,GiftRedemption,PaymentTransaction,Offer";
                 var oFinancialYear = this._getfinanceYear(),
                     aFilters = [],
                     //check if CreatedAt is Passed in filter or Not
