@@ -227,23 +227,19 @@ sap.ui.define(
                                 );
                             } else if (prop === "StartDate") {
                                 aFlaEmpty = false;
-                                var oDateStart = new Date(oViewFilter[prop].setHours(0,0,0,0));
-                                console.log(oDateStart);
                                 aCurrentFilterValues.push(
                                     new Filter(
                                         "StartDate",
                                         FilterOperator.GE,
-                                        oDateStart
+                                        oViewFilter[prop]
                                     )
                                     
                                 );
                             } else if (prop === "EndDate") {
                                 aFlaEmpty = false;
-                                var oDateEnd = new Date(oViewFilter[prop].setHours(0,0,0,0));
-                                
-                                oDateEnd.setDate(oDateEnd.getDate() + 1);
+                                var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
                                 aCurrentFilterValues.push(
-                                    new Filter("EndDate", FilterOperator.LT, oDateEnd)
+                                    new Filter("EndDate", FilterOperator.LT, oDate)
                                    
                                 );
                             } else if (prop === "Active") {
