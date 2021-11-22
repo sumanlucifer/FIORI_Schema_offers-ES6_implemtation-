@@ -233,8 +233,7 @@ sap.ui.define(
                                 );
                             } else if (prop === "EndDate") {
                                 aFlaEmpty = false;
-                                var oDate = new Date(oViewFilter[prop]);
-                                oDate.setDate(oDate.getDate() + 1);
+                                var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
                                 aCurrentFilterValues.push(
                                     new Filter("CreatedAt", FilterOperator.LT, oDate)
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
