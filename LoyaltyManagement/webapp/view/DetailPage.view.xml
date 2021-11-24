@@ -104,6 +104,11 @@
                                     </form:fields>
                                     
                                 </form:FormElement>
+                                <form:FormElement label="Redemption Status" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                    <form:fields >
+                                        <Text class="sapUiTinyMarginTop" text="{= ${Offer/RedemptionStatus}=== null ? 'NA' : ${path:'Offer/RedemptionStatus',formatter:'.formatter.accuralType'} }"/>
+                                    </form:fields>
+                                </form:FormElement>
                                 <form:FormElement label="Reward Gift" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{= ${GiftRedemption}=== null ? 'NA' : ${GiftRedemption/RewardGiftName} }"/>
@@ -119,10 +124,18 @@
                                         <Text class="sapUiTinyMarginTop" text="{= ${RewardPoints}=== null ? 'NA' : ${RewardPoints} }"/>
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Status" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                <form:FormElement label="Gift Status" visible="{= ${GiftRedemption}!== null}">
                                     <form:fields >
                                     <FlexBox >
                                         <Text class="sapUiTinyMarginTop" visible="{= ${GiftRedemption}!== null}" text="{path:'GiftRedemption/TrackingStatus',formatter:'.formatter.accuralType'}"/>
+                                        <!-- <Text class="sapUiTinyMarginTop" visible="{= ${PaymentTransaction}!== null}" text="{path:'PaymentTransaction/TransactionStatus',formatter:'.formatter.accuralType'}"/> -->
+                                    </FlexBox>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement label="Transaction Status" visible="{= ${PaymentTransaction}!== null}">
+                                    <form:fields >
+                                    <FlexBox >
+                                        <!-- <Text class="sapUiTinyMarginTop" visible="{= ${GiftRedemption}!== null}" text="{path:'GiftRedemption/TrackingStatus',formatter:'.formatter.accuralType'}"/> -->
                                         <Text class="sapUiTinyMarginTop" visible="{= ${PaymentTransaction}!== null}" text="{path:'PaymentTransaction/TransactionStatus',formatter:'.formatter.accuralType'}"/>
                                     </FlexBox>
                                     </form:fields>
