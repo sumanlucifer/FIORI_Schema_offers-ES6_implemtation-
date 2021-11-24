@@ -214,7 +214,7 @@ sap.ui.define([
                             aCurrentFilterValues.push(
                                 new Filter({
                                     path: "PointType",
-                                    operator: "Contains",
+                                    operator: "EQ",
                                     value1: oViewFilter[prop].trim(),
                                     caseSensitive: false
                                 }),
