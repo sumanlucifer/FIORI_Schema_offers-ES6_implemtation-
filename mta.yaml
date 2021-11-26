@@ -16,6 +16,7 @@ modules:
     group: destinations
     properties:
       forwardAuthToken: true
+      timeout: 60000
       name: KNPL_PAINTER_API
       url: https://knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
   parameters:
