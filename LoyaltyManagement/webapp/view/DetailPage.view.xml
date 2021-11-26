@@ -106,7 +106,7 @@
                                 </form:FormElement>
                                 <form:FormElement label="Redemption Status" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
                                     <form:fields >
-                                        <Text class="sapUiTinyMarginTop" text="{= ${Offer/RedemptionStatus}=== null ? 'NA' : ${path:'Offer/RedemptionStatus',formatter:'.formatter.accuralType'} }"/>
+                                        <Text class="sapUiTinyMarginTop" text="Redeemed"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Reward Gift" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
@@ -147,7 +147,7 @@
                                     </FlexBox>
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Payment Transaction Id" visible="{= ${PointTransactionType}=== 'REDEEMED'}">
+                                <form:FormElement label="Payment Transaction Id" visible="{= ${PaymentTransactionId}!== null}">
                                     <form:fields >
                                         <Text class="sapUiTinyMarginTop" text="{= ${PaymentTransactionId}=== null ? 'NA' : ${PaymentTransactionId} }"/>
                                     </form:fields>
@@ -159,7 +159,8 @@
                                 </form:FormElement>
                                 <form:FormElement label="Date">
                                     <form:fields>
-                                        <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" />
+                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                        <Text class="sapUiTinyMarginTop"  text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
                                     </form:fields>
                                 </form:FormElement>
                             </form:formElements>
