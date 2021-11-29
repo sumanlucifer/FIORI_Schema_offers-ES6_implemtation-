@@ -13,9 +13,9 @@ sap.ui.define([
 
     service._extendSession = function(){
         SessionHandlerAgent.handleExtendSessionEvent().then(function(){
-            console.log('Session Keep Alive: Success');
+            //console.log('Session Keep Alive: Success');
         }).catch(function(){
-            console.log('Session Keep Alive: Error');
+            //console.log('Session Keep Alive: Error');
         });
     };
 
