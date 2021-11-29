@@ -148,15 +148,15 @@
                                 </ColumnListItem>
 							</items>
 						</Table>
-                        <Table id="List1" width="auto"
-							items="{path: 'objectView>/oDetails/Members'}"
-							headerText="{i18n>colGroupMembers}" growing="true" visible="{= ${objectView>/sMode} === 'V'}" noDataText="No Data Available">
-							<!-- <headerToolbar>
-								<Toolbar>
-									<ToolbarSpacer/>
-									<Button press="addMember" icon="sap-icon://add" type="Emphasized" text="{i18n>btnAddMember}"/>
-								</Toolbar>
-							</headerToolbar> -->
+                           <Table id="List1" 
+							items="{path: 'Members/', parameters:{expand:'Painter,Admin,Role'}}" growingScrollToLoad="false" growingThreshold="10"
+							 updateFinished=".onPainterUpdateFinished" growing="true" visible="{= ${objectView>/sMode} === 'V'}" noDataText="No Data Available">
+                            <headerToolbar>
+					<OverflowToolbar>
+						<Title id="tableHeader" text="{objectView>/TableList1Title}" level="H3"/>
+					
+					</OverflowToolbar>
+				</headerToolbar>
 							<columns>
 								<Column>
 									<Text text="{i18n>colName}"/>
@@ -164,12 +164,64 @@
 								<Column>
 									<Text text="{i18n>colMobile}"/>
 								</Column>
-								<!-- <Column>
-									<Text text="{i18n>colEmail}"/>
-								</Column> -->
-                                	<!-- <Column>
-									<Text text="{i18n>colRole}"/>
-								</Column> -->
+							
+                                <Column>
+									<Text text="{i18n>colMembershipid}"/>
+								</Column>
+                                 <Column>
+									<Text text="{i18n>colZone}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDevision}"/>
+								</Column>
+                                <Column>
+									<Text text="{i18n>colDepot}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+                                    <FlexBox >
+                                    <Text text="{Admin/Name}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/Name}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+									<FlexBox >
+                                    <Text text="{Admin/Mobile}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/Mobile}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+							
+                                     <FlexBox >
+                                    <Text text="{Admin/MembershipCard}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/MembershipCard}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+                                    <FlexBox >
+                                    <Text text="{Admin/ZoneId}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/ZoneId}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+                                     <FlexBox >
+                                    <Text text="{Admin/DivisionId}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/DivisionId}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+                                    <FlexBox >
+                                    <Text text="{Admin/DepotId}" visible="{= ${IsArchived} !== true }"/>
+                                    <Text text="{Painter/DepotId}" visible="{= ${IsArchived} !== true }"/>
+                                    </FlexBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+                        <!-- <Table id="List1" width="auto"
+							items="{path: 'objectView>/oDetails/Members'}"
+							headerText="{i18n>colGroupMembers}" growing="true" visible="{= ${objectView>/sMode} === 'V'}" noDataText="No Data Available">
+						
+							<columns>
+								<Column>
+									<Text text="{i18n>colName}"/>
+								</Column>
+								<Column>
+									<Text text="{i18n>colMobile}"/>
+								</Column>
+							
                                 <Column>
 									<Text text="{i18n>colMembershipid}"/>
 								</Column>
@@ -194,10 +246,7 @@
                                     <Text text="{objectView>Admin/Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/Mobile}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
-									<!-- <FlexBox >
-                                    <Text text="{objectView>Admin/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
-                                    <Text text="{objectView>Painter/Email}" visible="{= ${objectView>IsArchived} !== true }"/>
-                                    </FlexBox> -->
+							
                                      <FlexBox >
                                     <Text text="{objectView>Admin/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/MembershipCard}" visible="{= ${objectView>IsArchived} !== true }"/>
@@ -214,12 +263,10 @@
                                     <Text text="{objectView>Admin/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     <Text text="{objectView>Painter/DepotId}" visible="{= ${objectView>IsArchived} !== true }"/>
                                     </FlexBox>
-                                    
-                                    <!-- <Text text="{objectView>Role/Role}" visible="{= ${objectView>IsArchived} !== true }"/> -->
 									</cells>
 								</ColumnListItem>
 							</items>
-						</Table>
+						</Table> -->
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
