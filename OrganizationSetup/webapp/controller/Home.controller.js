@@ -6,18 +6,20 @@ sap.ui.define([
     "sap/ui/model/FilterType",
     "sap/ui/richtexteditor/RichTextEditor",
     'sap/m/MessageToast',
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "../service/FioriSessionService"
 
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor, MessageToast, MessageBox) {
+    function (Controller, Sorter, Filter, FilterOperator, FilterType, RichTextEditor, MessageToast, MessageBox, FioriSessionService) {
         "use strict";
 
 
         return Controller.extend("com.knpl.pragati.OrganizationSetup.controller.Home", {
             onInit: function () {
+                FioriSessionService.sessionKeepAlive();
                 var oRouter = this.getOwnerComponent().getRouter();
 
                 oRouter
