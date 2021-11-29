@@ -1,12 +1,14 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel"
-], function (BaseController, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "../service/FioriSessionService"
+], function (BaseController, JSONModel, FioriSessionService) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.MDM.controller.App", {
 
         onInit: function () {
+            FioriSessionService.sessionKeepAlive();
 			this.oOwnerComponent = this.getOwnerComponent();
 			this.oRouter = this.oOwnerComponent.getRouter();
 			this.oRouter.attachRouteMatched(this.onRouteMatched, this);
