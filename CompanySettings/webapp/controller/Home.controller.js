@@ -11,13 +11,14 @@ sap.ui.define([
     "sap/m/Button",
     "sap/m/ButtonType",
     "sap/m/Text",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "../service/FioriSessionService"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, Fragment, MessageToast, MessageBox, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
-        JSONModel) {
+        JSONModel, FioriSessionService) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -45,6 +46,7 @@ sap.ui.define([
                 // this._property = "MasterCompanySettingsSet(1)";
 
                 // this.getView().bindElement("/MasterCompanySettingsSet(1)");
+                FioriSessionService.sessionKeepAlive();
                 this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
 

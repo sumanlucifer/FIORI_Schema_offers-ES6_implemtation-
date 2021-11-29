@@ -1,13 +1,15 @@
 // @ts-ignore
 sap.ui.define([
 		"com/knpl/pragati/CallbackRequests/controller/BaseController",
-		"sap/ui/model/json/JSONModel"
-	], function (BaseController, JSONModel) {
+		"sap/ui/model/json/JSONModel",
+        "../service/FioriSessionService"
+	], function (BaseController, JSONModel, FioriSessionService) {
 		"use strict";
 
 		return BaseController.extend("com.knpl.pragati.CallbackRequests.controller.App", {
 
 			onInit : function () {
+                FioriSessionService.sessionKeepAlive();
 				var oViewModel,
 					fnSetAppNotBusy,
 					iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
