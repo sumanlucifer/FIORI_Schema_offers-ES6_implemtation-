@@ -19,7 +19,7 @@ xmlns:l="sap.ui.layout"
                     descending: true
                     }
                  }"
-                growing="true" growingThreshold="20">
+                growing="true" growingThreshold="10" growingScrollToLoad="false">
                             <headerToolbar>
                             
                                 <Toolbar class="tblTlbrAd">
@@ -78,7 +78,8 @@ xmlns:l="sap.ui.layout"
 				<Table inset="false" id="tableRoles" items="{path: 'data>/MasterAdminRoleSet',
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
-                growingThreshold="20">
+                growingScrollToLoad="false"
+                growingThreshold="10">
                             <headerToolbar>
                                 <Toolbar class="tblTlbrAd">
 
