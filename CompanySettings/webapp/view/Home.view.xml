@@ -6,7 +6,7 @@ xmlns:u="sap.ui.unified"
 xmlns:f="sap.ui.layout.form">
 	
 	
-            <Page busyIndicatorDelay="0" busy="{local>/bBusy}">
+            <Page busyIndicatorDelay="0" busy="{local>/bBusy}" title="{i18n>appTitle}" titleAlignment="Center" >
             <content>
             <VBox visible="{=!${local>/bEdit}}">
             
