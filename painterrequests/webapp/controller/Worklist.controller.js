@@ -189,12 +189,12 @@ sap.ui.define(
 
                     // Apply Filters
                     var oFilter = this._CreateFilter();
-                    if(oFilter){
+                    if (oFilter) {
                         oBindingParams.filters.push(oFilter);
                     }
 
                 },
-                onFilterBarGo:function(){
+                onFilterBarGo: function () {
                     var oView = this.getView();
                     oView.byId("idWorkListTable1").rebindTable();
                 },
@@ -203,8 +203,16 @@ sap.ui.define(
                     var oViewFilter = this.getView()
                         .getModel("oModelControl")
                         .getProperty("/filterBar");
-                    // init filters
-                    var aFlaEmpty = true;
+                   
+                    var aFlaEmpty = false;
+                     // init filters - is archived
+                    aCurrentFilterValues.push(
+                        new Filter("IsArchived", FilterOperator.EQ, false));
+                    // init filters - ComplainType Id ne 1
+                      aCurrentFilterValues.push(
+                        new Filter("ComplaintTypeId", FilterOperator.NE, 1));
+
+                    
                     // filter bar filters
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
@@ -217,7 +225,7 @@ sap.ui.define(
                                         new Date(oViewFilter[prop])
                                     )
                                 );
-                            }else if (prop === "Status") {
+                            } else if (prop === "Status") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("ComplaintStatus", FilterOperator.EQ, oViewFilter[prop]));
@@ -265,14 +273,14 @@ sap.ui.define(
                     var aCurrentFilterValues = [];
                     var aResetProp = {
                         StartDate: null,
-                            Status: "",
-                            Search: "",
+                        Status: "",
+                        Search: "",
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
                     var oTable = this.getView().byId("idWorkListTable1");
                     oTable.rebindTable();
-                 
+
                 },
                 onListItemPress: function (oEvent) {
 

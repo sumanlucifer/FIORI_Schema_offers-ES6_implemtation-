@@ -5,7 +5,9 @@ sap.ui.define([
     "sap/ui/core/routing/History",
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
-], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel) {
+    "../controller/Validator",
+    "sap/m/MessageToast"
+], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -61,24 +63,77 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
+                Pagetitle: "Add Complaint Details",
                 mode: mParam1,
                 ComplainId: mParam2,
                 bindProp: "PainterComplainSet(" + mParam2 + ")",
-                resourcePath:"com.knpl.pragati.painterrequests"
+                resourcePath: "com.knpl.pragati.painterrequests"
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
             promise.resolve()
             return promise;
         },
-       
+        _ValidateForm: function () {
+            var oView = this.getView();
+            var oValidate = new Validator();
+            var othat = this;
+            var oForm = oView.byId("FormObjectData");
+            var bFlagValidate = oValidate.validate(oForm);
+            if (!bFlagValidate) {
+                MessageToast.show(othat.geti18nText("errorMessage1"));
+                return false;
+            }
+
+            return true;
+        },
         /**
          * Getter for the resource bundle.
          * @public
          * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
          */
-        getResourceBundle: function () {
-            return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        getResourceBundle: function (mParam, mParam2) {
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            return oModel.getText(mParam, mParam2);
+        },
+        geti18nText: function (mParam, mParam2) {
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            return oModel.getText(mParam, mParam2);
+        },
+        _RemoveEmptyValue: function (mParam) {
+            var obj = Object.assign({}, mParam);
+            // remove string values
+            for (var b in obj) {
+                if (obj[b] === "") {
+                    obj[b] = null;
+                }
+            }
+            return obj;
+        },
+        _CheckEmptyFieldsPostPayload: function () {
+            var promise = jQuery.Deferred();
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            var oModelData = oModel.getData();
+            //1.Clone the payload and convert string to integer values based on odata model entity
+            var oPayLoad = this._RemoveEmptyValue(oModelData);
+            var inTegerProperty = [
+                "ComplaintTypeId",
+            ];
+            for (var y of inTegerProperty) {
+                if (oPayLoad.hasOwnProperty(y)) {
+                    if (oPayLoad[y] !== null) {
+                        oPayLoad[y] = parseInt(oPayLoad[y]);
+                    }
+                }
+            }
+            promise.resolve(oPayLoad);
+            return promise;
+        },
+        _uploadFile: function () {
+            var promise = jQuery.Deferred();
+            promise.resolve(oPayLoad);
+            return promise;
         },
 
         /**

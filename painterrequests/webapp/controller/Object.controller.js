@@ -7,10 +7,9 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/core/ValueState",
     "sap/ui/core/Fragment",
-    "../controller/Validator",
     "sap/m/MessageBox",
     "sap/m/MessageToast"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, Validator, MessageBox, MessageToast) {
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.painterrequests.controller.Object", {
@@ -26,7 +25,7 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
-           
+
             sap.ui.getCore().attachValidationError(function (oEvent) {
                 if (oEvent.getParameter("element").getRequired()) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -105,57 +104,59 @@ sap.ui.define([
 
 
         onPressSave: function () {
-
-            //console.log(this.getView().getModel("oModelView").getData());
-            var oView = this.getView();
-            var oValidate = new Validator();
-            var oForm = oView.byId("FormCondonation");
-
-            var bFlagValidate = oValidate.validate(oForm);
-            if (bFlagValidate == false) {
-                MessageToast.show("Kinldy Input All the Mandatory(*) fields.");
-                return;
+            var bValidateForm = this._ValidateForm();
+            if (bValidateForm) {
+                this._postDataToSave();
             }
-            this._postDataToSave();
+
         },
         _postDataToSave: function () {
+            /*
+             * Author: manik saluja
+             * Date: 02-Dec-2021
+             * Language:  JS
+             * Purpose: Payload is ready and we have to send the same based to server but before that we have to modify it slighlty
+             */
             var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl");
+            oModelControl.setProperty("/PageBusy", true);
             var othat = this;
-            var oData = oView.getModel();
-            var oModelView = oView.getModel("oModelView");
-            var oPayLoad = Object.assign({}, oModelView.getData());
-            delete oPayLoad["AddFields"];
-            delete oPayLoad["Slabs"];
-
-            if (oView.getModel("oModelControl").getProperty("/bPayloadSent")) {
-                return;
-            }
-
-            //console.log(oPayLoad);
-            oView.getModel("oModelControl").setProperty("/bBusy", true);
-            oView.getModel("oModelControl").setProperty("/bPayloadSent", true);
-
-            //Double click issue solution
-
-            oData.create("/PainterLoyaltyRedemptionRequestSet", oPayLoad, {
-                success: function () {
-                    MessageToast.show("Redemption request Sucessfully Submitted.")
-                    othat.onNavBack();
-                    oView.getModel("oModelControl").setProperty("/bBusy", false);
-                },
-                error: function (a) {
-                    oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
-                    oView.getModel("oModelControl").setProperty("/bBusy", false);
-                    MessageBox.error(
-                        "Unable to create Redemption request due to the server issues", {
-                            title: "Error Code: " + a.statusCode,
-                        }
-                    );
-
-                }
+            var c1, c2, c3, c4;
+            c1 = othat._CheckEmptyFieldsPostPayload();
+            c1.then(function (oPayload) {
+                c2 = othat._CreateObject(oPayload)
+                c2.then(function () {
+                    c3 = othat._uploadFile();
+                    c3.then(function () {
+                        oModelControl.setProperty("/PageBusy", false);
+                        othat.onNavToHome();
+                    })
+                })
             })
 
+
         },
+        _CreateObject: function (oPayLoad) {
+            //console.log(oPayLoad);
+            var othat = this;
+            var oView = this.getView();
+            var oDataModel = oView.getModel();
+            var oModelControl = oView.getModel("oModelControl");
+            return new Promise((resolve, reject) => {
+                oDataModel.create("/PainterComplainsSet", oPayLoad, {
+                    success: function (data) {
+                        MessageToast.show(othat.geti18nText("Message1"));
+                        oModelControl.setProperty("/ComplainId", data["Id"]);
+                        resolve(data);
+                    },
+                    error: function (data) {
+                        MessageToast.show(othat.geti18nText("errorMessage2"));
+                        oModelControl.setProperty("/PageBusy", false);
+                        reject(data);
+                    },
+                });
+            });
+        }
 
     });
 
