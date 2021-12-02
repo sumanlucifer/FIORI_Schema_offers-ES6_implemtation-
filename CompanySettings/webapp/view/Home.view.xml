@@ -22,7 +22,7 @@ xmlns:f="sap.ui.layout.form">
             </core:Fragment>
                 </VBox>
                     <VBox class="sapUiSmallMargin">
-                    <Table id="idPdf" width="auto"  items="{path: 'MediaList/', templateShareable: false,filters : [{ path : 'ContentType', operator : 'EQ', value1 : 'application/pdf'},{ path : 'DirectoryName', operator : 'EQ', value1 : 'COMPANY_SETTINGS'}]}" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="2" growingScrollToLoad="false">
+                    <Table id="idPdf" width="auto"  items="{path: 'MediaList/', templateShareable: false,filters : [{ path : 'ContentType', operator : 'EQ', value1 : 'application/pdf'},{ path : 'DirectoryName', operator : 'EQ', value1 : 'COMPANY_SETTINGS'}]}" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="10" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>catalogues}" />
@@ -79,7 +79,7 @@ xmlns:f="sap.ui.layout.form">
                             </Table>
                         </VBox>
                         <VBox class="sapUiSmallMargin">
-                    <Table id="idPdf2" width="auto" items="{path: 'MediaList/', templateShareable: false,filters : [{ path : 'ContentType', operator : 'EQ', value1 : 'application/pdf'},{ path : 'DirectoryName', operator : 'EQ', value1 : 'MEDICLAIM'}]}" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="2" growingScrollToLoad="false">
+                    <Table id="idPdf2" width="auto" items="{path: 'MediaList/', templateShareable: false,filters : [{ path : 'ContentType', operator : 'EQ', value1 : 'application/pdf'},{ path : 'DirectoryName', operator : 'EQ', value1 : 'MEDICLAIM'}]}" noDataText="{i18n>tableNoDataText}" growing="true" growingThreshold="10" growingScrollToLoad="false">
                                         <headerToolbar>
                                             <Toolbar>
                                                 <Title text="{i18n>mediclaim}" />

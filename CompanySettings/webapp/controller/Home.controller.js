@@ -1,20 +1,20 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    'sap/ui/core/Fragment',
-    'sap/m/MessageToast',
-    'sap/m/MessageBox',
-    "sap/ui/core/library",
-    "sap/ui/core/ValueState",
-    "../utils/Validator",
-    "sap/m/Dialog",
-    "sap/m/DialogType",
-    "sap/m/Button",
-    "sap/m/ButtonType",
-    "sap/m/Text",
-    "sap/ui/model/json/JSONModel",
-    "../service/FioriSessionService"
-],
-	/**
+        "sap/ui/core/mvc/Controller",
+        'sap/ui/core/Fragment',
+        'sap/m/MessageToast',
+        'sap/m/MessageBox',
+        "sap/ui/core/library",
+        "sap/ui/core/ValueState",
+        "../utils/Validator",
+        "sap/m/Dialog",
+        "sap/m/DialogType",
+        "sap/m/Button",
+        "sap/m/ButtonType",
+        "sap/m/Text",
+        "sap/ui/model/json/JSONModel",
+        "../service/FioriSessionService"
+    ],
+    /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, Fragment, MessageToast, MessageBox, library, ValueState, Validator, Dialog, DialogType, Button, ButtonType, Text,
@@ -61,14 +61,15 @@ sap.ui.define([
             },
             _onObjectMatched: function () {
 
-                var that = this, oLocalModel = new JSONModel({
-                    bBusy: false,
-                    bEdit: false,
-                    Catalogue: [],
-                    Mediclaim: [],
-                    IsOfferEnabled: false,
-                    IsRedemptionEnabled: false
-                });
+                var that = this,
+                    oLocalModel = new JSONModel({
+                        bBusy: false,
+                        bEdit: false,
+                        Catalogue: [],
+                        Mediclaim: [],
+                        IsOfferEnabled: false,
+                        IsRedemptionEnabled: false
+                    });
                 this.getView().setModel(oLocalModel, "local");
 
                 this._property = "MasterCompanySettingsSet(1)";
@@ -92,53 +93,74 @@ sap.ui.define([
                 var oModel = this.getView().getModel();
                 //oModel.refresh(true);
                 var oLocalModel = this.getView().getModel("local");
-                oModel.read("/" + this._property, {
-                    urlParameters: {
-                        "$expand": "MediaList"
-                    },
-                    success: function (oRetrievedResult) {
-                        oLocalModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
-                        oLocalModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
-                        // var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
-                        //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
-                        //         return ele;
-                        //     }
-                        // });
-                        // var Mediclaim = oRetrievedResult.MediaList.results.filter(function (ele) {
-                        //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
-                        //         return ele;
-                        //     }
-
-                        // });
-                        // oLocalModel.setProperty("/Catalogue", Catalogue);
-                        // oLocalModel.setProperty("/Mediclaim", Mediclaim);
-                        
-                        oLocalModel.updateBindings();
+                var c1, c2, c3;
+                var othat = this;
+                var c1 = othat._LoadViewData1();
+                c1.then(function () {
+                    c2 = othat._LoadViewData2();
+                    c2.then(function () {
+                        othat.getView().getModel().refresh();
+                    })
+                })
 
 
-                    },
-                    error: function (oError) { }
-                });
 
-                        var oTable = this.getView().byId("idPdf");
-                        oTable.bindElement({
-                            path:"/MasterCompanySettingsSet(1)",
-                            parameters: {
-                                expand: "MediaList"
-                            }
-                        });
-                        var oTable2 = this.getView().byId("idPdf2");
-                        oTable2.bindElement({
-                            path:"/MasterCompanySettingsSet(1)",
-                            parameters: {
-                                expand: "MediaList"
-                            }
-                        });
                 //oLocalModel.refresh(true);
                 //oModel.refresh(true);
 
             },
+            _LoadViewData1: function () {
+                var oModel = this.getView().getModel();
+                var oLocalModel = this.getView().getModel("local");
+                return new Promise((resolve, reject) => {
+                    oModel.read("/" + this._property, {
+                        success: function (oRetrievedResult) {
+                            oLocalModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
+                            oLocalModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
+                            // var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
+                            //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
+                            //         return ele;
+                            //     }
+                            // });
+                            // var Mediclaim = oRetrievedResult.MediaList.results.filter(function (ele) {
+                            //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
+                            //         return ele;
+                            //     }
 
+                            // });
+                            // oLocalModel.setProperty("/Catalogue", Catalogue);
+                            // oLocalModel.setProperty("/Mediclaim", Mediclaim);
+                            resolve();
+                            oLocalModel.refresh(true);
+
+
+                        },
+                        error: function (oError) {
+                            resolve();
+                        }
+                    });
+                })
+
+            },
+            _LoadViewData2: function () {
+                var promise = jQuery.Deferred();
+                var oTable = this.getView().byId("idPdf");
+                oTable.bindElement({
+                    path: "/MasterCompanySettingsSet(1)",
+                    parameters: {
+                        expand: "MediaList"
+                    }
+                });
+                var oTable2 = this.getView().byId("idPdf2");
+                oTable2.bindElement({
+                    path: "/MasterCompanySettingsSet(1)",
+                    parameters: {
+                        expand: "MediaList"
+                    }
+                });
+                promise.resolve();
+                return promise;
+            },
 
             // handleEditPress: function () {
             //     this.getView().getModel("local").setProperty("/bEdit", true);
@@ -159,16 +181,14 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("EditPdf", {
                     tableId: "Table1"
-                }
-                );
+                });
 
             },
             onEditMediclaim: function () {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("EditPdf", {
                     tableId: "Table2"
-                }
-                );
+                });
 
             },
 
@@ -187,8 +207,7 @@ sap.ui.define([
                         });
                         oLocalModel.setProperty("/Catalogue", Catalogue);
                     },
-                    error: function (oError) {
-                    }
+                    error: function (oError) {}
                 });
 
 
@@ -433,14 +452,14 @@ sap.ui.define([
                 var switchName = oEvent.getSource().getName();
                 MessageBox.confirm(
                     "Kindly confirm to change the status", {
-                    actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
-                    emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (sAction) {
-                        if (sAction == "OK") {
-                            othat.onChnage(oData, sPath, switchName);
-                        }
-                    },
-                }
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat.onChnage(oData, sPath, switchName);
+                            }
+                        },
+                    }
                 );
             },
 
@@ -476,7 +495,7 @@ sap.ui.define([
             },
             openPdf2: function (oEvent) {
                 var oContext = oEvent.getSource().getBindingContext();
-                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode")+"&directory=MEDICLAIM";
+                var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode") + "&directory=MEDICLAIM";
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
             },
