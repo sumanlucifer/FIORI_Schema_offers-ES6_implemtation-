@@ -74,11 +74,11 @@ sap.ui.define(
                     if (sMode == "Edit") {
                         this._initEditData();
                     } else {
-                        this._initData();
+                        this._initDisplayData();
                     }
 
                 },
-                _initData: function () {
+                _initDisplayData: function () {
                     var c1, c2, c3;
                     var oModel = this.getView().getModel("oModelDisplay");
                     var oData = oModel.getData();
@@ -86,7 +86,7 @@ sap.ui.define(
                     oModel.setProperty("/PageBusy", true);
                     c1 = othat._CheckLoginData();
                     c1.then(function () {
-                        c2 = othat._setDisplayData(oData["bindProp"]);
+                        c2 = othat._getDisplayData(oData["bindProp"]);
                         c2.then(function () {
                             c3 = othat._LoadFragment("DisplayDetails");
                             c3.then(function () {
@@ -99,8 +99,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var othat = this;
                     var oModel = oView.getModel("oModelDisplay");
+                    var sProp=oModel.getProperty("/bindProp")
                     var oData = oModel.getData();
-                    var c1, c2, c3;
+                    var c1, c2, c3,c4;
                     var c1 = othat._AddObjectControlModel("Edit", oData["complaintId"]);
                     oModel.setProperty("/PageBusy", true);
                     c1.then(function () {
@@ -109,7 +110,11 @@ sap.ui.define(
                             c2.then(function () {
                                 c3 = othat._LoadFragment("AddComplaint");
                                 c3.then(function () {
-                                    oModel.setProperty("/PageBusy", false);
+                                    c4 = othat._getDisplayData(sProp);
+                                    c4.then(function () {
+                                        oModel.setProperty("/PageBusy", false);
+                                    })
+
                                 })
                             })
                         })
@@ -175,7 +180,7 @@ sap.ui.define(
 
                 },
 
-                _setDisplayData: function (oProp) {
+                _getDisplayData: function (oProp) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
 
@@ -212,7 +217,7 @@ sap.ui.define(
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
                 },
-              
+
                 _LoadFragment: function (mParam) {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -236,7 +241,7 @@ sap.ui.define(
                     if (bValidateForm) {
                         this._postDataToSave();
                     }
-        
+
                 },
                 _postDataToSave: function () {
                     /*
@@ -261,8 +266,8 @@ sap.ui.define(
                             })
                         })
                     })
-        
-        
+
+
                 },
                 _UpdatedObject: function (oPayLoad) {
                     //console.log(oPayLoad);
@@ -273,7 +278,7 @@ sap.ui.define(
                     var sProp = oModelControl.getProperty("/bindProp")
                     //console.log(sProp)
                     return new Promise((resolve, reject) => {
-                        oDataModel.update("/"+sProp, oPayLoad, {
+                        oDataModel.update("/" + sProp, oPayLoad, {
                             success: function (data) {
                                 MessageToast.show(othat.geti18nText("Message1"));
                                 oModelControl.setProperty("/ComplainId", data["Id"]);
