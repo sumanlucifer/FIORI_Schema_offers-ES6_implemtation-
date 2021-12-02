@@ -1,6 +1,6 @@
 <mvc:View
  xmlns:core="sap.ui.core"
-	controllerName="com.knpl.pragati.painterrequests.controller.Object"
+	controllerName="com.knpl.pragati.painterrequests.controller.AddObject"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	>

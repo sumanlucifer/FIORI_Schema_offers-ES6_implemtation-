@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>ComplainList}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="ParentComplaintId" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>ComplainList}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="ParentComplaintId,Id" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
@@ -43,17 +43,26 @@
                     </customData>
                     <Text text="{i18n>ComplaintStatus}"/>
                 </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Actions"}'/>
+                    </customData>
+                    <Text text="{i18n>Actions}"/>
+                </Column>
 
             </columns>
             <items>
-                <ColumnListItem>
+                <ColumnListItem press="onListItemPress" type="Navigation">
                     <cells>
                         <Text text="{Painter/Name}"/>
                         <Text text="{ComplaintCode}"/>
                          <Text text="{ComplaintType/ComplaintType}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.formatter.fmtLowerCase'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
-
+                           <HBox >
+                                            <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/>
+							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
+                                        </HBox>
                     </cells>
                 </ColumnListItem>
             </items>

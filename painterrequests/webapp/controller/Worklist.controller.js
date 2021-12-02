@@ -203,16 +203,16 @@ sap.ui.define(
                     var oViewFilter = this.getView()
                         .getModel("oModelControl")
                         .getProperty("/filterBar");
-                   
+
                     var aFlaEmpty = false;
-                     // init filters - is archived
+                    // init filters - is archived
                     aCurrentFilterValues.push(
                         new Filter("IsArchived", FilterOperator.EQ, false));
                     // init filters - ComplainType Id ne 1
-                      aCurrentFilterValues.push(
+                    aCurrentFilterValues.push(
                         new Filter("ComplaintTypeId", FilterOperator.NE, 1));
 
-                    
+
                     // filter bar filters
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
@@ -283,8 +283,21 @@ sap.ui.define(
 
                 },
                 onListItemPress: function (oEvent) {
+                    var oBj = oEvent.getSource().getBindingContext().getObject();
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("Detail", {
+                        Id: oBj["Id"],
+                        Mode:"Display"
+                    });
 
-
+                },
+                onEditListItemPress: function (oEvent) {
+                    var oBj = oEvent.getSource().getBindingContext().getObject();
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("Detail", {
+                        Id: oBj["Id"],
+                        Mode:"Edit"
+                    });
 
                 }
             }

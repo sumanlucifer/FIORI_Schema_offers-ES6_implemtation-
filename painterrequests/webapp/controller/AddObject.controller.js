@@ -12,7 +12,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.painterrequests.controller.Object", {
+    return BaseController.extend("com.knpl.pragati.painterrequests.controller.AddObject", {
 
         formatter: formatter,
 

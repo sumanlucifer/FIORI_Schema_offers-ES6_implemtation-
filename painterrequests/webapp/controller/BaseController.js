@@ -63,10 +63,10 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: "Add Complaint Details",
+                Pagetitle: mParam1 ==="Add" ? "Add Complaint Details":"Edit Complaint",
                 mode: mParam1,
                 ComplainId: mParam2,
-                bindProp: "PainterComplainSet(" + mParam2 + ")",
+                bindProp: "PainterComplainsSet(" + mParam2 + ")",
                 resourcePath: "com.knpl.pragati.painterrequests"
             };
             var oModelControl = new JSONModel(oDataControl)
