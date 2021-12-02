@@ -132,7 +132,7 @@
                     ]
                 },
                 {
-                    "pattern": "Add/{Id}",
+                    "pattern": "Add",
                     "name": "Add",
                     "target": [
                         "object"
@@ -149,8 +149,7 @@
                 "object": {
                     "viewName": "Object",
                     "viewId": "object",
-                    "viewLevel": 2,
-                    "title": "{i18n>objectViewTitle}"
+                    "viewLevel": 2
                 },
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",

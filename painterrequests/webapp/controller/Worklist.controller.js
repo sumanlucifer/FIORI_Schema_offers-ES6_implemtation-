@@ -55,14 +55,18 @@ sap.ui.define(
 
 
                 },
-                _onRouteMatched: function (mParam1) {
+                _onRouteMatched: function () {
                     this._InitData();
                 },
-                _onNavToAdd: function (mParam) {
+                onPressAddObject: function () {
+                    /*
+                     * Author: manik saluja
+                     * Date: 02-Dec-2021
+                     * Language:  JS
+                     * Purpose: Navigation to add object view and controller
+                     */
                     var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("Add", {
-                        Id: mParam
-                    });
+                    oRouter.navTo("Add");
 
                 },
                 _InitData: function () {

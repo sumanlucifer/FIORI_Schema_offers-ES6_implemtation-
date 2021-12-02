@@ -5,28 +5,25 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	>
 
- <Page busy="{oModelControl>/bBusy}"  busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
+ <Page busy="{oModelControl>/PageBusy}"  busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddNewRedemption}">
-                        <Link text="{i18n>worklistTitle}" press="onNavBack"/>
+                    <Breadcrumbs currentLocationText="{i18n>AddComplaint}">
+                        <Link text="{i18n>Complaint}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>
         </headerContent>
         <content>
-
-            <VBox width="100%" id="oVbxSmtTbl">
-                 <!-- <core:Fragment id="Add"  fragmentName="com.knpl.pragati.painterrequests.view.subview.Add" type="XML" /> -->
+            <VBox width="100%" id="oVBoxAddObjectPage">
             </VBox>
         </content>
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavBack"/>
-                <Button width="7%" text="{i18n>Redeem}" type="Accept" enabled="{oModelControl>/isValidOTP}" visible="{= ${oModelControl>/IsWorkflowApplicable} === false}" press="onPressSave"/>
-                <Button text="{i18n>SendForApproval}" type="Emphasized" enabled="{oModelControl>/isValidOTP}" visible="{= ${oModelControl>/IsWorkflowApplicable} === true}" press="onPressSave"/>
+                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavToHome"/>
+                <Button width="7%" text="{i18n>Save}" type="Emphasized" />
             </Toolbar>
         </footer>
     </Page>
