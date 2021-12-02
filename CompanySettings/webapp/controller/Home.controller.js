@@ -99,26 +99,42 @@ sap.ui.define([
                     success: function (oRetrievedResult) {
                         oLocalModel.setProperty("/IsOfferEnabled", oRetrievedResult.IsOfferEnabled);
                         oLocalModel.setProperty("/IsRedemptionEnabled", oRetrievedResult.IsRedemptionEnabled);
-                        var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
-                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
-                                return ele;
-                            }
-                        });
-                        var Mediclaim = oRetrievedResult.MediaList.results.filter(function (ele) {
-                            if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
-                                return ele;
-                            }
+                        // var Catalogue = oRetrievedResult.MediaList.results.filter(function (ele) {
+                        //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("COMPANY_SETTINGS")) {
+                        //         return ele;
+                        //     }
+                        // });
+                        // var Mediclaim = oRetrievedResult.MediaList.results.filter(function (ele) {
+                        //     if (!ele.ContentType.includes("image") && ele.DirectoryName.includes("MEDICLAIM")) {
+                        //         return ele;
+                        //     }
 
-                        });
-                        oLocalModel.setProperty("/Catalogue", Catalogue);
-                        oLocalModel.setProperty("/Mediclaim", Mediclaim);
+                        // });
+                        // oLocalModel.setProperty("/Catalogue", Catalogue);
+                        // oLocalModel.setProperty("/Mediclaim", Mediclaim);
+                        
                         oLocalModel.updateBindings();
 
 
                     },
                     error: function (oError) { }
                 });
-                oLocalModel.refresh(true);
+
+                        var oTable = this.getView().byId("idPdf");
+                        oTable.bindElement({
+                            path:"/MasterCompanySettingsSet(1)",
+                            parameters: {
+                                expand: "MediaList"
+                            }
+                        });
+                        var oTable2 = this.getView().byId("idPdf2");
+                        oTable2.bindElement({
+                            path:"/MasterCompanySettingsSet(1)",
+                            parameters: {
+                                expand: "MediaList"
+                            }
+                        });
+                //oLocalModel.refresh(true);
                 //oModel.refresh(true);
 
             },
@@ -303,7 +319,7 @@ sap.ui.define([
             //     this.oEscapePreventDialog.open();
             // },
             openPdf: function (oEvent) {
-                var oContext = oEvent.getSource().getBindingContext("local");
+                var oContext = oEvent.getSource().getBindingContext();
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
@@ -459,7 +475,7 @@ sap.ui.define([
                 });
             },
             openPdf2: function (oEvent) {
-                var oContext = oEvent.getSource().getBindingContext("local");
+                var oContext = oEvent.getSource().getBindingContext();
                 var sSource = this.sServiceURI + this._property + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode")+"&directory=MEDICLAIM";
                 sSource = "https://" + location.host + "/" + sSource
                 sap.m.URLHelper.redirect(sSource, true);
