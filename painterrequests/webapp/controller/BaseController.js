@@ -130,7 +130,7 @@ sap.ui.define([
             promise.resolve(oPayLoad);
             return promise;
         },
-        _uploadFile: function () {
+        _uploadFile: function (oPayLoad) {
             var promise = jQuery.Deferred();
             promise.resolve(oPayLoad);
             return promise;
