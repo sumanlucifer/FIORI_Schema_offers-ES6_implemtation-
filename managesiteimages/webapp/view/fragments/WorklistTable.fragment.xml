@@ -5,7 +5,7 @@
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddSiteImages}" press="onPressAddObject"/>
+                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddSiteImage}" press="onPressAddObject"/>
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 

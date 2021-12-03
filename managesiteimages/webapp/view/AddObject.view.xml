@@ -9,8 +9,8 @@
         <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddComplaint}">
-                        <Link text="{i18n>Complaint}" press="onNavToHome"/>
+                    <Breadcrumbs currentLocationText="{i18n>AddSiteImage}">
+                        <Link text="{i18n>SiteImage}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>
