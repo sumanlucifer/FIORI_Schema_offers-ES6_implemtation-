@@ -9,13 +9,26 @@
 
     <f:SimpleForm id="DisplayData" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
-              <core:Title text="{i18n>ComplaintDetails}" />
-                <Label text="{i18n>ComplaintType}" />
-                <Text text="{path : 'ComplaintType/ComplaintType'}"  />
-                <core:Title text="{i18n>RemarkDetails}" />
-                <Label text="{i18n>Remark}" />
-               <Text 
-                text="{path : 'Remark'}"  />
+            <core:Title text="{i18n>SiteImageDetails}" />
+            <Label text="{i18n>PainterName}" />
+            <Text text="{Painter/Name}" />
+            <Label text="{i18n>MembershipId}" />
+            <Text text="{Painter/MembershipCard}" />
+            <Label text="{i18n>PrimaryMobileNo}" />
+            <Text text="{Painter/Mobile}" />
+            <Label text="{i18n>Zone}" />
+            <Text text="{Painter/ZoneId}" />
+            <Label text="{i18n>Division}" />
+            <Text text="{Painter/DivisionId}" />
+            <Label text="{i18n>Depot}" />
+            <Text text="{Painter/Depot/Depot}" />
+
+            <core:Title text="{i18n>RemarkDetails}" />
+            <Label text="{i18n>ComplaintType}" />
+            <Text text="{path : 'ComplaintType/ComplaintType'}"  />
+            <Label text="{i18n>ComplaintSubType}" />
+            <Text text="{ComplaintSubtype/ComplaintSubtype}" />
+
         </f:content>
     </f:SimpleForm>
 

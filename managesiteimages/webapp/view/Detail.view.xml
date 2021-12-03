@@ -7,8 +7,8 @@
                     <Title text="{ComplaintType/ComplaintType}"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
-                        <Link text="{i18n>Complaint}" press="onNavToHome"/>
+                    <Breadcrumbs currentLocationText="{i18n>UpdateSiteImage}">
+                        <Link text="{i18n>SiteImage}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
@@ -20,9 +20,9 @@
                 <f:snappedTitleOnMobile>
                     <Title text="{ComplaintType/ComplaintType}"/>
                 </f:snappedTitleOnMobile>
-                <f:actions>
+                <!-- <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
-                </f:actions>
+                </f:actions> -->
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -49,11 +49,10 @@
                 <items>
                     <IconTabFilter  text="{i18n>Overview}" key="0" >
                         <VBox id="oVBoxAddObjectPage" width="100%">
-                          </VBox>
-                        
+                        </VBox>
                         
                         </IconTabFilter>
-                         <IconTabFilter  text="{i18n>History}" key="1" >
+                        <IconTabFilter  text="{i18n>History}" key="1" >
                              <core:Fragment fragmentName="com.knpl.pragati.managesiteimages.view.fragments.HistoryTable" type="XML"/>
                         </IconTabFilter>
                          
