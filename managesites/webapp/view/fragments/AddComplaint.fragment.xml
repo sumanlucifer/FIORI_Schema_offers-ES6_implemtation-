@@ -6,11 +6,11 @@
                 <Input required="true" valueHelpOnly="true"
                  showValueHelp="true" 
                  valueHelpRequest="onValueHelpRequest" 
-                 value="{path:'oModelView>/addCompAddData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                 value="{path:'oModelControl>/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
 <Label text="{i18n>PainterName}" />
-                <Text  text="{oModelView>/addCompAddData/Name}" />
+                <Text  text="{oModelControl>/Name}" />
                 <Label text="{i18n>MembershipId}" />
-                <Text text="{oModelView>/addCompAddData/MembershipCard}" />
+                <Text text="{oModelControl>/MembershipCard}" />
                 <!-- Zone Division Depot Info -->
                 <Label text="{i18n>Zone}" />
                 <Text text="{oModelControl>/ZoneId}" />
@@ -20,7 +20,7 @@
                 <Text text="{oModelControl>/Depot}" />
                 <core:Title text="{i18n>ComplaintDetails}" />
                 <Label text="{i18n>ComplaintType}" />
-                <ComboBox enabled="{= ${oModelView>/addComplaint/PainterId}!== '' }" change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox enabled="{= ${oModelView>/PainterId}!== '' }" change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
                         <core:Item text="{ComplaintType}" key="{Id}" />
                     </items>

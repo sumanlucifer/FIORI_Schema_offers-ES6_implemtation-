@@ -9,10 +9,8 @@ sap.ui.define([
     "sap/m/MessageToast"
 ], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast) {
     "use strict";
-
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
-
     return Controller.extend("com.knpl.pragati.managesites.controller.BaseController", {
         /**
          * Convenience method for accessing the router.
@@ -22,7 +20,6 @@ sap.ui.define([
         getRouter: function () {
             return UIComponent.getRouterFor(this);
         },
-
         /**
          * Convenience method for getting the view model by name.
          * @public
@@ -32,7 +29,6 @@ sap.ui.define([
         getModel: function (sName) {
             return this.getView().getModel(sName);
         },
-
         /**
          * Convenience method for setting the view model.
          * @public
@@ -45,7 +41,6 @@ sap.ui.define([
         },
         onNavToHome: function () {
             var sPreviousHash = History.getInstance().getPreviousHash();
-
             if (sPreviousHash !== undefined) {
                 history.go(-1);
             } else {
@@ -65,6 +60,12 @@ sap.ui.define([
                 PageBusy: true,
                 Pagetitle: mParam1 ==="Add" ? "Add Complaint Details":"Edit Complaint",
                 mode: mParam1,
+                Mobile: "",
+                Name: "",
+                MembershipCard: "",
+                ZoneId: "",
+                DivisionId : "",
+                Depot : "",
                 ComplainId: mParam2,
                 bindProp: "PainterComplainsSet(" + mParam2 + ")",
                 resourcePath: "com.knpl.pragati.managesites"
@@ -84,7 +85,6 @@ sap.ui.define([
                 MessageToast.show(othat.geti18nText("errorMessage1"));
                 return false;
             }
-
             return true;
         },
         /**
@@ -135,7 +135,6 @@ sap.ui.define([
             promise.resolve(oPayLoad);
             return promise;
         },
-
         /**
          * Event handler when the share by E-Mail button has been clicked
          * @public
@@ -149,5 +148,4 @@ sap.ui.define([
             );
         }
     });
-
 });

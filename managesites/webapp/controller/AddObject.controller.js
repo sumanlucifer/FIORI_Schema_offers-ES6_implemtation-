@@ -67,17 +67,13 @@ sap.ui.define([
             var oDataView = {
                 Remark: "",
                 ComplaintTypeId: "",
-                addComplaint:{
-                    PainterId:""
-                },
-                addCompAddData: {
-                    MembershipCard: "",
-                    Mobile: "",
-                    Name: ""
-                }
-            };
+                PainterId: ""
+                
+
+            }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
+
             promise.resolve();
             return promise;
         },
@@ -130,6 +126,7 @@ sap.ui.define([
             })
         },
         _CreateObject: function (oPayLoad) {
+            
             //console.log(oPayLoad);
             var othat = this;
             var oView = this.getView();
@@ -221,28 +218,52 @@ sap.ui.define([
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
         onValueHelpClose: function (oEvent) {
+
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
             var oViewModel = this.getView().getModel("oModelView"),
-             oModelControl = this.getView().getModel("oModelControl")  ;
+                oModelControl = this.getView().getModel("oModelControl");
             if (!oSelectedItem) {
                 return;
             }
             var obj = oSelectedItem.getBindingContext().getObject();
-            oViewModel.setProperty(
-                "/addCompAddData/MembershipCard",
-                obj["MembershipCard"]
-            );
+            oViewModel.setProperty("/PainterId", obj["Id"]);
+
+
+
+
+          
+           
+        
+            // var obj = oSelectedItem.getBindingContext().getObject();
+            // oViewModel.setProperty(
+            //     "/addCompAddData/MembershipCard",
+            //     obj["MembershipCard"]
+            //);
             //  debugger;
-            oViewModel.setProperty("/addCompAddData/Mobile", obj["Mobile"]);
-            oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
-            oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
-            oModelControl.setProperty("/DivisionId",obj.DivisionId );
-            oModelControl.setProperty("/ZoneId",obj.ZoneId );
-            oModelControl.setProperty("/DepotId", ""  ); 
+            oModelControl.setProperty("/MembershipCard",obj["MembershipCard"]);
+            oModelControl.setProperty("/Mobile", obj["Mobile"]);
+            oModelControl.setProperty("/Name", obj["Name"]);
+            oModelControl.setProperty("/DivisionId", obj.DivisionId);
+            oModelControl.setProperty("/ZoneId", obj.ZoneId);
+            oModelControl.setProperty("/DepotId", "");
+
             //Fallback as Preliminary context not supported
             this._getDepot(obj.DepotId);
                 //DivisionId,ZoneId
         },
+        _getDepot: function(sDepotId){
+            if(!sDepotId) return;
+            var sPath = this.getModel().createKey("/MasterDepotSet", {
+                Id : sDepotId
+            }),
+                oModel = this.getModel("oModelControl");
+
+            this.getModel().read(sPath, {
+                success: ele => oModel.setProperty("/Depot",ele.Depot)
+            })
+            
+        },
+
     });
 });
