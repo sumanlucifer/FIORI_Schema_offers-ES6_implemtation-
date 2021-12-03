@@ -67,8 +67,8 @@ sap.ui.define([
             var oDataView = {
                 Remark: "",
                 ComplaintTypeId: "",
-                addComplaint: {
-                    PainterId: ""
+                addComplaint:{
+                    PainterId:""
                 },
                 addCompAddData: {
                     MembershipCard: "",
@@ -224,7 +224,7 @@ sap.ui.define([
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
             var oViewModel = this.getView().getModel("oModelView"),
-                oModelControl = this.getView().getModel("oModelControl");
+             oModelControl = this.getView().getModel("oModelControl")  ;
             if (!oSelectedItem) {
                 return;
             }
@@ -237,12 +237,12 @@ sap.ui.define([
             oViewModel.setProperty("/addCompAddData/Mobile", obj["Mobile"]);
             oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
             oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
-            oModelControl.setProperty("/DivisionId", obj.DivisionId);
-            oModelControl.setProperty("/ZoneId", obj.ZoneId);
-            oModelControl.setProperty("/DepotId", "");
+            oModelControl.setProperty("/DivisionId",obj.DivisionId );
+            oModelControl.setProperty("/ZoneId",obj.ZoneId );
+            oModelControl.setProperty("/DepotId", ""  ); 
             //Fallback as Preliminary context not supported
             this._getDepot(obj.DepotId);
-            //DivisionId,ZoneId
+                //DivisionId,ZoneId
         },
     });
 });
