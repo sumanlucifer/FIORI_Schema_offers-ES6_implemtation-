@@ -109,6 +109,8 @@ modules:
     - artifacts:
       - managesiteimages-content.zip
       name: managesiteimages
+      target-path: resources/
+    - artifacts:
       - portfolio-content.zip
       name: portfolio
       target-path: resources/
@@ -277,6 +279,11 @@ modules:
 - name: managesiteimages
   type: html5
   path: managesiteimages
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 - name: portfolio
   type: html5
   path: portfolio
