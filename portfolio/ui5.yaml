@@ -1,6 +1,6 @@
 specVersion: '1.0'
 metadata:
-  name: 'redeempoints'
+  name: 'portfolio'
 type: application
 resources:
   configuration:
