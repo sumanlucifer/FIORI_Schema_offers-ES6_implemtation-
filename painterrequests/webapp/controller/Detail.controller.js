@@ -127,7 +127,7 @@ sap.ui.define(
                     var othat = this;
                     var oModel = oView.getModel("oModelDisplay")
                     var oProp = oModel.getProperty("/bindProp");
-                    var exPand = "Painter";
+                    var exPand = "ComplaintType";
                     return new Promise((resolve, reject) => {
                         oView.getModel().read("/" + oProp, {
                             urlParameters: {
@@ -270,7 +270,7 @@ sap.ui.define(
 
                 },
                 _UpdatedObject: function (oPayLoad) {
-                    //console.log(oPayLoad);
+                    console.log(oPayLoad);
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
@@ -281,7 +281,6 @@ sap.ui.define(
                         oDataModel.update("/" + sProp, oPayLoad, {
                             success: function (data) {
                                 MessageToast.show(othat.geti18nText("Message1"));
-                                oModelControl.setProperty("/ComplainId", data["Id"]);
                                 resolve(data);
                             },
                             error: function (data) {

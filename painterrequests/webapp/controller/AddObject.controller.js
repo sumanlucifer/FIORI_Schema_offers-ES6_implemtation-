@@ -76,7 +76,9 @@ sap.ui.define([
             var oView = this.getView();
             var oDataView = {
                 Remark: "",
-                ComplaintTypeId: ""
+                ComplaintTypeId: "",
+                "ComplaintSubtypeId": 8,
+                "PainterId": 25,
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
