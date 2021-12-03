@@ -440,7 +440,7 @@
             </items>
         </VBox>
          <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
-            <Title titleStyle="H3" text="4. {i18n>CombinationCndtn}"/>
+            <Title titleStyle="H3" text="4. {i18n>formApplicableLbl18}"/>
         </Toolbar>
         <RadioButtonGroup columns="3" select="" selectedIndex="{oModelDisplay>/ContributionCondition}"  editable="false">
                         <buttons>
