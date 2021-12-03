@@ -109,6 +109,8 @@ modules:
     - artifacts:
       - managesiteimages-content.zip
       name: managesiteimages
+      - portfolio-content.zip
+      name: portfolio
       target-path: resources/
 - name: MDM
   type: html5
@@ -275,6 +277,9 @@ modules:
 - name: managesiteimages
   type: html5
   path: managesiteimages
+- name: portfolio
+  type: html5
+  path: portfolio
   build-parameters:
     builder: custom
     commands:
