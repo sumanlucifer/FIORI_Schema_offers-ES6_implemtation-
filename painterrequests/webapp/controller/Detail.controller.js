@@ -270,13 +270,12 @@ sap.ui.define(
 
                 },
                 _UpdatedObject: function (oPayLoad) {
-                    console.log(oPayLoad);
                     var othat = this;
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl");
                     var sProp = oModelControl.getProperty("/bindProp")
-                    //console.log(sProp)
+                    //console.log(sProp,oPayLoad)
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + sProp, oPayLoad, {
                             success: function (data) {
