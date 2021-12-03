@@ -93,3 +93,5 @@ knpl-influencer-web/redeempoints/.env1
 knpl-influencer-web/redeempoints/.env2
 # auto generated wildcard
 knpl-influencer-web/MDM/.env1
+# auto generated wildcard
+knpl-influencer-web/portfolio/.env1

@@ -106,6 +106,10 @@ modules:
       - reports-content.zip
       name: reports
       target-path: resources/
+    - artifacts:
+      - portfolio-content.zip
+      name: portfolio
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -263,6 +267,14 @@ modules:
 - name: reports
   type: html5
   path: reports
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: portfolio
+  type: html5
+  path: portfolio
   build-parameters:
     builder: custom
     commands:
