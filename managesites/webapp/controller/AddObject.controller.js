@@ -11,21 +11,16 @@ sap.ui.define([
     "sap/m/MessageToast"
 ], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast) {
     "use strict";
-
     return BaseController.extend("com.knpl.pragati.managesites.controller.AddObject", {
-
         formatter: formatter,
-
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
-
         /**
          * Called when the worklist controller is instantiated.
          * @public
          */
         onInit: function () {
-
             sap.ui.getCore().attachValidationError(function (oEvent) {
                 if (oEvent.getParameter("element").getRequired()) {
                     oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -36,12 +31,8 @@ sap.ui.define([
             sap.ui.getCore().attachValidationSuccess(function (oEvent) {
                 oEvent.getParameter("element").setValueState(ValueState.None);
             });
-
-
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("Add").attachMatched(this._onRouterMatched, this);
-
-
         },
         _onRouterMatched: function (oEvent) {
             var sPainterId = oEvent.getParameter("arguments").Id;
@@ -63,7 +54,6 @@ sap.ui.define([
                     })
                 })
             })
-
         },
         _setInitViewModel: function () {
             /*
@@ -76,8 +66,16 @@ sap.ui.define([
             var oView = this.getView();
             var oDataView = {
                 Remark: "",
-                ComplaintTypeId: ""
-            }
+                ComplaintTypeId: "",
+                addComplaint: {
+                    PainterId: ""
+                },
+                addCompAddData: {
+                    MembershipCard: "",
+                    Mobile: "",
+                    Name: ""
+                }
+            };
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
             promise.resolve();
@@ -101,14 +99,11 @@ sap.ui.define([
                 return promise;
             });
         },
-
-
         onPressSave: function () {
             var bValidateForm = this._ValidateForm();
             if (bValidateForm) {
                 this._postDataToSave();
             }
-
         },
         _postDataToSave: function () {
             /*
@@ -133,8 +128,6 @@ sap.ui.define([
                     })
                 })
             })
-
-
         },
         _CreateObject: function (oPayLoad) {
             //console.log(oPayLoad);
@@ -156,8 +149,100 @@ sap.ui.define([
                     },
                 });
             });
-        }
-
+        },
+        onValueHelpRequest: function (oEvent) {
+            var sInputValue = oEvent.getSource().getValue(),
+                oView = this.getView();
+            if (!this._pValueHelpDialog) {
+                this._pValueHelpDialog = Fragment.load({
+                    id: oView.getId(),
+                    name:
+                        "com.knpl.pragati.managesites.view.fragments.ValueHelpDialog",
+                    controller: this,
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pValueHelpDialog.then(function (oDialog) {
+                // Create a filter for the binding
+                oDialog
+                    .getBinding("items")
+                    .filter([
+                        new Filter(
+                            [
+                                new Filter(
+                                    {
+                                        path: "Name",
+                                        operator: "Contains",
+                                        value1: sInputValue.trim(),
+                                        caseSensitive: false
+                                    }
+                                ),
+                                new Filter(
+                                    {
+                                        path: "Mobile",
+                                        operator: "Contains",
+                                        value1: sInputValue.trim(),
+                                        caseSensitive: false
+                                    }
+                                ),
+                            ],
+                            false
+                        ),
+                    ]);
+                // Open ValueHelpDialog filtered by the input's value
+                oDialog.open(sInputValue);
+            });
+        },
+        onValueHelpSearch: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new Filter(
+                [
+                    new Filter(
+                        {
+                            path: "Name",
+                            operator: "Contains",
+                            value1: sValue.trim(),
+                            caseSensitive: false
+                        }
+                    ),
+                    new Filter(
+                        {
+                            path: "Mobile",
+                            operator: "Contains",
+                            value1: sValue.trim(),
+                            caseSensitive: false
+                        }
+                    )
+                ],
+                false
+            );
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        onValueHelpClose: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            var oViewModel = this.getView().getModel("oModelView"),
+                oModelControl = this.getView().getModel("oModelControl");
+            if (!oSelectedItem) {
+                return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+            oViewModel.setProperty(
+                "/addCompAddData/MembershipCard",
+                obj["MembershipCard"]
+            );
+            //  debugger;
+            oViewModel.setProperty("/addCompAddData/Mobile", obj["Mobile"]);
+            oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
+            oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
+            oModelControl.setProperty("/DivisionId", obj.DivisionId);
+            oModelControl.setProperty("/ZoneId", obj.ZoneId);
+            oModelControl.setProperty("/DepotId", "");
+            //Fallback as Preliminary context not supported
+            this._getDepot(obj.DepotId);
+            //DivisionId,ZoneId
+        },
     });
-
 });

@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>ComplainList}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="ParentComplaintId,Id" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>SiteList}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="ParentComplaintId,Id" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddComplaint}" press="onPressAddObject"/>
+                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddSite}" press="onPressAddObject"/>
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 
@@ -60,7 +60,7 @@
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.formatter.fmtLowerCase'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
                            <HBox >
-                                            <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/>
+                                            <Button icon="sap-icon://edit" visible="false" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/>
 							                <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
                                         </HBox>
                     </cells>
