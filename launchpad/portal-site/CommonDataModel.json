@@ -91,6 +91,10 @@
 					"id": "com.knpl.pragati.managesiteimages-16-1638513894710",
 					"appId": "com.knpl.pragati.managesiteimages",
 					"vizId": "Manage-SiteImages"
+				}, {
+					"id": "com.knpl.pragati.portfolio-17-1638537968427",
+					"appId": "com.knpl.pragati.portfolio",
+					"vizId": "Manage-Portfolio"
 				}]
 			}
 		}, {

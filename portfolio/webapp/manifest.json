@@ -28,7 +28,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "PaintReq",
+                    "action": "Portfolio",
                     "title": "Portfolio",
                     "subTitle": "",
                     "icon": ""
