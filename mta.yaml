@@ -106,6 +106,10 @@ modules:
       - reports-content.zip
       name: reports
       target-path: resources/
+    - artifacts:
+      - managesites-content.zip
+      name: reports
+      target-path: managesites/
 - name: MDM
   type: html5
   path: MDM
@@ -263,6 +267,14 @@ modules:
 - name: reports
   type: html5
   path: reports
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: managesites
+  type: html5
+  path: managesites
   build-parameters:
     builder: custom
     commands:

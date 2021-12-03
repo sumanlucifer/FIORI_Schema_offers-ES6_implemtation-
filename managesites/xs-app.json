@@ -1,0 +1,26 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "authenticationType": "xsuaa",
+      "csrfProtection": false,
+      "source": "^/KNPL_PAINTER_API/(.*)$",
+      "destination": "KNPL_PAINTER_API",
+      "target": "$1",
+      "cacheControl": "no-cache"
+    },
+   
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa",
+      "cacheControl": "no-cache"
+    }
+
+  ]
+}
