@@ -65,15 +65,12 @@ sap.ui.define([
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oDataView = {
-                Remark: "",
+                PainterId: "",
                 ComplaintTypeId: "",
-                PainterId: ""
-                
-
+                Remark: ""
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
-
             promise.resolve();
             return promise;
         },
@@ -126,7 +123,6 @@ sap.ui.define([
             })
         },
         _CreateObject: function (oPayLoad) {
-            
             //console.log(oPayLoad);
             var othat = this;
             var oView = this.getView();
@@ -218,7 +214,6 @@ sap.ui.define([
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
         onValueHelpClose: function (oEvent) {
-
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
             var oViewModel = this.getView().getModel("oModelView"),
@@ -228,13 +223,6 @@ sap.ui.define([
             }
             var obj = oSelectedItem.getBindingContext().getObject();
             oViewModel.setProperty("/PainterId", obj["Id"]);
-
-
-
-
-          
-           
-        
             // var obj = oSelectedItem.getBindingContext().getObject();
             // oViewModel.setProperty(
             //     "/addCompAddData/MembershipCard",
@@ -247,7 +235,6 @@ sap.ui.define([
             oModelControl.setProperty("/DivisionId", obj.DivisionId);
             oModelControl.setProperty("/ZoneId", obj.ZoneId);
             oModelControl.setProperty("/DepotId", "");
-
             //Fallback as Preliminary context not supported
             this._getDepot(obj.DepotId);
                 //DivisionId,ZoneId
@@ -258,12 +245,9 @@ sap.ui.define([
                 Id : sDepotId
             }),
                 oModel = this.getModel("oModelControl");
-
             this.getModel().read(sPath, {
                 success: ele => oModel.setProperty("/Depot",ele.Depot)
             })
-            
         },
-
     });
 });
