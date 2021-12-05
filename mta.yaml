@@ -107,13 +107,9 @@ modules:
       name: reports
       target-path: resources/
     - artifacts:
-      - managesiteimages-content.zip
-      name: managesiteimages
-      target-path: resources/
-    - artifacts:
-      - portfolio-content.zip
-      name: portfolio
-      target-path: resources/
+      - managesites-content.zip
+      name: reports
+      target-path: managesites/
 - name: MDM
   type: html5
   path: MDM
@@ -276,17 +272,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: managesiteimages
+- name: managesites
   type: html5
-  path: managesiteimages
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: portfolio
-  type: html5
-  path: portfolio
+  path: managesites
   build-parameters:
     builder: custom
     commands:
