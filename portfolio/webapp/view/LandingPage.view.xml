@@ -1,118 +1,32 @@
-<mvc:View height="100%" controllerName="com.knpl.pragati.portfolio.controller.LandingPage" 
-xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout"
- xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" 
- xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" 	xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-    <f:DynamicPage busy="{oModelDisplay>/PageBusy}" busyIndicatorDelay="0"	stickySubheaderProvider="iconTabBar"
-			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
-        <!-- <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="Portfolio"/>
-                </f:heading>
-                <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
-                        <Link text="{i18n>Complaint}" press="onNavToHome"/>
-                    </Breadcrumbs>
-                </f:breadcrumbs>
-                <f:expandedContent>
-                    <Label text="{ComplaintCode}"/>
-                </f:expandedContent>
-                <f:snappedContent>
-                    <Label text="{ComplaintCode}"/>
-                </f:snappedContent>
-                <f:snappedTitleOnMobile>
-                    <Title text="{ComplaintType/ComplaintType}"/>
-                </f:snappedTitleOnMobile>
-                <f:actions>
-                    <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
-                </f:actions>
-            </f:DynamicPageTitle>
-        </f:title> -->
-        <!-- <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <layout:HorizontalLayout allowWrapping="false">
-                    <layout:VerticalLayout class="sapUiSmallMarginEnd">
-                        <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
-                        <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
-                    </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
-                        <Label  text="{i18n>ComplaintDetails}:"  />
-                        <ObjectAttribute  text="{ComplaintSubtype/ComplaintSubtype}"/>
-                    </layout:VerticalLayout>
-                    <layout:VerticalLayout>
-                        <Label  text="{i18n>Status}:"/>
-                   
-                          <ObjectStatus class="sapMObjectStatusLarge" text="{ComplaintStatus}" state="None"/>
-                    </layout:VerticalLayout>
-                </layout:HorizontalLayout>
-            </f:DynamicPageHeader>
-        </f:header> -->
-        <f:content>
-		<form:SimpleForm
+<mvc:View
+ xmlns:core="sap.ui.core"
+	controllerName="com.knpl.pragati.portfolio.controller.LandingPage"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	>
 
-			editable="true"
-			layout="ResponsiveGridLayout"
-			title="Portfolio"
-			labelSpanXL="4"
-			labelSpanL="4"
-			labelSpanM="4"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="0"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="3"
-			columnsL="2"
-			columnsM="2"
-			singleContainerFullSize="false" >
-			<form:content>
-				<core:Title text="" />
-				<Label text="Painter" />
-				<Select
-					forceSelection="false"
-					selectedKey="{/PainterId}"
-					items="{
-						path: '/PainterSet',
-                        filters: {path: 'IsArchived', operator: 'EQ', value1: false},
-						sorter: { path: 'Name' }
-					}">
-					<core:Item key="{Id}" text="{Name}" />
-				</Select>
-				<core:Title text="" />
-				<Label text="Complaint Type" />
-				<Select
-					forceSelection="false"
-                    change="onComplaintTypeChange"
-					items="{
-						path: '/MasterComplaintTypeSet',
-						sorter: { path: 'ComplaintType' }
-					}">
-					<core:Item key="{Id}" text="{ComplaintType}" />
-				</Select>
-                <Label text="Sub Complaint" />
-				<Select
-                id="IdComplaintSubtype"
-					forceSelection="false"
-					items="{
-						path: '/MasterComplaintTypeSet'
-					}">
-					<core:Item key="{Id}" text="{ComplaintSubtype/ComplaintSubtype}" />
-				</Select>
-			</form:content>
-		</form:SimpleForm>
-        </f:content>
-        <f:footer>
-         
-            <OverflowToolbar>
-              <ToolbarSpacer/>
-              <Button press="onNavToHome" type="Ghost"  text="{i18n>Cancel}"  />
-             
-              <!-- <Button press=".onApproval(true)" visible="{= ${oModelDisplay>/mode}==='Display'}" text="{i18n>Approve}"  type="Accept"  /> -->
-             <Button press="onPressSave" text="{i18n>Generate}" type="Emphasized" />
-          
-        
-            </OverflowToolbar>
-        </f:footer>
-    </f:DynamicPage>
+ <Page busy="{oModelControl>/PageBusy}"  busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
+        <!-- <headerContent>
+            <Bar>
+                <contentLeft>
+                    <Breadcrumbs currentLocationText="{i18n>AddSite}">
+                        <Link text="{i18n>site}" press="onNavToHome"/>
+                    </Breadcrumbs>
+                </contentLeft>
+            </Bar>
+        </headerContent> -->
+        <content>
+            <VBox width="100%" id="oVBoxObjectPage">
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button visible="false" width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavToHome"/>
+                <Button width="7%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
+            </Toolbar>
+        </footer>
+    </Page>
+
+
 </mvc:View>

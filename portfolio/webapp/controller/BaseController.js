@@ -63,7 +63,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "Add Complaint Details":"Edit Complaint",
+                Pagetitle:"Portfolio",
                 mode: mParam1,
                 ComplainId: mParam2,
                 bindProp: "PainterComplainsSet(" + mParam2 + ")",
