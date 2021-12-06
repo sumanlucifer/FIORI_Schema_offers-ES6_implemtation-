@@ -88,10 +88,6 @@
 					"appId": "com.knpl.pragati.downloadreports",
 					"vizId": "Manage-REPORTS"
 				}, {
-					"id": "com.knpl.pragati.managesites-16-1638519344721",
-					"appId": "com.knpl.pragati.managesites",
-					"vizId": "Manage-ManageSite"
-				}, {
 					"id": "com.knpl.pragati.portfolio-17-1638768109128",
 					"appId": "com.knpl.pragati.portfolio",
 					"vizId": "Manage-Portfolio"
@@ -99,6 +95,10 @@
 					"id": "com.knpl.pragati.managesiteimages-18-1638768109128",
 					"appId": "com.knpl.pragati.managesiteimages",
 					"vizId": "Manage-SiteImages"
+				}, {
+					"id": "com.knpl.pragati.managesite-18-1638799261270",
+					"appId": "com.knpl.pragati.managesite",
+					"vizId": "Manage-ManageSite"
 				}]
 			}
 		}, {
