@@ -109,7 +109,7 @@ modules:
     - artifacts:
       - managesites-content.zip
       name: managesites
-      target-path: managesites/
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
