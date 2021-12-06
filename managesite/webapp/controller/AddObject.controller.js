@@ -75,10 +75,10 @@ sap.ui.define([
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oDataView = {
-                Remark: "",
+                PainterId: "",
                 ComplaintTypeId: "",
-                "ComplaintSubtypeId": 8,
-                "PainterId": 25,
+                Remark: "",
+                ComplaintSubtypeId: ""
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
@@ -139,6 +139,7 @@ sap.ui.define([
 
         },
         _CreateObject: function (oPayLoad) {
+            oPayLoad.ComplaintSubtypeId = parseInt(oPayLoad.ComplaintSubtypeId);
             //console.log(oPayLoad);
             var othat = this;
             var oView = this.getView();
@@ -158,7 +159,114 @@ sap.ui.define([
                     },
                 });
             });
-        }
+        },
+
+        onValueHelpRequest: function (oEvent) {
+            var sInputValue = oEvent.getSource().getValue(),
+                oView = this.getView();
+            if (!this._pValueHelpDialog) {
+                this._pValueHelpDialog = Fragment.load({
+                    id: oView.getId(),
+                    name:
+                        "com.knpl.pragati.managesite.view.fragments.ValueHelpDialog",
+                    controller: this,
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pValueHelpDialog.then(function (oDialog) {
+                // Create a filter for the binding
+                oDialog
+                    .getBinding("items")
+                    .filter([
+                        new Filter(
+                            [
+                                new Filter(
+                                    {
+                                        path: "Name",
+                                        operator: "Contains",
+                                        value1: sInputValue.trim(),
+                                        caseSensitive: false
+                                    }
+                                ),
+                                new Filter(
+                                    {
+                                        path: "Mobile",
+                                        operator: "Contains",
+                                        value1: sInputValue.trim(),
+                                        caseSensitive: false
+                                    }
+                                ),
+                            ],
+                            false
+                        ),
+                    ]);
+                // Open ValueHelpDialog filtered by the input's value
+                oDialog.open(sInputValue);
+            });
+        },
+        onValueHelpSearch: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new Filter(
+                [
+                    new Filter(
+                        {
+                            path: "Name",
+                            operator: "Contains",
+                            value1: sValue.trim(),
+                            caseSensitive: false
+                        }
+                    ),
+                    new Filter(
+                        {
+                            path: "Mobile",
+                            operator: "Contains",
+                            value1: sValue.trim(),
+                            caseSensitive: false
+                        }
+                    )
+                ],
+                false
+            );
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+        onValueHelpClose: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            var oViewModel = this.getView().getModel("oModelView"),
+                oModelControl = this.getView().getModel("oModelControl");
+            if (!oSelectedItem) {
+                return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+            oViewModel.setProperty("/PainterId", obj["Id"]);
+            // var obj = oSelectedItem.getBindingContext().getObject();
+            // oViewModel.setProperty(
+            //     "/addCompAddData/MembershipCard",
+            //     obj["MembershipCard"]
+            //);
+            //  debugger;
+            oModelControl.setProperty("/MembershipCard",obj["MembershipCard"]);
+            oModelControl.setProperty("/Mobile", obj["Mobile"]);
+            oModelControl.setProperty("/Name", obj["Name"]);
+            oModelControl.setProperty("/DivisionId", obj.DivisionId);
+            oModelControl.setProperty("/ZoneId", obj.ZoneId);
+            oModelControl.setProperty("/DepotId", "");
+            //Fallback as Preliminary context not supported
+            this._getDepot(obj.DepotId);
+                //DivisionId,ZoneId
+        },
+        _getDepot: function(sDepotId){
+            if(!sDepotId) return;
+            var sPath = this.getModel().createKey("/MasterDepotSet", {
+                Id : sDepotId
+            }),
+                oModel = this.getModel("oModelControl");
+            this.getModel().read(sPath, {
+                success: ele => oModel.setProperty("/Depot",ele.Depot)
+            })
+        },
 
     });
 

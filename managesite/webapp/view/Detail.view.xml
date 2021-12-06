@@ -25,7 +25,7 @@
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
-        <f:header>
+        <!-- <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="false">
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
@@ -38,38 +38,30 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <Label  text="{i18n>Status}:"/>
-                   
                           <ObjectStatus class="sapMObjectStatusLarge" text="{ComplaintStatus}" state="None"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
-        </f:header>
+        </f:header> -->
         <f:content>
             <IconTabBar  select="onIcnTbarChange" selectedKey="{oModelDisplay>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter  text="{i18n>Overview}" key="0" >
                         <VBox id="oVBoxAddObjectPage" width="100%">
                           </VBox>
-                        
-                        
                         </IconTabFilter>
-                         <IconTabFilter  text="{i18n>History}" key="1" >
+                         <IconTabFilter visible="false"  text="{i18n>History}" key="1" >
                              <core:Fragment fragmentName="com.knpl.pragati.managesite.view.fragments.HistoryTable" type="XML"/>
                         </IconTabFilter>
-                         
                     </items>
                 </IconTabBar>
         </f:content>
         <f:footer>
-         
             <OverflowToolbar>
               <ToolbarSpacer/>
               <Button press="onNavToHome" type="Ghost"  text="{i18n>Cancel}"  />
-             
               <Button press=".onApproval(true)" visible="{= ${oModelDisplay>/mode}==='Display'}" text="{i18n>Approve}"  type="Accept"  />
              <Button press="onPressSave" visible="{= ${oModelDisplay>/mode}==='Edit'}"  text="{i18n>Save}" type="Emphasized" />
-          
-        
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

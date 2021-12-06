@@ -4,13 +4,12 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	>
-
  <Page busy="{oModelControl>/PageBusy}"  busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
-        <headerContent>
+       <headerContent>
             <Bar>
                 <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddComplaint}">
-                        <Link text="{i18n>Complaint}" press="onNavToHome"/>
+                    <Breadcrumbs currentLocationText="{i18n>AddSite}">
+                        <Link text="{i18n>site}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </contentLeft>
             </Bar>
@@ -22,11 +21,9 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavToHome"/>
+                <Button width="7%" visible="false" text="{i18n>Cancel}" type="Ghost" press="onNavToHome"/>
                 <Button width="7%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
             </Toolbar>
         </footer>
     </Page>
-
-
 </mvc:View>

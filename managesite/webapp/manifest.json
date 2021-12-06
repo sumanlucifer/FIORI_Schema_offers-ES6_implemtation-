@@ -28,8 +28,8 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "PaintReq",
-                    "title": "Painter Requests",
+                    "action": "ManageSite",
+                    "title": "ManageSite",
                     "subTitle": "",
                     "icon": ""
                 }
