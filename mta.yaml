@@ -111,6 +111,10 @@ modules:
       name: managesites
       target-path: resources/
     - artifacts:
+      - managesite-content.zip
+      name: managesite
+      target-path: resources/  
+    - artifacts:
       - managesiteimages-content.zip
       name: managesiteimages
       target-path: resources/
@@ -288,6 +292,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
+- name: managesite
+  type: html5
+  path: managesite
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []    
 - name: managesiteimages
   type: html5
   path: managesiteimages
