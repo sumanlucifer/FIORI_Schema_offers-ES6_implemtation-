@@ -91,7 +91,7 @@ sap.ui.define(
                 },
                 _validateLoggedInUser: function (mParam) {
                     var promise = jQuery.Deferred();
-                     var othat = this;
+                    var othat = this;
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     var data = oLoginModel.getData();
                     //console.log(data);
@@ -478,11 +478,10 @@ sap.ui.define(
                     }
                 },
                 onRefreshButton: function () {
-
-                    var myLocation = window.location;
                     var oView = this.getView();;
                     var oTable = oView.byId("table")
                     oTable.getBinding("items").refresh();
+
 
                 },
                 onMenuAction: function (oEvent) {
@@ -496,13 +495,25 @@ sap.ui.define(
                     oDataModel.create("/PragatiReportSet", oPayload, {
                         success: function () {
                             othat._showToast("MSG_1");
-                            othat.getView().getModel().refresh()
+                            othat.getView().getModel().refresh();
+                            othat._setTimeInterval();
                         },
                         error: function () {
 
                         }
                     })
 
+                },
+                _setTimeInterval: function () {
+                    if (this._Timer) {
+                        clearInterval(this._Timer);
+                    }
+                    var othat = this;
+                    this._Timer = setInterval(myTimer.bind(this), 60000);
+
+                    function myTimer(mParam1, mParam2) {
+                        this.onRefreshButton();
+                    }
                 },
                 onDowloadFile: function (oEvent) {
                     var oView = this.getView();
@@ -598,6 +609,12 @@ sap.ui.define(
                         );
                     }
                 },
+                onExit: function () {
+                    console.log("on exit trigerred for the view");
+                    if(this._Timer){
+                        clearInterval(this._Timer)
+                    }
+                }
             }
         );
     }
