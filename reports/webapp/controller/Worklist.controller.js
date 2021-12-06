@@ -507,6 +507,7 @@ sap.ui.define(
                 _setTimeInterval: function () {
                     if (this._Timer) {
                         clearInterval(this._Timer);
+                        delete this._Timer;
                     }
                     var othat = this;
                     this._Timer = setInterval(myTimer.bind(this), 60000);
@@ -610,9 +611,10 @@ sap.ui.define(
                     }
                 },
                 onExit: function () {
-                    console.log("on exit trigerred for the view");
-                    if(this._Timer){
-                        clearInterval(this._Timer)
+                    //console.log("on exit trigerred for the view");
+                    if (this._Timer) {
+                        clearInterval(this._Timer);
+                        delete this._Timer;
                     }
                 }
             }
