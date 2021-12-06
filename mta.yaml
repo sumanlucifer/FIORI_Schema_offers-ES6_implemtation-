@@ -110,6 +110,14 @@ modules:
       - managesites-content.zip
       name: managesites
       target-path: resources/
+    - artifacts:
+      - managesiteimages-content.zip
+      name: managesiteimages
+      target-path: resources/
+    - artifacts:
+      - portfolio-content.zip
+      name: portfolio
+      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -275,6 +283,22 @@ modules:
 - name: managesites
   type: html5
   path: managesites
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: managesiteimages
+  type: html5
+  path: managesiteimages
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: portfolio
+  type: html5
+  path: portfolio
   build-parameters:
     builder: custom
     commands:
