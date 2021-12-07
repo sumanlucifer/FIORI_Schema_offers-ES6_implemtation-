@@ -9,7 +9,7 @@
 
     <f:SimpleForm id="DisplayData" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
         <f:content>
-            <core:Title text="{i18n>SiteImageDetails}" />
+            <core:Title text="{i18n>PainterDetails}" />
             <Label text="{i18n>PainterName}" />
             <Text text="{Painter/Name}" />
             <Label text="{i18n>MembershipId}" />
@@ -23,12 +23,13 @@
             <Label text="{i18n>Depot}" />
             <Text text="{Painter/Depot/Depot}" />
 
-            <core:Title text="{i18n>RemarkDetails}" />
+            <core:Title text="{i18n>SiteImageDetails}" />
             <Label text="{i18n>ComplaintType}" />
             <Text text="{path : 'ComplaintType/ComplaintType'}"  />
             <Label text="{i18n>ComplaintSubType}" />
             <Text text="{ComplaintSubtype/ComplaintSubtype}" />
-
+            <Label text="{i18n>siteImage}" />
+            <Link press="onImageView" text="View Image" />
         </f:content>
     </f:SimpleForm>
 

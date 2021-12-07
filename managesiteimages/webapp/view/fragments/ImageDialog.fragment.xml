@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>siteImage}" afterClose="onDialogClose">
+        <content>
+            <Carousel class="sapUiContentPadding" loop="true">
+                <Image src="{path : 'oModelDisplay>/oImage' }" alt="No Site Image found"/>
+            </Carousel>
+        </content>
+        <endButton>
+            <Button text="Close" press="onPressCloseImageDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

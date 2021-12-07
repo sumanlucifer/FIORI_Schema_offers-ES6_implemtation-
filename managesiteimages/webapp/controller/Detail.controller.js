@@ -64,6 +64,7 @@ sap.ui.define(
                     var oData = {
                         mode: sMode,
                         bindProp: "PainterComplainsSet(" + oProp + ")",
+                        oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterComplainsSet(" + oProp + ")/$value",
                         complaintId: oProp,
                         PageBusy: true,
                         IcnTabKey: "0",
@@ -236,6 +237,30 @@ sap.ui.define(
                         return promise;
                     });
                 },
+
+                onImageView: function (oEvent) {
+                    var oButton = oEvent.getSource();
+                    var oView = this.getView();
+                    var oThat = this;
+                    if (!oThat.ImageDialog) {
+                        Fragment.load({
+                            name: "com.knpl.pragati.managesiteimages.view.fragments.ImageDialog",
+                            controller: oThat,
+                        }).then(
+                            function (oDialog) {
+                                oView.addDependent(oDialog);
+                                oThat.ImageDialog = oDialog;
+                                oDialog.open();
+                            });
+                    } else {
+                        oThat.ImageDialog.open();
+                    }
+                },
+
+                onPressCloseImageDialog: function () {
+                    this.ImageDialog.close();
+                },
+
                 onPressSave: function () {
                     var bValidateForm = this._ValidateForm();
                     if (bValidateForm) {
