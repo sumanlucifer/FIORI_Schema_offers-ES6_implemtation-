@@ -4,12 +4,12 @@
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="{i18n>KycDetails}"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
+                <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="{i18n>NotSubmitted}" state="Error"/>
                 <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status'}" state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined }"/>
                 <ToolbarSpacer/>
                     <FlexBox visible="{=${PainterKycDetails/Status} !== 'INPROGRESS'}">
-                        <Button visible="{=!${oModelControl>/EditKycButton}}" text="Edit" type="Emphasized" press="onEditKycFields"/>
-                        <Button visible="{=${oModelControl>/EditKycButton}}" text="Cancel" press="onEditCancelKycFields"/>
+                        <Button visible="{=!${oModelControl>/EditKycButton}}" text="{i18n>Edit}" type="Emphasized" press=".onEditKycFields"/>
+                        <Button visible="{=${oModelControl>/EditKycButton}}" text="{i18n>Cancel}" press="onEditCancelKycFields"/>
                     </FlexBox>
             </OverflowToolbar>
 		</headerToolbar>
@@ -41,7 +41,7 @@
                 <FlexBox >
                 <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView"/>
                 <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDocButton} }" type="Emphasized" text="Update Document"  press="onAddKycDoc" />
-                <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDoc} }" text="Cancel" press="onCancelKycDoc" />
+                <!-- <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDoc} }" text="Cancel" press="onCancelKycDoc" /> -->
                 </FlexBox>
                 <Label text="" visible="{=${oModelControl>/AddKycDoc}}" />
                 <UploadCollection typeMissmatch="onUploadFileTypeMis"  fileType="jpg,jpeg,png" id="idUploadCollection" visible="{=${oModelControl>/AddKycDoc}}" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />

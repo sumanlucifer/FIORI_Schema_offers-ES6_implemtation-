@@ -2,7 +2,7 @@
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
     <smartTable:SmartTable id="OfferHistory" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="OfferActivationLogSet" beforeRebindTable="onBeforeBindOfferHistory" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="true" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="OfferHistorySmartTableKey">
-        <Table growing="true" growingThreshold="15" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
+        <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
             <columns>
                 <Column hAlign="Begin">
                     <customData>
