@@ -90,6 +90,9 @@
                     <Column>
                         <Text text="{i18n>UpdatedAt}"/>
                     </Column>
+                    <Column>
+                        <Text text="{i18n>CreatedAt}"/>
+                    </Column>
                      <Column>
                         <Text text="{i18n>Status}"/>
                     </Column>
@@ -106,11 +109,19 @@
                             <Text text="{path:'ReportType',formatter:'.formatter.fmtLowerCase'}"/>
                           
                             <Text text="{path:'GeneratedByName',formatter:'.formatter.fmtLowerCase'}"/>
-                              <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
-                              <Text text="{path:'ReportStatus',formatter:'.formatter.fmtLowerCase'}"/>
+                              <VBox>
+                                 <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                              </VBox>
                               <HBox>
+                                <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" visible="{= ${ReportStatus} !== 'PENDING'}"/>
+                                <Text text="{i18n>InProgress}" visible="{= ${ReportStatus} === 'PENDING'}" />
+                              </HBox>
+                              
+                              <Text text="{path:'ReportStatus',formatter:'.formatter.fmtLowerCase'}"/>
+                              <HBox justifyContent="Start">
                                 <items>
                                     <Button icon="sap-icon://download" visible="{= ${ReportStatus} === 'AVAILABLE'}" press="onDowloadFile" />
+                                    	<BusyIndicator visible="{= ${ReportStatus} === 'PENDING'}" />
                                 </items>
                               </HBox>
                           
