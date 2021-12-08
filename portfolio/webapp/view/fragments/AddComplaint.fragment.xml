@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-        <f:SimpleForm class="addForm" id="FormObjectData" editable="true" layout="ResponsiveGridLayout" title="{oModelControl>/Pagetitle}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+        <f:SimpleForm class="addForm" id="FormObjectData" editable="true" layout="ResponsiveGridLayout" title="{i18n>Pagetitle}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
  <core:Title text="{i18n>PainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
@@ -19,15 +19,15 @@
                 <Label text="{i18n>Depot}" />
                 <Text text="{oModelControl>/Depot}" />
                 <core:Title text="{i18n>ComplaintDetails}" />
-                <Label text="{i18n>ComplaintType}" />
-                <ComboBox enabled="{= ${oModelView>/PainterId}!== '' }" change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <Label text="{i18n>SiteCategory}" />
+                <ComboBox enabled="{= ${oModelView>/PainterId}!== '' }" change="onCmpTypChange" required="true" items="{path:'/MasterSiteCategorySet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
-                        <core:Item text="{ComplaintType}" key="{Id}" />
+                        <core:Item text="{category}" key="{Id}" />
                     </items>
                 </ComboBox>
 
                   <!-- <core:Title text="{i18n>RemarkDetails}" /> -->
-                <Label text="{i18n>ComplaintSubType}" />
+                <Label text="{i18n>Site}" />
                 <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/ComplaintTypeId}!== '' }" id="idComplainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" >
                     <items>
                         <core:Item text="{ComplaintSubtype}" key="{Id}" />
