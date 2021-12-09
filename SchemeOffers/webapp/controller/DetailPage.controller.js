@@ -139,7 +139,7 @@ sap.ui.define(
                     this.oWorkflowModel = new JSONModel();
                     this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
                     this.getView().setModel(this.oWorkflowModel, "wfmodel");
-                    this._LoadPainterData(0, 16);
+                    //this._LoadPainterData(0, 16);
                     if (sMode === "edit") {
                         this.handleEditPress();
                     } else {
@@ -147,7 +147,8 @@ sap.ui.define(
                     }
 
                 },
-                _LoadPainterData(mSkip, mTop) {
+                _LoadPainterData: function(mSkip, mTop) {
+                    console.log("function called");
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oControlModel = oView.getModel("oModelControl3");
@@ -2030,7 +2031,7 @@ sap.ui.define(
                     var oView = this.getView();
                     if (sKey == "1") {
                         this._LoadPainterData(0,16);
-                        oView.byId("idPainterTable").getModel().refresh();
+                        //oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
                         //oView.byId("PainteTable2").rebindTable();
                     } else if (sKey == "3") {
