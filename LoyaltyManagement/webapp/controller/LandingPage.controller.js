@@ -524,7 +524,6 @@ sap.ui.define([
                 var oView = this.getView();
                 var sKey = oEvent.getSource().getSelectedKey();
             
-                console.log(sKey);
                 if(sKey==="all"){
 
                 }else if (sKey ==="acc"){
