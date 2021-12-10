@@ -6,8 +6,9 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
     "../controller/Validator",
-    "sap/m/MessageToast"
-], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast, MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -63,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "Add Site Image Details":"Edit Site Image Details",
+                Pagetitle: mParam1 ==="Add" ? "Add Portfolio Image Details":"Edit Portfolio Image Details",
                 mode: mParam1,
                 Mobile: "",
                 Name: "",
@@ -71,8 +72,8 @@ sap.ui.define([
                 ZoneId: "",
                 DivisionId : "",
                 Depot : "",
-                ComplainId: mParam2,
-                bindProp: "PainterComplainsSet(" + mParam2 + ")",
+                SiteImageId: mParam2,
+                bindProp: "PainterPortfolioSet(" + mParam2 + ")",
                 resourcePath: "com.knpl.pragati.managesiteimages"
             };
             var oModelControl = new JSONModel(oDataControl)
@@ -85,6 +86,9 @@ sap.ui.define([
             var oValidate = new Validator();
             var othat = this;
             var oForm = oView.byId("FormObjectData");
+            if (!oForm) {
+                oForm = oView.byId("DisplayData");
+            }
             var bFlagValidate = oValidate.validate(oForm);
             if (!bFlagValidate) {
                 MessageToast.show(othat.geti18nText("errorMessage1"));
@@ -124,7 +128,7 @@ sap.ui.define([
             //1.Clone the payload and convert string to integer values based on odata model entity
             var oPayLoad = this._RemoveEmptyValue(oModelData);
             var inTegerProperty = [
-                "ComplaintTypeId",
+                "PainterId"
             ];
             for (var y of inTegerProperty) {
                 if (oPayLoad.hasOwnProperty(y)) {
@@ -153,6 +157,23 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailSubject"),
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
+        },
+
+        /*
+         * Common function for showing warning dialogs
+         * @param sMsgTxt : i18n Key string
+         * @param _fnYes : Optional: function to be called for Yes response
+         */
+        showWarning: function (sMsgTxt, _fnYes) {
+            var that = this;
+            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        _fnYes && _fnYes.apply(that);
+                    }
+                }
+            });
         }
     });
 

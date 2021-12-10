@@ -1,23 +1,29 @@
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.managesiteimages.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage busyIndicatorDelay="0" busy="{oModelControl>/PageBusy}" id="dynamicPageId" headerExpanded="true">
-    
+        <f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>worklistTitle}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilterBarGo" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                        
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <DatePicker placeholder="{i18n>DDMMYYYY}"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>ComplaintStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            </fb:FilterGroupItem> -->
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>PortfolioStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                     <ComboBox id="idStatus" placeholder="{i18n>Select} {i18n>ComplaintStatus}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
-                                       <core:Item text="{i18n>Registered}" key="REGISTERED"/>
-                                        <core:Item text="{i18n>Inreview}" key="INREVIEW"/>
-                                        <core:Item text="{i18n>Resolved}" key="RESOLVED"/>
+                                     <ComboBox id="idStatus" placeholder="{i18n>Select} {i18n>PortfolioStatus}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
+                                       <core:Item text="{i18n>Pending}" key="PENDING"/>
+                                        <core:Item text="{i18n>Approved}" key="APPROVED"/>
+                                        <core:Item text="{i18n>Rejected}" key="REJECTED"/>
                                         <core:Item text="{i18n>Withdrawn}" key="WITHDRAWN"/>
                                     </ComboBox>
                                 </fb:control>

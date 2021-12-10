@@ -75,9 +75,9 @@ sap.ui.define([
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oDataView = {
-                PainterId: null,
-                ComplaintTypeId: null,
-                ComplaintSubtypeId: null
+                PainterId: "",
+                PortfolioCategoryId: "",
+                PortfolioStatus: "PENDING"
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
@@ -182,15 +182,15 @@ sap.ui.define([
         onValueHelpClose: function (oEvent) {
             var oSelectedItem = oEvent.getParameter("selectedItem");
             oEvent.getSource().getBinding("items").filter([]);
-            var oViewModel = this.getView().getModel("oModelView"),
-                oModelControl = this.getView().getModel("oModelControl");
+            var oModelControl = this.getView().getModel("oModelControl");
+            var oModelView = this.getView().getModel("oModelView");
             if (!oSelectedItem) {
                 return;
             }
             var obj = oSelectedItem.getBindingContext().getObject();
-            oViewModel.setProperty("/PainterId", obj["Id"]);
+            oModelView.setProperty("/PainterId", obj["Id"]);
 
-            oModelControl.setProperty("/MembershipCard",obj["MembershipCard"]);
+            oModelControl.setProperty("/MembershipCard", obj["MembershipCard"]);
             oModelControl.setProperty("/Mobile", obj["Mobile"]);
             oModelControl.setProperty("/Name", obj["Name"]);
             oModelControl.setProperty("/DivisionId", obj.DivisionId);
@@ -201,18 +201,38 @@ sap.ui.define([
             //DivisionId,ZoneId
         },
 
-        _getDepot: function(sDepotId){
-            if(!sDepotId) return;
+        _getDepot: function (sDepotId) {
+            if (!sDepotId) return;
             var sPath = this.getModel().createKey("/MasterDepotSet", {
-                Id : sDepotId
+                Id: sDepotId
             }),
                 oModel = this.getModel("oModelControl");
 
             this.getModel().read(sPath, {
-                success: ele => oModel.setProperty("/Depot",ele.Depot)
+                success: ele => oModel.setProperty("/Depot", ele.Depot)
             })
-            
+
         },
+
+        // onSiteCategoryChange: function (oEvent) {
+        //     var oModelControl = this.getModel("oModelControl");
+        //     var aFilter = [];
+        //     var sId = oEvent.getSource().getSelectedKey();
+        //     if (sId) {
+        //         oModelControl.setProperty("/hasPainterSite", oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite);
+        //         if (oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite === true) {
+        //             var oPainterSite = this.getView().byId("idPainterSite");
+        //             var oPainterSiteItems = oPainterSite.getBinding("items");
+        //             oPainterSite.clearSelection();
+        //             oPainterSite.setValue("");
+        //             aFilter.push(new Filter("IsArchived", FilterOperator.EQ, false));
+        //             aFilter.push(new Filter("SiteCategoryId", FilterOperator.EQ, sId));
+        //             oPainterSiteItems.filter(aFilter);
+        //         }
+        //     } else {
+        //         oModelControl.setProperty("/hasPainterSite", false);
+        //     }
+        // },
 
         onPressSave: function () {
             var bValidateForm = this._ValidateForm();
@@ -229,36 +249,35 @@ sap.ui.define([
              * Purpose: Payload is ready and we have to send the same based to server but before that we have to modify it slighlty
              */
             var oView = this.getView();
+            var oData = this.getView().getModel();
             var oModelControl = oView.getModel("oModelControl");
             oModelControl.setProperty("/PageBusy", true);
             var othat = this;
             var c1, c2, c3, c4;
             c1 = othat._CheckEmptyFieldsPostPayload();
             c1.then(function (oPayload) {
-                c2 = othat._CreateObject(oPayload)
-                c2.then(function () {
-                    c3 = othat._uploadFile();
+                c2 = othat._CreateObject(oPayload);
+                c2.then(function (oData) {
+                    c3 = othat._uploadFile(oData);
                     c3.then(function () {
                         oModelControl.setProperty("/PageBusy", false);
                         othat.onNavToHome();
                     })
                 })
             })
-
-
         },
+
         _CreateObject: function (oPayLoad) {
             //console.log(oPayLoad);
-            oPayLoad.ComplaintSubtypeId = parseInt(oPayLoad.ComplaintSubtypeId);
             var othat = this;
             var oView = this.getView();
             var oDataModel = oView.getModel();
             var oModelControl = oView.getModel("oModelControl");
             return new Promise((resolve, reject) => {
-                oDataModel.create("/PainterComplainsSet", oPayLoad, {
+                oDataModel.create("/PainterPortfolioSet", oPayLoad, {
                     success: function (data) {
                         MessageToast.show(othat.geti18nText("Message1"));
-                        oModelControl.setProperty("/ComplainId", data["Id"]);
+                        oModelControl.setProperty("/SiteImageId", data["Id"]);
                         resolve(data);
                     },
                     error: function (data) {
@@ -268,6 +287,75 @@ sap.ui.define([
                     },
                 });
             });
+        },
+
+        _uploadFile: function (oData) {
+            var that = this;
+            var oModelContrl = this.getView().getModel("oModelControl");
+            var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
+            var newSpath = "/PainterPortfolioSet(" + oData.Id + ")";
+            return new Promise(function (resolve, reject) {
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                    data: oImage.Image,
+                    method: "PUT",
+                    headers: that.getModel().getHeaders(),
+                    contentType: "image/png",
+                    processData: false,
+                    success: function (x) {
+                        oModelContrl.setProperty("/busy", false);
+                        MessageToast.show("Portfolio Image Successfully Uploaded");
+                        resolve(x);
+                    },
+                    error: function (a) {
+                        oModelContrl.setProperty("/busy", false);
+                        MessageToast.show("Portfolio Image creation failed");
+                        reject(a);
+                    }
+                };
+                $.ajax(settings);
+            })
+        },
+
+        onUpload: function (oEvent) {
+            var oFile = oEvent.getSource().FUEl.files[0];
+            this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
+        },
+
+        handleTypeMissmatch: function () {
+
+        },
+
+        getImageBinary: function (oFile) {
+            var oFileReader = new FileReader();
+            var sFileName = oFile.name;
+            return new Promise(function (res, rej) {
+
+                if (!(oFile instanceof File)) {
+                    res(oFile);
+                    return;
+                }
+
+                oFileReader.onload = function () {
+                    res({
+                        Image: oFileReader.result,
+                        name: sFileName
+                    });
+                };
+                res({
+                    Image: oFile,
+                    name: sFileName
+                });
+            });
+        },
+
+        _fnAddFile: function (oItem) {
+            this.getModel("oModelControl").setProperty("/oImage", {
+                Image: oItem.Image, //.slice(iIndex),
+                FileName: oItem.name,
+                IsArchived: false
+            });
+            this.getModel("oModelControl").refresh();
         }
 
     });
