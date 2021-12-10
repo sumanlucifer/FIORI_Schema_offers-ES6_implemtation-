@@ -520,6 +520,19 @@ sap.ui.define([
             //     if(this.oFilter)
             //         oBindingParams.filters.push(this.oFilter);            
             // },
+            onItabSelection: function (oEvent) {
+                var oView = this.getView();
+                var sKey = oEvent.getSource().getSelectedKey();
+            
+                console.log(sKey);
+                if(sKey==="all"){
+
+                }else if (sKey ==="acc"){
+                    oView.byId("idAccTable").rebindTable();
+                }else if (sKey ==="redemption"){
+                    oView.byId("idRdmTable").rebindTable();
+                }
+            },
             fnrebindTableAll: function (oEvent) {
 
                 var oBindingParams = oEvent.getParameter("bindingParams");
@@ -651,7 +664,7 @@ sap.ui.define([
                         } else if (prop === "StartDate") {
                             StartDate = oDateFormat.format(oViewFilter["StartDate"], true);
                         } else if (prop === "EndDate") {
-                            EndDate =  oDateFormat.format(oViewFilter["EndDate"], true);
+                            EndDate = oDateFormat.format(oViewFilter["EndDate"], true);
                         } else if (prop === "Name") {
                             Name = oViewFilter[prop];
                         }

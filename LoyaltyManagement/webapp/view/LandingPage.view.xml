@@ -90,6 +90,7 @@
                 id="idIconTabBar"
                 headerMode="Inline"
                 expanded="{device>/isNoPhone}"
+                select="onItabSelection"
                 class="sapUiResponsiveContentPadding">
                 <items>
 
@@ -186,7 +187,7 @@
                     ignoredFields="IsArchived,IsSelected,Id"
                     demandPopin="true"
                     requestAtLeastFields="Id,PointType,Painter/Name"
-                    enableAutoBinding="true"
+                    enableAutoBinding="false"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                     noData="{i18n>nodata}"
@@ -254,7 +255,7 @@
                     ignoredFields="IsArchived,IsSelected,Id"
                     demandPopin="true"
                     requestAtLeastFields="Id,PointType,Painter/Name,RewardPoints,GiftRedemption/RewardGiftName,PaymentTransaction/TransactionAmount,PaymentTransaction/TransactionMessage"
-                    enableAutoBinding="true"
+                    enableAutoBinding="false"
                     placeToolbarInTable="true" 
                     persistencyKey="PainterListSmartTableKey"
                     noData="{i18n>nodata}"
