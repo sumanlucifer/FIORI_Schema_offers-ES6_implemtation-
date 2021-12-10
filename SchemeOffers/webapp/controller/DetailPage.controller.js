@@ -147,8 +147,8 @@ sap.ui.define(
                     }
 
                 },
-                _LoadPainterData: function(mSkip, mTop) {
-                    console.log("function called");
+                _LoadPainterData: function (mSkip, mTop) {
+
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oControlModel = oView.getModel("oModelControl3");
@@ -288,7 +288,7 @@ sap.ui.define(
                             Table7: [],
                             Table8: [],
                             Table9: [],
-                            Table10:[]
+                            Table10: []
                         },
                         OfferType: {
                             BasicInformation: true,
@@ -367,7 +367,7 @@ sap.ui.define(
                                                     c6.then(function (data) {
                                                         c7 = othat._OfferTypeValidation(data);
                                                         c7.then(function (data) {
-                                                            c7B = othat._getExecLogData(data);
+                                                            c7B = othat._CheckPromiseData(data);
                                                             c7B.then(function (data) {
                                                                 //c8 = othat._CheckAttachment();
                                                                 // c8.then(function () {
@@ -914,7 +914,7 @@ sap.ui.define(
                                                     // no data required from the previous steop
                                                     c9B = othat._EditCreatehashData(data);
                                                     c9B.then(function (data) {
-                                                        c9C = othat._getExecLogData(data);
+                                                        c9C = othat._CheckPromiseData(data);
                                                         c9C.then(function () {
                                                             c10 = othat._getProductsData([]);
                                                             c10.then(function () {
@@ -2027,15 +2027,27 @@ sap.ui.define(
                     });
                 },
                 onIcnTbarChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oCtrl2Model = oView.getModel("oModelControl3");
+
                     if (sKey == "1") {
-                        this._LoadPainterData(0,16);
+                        this._LoadPainterData(0, 16);
                         //oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
                         //oView.byId("PainteTable2").rebindTable();
                     } else if (sKey == "3") {
                         oView.byId("OfferHistory").rebindTable();
+                    } else if (sKey == "4") {
+                        oCtrl2Model.setProperty("/PageBusy",true)
+                        var sMode = oCtrl2Model.getProperty("/mode");
+                        var oData = null;
+                        if (sMode === "display") {
+                            oData = oView.getModel("oModelDisplay").getData();
+                        } else if (sMode === "edit") {
+                            oData = oView.getModel("oModelView").getData();
+                        }
+                        this._getExecLogData(oData);
                     } else if (sKey == "5") {
                         this.onfilterOfferPainter();
                     }
@@ -2390,7 +2402,7 @@ sap.ui.define(
                             })
                         }
                     }
-                   // 3.End Date Changed For the Achiever Points Table
+                    // 3.End Date Changed For the Achiever Points Table
                     if (oViewData["OfferAchiever"].hasOwnProperty("results")) {
                         if (oViewData["OfferAchiever"]["results"].length > 0) {
                             oViewData["OfferAchiever"]["results"].forEach(function (mPram1) {
@@ -2460,7 +2472,6 @@ sap.ui.define(
                 _getExecLogData: function (oData) {
                     var promise = jQuery.Deferred();
                     //for Test case scenerios delete as needed
-                    var oView = this.getView();
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
                     if (sWorkFlowInstanceId) {
                         var sUrl =
@@ -2477,6 +2488,8 @@ sap.ui.define(
                 _setWfData: function () {
                     //TODO: format subject FORCETAT
                     //console.log(this.oWorkflowModel.getData());
+                    var oView = this.getView();
+                    var oModelCtrl = oView.getModel("oModelControl3")
                     var aWfData = this.oWorkflowModel.getData(),
                         taskSet = new Set([
                             "WORKFLOW_STARTED",
@@ -2489,6 +2502,8 @@ sap.ui.define(
                     aWfData = aWfData.filter((ele) => taskSet.has(ele.type));
                     //console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
+                    oModelCtrl.setProperty("/PageBusy",false)
+
                 },
                 onPainterListDownload: function () {
                     var oView = this.getView();
@@ -2582,27 +2597,28 @@ sap.ui.define(
                         },
                     });
                 },
+                _EmptyPromise: function (mParam) {
+                    var oPromise = jQuerry.Deferred();
+
+                    oPromise.resolve(mParam)
+                    return oPromise
+                },
 
                 onfilterOfferPainter: function () {
-                    var oModel = this.getView().getModel("oModelControl3");
+                    var oView = this.getView()
+                    var oModel = oView.getModel("oModelControl3");
                     var offerId = oModel.getProperty("/OfferId");
-                    var aFilters = [];
-                    aFilters.push(new Filter([
-                        new Filter({
-                            path: "OfferId",
-                            operator: FilterOperator.EQ,
-                            value1: offerId
-                        }),
-                        new Filter({
-                            path: "IsArchived",
-                            operator: FilterOperator.EQ,
-                            value1: false
-                        })
-                    ], true));
-
-                    var oTable = this.getView().byId("idDelPainterTable");
-                    var oBinding = oTable.getBinding("items");
-                    oBinding.filter(aFilters);
+                    var oTable = oView.byId("idDelPainterTable");
+                    oTable.bindItems({
+                        path: "/OfferDeselectedPainterSet",
+                        template: oView.byId("tblDeSelPainterDepnd"),
+                        parameters: {
+                            expand: 'Painter',
+                        },
+                        templateShareable: true,
+                        filters: [new Filter("OfferId", FilterOperator.EQ, offerId), new Filter("IsArchived", FilterOperator.EQ, false)],
+                        sorter: new Sorter("CreatedAt", false)
+                    })
 
                 }
                 //     fnrebindTable: function (oEvent) {
