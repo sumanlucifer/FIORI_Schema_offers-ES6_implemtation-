@@ -376,6 +376,7 @@ sap.ui.define(
                                 filters: [new Filter("IsArchived", FilterOperator.EQ, true)],
                                 sorter: new Sorter("CreatedAt", true)
                             })
+                            this.onFilter();
                         }
 
                     }
