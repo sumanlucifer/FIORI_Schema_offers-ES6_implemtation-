@@ -2471,8 +2471,10 @@ sap.ui.define(
                 //execution Log
                 _getExecLogData: function (oData) {
                     var promise = jQuery.Deferred();
+                    var oView = this.getView();
                     //for Test case scenerios delete as needed
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    var oModelCtrl = oView.getModel("oModelControl3")
                     if (sWorkFlowInstanceId) {
                         var sUrl =
                             "/comknplpragatiSchemeOffers/bpmworkflowruntime/v1/workflow-instances/" +
@@ -2481,6 +2483,7 @@ sap.ui.define(
                         this.oWorkflowModel.loadData(sUrl);
                     } else {
                         this.oWorkflowModel.setData([]);
+                        oModelCtrl.setProperty("/PageBusy",false)
                     }
                     promise.resolve();
                     return promise;
