@@ -363,18 +363,21 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedKey();
                     if (sKey === "delpainters") {
                         var oView = this.getView();
-                        var oTable = oView.byId("idDelPainterTable")
-                        oTable.bindItems({
-                            path: "/PainterSet",
-                            template: oView.byId("idDelPainterTableTemplate"),
-                            templateShareable: true,
-                            parameters: {
-                                expand: 'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',
-                                select: "Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag"
-                            },
-                            filters: [new Filter("IsArchived", FilterOperator.EQ, true)],
-                            sorter: new Sorter("CreatedAt", true)
-                        })
+                        var oTable = oView.byId("idDelPainterTable");
+                        if (!oTable.getBinding("items")) {
+                            oTable.bindItems({
+                                path: "/PainterSet",
+                                template: oView.byId("idDelPainterTableTemplate"),
+                                templateShareable: true,
+                                parameters: {
+                                    expand: 'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',
+                                    select: "Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag"
+                                },
+                                filters: [new Filter("IsArchived", FilterOperator.EQ, true)],
+                                sorter: new Sorter("CreatedAt", true)
+                            })
+                        }
+
                     }
                 },
                 onZoneChange: function (oEvent) {
