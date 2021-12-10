@@ -89,7 +89,8 @@
             <IconTabBar
                 id="idIconTabBar"
                 headerMode="Inline"
-                expanded="{device>/isNoPhone}"
+                expanded="true"
+                expandable="false"
                 select="onItabSelection"
                 class="sapUiResponsiveContentPadding">
                 <items>
