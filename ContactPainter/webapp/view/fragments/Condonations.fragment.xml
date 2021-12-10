@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="IdTblCondonations" width="auto" growing="true" growingThreshold="10" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[ {path:'ComplaintSubtypeId',operator:'EQ',value1:1}, {path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'PainterComplainProducts, PainterComplainProducts/ProductPackDetails, PainterComplainProducts/ProductPackDetails/ProductCategoryDetails' }}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}"  noDataText="{i18n>tableNoDataText}">
+        <Table id="IdTblCondonations" width="auto" growing="true" growingThreshold="10" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}"  noDataText="{i18n>tableNoDataText}">
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer />
@@ -32,8 +32,8 @@
                
             </columns>
 
-            <items>
-                <ColumnListItem press="onListItemPress">
+            <dependents>
+                <ColumnListItem id="TblCondoDepend" press="onListItemPress">
                     <cells>
                         <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colCategory'} ], formatter : '.formatter.ProductProperty'  }" />
                         <Text text="{parts : [ { path:'PainterComplainProducts' },{path: 'i18n>colProductName'} ], formatter : '.formatter.ProductProperty'  }" />
@@ -44,7 +44,7 @@
 
                     </cells>
                 </ColumnListItem>
-            </items>
+            </dependents>
         </Table>
 
     </VBox>
