@@ -37,8 +37,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.CallbackRequests.controller.LandingPage",
-            {
+            "com.knpl.pragati.CallbackRequests.controller.LandingPage", {
                 onInit: function () {
                     var oModel = new JSONModel({
                         busy: false,
@@ -47,7 +46,7 @@ sap.ui.define(
                     this.getView().setModel(oModel, "ViewModel");
 
                     this.getComponentModel().metadataLoaded().
-                        then(this._fnLoginAdminData.bind(this));
+                    then(this._fnLoginAdminData.bind(this));
 
                 },
 
@@ -194,7 +193,14 @@ sap.ui.define(
                         })
                     }
                 },
-
+                onIconTabChange: function (oEvent) {
+                    var oView = this.getView();
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    console.log(sKey);
+                    if (sKey === "completed") {
+                        oView.byId("idCompletedSmartTable").rebindTable();
+                    }
+                },
                 onPressCallPainter: function (oEvent) {
                     var sPath = oEvent.getSource().getBindingContext().getPath().substr(1);
                     var that = this;
@@ -214,7 +220,9 @@ sap.ui.define(
                         this.oRemarksMessageDialog = new Dialog({
                             type: DialogType.Message,
                             title: oResourceBundle.getText("remarksDialogTitle"),
-                            content: new Text("idRemarksText", { text: sRemarks }),
+                            content: new Text("idRemarksText", {
+                                text: sRemarks
+                            }),
                             styleClass: ['sapUiSizeCompact'],
                             beginButton: new Button({
                                 type: ButtonType.Emphasized,
