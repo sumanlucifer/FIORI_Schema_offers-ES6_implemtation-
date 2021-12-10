@@ -174,9 +174,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oSection = oEvent.getParameter("section");
                     var sId = oSection.getId();
-                    var oPainterId = oView
-                        .getModel("oModelControl2")
-                        .getProperty("/PainterId");
+                    var oModelControl = oView
+                    .getModel("oModelControl2")
+                    var oPainterId = oModelControl.getProperty("/PainterId");
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
                         oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
@@ -189,6 +189,7 @@ sap.ui.define(
                     } else if (sId.match("callbacksection")) {
                         oView.byId("smrtCallback").rebindTable();
                     } else if (sId.match("referral")) {
+                        oModelControl.setProperty("/Search/Referral","")
                         var oTable = oView.byId("Referral")
                         var oRefFilter = new Filter(
                             [
@@ -219,6 +220,7 @@ sap.ui.define(
                             sorter: new Sorter("CreatedAt", true)
                         })
                     } else if (sId.match("complainSection")) {
+                        oModelControl.setProperty("/Search/Complains","")
                         var oTable = oView.byId("IdTblComplaints")
                         oTable.bindItems({
                             path: "/PainterComplainsSet",
@@ -243,6 +245,7 @@ sap.ui.define(
                             sorter: new Sorter("CreatedAt", true)
                         })
                     } else if (sId.match("tokenSection")) {
+                        oModelControl.setProperty("/Search/Tokens","")
                         var oTable = oView.byId("idTblOffers")
                         oTable.bindItems({
                             path: "/PainterTokenScanHistorySet",
