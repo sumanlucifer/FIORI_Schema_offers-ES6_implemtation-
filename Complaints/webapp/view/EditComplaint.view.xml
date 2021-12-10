@@ -1,5 +1,5 @@
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage 	stickySubheaderProvider="iconTabBar"
+    <f:DynamicPage busy="{oModelControl>/PageBusy}"	stickySubheaderProvider="iconTabBar"
 			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
@@ -49,7 +49,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <IconTabBar selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <IconTabBar select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter  text="{i18n>Overview}" key="0" >
                         <VBox id="idVbx" width="100%">
