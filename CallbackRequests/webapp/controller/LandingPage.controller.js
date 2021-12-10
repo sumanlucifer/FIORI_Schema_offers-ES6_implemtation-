@@ -196,7 +196,6 @@ sap.ui.define(
                 onIconTabChange: function (oEvent) {
                     var oView = this.getView();
                     var sKey = oEvent.getSource().getSelectedKey();
-                    console.log(sKey);
                     if (sKey === "completed") {
                         oView.byId("idCompletedSmartTable").rebindTable();
                     }
