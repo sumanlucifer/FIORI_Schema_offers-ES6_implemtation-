@@ -16,25 +16,22 @@
                 <Label text="{i18n>Depot}" />
                 <Text text="{oModelControl>/Depot}" />
 
-                <core:Title text="{i18n>SiteImageDetails}" />
-                <Label text="{i18n>ComplaintType}" />
-                <ComboBox change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <core:Title text="{i18n>PortfolioDetails}" />
+                <Label text="{i18n>Category}" required="true"/>
+                <ComboBox required="true" items="{path:'/PortfolioCategorySet'}" selectedKey="{path:'oModelView>/PortfolioCategoryId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
-                        <core:Item text="{ComplaintType}" key="{Id}" />
+                        <core:Item text="{category}" key="{Id}" />
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>ComplaintSubType}" />
-                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/ComplaintTypeId}!== '' }" id="idComplainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" >
+                <Label text="{i18n>Images}" required="true"/>
+                <VBox>
                     <items>
-                        <core:Item text="{ComplaintSubtype}" key="{Id}" />
+                        <unified:FileUploader  change="onBannerImageFileChange" id="idImageUploader" width="100%" tooltip="{i18n>fileUploaderTrainingtip}" typeMissmatch="handleTypeMissmatch" fileType="png,jpg,jpeg" maximumFileSize="2.1" fileSizeExceed="onFileSizeExceed" useMultipart="false" sendXHR="true" fileAllowed="onUpload"/>
+                          <Text text="{i18n>FileUploadMessage}"/>
                     </items>
-                </ComboBox>
+                </VBox>
 
-                <Label text="{i18n>Images}"/>
-                <UploadCollection numberOfAttachmentsText="{i18n>TxtAttachment}" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
-                <Label text=""/>
-                <Text text="{i18n>FileUploadMessage}"/>
             </f:content>
         </f:SimpleForm>
 </core:FragmentDefinition>

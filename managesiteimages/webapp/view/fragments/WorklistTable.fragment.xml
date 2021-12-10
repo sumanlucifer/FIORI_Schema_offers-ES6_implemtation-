@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>SiteImages}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="ParentComplaintId,Id" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PortfolioImages}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddSiteImage}" press="onPressAddObject"/>
+                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddPortfolioImage}" press="onPressAddObject"/>
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 
@@ -20,28 +20,21 @@
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 1 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCode", "leadingProperty": "PortfolioCode", "columnIndex": 1 ,"sortProperty": "PortfolioCode","filterProperty": "PortfolioCode"}'/>
                     </customData>
-                    <Text text="{i18n>ComplaintCode}"/>
-                </Column>
-
-                <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintType/ComplaintType", "leadingProperty": "ComplaintType/ComplaintType", "columnIndex": 2 ,"sortProperty": "ComplaintType/ComplaintType","filterProperty": "ComplaintType/ComplaintType"}'/>
-                    </customData>
-                    <Text text="{i18n>ComplaintType}"/>
+                    <Text text="{i18n>PortfolioCode}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "SiteCategory/category", "leadingProperty": "SiteCategory/category", "columnIndex": 2 ,"sortProperty": "SiteCategory/category","filterProperty": "SiteCategory/category"}'/>
                     </customData>
-                    <Text text="{i18n>DateAndTime}"/>
+                    <Text text="{i18n>Category}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintStatus", "leadingProperty": "ComplaintStatus", "columnIndex": 4 ,"sortProperty": "ComplaintStatus","filterProperty": "ComplaintStatus"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioStatus", "leadingProperty": "PortfolioStatus", "columnIndex": 3 ,"sortProperty": "PortfolioStatus","filterProperty": "PortfolioStatus"}'/>
                     </customData>
-                    <Text text="{i18n>ComplaintStatus}"/>
+                    <Text text="{i18n>PortfolioStatus}"/>
                 </Column>
                  <Column hAlign="Begin">
                     <customData>
@@ -55,13 +48,12 @@
                 <ColumnListItem press="onListItemPress" type="Navigation">
                     <cells>
                         <Text text="{Painter/Name}"/>
-                        <Text text="{ComplaintCode}"/>
-                        <Text text="{ComplaintType/ComplaintType}"/>
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                        <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.formatter.fmtLowerCase'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
+                        <Text text="{PortfolioCode}"/>
+                        <Text text="{SiteCategory/category}"/>
+                        <Text text="{PortfolioStatus}"/>
                         <HBox >
                             <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
-                            <Button icon="sap-icon://delete" press="onDeleteOnlineTraining" type="Transparent" tooltip="{i18n>Delete}"/>
+                            <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>
                         </HBox>
                     </cells>
                 </ColumnListItem>

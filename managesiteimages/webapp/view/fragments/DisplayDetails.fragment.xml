@@ -23,13 +23,13 @@
             <Label text="{i18n>Depot}" />
             <Text text="{Painter/Depot/Depot}" />
 
-            <core:Title text="{i18n>SiteImageDetails}" />
-            <Label text="{i18n>ComplaintType}" />
-            <Text text="{path : 'ComplaintType/ComplaintType'}"  />
-            <Label text="{i18n>ComplaintSubType}" />
-            <Text text="{ComplaintSubtype/ComplaintSubtype}" />
-            <Label text="{i18n>siteImage}" />
+            <core:Title text="{i18n>PortfolioDetails}" />
+            <Label text="{i18n>Category}" />
+            <Text text="{path : 'SiteCategory/category'}"  />
+            <Label text="{i18n>PortfolioImage}" />
             <Link press="onImageView" text="View Image" />
+            <Label text="{i18n>Remark}" />
+            <Input required="true" value="{path:'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
         </f:content>
     </f:SimpleForm>
 

@@ -4,21 +4,21 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{SiteCategory/category}"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="{i18n>UpdateSiteImage}">
-                        <Link text="{i18n>SiteImage}" press="onNavToHome"/>
+                    <Breadcrumbs currentLocationText="{i18n>UpdatePortfolioImage}">
+                        <Link text="{i18n>PortfolioImage}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{ComplaintCode}"/>
+                    <Label text="{PortfolioCode}"/>
                 </f:expandedContent>
                 <f:snappedContent>
-                    <Label text="{ComplaintCode}"/>
+                    <Label text="{PortfolioCode}"/>
                 </f:snappedContent>
                 <f:snappedTitleOnMobile>
-                    <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{SiteCategory/category}"/>
                 </f:snappedTitleOnMobile>
                 <!-- <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
@@ -32,14 +32,13 @@
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
+                    <!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
                         <Label  text="{i18n>ComplaintDetails}:"  />
                         <ObjectAttribute  text="{ComplaintSubtype/ComplaintSubtype}"/>
-                    </layout:VerticalLayout>
+                    </layout:VerticalLayout> -->
                     <layout:VerticalLayout>
                         <Label  text="{i18n>Status}:"/>
-                   
-                          <ObjectStatus class="sapMObjectStatusLarge" text="{ComplaintStatus}" state="None"/>
+                          <ObjectStatus class="sapMObjectStatusLarge" text="{PortfolioStatus}" state="None"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -64,11 +63,9 @@
             <OverflowToolbar>
               <ToolbarSpacer/>
               <Button press="onNavToHome" type="Ghost"  text="{i18n>Cancel}"  />
-             
-              <Button press=".onApproval(true)" visible="{= ${oModelDisplay>/mode}==='Display'}" text="{i18n>Approve}"  type="Accept"  />
-             <Button press="onPressSave" visible="{= ${oModelDisplay>/mode}==='Edit'}"  text="{i18n>Save}" type="Emphasized" />
-          
-        
+              <Button press="onRejection" visible="{= ${oModelDisplay>/mode}==='Display'}" text="{i18n>Reject}"  type="Reject"  />
+              <Button press="onApproval" visible="{= ${oModelDisplay>/mode}==='Display'}" text="{i18n>Approve}"  type="Accept"  />
+              <Button press="onPressSave" visible="{= ${oModelDisplay>/mode}==='Edit'}"  text="{i18n>Save}" type="Emphasized" />
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

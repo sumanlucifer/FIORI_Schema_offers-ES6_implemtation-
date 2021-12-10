@@ -28,8 +28,8 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "Manage",
-                    "action": "SiteImages",
-                    "title": "Site Images",
+                    "action": "PortfolioImages",
+                    "title": "Portfolios",
                     "subTitle": "",
                     "icon": ""
                 }

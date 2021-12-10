@@ -88,10 +88,6 @@
 					"appId": "com.knpl.pragati.downloadreports",
 					"vizId": "Manage-REPORTS"
 				}, {
-					"id": "com.knpl.pragati.portfolio-17-1638768109128",
-					"appId": "com.knpl.pragati.portfolio",
-					"vizId": "Manage-Portfolio"
-				}, {
 					"id": "com.knpl.pragati.managesiteimages-18-1638768109128",
 					"appId": "com.knpl.pragati.managesiteimages",
 					"vizId": "Manage-SiteImages"
