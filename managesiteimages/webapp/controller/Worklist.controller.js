@@ -43,6 +43,7 @@ sap.ui.define(
                     filterBar: {
                         Status: "",
                         Search: "",
+                        CategoryId: null
                     },
                     PageBusy: true
                 };
@@ -225,6 +226,11 @@ sap.ui.define(
                         //         )
                         //     );
                         // } else
+                        if (prop === "CategoryId") {
+                            aFlaEmpty = false;
+                            aCurrentFilterValues.push(
+                                new Filter("PortfolioCategoryId", FilterOperator.EQ, oViewFilter[prop]));
+                        } else
                         if (prop === "Status") {
                             aFlaEmpty = false;
                             aCurrentFilterValues.push(
@@ -274,6 +280,7 @@ sap.ui.define(
                 var aResetProp = {
                     Status: "",
                     Search: "",
+                    CategoryId: null
                 };
                 var oViewModel = this.getView().getModel("oModelControl");
                 oViewModel.setProperty("/filterBar", aResetProp);
