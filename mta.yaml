@@ -280,25 +280,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: managesite
-  type: html5
-  path: managesite
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []    
 - name: managesiteimages
   type: html5
   path: managesiteimages
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: portfolio
-  type: html5
-  path: portfolio
   build-parameters:
     builder: custom
     commands:
