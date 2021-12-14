@@ -107,16 +107,8 @@ modules:
       name: reports
       target-path: resources/
     - artifacts:
-      - managesite-content.zip
-      name: managesite
-      target-path: resources/  
-    - artifacts:
       - managesiteimages-content.zip
       name: managesiteimages
-      target-path: resources/
-    - artifacts:
-      - portfolio-content.zip
-      name: portfolio
       target-path: resources/
 - name: MDM
   type: html5
