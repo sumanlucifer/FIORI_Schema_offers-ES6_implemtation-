@@ -128,7 +128,8 @@ sap.ui.define([
             //1.Clone the payload and convert string to integer values based on odata model entity
             var oPayLoad = this._RemoveEmptyValue(oModelData);
             var inTegerProperty = [
-                "PainterId"
+                "PainterId",
+                "PortfolioCategoryId"
             ];
             for (var y of inTegerProperty) {
                 if (oPayLoad.hasOwnProperty(y)) {
