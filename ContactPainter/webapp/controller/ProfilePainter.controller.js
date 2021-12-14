@@ -2527,6 +2527,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl2");
+                    // oModelControl2>/ProfilePageBuzy
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
                     var sTokenCode = oModelControl
                         .getProperty("/ApplyLoyaltyPoints")
                         .trim();
@@ -2554,8 +2556,11 @@ sap.ui.define(
                                     othat.getView().getModel().refresh(true);
                                 }
                             }
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
                         },
-                        error: function () {},
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        },
                     });
                 },
                 onPressAddReferral: function (oEvent) {
