@@ -96,7 +96,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection id="tokenSection" titleUppercase="false" title="{i18n>Tokens}">
+            <uxap:ObjectPageSection id="tokenSection" titleUppercase="false" title="{i18n>Tokens}" >
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -134,7 +134,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Complaints}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>Complaints}" id="complainSection">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">
@@ -143,7 +143,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TtlCondonation}">
+            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TtlCondonation}" id="condomationSection">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <VBox renderType="Bare">

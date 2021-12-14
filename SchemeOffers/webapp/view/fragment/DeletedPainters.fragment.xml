@@ -4,52 +4,13 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     xmlns:smartTable="sap.ui.comp.smarttable">
-    <!-- <f:Form editable="true">
-        <f:layout>
-            <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
-        </f:layout>
-        <f:toolbar>
-            <Toolbar >
-                <RadioButtonGroup selectedIndex="{oModelControl3>/Rbtn/AddPainter}" columns="4" select="onRbAppPainter">
-                    <RadioButton text="{i18n>selectPainter}"/>
-                    <RadioButton text="{i18n>uploadPainter}"/>
-
-                </RadioButtonGroup>
-            </Toolbar>
-        </f:toolbar>
-        <f:formContainers >
-            <f:FormContainer title="">
-                <f:formElements>
-                <f:FormElement label="{i18n>Painters}">
-                        <f:fields>
-                            <MultiInput placeholder="{i18n>placeHolder1}" visible="{= ${oModelControl3>/Rbtn/AddPainter} === 0 }" id="Painters" tokens="{oModelControl3>/MultiCombo/Painters}" valueHelpRequest="onValueHelpRequestedPainter2">
-                                <tokens>
-                                    <Token editable="false" text="{oModelControl3>PainterName}" key="{oModelControl3>PainterId}"/>
-                                </tokens>
-                                <layoutData>
-                                    <l:GridData span="XL12 L12 M12 S12" />
-                                </layoutData>
-                            </MultiInput>
-                             <u:FileUploader id="idOfferFileUploader" visible="{= ${oModelControl3>/Rbtn/AddPainter} === 1 }" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
-                          </f:fields>
-                </f:FormElement>
-                                     </f:formElements>
-            </f:FormContainer>
-        </f:formContainers>
-    </f:Form> -->
+   
     <VBox class="sapUiMediumMargin">
-                <Table id="idDelPainterTable" width="auto" items="{ path: '/OfferDeselectedPainterSet', sorter: { path: 'CreatedAt', descending: false },parameters:{expand : 'Painter'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
+                <Table id="idDelPainterTable" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" growing="true" growingThreshold="15">
                             <headerToolbar>
                                 <Toolbar visible="{=${oModelControl3>/mode} === 'display'}">
                                     <ToolbarSpacer/> 
-                                            <!-- <MultiInput width="50%" placeholder="{i18n>UpdatePainterList}" id="Painters2" tokens="{oModelControl2>/OfferDeselectedPainter}" valueHelpRequest="onValueHelpRequestedPainter2">
-                                                <tokens>
-                                                    <Token editable="false" text="{oModelControl2>PainterId}" key="{oModelControl2>PainterId}"/>
-                                                </tokens>
-                                                <layoutData>
-                                                    <l:GridData span="XL12 L12 M12 S12" />
-                                                </layoutData>
-                                            </MultiInput> -->
+                                          
                                                 <u:FileUploader style="Emphasized" id="idOfferFileUploader2" visible="{oModelDisplay>/IsPublished}" iconFirst="true" icon="sap-icon://upload" sameFilenameAllowed="false" uploadComplete="onUploadComplete" change="onUploadDelPainter" buttonOnly="true" placeholder="{i18n>formApplicableLbl17}" buttonText="{i18n>formApplicableLbl17}" typeMissmatch="onUploadMisMatch1" fileType="text,csv" />
                                     
                                 </Toolbar>
@@ -80,8 +41,8 @@
                                 </Column> 
                             </columns>
 
-                            <items>
-                                <ColumnListItem press="onListItemPress">
+                            <dependents>
+                                <ColumnListItem id="tblDeSelPainterDepnd" press="onListItemPress">
                                     <cells>
                                         <Text text="{Painter/Name}"/>
                                         <Text text="{Painter/MembershipCard}"/>
@@ -95,7 +56,7 @@
                                         <Text text="{EarnedPoints}"/> -->
                                     </cells>
                                 </ColumnListItem>
-                            </items>
+                            </dependents>
                 </Table>
     </VBox>
 </core:FragmentDefinition>

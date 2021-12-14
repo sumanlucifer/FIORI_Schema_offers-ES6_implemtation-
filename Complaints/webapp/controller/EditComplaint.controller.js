@@ -101,6 +101,7 @@ sap.ui.define(
                 _initData: function (oProp) {
                     this._oMessageManager.removeAllMessages();
                     var oData = {
+                        PageBusy: false,
                         modeEdit: false,
                         aQuantity: [{
                             value: "1",
@@ -192,7 +193,7 @@ sap.ui.define(
                                     c4.then(function () {
                                         c5 = othat._setWorkFlowFlag();
                                         c5.then(function () {
-                                            c6 = othat._getExecLogData();
+                                            c6 = othat._CheckPromiseData();
                                         })
                                     })
                                 });
@@ -200,13 +201,21 @@ sap.ui.define(
                         })
                     });
                 },
+                _CheckPromiseData: function (oData) {
+                    var promise = jQuery.Deferred();
+                    // work flow releated data
+                    //console.log(oData);
+                    promise.resolve(oData);
+                    return promise;
+                },
                 _getExecLogData: function () {
                     var promise = jQuery.Deferred();
                     //for Test case scenerios delete as needed
                     var oView = this.getView();
                     var oData = oView.getModel("oModelView").getData();
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
-                    // console.log(sWorkFlowInstanceId);
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/PageBusy", true)
                     if (sWorkFlowInstanceId) {
                         var sUrl =
                             "/comknplpragatiComplaints/bpmworkflowruntime/v1/workflow-instances/" +
@@ -215,12 +224,16 @@ sap.ui.define(
                         this.oWorkflowModel.loadData(sUrl);
                     } else {
                         this.oWorkflowModel.setData([]);
+                        oModelControl.setProperty("/PageBusy", false);
                     }
                     promise.resolve();
                     return promise;
                 },
                 _setWfData: function () {
                     //TODO: format subject FORCETAT
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    
                     var aWfData = this.oWorkflowModel.getData(),
                         taskSet = new Set([
                             "WORKFLOW_STARTED",
@@ -232,6 +245,21 @@ sap.ui.define(
                         ]);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
                     this.oWorkflowModel.setData(aWfData);
+                    oModelControl.setProperty("/PageBusy",false)
+                },
+                onIcnTabChange: function (oEvent) {
+                    var oView = this.getView();
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    console.log(sKey);
+                    //oHistoryTable.rebindTable();
+                    if (sKey === "0") {
+
+                    } else if (sKey === "1") {
+                        var oTable = oView.byId("smartHistory");
+                        oTable.rebindTable();
+                    } else if (sKey === "2") {
+                        this._getExecLogData()
+                    }
                 },
                 _CheckLoginData: function () {
                     var promise = jQuery.Deferred();
@@ -360,7 +388,7 @@ sap.ui.define(
                                 jQuery.extend(true, othat.oClonePayload, data);
                                 var oViewModel = new JSONModel(data);
                                 oView.setModel(oViewModel, "oModelView");
-                               
+
                                 othat._setInitData();
                                 resolve();
                             },
@@ -435,7 +463,7 @@ sap.ui.define(
                     // oModelControl.setProperty("/ComplainReopenReasonId", oModelView.getProperty("/ComplainReopenReasonId"));
                     var oHistoryTable = oView.byId("smartHistory")
                     if (oHistoryTable) {
-                        oHistoryTable.rebindTable();
+                        //oHistoryTable.rebindTable();
                     }
                     //set Complain level
                     oModelControl.setProperty("/iComplaintLevel", this._getRoleLevel(oModelView.getProperty("/AssigneUserType")));

@@ -8,7 +8,7 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="Referral" updateFinished="onUpdateFinishedReferralTable" width="auto" items="{path: '/PainterReferralHistorySet', sorter:{path:'CreatedAt',descending:true},filters:[{path:'ReferralStatus',operator:'EQ',value1:'PENDING'},{path:'ReferralStatus',operator:'EQ',value1:'REGISTERED'},{path:'ReferralStatus',operator:'EQ',value1:'PENDINGSCAN'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="Referral" updateFinished="onUpdateFinishedReferralTable" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" growing="true" growingThreshold="10" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <MessageStrip visible="{= ${oModelControl2>/ReferralMessage}.length > 0}" text="{oModelControl2>/ReferralMessage}" showIcon="true">
@@ -38,8 +38,8 @@
                     <Text text="{i18n>PointsReceived}"/>
                 </Column>
             </columns>
-            <items>
-                <ColumnListItem press="onListItemPress">
+            <dependents>
+                <ColumnListItem id="ReferralTableDependent" press="onListItemPress">
                     <cells>
                         <Text text="{ReferralName}"/>
                         <Text text="{ReferralMobile}"/>
@@ -49,7 +49,7 @@
                         <Text text="{= ${ReferralStatus}==='PENDING'? '-' : ${RewardPoints} }"/>
                     </cells>
                 </ColumnListItem>
-            </items>
+            </dependents>
         </Table>
     </VBox>
 </core:FragmentDefinition>

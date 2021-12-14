@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox width="100%">
-        <Table id="idTblOffers" growing="true" growingThreshold="10" width="auto" items="{path: '/PainterTokenScanHistorySet',sorter:{path:'CreatedAt',descending:true}, parameters:{expand:'Painter'},filters:[{path:'ScanStatus',operator:'EQ',value1:'COMPLETED'}] }" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idTblOffers" growing="true" growingThreshold="10" width="auto"  noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <ToolbarSpacer />
@@ -31,8 +31,8 @@
                     <Text text="{i18n>ProductCategory}" />
                 </Column> -->
             </columns>
-            <items>
-                <ColumnListItem press="onListItemPress">
+            <dependents>
+                <ColumnListItem id="TblToknHistDepend" press="onListItemPress">
                     <cells>
                         <Text text="{TokenCode}" />
                         <Text text="{ProductName}" />
@@ -43,7 +43,7 @@
                         <!-- <Text text="{ProductCategory}" /> -->
                     </cells>
                 </ColumnListItem>
-            </items>
+            </dependents>
         </Table>
     </VBox>
 </core:FragmentDefinition>

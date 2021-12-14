@@ -42,6 +42,7 @@ sap.ui.define(
                         .getRoute("RoutePList")
                         .attachMatched(this._onRouteMatched, this);
                     var oDataControl = {
+                        IcnTabKey: "allpainters",
                         filterBar: {
                             AgeGroupId: "",
                             StartDate: null,
@@ -59,6 +60,7 @@ sap.ui.define(
                             /*Aditya changes*/
                             KycStatus: "" /*Aditya changes*/
                         },
+
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -305,9 +307,9 @@ sap.ui.define(
                     //deleted table filter
                     var oTable = this.getView().byId("idDelPainterTable");
                     var oBinding = oTable.getBinding("items");
-                    if (!aFlaEmpty) {
+                    if (!aFlaEmpty && oBinding) {
                         oBinding.filter(endFilter);
-                    } else {
+                    } else if (aFlaEmpty && oBinding) {
                         oBinding.filter([]);
                     }
                 },
@@ -356,6 +358,28 @@ sap.ui.define(
                 onPressAddPainter: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteAddEditP", {});
+                },
+                onIcnTbarChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    if (sKey === "delpainters") {
+                        var oView = this.getView();
+                        var oTable = oView.byId("idDelPainterTable");
+                        if (!oTable.getBinding("items")) {
+                            oTable.bindItems({
+                                path: "/PainterSet",
+                                template: oView.byId("idDelPainterTableTemplate"),
+                                templateShareable: true,
+                                parameters: {
+                                    expand: 'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',
+                                    select: "Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag"
+                                },
+                                filters: [new Filter("IsArchived", FilterOperator.EQ, true)],
+                                sorter: new Sorter("CreatedAt", true)
+                            })
+                            this.onFilter();
+                        }
+
+                    }
                 },
                 onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();

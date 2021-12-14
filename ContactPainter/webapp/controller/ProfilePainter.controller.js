@@ -174,6 +174,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oSection = oEvent.getParameter("section");
                     var sId = oSection.getId();
+                    var oModelControl = oView
+                    .getModel("oModelControl2")
+                    var oPainterId = oModelControl.getProperty("/PainterId");
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
                         oView.byId("smrtLoyalty1").rebindTable(); //redeemed table
@@ -185,7 +188,117 @@ sap.ui.define(
                         oView.byId("smrtVideoTraining").rebindTable();
                     } else if (sId.match("callbacksection")) {
                         oView.byId("smrtCallback").rebindTable();
+                    } else if (sId.match("referral")) {
+                        oModelControl.setProperty("/Search/Referral","")
+                        var oTable = oView.byId("Referral")
+                        var oRefFilter = new Filter(
+                            [
+                                new Filter({
+                                    path: "ReferralStatus",
+                                    operator: "EQ",
+                                    value1: "PENDING"
+                                }),
+                                new Filter({
+                                    path: "ReferralStatus",
+                                    operator: "EQ",
+                                    value1: "REGISTERED"
+                                }),
+                                new Filter({
+                                    path: "ReferralStatus",
+                                    operator: "EQ",
+                                    value1: "PENDINGSCAN"
+                                })
+
+                            ],
+                            false
+                        )
+                        oTable.bindItems({
+                            path: "/PainterReferralHistorySet",
+                            template: oView.byId("ReferralTableDependent"),
+                            templateShareable: true,
+                            filters: [new Filter("ReferredBy", FilterOperator.EQ, oPainterId), oRefFilter],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
+                    } else if (sId.match("complainSection")) {
+                        oModelControl.setProperty("/Search/Complains","")
+                        var oTable = oView.byId("IdTblComplaints")
+                        oTable.bindItems({
+                            path: "/PainterComplainsSet",
+                            template: oView.byId("CompTablDepend"),
+                            parameters: {
+                                expand: 'ComplaintType,Painter,ComplaintSubtype',
+                            },
+                            templateShareable: true,
+                            filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.NE, 1)],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
+                    } else if (sId.match("condomationSection")) {
+                        var oTable = oView.byId("IdTblCondonations")
+                        oTable.bindItems({
+                            path: "/PainterComplainsSet",
+                            template: oView.byId("TblCondoDepend"),
+                            parameters: {
+                                expand: 'PainterComplainProducts, PainterComplainProducts/ProductPackDetails, PainterComplainProducts/ProductPackDetails/ProductCategoryDetails',
+                            },
+                            templateShareable: true,
+                            filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.EQ, 1)],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
+                    } else if (sId.match("tokenSection")) {
+                        oModelControl.setProperty("/Search/Tokens","")
+                        var oTable = oView.byId("idTblOffers")
+                        oTable.bindItems({
+                            path: "/PainterTokenScanHistorySet",
+                            template: oView.byId("TblToknHistDepend"),
+                            parameters: {
+                                expand: 'Painter',
+                            },
+                            templateShareable: true,
+                            filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("ScanStatus", FilterOperator.EQ, "COMPLETED")],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
+                    }else if (sId.match("offerssection")) {
+                        var oTable = oView.byId("idTblOffersNew2")
+                        oTable.bindItems({
+                            path: "/PainterOfferSet",
+                            template: oView.byId("idTblOffersNew2Template"),
+                            templateShareable: true,
+                            parameters: {
+                                expand: 'Painter,Offer/OfferType,PainterOfferProgress,PainterOfferRedemption/GiftRedemption',
+                                custom: {
+                                    PainterId: "" + oPainterId + ""
+                                }
+                            },
+                            filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
+                    }else if (sId.match("additionalrequest")) {
+                        var oTable = oView.byId("idTblOffers")
+                        oTable.bindItems({
+                            path: "/PainterAdditionalBenifitSet",
+                            template: oView.byId("idTbladditionalReqNew2Template"),
+                            templateShareable: true,
+                            parameters: {
+                                expand: 'masterAdditionalBenifit',
+    
+                            },
+                            filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("painterId", FilterOperator.EQ, oPainterId)],
+                            sorter: new Sorter("CreatedAt", true)
+                        })
                     }
+
+
+                    // else if (sId.match("complainSection")) {
+                    //     var oTableReferral = oView.byId("IdTblComplaints");
+                    //     var oRefFilter = new Filter(
+                    //     oTableReferral.bindItems({
+                    //         path: "/PainterComplainsSet",
+                    //         template: oView.byId("CompTablDepend"),
+                    //         templateShareable: true,
+                    //         filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.NE, 1),new Filter("PainterId", FilterOperator.EQ, oPainterId)],
+                    //         sorter: new Sorter("CreatedAt", true)
+                    //     });
+                    // }
                 },
                 handleEditPress: function () {
                     this._toggleButtonsAndView(true);
@@ -922,64 +1035,14 @@ sap.ui.define(
                     var oPainterId = oView
                         .getModel("oModelControl2")
                         .getProperty("/PainterId");
-                    var oFilerByRId = new Filter(
-                        "ReferredBy",
-                        FilterOperator.EQ,
-                        oPainterId
-                    );
-                    oView.byId("Referral").getBinding("items").filter(oFilerByRId);
-                    var oFilComplaints = new Filter(
-                        "PainterId",
-                        FilterOperator.EQ,
-                        parseInt(oPainterId)
-                    );
-                    oView
-                        .byId("IdTblComplaints")
-                        .getBinding("items")
-                        .filter(oFilComplaints);
-                    oView
-                        .byId("IdTblCondonations")
-                        .getBinding("items")
-                        .filter(oFilComplaints);
-                    var oFilOffers = new Filter(
-                        "PainterId",
-                        FilterOperator.EQ,
-                        oPainterId
-                    );
-                    oView.byId("idTblOffers").getBinding("items").filter(oFilOffers);
+
+
+
                     //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
                     //Offers Table
-                    oView.byId("idTblOffersNew2").bindItems({
-                        path: "/PainterOfferSet",
-                        template: oView.byId("idTblOffersNew2Template"),
-                        templateShareable: true,
-                        parameters: {
-                            expand: 'Painter,Offer/OfferType,PainterOfferProgress,PainterOfferRedemption/GiftRedemption',
-                            custom: {
-                                PainterId: "" + oPainterId + ""
-                                //  PainterId: "" + 289 + ""
-                            }
-                        },
-                        filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
-                        sorter: new Sorter("CreatedAt", true)
-                    })
+                    
                     //additional request table
-                    oView.byId("idAdditionalRequest").bindItems({
-                        path: "/PainterAdditionalBenifitSet",
-                        template: oView.byId("idTbladditionalReqNew2Template"),
-                        templateShareable: true,
-                        parameters: {
-                            expand: 'masterAdditionalBenifit',
-                            // custom: {
-                            //     PainterId: "" + oPainterId + ""
-                            //     //  PainterId: "" + 289 + ""
-                            // },
-                            // select: "Painter/IsArchived,Painter/ActivationStatus,Offer/OfferCode,Offer/Title,Offer/OfferType/OfferType,Offer/StartDate,Offer/EndDate,ProgressStatus,RedemeptionIndex,RedemptionMax,RedemptionStatus,UUID," +
-                            //     "PainterOfferProgress/ProgressStatus,PainterOfferProgress/UUID,PainterOfferProgress/OfferRewardRatioId,PainterOfferRedemption/GiftRedemption,PainterOfferRedemption/RedemptionType,PainterOfferRedemption/RewardPoints,PainterOfferRedemption/GiftRedemptionId,PainterOfferRedemption/RewardCash,PainterOfferRedemption/TotalBonusPoints,PainterOfferRedemption/RedemptionStatus,Remark"
-                        },
-                        filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("painterId", FilterOperator.EQ, oPainterId)],
-                        sorter: new Sorter("CreatedAt", true)
-                    })
+                   
                 },
                 onLoyaltySelChange: function (oEvent) {
                     var sKey = oEvent.getParameter("item").getKey();
@@ -1272,7 +1335,7 @@ sap.ui.define(
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     oModelCtrl.setProperty("/EditField", true);
                 },
-              
+
                 fmtLabel: function (mParam1) {
                     var oData = this.getView().getModel(),
                         oPayload = "";
@@ -2461,9 +2524,12 @@ sap.ui.define(
                     this.oQRCodeDtlsDialog.close();
                 },
                 onApplyLoyalyPoints: function () {
+                    this.oQRCodeDtlsDialog.setBusy(true);
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl2");
+                    // oModelControl2>/ProfilePageBuzy
+                   
                     var sTokenCode = oModelControl
                         .getProperty("/ApplyLoyaltyPoints")
                         .trim();
@@ -2491,8 +2557,11 @@ sap.ui.define(
                                     othat.getView().getModel().refresh(true);
                                 }
                             }
+                            othat.oQRCodeDtlsDialog.setBusy(false);
                         },
-                        error: function () {},
+                        error: function () {
+                            othat.oQRCodeDtlsDialog.setBusy(false);
+                        },
                     });
                 },
                 onPressAddReferral: function (oEvent) {

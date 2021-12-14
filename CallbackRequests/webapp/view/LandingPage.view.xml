@@ -19,6 +19,7 @@
             <IconTabBar
                 id="idIconTabBar"
                 headerMode="Inline"
+                select="onIconTabChange"
                 expanded="{device>/isNoPhone}"
                 class="sapUiResponsiveContentPadding">
                 <items>
@@ -94,7 +95,7 @@
                             useVariantManagement="false"
                             useTablePersonalisation="true"
                             demandPopin="true"
-                            enableAutoBinding="true"
+                            enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="CompletedSmartTableKey"
                             ignoreFromPersonalisation="RequestTypeId,IsSelected,Status,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
