@@ -2524,11 +2524,12 @@ sap.ui.define(
                     this.oQRCodeDtlsDialog.close();
                 },
                 onApplyLoyalyPoints: function () {
+                    this.oQRCodeDtlsDialog.setBusy(true);
                     var oView = this.getView();
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl2");
                     // oModelControl2>/ProfilePageBuzy
-                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                   
                     var sTokenCode = oModelControl
                         .getProperty("/ApplyLoyaltyPoints")
                         .trim();
@@ -2556,10 +2557,10 @@ sap.ui.define(
                                     othat.getView().getModel().refresh(true);
                                 }
                             }
-                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                            othat.oQRCodeDtlsDialog.setBusy(false);
                         },
                         error: function () {
-                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                            othat.oQRCodeDtlsDialog.setBusy(false);
                         },
                     });
                 },
