@@ -494,7 +494,7 @@ sap.ui.define(
                     }
                     var oDate = new Date();
                     var nHours = oDate.getHours();
-                    console.log(nHours);
+                   
                     if (nHours <= 9 || nHours >= 20) {
                         this._generateReport(oPayload)
                     } else {
