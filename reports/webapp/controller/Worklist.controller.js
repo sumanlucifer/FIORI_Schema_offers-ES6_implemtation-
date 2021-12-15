@@ -492,6 +492,22 @@ sap.ui.define(
                     var oPayload = {
                         ReportType: obj["Key"]
                     }
+                    var oDate = new Date();
+                    var nHours = oDate.getHours();
+                    console.log(nHours);
+                    if (nHours <= 9 || nHours >= 20) {
+                        this._generateReport(oPayload)
+                    } else {
+                        var sMessageText = this.getResourceBundle().getText("Message2");
+                        MessageBox.information(sMessageText)
+                    }
+
+
+                },
+                _generateReport: function (oPayload) {
+                    var othat = this;
+                    var oView = this.getView();
+                    var oDataModel = oView.getModel();
                     oDataModel.create("/PragatiReportSet", oPayload, {
                         success: function () {
                             othat._showToast("MSG_1");
@@ -502,7 +518,6 @@ sap.ui.define(
 
                         }
                     })
-
                 },
                 _setTimeInterval: function () {
                     if (this._Timer) {
