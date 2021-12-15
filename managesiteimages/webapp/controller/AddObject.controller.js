@@ -214,30 +214,22 @@ sap.ui.define([
 
         },
 
-        // onSiteCategoryChange: function (oEvent) {
-        //     var oModelControl = this.getModel("oModelControl");
-        //     var aFilter = [];
-        //     var sId = oEvent.getSource().getSelectedKey();
-        //     if (sId) {
-        //         oModelControl.setProperty("/hasPainterSite", oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite);
-        //         if (oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite === true) {
-        //             var oPainterSite = this.getView().byId("idPainterSite");
-        //             var oPainterSiteItems = oPainterSite.getBinding("items");
-        //             oPainterSite.clearSelection();
-        //             oPainterSite.setValue("");
-        //             aFilter.push(new Filter("IsArchived", FilterOperator.EQ, false));
-        //             aFilter.push(new Filter("SiteCategoryId", FilterOperator.EQ, sId));
-        //             oPainterSiteItems.filter(aFilter);
-        //         }
-        //     } else {
-        //         oModelControl.setProperty("/hasPainterSite", false);
-        //     }
-        // },
-
         onPressSave: function () {
+            var oModelContrl = this.getView().getModel("oModelControl");
             var bValidateForm = this._ValidateForm();
+            // if (bValidateForm) {
+            //     this._postDataToSave();
+            // }
+
             if (bValidateForm) {
-                this._postDataToSave();
+                if (oModelContrl.getProperty("/oImage")) {
+                    this._postDataToSave();
+                } else {
+                    MessageToast.show(
+                        "Kindly upload Portfolio Image to continue."
+                    );
+                }
+
             }
 
         },
