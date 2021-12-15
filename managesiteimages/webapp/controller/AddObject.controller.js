@@ -77,7 +77,7 @@ sap.ui.define([
             var oDataView = {
                 PainterId: "",
                 PortfolioCategoryId: "",
-                PortfolioStatus: "PENDING"
+                ApprovalStatus: "PENDING"
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
@@ -265,7 +265,7 @@ sap.ui.define([
             var oDataModel = oView.getModel();
             var oModelControl = oView.getModel("oModelControl");
             return new Promise((resolve, reject) => {
-                oDataModel.create("/PainterPortfolioSet", oPayLoad, {
+                oDataModel.create("/PainterPortfolioImageSet", oPayLoad, {
                     success: function (data) {
                         MessageToast.show(othat.geti18nText("Message1"));
                         oModelControl.setProperty("/SiteImageId", data["Id"]);
@@ -284,7 +284,7 @@ sap.ui.define([
             var that = this;
             var oModelContrl = this.getView().getModel("oModelControl");
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-            var newSpath = "/PainterPortfolioSet(" + oData.Id + ")";
+            var newSpath = "/PainterPortfolioImageSet(" + oData.Id + ")";
             return new Promise(function (resolve, reject) {
                 var settings = {
                     url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",

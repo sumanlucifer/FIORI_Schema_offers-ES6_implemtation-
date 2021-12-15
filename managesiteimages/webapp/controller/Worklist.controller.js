@@ -184,7 +184,7 @@ sap.ui.define(
                  * Purpose: init binding method for the table.
                  */
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "Painter, SiteCategory";
+                oBindingParams.parameters["expand"] = "Painter, PortfolioCategoryId";
                 oBindingParams.sorter.push(new Sorter("CreatedAt", true));
 
                 // Apply Filters

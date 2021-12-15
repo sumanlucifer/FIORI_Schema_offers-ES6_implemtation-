@@ -10,7 +10,7 @@
         filters: [ {path:'RegistrationStatus',operator:'NotContains',value1:'DEREGISTERED' },
                    {path:'ActivationStatus',operator:'NotContains',value1:'DEACTIVATED' },
                    {path:'IsArchived',operator:'EQ',value1:false}   
-                ], select: {Id, Name, Mobile, MembershipCard, DivisionId, ZoneId, DepotId} }"
+                ], parameters: { select: 'Id, Name, Mobile, MembershipCard, DivisionId, ZoneId, DepotId' } }"
 		search=".onValueHelpSearch"
 		confirm=".onValueHelpClose"
 		cancel=".onValueHelpClose">
