@@ -64,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "Add Portfolio Image Details":"Edit Portfolio Image Details",
+                Pagetitle: mParam1 ==="Add" ? "{i18n>AddPortfoliImageDetails}":"{i18n>EditPortfoliImageDetails}",
                 mode: mParam1,
                 Mobile: "",
                 Name: "",

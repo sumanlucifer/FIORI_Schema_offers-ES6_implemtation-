@@ -20,7 +20,7 @@
                             </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="CategoryId" label="{i18n>Category}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Select} {i18n>Category}" selectionChange="onCategoryChange" items="{ path: '/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{oModelControl>/filterBar/CategoryId}">
+                                    <ComboBox placeholder="{i18n>Select} {i18n>Category}" selectionChange="onCategoryChange" items="{ path: '/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], select: {Id, category} }" selectedKey="{oModelControl>/filterBar/CategoryId}">
 										<core:Item key="{Id}" text="{category}"/>
 									</ComboBox>
                                 </fb:control>

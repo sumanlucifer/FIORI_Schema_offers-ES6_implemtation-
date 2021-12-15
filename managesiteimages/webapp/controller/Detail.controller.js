@@ -188,12 +188,14 @@ sap.ui.define(
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var exPand = "Painter/Depot, SiteCategory";
+                var select = "Id, PainterId, PortfolioCode, PortfolioCategoryId, Remark, Painter, SiteCategory";
                 var othat = this;
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/" + oProp,
                         parameters: {
                             expand: exPand,
+                            select: select
                         },
                         events: {
                             dataRequested: function (oEvent) {

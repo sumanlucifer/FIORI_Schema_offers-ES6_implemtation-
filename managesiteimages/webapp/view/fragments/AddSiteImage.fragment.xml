@@ -18,7 +18,7 @@
 
                 <core:Title text="{i18n>PortfolioDetails}" />
                 <Label text="{i18n>Category}" required="true"/>
-                <ComboBox required="true" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ] }" selectedKey="{path:'oModelView>/PortfolioCategoryId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox required="true" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], select: {Id, category} }" selectedKey="{path:'oModelView>/PortfolioCategoryId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
                     <items>
                         <core:Item text="{category}" key="{Id}" />
                     </items>

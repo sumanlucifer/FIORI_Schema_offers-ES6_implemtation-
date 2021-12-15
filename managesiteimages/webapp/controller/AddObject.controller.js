@@ -222,12 +222,11 @@ sap.ui.define([
             // }
 
             if (bValidateForm) {
+                var that = this;
                 if (oModelContrl.getProperty("/oImage")) {
                     this._postDataToSave();
                 } else {
-                    MessageToast.show(
-                        "Kindly upload Portfolio Image to continue."
-                    );
+                    MessageToast.show(that.geti18nText("errorMessage4"));
                 }
 
             }
@@ -296,12 +295,12 @@ sap.ui.define([
                     processData: false,
                     success: function (x) {
                         oModelContrl.setProperty("/busy", false);
-                        MessageToast.show("Portfolio Image Successfully Uploaded");
+                        MessageToast.show(that.geti18nText("Message4"));
                         resolve(x);
                     },
                     error: function (a) {
                         oModelContrl.setProperty("/busy", false);
-                        MessageToast.show("Portfolio Image creation failed");
+                        MessageToast.show(that.geti18nText("errorMessage3"));
                         reject(a);
                     }
                 };
