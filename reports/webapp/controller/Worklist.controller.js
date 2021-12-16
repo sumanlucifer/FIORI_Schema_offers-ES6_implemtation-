@@ -495,7 +495,7 @@ sap.ui.define(
                     var oDate = new Date();
                     var nHours = oDate.getHours();
                    
-                    if (nHours <= 9 || nHours >= 20) {
+                    if (nHours < 9 || nHours >= 20) {
                         this._generateReport(oPayload)
                     } else {
                         var sMessageText = this.getResourceBundle().getText("Message2");
