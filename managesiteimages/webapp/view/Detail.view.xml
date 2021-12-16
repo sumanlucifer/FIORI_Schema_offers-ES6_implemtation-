@@ -4,7 +4,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{PortfolioCategoryId/category}"/>
+                    <Title text="{PortfolioCategory/category}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>UpdatePortfolioImage}">
@@ -18,7 +18,7 @@
                     <Label text="{PortfolioCode}"/>
                 </f:snappedContent> -->
                 <f:snappedTitleOnMobile>
-                    <Title text="{PortfolioCategoryId/category}"/>
+                    <Title text="{PortfolioCategory/category}"/>
                 </f:snappedTitleOnMobile>
                 <!-- <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />

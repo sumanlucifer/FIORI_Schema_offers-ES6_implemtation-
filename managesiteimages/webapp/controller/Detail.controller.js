@@ -131,7 +131,7 @@ expandsap.ui.define(
                 var othat = this;
                 var oModel = oView.getModel("oModelDisplay")
                 var oProp = oModel.getProperty("/bindProp");
-                var exPand = "Painter/Depot, PortfolioCategoryId";
+                var exPand = "Painter/Depot, PortfolioCategory";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
@@ -187,8 +187,8 @@ expandsap.ui.define(
             _getDisplayData: function (oProp) {
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
-                var exPand = "Painter/Depot, PortfolioCategoryId";
-                var select = "Id, PainterId, PortfolioCategoryId, Remark, Painter, PortfolioCategoryId";
+                var exPand = "Painter/Depot, PortfolioCategory";
+                var select = "Id, PainterId, PortfolioCategoryId, Remark, Painter, PortfolioCategory";
                 var othat = this;
                 if (oProp.trim() !== "") {
                     oView.bindElement({

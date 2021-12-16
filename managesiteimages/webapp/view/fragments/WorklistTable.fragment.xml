@@ -26,7 +26,7 @@
                 </Column> -->
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCategoryId/category", "leadingProperty": "PortfolioCategoryId/category", "columnIndex": 1 ,"sortProperty": "PortfolioCategoryId/category","filterProperty": "PortfolioCategoryId/category"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCategory/category", "leadingProperty": "PortfolioCategory/category", "columnIndex": 1 ,"sortProperty": "PortfolioCategory/category","filterProperty": "PortfolioCategory/category"}'/>
                     </customData>
                     <Text text="{i18n>Category}"/>
                 </Column>
@@ -49,7 +49,7 @@
                     <cells>
                         <Text text="{Painter/Name}"/>
                         <!-- <Text text="{PortfolioCode}"/> -->
-                        <Text text="{PortfolioCategoryId/category}"/>
+                        <Text text="{PortfolioCategory/category}"/>
                         <Text text="{ApprovalStatus}"/>
                         <HBox >
                             <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
