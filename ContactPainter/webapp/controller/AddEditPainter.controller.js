@@ -58,7 +58,7 @@ sap.ui.define(
 
         return BaseController.extend(
             "com.knpl.pragati.ContactPainter.controller.AddEditPainter", {
-                formatter:formatter,
+                formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
 
@@ -900,6 +900,13 @@ sap.ui.define(
                     var oSourceVal = oSource.getValue().trim();
                     var oSecAccNo = oView.byId("idCnfAcntNum");
                     var sSecAccVal = oSecAccNo.getValue().trim();
+                    var sIfscCode = oView.byId("IdAbIfscCode").getValue().trim();
+                    if (!sIfscCode) {
+                        oSource.setValue("");
+                        var sMessage3 = this.geti18nText("Message2");
+                        MessageToast.show(sMessage3);
+
+                    }
                     if (sSecAccVal === "") {
                         return;
                     } else {
@@ -907,6 +914,61 @@ sap.ui.define(
                             "Kindly enter the same account number in the 'Confirm Account Number' field."
                         );
                         oSecAccNo.setValue("");
+                    }
+                },
+                _CheckBankExistDetails: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    oModelView.setProperty("/busy",true);
+                    var sBankAccNo = oView.byId("idAddAcntNum").getValue().trim();
+                    var sIfscCode = oView.byId("IdAbIfscCode").getValue().trim();
+
+                    var oData = oView.getModel();
+                    oData.read("/PainterBankDetailsSet", {
+                        urlParameters: {
+                            $select: "AccountNumber,IfscCode"
+                        },
+                        filters: [new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
+                            path: "IfscCode",
+                            operator: FilterOperator.EQ,
+                            value1: sIfscCode,
+                            caseSensitive: false,
+                        })],
+                        success: function (oData) {
+
+                            if (oData["results"].length > 0) {
+                                var sMessage1 = this.geti18nText("Message1", [sIfscCode]);
+                                oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
+                                oModelView.setProperty("/PainterAddDet/ConfrmAccNum", "");
+                                MessageToast.show(sMessage1,{
+                                    duration:6000
+                                });
+                            }
+                            oModelView.setProperty("/busy",false);
+                        }.bind(this),
+                        error: function () {
+                            oModelView.setProperty("/busy",false);
+                        }
+
+                    })
+                },
+                onIFSCCodeChange:function(){
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
+                    oModelView.setProperty("/PainterAddDet/ConfrmAccNum", "");
+                },
+                onConfAccChng: function (oEvent) {
+                    var oView = this.getView();
+                    var oPrimAcNum = oView.byId("idAddAcntNum");
+                    var oSecNumber = oEvent.getSource().getValue();
+                    if (oSecNumber.trim() !== oPrimAcNum.getValue().trim()) {
+                        MessageToast.show(
+                            "Account Number doesn't match, kindly enter it again."
+                        );
+                        oEvent.getSource().setValue("");
+                    } else if(oSecNumber.trim() && oPrimAcNum.getValue().trim()) {
+                        this._CheckBankExistDetails();
                     }
                 },
                 onZoneChange: function (oEvent) {
@@ -951,17 +1013,7 @@ sap.ui.define(
                     this._dealerReset();
                 },
 
-                onConfAccChng: function (oEvent) {
-                    var oView = this.getView();
-                    var oPrimAcNum = oView.byId("idAddAcntNum");
-                    var oSecNumber = oEvent.getSource().getValue();
-                    if (oSecNumber.trim() !== oPrimAcNum.getValue().trim()) {
-                        MessageToast.show(
-                            "Account Number doesn't match, kindly enter it again."
-                        );
-                        oEvent.getSource().setValue("");
-                    }
-                },
+            
                 onStateChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
