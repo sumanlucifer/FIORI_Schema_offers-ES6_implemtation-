@@ -73,6 +73,7 @@ sap.ui.define([
                 DivisionId : "",
                 Depot : "",
                 SiteImageId: mParam2,
+                editable: true,
                 bindProp: "PainterPortfolioSet(" + mParam2 + ")",
                 resourcePath: "com.knpl.pragati.managesiteimages"
             };

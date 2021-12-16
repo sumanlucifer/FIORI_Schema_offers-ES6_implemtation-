@@ -82,6 +82,13 @@ sap.ui.define([
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
 
+            var oPortfolioDataView = {
+                PainterId: "",
+                ApprovalStatus: "PENDING"
+            }
+            var oPortfolioModel1 = new JSONModel(oPortfolioDataView);
+            oView.setModel(oModel1, "oPortfolioModelView");
+
             promise.resolve();
             return promise;
         },

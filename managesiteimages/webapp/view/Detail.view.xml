@@ -3,26 +3,17 @@
 			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="{PortfolioCategory/category}"/>
-                </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs currentLocationText="{i18n>UpdatePortfolioImage}">
-                        <Link text="{i18n>PortfolioImage}" press="onNavToHome"/>
+                    <Breadcrumbs currentLocationText="{i18n>UpdatePainterPortfolio}">
+                        <Link text="{i18n>worklistViewTitle}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
-                <!-- <f:expandedContent>
+                <f:expandedContent>
                     <Label text="{PortfolioCode}"/>
                 </f:expandedContent>
                 <f:snappedContent>
                     <Label text="{PortfolioCode}"/>
-                </f:snappedContent> -->
-                <f:snappedTitleOnMobile>
-                    <Title text="{PortfolioCategory/category}"/>
-                </f:snappedTitleOnMobile>
-                <!-- <f:actions>
-                    <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
-                </f:actions> -->
+                </f:snappedContent>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -31,6 +22,10 @@
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
+                        <ObjectAttribute title="{i18n>PrimaryMobileNo}" text="{Painter/Mobile}"/>
+                        <ObjectAttribute title="{i18n>Zone}" text="{Painter/ZoneId}"/>
+                        <ObjectAttribute title="{i18n>Division}" text="{Painter/DivisionId}"/>
+                        <ObjectAttribute title="{i18n>Depot}" text="{Painter/DepotId}"/>
                     </layout:VerticalLayout>
                     <!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
                         <Label  text="{i18n>ComplaintDetails}:"  />
@@ -44,19 +39,20 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <IconTabBar  select="onIcnTbarChange" selectedKey="{oModelDisplay>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <!-- <IconTabBar  select="onIcnTbarChange" selectedKey="{oModelDisplay>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter  text="{i18n>Overview}" key="0" >
-                        <VBox id="oVBoxAddObjectPage" width="100%">
-                        </VBox>
-                        
-                        </IconTabFilter>
-                        <IconTabFilter  text="{i18n>History}" key="1" >
-                             <core:Fragment fragmentName="com.knpl.pragati.managesiteimages.view.fragments.HistoryTable" type="XML"/>
-                        </IconTabFilter>
-                         
-                    </items>
-                </IconTabBar>
+                        <VBox id="oVBoxAddObjectPage" width="100%"></VBox>
+                    </IconTabFilter>                         
+                </items>
+            </IconTabBar> -->
+            <IconTabBar  select="onIcnTbarChange" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], parameters:{select:'Id, category' } }" selectedKey="{oModelView>/PortfolioCategoryId}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+                <items>
+                    <IconTabFilter  text="{category}" key="Id" >
+                        <VBox id="oVBoxAddObjectPage" width="100%"></VBox>  
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
         </f:content>
         <f:footer>
          
