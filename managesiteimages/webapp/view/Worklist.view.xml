@@ -31,7 +31,6 @@
                                        <core:Item text="{i18n>Pending}" key="PENDING"/>
                                         <core:Item text="{i18n>Approved}" key="APPROVED"/>
                                         <core:Item text="{i18n>Rejected}" key="REJECTED"/>
-                                        <core:Item text="{i18n>Withdrawn}" key="WITHDRAWN"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>

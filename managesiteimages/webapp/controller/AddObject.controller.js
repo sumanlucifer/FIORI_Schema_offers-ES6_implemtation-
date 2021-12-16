@@ -232,6 +232,33 @@ sap.ui.define([
             }
 
         },
+
+        // _postDataToSave: function () {
+        //     /*
+        //      * Author: manik saluja
+        //      * Date: 02-Dec-2021
+        //      * Language:  JS
+        //      * Purpose: Payload is ready and we have to send the same based to server but before that we have to modify it slighlty
+        //      */
+        //     var oView = this.getView();
+        //     var oData = this.getView().getModel();
+        //     var oModelControl = oView.getModel("oModelControl");
+        //     oModelControl.setProperty("/PageBusy", true);
+        //     var othat = this;
+        //     var c1, c2, c3, c4;
+        //     c1 = othat._CheckEmptyFieldsPostPayload();
+        //     c1.then(function (oPayload) {
+        //         c2 = othat._CreateObject(oPayload);
+        //         c2.then(function (oData) {
+        //             c3 = othat._uploadFile(oData);
+        //             c3.then(function () {
+        //                 oModelControl.setProperty("/PageBusy", false);
+        //                 othat.onNavToHome();
+        //             })
+        //         })
+        //     })
+        // },
+
         _postDataToSave: function () {
             /*
              * Author: manik saluja
@@ -246,48 +273,48 @@ sap.ui.define([
             var othat = this;
             var c1, c2, c3, c4;
             c1 = othat._CheckEmptyFieldsPostPayload();
-            c1.then(function (oPayload) {
-                c2 = othat._CreateObject(oPayload);
-                c2.then(function (oData) {
-                    c3 = othat._uploadFile(oData);
-                    c3.then(function () {
+            // c1.then(function (oPayload) {
+            //     c2 = othat._CreateObject(oPayload);
+                c1.then(function (oPayload) {
+                    c2 = othat._uploadFile(oPayload);
+                    c2.then(function () {
                         oModelControl.setProperty("/PageBusy", false);
                         othat.onNavToHome();
                     })
                 })
-            })
+            // })
         },
 
-        _CreateObject: function (oPayLoad) {
-            //console.log(oPayLoad);
-            var othat = this;
-            var oView = this.getView();
-            var oDataModel = oView.getModel();
-            var oModelControl = oView.getModel("oModelControl");
-            return new Promise((resolve, reject) => {
-                oDataModel.create("/PainterPortfolioImageSet", oPayLoad, {
-                    success: function (data) {
-                        MessageToast.show(othat.geti18nText("Message1"));
-                        oModelControl.setProperty("/SiteImageId", data["Id"]);
-                        resolve(data);
-                    },
-                    error: function (data) {
-                        MessageToast.show(othat.geti18nText("errorMessage2"));
-                        oModelControl.setProperty("/PageBusy", false);
-                        reject(data);
-                    },
-                });
-            });
-        },
+        // _CreateObject: function (oPayLoad) {
+        //     //console.log(oPayLoad);
+        //     var othat = this;
+        //     var oView = this.getView();
+        //     var oDataModel = oView.getModel();
+        //     var oModelControl = oView.getModel("oModelControl");
+        //     return new Promise((resolve, reject) => {
+        //         oDataModel.create("/PainterPortfolioImageSet", oPayLoad, {
+        //             success: function (data) {
+        //                 MessageToast.show(othat.geti18nText("Message1"));
+        //                 oModelControl.setProperty("/SiteImageId", data["Id"]);
+        //                 resolve(data);
+        //             },
+        //             error: function (data) {
+        //                 MessageToast.show(othat.geti18nText("errorMessage2"));
+        //                 oModelControl.setProperty("/PageBusy", false);
+        //                 reject(data);
+        //             },
+        //         });
+        //     });
+        // },
 
         _uploadFile: function (oData) {
             var that = this;
             var oModelContrl = this.getView().getModel("oModelControl");
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-            var newSpath = "/PainterPortfolioImageSet(" + oData.Id + ")";
+            var newSpath = "/PainterPortfolioImageSet(0)";
             return new Promise(function (resolve, reject) {
                 var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value?painterId=" + oData.PainterId + "&categoryId=" + oData.PortfolioCategoryId,
                     data: oImage.Image,
                     method: "PUT",
                     headers: that.getModel().getHeaders(),

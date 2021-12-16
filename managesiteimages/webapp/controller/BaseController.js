@@ -64,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "{i18n>AddPortfoliImageDetails}":"{i18n>EditPortfoliImageDetails}",
+                Pagetitle: mParam1 ==="Add" ? this.geti18nText("AddPortfoliImageDetails"):this.geti18nText("EditPortfoliImageDetails"),
                 mode: mParam1,
                 Mobile: "",
                 Name: "",
@@ -168,7 +168,8 @@ sap.ui.define([
          */
         showWarning: function (sMsgTxt, _fnYes) {
             var that = this;
-            MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+            // MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
+                MessageBox.warning(this.geti18nText(sMsgTxt), {
                 actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
                 onClose: function (sAction) {
                     if (sAction === "YES") {

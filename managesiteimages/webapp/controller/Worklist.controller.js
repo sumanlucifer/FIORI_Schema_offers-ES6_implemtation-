@@ -310,15 +310,15 @@ sap.ui.define(
             onDeleteSiteImage: function (oEvent) {
                 var sPath = oEvent.getSource().getBindingContext().getPath();
                 var that = this;
-                // function onYes() {
+                function onYes() {
                     var data = sPath + "/IsArchived";
                     that.getModel().update(data, {
                         IsArchived: true
                     }, {
                         success: MessageToast.show(that.geti18nText("Message3"))
                     });
-                // }
-                // that.showWarning("MSG_CONFIRM_DELETE", onYes);
+                }
+                that.showWarning("MSG_CONFIRM_DELETE", onYes);
             }
         }
         );

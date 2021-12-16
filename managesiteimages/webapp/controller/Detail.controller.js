@@ -1,4 +1,4 @@
-expandsap.ui.define(
+sap.ui.define(
     [
         "../controller/BaseController",
         "sap/ui/model/json/JSONModel",
@@ -189,7 +189,7 @@ expandsap.ui.define(
                 var oView = this.getView();
                 var exPand = "Painter/Depot, PortfolioCategory";
                 var select = "Id, PainterId, PortfolioCategoryId, Remark, Painter, PortfolioCategory";
-                var othat = this;
+                // var othat = this;
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/" + oProp,
@@ -309,18 +309,18 @@ expandsap.ui.define(
             },
             _UpdatedObject: function (oPayLoad, status) {
                 //console.log(oPayLoad);
-                oPayLoad.SiteApprovalStatus = status;
+                oPayLoad.ApprovalStatus = status;
                 var othat = this;
                 var oView = this.getView();
                 var oDataModel = oView.getModel();
                 var oModelDisplay = oView.getModel("oModelDisplay");
                 var sProp = oModelDisplay.getProperty("/bindProp")
-                //console.log(sProp)
                 return new Promise((resolve, reject) => {
                     oDataModel.update("/" + sProp, oPayLoad, {
                         success: function (data) {
+                            debugger;
                             MessageToast.show(othat.geti18nText("Message2"));
-                            oModelDisplay.setProperty("/SiteImageId", data["Id"]);
+                            // oModelDisplay.setProperty("/SiteImageId", data["Id"]);
                             oModelDisplay.setProperty("/PageBusy", false);
                             resolve(data);
                         },
