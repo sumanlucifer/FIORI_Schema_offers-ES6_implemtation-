@@ -64,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "Add Portfolio Image Details":"Edit Portfolio Image Details",
+                Pagetitle: mParam1 ==="Add" ? "{i18n>AddPortfoliImageDetails}":"{i18n>EditPortfoliImageDetails}",
                 mode: mParam1,
                 Mobile: "",
                 Name: "",
@@ -127,6 +127,7 @@ sap.ui.define([
             var oModelData = oModel.getData();
             //1.Clone the payload and convert string to integer values based on odata model entity
             var oPayLoad = this._RemoveEmptyValue(oModelData);
+            
             var inTegerProperty = [
                 "PainterId",
                 "PortfolioCategoryId"

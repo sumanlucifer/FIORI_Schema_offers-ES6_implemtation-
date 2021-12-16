@@ -184,7 +184,7 @@ sap.ui.define(
                  * Purpose: init binding method for the table.
                  */
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "Painter, SiteCategory";
+                oBindingParams.parameters["expand"] = "Painter, PortfolioCategory";
                 oBindingParams.sorter.push(new Sorter("CreatedAt", true));
 
                 // Apply Filters
@@ -234,7 +234,7 @@ sap.ui.define(
                         if (prop === "Status") {
                             aFlaEmpty = false;
                             aCurrentFilterValues.push(
-                                new Filter("PortfolioStatus", FilterOperator.EQ, oViewFilter[prop]));
+                                new Filter("ApprovalStatus", FilterOperator.EQ, oViewFilter[prop]));
                         } else if (prop === "Search") {
                             aFlaEmpty = false;
                             aCurrentFilterValues.push(
@@ -245,13 +245,13 @@ sap.ui.define(
                                             operator: "Contains",
                                             value1: oViewFilter[prop].trim(),
                                             caseSensitive: false
-                                        }),
-                                        new Filter({
-                                            path: "PortfolioCode",
-                                            operator: "Contains",
-                                            value1: oViewFilter[prop].trim(),
-                                            caseSensitive: false
                                         })
+                                        // new Filter({
+                                        //     path: "PortfolioCode",
+                                        //     operator: "Contains",
+                                        //     value1: oViewFilter[prop].trim(),
+                                        //     caseSensitive: false
+                                        // })
                                     ],
                                     false
                                 )

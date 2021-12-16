@@ -25,7 +25,7 @@
 
             <core:Title text="{i18n>PortfolioDetails}" />
             <Label text="{i18n>Category}" />
-            <Text text="{path : 'SiteCategory/category'}"  />
+            <Text text="{PortfolioCategory/category}"  />
             <Label text="{i18n>PortfolioImage}" />
             <Link press="onImageView" text="View Image" />
             <Label text="{i18n>Remark}" />

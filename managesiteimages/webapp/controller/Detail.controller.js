@@ -1,4 +1,4 @@
-sap.ui.define(
+expandsap.ui.define(
     [
         "../controller/BaseController",
         "sap/ui/model/json/JSONModel",
@@ -63,8 +63,8 @@ sap.ui.define(
             _SetDisplayData: function (oProp, sMode) {
                 var oData = {
                     mode: sMode,
-                    bindProp: "PainterPortfolioSet(" + oProp + ")",
-                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioSet(" + oProp + ")/$value",
+                    bindProp: "PainterPortfolioImageSet(" + oProp + ")",
+                    oImage: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioImageSet(" + oProp + ")/$value",
                     SiteImageId: oProp,
                     PageBusy: true,
                     IcnTabKey: "0",
@@ -131,7 +131,7 @@ sap.ui.define(
                 var othat = this;
                 var oModel = oView.getModel("oModelDisplay")
                 var oProp = oModel.getProperty("/bindProp");
-                var exPand = "Painter/Depot, SiteCategory";
+                var exPand = "Painter/Depot, PortfolioCategory";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
@@ -187,13 +187,15 @@ sap.ui.define(
             _getDisplayData: function (oProp) {
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
-                var exPand = "Painter/Depot, SiteCategory";
+                var exPand = "Painter/Depot, PortfolioCategory";
+                var select = "Id, PainterId, PortfolioCategoryId, Remark, Painter, PortfolioCategory";
                 var othat = this;
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/" + oProp,
                         parameters: {
                             expand: exPand,
+                            select: select
                         },
                         events: {
                             dataRequested: function (oEvent) {

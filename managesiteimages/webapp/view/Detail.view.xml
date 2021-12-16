@@ -4,21 +4,21 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{SiteCategory/category}"/>
+                    <Title text="{PortfolioCategory/category}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>UpdatePortfolioImage}">
                         <Link text="{i18n>PortfolioImage}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
-                <f:expandedContent>
+                <!-- <f:expandedContent>
                     <Label text="{PortfolioCode}"/>
                 </f:expandedContent>
                 <f:snappedContent>
                     <Label text="{PortfolioCode}"/>
-                </f:snappedContent>
+                </f:snappedContent> -->
                 <f:snappedTitleOnMobile>
-                    <Title text="{SiteCategory/category}"/>
+                    <Title text="{PortfolioCategory/category}"/>
                 </f:snappedTitleOnMobile>
                 <!-- <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
@@ -38,7 +38,7 @@
                     </layout:VerticalLayout> -->
                     <layout:VerticalLayout>
                         <Label  text="{i18n>Status}:"/>
-                          <ObjectStatus class="sapMObjectStatusLarge" text="{PortfolioStatus}" state="None"/>
+                          <ObjectStatus class="sapMObjectStatusLarge" text="{ApprovalStatus}" state="None"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>

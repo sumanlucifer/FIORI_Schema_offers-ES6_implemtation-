@@ -77,7 +77,7 @@ sap.ui.define([
             var oDataView = {
                 PainterId: "",
                 PortfolioCategoryId: "",
-                PortfolioStatus: "PENDING"
+                ApprovalStatus: "PENDING"
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
@@ -214,30 +214,21 @@ sap.ui.define([
 
         },
 
-        // onSiteCategoryChange: function (oEvent) {
-        //     var oModelControl = this.getModel("oModelControl");
-        //     var aFilter = [];
-        //     var sId = oEvent.getSource().getSelectedKey();
-        //     if (sId) {
-        //         oModelControl.setProperty("/hasPainterSite", oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite);
-        //         if (oEvent.getSource().getSelectedItem().getBindingContext().getObject().HasPainterSite === true) {
-        //             var oPainterSite = this.getView().byId("idPainterSite");
-        //             var oPainterSiteItems = oPainterSite.getBinding("items");
-        //             oPainterSite.clearSelection();
-        //             oPainterSite.setValue("");
-        //             aFilter.push(new Filter("IsArchived", FilterOperator.EQ, false));
-        //             aFilter.push(new Filter("SiteCategoryId", FilterOperator.EQ, sId));
-        //             oPainterSiteItems.filter(aFilter);
-        //         }
-        //     } else {
-        //         oModelControl.setProperty("/hasPainterSite", false);
-        //     }
-        // },
-
         onPressSave: function () {
+            var oModelContrl = this.getView().getModel("oModelControl");
             var bValidateForm = this._ValidateForm();
+            // if (bValidateForm) {
+            //     this._postDataToSave();
+            // }
+
             if (bValidateForm) {
-                this._postDataToSave();
+                var that = this;
+                if (oModelContrl.getProperty("/oImage")) {
+                    this._postDataToSave();
+                } else {
+                    MessageToast.show(that.geti18nText("errorMessage4"));
+                }
+
             }
 
         },
@@ -274,7 +265,7 @@ sap.ui.define([
             var oDataModel = oView.getModel();
             var oModelControl = oView.getModel("oModelControl");
             return new Promise((resolve, reject) => {
-                oDataModel.create("/PainterPortfolioSet", oPayLoad, {
+                oDataModel.create("/PainterPortfolioImageSet", oPayLoad, {
                     success: function (data) {
                         MessageToast.show(othat.geti18nText("Message1"));
                         oModelControl.setProperty("/SiteImageId", data["Id"]);
@@ -293,7 +284,7 @@ sap.ui.define([
             var that = this;
             var oModelContrl = this.getView().getModel("oModelControl");
             var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-            var newSpath = "/PainterPortfolioSet(" + oData.Id + ")";
+            var newSpath = "/PainterPortfolioImageSet(" + oData.Id + ")";
             return new Promise(function (resolve, reject) {
                 var settings = {
                     url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value",
@@ -304,12 +295,12 @@ sap.ui.define([
                     processData: false,
                     success: function (x) {
                         oModelContrl.setProperty("/busy", false);
-                        MessageToast.show("Portfolio Image Successfully Uploaded");
+                        MessageToast.show(that.geti18nText("Message4"));
                         resolve(x);
                     },
                     error: function (a) {
                         oModelContrl.setProperty("/busy", false);
-                        MessageToast.show("Portfolio Image creation failed");
+                        MessageToast.show(that.geti18nText("errorMessage3"));
                         reject(a);
                     }
                 };
