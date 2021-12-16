@@ -919,7 +919,7 @@ sap.ui.define(
                 _CheckBankExistDetails: function () {
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
-                    oModelView.setProperty("/busy",true);
+                    oModelView.setProperty("/busy", true);
                     var sBankAccNo = oView.byId("idAddAcntNum").getValue().trim();
                     var sIfscCode = oView.byId("IdAbIfscCode").getValue().trim();
 
@@ -940,19 +940,19 @@ sap.ui.define(
                                 var sMessage1 = this.geti18nText("Message1", [sIfscCode]);
                                 oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                                 oModelView.setProperty("/PainterAddDet/ConfrmAccNum", "");
-                                MessageToast.show(sMessage1,{
-                                    duration:6000
+                                MessageToast.show(sMessage1, {
+                                    duration: 6000
                                 });
                             }
-                            oModelView.setProperty("/busy",false);
+                            oModelView.setProperty("/busy", false);
                         }.bind(this),
                         error: function () {
-                            oModelView.setProperty("/busy",false);
+                            oModelView.setProperty("/busy", false);
                         }
 
                     })
                 },
-                onIFSCCodeChange:function(){
+                onIFSCCodeChange: function () {
                     var oView = this.getView();
                     var oModelView = oView.getModel("oModelView");
                     oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
@@ -967,7 +967,7 @@ sap.ui.define(
                             "Account Number doesn't match, kindly enter it again."
                         );
                         oEvent.getSource().setValue("");
-                    } else if(oSecNumber.trim() && oPrimAcNum.getValue().trim()) {
+                    } else if (oSecNumber.trim() && oPrimAcNum.getValue().trim()) {
                         this._CheckBankExistDetails();
                     }
                 },
@@ -1013,7 +1013,7 @@ sap.ui.define(
                     this._dealerReset();
                 },
 
-            
+
                 onStateChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
@@ -1445,6 +1445,47 @@ sap.ui.define(
                     oView.byId("idRKyc").setSelectedIndex(0);
                     oModel.setProperty("/PainterKycDetails/Status", "PENDING");
                     oView.byId("idUploadCollection").removeAllItems();
+                },
+                onKYCIdInpChange: function (oEvent) {
+                    var sValue = oEvent.getSource().getValue().trim();
+                    if (sValue) {
+                        this._CheckKYCExistDetails();
+                    }
+
+                },
+                _CheckKYCExistDetails: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    oModelView.setProperty("/busy", true);
+                    var sGovtTypeId = oModelView.getProperty("/PainterKycDetails/KycTypeId");
+                    var sGovtIdNo = oModelView.getProperty("/PainterKycDetails/GovtId");
+                    var sKycTypeName = oView.byId("idCmbxChange").getSelectedItem().getBindingContext().getObject()["KycType"];
+                    var oData = oView.getModel();
+                    oData.read("/PainterKycDetailsSet", {
+                        urlParameters: {
+                            $select: "KycTypeId,GovtId"
+                        },
+                        filters: [new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
+                            path: "GovtId",
+                            operator: FilterOperator.EQ,
+                            value1: sGovtIdNo,
+                            caseSensitive: false,
+                        })],
+                        success: function (oData) {
+                            if (oData["results"].length > 0) {
+                                var sMessage1 = this.geti18nText("Message3", [sKycTypeName]);
+                                oModelView.setProperty("/PainterKycDetails/GovtId", "");
+                                MessageToast.show(sMessage1, {
+                                    duration: 6000
+                                });
+                            }
+                            oModelView.setProperty("/busy", false);
+                        }.bind(this),
+                        error: function () {
+                            oModelView.setProperty("/busy", false);
+                        }
+
+                    })
                 },
                 onUploadFileTypeMis: function () {
                     MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
