@@ -24,15 +24,16 @@
                     </customData>
                     <Text text="{i18n>PortfolioCode}"/>
                 </Column>
-                <!-- <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCategory/category", "leadingProperty": "PortfolioCategory/category", "columnIndex": 1 ,"sortProperty": "PortfolioCategory/category","filterProperty": "PortfolioCategory/category"}'/>
-                    </customData>
-                    <Text text="{i18n>Category}"/>
-                </Column> -->
+                
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 2 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>CreatedAt}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 3 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
                     <Text text="{i18n>ApprovalStatus}"/>
                 </Column>
@@ -49,7 +50,7 @@
                     <cells>
                         <Text text="{Painter/Name}"/>
                         <Text text="{PortfolioCode}"/>
-                        <!-- <Text text="{PortfolioCategory/category}"/> -->
+                             <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
                        <ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <HBox >
                             <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
