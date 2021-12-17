@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PortfolioImages}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioImageSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PainterPortfolios}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddPortfolioImage}" press="onPressAddObject"/>
+                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddPainterPortfolio}" press="onPressAddObject"/>
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 
@@ -18,18 +18,18 @@
                     </customData>
                     <Text text="{i18n>PainterName}"/>
                 </Column>
-                <!-- <Column hAlign="Begin">
+                <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCode", "leadingProperty": "PortfolioCode", "columnIndex": 1 ,"sortProperty": "PortfolioCode","filterProperty": "PortfolioCode"}'/>
                     </customData>
                     <Text text="{i18n>PortfolioCode}"/>
-                </Column> -->
-                <Column hAlign="Begin">
+                </Column>
+                <!-- <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCategory/category", "leadingProperty": "PortfolioCategory/category", "columnIndex": 1 ,"sortProperty": "PortfolioCategory/category","filterProperty": "PortfolioCategory/category"}'/>
                     </customData>
                     <Text text="{i18n>Category}"/>
-                </Column>
+                </Column> -->
                 <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 2 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
@@ -48,9 +48,9 @@
                 <ColumnListItem press="onListItemPress" type="Navigation">
                     <cells>
                         <Text text="{Painter/Name}"/>
-                        <!-- <Text text="{PortfolioCode}"/> -->
-                        <Text text="{PortfolioCategory/category}"/>
-                        <Text text="{ApprovalStatus}"/>
+                        <Text text="{PortfolioCode}"/>
+                        <!-- <Text text="{PortfolioCategory/category}"/> -->
+                       <ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <HBox >
                             <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>

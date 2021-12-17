@@ -64,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? this.geti18nText("AddPortfoliImageDetails"):this.geti18nText("EditPortfoliImageDetails"),
+                Pagetitle: "Portfolio Details",
                 mode: mParam1,
                 Mobile: "",
                 Name: "",
@@ -72,9 +72,14 @@ sap.ui.define([
                 ZoneId: "",
                 DivisionId : "",
                 Depot : "",
-                SiteImageId: mParam2,
-                bindProp: "PainterPortfolioSet(" + mParam2 + ")",
-                resourcePath: "com.knpl.pragati.managesiteimages"
+                PortfolioId: null,
+                editable: true,
+                bindProp: "",
+                resourcePath: "com.knpl.pragati.managesiteimages",
+                TableData1:[],
+                IconTabKey:null,
+                PainterId:mParam2,
+                dataSource:"/"+this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
@@ -109,6 +114,13 @@ sap.ui.define([
         geti18nText: function (mParam, mParam2) {
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
+        },
+        _showMessageToast:function(mParam, mParam2){
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            var sText =  oModel.getText(mParam, mParam2);
+            MessageToast.show(sText,{
+                duration:6000
+            })
         },
         _RemoveEmptyValue: function (mParam) {
             var obj = Object.assign({}, mParam);
@@ -160,7 +172,11 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
         },
-
+           onDialogClose: function () {
+            if (this._ViewImageDialog) {
+                this._ViewImageDialog.close();
+            }
+        },
         /*
          * Common function for showing warning dialogs
          * @param sMsgTxt : i18n Key string

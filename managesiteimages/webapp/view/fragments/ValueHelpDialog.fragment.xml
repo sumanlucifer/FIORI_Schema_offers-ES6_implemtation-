@@ -12,7 +12,7 @@
                    {path:'IsArchived',operator:'EQ',value1:false}   
                 ], parameters: { select: 'Id, Name, Mobile, MembershipCard, DivisionId, ZoneId, DepotId' } }"
 		search=".onValueHelpSearch"
-		confirm=".onValueHelpClose"
+		confirm=".onValueHelpConfirm"
 		cancel=".onValueHelpClose">
 		<StandardListItem 
 			title="{Name}"

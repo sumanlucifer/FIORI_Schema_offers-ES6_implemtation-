@@ -1,32 +1,79 @@
-<mvc:View
- xmlns:core="sap.ui.core"
-	controllerName="com.knpl.pragati.managesiteimages.controller.AddObject"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	>
-
- <Page busy="{oModelControl>/PageBusy}"  busyIndicatorDelay="0" showNavButton="false" showHeader="true" >
-        <headerContent>
-            <Bar>
-                <contentLeft>
-                    <Breadcrumbs currentLocationText="{i18n>AddPortfolioImage}">
-                        <Link text="{i18n>PortfolioImage}" press="onNavToHome"/>
+<mvc:View height="100%" controllerName="com.knpl.pragati.managesiteimages.controller.AddObject" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+    <f:DynamicPage busy="{oModelControl>/PageBusy}" busyIndicatorDelay="0"	stickySubheaderProvider="iconTabBar"
+			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="{i18n>AddPainterPortfolio}">
+                        <Link text="{i18n>worklistViewTitle}" press="onNavToHome"/>
                     </Breadcrumbs>
-                </contentLeft>
-            </Bar>
-        </headerContent>
-        <content>
-            <VBox width="100%" id="oVBoxAddObjectPage">
-            </VBox>
-        </content>
-        <footer>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavToHome"/>
-                <Button width="7%" text="{i18n>Save}" type="Emphasized" press="onPressSave"/>
-            </Toolbar>
-        </footer>
-    </Page>
-
-
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <Avatar  fallbackIcon="sap-icon://picture" src="{parts:['Painter/__metadata'],formatter:'.formatter.generateImageUrl'}"  displaySize="L" displayShape="Circle"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <layout:HorizontalLayout class="sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>PainterName}:"/>
+                            <Text text="{path:'Painter/Name'}"/>
+                        </layout:HorizontalLayout>
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>Mobile}:"/>
+                            <Text text="{Painter/Mobile}"/>
+                        </layout:HorizontalLayout>
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>MembershipId}:"/>
+                            <Text text="{Painter/MembershipCard}"/>
+                        </layout:HorizontalLayout>
+                       
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <layout:HorizontalLayout class="sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>Zone}:"/>
+                            <Text text="{path:'Painter/ZoneId'}"/>
+                        </layout:HorizontalLayout>
+                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>Division}:"/>
+                            <Text text="{path:'Painter/DivisionId'}"/>
+                        </layout:HorizontalLayout>
+                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>Depot}:"/>
+                            <Text text="{path:'Painter/Depot/Depot'}"/>
+                        </layout:HorizontalLayout>
+                    </layout:VerticalLayout>
+                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                        <layout:HorizontalLayout class="sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>PortfolioCode}:"/>
+                            <Text text="{path:'PortfolioCode'}"/>
+                        </layout:HorizontalLayout>
+                    </layout:VerticalLayout>
+                    <!-- <layout:VerticalLayout>
+                        <layout:VerticalLayout class="sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>headerStatus}"/>
+                            <ObjectStatus class="statusTextSizeLarge sapUiTinyMarginTop" text="{path:'OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
+                        </layout:VerticalLayout>
+                    </layout:VerticalLayout> -->
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <IconTabBar  select="onIcnTbarChange" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], parameters:{select:'Id, category,MAXIMAGES' } }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+                <items>
+                    <IconTabFilter  text="{category}" key="{Id}" >
+                      
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar>
+              <ToolbarSpacer/>
+              <Button press="onNavToHome" type="Ghost"  text="{i18n>Cancel}"  />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
 </mvc:View>
