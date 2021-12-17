@@ -175,7 +175,7 @@ sap.ui.define(
                     var oSection = oEvent.getParameter("section");
                     var sId = oSection.getId();
                     var oModelControl = oView
-                    .getModel("oModelControl2")
+                        .getModel("oModelControl2")
                     var oPainterId = oModelControl.getProperty("/PainterId");
                     if (sId.match("loyaltysection")) {
                         oView.byId("smrtLoyalty").rebindTable();
@@ -189,7 +189,7 @@ sap.ui.define(
                     } else if (sId.match("callbacksection")) {
                         oView.byId("smrtCallback").rebindTable();
                     } else if (sId.match("referral")) {
-                        oModelControl.setProperty("/Search/Referral","")
+                        oModelControl.setProperty("/Search/Referral", "")
                         var oTable = oView.byId("Referral")
                         var oRefFilter = new Filter(
                             [
@@ -220,7 +220,7 @@ sap.ui.define(
                             sorter: new Sorter("CreatedAt", true)
                         })
                     } else if (sId.match("complainSection")) {
-                        oModelControl.setProperty("/Search/Complains","")
+                        oModelControl.setProperty("/Search/Complains", "")
                         var oTable = oView.byId("IdTblComplaints")
                         oTable.bindItems({
                             path: "/PainterComplainsSet",
@@ -245,7 +245,7 @@ sap.ui.define(
                             sorter: new Sorter("CreatedAt", true)
                         })
                     } else if (sId.match("tokenSection")) {
-                        oModelControl.setProperty("/Search/Tokens","")
+                        oModelControl.setProperty("/Search/Tokens", "")
                         var oTable = oView.byId("idTblOffers")
                         oTable.bindItems({
                             path: "/PainterTokenScanHistorySet",
@@ -257,7 +257,7 @@ sap.ui.define(
                             filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("ScanStatus", FilterOperator.EQ, "COMPLETED")],
                             sorter: new Sorter("CreatedAt", true)
                         })
-                    }else if (sId.match("offerssection")) {
+                    } else if (sId.match("offerssection")) {
                         var oTable = oView.byId("idTblOffersNew2")
                         oTable.bindItems({
                             path: "/PainterOfferSet",
@@ -272,7 +272,7 @@ sap.ui.define(
                             filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ProgressStatus", FilterOperator.NE, 'None'), new Filter("Offer/IsArchived", FilterOperator.EQ, false), new Filter("Offer/IsActive", FilterOperator.EQ, true)],
                             sorter: new Sorter("CreatedAt", true)
                         })
-                    }else if (sId.match("additionalrequest")) {
+                    } else if (sId.match("additionalrequest")) {
                         var oTable = oView.byId("idTblOffers")
                         oTable.bindItems({
                             path: "/PainterAdditionalBenifitSet",
@@ -280,7 +280,7 @@ sap.ui.define(
                             templateShareable: true,
                             parameters: {
                                 expand: 'masterAdditionalBenifit',
-    
+
                             },
                             filters: [new Filter("IsArchived", FilterOperator.EQ, false), new Filter("painterId", FilterOperator.EQ, oPainterId)],
                             sorter: new Sorter("CreatedAt", true)
@@ -1040,9 +1040,9 @@ sap.ui.define(
 
                     //View.byId("idLoyaltyPoints").getBinding("items").filter(oFilOffers);
                     //Offers Table
-                    
+
                     //additional request table
-                   
+
                 },
                 onLoyaltySelChange: function (oEvent) {
                     var sKey = oEvent.getParameter("item").getKey();
@@ -1872,9 +1872,54 @@ sap.ui.define(
                     //     oModelCtrl.setProperty("/EditField", false);
                     // }
                 },
+                onInpAccNumberChange: function () {
+                    var oView = this.getView();
+                    var sBankAccNo = oView.byId("NewAccountNumber").getValue().trim();
+                    if (sBankAccNo) {
+                        this._CheckBankExistDetails();
+                    }
+
+                },
+                _CheckBankExistDetails: function () {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelControl2 = oView.getModel("oModelControl2");
+                    oModelControl2.setProperty("/busy", true);
+                    var sBankAccNo = oView.byId("NewAccountNumber").getValue().trim();
+                    var sIfscCode = oView.byId("NewIfscCode").getValue().trim();
+
+                    var oData = oView.getModel();
+                    oData.read("/PainterBankDetailsSet", {
+                        urlParameters: {
+                            $select: "AccountNumber,IfscCode"
+                        },
+                        filters: [new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
+                            path: "IfscCode",
+                            operator: FilterOperator.EQ,
+                            value1: sIfscCode,
+                            caseSensitive: false,
+                        })],
+                        success: function (oData) {
+
+                            if (oData["results"].length > 0) {
+                                var sMessage1 = this.geti18nText("Message1", [sIfscCode]);
+                                oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
+                                MessageToast.show(sMessage1, {
+                                    duration: 6000
+                                });
+                            }
+                            oModelControl2.setProperty("/busy", false);
+                        }.bind(this),
+                        error: function () {
+                            oModelControl2.setProperty("/busy", false);
+                        }
+
+                    })
+                },
                 onEditFieldKyc: function (oEvent) {
                     var length = oEvent.getParameter("value").length;
                     var value = oEvent.getParameter("value");
+                    var oView = this.getView();
                     var oModelCtrl = this.getView().getModel("oModelControl");
                     var oModelView = this.getView().getModel("oModelView");
                     if (length > 1) {
@@ -1883,6 +1928,66 @@ sap.ui.define(
                     } else {
                         oModelCtrl.setProperty("/EditFieldKyc", false);
                     }
+                    // Here 2 diff kinds of fields will be displayed based on if intial kyc value is null or non null
+                    
+                  
+                    var sSouceId = oEvent.getSource().getId();
+                    var sGovtTypeId = oModelView.getProperty("/PainterKycDetails/KycTypeId");
+                    var sKycId1 = this.createId("kycIdNo");
+                    var sKycId2 = this.createId("kycIdNoEdit");
+                    
+                    if (sSouceId === sKycId1) {
+                        var sKyCNumber = oView.byId("kycIdNo").getValue().trim();
+                        if (sKyCNumber && sGovtTypeId) {
+                            this._CheckKYCExistDetails1();
+                        }
+                    }
+                    // below statement will run when the kyc is null
+                    if (sSouceId === sKycId2) {
+                        var sKyCNumber = oView.byId("kycIdNoEdit").getValue().trim();
+                        if (sKyCNumber && sGovtTypeId) {
+                            this._CheckKYCExistDetails1("kycNull");
+                        }
+                    }
+
+
+
+                },
+                _CheckKYCExistDetails1: function (mParam1) {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oModelControl = oView.getModel("oModelControl2");
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    var sGovtTypeId = oModelView.getProperty("/PainterKycDetails/KycTypeId");
+                    var sGovtIdNo = oModelView.getProperty("/PainterKycDetails/GovtId");
+                    var sCmBxId = mParam1 === "kycNull" ? "idKycEditCombo" : "idKycEditComboNotNull";
+                    var sKycTypeName = oView.byId(sCmBxId).getSelectedItem().getBindingContext().getObject()["KycType"];
+                    var oData = oView.getModel();
+                    oData.read("/PainterKycDetailsSet", {
+                        urlParameters: {
+                            $select: "KycTypeId,GovtId"
+                        },
+                        filters: [new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
+                            path: "GovtId",
+                            operator: FilterOperator.EQ,
+                            value1: sGovtIdNo,
+                            caseSensitive: false,
+                        })],
+                        success: function (oData) {
+                            if (oData["results"].length > 0) {
+                                var sMessage1 = this.geti18nText("Message3", [sKycTypeName]);
+                                oModelView.setProperty("/PainterKycDetails/GovtId", "");
+                                MessageToast.show(sMessage1, {
+                                    duration: 6000
+                                });
+                            }
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(this),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }
+
+                    })
                 },
                 onEditKycFields: function () {
                     var oModelCtrl = this.getView().getModel("oModelControl");
@@ -2529,7 +2634,7 @@ sap.ui.define(
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl2");
                     // oModelControl2>/ProfilePageBuzy
-                   
+
                     var sTokenCode = oModelControl
                         .getProperty("/ApplyLoyaltyPoints")
                         .trim();

@@ -157,6 +157,10 @@ sap.ui.define([
 
 
         },
+        geti18nText: function (mParam, mParam2) {
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            return oModel.getText(mParam, mParam2);
+        },
 
         /**
          * Adds a history entry in the FLP page history

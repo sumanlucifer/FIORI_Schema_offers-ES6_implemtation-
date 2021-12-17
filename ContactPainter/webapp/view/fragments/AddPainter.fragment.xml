@@ -271,7 +271,7 @@
                     <Link text="{i18n>AddNewBank}" visible="{= !${oModelControl>/AddNewBank} }" press="onAddNewBank" />
                 </HBox>
                 <Label text="{i18n>IFSCCode}" />
-                <Input maxLength="11" id="IdAbIfscCode" enabled="{oModelControl>/AddNewBank}" valueStateText="Kindly enter a valid IFSC code" required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:10,maxLength:11, search:'^[a-zA-Z0-9]*$'} }" />
+                <Input maxLength="11" id="IdAbIfscCode" change="onIFSCCodeChange" enabled="{oModelControl>/AddNewBank}" valueStateText="Kindly enter a valid IFSC code" required="{oModelControl>/AddNewBank}" value="{path:'oModelView>/PainterBankDetails/IfscCode',type : 'sap.ui.model.type.String', constraints : {minLength:10,maxLength:11, search:'^[a-zA-Z0-9]*$'} }" />
                 <Label text="{i18n>BankName}" />
                 <ComboBox id="IdAbBankNameId" enabled="{oModelControl>/AddNewBank}" required="{oModelControl>/AddNewBank}" items="{path:'/MasterBankNameSet',sorter:{path:'BankName'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterBankDetails/BankNameId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
                     <items>
@@ -315,13 +315,13 @@
                 </HBox> -->
                 <core:Title text="{i18n>KYCDetails}" />
                 <Label text="{i18n>SelectKYCDocument}" />
-                <ComboBox change=".onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
+                <ComboBox id="idCmbxChange" change=".onKycChange" items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId' }">
                     <items>
                         <core:Item text="{KycType}" key="{Id}"></core:Item>
                     </items>
                 </ComboBox>
                 <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
-                <Input id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:5,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
+                <Input change="onKYCIdInpChange" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId',type:'sap.ui.model.type.String',constraints:{minLength:5,search:'^[a-zA-z0-9]'} }" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" required="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" enabled="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
                 <Label text="{i18n>Status}" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" />
                 <RadioButtonGroup id="idRKyc" visible="{= ${oModelView>/PainterKycDetails/KycTypeId} !== '' }" select="onRbKycStatus" selectedIndex="0" columns="2" width="100%">
                     <RadioButton text="{i18n>Pending}" />
