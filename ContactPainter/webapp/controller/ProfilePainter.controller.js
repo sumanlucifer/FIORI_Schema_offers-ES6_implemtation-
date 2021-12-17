@@ -1878,16 +1878,16 @@ sap.ui.define(
                     var sBankAccNo = oView.byId("NewAccountNumber").getValue().trim();
                     var sIfscCode = oView.byId("NewIfscCode").getValue().trim();
                     if (!sIfscCode) {
+                        oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                         var sMessage1 = this.geti18nText("Message2");
                         MessageToast.show(sMessage1, {
                             duration: 6000
                         })
-                        oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                         return;
                     }
                     if (sBankAccNo) {
                         this._CheckBankExistDetails();
-                        return;
+                        return
                     }
 
                 },
