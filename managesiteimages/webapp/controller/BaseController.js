@@ -79,7 +79,7 @@ sap.ui.define([
                 TableData1:[],
                 IconTabKey:null,
                 PainterId:mParam2,
-                dataSource:"/KNPL_PAINTER_API"
+                dataSource:"/"+this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
@@ -172,7 +172,11 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
         },
-
+           onDialogClose: function () {
+            if (this._ViewImageDialog) {
+                this._ViewImageDialog.close();
+            }
+        },
         /*
          * Common function for showing warning dialogs
          * @param sMsgTxt : i18n Key string

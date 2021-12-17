@@ -50,7 +50,7 @@
                         <Text text="{Painter/Name}"/>
                         <Text text="{PortfolioCode}"/>
                         <!-- <Text text="{PortfolioCategory/category}"/> -->
-                        <Text text="{ApprovalStatus}"/>
+                       <ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <HBox >
                             <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>

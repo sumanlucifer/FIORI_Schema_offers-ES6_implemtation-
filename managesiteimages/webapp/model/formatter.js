@@ -38,6 +38,15 @@ sap.ui.define([], function () {
             }
             return "";
         },
+        formatURL: function (sURL) {
+            if (sURL) {
+                return "https://".concat(
+                    location.host,
+                    "/KNPL_PAINTER_API",
+                    new URL(sURL).pathname
+                );
+            }
+        },
         fmtCheckStatusColor: function (mParam) {
             if (mParam === "APPROVED") {
                 return "Success";
@@ -50,7 +59,22 @@ sap.ui.define([], function () {
             }
             return "Information";
         },
-
+        fmtBtnApproveImage:function(mParam1,mParam2){
+            if(!mParam1){
+                if(mParam2 ==="PENDING" || mParam2 ==="REJECTED"){
+                    return true;
+                }
+            }
+            return false;
+        },
+        fmtBtnRejectImage:function(mParam1,mParam2){
+            if(!mParam1){
+                if(mParam2 ==="PENDING" || mParam2 ==="APPROVED"){
+                    return true;
+                }
+            }
+            return false;
+        },
         fmtCheckNull: function (mParam1) {
             if (!mParam1) {
                 return "NA"

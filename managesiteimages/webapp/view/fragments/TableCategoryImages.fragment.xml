@@ -36,10 +36,15 @@
                               <VBox >
                                 	<ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                             </VBox>
-                             <HBox>
-                                <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewardsV1"></Button>
+
+                             <HBox >
+                                <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddNewImage"></Button>
                                 <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button>
-                                <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward"></Button>
+                                <Button   icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onDelteportFolioImage"></Button>
+                                <Button visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }" icon="sap-icon://sys-cancel" type="Transparent" tooltip="{i18n>Delete}" press="onCancelImagesTable"></Button>
+                                <!-- Approval and Reject Button -->
+                                  <Button visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnApproveImage'  }"  type="Accept" text="{i18n>Approve}" tooltip="{i18n>Approve}" press="onApproveImage" class="sapUiTinyMarginEnd"></Button>
+                                  <Button visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnRejectImage'  }" type="Reject" text="{i18n>Reject}" tooltip="{i18n>Reject}" press="onRejectImage"></Button>
                             </HBox>
                         </cells>
                     </ColumnListItem>
