@@ -13,6 +13,9 @@
                     <Column >
                         <Text text="{i18n>Image}"/>
                     </Column>
+                     <Column >
+                        <Text text="{i18n>CreatedAt}"/>
+                    </Column>
                       <Column >
                         <Text text="{i18n>Remark}"/>
                     </Column>
@@ -32,10 +35,11 @@
                                 	<u:FileUploader app:type="fileUploader" typeMissmatch="onFilteMisMatch" fileType="jpg,jpeg,png" placeholder="{i18n>Message5}" tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
                                     <Link text="{i18n>ViewImage}" press="onViewImage"  visible="{= ${oModelControl>editable} !== true }"/>
                             </VBox>
+                              <Text text="{ path:'oModelControl>CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
                               <Text text="{ path:'oModelControl>Remark',formatter:'.formatter.fmtCheckNull'}" />
-                              <VBox >
+                           
                                 	<ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
-                            </VBox>
+                          
 
                              <HBox >
                                 <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddNewImage"></Button>
